@@ -11,23 +11,23 @@ using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
 {
-    internal partial class InternalFileListResponse
+    internal partial class InternalFileListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalFileListResult"/>. </summary>
         /// <param name="data"> The files returned for the request. </param>
-        internal InternalFileListResponse(IEnumerable<PersistentAgentFileInfo> data)
+        internal InternalFileListResult(IEnumerable<PersistentAgentFileInfo> data)
         {
             Data = data.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalFileListResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalFileListResult"/>. </summary>
         /// <param name="object"> The object type, which is always 'list'. </param>
         /// <param name="data"> The files returned for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalFileListResponse(string @object, IList<PersistentAgentFileInfo> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalFileListResult(string @object, IList<PersistentAgentFileInfo> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Data = data;

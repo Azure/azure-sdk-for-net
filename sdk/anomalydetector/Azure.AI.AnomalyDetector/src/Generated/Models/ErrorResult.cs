@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Error information that the API returned. </summary>
-    public partial class ErrorResponse
+    public partial class ErrorResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
-        internal ErrorResponse(string code, string message)
+        internal ErrorResult(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Message that explains the error that the service reported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorResponse(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorResult(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
