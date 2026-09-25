@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for asset references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningDataPathAssetReference"/>, <see cref="MachineLearningIdAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
     /// </summary>
     public abstract partial class MachineLearningAssetReferenceBase
     {

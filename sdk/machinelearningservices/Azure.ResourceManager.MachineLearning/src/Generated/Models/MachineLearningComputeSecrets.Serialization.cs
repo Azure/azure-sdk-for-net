@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Secrets related to a Machine Learning compute. Might differ for every type of compute.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksComputeSecrets"/>, <see cref="MachineLearningVirtualMachineSecrets"/>, and <see cref="MachineLearningDatabricksComputeSecrets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAksComputeSecrets"/>, <see cref="MachineLearningDatabricksComputeSecrets"/>, and <see cref="MachineLearningVirtualMachineSecrets"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownComputeSecrets))]
     public abstract partial class MachineLearningComputeSecrets : IJsonModel<MachineLearningComputeSecrets>
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AKS":
                         return MachineLearningAksComputeSecrets.DeserializeMachineLearningAksComputeSecrets(element, options);
-                    case "VirtualMachine":
-                        return MachineLearningVirtualMachineSecrets.DeserializeMachineLearningVirtualMachineSecrets(element, options);
                     case "Databricks":
                         return MachineLearningDatabricksComputeSecrets.DeserializeMachineLearningDatabricksComputeSecrets(element, options);
+                    case "VirtualMachine":
+                        return MachineLearningVirtualMachineSecrets.DeserializeMachineLearningVirtualMachineSecrets(element, options);
                 }
             }
             return UnknownComputeSecrets.DeserializeUnknownComputeSecrets(element, options);
