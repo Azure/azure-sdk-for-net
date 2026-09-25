@@ -64,9 +64,15 @@ namespace Azure.Core.Tests.Identity.Mock
             // Non-IMDS sources (AppService, CloudShell, etc.) are detected from env vars
             // without HTTP probing, so MSAL handles them safely.
 #pragma warning disable CS0618 // DefaultToImds is obsolete
+            if (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None)
+            {
+                _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            }
+
             if (Pipeline != null &&
                 (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.DefaultToImds ||
-                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds))
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds ||
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None))
 #pragma warning restore CS0618
             {
                 return new ValueTask<AuthenticationResult>(SendDirectImdsRequest(requestContext, cancellationToken));

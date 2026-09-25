@@ -1,5 +1,13 @@
 # Release History
 
+## 1.62.1 (2026-09-25)
+
+### Bugs Fixed
+
+- Fixed `ModelReaderWriter` deserialization of `GeoPoint` with `AzureCoreContext` or a generated consumer context throwing because its type builder was not registered.
+- Fixed `DefaultAzureCredential` taking up to a minute to continue past managed identity on hosts where IMDS is unavailable. Bearer-token requests now avoid unnecessary capability discovery and chained requests use the short Azure.Core IMDS probe.
+- Fixed chained managed identity aborting the credential chain when MSAL reports all sources unavailable immediately after a successful initial IMDS probe for a bearer-token request.
+
 ## 1.62.0 (2026-08-20)
 
 ### Features Added
