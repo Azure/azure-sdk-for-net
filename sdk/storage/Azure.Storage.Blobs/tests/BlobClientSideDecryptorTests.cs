@@ -3,7 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.Cryptography;
+using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -11,351 +17,168 @@ namespace Azure.Storage.Blobs.Test
     [TestFixture]
     public class BlobClientSideDecryptorTests
     {
-        #region GetAndValidateEncryptionDataOrDefault
+        #region DecryptInternal
 
         [Test]
-        public void GetAndValidateEncryptionDataOrDefault_NullMetadata_ReturnsDefault()
+        public async Task DecryptInternal_NoEncryptionMetadata_TrimsStream()
         {
-            var result = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(null);
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public void GetAndValidateEncryptionDataOrDefault_NoEncryptionKey_ReturnsDefault()
-        {
-            var metadata = new Dictionary<string, string> { { "somekey", "somevalue" } };
-            var result = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata);
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public void GetAndValidateEncryptionDataOrDefault_V1_MissingIV_Throws()
-        {
-            var encryptionData = new EncryptionData
-            {
-                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
-                EncryptionAgent = new EncryptionAgent
-                {
-#pragma warning disable CS0618 // obsolete
-                    EncryptionVersion = ClientSideEncryptionVersionInternal.V1_0,
-#pragma warning restore CS0618 // obsolete
-                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
-                },
-                WrappedContentKey = new KeyEnvelope
-                {
-                    KeyId = "keyId",
-                    EncryptedKey = new byte[] { 1, 2, 3 },
-                    Algorithm = "algo"
-                },
-                ContentEncryptionIV = null,
-                KeyWrappingMetadata = new Dictionary<string, string>
-                {
-                    { Constants.ClientSideEncryption.AgentMetadataKey, "1.0" }
-                }
-            };
-
+            var decryptor = new BlobClientSideDecryptor(CreateDecryptor());
+            using var stream = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 });
             var metadata = new Dictionary<string, string>
             {
-                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData) }
+                { "otherKey", "otherValue" }
             };
 
-            Assert.Throws<InvalidOperationException>(() =>
-                BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata));
+            var result = await decryptor.DecryptInternal(
+                stream,
+                metadata,
+                new HttpRange(2, 3),
+                "bytes 0-4/5",
+                0,
+                async: false,
+                CancellationToken.None);
+
+            var actual = await ReadAllBytesAsync(result);
+            CollectionAssert.AreEqual(new byte[] { 3, 4, 5 }, actual);
         }
 
         [Test]
-        public void GetAndValidateEncryptionDataOrDefault_V1_Valid_ReturnsData()
+        public async Task DecryptInternal_WithEncryptionMetadata_DecryptsAndTrims()
         {
-            var encryptionData = new EncryptionData
+            var plaintext = new byte[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 };
+            var (ciphertext, metadata) = await CreateEncryptedPayloadAsync(plaintext);
+            var decryptor = new BlobClientSideDecryptor(CreateDecryptor());
+
+            var result = await decryptor.DecryptInternal(
+                ciphertext,
+                metadata,
+                new HttpRange(3, 5),
+                "bytes 0-9/10",
+                0,
+                async: false,
+                CancellationToken.None);
+
+            var actual = await ReadAllBytesAsync(result);
+            CollectionAssert.AreEqual(new byte[] { 13, 14, 15, 16, 17 }, actual);
+        }
+
+        [Test]
+        public async Task DecryptWholeBlobWriteInternal_NoEncryptionMetadata_ReturnsOriginalStream()
+        {
+            var decryptor = new BlobClientSideDecryptor(CreateDecryptor());
+            var stream = new MemoryStream(new byte[] { 1, 2, 3 });
+
+            var result = await decryptor.DecryptWholeBlobWriteInternal(
+                stream,
+                new Dictionary<string, string> { { "otherKey", "otherValue" } },
+                async: false,
+                CancellationToken.None);
+
+            Assert.AreSame(stream, result);
+        }
+
+        [Test]
+        public async Task DecryptWholeBlobWriteInternal_WithEncryptionMetadata_DecryptsToDestination()
+        {
+            var plaintext = new byte[] { 20, 21, 22, 23, 24 };
+            var (ciphertext, metadata) = await CreateEncryptedPayloadAsync(plaintext);
+            var decryptor = new BlobClientSideDecryptor(CreateDecryptor());
+            var destination = new MemoryStream();
+
+            using (Stream result = await decryptor.DecryptWholeBlobWriteInternal(
+                destination,
+                metadata,
+                async: false,
+                CancellationToken.None))
             {
-                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
-                EncryptionAgent = new EncryptionAgent
-                {
-#pragma warning disable CS0618 // obsolete
-                    EncryptionVersion = ClientSideEncryptionVersionInternal.V1_0,
-#pragma warning restore CS0618 // obsolete
-                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
-                },
-                WrappedContentKey = new KeyEnvelope
-                {
-                    KeyId = "keyId",
-                    EncryptedKey = new byte[] { 1, 2, 3 },
-                    Algorithm = "algo"
-                },
-                ContentEncryptionIV = new byte[16],
-                KeyWrappingMetadata = new Dictionary<string, string>
-                {
-                    { Constants.ClientSideEncryption.AgentMetadataKey, "1.0" }
-                }
-            };
+                Assert.IsNotNull(result);
+                ciphertext.Position = 0;
+                await result.WriteAsync(await ReadAllBytesAsync(ciphertext), 0, (int)ciphertext.Length);
+                result.Flush();
+            }
 
-            var metadata = new Dictionary<string, string>
-            {
-                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData) }
-            };
-
-            var result = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata);
-
-            Assert.IsNotNull(result);
-#pragma warning disable CS0618 // obsolete
-            Assert.AreEqual(ClientSideEncryptionVersionInternal.V1_0, result.EncryptionAgent.EncryptionVersion);
-#pragma warning restore CS0618 // obsolete
-        }
-
-        [Test]
-        public void GetAndValidateEncryptionDataOrDefault_V2_MissingRegionInfo_Throws()
-        {
-            var encryptionData = new EncryptionData
-            {
-                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
-                EncryptionAgent = new EncryptionAgent
-                {
-                    EncryptionVersion = ClientSideEncryptionVersionInternal.V2_0,
-                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesGcm256,
-                },
-                WrappedContentKey = new KeyEnvelope
-                {
-                    KeyId = "keyId",
-                    EncryptedKey = new byte[] { 1, 2, 3 },
-                    Algorithm = "algo"
-                },
-                EncryptedRegionInfo = null,
-                KeyWrappingMetadata = new Dictionary<string, string>
-                {
-                    { Constants.ClientSideEncryption.AgentMetadataKey, "2.0" }
-                }
-            };
-
-            var metadata = new Dictionary<string, string>
-            {
-                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData) }
-            };
-
-            Assert.Throws<InvalidOperationException>(() =>
-                BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata));
-        }
-
-        [Test]
-        public void GetAndValidateEncryptionDataOrDefault_V2_Valid_ReturnsData()
-        {
-            var encryptionData = CreateV2EncryptionData();
-
-            var metadata = new Dictionary<string, string>
-            {
-                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData) }
-            };
-
-            var result = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata);
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(ClientSideEncryptionVersionInternal.V2_0, result.EncryptionAgent.EncryptionVersion);
-        }
-
-        [Test]
-        public void GetAndValidateEncryptionDataOrDefault_MissingEncryptedKey_Throws()
-        {
-            // Construct a valid V2 encryption data, serialize it, then manipulate the JSON
-            // to remove the EncryptedKey value to simulate missing key scenario.
-            var encryptionData = CreateV2EncryptionData();
-            string serialized = EncryptionDataSerializer.Serialize(encryptionData);
-            // Replace the base64-encoded key with null in JSON
-            var json = Newtonsoft.Json.Linq.JObject.Parse(serialized);
-            json["WrappedContentKey"]["EncryptedKey"] = null;
-            serialized = json.ToString(Newtonsoft.Json.Formatting.None);
-
-            var metadata = new Dictionary<string, string>
-            {
-                { Constants.ClientSideEncryption.EncryptionDataKey, serialized }
-            };
-
-            Assert.That(() =>
-                BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata),
-                Throws.InstanceOf<ArgumentNullException>());
-        }
-
-        #endregion
-
-        #region GetEncryptedBlobRange
-
-        [Test]
-        public void GetEncryptedBlobRange_DefaultEncryptionData_ReturnsSameRange()
-        {
-            var originalRange = new HttpRange(100, 200);
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, default(EncryptionData));
-            Assert.AreEqual(originalRange, result.BlobRange);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V1_ZeroOffset_NoAdjustment()
-        {
-            var encryptionData = CreateV1EncryptionData();
-            var originalRange = new HttpRange(0, 32);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            Assert.AreEqual(32, result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V1_OffsetLessThanBlockSize_AlignsToBlockBoundary()
-        {
-            var encryptionData = CreateV1EncryptionData();
-            // Offset 5, within first block (blocksize=16), no IV needed
-            var originalRange = new HttpRange(5, 10);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            // offset adjusted back by 5 (diff from block boundary), so offset=0
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            // count adjusted: 10 + 5 = 15, rounded up to block boundary = 16
-            Assert.AreEqual(16, result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V1_OffsetBeyondBlockSize_IncludesIV()
-        {
-            var encryptionData = CreateV1EncryptionData();
-            // Offset 20 (>16), diff from block boundary = 20%16 = 4
-            var originalRange = new HttpRange(20, 10);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            // offset = 20 - 4(diff) - 16(IV) = 0
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            // count = 10 + 4(diff) + 16(IV) = 30, rounded up to 32
-            Assert.AreEqual(32, result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V1_NullLength_ReturnsNullLength()
-        {
-            var encryptionData = CreateV1EncryptionData();
-            var originalRange = new HttpRange(0, null);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            Assert.IsNull(result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V2_ZeroOffset_NoAdjustment()
-        {
-            var encryptionData = CreateV2EncryptionData();
-            int totalRegionSize = Constants.ClientSideEncryption.V2.NonceSize
-                + Constants.ClientSideEncryption.V2.EncryptionRegionDataSize
-                + Constants.ClientSideEncryption.V2.TagSize;
-            var originalRange = new HttpRange(0, 100);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            // end is in region 0, so count = 1 * totalRegionSize
-            Assert.AreEqual(totalRegionSize, result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V2_OffsetInSecondRegion()
-        {
-            var encryptionData = CreateV2EncryptionData();
-            int dataSize = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize;
-            int totalRegionSize = Constants.ClientSideEncryption.V2.NonceSize
-                + dataSize
-                + Constants.ClientSideEncryption.V2.TagSize;
-
-            // Offset in second region
-            var originalRange = new HttpRange(dataSize + 100, 50);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            // Region 1 start
-            Assert.AreEqual(1 * totalRegionSize, result.BlobRange.Offset);
-            // End is also in region 1, so count = 2 * totalRegionSize - 1 * totalRegionSize = totalRegionSize
-            Assert.AreEqual(totalRegionSize, result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_V2_NullLength_ReturnsNullLength()
-        {
-            var encryptionData = CreateV2EncryptionData();
-            var originalRange = new HttpRange(0, null);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
-
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            Assert.IsNull(result.BlobRange.Length);
-        }
-
-        [Test]
-        public void GetEncryptedBlobRange_StringOverload_Works()
-        {
-            var encryptionData = CreateV2EncryptionData();
-            string rawEncryptionData = EncryptionDataSerializer.Serialize(encryptionData);
-            var originalRange = new HttpRange(0, 100);
-
-            var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, rawEncryptionData);
-
-            Assert.AreEqual(0, result.BlobRange.Offset);
-            Assert.IsTrue(result.BlobRange.Length > 100);
+            CollectionAssert.AreEqual(plaintext, destination.ToArray());
         }
 
         #endregion
 
         #region Helpers
 
-        private static EncryptionData CreateV1EncryptionData()
+        private static ClientSideDecryptor CreateDecryptor()
         {
-            return new EncryptionData
+            const string keyId = "keyId";
+            const string keyWrapAlgorithm = "some algorithm name";
+            var key = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
+            key.SetupGet(k => k.KeyId).Returns(keyId);
+            key.Setup(k => k.WrapKey(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => contents.ToArray());
+            key.Setup(k => k.UnwrapKey(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => contents.ToArray());
+            key.Setup(k => k.WrapKeyAsync(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => Task.FromResult(contents.ToArray()));
+            key.Setup(k => k.UnwrapKeyAsync(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => Task.FromResult(contents.ToArray()));
+
+            var resolver = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
+            resolver.Setup(r => r.Resolve(keyId, It.IsAny<CancellationToken>())).Returns(key.Object);
+            resolver.Setup(r => r.ResolveAsync(keyId, It.IsAny<CancellationToken>())).ReturnsAsync(key.Object);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
             {
-                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
-                EncryptionAgent = new EncryptionAgent
-                {
-#pragma warning disable CS0618 // obsolete
-                    EncryptionVersion = ClientSideEncryptionVersionInternal.V1_0,
-#pragma warning restore CS0618 // obsolete
-                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
-                },
-                WrappedContentKey = new KeyEnvelope
-                {
-                    KeyId = "keyId",
-                    EncryptedKey = new byte[] { 1, 2, 3 },
-                    Algorithm = "algo"
-                },
-                ContentEncryptionIV = new byte[16],
-                KeyWrappingMetadata = new Dictionary<string, string>
-                {
-                    { Constants.ClientSideEncryption.AgentMetadataKey, "1.0" }
-                }
+                KeyEncryptionKey = key.Object,
+                KeyResolver = resolver.Object,
+                KeyWrapAlgorithm = keyWrapAlgorithm,
             };
+
+            return new ClientSideDecryptor(options);
         }
 
-        private static EncryptionData CreateV2EncryptionData()
+        private static async Task<(MemoryStream Ciphertext, Dictionary<string, string> Metadata)> CreateEncryptedPayloadAsync(byte[] plaintext)
         {
-            return new EncryptionData
+            const string keyId = "keyId";
+            const string keyWrapAlgorithm = "some algorithm name";
+            var key = new Mock<IKeyEncryptionKey>(MockBehavior.Strict);
+            key.SetupGet(k => k.KeyId).Returns(keyId);
+            key.Setup(k => k.WrapKey(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => contents.ToArray());
+            key.Setup(k => k.UnwrapKey(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => contents.ToArray());
+            key.Setup(k => k.WrapKeyAsync(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => Task.FromResult(contents.ToArray()));
+            key.Setup(k => k.UnwrapKeyAsync(keyWrapAlgorithm, It.IsAny<ReadOnlyMemory<byte>>(), It.IsAny<CancellationToken>()))
+                .Returns((string _, ReadOnlyMemory<byte> contents, CancellationToken _) => Task.FromResult(contents.ToArray()));
+
+            var resolver = new Mock<IKeyEncryptionKeyResolver>(MockBehavior.Strict);
+            resolver.Setup(r => r.Resolve(keyId, It.IsAny<CancellationToken>())).Returns(key.Object);
+            resolver.Setup(r => r.ResolveAsync(keyId, It.IsAny<CancellationToken>())).ReturnsAsync(key.Object);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V2_0)
             {
-                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
-                EncryptionAgent = new EncryptionAgent
-                {
-                    EncryptionVersion = ClientSideEncryptionVersionInternal.V2_0,
-                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesGcm256,
-                },
-                WrappedContentKey = new KeyEnvelope
-                {
-                    KeyId = "keyId",
-                    EncryptedKey = new byte[] { 1, 2, 3 },
-                    Algorithm = "algo"
-                },
-                EncryptedRegionInfo = new EncryptedRegionInfo
-                {
-                    DataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
-                    NonceLength = Constants.ClientSideEncryption.V2.NonceSize
-                },
-                KeyWrappingMetadata = new Dictionary<string, string>
-                {
-                    { Constants.ClientSideEncryption.AgentMetadataKey, "2.0" }
-                }
+                KeyEncryptionKey = key.Object,
+                KeyResolver = resolver.Object,
+                KeyWrapAlgorithm = keyWrapAlgorithm,
             };
+
+            var encryptor = new ClientSideEncryptorV2_0(options);
+            var (ciphertext, encryptionData) = await encryptor.BufferedEncryptInternal(new MemoryStream(plaintext), async: false, CancellationToken.None);
+            var metadata = new Dictionary<string, string>
+            {
+                { Constants.ClientSideEncryption.EncryptionDataKey, EncryptionDataSerializer.Serialize(encryptionData) }
+            };
+
+            return (new MemoryStream(ciphertext), metadata);
+        }
+
+        private static async Task<byte[]> ReadAllBytesAsync(Stream stream)
+        {
+            using var memory = new MemoryStream();
+            if (stream.CanSeek)
+            {
+                stream.Position = 0;
+            }
+
+            await stream.CopyToAsync(memory).ConfigureAwait(false);
+            return memory.ToArray();
         }
 
         #endregion
