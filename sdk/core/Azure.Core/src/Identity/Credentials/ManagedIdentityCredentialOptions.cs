@@ -32,6 +32,7 @@ namespace Azure.Identity
         /// The default is <c>true</c>. Set to <c>false</c> to request bearer tokens even when proof-of-possession
         /// was requested by the caller and the runtime prerequisites for mTLS proof-of-possession are available.
         /// </summary>
+        /// <seealso href="https://learn.microsoft.com/entra/msal/dotnet/advanced/proof-of-possession-tokens"/>
         [Experimental("AZID0004")]
         public bool EnableMtlsProofOfPossession { get; set; } = true;
 
