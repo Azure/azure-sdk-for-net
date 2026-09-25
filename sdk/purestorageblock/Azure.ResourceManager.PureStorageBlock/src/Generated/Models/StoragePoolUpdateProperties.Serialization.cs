@@ -14,7 +14,7 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> The updatable properties of the StoragePool. </summary>
-    internal partial class StoragePoolUpdateProperties : IJsonModel<StoragePoolUpdateProperties>
+    public partial class StoragePoolUpdateProperties : IJsonModel<StoragePoolUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("provisionedBandwidthMbPerSec"u8);
                 writer.WriteNumberValue(ProvisionedBandwidthMbPerSec.Value);
             }
+            if (Optional.IsDefined(PlatformConsoleSettings))
+            {
+                writer.WritePropertyName("platformConsoleSettings"u8);
+                writer.WriteObjectValue(PlatformConsoleSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             long? provisionedBandwidthMbPerSec = default;
+            PlatformConsoleSettings platformConsoleSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     provisionedBandwidthMbPerSec = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("platformConsoleSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    platformConsoleSettings = PlatformConsoleSettings.DeserializePlatformConsoleSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StoragePoolUpdateProperties(provisionedBandwidthMbPerSec, additionalBinaryDataProperties);
+            return new StoragePoolUpdateProperties(provisionedBandwidthMbPerSec, platformConsoleSettings, additionalBinaryDataProperties);
         }
     }
 }
