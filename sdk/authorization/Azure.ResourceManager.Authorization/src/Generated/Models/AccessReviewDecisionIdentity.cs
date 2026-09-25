@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary>
     /// Target of the decision.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessReviewDecisionUserIdentity"/> and <see cref="AccessReviewDecisionServicePrincipalIdentity"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AccessReviewDecisionServicePrincipalIdentity"/> and <see cref="AccessReviewDecisionUserIdentity"/>.
     /// </summary>
     public abstract partial class AccessReviewDecisionIdentity
     {

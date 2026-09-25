@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LargeInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

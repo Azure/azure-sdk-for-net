@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    userAssignedIdentity = BinaryData.FromString(prop.Value.GetRawText());
+                    userAssignedIdentity = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EncryptionPropertiesIdentity(userAssignedIdentity, additionalBinaryDataProperties);

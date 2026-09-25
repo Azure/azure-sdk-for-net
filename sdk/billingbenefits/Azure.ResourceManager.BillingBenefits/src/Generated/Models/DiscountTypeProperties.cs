@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary>
     /// This defines the conditions for a given discount type.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DiscountTypeProductFamily"/>, <see cref="DiscountTypeProduct"/>, <see cref="DiscountTypeProductSku"/>, <see cref="DiscountTypeCustomPrice"/>, and <see cref="DiscountTypeCustomPriceMultiCurrency"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DiscountTypeCustomPrice"/>, <see cref="DiscountTypeCustomPriceMultiCurrency"/>, <see cref="DiscountTypeProduct"/>, <see cref="DiscountTypeProductFamily"/>, and <see cref="DiscountTypeProductSku"/>.
     /// </summary>
     public abstract partial class DiscountTypeProperties
     {

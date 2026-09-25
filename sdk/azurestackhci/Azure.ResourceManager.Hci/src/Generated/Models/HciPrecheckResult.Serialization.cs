@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    healthCheckTags = BinaryData.FromString(prop.Value.GetRawText());
+                    healthCheckTags = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("title"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HciPrecheckResult(
