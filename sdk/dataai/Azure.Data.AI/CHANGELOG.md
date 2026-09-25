@@ -15,4 +15,6 @@
 
 ### Bugs Fixed
 
+- Fixed `InferenceClient(InferenceClientSettings)` so that API-key settings authenticate with the `Ocp-Apim-Subscription-Key` header instead of throwing `ArgumentNullException`. This also unblocks API-key authentication through `AddInferenceClient` and `AddKeyedInferenceClient`.
+
 ### Other Changes

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -82,13 +81,6 @@ namespace Azure.Data.AI
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public InferenceClient(Uri endpoint, TokenCredential credential, InferenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of InferenceClient from a <see cref="InferenceClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for InferenceClient. </param>
-        [Experimental("SCME0002")]
-        public InferenceClient(InferenceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 

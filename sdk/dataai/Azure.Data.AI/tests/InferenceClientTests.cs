@@ -33,6 +33,58 @@ namespace Azure.Data.AI.Tests
             Assert.That(client, Is.Not.Null);
         }
 
+        // InferenceClientSettings and the settings-based constructor are gated behind
+        // the SCME0002 experimental diagnostic while the configuration binding API stabilizes.
+#pragma warning disable SCME0002
+        [Test]
+        public void CanCreateApiKeyClientFromSettings()
+        {
+            var settings = new InferenceClientSettings
+            {
+                Endpoint = new Uri("https://example.inference.azure.com"),
+                Credential = new CredentialSettings(null)
+                {
+                    CredentialSource = "ApiKeyCredential",
+                    Key = "api-key"
+                }
+            };
+
+            var client = new InferenceClient(settings);
+
+            Assert.That(client, Is.Not.Null);
+            Assert.That(client.Pipeline, Is.Not.Null);
+        }
+
+        [Test]
+        public void CanCreateTokenCredentialClientFromSettings()
+        {
+            var settings = new InferenceClientSettings
+            {
+                Endpoint = new Uri("https://example.inference.azure.com"),
+                Credential = new CredentialSettings(null)
+                {
+                    TokenProvider = new TestCredential()
+                }
+            };
+
+            var client = new InferenceClient(settings);
+
+            Assert.That(client, Is.Not.Null);
+            Assert.That(client.Pipeline, Is.Not.Null);
+        }
+
+        [Test]
+        public void SettingsWithoutCredentialThrows()
+        {
+            var settings = new InferenceClientSettings
+            {
+                Endpoint = new Uri("https://example.inference.azure.com")
+            };
+
+            Assert.Throws<ArgumentException>(() => new InferenceClient(settings));
+        }
+#pragma warning restore SCME0002
+
         [Test]
         public void RequestRequiresQuery()
         {
