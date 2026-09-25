@@ -90,6 +90,36 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
+        protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
+            => currentModel.BaseModel is not null &&
+                KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase)
+                    ? knownBase
+                    : null;
+
+        /// <inheritdoc/>
+        protected override bool IsLastContractModelBasePropertyCompatibleCore(
+            CSharpType mappedBase,
+            InputModelProperty currentProperty,
+            PropertyProvider lastContractProperty)
+        {
+            if (base.IsLastContractModelBasePropertyCompatibleCore(mappedBase, currentProperty, lastContractProperty))
+            {
+                return true;
+            }
+
+            if (!KnownManagementTypes.TryGetInheritableSystemType(mappedBase, out _))
+            {
+                return false;
+            }
+
+            var wireName = currentProperty.SerializedName ?? currentProperty.Name;
+            var expectedName = wireName == "type"
+                ? "ResourceType"
+                : wireName.ToIdentifierName();
+            return lastContractProperty.Name == expectedName;
+        }
+
+        /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
             return new ManagementClientProvider(inputClient);
