@@ -91,9 +91,21 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   return $allPackageProps
 }
 
-function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages, $diffObj, $AllPkgProps)
+function Get-dotnet-AdditionalValidationPackagesFromPackageSet(
+  $LocatedPackages,
+  $diffObj,
+  $AllPkgProps,
+  [bool] $UseRepositorySourceGraph = $true)
 {
   $additionalValidationPackages = @()
+
+  # Pipeline callers use the environment because the common package-selection hook passes only
+  # the first three arguments. Explicit PowerShell callers can override it with the parameter.
+  if (!$PSBoundParameters.ContainsKey('UseRepositorySourceGraph') -and $env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH) {
+    if (![bool]::TryParse($env:AZURESDK_USE_REPOSITORY_SOURCE_GRAPH, [ref]$UseRepositorySourceGraph)) {
+      throw "AZURESDK_USE_REPOSITORY_SOURCE_GRAPH must be 'true' or 'false'."
+    }
+  }
 
   # Changes to a package's project-scoped engineering files (ApiCompat baselines,
   # analyzer/NoWarn allow-lists, CPM overrides) live under eng/ and so are invisible to
@@ -128,33 +140,86 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
 
   Write-Host "Calculating dependencies for: $TestDependsOnDependency"
 
-  $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
+  $resolvedReferenceOutputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
+  $repositorySourceGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.repository-source-graph.txt"
+  # Keep the complete graph at the service.proj default so later PR matrix steps can reuse the
+  # same commit-attributed artifact for sparse checkout instead of evaluating the repository again.
+  $repositoryProjectGraphPath = Join-Path $RepoRoot "artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json"
+  $sparseCheckoutGraphArguments = if ($env:AZURESDK_BUILD_SPARSE_CHECKOUT_GRAPH -eq 'true') {
+    " /p:IncludeRepositoryProjectGraphInputCheckoutRoots=true"
+  } else {
+    ""
+  }
 
-  $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+  $repositorySourceGraphCommand = "dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverseWithProjectGraph ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
-    " /p:OutputProjectFilePath=`"$outputFilePath`""
+    "$sparseCheckoutGraphArguments /p:RepositoryProjectGraphReaderPath=`"$repositoryProjectGraphPath`"" +
+    " /p:OutputProjectFilePath=`"$repositorySourceGraphOutputFilePath`""
 
-  Invoke-LoggedMsbuildCommand $command
+  $resolvedReferenceCommand = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    " /p:OutputProjectFilePath=`"$resolvedReferenceOutputFilePath`""
 
-  if (Test-Path $outputFilePath) {
-    $dependentProjects = Get-Content $outputFilePath
+  Remove-Item $repositorySourceGraphOutputFilePath, $resolvedReferenceOutputFilePath -Force -ErrorAction SilentlyContinue
+  $repositorySourceGraphAvailable = $false
+  try {
+    Write-Host "Calculating dependencies using the repository source graph."
+    Invoke-LoggedMsbuildCommand $repositorySourceGraphCommand
+    $repositorySourceGraphAvailable = $true
+  }
+  catch {
+    if ($UseRepositorySourceGraph) {
+      throw
+    }
+    $reason = $_.Exception.Message -replace "`r?`n", ' '
+    Write-Host "##vso[task.logissue type=warning;code=RepositorySourceGraphFailure]Repository source graph calculation failed in shadow mode: $reason"
+    Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=failed"
+  }
 
-    foreach ($packageRootPath in $dependentProjects) {
-      if (!$packageRootPath) {
-        Write-Verbose "Get-dotnet-AdditionalValidationPackagesFromPackageSet::dependentProjects Package root path is empty, skipping."
-        continue
-      }
-      $pkg = $AllPkgProps | Where-Object { $_.DirectoryPath -eq $packageRootPath }
+  Write-Host "Calculating dependencies using ResolveReferences."
+  Invoke-LoggedMsbuildCommand $resolvedReferenceCommand
 
-      if (!$pkg) {
-        Write-Verbose "Unable to find package for path $packageRootPath, skipping. Most likely a nested test project not directly under test."
-        continue
-      }
+  $resolvedReferenceDependencies = @(Get-Content $resolvedReferenceOutputFilePath | Sort-Object -Unique)
+  $repositorySourceGraphDependencies = @(
+    if ($repositorySourceGraphAvailable) {
+      Get-Content $repositorySourceGraphOutputFilePath | Sort-Object -Unique
+    }
+  )
 
-      if ($pkg -and $LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
-        $pkg.IncludedForValidation = $true
-        $additionalValidationPackages += $pkg
-      }
+  if ($repositorySourceGraphAvailable) {
+    $dependencyDifferences = @(Compare-Object $resolvedReferenceDependencies $repositorySourceGraphDependencies)
+    if ($dependencyDifferences.Count -gt 0) {
+      $dependencyDifferences | Format-Table | Out-String | Write-Host
+      Write-Host "##vso[task.logissue type=warning;code=RepositorySourceGraphMismatch]Repository source graph selected $($repositorySourceGraphDependencies.Count) package roots while ResolveReferences selected $($resolvedReferenceDependencies.Count)."
+      Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=mismatch"
+    } else {
+      Write-Host "REPOSITORY_SOURCE_GRAPH_RESULT=matched"
+    }
+  }
+
+  $dependentProjects = if ($UseRepositorySourceGraph) {
+    $repositorySourceGraphDependencies
+  } else {
+    $resolvedReferenceDependencies
+  }
+  $dependencyAuthority = if ($UseRepositorySourceGraph) { 'repository-source-graph' } else { 'resolve-references' }
+  Write-Host "REPOSITORY_DEPENDENCY_AUTHORITY=$dependencyAuthority selectedRootCount=$($dependentProjects.Count)"
+
+  foreach ($packageRootPath in $dependentProjects) {
+    if (!$packageRootPath) {
+      Write-Verbose "Get-dotnet-AdditionalValidationPackagesFromPackageSet::dependentProjects Package root path is empty, skipping."
+      continue
+    }
+    $pkg = $AllPkgProps | Where-Object { $_.DirectoryPath -eq $packageRootPath }
+
+    if (!$pkg) {
+      Write-Verbose "Unable to find package for path $packageRootPath, skipping. Most likely a nested test project not directly under test."
+      continue
+    }
+
+    if ($pkg -and $LocatedPackages -notcontains $pkg -and $additionalValidationPackages -notcontains $pkg) {
+      $pkg.IncludedForValidation = $true
+      $additionalValidationPackages += $pkg
     }
   }
 

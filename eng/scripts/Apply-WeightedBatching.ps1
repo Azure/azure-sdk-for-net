@@ -33,6 +33,11 @@ Indirect packages only run on Linux, so they can use a higher target than direct
 
 .PARAMETER DefaultWeight
 Weight assigned to packages not found in the weights file. Default is 1.
+
+.PARAMETER PreserveCIMatrixConfigs
+Prevents packages with different CI matrix configurations from sharing a consolidated PackageInfo
+file. This is required when a later job expands the consolidated ArtifactName back into singleton
+test cases under the representative file's matrix.
 #>
 
 [CmdletBinding()]
@@ -41,7 +46,8 @@ param (
   [Parameter(Mandatory = $true)][string]$WeightsFile,
   [Parameter()][int]$Target = 1800,
   [Parameter()][int]$IndirectTarget = 0,
-  [Parameter()][int]$DefaultWeight = 1
+  [Parameter()][int]$DefaultWeight = 1,
+  [Parameter()][switch]$PreserveCIMatrixConfigs
 )
 
 Set-StrictMode -Version 4
@@ -188,14 +194,53 @@ function Apply-LPTBatching {
   Write-Host "  $Label`: Consolidated $($Packages.Count) files into $numBuckets batch files."
 }
 
+function Apply-LPTBatchingByMatrixConfig {
+  param(
+    [object[]]$Packages,
+    [hashtable]$Weights,
+    [int]$Target,
+    [int]$DefaultWeight,
+    [string]$Label
+  )
+
+  if (!$PreserveCIMatrixConfigs) {
+    Apply-LPTBatching -Packages $Packages -Weights $Weights -Target $Target `
+      -DefaultWeight $DefaultWeight -Label $Label
+    return
+  }
+
+  # Create-PrJobMatrix uses CIMatrixConfigs from the retained representative file. Keep distinct
+  # configs in distinct buckets so every expanded singleton runs under its own declared matrix.
+  $groups = @{}
+  foreach ($package in $Packages) {
+    $ciParametersProperty = $package.Json.PSObject.Properties['CIParameters']
+    $ciParameters = $ciParametersProperty ? $ciParametersProperty.Value : $null
+    $matrixConfigsProperty = $ciParameters ? $ciParameters.PSObject.Properties['CIMatrixConfigs'] : $null
+    $matrixConfigs = $matrixConfigsProperty ? $matrixConfigsProperty.Value : $null
+    $key = $null -eq $matrixConfigs ? '<default>' :
+      ($matrixConfigs | ConvertTo-Json -Depth 100 -Compress)
+    if (!$groups.ContainsKey($key)) {
+      $groups[$key] = [System.Collections.Generic.List[object]]::new()
+    }
+    $groups[$key].Add($package)
+  }
+
+  $groupIndex = 1
+  foreach ($key in @($groups.Keys | Sort-Object)) {
+    Apply-LPTBatching -Packages $groups[$key].ToArray() -Weights $Weights -Target $Target `
+      -DefaultWeight $DefaultWeight -Label "$Label matrix group $groupIndex/$($groups.Count)"
+    $groupIndex++
+  }
+}
+
 # Apply LPT batching to direct and indirect packages separately
 if ($directPackages.Count -gt 0) {
-  Apply-LPTBatching -Packages $directPackages -Weights $weights `
+  Apply-LPTBatchingByMatrixConfig -Packages $directPackages -Weights $weights `
     -Target $Target -DefaultWeight $DefaultWeight -Label "Direct"
 }
 
 if ($indirectPackages.Count -gt 0) {
-  Apply-LPTBatching -Packages $indirectPackages -Weights $weights `
+  Apply-LPTBatchingByMatrixConfig -Packages $indirectPackages -Weights $weights `
     -Target $IndirectTarget -DefaultWeight $DefaultWeight -Label "Indirect"
 }
 

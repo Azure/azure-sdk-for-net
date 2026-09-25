@@ -17,9 +17,10 @@ file name, so callers pass the appropriate leaf-name glob via TestResultsGlob:
 - Java    (JUnit XML): TestResultsGlob: 'TEST-*.xml',        SearchFolder: '$(System.DefaultWorkingDirectory)/sdk'
 - Go      (JUnit XML): TestResultsGlob: 'report.xml'
 
-The staging step does not care about the file format; it only moves files. Each file is
-renamed using its location relative to the repo's "sdk" directory so results from different
-services/packages do not collide once flattened into a single directory.
+The staging step does not care about the file format. It moves files by default, or copies them
+when CopyFiles is true. Each file is renamed using its location relative to the repo's "sdk"
+directory so results from different services/packages do not collide once flattened into a single
+directory.
 
 .PARAMETER ArtifactStagingDirectory
 The folder in which the llm-artifacts directory will be created. Passed from DevOps as a string.
@@ -32,6 +33,10 @@ The glob pattern to match test result files. Passed from DevOps as a string.
 
 .PARAMETER SourcesDirectory
 The root folder of the repo. Passed from DevOps as a string.
+
+.PARAMETER CopyFiles
+Retains the original result files after staging. Singleton sparse validation uses this so its
+evidence artifact remains self-contained.
 #>
 [CmdletBinding()]
 Param(
@@ -42,7 +47,8 @@ Param(
     [Parameter(Mandatory = $True)]
     [string] $TestResultsGlob,
     [Parameter(Mandatory = $True)]
-    [string] $SourcesDirectory
+    [string] $SourcesDirectory,
+    [bool] $CopyFiles = $false
 )
 
 Set-StrictMode -Version 4
@@ -81,7 +87,12 @@ foreach ($testResultsFile in $testResultsFiles) {
     $fileName = $relativePath -replace "^[\\/]+", "" -replace "[\\/]+", "-"
 
     $destination = "$artifactsDirectory/$fileName"
-    Move-Item -Path $fileFullName -Destination $destination -ErrorAction Continue
+    if ($CopyFiles) {
+        Copy-Item -Path $fileFullName -Destination $destination -ErrorAction Continue
+    }
+    else {
+        Move-Item -Path $fileFullName -Destination $destination -ErrorAction Continue
+    }
     if (Test-Path -Path $destination) {
         $stagedCount++
     }

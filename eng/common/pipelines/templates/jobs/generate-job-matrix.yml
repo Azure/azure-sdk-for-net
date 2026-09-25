@@ -18,6 +18,9 @@ parameters:
   default: {}
 - name: JobTemplatePath
   type: string
+- name: EmitGeneratedJobs
+  type: boolean
+  default: true
 # Set this to false to do a full checkout for private repositories with the azure pipelines service connection
 - name: SparseCheckout
   type: boolean
@@ -39,6 +42,9 @@ parameters:
 - name: GenerateJobName
   type: string
   default: 'generate_job_matrix'
+- name: JobTimeoutInMinutes
+  type: number
+  default: 60
 - name: PreGenerationSteps
   type: stepList
   default: []
@@ -63,6 +69,9 @@ parameters:
 - name: PRJobBatchSizeByPool
   type: object
   default: {}
+- name: MaxPRMatrixJobs
+  type: number
+  default: 0
 - name: PRMatrixIndirectFilters
   type: object
   default: []
@@ -85,6 +94,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.GenerateJobName }}
+  timeoutInMinutes: ${{ parameters.JobTimeoutInMinutes }}
   variables:
     - template: /eng/pipelines/templates/variables/image.yml
     - name: skipComponentGovernanceDetection
@@ -181,11 +191,12 @@ jobs:
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
               -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
               -PackagesPerPRJob $batchSize `
+              -MaxJobs ${{ parameters.MaxPRMatrixJobs }} `
               -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}
 
-- ${{ if eq(parameters.EnablePRGeneration, false) }}:
+- ${{ if and(parameters.EmitGeneratedJobs, eq(parameters.EnablePRGeneration, false)) }}:
   - ${{ each config in parameters.MatrixConfigs }}:
     - ${{ each pool in parameters.Pools }}:
       - ${{ if eq(config.GenerateVMJobs, 'true') }}:
@@ -209,7 +220,7 @@ jobs:
             CloudConfig: ${{ parameters.CloudConfig }}
             ${{ each param in parameters.AdditionalParameters }}:
               ${{ param.key }}: ${{ param.value }}
-- ${{ else }}:
+- ${{ if and(parameters.EmitGeneratedJobs, ne(parameters.EnablePRGeneration, false)) }}:
   - ${{ each pool in parameters.Pools }}:
     - template: ${{ parameters.JobTemplatePath }}
       parameters:
