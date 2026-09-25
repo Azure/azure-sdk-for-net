@@ -408,39 +408,6 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksAccessConnectorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
-        /// <summary> Egress endpoints which Workspace connects to for common purposes. </summary>
-        /// <param name="category"> The category of endpoints accessed by the Workspace, e.g. azure-storage, azure-mysql, etc. </param>
-        /// <param name="endpoints"> The endpoints that Workspace connect to. </param>
-        /// <returns> A new <see cref="Models.DatabricksOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
-        public static DatabricksOutboundEnvironmentEndpoint DatabricksOutboundEnvironmentEndpoint(string category = default, IEnumerable<DatabricksEndpointDependency> endpoints = default)
-        {
-            endpoints ??= new ChangeTrackingList<DatabricksEndpointDependency>();
-
-            return new DatabricksOutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<DatabricksEndpointDependency>()).ToList(), default);
-        }
-
-        /// <summary> A domain name or IP address the Workspace is reaching at. </summary>
-        /// <param name="domainName"> The domain name of the dependency. </param>
-        /// <param name="endpointDetails"> The Ports used when connecting to domainName. </param>
-        /// <returns> A new <see cref="Models.DatabricksEndpointDependency"/> instance for mocking. </returns>
-        public static DatabricksEndpointDependency DatabricksEndpointDependency(string domainName = default, IEnumerable<DatabricksEndpointDetail> endpointDetails = default)
-        {
-            endpointDetails ??= new ChangeTrackingList<DatabricksEndpointDetail>();
-
-            return new DatabricksEndpointDependency(domainName, (endpointDetails ?? new ChangeTrackingList<DatabricksEndpointDetail>()).ToList(), default);
-        }
-
-        /// <summary> Connect information from the Workspace to a single endpoint. </summary>
-        /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
-        /// <param name="port"> The port an endpoint is connected to. </param>
-        /// <param name="latency"> The time in milliseconds it takes for the connection to be created from the Workspace to this IpAddress at this Port. </param>
-        /// <param name="isAccessible"> Whether it is possible to create a connection from the Workspace to this IpAddress at this Port. </param>
-        /// <returns> A new <see cref="Models.DatabricksEndpointDetail"/> instance for mocking. </returns>
-        public static DatabricksEndpointDetail DatabricksEndpointDetail(string ipAddress = default, int? port = default, double? latency = default, bool? isAccessible = default)
-        {
-            return new DatabricksEndpointDetail(ipAddress, port, latency, isAccessible, default);
-        }
-
         /// <summary> The group information for creating a private endpoint on a workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
