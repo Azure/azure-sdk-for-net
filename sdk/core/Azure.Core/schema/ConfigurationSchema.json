@@ -392,6 +392,11 @@
                   "ObjectId"
                 ]
               },
+              "EnableMtlsProofOfPossession": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enables mTLS proof-of-possession token acquisition for the managed identity credential. Set to false to request bearer tokens instead."
+              },
               "Retry": {
                 "$ref": "#/definitions/retry"
               },
@@ -945,6 +950,11 @@
                   "ResourceId",
                   "ObjectId"
                 ]
+              },
+              "EnableMtlsProofOfPossession": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enables mTLS proof-of-possession token acquisition for the managed identity credential. Set to false to request bearer tokens instead."
               }
             },
             "allOf": [

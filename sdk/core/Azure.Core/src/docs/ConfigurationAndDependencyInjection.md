@@ -451,7 +451,7 @@ Replace `MyClient` and the source index with the values from your configuration.
 For a custom configuration builder, add the environment-variable provider after the
 JSON provider so the override takes precedence:
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_EnvironmentVariableOverride
 IConfiguration configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .AddEnvironmentVariables()
