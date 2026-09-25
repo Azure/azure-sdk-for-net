@@ -11,26 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary> Represents a user confirmation for a high availability solution. </summary>
-    public partial class UserConfirmationForHighAvailabilityItem
+    public partial class UserConfirmationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserConfirmationForHighAvailabilityItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserConfirmationItem"/>. </summary>
         /// <param name="solutionDisplayName"> The solution display name of the high availability solution. </param>
         /// <param name="confirmationStatus"> The confirmation status of the high availability solution. </param>
-        public UserConfirmationForHighAvailabilityItem(ResilienceManagementSolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus)
+        public UserConfirmationItem(ResilienceManagementSolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus)
         {
             SolutionDisplayName = solutionDisplayName;
             ConfirmationStatus = confirmationStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserConfirmationForHighAvailabilityItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserConfirmationItem"/>. </summary>
         /// <param name="solutionDisplayName"> The solution display name of the high availability solution. </param>
         /// <param name="confirmationStatus"> The confirmation status of the high availability solution. </param>
         /// <param name="reasonForRequestingConfirmation"> The reason for requesting user confirmation for the high availability solution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserConfirmationForHighAvailabilityItem(ResilienceManagementSolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus, ReasonForRequestingConfirmation? reasonForRequestingConfirmation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserConfirmationItem(ResilienceManagementSolutionDisplayName solutionDisplayName, ConfirmationStatus confirmationStatus, ReasonForRequestingConfirmation? reasonForRequestingConfirmation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SolutionDisplayName = solutionDisplayName;
             ConfirmationStatus = confirmationStatus;

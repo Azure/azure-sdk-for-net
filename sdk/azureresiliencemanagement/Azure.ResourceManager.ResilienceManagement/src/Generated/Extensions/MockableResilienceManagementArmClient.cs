@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return new GoalTemplateCollection(Client, scope);
         }
 
-        /// <summary> Get a GoalTemplate. </summary>
+        /// <summary> Gets a goal template. Deprecated: the GoalTemplate resource type is deprecated and is removed in 2026-09-30-preview. Set resiliency intent directly on the GoalAssignment (requireZonalResiliency, requireRegionalResiliency) and read resource posture from GoalResource (zonalResiliency, regionalResiliency) instead. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="goalTemplateName"> The name of the goalTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Mocking
             return GetGoalTemplates(scope).Get(goalTemplateName, cancellationToken);
         }
 
-        /// <summary> Get a GoalTemplate. </summary>
+        /// <summary> Gets a goal template. Deprecated: the GoalTemplate resource type is deprecated and is removed in 2026-09-30-preview. Set resiliency intent directly on the GoalAssignment (requireZonalResiliency, requireRegionalResiliency) and read resource posture from GoalResource (zonalResiliency, regionalResiliency) instead. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <param name="goalTemplateName"> The name of the goalTemplate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

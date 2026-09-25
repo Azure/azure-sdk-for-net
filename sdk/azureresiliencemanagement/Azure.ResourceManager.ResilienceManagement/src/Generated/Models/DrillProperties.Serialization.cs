@@ -148,17 +148,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("lastResyncReadinessCheckTime"u8);
                 writer.WriteStringValue(LastResyncReadinessCheckOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedOnBehalfOfConfiguration))
-            {
-                writer.WritePropertyName("managedOnBehalfOfConfiguration"u8);
-                writer.WriteObjectValue(ManagedOnBehalfOfConfiguration, options);
-            }
             writer.WritePropertyName("drillType"u8);
             writer.WriteStringValue(DrillType.ToString());
             if (Optional.IsDefined(MonitoringProperties))
             {
                 writer.WritePropertyName("monitoringProperties"u8);
                 writer.WriteObjectValue(MonitoringProperties, options);
+            }
+            if (Optional.IsDefined(HealthModelMonitoringProperties))
+            {
+                writer.WritePropertyName("healthModelMonitoringProperties"u8);
+                writer.WriteObjectValue(HealthModelMonitoringProperties, options);
+            }
+            if (Optional.IsDefined(SliMonitoringProperties))
+            {
+                writer.WritePropertyName("sliMonitoringProperties"u8);
+                writer.WriteObjectValue(SliMonitoringProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {

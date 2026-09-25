@@ -20,15 +20,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceLevelTarget"/>. </summary>
         /// <param name="serviceLevelIndicatorResourceId"> The arm id of the service level indicator resource. </param>
-        /// <param name="serviceLevelObjectiveResourceId"> The arm id of the service level object resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceLevelIndicatorResourceId"/> or <paramref name="serviceLevelObjectiveResourceId"/> is null. </exception>
-        public ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId, ResourceIdentifier serviceLevelObjectiveResourceId)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceLevelIndicatorResourceId"/> is null. </exception>
+        public ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId)
         {
             Argument.AssertNotNull(serviceLevelIndicatorResourceId, nameof(serviceLevelIndicatorResourceId));
-            Argument.AssertNotNull(serviceLevelObjectiveResourceId, nameof(serviceLevelObjectiveResourceId));
 
             ServiceLevelIndicatorResourceId = serviceLevelIndicatorResourceId;
-            ServiceLevelObjectiveResourceId = serviceLevelObjectiveResourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceLevelTarget"/>. </summary>
