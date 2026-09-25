@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -44,6 +45,50 @@ namespace Azure.Generator.Management.Visitors
                 && (baseline.IsMemberSuppressed(model.Type.FullyQualifiedName, property.Name, 0)
                     || baseline.IsMemberSuppressed(model.Type.FullyQualifiedName, $"get_{property.Name}", 0)
                     || baseline.ReferencesSuppressedType(property.Type));
+        }
+
+        internal static void ValidateFlattenedConstructors(ModelProvider model)
+        {
+            if (model.LastContractView is not { } previous)
+            {
+                return;
+            }
+
+            var flattenedProperties = PropertyHelpers.GetAllProperties(model).OfType<FlattenedPropertyProvider>().ToArray();
+            var currentConstructors = model.Constructors.Concat(model.CustomCodeView?.Constructors ?? []).ToArray();
+            foreach (var constructor in previous.Constructors)
+            {
+                var parameters = constructor.Signature.Parameters;
+                if (!constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                    || !parameters.Any(parameter => flattenedProperties.Any(property => property.AsParameter.Name == parameter.Name))
+                    || IsConstructorRemovalAccepted(model, constructor.Signature)
+                    || currentConstructors.Any(current =>
+                        current.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                        && current.Signature.Parameters.Count == parameters.Count
+                        && current.Signature.Parameters.Zip(parameters).All(pair =>
+                            pair.First.IsRef == pair.Second.IsRef && pair.First.IsOut == pair.Second.IsOut && pair.First.IsIn == pair.Second.IsIn
+                            && (pair.First.Type.IsValueType
+                                ? pair.First.Type.Equals(pair.Second.Type)
+                                : pair.First.Type.WithNullable(false).Equals(pair.Second.Type.WithNullable(false))))))
+                {
+                    continue;
+                }
+
+                // The shared property parameter cannot represent both T and T? overloads.
+                // Validate after restoration, including custom constructors, rather than accepting one signature.
+                ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-error",
+                    $"Cannot preserve historical constructor '{model.Name}({string.Join(", ", parameters.Select(p => p.Type))})' "
+                    + "after property flattening. Provide a custom constructor with this exact signature and an explicit mapping to the current model.",
+                    severity: EmitterDiagnosticSeverity.Error);
+            }
+        }
+
+        internal static bool IsConstructorRemovalAccepted(ModelProvider model, ConstructorSignature signature)
+        {
+            var baseline = ManagementClientGenerator.Instance.SourceInputModel?.ApiCompatBaseline;
+            return baseline is not null
+                && (baseline.IsMethodRemovalSuppressed(model.Type.FullyQualifiedName, ".ctor", [.. signature.Parameters.Select(p => p.Type)])
+                    || signature.Parameters.Any(p => baseline.ReferencesSuppressedType(p.Type)));
         }
     }
 }

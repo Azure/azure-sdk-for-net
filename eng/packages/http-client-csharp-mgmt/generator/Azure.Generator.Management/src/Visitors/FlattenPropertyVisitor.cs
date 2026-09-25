@@ -800,9 +800,12 @@ namespace Azure.Generator.Management.Visitors
         {
             // Constructor restoration clones AsParameter, not the historical parameter. Keep
             // its exact value-type nullability independently of the property's wrapper lifting.
+            // Mixed T/T? overloads cannot share one type; ValidateFlattenedConstructors reports
+            // any signatures still missing after restoration and custom-code filtering.
             var parameter = flattenedProperty.AsParameter;
             var previousTypes = model.LastContractView?.Constructors
-                .Where(c => IsPublicApi(c.Signature.Modifiers))
+                .Where(c => IsPublicApi(c.Signature.Modifiers)
+                    && !ModelCompatibilityValidator.IsConstructorRemovalAccepted(model, c.Signature))
                 .SelectMany(c => c.Signature.Parameters)
                 .Where(p => p.Name == parameter.Name && p.Type.WithNullable(false).Equals(parameter.Type.WithNullable(false)))
                 .Select(p => p.Type)

@@ -71,6 +71,7 @@ namespace Azure.Generator.Management
                 if (provider is ModelProvider model)
                 {
                     ModelCompatibilityValidator.ValidateProperties(model);
+                    ModelCompatibilityValidator.ValidateFlattenedConstructors(model);
                 }
                 SerializationConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }

@@ -217,6 +217,80 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void MixedHistoricalConstructorNullabilityRequiresCustomization(
+            [Values] bool safeFlatten, [Values] bool wrapperRequired, [Values] bool nullableFirst,
+            [Values("none", "custom", "partial-custom", "baseline", "baseline-nullable")] string resolution)
+        {
+            var name = safeFlatten ? "CapacitySize" : "Size";
+            var parameterName = safeFlatten ? "capacitySize" : "size";
+            var nonNullableConstructor = $"public CapacityModel(string location, long {parameterName}) {{ }}";
+            var nullableConstructor = $"public CapacityModel(string location, long? {parameterName}) {{ }}";
+            var inner = InputFactory.Model("CapacityProperties", properties: [InputFactory.Property("size", InputPrimitiveType.Int64)]);
+            var wrapper = InputFactory.Property("capacity", inner, isRequired: wrapperRequired);
+            if (!safeFlatten)
+            {
+                Flatten(wrapper);
+            }
+            var input = InputFactory.Model("CapacityModel", properties:
+            [
+                InputFactory.Property("location", InputPrimitiveType.String, isRequired: true),
+                wrapper
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                apiCompatBaseline: resolution is "baseline" or "baseline-nullable" ? ApiCompatBaseline.Parse(
+                    [$"MembersMustExist : Member 'Samples.Models.CapacityModel..ctor(System.String, {(resolution == "baseline" ? "System.Int64" : "System.Nullable<System.Int64>")})' does not exist in the implementation but it does exist in the contract."]) : null,
+                customizationSources: resolution is "custom" or "partial-custom"
+                    ? [$$"""
+                        namespace Samples.Models
+                        {
+                            public partial class CapacityModel
+                            {
+                                public CapacityModel(string location, long {{parameterName}}) : this(location)
+                                {
+                                    {{name}} = {{parameterName}};
+                                }
+                                {{(resolution == "custom" ? $"public CapacityModel(string location, long? {parameterName}) : this(location) {{ {name} = {parameterName}; }}" : "")}}
+                            }
+                        }
+                        """]
+                    : null,
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public partial class CapacityModel
+                        {
+                            {{(nullableFirst ? nullableConstructor : nonNullableConstructor)}}
+                            {{(nullableFirst ? nonNullableConstructor : nullableConstructor)}}
+                            public string Location { get; set; }
+                            public long? {{name}} { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+            _ = plugin.Object.GetWriter(model).Write();
+
+            var constructors = model.Constructors.Concat(model.CustomCodeView?.Constructors ?? [])
+                .Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                    && c.Signature.Parameters.Count == 2).ToArray();
+            Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long?)))), Is.EqualTo(resolution is not ("partial-custom" or "baseline-nullable")));
+            Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is "custom" or "partial-custom" or "baseline-nullable"));
+            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
+            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(resolution is "none" or "partial-custom"));
+            if (resolution is "none" or "partial-custom")
+            {
+                Assert.That(messages, Does.Contain(resolution == "none" ? "CapacityModel(string, long)" : "CapacityModel(string, long?)"));
+                Assert.That(messages, Does.Contain("custom constructor"));
+            }
+        }
+
+        [Test]
         public void InternalHistoricalLeafDoesNotOverrideCurrentType([Values] bool safeFlatten)
         {
             var (plugin, model, _) = CreateCapacityModel(safeFlatten, wrapperRequired: false);
