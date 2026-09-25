@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(PolicyResourceId))
+            if (Optional.IsDefined(CertificateAuthorityResourceId))
             {
-                writer.WritePropertyName("policyResourceId"u8);
-                writer.WriteStringValue(PolicyResourceId);
+                writer.WritePropertyName("certificateAuthorityResourceId"u8);
+                writer.WriteStringValue(CertificateAuthorityResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.IotHub.Models
             DateTimeOffset? updatedOn = default;
             string verificationCode = default;
             BinaryData certificate = default;
-            ResourceIdentifier policyResourceId = default;
+            ResourceIdentifier certificateAuthorityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -241,13 +241,13 @@ namespace Azure.ResourceManager.IotHub.Models
                     certificate = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("policyResourceId"u8))
+                if (prop.NameEquals("certificateAuthorityResourceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    certificateAuthorityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 updatedOn,
                 verificationCode,
                 certificate,
-                policyResourceId,
+                certificateAuthorityResourceId,
                 additionalBinaryDataProperties);
         }
     }

@@ -362,6 +362,9 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         public static Azure.ResourceManager.IotHub.Models.CloudToDeviceFeedbackQueueProperties CloudToDeviceFeedbackQueueProperties(System.TimeSpan? lockDurationAsIso8601 = default(System.TimeSpan?), System.TimeSpan? ttlAsIso8601 = default(System.TimeSpan?), int? maxDeliveryCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties CloudToDeviceProperties(int? maxDeliveryCount = default(int?), System.TimeSpan? defaultTtlAsIso8601 = default(System.TimeSpan?), Azure.ResourceManager.IotHub.Models.CloudToDeviceFeedbackQueueProperties feedback = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity DeviceRegistryIdentity(Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType? type = default(Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties DeviceRegistryLinkingProperties(Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState? state = default(Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState?), Azure.ResourceManager.IotHub.Models.ErrorDetails error = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.ErrorDetails ErrorDetails(string code = null, string httpStatusCode = null, string message = null, string details = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties EventHubCompatibleEndpointProperties(long? retentionTimeInDays = default(long?), int? partitionCount = default(int?), System.Collections.Generic.IEnumerable<string> partitionIds = null, string eventHubCompatibleName = null, string endpoint = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.EventHubConsumerGroupInfoCreateOrUpdateContent EventHubConsumerGroupInfoCreateOrUpdateContent(string name = null) { throw null; }
         public static Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoData EventHubConsumerGroupInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -369,15 +372,15 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubCapacity IotHubCapacity(long? minimum = default(long?), long? maximum = default(long?), long? @default = default(long?), Azure.ResourceManager.IotHub.Models.IotHubScaleType? scaleType = default(Azure.ResourceManager.IotHub.Models.IotHubScaleType?)) { throw null; }
         public static Azure.ResourceManager.IotHub.IotHubCertificateDescriptionData IotHubCertificateDescriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties IotHubCertificateProperties(string subject = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprintString = null, bool? isVerified = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), System.BinaryData certificate = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties IotHubCertificateProperties(string subject, System.DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, System.BinaryData certificate, Azure.Core.ResourceIdentifier policyResourceId) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties IotHubCertificateProperties(string subject, System.DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, System.BinaryData certificate, Azure.Core.ResourceIdentifier certificateAuthorityResourceId) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string thumbprintString = null, bool? isVerified = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string verificationCode = null, System.BinaryData certificate = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, System.DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string verificationCode, System.BinaryData certificate, Azure.Core.ResourceIdentifier policyResourceId) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, System.DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string verificationCode, System.BinaryData certificate, Azure.Core.ResourceIdentifier certificateAuthorityResourceId) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificateVerificationContent IotHubCertificateVerificationContent(System.BinaryData certificate = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubCertificateWithNonceDescription IotHubCertificateWithNonceDescription(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.IotHub.IotHubDescriptionData IotHubDescriptionData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.IotHub.Models.IotHubProperties properties, Azure.ETag? eTag, Azure.ResourceManager.IotHub.Models.IotHubSkuInfo sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { throw null; }
         public static Azure.ResourceManager.IotHub.IotHubDescriptionData IotHubDescriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.IotHub.Models.IotHubProperties properties = null, Azure.ResourceManager.IotHub.Models.IotHubSkuInfo sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubDescriptionPatch IotHubDescriptionPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry IotHubDeviceRegistry(Azure.Core.ResourceIdentifier namespaceResourceId = null, Azure.Core.ResourceIdentifier identityResourceId = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry IotHubDeviceRegistry(Azure.Core.ResourceIdentifier namespaceResourceId = null, string namespaceUuid = null, string dataPlaneHostName = null, Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity identity = null, Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties linkingProperties = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubEncryptionProperties IotHubEncryptionProperties(string keySource = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubKeyVaultKeyProperties> keyVaultProperties = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthInfo IotHubEndpointHealthInfo(string endpointId = null, Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus? healthStatus = default(Azure.ResourceManager.IotHub.Models.IotHubEndpointHealthStatus?), string lastKnownError = null, System.DateTimeOffset? lastKnownErrorOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSuccessfulSendAttemptOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastSendAttemptOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubEnrichmentProperties IotHubEnrichmentProperties(string key = null, string value = null, System.Collections.Generic.IEnumerable<string> endpointNames = null) { throw null; }
@@ -400,7 +403,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionState IotHubPrivateLinkServiceConnectionState(Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus status = default(Azure.ResourceManager.IotHub.Models.IotHubPrivateLinkServiceConnectionStatus), string description = null, string actionsRequired = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubProperties IotHubProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = default(bool?), bool? disableDeviceSas = default(bool?), bool? disableModuleSas = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> ipFilterRules = null, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> eventHubEndpoints = null, Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties routing = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> storageEndpoints = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = default(bool?), Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties cloudToDevice = null, string comments = null, System.Collections.Generic.IEnumerable<string> deviceStreamsStreamingEndpoints = null, Azure.ResourceManager.IotHub.Models.IotHubCapability? features = default(Azure.ResourceManager.IotHub.Models.IotHubCapability?), Azure.ResourceManager.IotHub.Models.IotHubEncryptionProperties encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> locations = null, bool? enableDataResidency = default(bool?), Azure.ResourceManager.IotHub.Models.IotHubRootCertificateProperties rootCertificate = null, Azure.ResourceManager.IotHub.Models.IotHubIPVersion? ipVersion = default(Azure.ResourceManager.IotHub.Models.IotHubIPVersion?), Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry deviceRegistry = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubProperties IotHubProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> authorizationPolicies = null, bool? disableLocalAuth = default(bool?), bool? disableDeviceSas = default(bool?), bool? disableModuleSas = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), System.Collections.Generic.IEnumerable<string> allowedFqdns = null, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> ipFilterRules = null, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties networkRuleSets = null, string minTlsVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> privateEndpointConnections = null, string provisioningState = null, string state = null, string hostName = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> eventHubEndpoints = null, Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties routing = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> storageEndpoints = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> messagingEndpoints = null, bool? enableFileUploadNotifications = default(bool?), Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties cloudToDevice = null, string comments = null, Azure.ResourceManager.IotHub.Models.IotHubCapability? features = default(Azure.ResourceManager.IotHub.Models.IotHubCapability?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> locations = null, bool? enableDataResidency = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.IotHubProperties IotHubProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdns, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> ipFilterRules, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> eventHubEndpoints, Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties routing, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> storageEndpoints, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties cloudToDevice, string comments, System.Collections.Generic.IEnumerable<string> deviceStreamsStreamingEndpoints, Azure.ResourceManager.IotHub.Models.IotHubCapability? features, Azure.ResourceManager.IotHub.Models.IotHubEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> locations, bool? enableDataResidency, Azure.ResourceManager.IotHub.Models.IotHubRootCertificateProperties rootCertificate, Azure.ResourceManager.IotHub.Models.IotHubIPVersion? ipVersion, Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry deviceRegistry = null, Azure.ResourceManager.IotHub.Models.IotHubGatewayVersion? iotHubDetailsGatewayVersion = default(Azure.ResourceManager.IotHub.Models.IotHubGatewayVersion?)) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.IotHubProperties IotHubProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdns, Azure.ResourceManager.IotHub.Models.IotHubPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubIPFilterRule> ipFilterRules, Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties> eventHubEndpoints, Azure.ResourceManager.IotHub.Models.IotHubRoutingProperties routing, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.IotHubStorageEndpointProperties> storageEndpoints, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties cloudToDevice, string comments, System.Collections.Generic.IEnumerable<string> deviceStreamsStreamingEndpoints, Azure.ResourceManager.IotHub.Models.IotHubCapability? features, Azure.ResourceManager.IotHub.Models.IotHubEncryptionProperties encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> locations, bool? enableDataResidency, Azure.ResourceManager.IotHub.Models.IotHubRootCertificateProperties rootCertificate, Azure.ResourceManager.IotHub.Models.IotHubIPVersion? ipVersion, Azure.ResourceManager.IotHub.Models.ConnectionProfile? connectionProfile = default(Azure.ResourceManager.IotHub.Models.ConnectionProfile?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.TopicGroup> mqttV5TopicGroups = null, Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry deviceRegistry = null, Azure.ResourceManager.IotHub.Models.IotHubGatewayVersion? iotHubDetailsGatewayVersion = default(Azure.ResourceManager.IotHub.Models.IotHubGatewayVersion?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubQuotaMetricInfo IotHubQuotaMetricInfo(string name = null, long? currentValue = default(long?), long? maxValue = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubRegistryStatistics IotHubRegistryStatistics(long? totalDeviceCount = default(long?), long? enabledDeviceCount = default(long?), long? disabledDeviceCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.IotHubRootCertificateProperties IotHubRootCertificateProperties(bool? isRootCertificateV2Enabled = default(bool?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
@@ -419,17 +422,19 @@ namespace Azure.ResourceManager.IotHub.Models
         public static Azure.ResourceManager.IotHub.Models.RouteErrorPosition RouteErrorPosition(int? line = default(int?), int? column = default(int?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RouteErrorRange RouteErrorRange(Azure.ResourceManager.IotHub.Models.RouteErrorPosition start = null, Azure.ResourceManager.IotHub.Models.RouteErrorPosition end = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name = null, string id = null, string subscriptionId = null, string resourceGroup = null, System.Uri endpointUri = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string primaryKey = null, string secondaryKey = null, string databaseName = null, string containerName = null, string partitionKeyName = null, string partitionKeyTemplate = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, System.Uri endpointUri, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType, Azure.Core.ResourceIdentifier userAssignedIdentity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? messagePayloadFormat) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RoutingEndpoints RoutingEndpoints(System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.RoutingServiceBusQueueEndpointProperties> serviceBusQueues = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.RoutingServiceBusTopicEndpointProperties> serviceBusTopics = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.RoutingEventHubProperties> eventHubs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.RoutingStorageContainerProperties> storageContainers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotHub.Models.RoutingEventStreamProperties> eventStreams = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.RoutingEventHubProperties RoutingEventHubProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.RoutingEventStreamProperties RoutingEventStreamProperties(string name = null, string id = null, string endpointUri = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.EventStreamAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.EventStreamAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string workspaceId = null, string eventStreamId = null, string sourceId = null) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingEventHubProperties RoutingEventHubProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? messagePayloadFormat = default(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat?)) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingEventStreamProperties RoutingEventStreamProperties(string name = null, string id = null, string endpointUri = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.EventStreamAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.EventStreamAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string workspaceId = null, string eventStreamId = null, string sourceId = null, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? messagePayloadFormat = default(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RoutingMessage RoutingMessage(string body = null, System.Collections.Generic.IDictionary<string, string> appProperties = null, System.Collections.Generic.IDictionary<string, string> systemProperties = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.RoutingRuleProperties RoutingRuleProperties(string name = null, Azure.ResourceManager.IotHub.Models.IotHubRoutingSource source = default(Azure.ResourceManager.IotHub.Models.IotHubRoutingSource), string condition = null, System.Collections.Generic.IEnumerable<string> endpointNames = null, bool isEnabled = false) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.RoutingServiceBusQueueEndpointProperties RoutingServiceBusQueueEndpointProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.RoutingServiceBusTopicEndpointProperties RoutingServiceBusTopicEndpointProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null) { throw null; }
-        public static Azure.ResourceManager.IotHub.Models.RoutingStorageContainerProperties RoutingStorageContainerProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null, string containerName = null, string fileNameFormat = null, int? batchFrequencyInSeconds = default(int?), int? maxChunkSizeInBytes = default(int?), Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding? encoding = default(Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding?)) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingRuleProperties RoutingRuleProperties(string name = null, Azure.ResourceManager.IotHub.Models.IotHubRoutingSource source = default(Azure.ResourceManager.IotHub.Models.IotHubRoutingSource), string condition = null, string dataSchema = null, System.Collections.Generic.IEnumerable<string> endpointNames = null, bool isEnabled = false) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingServiceBusQueueEndpointProperties RoutingServiceBusQueueEndpointProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? messagePayloadFormat = default(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat?)) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingServiceBusTopicEndpointProperties RoutingServiceBusTopicEndpointProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, string entityPath = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? messagePayloadFormat = default(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat?)) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.RoutingStorageContainerProperties RoutingStorageContainerProperties(System.Guid? id = default(System.Guid?), string connectionString = null, string endpoint = null, Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType? authenticationType = default(Azure.ResourceManager.IotHub.Models.IotHubAuthenticationType?), Azure.Core.ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null, string containerName = null, string fileNameFormat = null, int? batchFrequencyInSeconds = default(int?), int? maxChunkSizeInBytes = default(int?), Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding? encoding = default(Azure.ResourceManager.IotHub.Models.RoutingStorageContainerPropertiesEncoding?), Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? messagePayloadFormat = default(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat?)) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RoutingTwin RoutingTwin(System.BinaryData tags = null, Azure.ResourceManager.IotHub.Models.RoutingTwinProperties properties = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.RoutingTwinProperties RoutingTwinProperties(System.BinaryData desired = null, System.BinaryData reported = null) { throw null; }
         public static Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule SharedAccessSignatureAuthorizationRule(string keyName = null, string primaryKey = null, string secondaryKey = null, Azure.ResourceManager.IotHub.Models.IotHubSharedAccessRight rights = Azure.ResourceManager.IotHub.Models.IotHubSharedAccessRight.RegistryRead) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.TopicGroup TopicGroup(string topicGroupId = null, System.Collections.Generic.IEnumerable<string> topicTemplates = null) { throw null; }
     }
     public partial class CloudToDeviceFeedbackQueueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.CloudToDeviceFeedbackQueueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.CloudToDeviceFeedbackQueueProperties>
     {
@@ -462,6 +467,106 @@ namespace Azure.ResourceManager.IotHub.Models
         Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectionProfile : System.IEquatable<Azure.ResourceManager.IotHub.Models.ConnectionProfile>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectionProfile(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.ConnectionProfile Classic { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.ConnectionProfile MqttV5 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.ConnectionProfile other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.ConnectionProfile left, Azure.ResourceManager.IotHub.Models.ConnectionProfile right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.ConnectionProfile (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.ConnectionProfile? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.ConnectionProfile left, Azure.ResourceManager.IotHub.Models.ConnectionProfile right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DeviceRegistryIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>
+    {
+        internal DeviceRegistryIdentity() { }
+        public Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType? Type { get { throw null; } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } }
+        protected virtual Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceRegistryIdentityType : System.IEquatable<Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceRegistryIdentityType(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType SystemAssigned { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType UserAssigned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType left, Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType left, Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DeviceRegistryLinkingProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>
+    {
+        internal DeviceRegistryLinkingProperties() { }
+        public Azure.ResourceManager.IotHub.Models.ErrorDetails Error { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState? State { get { throw null; } }
+        protected virtual Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeviceRegistryLinkingState : System.IEquatable<Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeviceRegistryLinkingState(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState Failed { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState Orphaned { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState Success { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState left, Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState left, Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>
+    {
+        internal ErrorDetails() { }
+        public string Code { get { throw null; } }
+        public string Details { get { throw null; } }
+        public string HttpStatusCode { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.IotHub.Models.ErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotHub.Models.ErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotHub.Models.ErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotHub.Models.ErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.ErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubCompatibleEndpointProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.EventHubCompatibleEndpointProperties>
     {
@@ -586,10 +691,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         public IotHubCertificateProperties() { }
         public System.BinaryData Certificate { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CertificateAuthorityResourceId { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PolicyResourceId { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
@@ -609,10 +714,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal IotHubCertificatePropertiesWithNonce() { }
         public System.BinaryData Certificate { get { throw null; } }
+        public Azure.Core.ResourceIdentifier CertificateAuthorityResourceId { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsVerified { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PolicyResourceId { get { throw null; } }
         public string Subject { get { throw null; } }
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public System.BinaryData Thumbprint { get { throw null; } }
@@ -674,9 +779,12 @@ namespace Azure.ResourceManager.IotHub.Models
     }
     public partial class IotHubDeviceRegistry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry>
     {
-        public IotHubDeviceRegistry() { }
-        public Azure.Core.ResourceIdentifier IdentityResourceId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier NamespaceResourceId { get { throw null; } set { } }
+        internal IotHubDeviceRegistry() { }
+        public string DataPlaneHostName { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.DeviceRegistryIdentity Identity { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.DeviceRegistryLinkingProperties LinkingProperties { get { throw null; } }
+        public Azure.Core.ResourceIdentifier NamespaceResourceId { get { throw null; } }
+        public string NamespaceUuid { get { throw null; } }
         protected virtual Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1138,8 +1246,9 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule> AuthorizationPolicies { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.CloudToDeviceProperties CloudToDevice { get { throw null; } set { } }
         public string Comments { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.ConnectionProfile? ConnectionProfile { get { throw null; } set { } }
         public string DeviceHostName { get { throw null; } }
-        public Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry DeviceRegistry { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.IotHubDeviceRegistry DeviceRegistry { get { throw null; } }
         public System.Collections.Generic.IList<string> DeviceStreamsStreamingEndpoints { get { throw null; } }
         public bool? DisableDeviceSas { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
@@ -1156,6 +1265,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotHub.Models.IotHubLocationDescription> Locations { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties> MessagingEndpoints { get { throw null; } }
         public string MinTlsVersion { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.Models.TopicGroup> MqttV5TopicGroups { get { throw null; } }
         public Azure.ResourceManager.IotHub.Models.IotHubNetworkRuleSetProperties NetworkRuleSets { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -1512,6 +1622,23 @@ namespace Azure.ResourceManager.IotHub.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.IotHubUserSubscriptionQuota>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.IotHubUserSubscriptionQuota>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MessagePayloadFormat : System.IEquatable<Azure.ResourceManager.IotHub.Models.MessagePayloadFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MessagePayloadFormat(string value) { throw null; }
+        public static Azure.ResourceManager.IotHub.Models.MessagePayloadFormat DOObservationV1 { get { throw null; } }
+        public static Azure.ResourceManager.IotHub.Models.MessagePayloadFormat None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat left, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.MessagePayloadFormat (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotHub.Models.MessagePayloadFormat left, Azure.ResourceManager.IotHub.Models.MessagePayloadFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class MessagingEndpointProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.MessagingEndpointProperties>
     {
         public MessagingEndpointProperties() { }
@@ -1599,6 +1726,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string DatabaseName { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string Id { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? MessagePayloadFormat { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string PartitionKeyName { get { throw null; } set { } }
         public string PartitionKeyTemplate { get { throw null; } set { } }
@@ -1644,6 +1772,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Endpoint { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? MessagePayloadFormat { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
@@ -1666,6 +1795,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string EntityPath { get { throw null; } set { } }
         public string EventStreamId { get { throw null; } set { } }
         public string Id { get { throw null; } }
+        public Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? MessagePayloadFormat { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string SourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentity { get { throw null; } set { } }
@@ -1700,6 +1830,7 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         public RoutingRuleProperties(string name, Azure.ResourceManager.IotHub.Models.IotHubRoutingSource source, System.Collections.Generic.IEnumerable<string> endpointNames, bool isEnabled) { }
         public string Condition { get { throw null; } set { } }
+        public string DataSchema { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EndpointNames { get { throw null; } }
         public bool IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -1722,6 +1853,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Endpoint { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? MessagePayloadFormat { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
@@ -1744,6 +1876,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string Endpoint { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? MessagePayloadFormat { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
@@ -1770,6 +1903,7 @@ namespace Azure.ResourceManager.IotHub.Models
         public string FileNameFormat { get { throw null; } set { } }
         public System.Guid? Id { get { throw null; } set { } }
         public int? MaxChunkSizeInBytes { get { throw null; } set { } }
+        public Azure.ResourceManager.IotHub.Models.MessagePayloadFormat? MessagePayloadFormat { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
@@ -1848,5 +1982,20 @@ namespace Azure.ResourceManager.IotHub.Models
         Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.SharedAccessSignatureAuthorizationRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TopicGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.TopicGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.TopicGroup>
+    {
+        public TopicGroup() { }
+        public string TopicGroupId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TopicTemplates { get { throw null; } }
+        protected virtual Azure.ResourceManager.IotHub.Models.TopicGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotHub.Models.TopicGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotHub.Models.TopicGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.TopicGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotHub.Models.TopicGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotHub.Models.TopicGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.TopicGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.TopicGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotHub.Models.TopicGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

@@ -138,6 +138,11 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
+            if (Optional.IsDefined(MessagePayloadFormat))
+            {
+                writer.WritePropertyName("messagePayloadFormat"u8);
+                writer.WriteStringValue(MessagePayloadFormat.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.IotHub.Models
             int? batchFrequencyInSeconds = default;
             int? maxChunkSizeInBytes = default;
             RoutingStorageContainerPropertiesEncoding? encoding = default;
+            MessagePayloadFormat? messagePayloadFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -285,6 +291,15 @@ namespace Azure.ResourceManager.IotHub.Models
                     encoding = new RoutingStorageContainerPropertiesEncoding(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("messagePayloadFormat"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    messagePayloadFormat = new MessagePayloadFormat(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -304,6 +319,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 batchFrequencyInSeconds,
                 maxChunkSizeInBytes,
                 encoding,
+                messagePayloadFormat,
                 additionalBinaryDataProperties);
         }
     }
