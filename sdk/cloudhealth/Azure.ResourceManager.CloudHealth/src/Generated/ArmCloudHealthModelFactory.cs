@@ -796,26 +796,100 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> A signal configuration for an Azure resource type. </summary>
         /// <param name="signalId"> Unique identifier of the recommended signal configuration. </param>
-        /// <param name="metricNamespace"> Metric namespace (e.g. 'microsoft.compute/virtualmachines'). </param>
-        /// <param name="metricName"> Name of the metric (e.g. 'Percentage CPU'). </param>
-        /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="unit"> Unit of the metric (e.g. Percent, Bytes, Count). </param>
-        /// <param name="timeGrain"> Time range of the metric. ISO 8601 duration format (e.g. 'PT5M'). </param>
-        /// <param name="dimensionFilter"> Optional dimension filter to apply to the metric. </param>
+        /// <param name="displayName"> Display name of the recommended signal configuration. </param>
+        /// <param name="description"> Description of the recommended signal configuration. </param>
+        /// <param name="applicableResourceTypes"> Azure resource types to which the recommended signal configuration applies. </param>
+        /// <param name="refreshInterval"> Interval in which the recommended signal is evaluated. </param>
+        /// <param name="dataUnit"> Unit of the recommended signal result (e.g. Bytes, MilliSeconds, Percent, Count). </param>
+        /// <param name="configuration"> Kind-specific settings for the recommended signal. </param>
         /// <param name="evaluationRules"> Evaluation rules with recommended thresholds. </param>
         /// <returns> A new <see cref="Models.SignalConfiguration"/> instance for mocking. </returns>
-        public static SignalConfiguration SignalConfiguration(string signalId = default, string metricNamespace = default, string metricName = default, MetricAggregationType? aggregationType = default, string unit = default, string timeGrain = default, string dimensionFilter = default, EntitySignalEvaluationRule evaluationRules = default)
+        public static SignalConfiguration SignalConfiguration(string signalId = default, string displayName = default, string description = default, IEnumerable<string> applicableResourceTypes = default, EntitySignalRefreshInterval? refreshInterval = default, string dataUnit = default, SignalRecommendationConfiguration configuration = default, EntitySignalEvaluationRule evaluationRules = default)
         {
+            applicableResourceTypes ??= new ChangeTrackingList<string>();
+
             return new SignalConfiguration(
                 signalId,
+                displayName,
+                description,
+                (applicableResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
+                refreshInterval,
+                dataUnit,
+                configuration,
+                evaluationRules,
+                default);
+        }
+
+        /// <summary>
+        /// Kind-specific signal recommendation configuration.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceMetricRecommendationConfiguration"/>, <see cref="Models.LogAnalyticsQueryRecommendationConfiguration"/>, and <see cref="Models.PrometheusMetricsRecommendationConfiguration"/>.
+        /// </summary>
+        /// <param name="signalKind"> Kind of the recommended signal. </param>
+        /// <returns> A new <see cref="Models.SignalRecommendationConfiguration"/> instance for mocking. </returns>
+        public static SignalRecommendationConfiguration SignalRecommendationConfiguration(string signalKind = default)
+        {
+            return new UnknownSignalRecommendationConfiguration(default, default);
+        }
+
+        /// <summary> Azure Resource Metric recommendation configuration. </summary>
+        /// <param name="metricNamespace"> Metric namespace. </param>
+        /// <param name="metricName"> Name of the metric. </param>
+        /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
+        /// <param name="timeGrain"> Time range of the metric in ISO 8601 duration format (e.g. 'PT5M'). </param>
+        /// <param name="dimensionFilter"> Optional dimension filter to apply to the metric. </param>
+        /// <returns> A new <see cref="Models.AzureResourceMetricRecommendationConfiguration"/> instance for mocking. </returns>
+        public static AzureResourceMetricRecommendationConfiguration AzureResourceMetricRecommendationConfiguration(string metricNamespace = default, string metricName = default, MetricAggregationType aggregationType = default, string timeGrain = default, string dimensionFilter = default)
+        {
+            return new AzureResourceMetricRecommendationConfiguration(
+                default,
+                default,
                 metricNamespace,
                 metricName,
                 aggregationType,
-                unit,
                 timeGrain,
-                dimensionFilter,
-                evaluationRules,
-                default);
+                dimensionFilter);
+        }
+
+        /// <summary> Log Analytics Query recommendation configuration. </summary>
+        /// <param name="queryText"> Query text in KQL syntax. Supported entity template variables, such as `{{entity.azureResourceId}}`, may appear in the query. </param>
+        /// <param name="timeGrain"> Time range of the signal in ISO 8601 duration format (e.g. 'PT5M'). If not specified, the KQL query must define a time range. </param>
+        /// <param name="valueColumnName"> Name of the numeric result column to evaluate against the thresholds. </param>
+        /// <param name="requiredTables"> Log Analytics tables required by the query. </param>
+        /// <param name="requiredDiagnosticSettingCategories"> Diagnostic setting categories required to populate the query's tables. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsQueryRecommendationConfiguration"/> instance for mocking. </returns>
+        public static LogAnalyticsQueryRecommendationConfiguration LogAnalyticsQueryRecommendationConfiguration(string queryText = default, string timeGrain = default, string valueColumnName = default, IEnumerable<string> requiredTables = default, IEnumerable<string> requiredDiagnosticSettingCategories = default)
+        {
+            requiredTables ??= new ChangeTrackingList<string>();
+            requiredDiagnosticSettingCategories ??= new ChangeTrackingList<string>();
+
+            return new LogAnalyticsQueryRecommendationConfiguration(
+                default,
+                default,
+                queryText,
+                timeGrain,
+                valueColumnName,
+                (requiredTables ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredDiagnosticSettingCategories ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <summary> Prometheus Metrics Query recommendation configuration. </summary>
+        /// <param name="queryText"> Query text in PromQL syntax. Supported entity template variables, such as `{{entity.name}}`, may appear in the query. </param>
+        /// <param name="timeGrain"> Time range of the signal in ISO 8601 duration format (e.g. 'PT5M'). </param>
+        /// <param name="requiredMetrics"> Prometheus metrics required by the query. </param>
+        /// <param name="requiredScrapeTargets"> Prometheus scrape targets required to populate the query's metrics. </param>
+        /// <returns> A new <see cref="Models.PrometheusMetricsRecommendationConfiguration"/> instance for mocking. </returns>
+        public static PrometheusMetricsRecommendationConfiguration PrometheusMetricsRecommendationConfiguration(string queryText = default, string timeGrain = default, IEnumerable<string> requiredMetrics = default, IEnumerable<string> requiredScrapeTargets = default)
+        {
+            requiredMetrics ??= new ChangeTrackingList<string>();
+            requiredScrapeTargets ??= new ChangeTrackingList<string>();
+
+            return new PrometheusMetricsRecommendationConfiguration(
+                default,
+                default,
+                queryText,
+                timeGrain,
+                (requiredMetrics ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredScrapeTargets ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> A relationship (aka edge) between two entities in a health model. </summary>
