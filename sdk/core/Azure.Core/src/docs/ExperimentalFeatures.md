@@ -160,7 +160,7 @@ Or in your project file:
 
 ### Description
 
-The mTLS token binding and proof-of-possession APIs enable proof-of-possession token support for managed identity scenarios. These APIs allow transport-level certificate binding for token requests, enabling mTLS-based token binding on supported Azure VMs. The `EnableMtlsProofOfPossession` option provides an explicit opt-in to mTLS proof-of-possession token acquisition when the underlying requirements are met. These APIs are experimental and subject to change as the feature matures.
+The mTLS token binding and proof-of-possession APIs enable proof-of-possession token support for managed identity scenarios. These APIs allow transport-level certificate binding for token requests, enabling mTLS-based token binding on supported Azure VMs. The `EnableMtlsProofOfPossession` option is enabled by default and controls mTLS proof-of-possession token acquisition when the underlying requirements are met; set it to `false` to opt out and use bearer tokens. These APIs are experimental and subject to change as the feature matures.
 
 ### Affected APIs
 
@@ -174,10 +174,10 @@ The mTLS token binding and proof-of-possession APIs enable proof-of-possession t
 ```csharp
 #pragma warning disable AZID0004
 
-// Enable mTLS proof-of-possession for managed identity
+// mTLS proof-of-possession is enabled by default. Set it to false to opt out and use bearer tokens.
 var credential = new ManagedIdentityCredential(new ManagedIdentityCredentialOptions
 {
-    EnableMtlsProofOfPossession = true
+    EnableMtlsProofOfPossession = false
 });
 
 #pragma warning restore AZID0004

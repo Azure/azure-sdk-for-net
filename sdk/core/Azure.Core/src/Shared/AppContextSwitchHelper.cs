@@ -38,5 +38,38 @@ namespace Azure.Core
             // Default to false.
             return false;
         }
+
+        /// <summary>
+        /// Determines if either an AppContext switch or its corresponding Environment Variable is set,
+        /// returning <paramref name="defaultValue"/> when neither is set.
+        /// </summary>
+        /// <param name="appContexSwitchName">Name of the AppContext switch.</param>
+        /// <param name="environmentVariableName">Name of the Environment variable.</param>
+        /// <param name="defaultValue">The value to use when neither the switch nor the environment variable is set.</param>
+        /// <returns>The AppContext switch value if set; otherwise the parsed environment variable value; otherwise <paramref name="defaultValue"/>.</returns>
+        public static bool GetConfigValue(string appContexSwitchName, string environmentVariableName, bool defaultValue)
+        {
+            // First check for the AppContext switch, giving it priority over the environment variable.
+            if (AppContext.TryGetSwitch(appContexSwitchName, out bool value))
+            {
+                return value;
+            }
+            // AppContext switch wasn't used. Check the environment variable.
+            string? envVar = Environment.GetEnvironmentVariable(environmentVariableName);
+            if (envVar != null)
+            {
+                if (envVar.Equals("true", StringComparison.OrdinalIgnoreCase) || envVar.Equals("1"))
+                {
+                    return true;
+                }
+                if (envVar.Equals("false", StringComparison.OrdinalIgnoreCase) || envVar.Equals("0"))
+                {
+                    return false;
+                }
+            }
+
+            // Neither the switch nor the environment variable is set.
+            return defaultValue;
+        }
     }
 }
