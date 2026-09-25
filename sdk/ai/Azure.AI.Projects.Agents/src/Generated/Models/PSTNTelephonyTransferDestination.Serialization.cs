@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A PSTN destination for a telephony transfer target. </summary>
-    internal partial class PSTNTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<PSTNTelephonyTransferDestination>
+    public partial class PSTNTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<PSTNTelephonyTransferDestination>
     {
         /// <summary> Initializes a new instance of <see cref="PSTNTelephonyTransferDestination"/> for deserialization. </summary>
         internal PSTNTelephonyTransferDestination()

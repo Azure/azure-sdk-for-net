@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyOutboundRetryPolicy))]
-    internal abstract partial class TelephonyOutboundRetryPolicy : IJsonModel<TelephonyOutboundRetryPolicy>
+    public abstract partial class TelephonyOutboundRetryPolicy : IJsonModel<TelephonyOutboundRetryPolicy>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundRetryPolicy"/> for deserialization. </summary>
         internal TelephonyOutboundRetryPolicy()

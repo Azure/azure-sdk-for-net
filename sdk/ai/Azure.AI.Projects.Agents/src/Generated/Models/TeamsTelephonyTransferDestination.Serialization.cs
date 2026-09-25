@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams destination for a telephony transfer target. </summary>
-    internal partial class TeamsTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<TeamsTelephonyTransferDestination>
+    public partial class TeamsTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<TeamsTelephonyTransferDestination>
     {
         /// <summary> Initializes a new instance of <see cref="TeamsTelephonyTransferDestination"/> for deserialization. </summary>
         internal TeamsTelephonyTransferDestination()

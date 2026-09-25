@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A named destination to which the voice agent may transfer a call. </summary>
-    [Experimental("AAIP001")]
-    internal partial class TelephonyTransferTarget
+    public partial class TelephonyTransferTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

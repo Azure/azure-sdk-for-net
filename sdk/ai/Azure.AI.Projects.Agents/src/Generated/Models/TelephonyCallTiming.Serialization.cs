@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Detailed provider-neutral timing for an inbound telephony call. </summary>
-    internal partial class TelephonyCallTiming : IJsonModel<TelephonyCallTiming>
+    public partial class TelephonyCallTiming : IJsonModel<TelephonyCallTiming>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallTiming"/> for deserialization. </summary>
         internal TelephonyCallTiming()

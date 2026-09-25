@@ -4,14 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A request to create one durable direct outbound call job. </summary>
-    [Experimental("AAIP001")]
-    internal partial class CreateTelephonyCallJobContent
+    public partial class CreateTelephonyCallJobContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

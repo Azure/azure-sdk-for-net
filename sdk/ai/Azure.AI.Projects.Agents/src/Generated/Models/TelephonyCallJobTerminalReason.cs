@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Known terminal reasons for an overall outbound call job, which can span multiple provider attempts. These are distinct from individual call lifecycle reasons. Additional string codes may be returned. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct TelephonyCallJobTerminalReason : IEquatable<TelephonyCallJobTerminalReason>
+    public readonly partial struct TelephonyCallJobTerminalReason : IEquatable<TelephonyCallJobTerminalReason>
     {
         private readonly string _value;
         /// <summary> The provider call ended before the service observed it as connected. </summary>

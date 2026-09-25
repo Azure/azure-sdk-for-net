@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
-    internal partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicy, IJsonModel<TelephonyOutboundFixedIntervalRetryPolicyResult>
+    public partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicy, IJsonModel<TelephonyOutboundFixedIntervalRetryPolicyResult>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/> for deserialization. </summary>
         internal TelephonyOutboundFixedIntervalRetryPolicyResult()

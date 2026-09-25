@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The mode used to expose a telephony call as a customer-facing Foundry trace. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct TelephonyCallTraceMode : IEquatable<TelephonyCallTraceMode>
+    public readonly partial struct TelephonyCallTraceMode : IEquatable<TelephonyCallTraceMode>
     {
         private readonly string _value;
         /// <summary> The trace was created while the voice-agent conversation was live. </summary>

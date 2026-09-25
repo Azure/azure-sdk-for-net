@@ -4,13 +4,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The lifecycle status of an inbound telephony call. </summary>
-    [Experimental("AAIP001")]
-    internal readonly partial struct TelephonyCallStatus : IEquatable<TelephonyCallStatus>
+    public readonly partial struct TelephonyCallStatus : IEquatable<TelephonyCallStatus>
     {
         private readonly string _value;
         /// <summary> The call has started and has not reached a terminal state. </summary>

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The outcome of one telephony lifecycle observation. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct TelephonyCallLifecycleEventOutcome : IEquatable<TelephonyCallLifecycleEventOutcome>
+    public readonly partial struct TelephonyCallLifecycleEventOutcome : IEquatable<TelephonyCallLifecycleEventOutcome>
     {
         private readonly string _value;
         /// <summary> The event was observed without a success or failure result. </summary>

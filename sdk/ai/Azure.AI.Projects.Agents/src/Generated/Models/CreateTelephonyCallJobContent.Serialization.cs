@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A request to create one durable direct outbound call job. </summary>
-    internal partial class CreateTelephonyCallJobContent : IJsonModel<CreateTelephonyCallJobContent>
+    public partial class CreateTelephonyCallJobContent : IJsonModel<CreateTelephonyCallJobContent>
     {
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobContent"/> for deserialization. </summary>
         internal CreateTelephonyCallJobContent()

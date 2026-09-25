@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    internal partial class TeamsTelephonyTransferDestination : TelephonyTransferDestination
+    public partial class TeamsTelephonyTransferDestination : TelephonyTransferDestination
     {
         /// <summary> Initializes a new instance of <see cref="TeamsTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The Microsoft Teams user or resource-account identifier. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A cancellation request recorded for an outbound call job. </summary>
-    internal partial class TelephonyCallJobCancellation : IJsonModel<TelephonyCallJobCancellation>
+    public partial class TelephonyCallJobCancellation : IJsonModel<TelephonyCallJobCancellation>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallJobCancellation"/> for deserialization. </summary>
         internal TelephonyCallJobCancellation()

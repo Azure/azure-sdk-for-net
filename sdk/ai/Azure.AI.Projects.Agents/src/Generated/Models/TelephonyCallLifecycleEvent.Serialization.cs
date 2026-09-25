@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A bounded durable observation in the lifecycle of one telephony call. </summary>
-    internal partial class TelephonyCallLifecycleEvent : IJsonModel<TelephonyCallLifecycleEvent>
+    public partial class TelephonyCallLifecycleEvent : IJsonModel<TelephonyCallLifecycleEvent>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallLifecycleEvent"/> for deserialization. </summary>
         internal TelephonyCallLifecycleEvent()

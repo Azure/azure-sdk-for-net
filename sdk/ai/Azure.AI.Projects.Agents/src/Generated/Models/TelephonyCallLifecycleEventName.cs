@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A provider-neutral lifecycle event name. Known values are stable; additional values may be added over time. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct TelephonyCallLifecycleEventName : IEquatable<TelephonyCallLifecycleEventName>
+    public readonly partial struct TelephonyCallLifecycleEventName : IEquatable<TelephonyCallLifecycleEventName>
     {
         private readonly string _value;
         /// <summary> The provider webhook was received. </summary>

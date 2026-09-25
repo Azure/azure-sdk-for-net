@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Detailed diagnostics for a durable inbound call to a voice agent. </summary>
-    internal partial class TelephonyCallRecord : IJsonModel<TelephonyCallRecord>
+    public partial class TelephonyCallRecord : IJsonModel<TelephonyCallRecord>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallRecord"/> for deserialization. </summary>
         internal TelephonyCallRecord()

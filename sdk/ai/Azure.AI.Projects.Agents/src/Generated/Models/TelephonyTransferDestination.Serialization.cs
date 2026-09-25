@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSTNTelephonyTransferDestination"/>, <see cref="SipTelephonyTransferDestination"/>, and <see cref="TeamsTelephonyTransferDestination"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyTransferDestination))]
-    internal abstract partial class TelephonyTransferDestination : IJsonModel<TelephonyTransferDestination>
+    public abstract partial class TelephonyTransferDestination : IJsonModel<TelephonyTransferDestination>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyTransferDestination"/> for deserialization. </summary>
         internal TelephonyTransferDestination()

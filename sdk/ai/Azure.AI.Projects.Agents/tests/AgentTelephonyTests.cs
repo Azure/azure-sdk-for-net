@@ -115,7 +115,7 @@ public class AgentTelephonyTests : AgentsTestBase
         BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
 
-        List<TelephonyCallSummary> calls = await telephonyClient.GetTelephonyCallsAsync(agentName, provider: (TelephonyProvider?)null).ToListAsync();
+        List<TelephonyCallSummary> calls = await telephonyClient.GetTelephonyCallsAsync(agentName, foundryFeatures: default, provider: (TelephonyProvider?)null).ToListAsync();
         Console.WriteLine($"[REST] LIST telephony calls -> {calls.Count} call(s)");
 
         Assert.That(calls, Is.Not.Null);

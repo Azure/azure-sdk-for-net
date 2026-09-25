@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Correlation from a durable telephony call record to its customer-facing Foundry trace. </summary>
     [Experimental("AAIP001")]
-    internal partial class TelephonyCallTrace
+    public partial class TelephonyCallTrace
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

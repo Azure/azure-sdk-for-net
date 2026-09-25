@@ -4,14 +4,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The telephony transfer targets configured for one voice agent. </summary>
-    [Experimental("AAIP001")]
-    internal partial class TelephonyTransferTargets
+    public partial class TelephonyTransferTargets
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

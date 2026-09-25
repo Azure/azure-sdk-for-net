@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A Microsoft Teams Phone Extension binding owned by a voice agent. </summary>
     [Experimental("AAIP001")]
-    internal partial class TeamsPhoneExtensionTelephonyBinding : TelephonyBinding
+    public partial class TeamsPhoneExtensionTelephonyBinding : TelephonyBinding
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensionTelephonyBinding"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>

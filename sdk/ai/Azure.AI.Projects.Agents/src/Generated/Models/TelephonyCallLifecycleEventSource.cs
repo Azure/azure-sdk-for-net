@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The component that supplied a telephony lifecycle observation. </summary>
     [Experimental("AAIP001")]
-    internal readonly partial struct TelephonyCallLifecycleEventSource : IEquatable<TelephonyCallLifecycleEventSource>
+    public readonly partial struct TelephonyCallLifecycleEventSource : IEquatable<TelephonyCallLifecycleEventSource>
     {
         private readonly string _value;
         /// <summary> The Foundry telephony gateway supplied the observation. </summary>

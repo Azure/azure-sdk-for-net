@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A PSTN destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    internal partial class PSTNTelephonyTransferDestination : TelephonyTransferDestination
+    public partial class PSTNTelephonyTransferDestination : TelephonyTransferDestination
     {
         /// <summary> Initializes a new instance of <see cref="PSTNTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The E.164 phone number to call. </param>

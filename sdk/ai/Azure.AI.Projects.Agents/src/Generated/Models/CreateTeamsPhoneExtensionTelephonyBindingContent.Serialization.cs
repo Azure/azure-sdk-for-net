@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The request to create a Microsoft Teams Phone Extension binding. </summary>
-    internal partial class CreateTeamsPhoneExtensionTelephonyBindingContent : CreateTelephonyBindingContent, IJsonModel<CreateTeamsPhoneExtensionTelephonyBindingContent>
+    public partial class CreateTeamsPhoneExtensionTelephonyBindingContent : CreateTelephonyBindingContent, IJsonModel<CreateTeamsPhoneExtensionTelephonyBindingContent>
     {
         /// <summary> Initializes a new instance of <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/> for deserialization. </summary>
         internal CreateTeamsPhoneExtensionTelephonyBindingContent()

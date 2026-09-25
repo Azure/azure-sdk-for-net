@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The request to create a Microsoft Teams Phone Extension binding. </summary>
     [Experimental("AAIP001")]
-    internal partial class CreateTeamsPhoneExtensionTelephonyBindingContent : CreateTelephonyBindingContent
+    public partial class CreateTeamsPhoneExtensionTelephonyBindingContent : CreateTelephonyBindingContent
     {
         /// <summary> Initializes a new instance of <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/>. </summary>
         /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
