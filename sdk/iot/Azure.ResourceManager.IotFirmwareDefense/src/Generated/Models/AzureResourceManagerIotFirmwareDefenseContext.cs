@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,16 +14,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BinaryHardeningFeatures))]
     [ModelReaderWriterBuildable(typeof(BinaryHardeningResourceListResult))]
     [ModelReaderWriterBuildable(typeof(BinaryHardeningResult))]
+    [ModelReaderWriterBuildable(typeof(BinaryHardeningResultProperties))]
     [ModelReaderWriterBuildable(typeof(BinaryHardeningSummary))]
+    [ModelReaderWriterBuildable(typeof(CryptoCertificate))]
     [ModelReaderWriterBuildable(typeof(CryptoCertificateEntity))]
     [ModelReaderWriterBuildable(typeof(CryptoCertificateResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CryptoCertificateResult))]
     [ModelReaderWriterBuildable(typeof(CryptoCertificateSummary))]
+    [ModelReaderWriterBuildable(typeof(CryptoKey))]
     [ModelReaderWriterBuildable(typeof(CryptoKeyResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CryptoKeyResult))]
     [ModelReaderWriterBuildable(typeof(CryptoKeySummary))]
@@ -31,8 +35,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     [ModelReaderWriterBuildable(typeof(CveLink))]
     [ModelReaderWriterBuildable(typeof(CveResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CveResult))]
+    [ModelReaderWriterBuildable(typeof(CveResultProperties))]
     [ModelReaderWriterBuildable(typeof(CveSummary))]
+    [ModelReaderWriterBuildable(typeof(CveSummaryResource))]
     [ModelReaderWriterBuildable(typeof(CvssScore))]
+    [ModelReaderWriterBuildable(typeof(CweProperties))]
+    [ModelReaderWriterBuildable(typeof(EpssProperties))]
     [ModelReaderWriterBuildable(typeof(FirmwareAnalysisStatusMessage))]
     [ModelReaderWriterBuildable(typeof(FirmwareAnalysisSummaryData))]
     [ModelReaderWriterBuildable(typeof(FirmwareAnalysisSummaryProperties))]
@@ -41,27 +49,39 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     [ModelReaderWriterBuildable(typeof(FirmwareAnalysisWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(FirmwareAnalysisWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(FirmwareListResult))]
+    [ModelReaderWriterBuildable(typeof(FirmwareProperties))]
     [ModelReaderWriterBuildable(typeof(FirmwareSummary))]
     [ModelReaderWriterBuildable(typeof(FirmwareUploadUriContent))]
     [ModelReaderWriterBuildable(typeof(FirmwareUriToken))]
+    [ModelReaderWriterBuildable(typeof(FunctionCall))]
     [ModelReaderWriterBuildable(typeof(IotFirmwareData))]
     [ModelReaderWriterBuildable(typeof(IotFirmwareDefenseSku))]
     [ModelReaderWriterBuildable(typeof(IotFirmwareDefenseSkuUpdate))]
     [ModelReaderWriterBuildable(typeof(IotFirmwarePatch))]
     [ModelReaderWriterBuildable(typeof(IotFirmwareResource))]
+    [ModelReaderWriterBuildable(typeof(KevProperties))]
+    [ModelReaderWriterBuildable(typeof(PasswordHash))]
     [ModelReaderWriterBuildable(typeof(PasswordHashResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PasswordHashResult))]
+    [ModelReaderWriterBuildable(typeof(PasswordHashSummaryResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SbomComponent))]
     [ModelReaderWriterBuildable(typeof(SbomComponentResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SbomComponentResult))]
+    [ModelReaderWriterBuildable(typeof(SbomSummaryResource))]
     [ModelReaderWriterBuildable(typeof(SummaryResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownSummaryResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(UnsafeFunctionCallsResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(UnsafeFunctionCallsResult))]
+    [ModelReaderWriterBuildable(typeof(UnsafeFunctionCallsResultProperties))]
+    [ModelReaderWriterBuildable(typeof(UnsafeFunctionCallsSummaryResource))]
     [ModelReaderWriterBuildable(typeof(UsageMetricData))]
     [ModelReaderWriterBuildable(typeof(UsageMetricListResult))]
     [ModelReaderWriterBuildable(typeof(UsageMetricProperties))]
     [ModelReaderWriterBuildable(typeof(UsageMetricResource))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
+    [ModelReaderWriterBuildable(typeof(WorkspaceProperties))]
     public partial class AzureResourceManagerIotFirmwareDefenseContext : ModelReaderWriterContext
     {
     }

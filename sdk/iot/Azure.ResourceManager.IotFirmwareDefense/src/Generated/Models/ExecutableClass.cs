@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public readonly partial struct ExecutableClass : IEquatable<ExecutableClass>
     {
         private readonly string _value;
+        /// <summary> The binary is 32-bit. </summary>
+        private const string X86Value = "x86";
+        /// <summary> The binary is 64-bit. </summary>
+        private const string X64Value = "x64";
 
         /// <summary> Initializes a new instance of <see cref="ExecutableClass"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExecutableClass(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string X86Value = "x86";
-        private const string X64Value = "x64";
+            _value = value;
+        }
 
         /// <summary> The binary is 32-bit. </summary>
         public static ExecutableClass X86 { get; } = new ExecutableClass(X86Value);
+
         /// <summary> The binary is 64-bit. </summary>
         public static ExecutableClass X64 { get; } = new ExecutableClass(X64Value);
+
         /// <summary> Determines if two <see cref="ExecutableClass"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExecutableClass left, ExecutableClass right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExecutableClass"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExecutableClass left, ExecutableClass right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExecutableClass"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExecutableClass"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExecutableClass(string value) => new ExecutableClass(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExecutableClass"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExecutableClass?(string value) => value == null ? null : new ExecutableClass(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExecutableClass other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExecutableClass other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

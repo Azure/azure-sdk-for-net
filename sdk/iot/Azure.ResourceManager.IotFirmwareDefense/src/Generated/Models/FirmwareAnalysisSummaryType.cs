@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -14,47 +15,92 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public readonly partial struct FirmwareAnalysisSummaryType : IEquatable<FirmwareAnalysisSummaryType>
     {
         private readonly string _value;
+        /// <summary> The summary contains information about the submitted firmware. </summary>
+        private const string FirmwareValue = "Firmware";
+        /// <summary> The summary contains information about the CVE (Common Vulnerabilities and Exposures) analysis results (deprecated). </summary>
+        private const string CommonVulnerabilitiesAndExposuresValue = "CommonVulnerabilitiesAndExposures";
+        /// <summary> The summary contains information about the binary hardening analysis results. </summary>
+        private const string BinaryHardeningValue = "BinaryHardening";
+        /// <summary> The summary contains information about the cryptographic certificate analysis results. </summary>
+        private const string CryptoCertificateValue = "CryptoCertificate";
+        /// <summary> The summary contains information about the cryptographic key analysis results. </summary>
+        private const string CryptoKeyValue = "CryptoKey";
+        /// <summary> The summary contains information about the CVE analysis results. </summary>
+        private const string CveValue = "CVE";
+        /// <summary> The summary contains information about the SBOM (Software Bill of Materials) analysis results. </summary>
+        private const string SbomValue = "SBOM";
+        /// <summary> The summary contains information about the password hash analysis results. </summary>
+        private const string PasswordHashValue = "PasswordHash";
+        /// <summary> The summary contains information about the unsafe function call analysis results. </summary>
+        private const string UnsafeFunctionCallsValue = "UnsafeFunctionCalls";
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisSummaryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirmwareAnalysisSummaryType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FirmwareValue = "Firmware";
-        private const string CommonVulnerabilitiesAndExposuresValue = "CommonVulnerabilitiesAndExposures";
-        private const string BinaryHardeningValue = "BinaryHardening";
-        private const string CryptoCertificateValue = "CryptoCertificate";
-        private const string CryptoKeyValue = "CryptoKey";
+            _value = value;
+        }
 
         /// <summary> The summary contains information about the submitted firmware. </summary>
         public static FirmwareAnalysisSummaryType Firmware { get; } = new FirmwareAnalysisSummaryType(FirmwareValue);
-        /// <summary> The summary contains information about the Common Vulnerabilities and Exposures analysis results. </summary>
+
+        /// <summary> The summary contains information about the CVE (Common Vulnerabilities and Exposures) analysis results (deprecated). </summary>
         public static FirmwareAnalysisSummaryType CommonVulnerabilitiesAndExposures { get; } = new FirmwareAnalysisSummaryType(CommonVulnerabilitiesAndExposuresValue);
+
         /// <summary> The summary contains information about the binary hardening analysis results. </summary>
         public static FirmwareAnalysisSummaryType BinaryHardening { get; } = new FirmwareAnalysisSummaryType(BinaryHardeningValue);
+
         /// <summary> The summary contains information about the cryptographic certificate analysis results. </summary>
         public static FirmwareAnalysisSummaryType CryptoCertificate { get; } = new FirmwareAnalysisSummaryType(CryptoCertificateValue);
+
         /// <summary> The summary contains information about the cryptographic key analysis results. </summary>
         public static FirmwareAnalysisSummaryType CryptoKey { get; } = new FirmwareAnalysisSummaryType(CryptoKeyValue);
+
+        /// <summary> The summary contains information about the CVE analysis results. </summary>
+        public static FirmwareAnalysisSummaryType Cve { get; } = new FirmwareAnalysisSummaryType(CveValue);
+
+        /// <summary> The summary contains information about the SBOM (Software Bill of Materials) analysis results. </summary>
+        public static FirmwareAnalysisSummaryType Sbom { get; } = new FirmwareAnalysisSummaryType(SbomValue);
+
+        /// <summary> The summary contains information about the password hash analysis results. </summary>
+        public static FirmwareAnalysisSummaryType PasswordHash { get; } = new FirmwareAnalysisSummaryType(PasswordHashValue);
+
+        /// <summary> The summary contains information about the unsafe function call analysis results. </summary>
+        public static FirmwareAnalysisSummaryType UnsafeFunctionCalls { get; } = new FirmwareAnalysisSummaryType(UnsafeFunctionCallsValue);
+
         /// <summary> Determines if two <see cref="FirmwareAnalysisSummaryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirmwareAnalysisSummaryType left, FirmwareAnalysisSummaryType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirmwareAnalysisSummaryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirmwareAnalysisSummaryType left, FirmwareAnalysisSummaryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirmwareAnalysisSummaryType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirmwareAnalysisSummaryType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirmwareAnalysisSummaryType(string value) => new FirmwareAnalysisSummaryType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirmwareAnalysisSummaryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirmwareAnalysisSummaryType?(string value) => value == null ? null : new FirmwareAnalysisSummaryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirmwareAnalysisSummaryType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirmwareAnalysisSummaryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
