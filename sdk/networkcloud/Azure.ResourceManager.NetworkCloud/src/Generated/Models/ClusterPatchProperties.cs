@@ -20,42 +20,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="ClusterPatchProperties"/>. </summary>
         public ClusterPatchProperties()
         {
-            ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinitionPatch>();
+            ComputeRackDefinitionsPatch = new ChangeTrackingList<NetworkCloudRackDefinitionPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterPatchProperties"/>. </summary>
-        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="aggregatorOrSingleRackDefinitionPatch"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterServicePrincipalPatch"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
         /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
-        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
+        /// <param name="computeDeploymentThresholdPatch"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitionsPatch"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
         /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
-        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="secretArchivePatch"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
         /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
-        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
+        /// <param name="updateStrategyPatch"> The strategy for updating the cluster. </param>
         /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterPatchProperties(NetworkCloudRackDefinitionPatch aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, string clusterLocation, ServicePrincipalInformationPatch clusterServicePrincipal, CommandOutputSettings commandOutputSettings, ValidationThresholdPatch computeDeploymentThreshold, IList<NetworkCloudRackDefinitionPatch> computeRackDefinitions, RuntimeProtectionConfigurationPatch runtimeProtectionConfiguration, ClusterSecretArchivePatch secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategyPatch updateStrategy, VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterPatchProperties(NetworkCloudRackDefinitionPatch aggregatorOrSingleRackDefinitionPatch, AnalyticsOutputSettings analyticsOutputSettings, string clusterLocation, ServicePrincipalInformationPatch clusterServicePrincipalPatch, CommandOutputSettings commandOutputSettings, ValidationThresholdPatch computeDeploymentThresholdPatch, IList<NetworkCloudRackDefinitionPatch> computeRackDefinitionsPatch, RuntimeProtectionConfigurationPatch runtimeProtectionConfiguration, ClusterSecretArchivePatch secretArchivePatch, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategyPatch updateStrategyPatch, VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
+            AggregatorOrSingleRackDefinitionPatch = aggregatorOrSingleRackDefinitionPatch;
             AnalyticsOutputSettings = analyticsOutputSettings;
             ClusterLocation = clusterLocation;
-            ClusterServicePrincipal = clusterServicePrincipal;
+            ClusterServicePrincipalPatch = clusterServicePrincipalPatch;
             CommandOutputSettings = commandOutputSettings;
-            ComputeDeploymentThreshold = computeDeploymentThreshold;
-            ComputeRackDefinitions = computeRackDefinitions;
+            ComputeDeploymentThresholdPatch = computeDeploymentThresholdPatch;
+            ComputeRackDefinitionsPatch = computeRackDefinitionsPatch;
             RuntimeProtectionConfiguration = runtimeProtectionConfiguration;
-            SecretArchive = secretArchive;
+            SecretArchivePatch = secretArchivePatch;
             SecretArchiveSettings = secretArchiveSettings;
-            UpdateStrategy = updateStrategy;
+            UpdateStrategyPatch = updateStrategyPatch;
             VulnerabilityScanningSettings = vulnerabilityScanningSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
-        public NetworkCloudRackDefinitionPatch AggregatorOrSingleRackDefinition { get; set; }
+        public NetworkCloudRackDefinitionPatch AggregatorOrSingleRackDefinitionPatch { get; set; }
 
         /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
         public AnalyticsOutputSettings AnalyticsOutputSettings { get; set; }
@@ -64,28 +64,28 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string ClusterLocation { get; set; }
 
         /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
-        public ServicePrincipalInformationPatch ClusterServicePrincipal { get; set; }
+        public ServicePrincipalInformationPatch ClusterServicePrincipalPatch { get; set; }
 
         /// <summary> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </summary>
         public CommandOutputSettings CommandOutputSettings { get; set; }
 
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
-        public ValidationThresholdPatch ComputeDeploymentThreshold { get; set; }
+        public ValidationThresholdPatch ComputeDeploymentThresholdPatch { get; set; }
 
         /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
-        public IList<NetworkCloudRackDefinitionPatch> ComputeRackDefinitions { get; } = new ChangeTrackingList<NetworkCloudRackDefinitionPatch>();
+        public IList<NetworkCloudRackDefinitionPatch> ComputeRackDefinitionsPatch { get; } = new ChangeTrackingList<NetworkCloudRackDefinitionPatch>();
 
         /// <summary> The settings for cluster runtime protection. </summary>
         public RuntimeProtectionConfigurationPatch RuntimeProtectionConfiguration { get; set; }
 
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
-        public ClusterSecretArchivePatch SecretArchive { get; set; }
+        public ClusterSecretArchivePatch SecretArchivePatch { get; set; }
 
         /// <summary> The settings for the secret archive used to hold credentials for the cluster. </summary>
         public SecretArchiveSettings SecretArchiveSettings { get; set; }
 
         /// <summary> The strategy for updating the cluster. </summary>
-        public ClusterUpdateStrategyPatch UpdateStrategy { get; set; }
+        public ClusterUpdateStrategyPatch UpdateStrategyPatch { get; set; }
 
         /// <summary> The settings for how security vulnerability scanning is applied to the cluster. </summary>
         internal VulnerabilityScanningSettingsPatch VulnerabilityScanningSettings { get; set; }

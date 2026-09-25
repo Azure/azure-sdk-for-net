@@ -45,5 +45,22 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
+        public ImageRepositoryCredentialsPatch VmImageRepositoryCredentialsPatch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmImageRepositoryCredentialsPatch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachinePatchProperties();
+                }
+                Properties.VmImageRepositoryCredentialsPatch = value;
+            }
+        }
     }
 }

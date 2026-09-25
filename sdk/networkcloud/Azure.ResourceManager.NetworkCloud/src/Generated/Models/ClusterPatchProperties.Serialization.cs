@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(ClusterPatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
+            if (Optional.IsDefined(AggregatorOrSingleRackDefinitionPatch))
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-                writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
+                writer.WriteObjectValue(AggregatorOrSingleRackDefinitionPatch, options);
             }
             if (Optional.IsDefined(AnalyticsOutputSettings))
             {
@@ -89,26 +89,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("clusterLocation"u8);
                 writer.WriteStringValue(ClusterLocation);
             }
-            if (Optional.IsDefined(ClusterServicePrincipal))
+            if (Optional.IsDefined(ClusterServicePrincipalPatch))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue(ClusterServicePrincipal, options);
+                writer.WriteObjectValue(ClusterServicePrincipalPatch, options);
             }
             if (Optional.IsDefined(CommandOutputSettings))
             {
                 writer.WritePropertyName("commandOutputSettings"u8);
                 writer.WriteObjectValue(CommandOutputSettings, options);
             }
-            if (Optional.IsDefined(ComputeDeploymentThreshold))
+            if (Optional.IsDefined(ComputeDeploymentThresholdPatch))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue(ComputeDeploymentThreshold, options);
+                writer.WriteObjectValue(ComputeDeploymentThresholdPatch, options);
             }
-            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            if (Optional.IsCollectionDefined(ComputeRackDefinitionsPatch))
             {
                 writer.WritePropertyName("computeRackDefinitions"u8);
                 writer.WriteStartArray();
-                foreach (NetworkCloudRackDefinitionPatch item in ComputeRackDefinitions)
+                foreach (NetworkCloudRackDefinitionPatch item in ComputeRackDefinitionsPatch)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -119,20 +119,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("runtimeProtectionConfiguration"u8);
                 writer.WriteObjectValue(RuntimeProtectionConfiguration, options);
             }
-            if (Optional.IsDefined(SecretArchive))
+            if (Optional.IsDefined(SecretArchivePatch))
             {
                 writer.WritePropertyName("secretArchive"u8);
-                writer.WriteObjectValue(SecretArchive, options);
+                writer.WriteObjectValue(SecretArchivePatch, options);
             }
             if (Optional.IsDefined(SecretArchiveSettings))
             {
                 writer.WritePropertyName("secretArchiveSettings"u8);
                 writer.WriteObjectValue(SecretArchiveSettings, options);
             }
-            if (Optional.IsDefined(UpdateStrategy))
+            if (Optional.IsDefined(UpdateStrategyPatch))
             {
                 writer.WritePropertyName("updateStrategy"u8);
-                writer.WriteObjectValue(UpdateStrategy, options);
+                writer.WriteObjectValue(UpdateStrategyPatch, options);
             }
             if (Optional.IsDefined(VulnerabilityScanningSettings))
             {
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            NetworkCloudRackDefinitionPatch aggregatorOrSingleRackDefinition = default;
+            NetworkCloudRackDefinitionPatch aggregatorOrSingleRackDefinitionPatch = default;
             AnalyticsOutputSettings analyticsOutputSettings = default;
             string clusterLocation = default;
-            ServicePrincipalInformationPatch clusterServicePrincipal = default;
+            ServicePrincipalInformationPatch clusterServicePrincipalPatch = default;
             CommandOutputSettings commandOutputSettings = default;
-            ValidationThresholdPatch computeDeploymentThreshold = default;
-            IList<NetworkCloudRackDefinitionPatch> computeRackDefinitions = default;
+            ValidationThresholdPatch computeDeploymentThresholdPatch = default;
+            IList<NetworkCloudRackDefinitionPatch> computeRackDefinitionsPatch = default;
             RuntimeProtectionConfigurationPatch runtimeProtectionConfiguration = default;
-            ClusterSecretArchivePatch secretArchive = default;
+            ClusterSecretArchivePatch secretArchivePatch = default;
             SecretArchiveSettings secretArchiveSettings = default;
-            ClusterUpdateStrategyPatch updateStrategy = default;
+            ClusterUpdateStrategyPatch updateStrategyPatch = default;
             VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    aggregatorOrSingleRackDefinition = NetworkCloudRackDefinitionPatch.DeserializeNetworkCloudRackDefinitionPatch(prop.Value, options);
+                    aggregatorOrSingleRackDefinitionPatch = NetworkCloudRackDefinitionPatch.DeserializeNetworkCloudRackDefinitionPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("analyticsOutputSettings"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    clusterServicePrincipal = ServicePrincipalInformationPatch.DeserializeServicePrincipalInformationPatch(prop.Value, options);
+                    clusterServicePrincipalPatch = ServicePrincipalInformationPatch.DeserializeServicePrincipalInformationPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("commandOutputSettings"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    computeDeploymentThreshold = ValidationThresholdPatch.DeserializeValidationThresholdPatch(prop.Value, options);
+                    computeDeploymentThresholdPatch = ValidationThresholdPatch.DeserializeValidationThresholdPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("computeRackDefinitions"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         array.Add(NetworkCloudRackDefinitionPatch.DeserializeNetworkCloudRackDefinitionPatch(item, options));
                     }
-                    computeRackDefinitions = array;
+                    computeRackDefinitionsPatch = array;
                     continue;
                 }
                 if (prop.NameEquals("runtimeProtectionConfiguration"u8))
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    secretArchive = ClusterSecretArchivePatch.DeserializeClusterSecretArchivePatch(prop.Value, options);
+                    secretArchivePatch = ClusterSecretArchivePatch.DeserializeClusterSecretArchivePatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("secretArchiveSettings"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    updateStrategy = ClusterUpdateStrategyPatch.DeserializeClusterUpdateStrategyPatch(prop.Value, options);
+                    updateStrategyPatch = ClusterUpdateStrategyPatch.DeserializeClusterUpdateStrategyPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vulnerabilityScanningSettings"u8))
@@ -311,17 +311,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             return new ClusterPatchProperties(
-                aggregatorOrSingleRackDefinition,
+                aggregatorOrSingleRackDefinitionPatch,
                 analyticsOutputSettings,
                 clusterLocation,
-                clusterServicePrincipal,
+                clusterServicePrincipalPatch,
                 commandOutputSettings,
-                computeDeploymentThreshold,
-                computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinitionPatch>(),
+                computeDeploymentThresholdPatch,
+                computeRackDefinitionsPatch ?? new ChangeTrackingList<NetworkCloudRackDefinitionPatch>(),
                 runtimeProtectionConfiguration,
-                secretArchive,
+                secretArchivePatch,
                 secretArchiveSettings,
-                updateStrategy,
+                updateStrategyPatch,
                 vulnerabilityScanningSettings,
                 additionalBinaryDataProperties);
         }

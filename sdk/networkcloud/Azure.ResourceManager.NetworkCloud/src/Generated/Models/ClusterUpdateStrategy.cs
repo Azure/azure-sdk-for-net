@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateStrategy"/>. </summary>
-        /// <param name="strategyType"> The mode of operation for runtime protection. </param>
+        /// <param name="strategyType"> The strategy for updating the cluster. </param>
         /// <param name="thresholdType"> Selection of how the threshold should be evaluated. </param>
         /// <param name="thresholdValue"> The numeric threshold value. </param>
         public ClusterUpdateStrategy(ClusterUpdateStrategyType strategyType, ValidationThresholdType thresholdType, long thresholdValue)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterUpdateStrategy"/>. </summary>
         /// <param name="maxUnavailable"> The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack. Limited by the maximum number of machines in the increment. Defaults to the whole increment size. </param>
-        /// <param name="strategyType"> The mode of operation for runtime protection. </param>
+        /// <param name="strategyType"> The strategy for updating the cluster. </param>
         /// <param name="thresholdType"> Selection of how the threshold should be evaluated. </param>
         /// <param name="thresholdValue"> The numeric threshold value. </param>
         /// <param name="waitTimeMinutes"> The time to wait between the increments of update defined by the strategy. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack. Limited by the maximum number of machines in the increment. Defaults to the whole increment size. </summary>
         public long? MaxUnavailable { get; set; }
 
-        /// <summary> The mode of operation for runtime protection. </summary>
+        /// <summary> The strategy for updating the cluster. </summary>
         public ClusterUpdateStrategyType StrategyType { get; set; }
 
         /// <summary> Selection of how the threshold should be evaluated. </summary>

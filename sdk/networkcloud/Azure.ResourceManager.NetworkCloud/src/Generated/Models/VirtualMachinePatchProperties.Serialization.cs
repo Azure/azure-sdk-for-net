@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachinePatchProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(VmImageRepositoryCredentials))
+            if (Optional.IsDefined(VmImageRepositoryCredentialsPatch))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials, options);
+                writer.WriteObjectValue(VmImageRepositoryCredentialsPatch, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            ImageRepositoryCredentialsPatch vmImageRepositoryCredentials = default;
+            ImageRepositoryCredentialsPatch vmImageRepositoryCredentialsPatch = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    vmImageRepositoryCredentials = ImageRepositoryCredentialsPatch.DeserializeImageRepositoryCredentialsPatch(prop.Value, options);
+                    vmImageRepositoryCredentialsPatch = ImageRepositoryCredentialsPatch.DeserializeImageRepositoryCredentialsPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachinePatchProperties(vmImageRepositoryCredentials, additionalBinaryDataProperties);
+            return new VirtualMachinePatchProperties(vmImageRepositoryCredentialsPatch, additionalBinaryDataProperties);
         }
     }
 }
