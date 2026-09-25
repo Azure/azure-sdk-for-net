@@ -1145,11 +1145,29 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Lists the restorable Azure Cosmos DB MongoDB collections for a given database under a database account.
-        ///             Back-compat overload that delegates to <see cref="RestorableCosmosDBAccountResource.GetRestorableMongoDBCollectionsAsync(string,string,string,CancellationToken)"/>.
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableMongodbCollections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RestorableDatabaseAccountGetResults_RestorableMongodbCollectionsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RestorableCosmosDBAccountResource"/>. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="restorableMongoDBDatabaseRid"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RestorableMongoDBCollection"/> that may take multiple service requests to iterate over. </returns>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -1160,11 +1178,29 @@ namespace Azure.ResourceManager.CosmosDB
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
 
         /// <summary>
-        /// Lists the restorable Azure Cosmos DB MongoDB collections for a given database under a database account.
-        ///             Back-compat overload that delegates to <see cref="RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections(string,string,string,CancellationToken)"/>.
+        /// Show the event feed of all mutations done on all the Azure Cosmos DB MongoDB collections under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read' permission
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}/restorableMongodbCollections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RestorableDatabaseAccountGetResults_RestorableMongodbCollectionsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-15. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RestorableCosmosDBAccountResource"/>. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="restorableMongoDBDatabaseRid"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="restorableMongoDBDatabaseRid"> The resource ID of the MongoDB database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RestorableMongoDBCollection"/> that may take multiple service requests to iterate over. </returns>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
