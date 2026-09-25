@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -18,30 +19,33 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Initializes a new instance of <see cref="SignalConfiguration"/>. </summary>
         /// <param name="signalId"> Unique identifier of the recommended signal configuration. </param>
-        internal SignalConfiguration(string signalId)
+        /// <param name="configuration"> Kind-specific settings for the recommended signal. </param>
+        internal SignalConfiguration(string signalId, SignalRecommendationConfiguration configuration)
         {
             SignalId = signalId;
+            ApplicableResourceTypes = new ChangeTrackingList<string>();
+            Configuration = configuration;
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalConfiguration"/>. </summary>
         /// <param name="signalId"> Unique identifier of the recommended signal configuration. </param>
-        /// <param name="metricNamespace"> Metric namespace (e.g. 'microsoft.compute/virtualmachines'). </param>
-        /// <param name="metricName"> Name of the metric (e.g. 'Percentage CPU'). </param>
-        /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="unit"> Unit of the metric (e.g. Percent, Bytes, Count). </param>
-        /// <param name="timeGrain"> Time range of the metric. ISO 8601 duration format (e.g. 'PT5M'). </param>
-        /// <param name="dimensionFilter"> Optional dimension filter to apply to the metric. </param>
+        /// <param name="displayName"> Display name of the recommended signal configuration. </param>
+        /// <param name="description"> Description of the recommended signal configuration. </param>
+        /// <param name="applicableResourceTypes"> Azure resource types to which the recommended signal configuration applies. </param>
+        /// <param name="refreshInterval"> Interval in which the recommended signal is evaluated. </param>
+        /// <param name="dataUnit"> Unit of the recommended signal result (e.g. Bytes, MilliSeconds, Percent, Count). </param>
+        /// <param name="configuration"> Kind-specific settings for the recommended signal. </param>
         /// <param name="evaluationRules"> Evaluation rules with recommended thresholds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalConfiguration(string signalId, string metricNamespace, string metricName, MetricAggregationType? aggregationType, string unit, string timeGrain, string dimensionFilter, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalConfiguration(string signalId, string displayName, string description, IList<string> applicableResourceTypes, EntitySignalRefreshInterval? refreshInterval, string dataUnit, SignalRecommendationConfiguration configuration, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalId = signalId;
-            MetricNamespace = metricNamespace;
-            MetricName = metricName;
-            AggregationType = aggregationType;
-            Unit = unit;
-            TimeGrain = timeGrain;
-            DimensionFilter = dimensionFilter;
+            DisplayName = displayName;
+            Description = description;
+            ApplicableResourceTypes = applicableResourceTypes;
+            RefreshInterval = refreshInterval;
+            DataUnit = dataUnit;
+            Configuration = configuration;
             EvaluationRules = evaluationRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,23 +53,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Unique identifier of the recommended signal configuration. </summary>
         public string SignalId { get; }
 
-        /// <summary> Metric namespace (e.g. 'microsoft.compute/virtualmachines'). </summary>
-        public string MetricNamespace { get; }
+        /// <summary> Display name of the recommended signal configuration. </summary>
+        public string DisplayName { get; }
 
-        /// <summary> Name of the metric (e.g. 'Percentage CPU'). </summary>
-        public string MetricName { get; }
+        /// <summary> Description of the recommended signal configuration. </summary>
+        public string Description { get; }
 
-        /// <summary> Type of aggregation to apply to the metric. </summary>
-        public MetricAggregationType? AggregationType { get; }
+        /// <summary> Azure resource types to which the recommended signal configuration applies. </summary>
+        public IList<string> ApplicableResourceTypes { get; }
 
-        /// <summary> Unit of the metric (e.g. Percent, Bytes, Count). </summary>
-        public string Unit { get; }
+        /// <summary> Interval in which the recommended signal is evaluated. </summary>
+        public EntitySignalRefreshInterval? RefreshInterval { get; }
 
-        /// <summary> Time range of the metric. ISO 8601 duration format (e.g. 'PT5M'). </summary>
-        public string TimeGrain { get; }
+        /// <summary> Unit of the recommended signal result (e.g. Bytes, MilliSeconds, Percent, Count). </summary>
+        public string DataUnit { get; }
 
-        /// <summary> Optional dimension filter to apply to the metric. </summary>
-        public string DimensionFilter { get; }
+        /// <summary> Kind-specific settings for the recommended signal. </summary>
+        public SignalRecommendationConfiguration Configuration { get; }
 
         /// <summary> Evaluation rules with recommended thresholds. </summary>
         public EntitySignalEvaluationRule EvaluationRules { get; }
