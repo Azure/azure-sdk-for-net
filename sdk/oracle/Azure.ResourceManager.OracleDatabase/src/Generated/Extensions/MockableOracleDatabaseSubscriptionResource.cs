@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         private ResourceAnchors _resourceAnchorsRestClient;
         private ClientDiagnostics _dbSystemsClientDiagnostics;
         private DbSystems _dbSystemsRestClient;
+        private ClientDiagnostics _goldenGateConnectionsClientDiagnostics;
+        private GoldenGateConnections _goldenGateConnectionsRestClient;
+        private ClientDiagnostics _goldenGateDeploymentsClientDiagnostics;
+        private GoldenGateDeployments _goldenGateDeploymentsRestClient;
 
         /// <summary> Initializes a new instance of MockableOracleDatabaseSubscriptionResource for mocking. </summary>
         protected MockableOracleDatabaseSubscriptionResource()
@@ -51,35 +55,43 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
 
         private ClientDiagnostics CloudExadataInfrastructuresClientDiagnostics => _cloudExadataInfrastructuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudExadataInfrastructures CloudExadataInfrastructuresRestClient => _cloudExadataInfrastructuresRestClient ??= new CloudExadataInfrastructures(CloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private CloudExadataInfrastructures CloudExadataInfrastructuresRestClient => _cloudExadataInfrastructuresRestClient ??= new CloudExadataInfrastructures(CloudExadataInfrastructuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics CloudVmClustersClientDiagnostics => _cloudVmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CloudVmClusters CloudVmClustersRestClient => _cloudVmClustersRestClient ??= new CloudVmClusters(CloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private CloudVmClusters CloudVmClustersRestClient => _cloudVmClustersRestClient ??= new CloudVmClusters(CloudVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics AutonomousDatabasesClientDiagnostics => _autonomousDatabasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AutonomousDatabases AutonomousDatabasesRestClient => _autonomousDatabasesRestClient ??= new AutonomousDatabases(AutonomousDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private AutonomousDatabases AutonomousDatabasesRestClient => _autonomousDatabasesRestClient ??= new AutonomousDatabases(AutonomousDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ExadbVmClustersClientDiagnostics => _exadbVmClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExadbVmClusters ExadbVmClustersRestClient => _exadbVmClustersRestClient ??= new ExadbVmClusters(ExadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExadbVmClusters ExadbVmClustersRestClient => _exadbVmClustersRestClient ??= new ExadbVmClusters(ExadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ExascaleDbStorageVaultsClientDiagnostics => _exascaleDbStorageVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExascaleDbStorageVaults ExascaleDbStorageVaultsRestClient => _exascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaults(ExascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ExascaleDbStorageVaults ExascaleDbStorageVaultsRestClient => _exascaleDbStorageVaultsRestClient ??= new ExascaleDbStorageVaults(ExascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics NetworkAnchorsClientDiagnostics => _networkAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkAnchors NetworkAnchorsRestClient => _networkAnchorsRestClient ??= new NetworkAnchors(NetworkAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private NetworkAnchors NetworkAnchorsRestClient => _networkAnchorsRestClient ??= new NetworkAnchors(NetworkAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ResourceAnchorsClientDiagnostics => _resourceAnchorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceAnchors ResourceAnchorsRestClient => _resourceAnchorsRestClient ??= new ResourceAnchors(ResourceAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private ResourceAnchors ResourceAnchorsRestClient => _resourceAnchorsRestClient ??= new ResourceAnchors(ResourceAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics DbSystemsClientDiagnostics => _dbSystemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DbSystems DbSystemsRestClient => _dbSystemsRestClient ??= new DbSystems(DbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private DbSystems DbSystemsRestClient => _dbSystemsRestClient ??= new DbSystems(DbSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+
+        private ClientDiagnostics GoldenGateConnectionsClientDiagnostics => _goldenGateConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GoldenGateConnections GoldenGateConnectionsRestClient => _goldenGateConnectionsRestClient ??= new GoldenGateConnections(GoldenGateConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+
+        private ClientDiagnostics GoldenGateDeploymentsClientDiagnostics => _goldenGateDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OracleDatabase.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GoldenGateDeployments GoldenGateDeploymentsRestClient => _goldenGateDeploymentsRestClient ??= new GoldenGateDeployments(GoldenGateDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary> Gets a collection of OracleSystemVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -102,7 +114,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,7 +144,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,7 +174,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -197,7 +209,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +239,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +277,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +307,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +345,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,7 +375,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +413,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,7 +443,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,7 +481,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,7 +511,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,7 +549,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -567,7 +579,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -605,7 +617,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -635,7 +647,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -673,7 +685,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -703,7 +715,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -741,7 +753,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -771,7 +783,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -788,6 +800,142 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             return GetOracleDBVersions(location).Get(dbversionsname, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DatabaseEditions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of DatabaseEditions and their operations over a DatabaseEditionResource. </returns>
+        public virtual DatabaseEditionCollection GetDatabaseEditions(AzureLocation location)
+        {
+            return GetCachedClient(client => new DatabaseEditionCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Get a DatabaseEdition
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/databaseEditions/{databaseeditionname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseEditions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databaseeditionname"> DatabaseEdition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseeditionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseeditionname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseEditionResource>> GetDatabaseEditionAsync(AzureLocation location, string databaseeditionname, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseeditionname, nameof(databaseeditionname));
+
+            return await GetDatabaseEditions(location).GetAsync(databaseeditionname, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DatabaseEdition
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/databaseEditions/{databaseeditionname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseEditions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databaseeditionname"> DatabaseEdition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseeditionname"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseeditionname"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseEditionResource> GetDatabaseEdition(AzureLocation location, string databaseeditionname, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseeditionname, nameof(databaseeditionname));
+
+            return GetDatabaseEditions(location).Get(databaseeditionname, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DatabaseSystemShapes in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of DatabaseSystemShapes and their operations over a DatabaseSystemShapeResource. </returns>
+        public virtual DatabaseSystemShapeCollection GetDatabaseSystemShapes(AzureLocation location)
+        {
+            return GetCachedClient(client => new DatabaseSystemShapeCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Get a DatabaseSystemShape
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/databaseSystemShapes/{databasesystemshapename}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseSystemShapeResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databasesystemshapename"> DatabaseSystemShape name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databasesystemshapename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databasesystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseSystemShapeResource>> GetDatabaseSystemShapeAsync(AzureLocation location, string databasesystemshapename, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databasesystemshapename, nameof(databasesystemshapename));
+
+            return await GetDatabaseSystemShapes(location).GetAsync(databasesystemshapename, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DatabaseSystemShape
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/databaseSystemShapes/{databasesystemshapename}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseSystemShapeResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="databasesystemshapename"> DatabaseSystemShape name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databasesystemshapename"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databasesystemshapename"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DatabaseSystemShapeResource> GetDatabaseSystemShape(AzureLocation location, string databasesystemshapename, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databasesystemshapename, nameof(databasesystemshapename));
+
+            return GetDatabaseSystemShapes(location).Get(databasesystemshapename, cancellationToken);
+        }
+
         /// <summary>
         /// List CloudExadataInfrastructure resources by subscription ID
         /// <list type="bullet">
@@ -801,7 +949,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -829,7 +977,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -857,7 +1005,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -885,7 +1033,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -913,7 +1061,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -941,7 +1089,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -969,7 +1117,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -997,7 +1145,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1025,7 +1173,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1053,7 +1201,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1081,7 +1229,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1109,7 +1257,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1137,7 +1285,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1165,7 +1313,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1193,7 +1341,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1221,7 +1369,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1234,6 +1382,118 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<OracleDBSystemData, OracleDBSystemResource>(new DbSystemsGetBySubscriptionCollectionResultOfT(DbSystemsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetOracleDBSystems"), data => new OracleDBSystemResource(Client, data));
+        }
+
+        /// <summary>
+        /// List GoldenGateConnection resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/goldenGateConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateConnections_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GoldenGateConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GoldenGateConnectionResource> GetGoldenGateConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GoldenGateConnectionData, GoldenGateConnectionResource>(new GoldenGateConnectionsGetBySubscriptionAsyncCollectionResultOfT(GoldenGateConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetGoldenGateConnections"), data => new GoldenGateConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List GoldenGateConnection resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/goldenGateConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateConnections_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GoldenGateConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GoldenGateConnectionResource> GetGoldenGateConnections(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GoldenGateConnectionData, GoldenGateConnectionResource>(new GoldenGateConnectionsGetBySubscriptionCollectionResultOfT(GoldenGateConnectionsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetGoldenGateConnections"), data => new GoldenGateConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List GoldenGateDeployment resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/goldenGateDeployments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateDeployments_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GoldenGateDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GoldenGateDeploymentResource> GetGoldenGateDeploymentsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GoldenGateDeploymentData, GoldenGateDeploymentResource>(new GoldenGateDeploymentsGetBySubscriptionAsyncCollectionResultOfT(GoldenGateDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetGoldenGateDeployments"), data => new GoldenGateDeploymentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List GoldenGateDeployment resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Oracle.Database/goldenGateDeployments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateDeployments_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GoldenGateDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GoldenGateDeploymentResource> GetGoldenGateDeployments(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GoldenGateDeploymentData, GoldenGateDeploymentResource>(new GoldenGateDeploymentsGetBySubscriptionCollectionResultOfT(GoldenGateDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOracleDatabaseSubscriptionResource.GetGoldenGateDeployments"), data => new GoldenGateDeploymentResource(Client, data));
         }
     }
 }

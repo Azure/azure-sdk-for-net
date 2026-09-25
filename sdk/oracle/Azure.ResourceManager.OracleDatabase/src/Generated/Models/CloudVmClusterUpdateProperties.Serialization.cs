@@ -159,6 +159,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsAcceleratedNetworkEnabled))
+            {
+                writer.WritePropertyName("isAcceleratedNetworkEnabled"u8);
+                writer.WriteBooleanValue(IsAcceleratedNetworkEnabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -213,6 +218,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DiagnosticCollectionConfig dataCollectionOptions = default;
             string displayName = default;
             IList<string> computeNodeOcids = default;
+            bool? isAcceleratedNetworkEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -349,6 +355,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     computeNodeOcids = array;
                     continue;
                 }
+                if (prop.NameEquals("isAcceleratedNetworkEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAcceleratedNetworkEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -367,6 +382,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 dataCollectionOptions,
                 displayName,
                 computeNodeOcids ?? new ChangeTrackingList<string>(),
+                isAcceleratedNetworkEnabled,
                 additionalBinaryDataProperties);
         }
     }

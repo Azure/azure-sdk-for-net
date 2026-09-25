@@ -149,6 +149,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsAutoscaleEnabled))
+            {
+                writer.WritePropertyName("isAutoscaleEnabled"u8);
+                writer.WriteBooleanValue(IsAutoscaleEnabled.Value);
+            }
+            if (Optional.IsDefined(AutoscaleLimitInGbs))
+            {
+                writer.WritePropertyName("autoscaleLimitInGbs"u8);
+                writer.WriteNumberValue(AutoscaleLimitInGbs.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -205,6 +215,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri ociUri = default;
             ResourceIdentifier exadataInfrastructureId = default;
             IReadOnlyList<ExascaleStorageShapeAttribute> attachedShapeAttributes = default;
+            bool? isAutoscaleEnabled = default;
+            int? autoscaleLimitInGbs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -315,6 +327,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     attachedShapeAttributes = array;
                     continue;
                 }
+                if (prop.NameEquals("isAutoscaleEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAutoscaleEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("autoscaleLimitInGbs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoscaleLimitInGbs = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -335,6 +365,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 ociUri,
                 exadataInfrastructureId,
                 attachedShapeAttributes ?? new ChangeTrackingList<ExascaleStorageShapeAttribute>(),
+                isAutoscaleEnabled,
+                autoscaleLimitInGbs,
                 additionalBinaryDataProperties);
         }
     }

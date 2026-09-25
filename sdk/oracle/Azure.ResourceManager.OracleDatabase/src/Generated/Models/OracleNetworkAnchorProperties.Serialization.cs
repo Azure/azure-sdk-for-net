@@ -174,6 +174,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dnsForwardingEndpointNsgRulesUrl"u8);
                 writer.WriteStringValue(DnsForwardingEndpointNsgRulesUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(ProximityPlacementGroup))
+            {
+                writer.WritePropertyName("proximityPlacementGroup"u8);
+                writer.WriteObjectValue(ProximityPlacementGroup, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -235,6 +240,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Uri dnsForwardingRulesUri = default;
             Uri dnsListeningEndpointNsgRulesUri = default;
             Uri dnsForwardingEndpointNsgRulesUri = default;
+            ProximityPlacementGroup proximityPlacementGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -374,6 +380,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     dnsForwardingEndpointNsgRulesUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("proximityPlacementGroup"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proximityPlacementGroup = ProximityPlacementGroup.DeserializeProximityPlacementGroup(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -399,6 +414,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 dnsForwardingRulesUri,
                 dnsListeningEndpointNsgRulesUri,
                 dnsForwardingEndpointNsgRulesUri,
+                proximityPlacementGroup,
                 additionalBinaryDataProperties);
         }
     }

@@ -85,6 +85,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ocid"u8);
                 writer.WriteStringValue(CloudVmClusterOcid);
             }
+            if (Optional.IsDefined(ResourceAnchorId))
+            {
+                writer.WritePropertyName("resourceAnchorId"u8);
+                writer.WriteStringValue(ResourceAnchorId);
+            }
+            if (Optional.IsDefined(NetworkAnchorId))
+            {
+                writer.WritePropertyName("networkAnchorId"u8);
+                writer.WriteStringValue(NetworkAnchorId);
+            }
             if (options.Format != "W" && Optional.IsDefined(ListenerPort))
             {
                 writer.WritePropertyName("listenerPort"u8);
@@ -146,7 +156,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStringValue(ZoneOcid);
             }
             writer.WritePropertyName("hostname"u8);
-            writer.WriteStringValue(Hostname);
+            writer.WriteStringValue(HostnameV2);
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
@@ -169,6 +179,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStoragePercentage"u8);
                 writer.WriteNumberValue(DataStoragePercentage.Value);
             }
+            if (Optional.IsDefined(RecoStoragePercentage))
+            {
+                writer.WritePropertyName("recoStoragePercentage"u8);
+                writer.WriteNumberValue(RecoStoragePercentage.Value);
+            }
+            if (Optional.IsDefined(SparseStoragePercentage))
+            {
+                writer.WritePropertyName("sparseStoragePercentage"u8);
+                writer.WriteNumberValue(SparseStoragePercentage.Value);
+            }
             if (Optional.IsDefined(IsLocalBackupEnabled))
             {
                 writer.WritePropertyName("isLocalBackupEnabled"u8);
@@ -176,6 +196,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("cloudExadataInfrastructureId"u8);
             writer.WriteStringValue(CloudExadataInfrastructureId);
+            if (Optional.IsDefined(ProximityPlacementGroup))
+            {
+                writer.WritePropertyName("proximityPlacementGroup"u8);
+                writer.WriteObjectValue(ProximityPlacementGroup, options);
+            }
             if (Optional.IsDefined(IsSparseDiskgroupEnabled))
             {
                 writer.WritePropertyName("isSparseDiskgroupEnabled"u8);
@@ -238,10 +263,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanDnsName))
+            if (options.Format != "W" && Optional.IsDefined(ScanDnsNameV2))
             {
                 writer.WritePropertyName("scanDnsName"u8);
-                writer.WriteStringValue(ScanDnsName);
+                writer.WriteStringValue(ScanDnsNameV2);
             }
             if (Optional.IsDefined(ScanListenerPortTcp))
             {
@@ -376,6 +401,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("storageManagementType"u8);
                 writer.WriteStringValue(StorageManagementType.Value.ToString());
             }
+            if (Optional.IsDefined(IsAcceleratedNetworkEnabled))
+            {
+                writer.WritePropertyName("isAcceleratedNetworkEnabled"u8);
+                writer.WriteBooleanValue(IsAcceleratedNetworkEnabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -419,6 +449,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string cloudVmClusterOcid = default;
+            ResourceIdentifier resourceAnchorId = default;
+            ResourceIdentifier networkAnchorId = default;
             long? listenerPort = default;
             int? nodeCount = default;
             int? storageSizeInGbs = default;
@@ -430,14 +462,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string lifecycleDetails = default;
             string timeZone = default;
             string zoneOcid = default;
-            string hostname = default;
             string domain = default;
             int cpuCoreCount = default;
             float? ocpuCount = default;
             string clusterName = default;
             int? dataStoragePercentage = default;
+            int? recoStoragePercentage = default;
+            int? sparseStoragePercentage = default;
             bool? isLocalBackupEnabled = default;
             ResourceIdentifier cloudExadataInfrastructureId = default;
+            ProximityPlacementGroup proximityPlacementGroup = default;
             bool? isSparseDiskgroupEnabled = default;
             string systemVersion = default;
             IList<string> sshPublicKeys = default;
@@ -445,7 +479,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             CloudVmClusterDiskRedundancy? diskRedundancy = default;
             IReadOnlyList<string> scanIPIds = default;
             IReadOnlyList<string> vipIds = default;
-            string scanDnsName = default;
+            string scanDnsNameV2 = default;
             int? scanListenerPortTcp = default;
             int? scanListenerPortTcpSsl = default;
             string scanDnsRecordOcid = default;
@@ -470,12 +504,31 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OracleDatabaseComputeModel? computeModel = default;
             ResourceIdentifier exascaleDBStorageVaultOcid = default;
             ExadataVmClusterStorageManagementType? storageManagementType = default;
+            bool? isAcceleratedNetworkEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ocid"u8))
                 {
                     cloudVmClusterOcid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceAnchorId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceAnchorId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("networkAnchorId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAnchorId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("listenerPort"u8))
@@ -608,6 +661,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     dataStoragePercentage = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("recoStoragePercentage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoStoragePercentage = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("sparseStoragePercentage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sparseStoragePercentage = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("isLocalBackupEnabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -620,6 +691,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 if (prop.NameEquals("cloudExadataInfrastructureId"u8))
                 {
                     cloudExadataInfrastructureId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("proximityPlacementGroup"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proximityPlacementGroup = ProximityPlacementGroup.DeserializeProximityPlacementGroup(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isSparseDiskgroupEnabled"u8))
@@ -715,7 +795,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("scanDnsName"u8))
                 {
-                    scanDnsName = prop.Value.GetString();
+                    scanDnsNameV2 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scanListenerPortTcp"u8))
@@ -923,6 +1003,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     storageManagementType = new ExadataVmClusterStorageManagementType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("isAcceleratedNetworkEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAcceleratedNetworkEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -930,6 +1019,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             return new CloudVmClusterProperties(
                 cloudVmClusterOcid,
+                resourceAnchorId,
+                networkAnchorId,
                 listenerPort,
                 nodeCount,
                 storageSizeInGbs,
@@ -941,14 +1032,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 lifecycleDetails,
                 timeZone,
                 zoneOcid,
-                hostname,
+                default,
                 domain,
                 cpuCoreCount,
                 ocpuCount,
                 clusterName,
                 dataStoragePercentage,
+                recoStoragePercentage,
+                sparseStoragePercentage,
                 isLocalBackupEnabled,
                 cloudExadataInfrastructureId,
+                proximityPlacementGroup,
                 isSparseDiskgroupEnabled,
                 systemVersion,
                 sshPublicKeys,
@@ -956,7 +1050,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 diskRedundancy,
                 scanIPIds ?? new ChangeTrackingList<string>(),
                 vipIds ?? new ChangeTrackingList<string>(),
-                scanDnsName,
+                scanDnsNameV2,
                 scanListenerPortTcp,
                 scanListenerPortTcpSsl,
                 scanDnsRecordOcid,
@@ -981,6 +1075,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeModel,
                 exascaleDBStorageVaultOcid,
                 storageManagementType,
+                isAcceleratedNetworkEnabled,
                 additionalBinaryDataProperties);
         }
     }
