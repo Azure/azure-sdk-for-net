@@ -138,6 +138,12 @@
 # ServiceLabel: %Azure Stack
 # ServiceOwners: @bganapa
 
+# PRLabel: %Azure.Data.AI
+/sdk/dataai/    @Azure/azure-data-ai-net-sdk
+
+# ServiceLabel: %Azure.Data.AI
+# ServiceOwners: @Azure/azure-data-ai-net-sdk
+
 # PRLabel: %Batch
 /sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
 
