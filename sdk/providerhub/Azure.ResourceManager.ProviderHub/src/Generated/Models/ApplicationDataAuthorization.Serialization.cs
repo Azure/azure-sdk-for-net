@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(IsApplicationIdExcludedFromManifest))
+            {
+                writer.WritePropertyName("excludeApplicationIdFromManifest"u8);
+                writer.WriteBooleanValue(IsApplicationIdExcludedFromManifest.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             ApplicationOwnershipRole role = default;
             IList<string> resourceTypes = default;
+            bool? isApplicationIdExcludedFromManifest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,12 +175,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceTypes = array;
                     continue;
                 }
+                if (prop.NameEquals("excludeApplicationIdFromManifest"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isApplicationIdExcludedFromManifest = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationDataAuthorization(role, resourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ApplicationDataAuthorization(role, resourceTypes ?? new ChangeTrackingList<string>(), isApplicationIdExcludedFromManifest, additionalBinaryDataProperties);
         }
     }
 }

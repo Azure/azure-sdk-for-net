@@ -5,16 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
+
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The resource access policy. </summary>
-    public enum ResourceAccessPolicy
+    public readonly partial struct ResourceAccessPolicy : IEquatable<ResourceAccessPolicy>
     {
-        /// <summary> NotSpecified. </summary>
-        NotSpecified,
-        /// <summary> AcisReadAllowed. </summary>
-        AcisReadAllowed,
-        /// <summary> AcisActionAllowed. </summary>
-        AcisActionAllowed
+        private readonly string _value;
+        private const string NotSpecifiedValue = "NotSpecified";
+
+        /// <summary> Initializes a new instance of <see cref="ResourceAccessPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceAccessPolicy(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
+        public static ResourceAccessPolicy NotSpecified { get; } = new ResourceAccessPolicy(NotSpecifiedValue);
+
+        /// <summary> Determines if two <see cref="ResourceAccessPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ResourceAccessPolicy left, ResourceAccessPolicy right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ResourceAccessPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ResourceAccessPolicy left, ResourceAccessPolicy right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ResourceAccessPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceAccessPolicy(string value) => new ResourceAccessPolicy(value);
+
+        /// <summary> Converts a string to a <see cref="ResourceAccessPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceAccessPolicy?(string value) => value == null ? null : new ResourceAccessPolicy(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ResourceAccessPolicy other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(ResourceAccessPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }
