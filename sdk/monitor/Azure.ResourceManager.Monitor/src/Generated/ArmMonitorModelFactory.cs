@@ -2379,7 +2379,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, MetricAlertResolveConfiguration resolveConfiguration, IEnumerable<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2414,7 +2414,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The rule criteria that defines the conditions of the alert rule.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="Models.WebtestLocationAvailabilityCriteria"/>, <see cref="Models.MetricAlertMultipleResourceMultipleMetricCriteria"/>, and <see cref="Models.PromQLCriteria"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="Models.MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="Models.PromQLCriteria"/>, and <see cref="Models.WebtestLocationAvailabilityCriteria"/>.
         /// </summary>
         /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
         /// <param name="additionalProperties"></param>
@@ -2469,7 +2469,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The types of conditions for a multi resource alert.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.MetricCriteria"/> and <see cref="Models.DynamicMetricCriteria"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DynamicMetricCriteria"/> and <see cref="Models.MetricCriteria"/>.
         /// </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
@@ -2589,7 +2589,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary>
         /// The types of conditions for a multi query metric alert.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StaticPromQLCriteria"/> and <see cref="Models.DynamicPromQLCriteria"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DynamicPromQLCriteria"/> and <see cref="Models.StaticPromQLCriteria"/>.
         /// </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>

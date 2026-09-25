@@ -482,10 +482,23 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary>
         /// Get a list of bare metal machines in the provided resource group.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachinesOperation IdBareMetalMachines_ListByResourceGroupDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudBareMetalMachineResource"/>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -497,7 +510,20 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary>
         /// Get a list of bare metal machines in the provided resource group.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachinesOperation IdBareMetalMachines_ListByResourceGroupDefault Api Version2025-07-01-previewResource<see cref="NetworkCloudBareMetalMachineResource"/>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/bareMetalMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BareMetalMachines_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource"/> that may take multiple service requests to iterate over. </returns>
