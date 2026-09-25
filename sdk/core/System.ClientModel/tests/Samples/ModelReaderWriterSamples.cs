@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
@@ -57,6 +57,144 @@ internal class ModelReaderWriterSamples
             }";
         OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
         #endregion
+    }
+
+    public void Write_Proxy()
+    {
+        #region Snippet:Readme_Write_Proxy
+        InputModel model = new InputModel();
+
+        ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+        options.AddProxy<InputModel>((IJsonModel<InputModel>)new InputModelProxy());
+
+        // ResolveProxy returns the proxy if one is registered, otherwise the model itself.
+        IJsonModel<InputModel> resolved = options.ResolveProxy((IJsonModel<InputModel>)model);
+        BinaryData data = ((IPersistableModel<InputModel>)resolved).Write(options);
+        #endregion
+    }
+
+    public void Read_Proxy()
+    {
+        #region Snippet:Readme_Read_Proxy
+        string json = @"{
+              ""x"": 1,
+              ""y"": 2,
+              ""z"": 3
+            }";
+
+        ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+        options.AddProxy<OutputModel>((IJsonModel<OutputModel>)new OutputModelProxy());
+
+        OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+        #endregion
+    }
+
+    public void Read_Proxy_Chain()
+    {
+        #region Snippet:Readme_Proxy_Chain
+        string json = @"{
+              ""x"": 1,
+              ""y"": 2,
+              ""z"": 3
+            }";
+        ModelReaderWriterOptions options = new ModelReaderWriterOptions("W");
+
+        // Higher-priority proxy registered first — consulted first in the chain
+        options.AddProxy(new OutputModelProxyOverride());
+
+        // Base library registers a fallback proxy
+        options.AddProxy(new OutputModelProxy());
+
+        OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json), options);
+        #endregion
+    }
+
+    #region Snippet:Readme_Read_Proxy_ClassStub
+    public class OutputModelProxy : IJsonModel<OutputModel>
+    #endregion
+    {
+        void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class OutputModelProxyOverride : IJsonModel<OutputModel>
+    {
+        void IJsonModel<OutputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        OutputModel IPersistableModel<OutputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<OutputModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #region Snippet:Readme_Write_Proxy_ClassStub
+    public class InputModelProxy : IJsonModel<InputModel>
+    #endregion
+    {
+        void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        InputModel IJsonModel<InputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        InputModel IPersistableModel<InputModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        BinaryData IPersistableModel<InputModel>.Write(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IPersistableModel<InputModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public void ModelReaderWriterContext_Usage()
@@ -120,7 +258,7 @@ internal class ModelReaderWriterSamples
         }
     }
 
-    private class OutputModel : IJsonModel<OutputModel>
+    internal class OutputModel : IJsonModel<OutputModel>
     {
         OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
@@ -148,7 +286,7 @@ internal class ModelReaderWriterSamples
         }
     }
 
-    private class InputModel : IJsonModel<InputModel>
+    internal class InputModel : IJsonModel<InputModel>
     {
         void IJsonModel<InputModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

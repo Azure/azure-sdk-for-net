@@ -58,9 +58,9 @@ public class OperationResultTests : SyncAsyncTestBase
         {
             PipelineResponse priorResponse = operation.GetRawResponse();
 
-             ClientResult result = IsAsync ?
-                await operation.UpdateStatusAsync() :
-                operation.UpdateStatus();
+            ClientResult result = IsAsync ?
+               await operation.UpdateStatusAsync() :
+               operation.UpdateStatus();
 
             // Custom interval: no wait.
 

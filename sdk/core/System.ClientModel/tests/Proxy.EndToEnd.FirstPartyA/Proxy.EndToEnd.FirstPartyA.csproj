@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Mock "Foundry-like" third-party library #1. Adds an AzureSearchTool subtype and a conditional proxy that intercepts the "azure_search" discriminator.</Description>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
+    <ProjectReference Include="..\Proxy.EndToEnd.OpenAILike\Proxy.EndToEnd.OpenAILike.csproj" />
+  </ItemGroup>
+
+</Project>
