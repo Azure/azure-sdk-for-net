@@ -140,12 +140,99 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"pro.perty\":\"value\"}", jp.ToString("J"));
         }
 
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public void ContainsValue_PropagatedValue_AgreesWithReadApis(bool hasLocalProperties, bool isNull)
+        {
+            JsonPatch parent = new("{\"child\":{\"name\":\"value\",\"nullProperty\":null}}"u8.ToArray());
+            JsonPatch child = new();
+            if (hasLocalProperties)
+            {
+                child.Set("$.local"u8, "local");
+            }
+            child.SetPropagators(
+                (ReadOnlySpan<byte> path, JsonPatch.EncodedValue value) => false,
+                (ReadOnlySpan<byte> path, out JsonPatch.EncodedValue value) =>
+                    parent.TryGetEncodedValue([.. "$.child"u8, .. path.Slice(1)], out value));
+            byte[] path = Encoding.UTF8.GetBytes(isNull ? "$.nullProperty" : "$.name");
+
+            Assert.IsTrue(child.TryGetEncodedValue(path, out _));
+            Assert.IsTrue(child.TryGetJson(path, out var json));
+            Assert.AreEqual(isNull ? "null" : "\"value\"", Encoding.UTF8.GetString(json.ToArray()));
+            Assert.AreEqual(isNull ? null : "value", child.GetString(path));
+            Assert.IsTrue(child.ContainsValue(path));
+            Assert.IsFalse(child.Contains(path));
+            Assert.IsFalse(child.ContainsValue("$.missing"u8));
+            Assert.AreEqual(hasLocalProperties, child.ContainsValue("$.local"u8));
+        }
+
+        [Test]
+        public void ContainsValue_PropagatedRemoval_TakesPrecedenceOverLocalValue()
+        {
+            JsonPatch parent = new("{\"name\":\"value\"}"u8.ToArray());
+            parent.Remove("$.name"u8);
+            JsonPatch child = new();
+            child.Set("$.name"u8, "local");
+            child.SetPropagators(
+                (ReadOnlySpan<byte> path, JsonPatch.EncodedValue value) => false,
+                (ReadOnlySpan<byte> path, out JsonPatch.EncodedValue value) =>
+                    parent.TryGetEncodedValue(path, out value));
+
+            Assert.IsFalse(child.ContainsValue("$.name"u8));
+            Assert.Throws<KeyNotFoundException>(() => child.GetString("$.name"u8));
+            Assert.IsTrue(child.Contains("$.name"u8));
+        }
+
+        [Test]
+        public void ContainsValue_SeededAndStoredValues()
+        {
+            JsonPatch jp = new("{\"parent\":{\"name\":\"value\"}}"u8.ToArray());
+
+            Assert.IsTrue(jp.ContainsValue("$.parent.name"u8));
+            Assert.IsFalse(jp.Contains("$.parent.name"u8));
+            Assert.IsFalse(jp.ContainsValue("$.missing"u8));
+
+            jp.Set("$.parent.name"u8, "updated");
+            Assert.IsTrue(jp.ContainsValue("$.parent.name"u8));
+            Assert.IsTrue(jp.Contains("$.parent.name"u8));
+
+            jp.Remove("$.parent.name"u8);
+            Assert.IsFalse(jp.ContainsValue("$.parent.name"u8));
+            Assert.IsTrue(jp.Contains("$.parent.name"u8));
+
+            jp.SetNull("$.parent.name"u8);
+            Assert.IsTrue(jp.ContainsValue("$.parent.name"u8));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ContainsValue_Root_DoesNotPropagate(bool hasRootOverride)
+        {
+            JsonPatch jp = new();
+            if (hasRootOverride)
+            {
+                jp.Set("$"u8, "local");
+            }
+            jp.SetPropagators(
+                (ReadOnlySpan<byte> path, JsonPatch.EncodedValue value) => false,
+                (ReadOnlySpan<byte> path, out JsonPatch.EncodedValue value) =>
+                    throw new InvalidOperationException("Root reads should not propagate."));
+
+            Assert.AreEqual(hasRootOverride, jp.ContainsValue("$"u8));
+            Assert.AreEqual(hasRootOverride, jp.TryGetEncodedValue("$"u8, out _));
+        }
+
         [Test]
         public void Contains_ArrayAppend_DoesNotReportArrayPath()
         {
             JsonPatch jp = new();
             jp.Append("$.items"u8, "value1");
             Assert.IsFalse(jp.Contains("$.items"u8), "Append should not cause Contains(path) to report true for the array container path.");
+            Assert.IsTrue(jp.ContainsValue("$.items"u8));
+            Assert.IsTrue(jp.ContainsValue("$.items[0]"u8));
+            Assert.IsFalse(jp.ContainsValue("$.items[1]"u8));
 
             Assert.AreEqual("value1", jp.GetString("$.items[0]"u8));
         }

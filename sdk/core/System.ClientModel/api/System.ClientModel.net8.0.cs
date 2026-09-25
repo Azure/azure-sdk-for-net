@@ -421,6 +421,7 @@ namespace System.ClientModel.Primitives
         public void AppendNull(System.ReadOnlySpan<byte> arrayPath) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool Contains(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
+        public bool ContainsValue(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator EnumerateArray(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public byte GetByte(System.ReadOnlySpan<byte> jsonPath) { throw null; }
