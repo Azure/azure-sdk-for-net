@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             {
                 return null;
             }
-            AzureBlobStorageCapabilityUpdate azureBlobStorage = default;
+            AzureBlobStorageCapabilityPatch azureBlobStorage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AzureBlobStorageCapabilityUpdate.DeserializeAzureBlobStorageCapabilityUpdate(prop.Value, options);
+                    azureBlobStorage = AzureBlobStorageCapabilityPatch.DeserializeAzureBlobStorageCapabilityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

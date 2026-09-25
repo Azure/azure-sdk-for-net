@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="capabilitiesAzureBlobStorage"> The Azure Blob Storage capability configuration to update. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, AzureBlobStorageCapabilityUpdate capabilitiesAzureBlobStorage)
+        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, AzureBlobStorageCapabilityPatch capabilitiesAzureBlobStorage)
         {
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
@@ -132,22 +132,22 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <param name="capacityDetailsStatus"> The enablement status to update for the capacity details capability. </param>
         /// <param name="prefixConfigurations"> The prefix configurations to update for Azure Blob Storage. </param>
-        /// <returns> A new <see cref="Models.AzureBlobStorageCapabilityUpdate"/> instance for mocking. </returns>
-        public static AzureBlobStorageCapabilityUpdate AzureBlobStorageCapabilityUpdate(CapabilityStatus? capacityDetailsStatus = default, IEnumerable<PrefixConfigurationUpdate> prefixConfigurations = default)
+        /// <returns> A new <see cref="Models.AzureBlobStorageCapabilityPatch"/> instance for mocking. </returns>
+        public static AzureBlobStorageCapabilityPatch AzureBlobStorageCapabilityPatch(CapabilityStatus? capacityDetailsStatus = default, IEnumerable<AzureBlobStoragePrefixConfigurationPatch> prefixConfigurations = default)
         {
-            prefixConfigurations ??= new ChangeTrackingList<PrefixConfigurationUpdate>();
+            prefixConfigurations ??= new ChangeTrackingList<AzureBlobStoragePrefixConfigurationPatch>();
 
-            return new AzureBlobStorageCapabilityUpdate(capacityDetailsStatus is null ? default : new CapacityDetailsUpdate(capacityDetailsStatus, default), (prefixConfigurations ?? new ChangeTrackingList<PrefixConfigurationUpdate>()).ToList(), default);
+            return new AzureBlobStorageCapabilityPatch(capacityDetailsStatus is null ? default : new CapacityDetailsUpdate(capacityDetailsStatus, default), (prefixConfigurations ?? new ChangeTrackingList<AzureBlobStoragePrefixConfigurationPatch>()).ToList(), default);
         }
 
         /// <summary> A prefix configuration that can be updated. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="containerName"> The name of the blob container within the storage account. </param>
         /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
-        /// <returns> A new <see cref="Models.PrefixConfigurationUpdate"/> instance for mocking. </returns>
-        public static PrefixConfigurationUpdate PrefixConfigurationUpdate(string storageAccountName = default, string containerName = default, string prefix = default)
+        /// <returns> A new <see cref="Models.AzureBlobStoragePrefixConfigurationPatch"/> instance for mocking. </returns>
+        public static AzureBlobStoragePrefixConfigurationPatch AzureBlobStoragePrefixConfigurationPatch(string storageAccountName = default, string containerName = default, string prefix = default)
         {
-            return new PrefixConfigurationUpdate(storageAccountName, containerName, prefix, default);
+            return new AzureBlobStoragePrefixConfigurationPatch(storageAccountName, containerName, prefix, default);
         }
 
         /// <summary> Storage Discovery Workspace Properties. </summary>

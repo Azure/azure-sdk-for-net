@@ -12,22 +12,22 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> The Azure Blob Storage capability configuration that can be updated. </summary>
-    public partial class AzureBlobStorageCapabilityUpdate
+    public partial class AzureBlobStorageCapabilityPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapabilityUpdate"/>. </summary>
-        public AzureBlobStorageCapabilityUpdate()
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapabilityPatch"/>. </summary>
+        public AzureBlobStorageCapabilityPatch()
         {
-            PrefixConfigurations = new ChangeTrackingList<PrefixConfigurationUpdate>();
+            PrefixConfigurations = new ChangeTrackingList<AzureBlobStoragePrefixConfigurationPatch>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapabilityUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapabilityPatch"/>. </summary>
         /// <param name="capacityDetails"> The capacity details configuration to update for Azure Blob Storage. </param>
         /// <param name="prefixConfigurations"> The prefix configurations to update for Azure Blob Storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobStorageCapabilityUpdate(CapacityDetailsUpdate capacityDetails, IList<PrefixConfigurationUpdate> prefixConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStorageCapabilityPatch(CapacityDetailsUpdate capacityDetails, IList<AzureBlobStoragePrefixConfigurationPatch> prefixConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityDetails = capacityDetails;
             PrefixConfigurations = prefixConfigurations;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         internal CapacityDetailsUpdate CapacityDetails { get; set; }
 
         /// <summary> The prefix configurations to update for Azure Blob Storage. </summary>
-        public IList<PrefixConfigurationUpdate> PrefixConfigurations { get; }
+        public IList<AzureBlobStoragePrefixConfigurationPatch> PrefixConfigurations { get; }
 
         /// <summary> The enablement status to update for the capacity details capability. </summary>
         public CapabilityStatus? CapacityDetailsStatus

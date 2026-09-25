@@ -33,15 +33,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Tests
         public async Task ListByResourceGroupGetsResponse()
         {
             var resourceGroup = await CreateResourceGroup(DefaultSubscription, "sdtest-rg-", AzureLocation.WestUS2).ConfigureAwait(false);
-            StorageDiscoveryWorkspaceCollection collection = resourceGroup.GetStorageDiscoveryWorkspaces();
 
-            await foreach (Page<StorageDiscoveryWorkspaceResource> page in collection.GetAllAsync().AsPages())
+            try
             {
-                Assert.That(page.GetRawResponse().Status, Is.InRange(200, 299));
-                return;
-            }
+                StorageDiscoveryWorkspaceCollection collection = resourceGroup.GetStorageDiscoveryWorkspaces();
 
-            Assert.Fail("Expected the service to return at least one page.");
+                await foreach (Page<StorageDiscoveryWorkspaceResource> page in collection.GetAllAsync().AsPages())
+                {
+                    Assert.That(page.GetRawResponse().Status, Is.InRange(200, 299));
+                    return;
+                }
+
+                Assert.Fail("Expected the service to return at least one page.");
+            }
+            finally
+            {
+                await resourceGroup.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+            }
         }
     }
 }

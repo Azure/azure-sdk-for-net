@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         internal StorageDiscoveryCapabilitiesUpdate Capabilities { get; set; }
 
         /// <summary> The Azure Blob Storage capability configuration to update. </summary>
-        public AzureBlobStorageCapabilityUpdate CapabilitiesAzureBlobStorage
+        public AzureBlobStorageCapabilityPatch CapabilitiesAzureBlobStorage
         {
             get
             {
