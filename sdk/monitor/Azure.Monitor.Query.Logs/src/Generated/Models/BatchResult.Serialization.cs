@@ -15,58 +15,58 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Response to a batch query. </summary>
-    internal partial class BatchResponse : IJsonModel<BatchResponse>
+    internal partial class BatchResult : IJsonModel<BatchResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BatchResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBatchResponse(document.RootElement, options);
+                        return DeserializeBatchResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMonitorQueryLogsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BatchResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BatchResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BatchResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchResponse IPersistableModel<BatchResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BatchResult IPersistableModel<BatchResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BatchResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BatchResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchResponse"/> from. </param>
-        public static explicit operator BatchResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BatchResult"/> from. </param>
+        public static explicit operator BatchResult(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBatchResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BatchResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BatchResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,16 +77,16 @@ namespace Azure.Monitor.Query.Logs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Responses))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
-                foreach (BatchQueryResponse item in Responses)
+                foreach (BatchQueryResult item in Responses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -111,30 +111,30 @@ namespace Azure.Monitor.Query.Logs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BatchResponse IJsonModel<BatchResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BatchResult IJsonModel<BatchResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BatchResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BatchResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BatchResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BatchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchResponse(document.RootElement, options);
+            return DeserializeBatchResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BatchResponse DeserializeBatchResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static BatchResult DeserializeBatchResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<BatchQueryResponse> responses = default;
+            IList<BatchQueryResult> responses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,10 +144,10 @@ namespace Azure.Monitor.Query.Logs.Models
                     {
                         continue;
                     }
-                    List<BatchQueryResponse> array = new List<BatchQueryResponse>();
+                    List<BatchQueryResult> array = new List<BatchQueryResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BatchQueryResponse.DeserializeBatchQueryResponse(item, options));
+                        array.Add(BatchQueryResult.DeserializeBatchQueryResult(item, options));
                     }
                     responses = array;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.Monitor.Query.Logs.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchResponse(responses ?? new ChangeTrackingList<BatchQueryResponse>(), additionalBinaryDataProperties);
+            return new BatchResult(responses ?? new ChangeTrackingList<BatchQueryResult>(), additionalBinaryDataProperties);
         }
     }
 }
