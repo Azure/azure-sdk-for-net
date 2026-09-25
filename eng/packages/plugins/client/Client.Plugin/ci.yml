@@ -35,11 +35,9 @@ extends:
       jobs:
       - job: Build
         steps:
-        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-          parameters:
-            Paths:
-              - "/sdk"
-              - "/common"
+        - checkout: self
+          fetchDepth: 1
+          fetchTags: false
         - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
         - template: /eng/pipelines/templates/steps/install-dotnet.yml
         - pwsh: |
