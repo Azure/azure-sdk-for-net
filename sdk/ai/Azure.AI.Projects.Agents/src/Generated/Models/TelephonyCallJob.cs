@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A durable direct or campaign-created outbound call intent. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyCallJob
+    internal partial class TelephonyCallJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

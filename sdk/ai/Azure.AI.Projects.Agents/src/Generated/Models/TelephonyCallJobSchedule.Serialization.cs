@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The optional execution window for a direct outbound call. </summary>
-    public partial class TelephonyCallJobSchedule : IJsonModel<TelephonyCallJobSchedule>
+    internal partial class TelephonyCallJobSchedule : IJsonModel<TelephonyCallJobSchedule>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

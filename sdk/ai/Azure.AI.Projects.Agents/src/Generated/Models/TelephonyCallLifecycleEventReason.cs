@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Known service-generated reasons for a telephony lifecycle event. An event reason does not necessarily describe the final outcome of the call. Additional string codes may be returned. </summary>
     [Experimental("AAIP001")]
-    public readonly partial struct TelephonyCallLifecycleEventReason : IEquatable<TelephonyCallLifecycleEventReason>
+    internal readonly partial struct TelephonyCallLifecycleEventReason : IEquatable<TelephonyCallLifecycleEventReason>
     {
         private readonly string _value;
         /// <summary> The provider webhook payload was invalid. </summary>

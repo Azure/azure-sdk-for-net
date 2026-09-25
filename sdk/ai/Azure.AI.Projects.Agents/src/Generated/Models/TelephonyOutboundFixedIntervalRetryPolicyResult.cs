@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicy
+    internal partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicy
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/>. </summary>
         /// <param name="interval"> The fixed delay in seconds between attempts. </param>

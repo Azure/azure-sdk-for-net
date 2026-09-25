@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The destination of an outbound call. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyOutboundDestination
+    internal partial class TelephonyOutboundDestination
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

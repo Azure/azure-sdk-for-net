@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The type of destination for an outbound call. </summary>
     [Experimental("AAIP001")]
-    public readonly partial struct TelephonyOutboundDestinationType : IEquatable<TelephonyOutboundDestinationType>
+    internal readonly partial struct TelephonyOutboundDestinationType : IEquatable<TelephonyOutboundDestinationType>
     {
         private readonly string _value;
         /// <summary> An E.164 phone number. </summary>

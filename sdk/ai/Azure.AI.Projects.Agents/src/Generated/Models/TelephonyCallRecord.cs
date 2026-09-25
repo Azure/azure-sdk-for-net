@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Detailed diagnostics for a durable inbound call to a voice agent. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyCallRecord
+    internal partial class TelephonyCallRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

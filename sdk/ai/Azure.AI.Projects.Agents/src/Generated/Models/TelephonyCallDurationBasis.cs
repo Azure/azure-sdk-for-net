@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The timestamp used as the basis for call duration. </summary>
     [Experimental("AAIP001")]
-    public readonly partial struct TelephonyCallDurationBasis : IEquatable<TelephonyCallDurationBasis>
+    internal readonly partial struct TelephonyCallDurationBasis : IEquatable<TelephonyCallDurationBasis>
     {
         private readonly string _value;
         /// <summary> Duration starts when the provider reports the call as answered. </summary>

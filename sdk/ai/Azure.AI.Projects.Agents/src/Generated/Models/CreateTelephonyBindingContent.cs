@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/> and <see cref="CreateTwilioTelephonyBindingContent"/>.
     /// </summary>
     [Experimental("AAIP001")]
-    public abstract partial class CreateTelephonyBindingContent
+    internal abstract partial class CreateTelephonyBindingContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The request to create a Twilio binding. </summary>
-    public partial class CreateTwilioTelephonyBindingContent : CreateTelephonyBindingContent, IJsonModel<CreateTwilioTelephonyBindingContent>
+    internal partial class CreateTwilioTelephonyBindingContent : CreateTelephonyBindingContent, IJsonModel<CreateTwilioTelephonyBindingContent>
     {
         /// <summary> Initializes a new instance of <see cref="CreateTwilioTelephonyBindingContent"/> for deserialization. </summary>
         internal CreateTwilioTelephonyBindingContent()

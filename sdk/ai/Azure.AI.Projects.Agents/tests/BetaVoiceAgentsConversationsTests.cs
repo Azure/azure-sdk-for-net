@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 
 #pragma warning disable AAIP001
 #pragma warning disable AAIP002

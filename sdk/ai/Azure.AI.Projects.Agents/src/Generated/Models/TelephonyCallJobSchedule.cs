@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The optional execution window for a direct outbound call. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyCallJobSchedule
+    internal partial class TelephonyCallJobSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

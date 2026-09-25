@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSTNTelephonyTransferDestination"/>, <see cref="SipTelephonyTransferDestination"/>, and <see cref="TeamsTelephonyTransferDestination"/>.
     /// </summary>
     [Experimental("AAIP001")]
-    public abstract partial class TelephonyTransferDestination
+    internal abstract partial class TelephonyTransferDestination
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

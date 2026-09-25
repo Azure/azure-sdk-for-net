@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A named destination to which the voice agent may transfer a call. </summary>
-    public partial class TelephonyTransferTarget : IJsonModel<TelephonyTransferTarget>
+    internal partial class TelephonyTransferTarget : IJsonModel<TelephonyTransferTarget>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyTransferTarget"/> for deserialization. </summary>
         internal TelephonyTransferTarget()

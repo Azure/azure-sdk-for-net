@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A summary of a durable inbound call to a voice agent. </summary>
-    public partial class TelephonyCallSummary : IJsonModel<TelephonyCallSummary>
+    internal partial class TelephonyCallSummary : IJsonModel<TelephonyCallSummary>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallSummary"/> for deserialization. </summary>
         internal TelephonyCallSummary()

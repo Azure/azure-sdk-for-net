@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A SIP destination for a telephony transfer target. </summary>
     [Experimental("AAIP001")]
-    public partial class SipTelephonyTransferDestination : TelephonyTransferDestination
+    internal partial class SipTelephonyTransferDestination : TelephonyTransferDestination
     {
         /// <summary> Initializes a new instance of <see cref="SipTelephonyTransferDestination"/>. </summary>
         /// <param name="value"> The SIP or SIPS URI to call. </param>

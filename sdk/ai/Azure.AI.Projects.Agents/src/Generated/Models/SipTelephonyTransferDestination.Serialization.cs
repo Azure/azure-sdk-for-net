@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A SIP destination for a telephony transfer target. </summary>
-    public partial class SipTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<SipTelephonyTransferDestination>
+    internal partial class SipTelephonyTransferDestination : TelephonyTransferDestination, IJsonModel<SipTelephonyTransferDestination>
     {
         /// <summary> Initializes a new instance of <see cref="SipTelephonyTransferDestination"/> for deserialization. </summary>
         internal SipTelephonyTransferDestination()

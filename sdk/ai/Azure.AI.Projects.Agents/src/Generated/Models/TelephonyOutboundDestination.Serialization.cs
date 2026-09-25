@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The destination of an outbound call. </summary>
-    public partial class TelephonyOutboundDestination : IJsonModel<TelephonyOutboundDestination>
+    internal partial class TelephonyOutboundDestination : IJsonModel<TelephonyOutboundDestination>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundDestination"/> for deserialization. </summary>
         internal TelephonyOutboundDestination()

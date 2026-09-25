@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A cancellation request recorded for an outbound call job. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyCallJobCancellation
+    internal partial class TelephonyCallJobCancellation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

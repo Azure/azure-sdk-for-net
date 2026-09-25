@@ -9,25 +9,25 @@ using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 
 namespace Azure.AI.Projects.Agents._Beta
 {
-    /// <summary> The Beta sub-client. </summary>
-    public partial class Beta
+    /// <summary> The ProjectsBeta sub-client. </summary>
+    public partial class ProjectsBeta
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private BetaVoiceAgents _cachedBetaVoiceAgents;
         private BetaAgents _cachedBetaAgents;
 
-        /// <summary> Initializes a new instance of Beta for mocking. </summary>
-        protected Beta()
+        /// <summary> Initializes a new instance of ProjectsBeta for mocking. </summary>
+        protected ProjectsBeta()
         {
         }
 
-        /// <summary> Initializes a new instance of Beta. </summary>
+        /// <summary> Initializes a new instance of ProjectsBeta. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Beta(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ProjectsBeta(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

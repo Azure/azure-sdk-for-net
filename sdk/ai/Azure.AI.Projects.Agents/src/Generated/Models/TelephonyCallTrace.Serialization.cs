@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Correlation from a durable telephony call record to its customer-facing Foundry trace. </summary>
-    public partial class TelephonyCallTrace : IJsonModel<TelephonyCallTrace>
+    internal partial class TelephonyCallTrace : IJsonModel<TelephonyCallTrace>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyCallTrace"/> for deserialization. </summary>
         internal TelephonyCallTrace()

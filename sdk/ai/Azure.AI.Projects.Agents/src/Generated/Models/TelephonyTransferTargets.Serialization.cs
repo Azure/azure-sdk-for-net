@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The telephony transfer targets configured for one voice agent. </summary>
-    public partial class TelephonyTransferTargets : IJsonModel<TelephonyTransferTargets>
+    internal partial class TelephonyTransferTargets : IJsonModel<TelephonyTransferTargets>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyTransferTargets"/> for deserialization. </summary>
         internal TelephonyTransferTargets()

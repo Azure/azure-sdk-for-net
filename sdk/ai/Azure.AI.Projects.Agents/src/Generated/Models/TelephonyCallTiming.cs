@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> Detailed provider-neutral timing for an inbound telephony call. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyCallTiming
+    internal partial class TelephonyCallTiming
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

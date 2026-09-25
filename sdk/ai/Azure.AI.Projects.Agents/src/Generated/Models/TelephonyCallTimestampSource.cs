@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The source of a telephony lifecycle timestamp. </summary>
     [Experimental("AAIP001")]
-    public readonly partial struct TelephonyCallTimestampSource : IEquatable<TelephonyCallTimestampSource>
+    internal readonly partial struct TelephonyCallTimestampSource : IEquatable<TelephonyCallTimestampSource>
     {
         private readonly string _value;
         /// <summary> The telephony provider supplied the timestamp. </summary>

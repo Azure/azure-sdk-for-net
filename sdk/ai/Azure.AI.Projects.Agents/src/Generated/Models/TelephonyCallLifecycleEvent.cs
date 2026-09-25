@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A bounded durable observation in the lifecycle of one telephony call. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyCallLifecycleEvent
+    internal partial class TelephonyCallLifecycleEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

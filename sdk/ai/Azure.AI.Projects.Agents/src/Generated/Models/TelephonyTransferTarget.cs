@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> A named destination to which the voice agent may transfer a call. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyTransferTarget
+    internal partial class TelephonyTransferTarget
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
