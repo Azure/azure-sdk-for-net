@@ -119,9 +119,11 @@ namespace Azure.ResourceManager.OperationalInsights
     [ModelReaderWriterBuildable(typeof(StorageInsightProperties))]
     [ModelReaderWriterBuildable(typeof(StorageInsightResource))]
     [ModelReaderWriterBuildable(typeof(StorageInsightStatus))]
+    [ModelReaderWriterBuildable(typeof(SummaryLogsIdentity))]
     [ModelReaderWriterBuildable(typeof(SummaryLogsListResult))]
     [ModelReaderWriterBuildable(typeof(SummaryLogsProperties))]
     [ModelReaderWriterBuildable(typeof(SummaryLogsRetryBinProperties))]
+    [ModelReaderWriterBuildable(typeof(SummaryLogsUserIdentityProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TableProperties))]
     [ModelReaderWriterBuildable(typeof(TablesListResult))]
@@ -130,6 +132,8 @@ namespace Azure.ResourceManager.OperationalInsights
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListUsagesResult))]
     [ModelReaderWriterBuildable(typeof(WorkspaceProperties))]
+    [ModelReaderWriterBuildable(typeof(WorkspacePurgeLakeDataBody))]
+    [ModelReaderWriterBuildable(typeof(WorkspacePurgeLakeDataTimeRange))]
     public partial class AzureResourceManagerOperationalInsightsContext : ModelReaderWriterContext
     {
     }
