@@ -630,7 +630,7 @@
               },
               "EnableMtlsProofOfPossession": {
                 "type": "boolean",
-                "default": false,
+                "default": true,
                 "description": "Enables mTLS proof-of-possession for both token exchanges in the managed identity federated identity flow."
               },
               "Retry": {
@@ -1160,7 +1160,7 @@
               },
               "EnableMtlsProofOfPossession": {
                 "type": "boolean",
-                "default": false,
+                "default": true,
                 "description": "Enables mTLS proof-of-possession for both token exchanges in the managed identity federated identity flow."
               }
             }
