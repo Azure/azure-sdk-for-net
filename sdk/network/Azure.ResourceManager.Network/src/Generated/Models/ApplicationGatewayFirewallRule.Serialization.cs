@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
+            if (Optional.IsDefined(ParanoiaLevel))
+            {
+                writer.WritePropertyName("paranoiaLevel"u8);
+                writer.WriteStringValue(ParanoiaLevel.Value.ToString());
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -153,6 +158,7 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayWafRuleStateType? state = default;
             ApplicationGatewayWafRuleActionType? action = default;
             ApplicationGatewayWafRuleSensitivityType? sensitivity = default;
+            ApplicationGatewayWafRuleParanoiaLevel? paranoiaLevel = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -194,6 +200,15 @@ namespace Azure.ResourceManager.Network.Models
                     sensitivity = new ApplicationGatewayWafRuleSensitivityType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("paranoiaLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    paranoiaLevel = new ApplicationGatewayWafRuleParanoiaLevel(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
@@ -210,6 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                 state,
                 action,
                 sensitivity,
+                paranoiaLevel,
                 description,
                 additionalBinaryDataProperties);
         }

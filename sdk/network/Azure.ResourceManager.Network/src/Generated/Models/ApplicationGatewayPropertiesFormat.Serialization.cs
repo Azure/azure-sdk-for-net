@@ -239,6 +239,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(AdvancedRoutingMaps))
+            {
+                writer.WritePropertyName("advancedRoutingMaps"u8);
+                writer.WriteStartArray();
+                foreach (ApplicationGatewayAdvancedRoutingMap item in AdvancedRoutingMaps)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(RequestRoutingRules))
             {
                 writer.WritePropertyName("requestRoutingRules"u8);
@@ -264,6 +274,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("rewriteRuleSets"u8);
                 writer.WriteStartArray();
                 foreach (ApplicationGatewayRewriteRuleSet item in RewriteRuleSets)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdvancedRoutingConditionSets))
+            {
+                writer.WritePropertyName("advancedRoutingConditionSets"u8);
+                writer.WriteStartArray();
+                foreach (ApplicationGatewayAdvancedRoutingConditionSet item in AdvancedRoutingConditionSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -303,6 +323,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("autoscaleConfiguration"u8);
                 writer.WriteObjectValue(AutoscaleConfiguration, options);
+            }
+            if (Optional.IsDefined(ReservedCapacity))
+            {
+                writer.WritePropertyName("reservedCapacity"u8);
+                writer.WriteNumberValue(ReservedCapacity.Value);
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
@@ -439,15 +464,18 @@ namespace Azure.ResourceManager.Network.Models
             IList<ApplicationGatewayListener> listeners = default;
             IList<ApplicationGatewaySslProfile> sslProfiles = default;
             IList<ApplicationGatewayUrlPathMap> urlPathMaps = default;
+            IList<ApplicationGatewayAdvancedRoutingMap> advancedRoutingMaps = default;
             IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default;
             IList<ApplicationGatewayRoutingRule> routingRules = default;
             IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default;
+            IList<ApplicationGatewayAdvancedRoutingConditionSet> advancedRoutingConditionSets = default;
             IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default;
             ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default;
             NetworkSubResource firewallPolicy = default;
             bool? enableHttp2 = default;
             bool? enableFips = default;
             ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default;
+            int? reservedCapacity = default;
             IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = default;
             IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = default;
             Guid? resourceGuid = default;
@@ -698,6 +726,20 @@ namespace Azure.ResourceManager.Network.Models
                     urlPathMaps = array;
                     continue;
                 }
+                if (prop.NameEquals("advancedRoutingMaps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ApplicationGatewayAdvancedRoutingMap> array = new List<ApplicationGatewayAdvancedRoutingMap>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ApplicationGatewayAdvancedRoutingMap.DeserializeApplicationGatewayAdvancedRoutingMap(item, options));
+                    }
+                    advancedRoutingMaps = array;
+                    continue;
+                }
                 if (prop.NameEquals("requestRoutingRules"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -738,6 +780,20 @@ namespace Azure.ResourceManager.Network.Models
                         array.Add(ApplicationGatewayRewriteRuleSet.DeserializeApplicationGatewayRewriteRuleSet(item, options));
                     }
                     rewriteRuleSets = array;
+                    continue;
+                }
+                if (prop.NameEquals("advancedRoutingConditionSets"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ApplicationGatewayAdvancedRoutingConditionSet> array = new List<ApplicationGatewayAdvancedRoutingConditionSet>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ApplicationGatewayAdvancedRoutingConditionSet.DeserializeApplicationGatewayAdvancedRoutingConditionSet(item, options));
+                    }
+                    advancedRoutingConditionSets = array;
                     continue;
                 }
                 if (prop.NameEquals("redirectConfigurations"u8))
@@ -797,6 +853,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     autoscaleConfiguration = ApplicationGatewayAutoscaleConfiguration.DeserializeApplicationGatewayAutoscaleConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("reservedCapacity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservedCapacity = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("privateLinkConfigurations"u8))
@@ -938,15 +1003,18 @@ namespace Azure.ResourceManager.Network.Models
                 listeners ?? new ChangeTrackingList<ApplicationGatewayListener>(),
                 sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>(),
                 urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>(),
+                advancedRoutingMaps ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingMap>(),
                 requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>(),
                 routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>(),
                 rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>(),
+                advancedRoutingConditionSets ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingConditionSet>(),
                 redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>(),
                 webApplicationFirewallConfiguration,
                 firewallPolicy,
                 enableHttp2,
                 enableFips,
                 autoscaleConfiguration,
+                reservedCapacity,
                 privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>(),
                 privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>(),
                 resourceGuid,

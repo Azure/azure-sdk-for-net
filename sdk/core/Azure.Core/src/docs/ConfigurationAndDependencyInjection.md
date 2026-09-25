@@ -416,6 +416,7 @@ the `Credential` section as well.
     "ManagedIdentityIdKind": "ClientId",
     "ManagedIdentityId": "00000000-0000-0000-0000-000000000000",
     "AzureCloud": "public",
+    "EnableMtlsProofOfPossession": true,
     "DisableInstanceDiscovery": false,
     "TokenCachePersistenceOptions": {
       "Name": "my-app-cache",
@@ -426,6 +427,9 @@ the `Credential` section as well.
 ```
 
 `ManagedIdentityIdKind` can be `ClientId`, `ResourceId`, or `ObjectId`. `AzureCloud` can be `public`, `usgov`, or `china`.
+Set `EnableMtlsProofOfPossession` to `true` to enable mTLS proof-of-possession for both token exchanges in the managed identity federated identity flow. The default is `false`.
+
+> mTLS proof-of-possession requires the application to reference the optional `Microsoft.Identity.Client.KeyAttestation` package and to run on a KeyGuard-capable host. MSAL resolves that package dynamically and Azure.Core does not ship it; when it is absent, a proof-of-possession request cannot obtain a binding certificate. Leave `EnableMtlsProofOfPossession` set to `false` to use bearer authentication instead.
 
 **VisualStudioCodeCredential:**
 ```json

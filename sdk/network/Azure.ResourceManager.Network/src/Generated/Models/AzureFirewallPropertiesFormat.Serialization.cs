@@ -185,6 +185,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("afcConfiguration"u8);
                 writer.WriteObjectValue(AfcConfiguration, options);
             }
+            if (Optional.IsDefined(IsAISecurityAddOnEnabled))
+            {
+                writer.WritePropertyName("aiSecurityAddOn"u8);
+                writer.WriteBooleanValue(IsAISecurityAddOnEnabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -242,6 +247,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, string> additionalProperties = default;
             AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
             AfcConfiguration afcConfiguration = default;
+            bool? isAISecurityAddOnEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -417,6 +423,15 @@ namespace Azure.ResourceManager.Network.Models
                     afcConfiguration = AfcConfiguration.DeserializeAfcConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("aiSecurityAddOn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAISecurityAddOnEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -438,6 +453,7 @@ namespace Azure.ResourceManager.Network.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                 autoscaleConfiguration,
                 afcConfiguration,
+                isAISecurityAddOnEnabled,
                 additionalBinaryDataProperties);
         }
     }

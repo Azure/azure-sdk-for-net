@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (Optional.IsDefined(PrincipalType))
+            {
+                writer.WritePropertyName("principalType"u8);
+                writer.WriteStringValue(PrincipalType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,6 +141,7 @@ namespace Azure.ResourceManager.Sql.Models
             string login = default;
             Guid sid = default;
             Guid? tenantId = default;
+            ManagedInstanceAdministratorPrincipalType? principalType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,12 +169,27 @@ namespace Azure.ResourceManager.Sql.Models
                     tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("principalType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalType = new ManagedInstanceAdministratorPrincipalType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedInstanceAdministratorProperties(administratorType, login, sid, tenantId, additionalBinaryDataProperties);
+            return new ManagedInstanceAdministratorProperties(
+                administratorType,
+                login,
+                sid,
+                tenantId,
+                principalType,
+                additionalBinaryDataProperties);
         }
     }
 }

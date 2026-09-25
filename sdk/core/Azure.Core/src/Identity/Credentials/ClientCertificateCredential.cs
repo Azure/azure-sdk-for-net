@@ -42,6 +42,10 @@ namespace Azure.Identity
 
         internal MsalConfidentialClient Client { get; }
 
+        private readonly Lazy<MsalConfidentialClient> _popClient;
+
+        internal MsalConfidentialClient PopClient => _popClient.Value;
+
         private readonly CredentialPipeline _pipeline;
 
         internal readonly string[] AdditionallyAllowedTenantIds;
@@ -163,14 +167,16 @@ namespace Azure.Identity
             X509Certificate2 certificate,
             TokenCredentialOptions options,
             CredentialPipeline pipeline,
-            MsalConfidentialClient client)
+            MsalConfidentialClient client,
+            MsalConfidentialClient popClient = null)
             : this(
                 tenantId,
                 clientId,
                 new X509Certificate2FromObjectProvider(certificate ?? throw new ArgumentNullException(nameof(certificate))),
                 options,
                 pipeline,
-                client)
+                client,
+                popClient)
         { }
 
         internal ClientCertificateCredential(
@@ -179,13 +185,15 @@ namespace Azure.Identity
             IX509Certificate2Provider certificateProvider,
             TokenCredentialOptions options,
             CredentialPipeline pipeline,
-            MsalConfidentialClient client)
+            MsalConfidentialClient client,
+            MsalConfidentialClient popClient = null)
         {
             TenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
             ClientId = clientId ?? throw new ArgumentNullException(nameof(clientId));
             ClientCertificateProvider = certificateProvider;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             ClientCertificateCredentialOptions certCredOptions = options as ClientCertificateCredentialOptions;
+            bool sendCertificateChain = certCredOptions?.SendCertificateChain ?? false;
 
             Client = client ??
                      new MsalConfidentialClient(
@@ -193,8 +201,33 @@ namespace Azure.Identity
                          tenantId,
                          clientId,
                          certificateProvider,
-                         certCredOptions?.SendCertificateChain ?? false,
+                         sendCertificateChain,
                          options);
+
+            // The PoP client is only usable when subject name / issuer authentication is enabled through
+            // SendCertificateChain. Token requests additionally require the first-party AppContext opt-in.
+            //
+            // The PoP client is created lazily on first use, but all input parameters - including a
+            // snapshot of the options - are captured here at construction time so the client's state is
+            // locked in regardless of when it is materialized. Snapshotting the options ensures the PoP
+            // client observes the same AuthorityHost (and other MSAL settings) as the eagerly-created
+            // bearer client, even if the caller mutates its options instance before first use.
+            MsalConfidentialClient capturedClient = client;
+            MsalConfidentialClient capturedPopClient = popClient;
+            MsalConfidentialClient standardClient = Client;
+            TokenCredentialOptions snapshotOptions = certCredOptions?.Clone<ClientCertificateCredentialOptions>() ?? options?.Clone<TokenCredentialOptions>();
+            _popClient = new Lazy<MsalConfidentialClient>(() =>
+                capturedPopClient ?? capturedClient ??
+                (sendCertificateChain
+                    ? new MsalConfidentialClient(
+                        _pipeline,
+                        tenantId,
+                        clientId,
+                        certificateProvider,
+                        sendCertificateChain,
+                        snapshotOptions,
+                        enableMtlsProofOfPossession: true)
+                    : standardClient));
 
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
@@ -217,7 +250,8 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && AppContextSwitches.EnableClientCertificateMtlsProofOfPossession ? PopClient : Client;
+                AuthenticationResult result = client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(result.ToAccessToken());
             }
@@ -244,7 +278,8 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                AuthenticationResult result = await Client
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && AppContextSwitches.EnableClientCertificateMtlsProofOfPossession ? PopClient : Client;
+                AuthenticationResult result = await client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken)
                     .ConfigureAwait(false);
 

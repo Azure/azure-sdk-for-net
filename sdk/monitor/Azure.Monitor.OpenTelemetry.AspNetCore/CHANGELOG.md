@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Reduce default HTTP client metric volume on .NET 8+ while retaining request latency, count, and failure dimensions through `http.client.request.duration`. Other `System.Net.Http` metrics are now opt-in through OpenTelemetry `AddView`; dashboards and alerts using them must [explicitly enable collection](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore#http-client-metrics). HTTP dependency tracing and server metrics are unchanged. No new public API is introduced.
+
 ### Bugs Fixed
 
 ### Other Changes

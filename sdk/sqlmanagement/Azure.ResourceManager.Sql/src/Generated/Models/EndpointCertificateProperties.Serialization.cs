@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("publicBlob"u8);
                 writer.WriteStringValue(PublicBlob);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(TrustedRootCertificates))
+            {
+                writer.WritePropertyName("trustedRootCertificates"u8);
+                writer.WriteStartArray();
+                foreach (EndpointTrustedRootCertificateInfo item in TrustedRootCertificates)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string publicBlob = default;
+            IReadOnlyList<EndpointTrustedRootCertificateInfo> trustedRootCertificates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,12 +141,26 @@ namespace Azure.ResourceManager.Sql.Models
                     publicBlob = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("trustedRootCertificates"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EndpointTrustedRootCertificateInfo> array = new List<EndpointTrustedRootCertificateInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EndpointTrustedRootCertificateInfo.DeserializeEndpointTrustedRootCertificateInfo(item, options));
+                    }
+                    trustedRootCertificates = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EndpointCertificateProperties(publicBlob, additionalBinaryDataProperties);
+            return new EndpointCertificateProperties(publicBlob, trustedRootCertificates ?? new ChangeTrackingList<EndpointTrustedRootCertificateInfo>(), additionalBinaryDataProperties);
         }
     }
 }

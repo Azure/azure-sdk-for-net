@@ -121,6 +121,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(MinAllocationSize))
+            {
+                writer.WritePropertyName("minAllocationSize"u8);
+                writer.WriteStringValue(MinAllocationSize);
+            }
+            if (Optional.IsDefined(MaxAllocationSize))
+            {
+                writer.WritePropertyName("maxAllocationSize"u8);
+                writer.WriteStringValue(MaxAllocationSize);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -169,6 +179,8 @@ namespace Azure.ResourceManager.Network.Models
             string parentPoolName = default;
             IList<string> addressPrefixes = default;
             NetworkProvisioningState? provisioningState = default;
+            string minAllocationSize = default;
+            string maxAllocationSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -227,6 +239,16 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState = new NetworkProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("minAllocationSize"u8))
+                {
+                    minAllocationSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("maxAllocationSize"u8))
+                {
+                    maxAllocationSize = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -239,6 +261,8 @@ namespace Azure.ResourceManager.Network.Models
                 parentPoolName,
                 addressPrefixes,
                 provisioningState,
+                minAllocationSize,
+                maxAllocationSize,
                 additionalBinaryDataProperties);
         }
     }

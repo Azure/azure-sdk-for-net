@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SubscriptionNetworkManagerConnectionData item in Value)
+            foreach (NetworkManagerConnectionData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<SubscriptionNetworkManagerConnectionData> value = default;
+            IList<NetworkManagerConnectionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SubscriptionNetworkManagerConnectionData> array = new List<SubscriptionNetworkManagerConnectionData>();
+                    List<NetworkManagerConnectionData> array = new List<NetworkManagerConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionNetworkManagerConnectionData.DeserializeSubscriptionNetworkManagerConnectionData(item, options));
+                        array.Add(NetworkManagerConnectionData.DeserializeNetworkManagerConnectionData(item, options));
                     }
                     value = array;
                     continue;

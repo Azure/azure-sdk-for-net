@@ -114,6 +114,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Circuits))
+            {
+                writer.WritePropertyName("circuits"u8);
+                writer.WriteStartArray();
+                foreach (NetworkSubResource item in Circuits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(AllocationDate))
             {
                 writer.WritePropertyName("allocationDate"u8);
@@ -198,6 +208,7 @@ namespace Azure.ResourceManager.Network.Models
             ExpressRouteLagEncapsulation? encapsulation = default;
             string etherType = default;
             IList<ExpressRouteLagLink> links = default;
+            IReadOnlyList<NetworkSubResource> circuits = default;
             string allocationDate = default;
             NetworkProvisioningState? provisioningState = default;
             string resourceGuid = default;
@@ -262,6 +273,20 @@ namespace Azure.ResourceManager.Network.Models
                         array.Add(ExpressRouteLagLink.DeserializeExpressRouteLagLink(item, options));
                     }
                     links = array;
+                    continue;
+                }
+                if (prop.NameEquals("circuits"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                    }
+                    circuits = array;
                     continue;
                 }
                 if (prop.NameEquals("allocationDate"u8))
@@ -332,6 +357,7 @@ namespace Azure.ResourceManager.Network.Models
                 encapsulation,
                 etherType,
                 links ?? new ChangeTrackingList<ExpressRouteLagLink>(),
+                circuits ?? new ChangeTrackingList<NetworkSubResource>(),
                 allocationDate,
                 provisioningState,
                 resourceGuid,

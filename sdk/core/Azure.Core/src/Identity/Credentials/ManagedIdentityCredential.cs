@@ -142,7 +142,7 @@ namespace Azure.Identity
                 Pipeline = pipeline,
                 PreserveTransport = preserveTransport,
                 Options = options,
-                DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options)
+                EnableMtlsProofOfPossession = ResolveEnableMtlsProofOfPossession(options)
             };
         }
 
@@ -159,9 +159,11 @@ namespace Azure.Identity
                 pipeline,
                 preserveTransport);
 
-        private static bool ResolveDisableMtlsProofOfPossession(TokenCredentialOptions options)
+        private static bool ResolveEnableMtlsProofOfPossession(TokenCredentialOptions options)
         {
-            return options is ManagedIdentityCredentialOptions managedIdentityCredentialOptions && managedIdentityCredentialOptions.DisableMtlsProofOfPossession;
+#pragma warning disable AZID0004 // Internal usage of experimental mTLS proof-of-possession API
+            return options is ManagedIdentityCredentialOptions managedIdentityCredentialOptions && managedIdentityCredentialOptions.EnableMtlsProofOfPossession;
+#pragma warning restore AZID0004
         }
 
         internal ManagedIdentityCredential(ManagedIdentityClient client)

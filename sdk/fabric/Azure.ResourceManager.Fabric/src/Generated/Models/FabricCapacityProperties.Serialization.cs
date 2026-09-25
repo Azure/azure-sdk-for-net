@@ -89,11 +89,8 @@ namespace Azure.ResourceManager.Fabric.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Overage))
-            {
-                writer.WritePropertyName("overage"u8);
-                writer.WriteObjectValue(Overage, options);
-            }
+            writer.WritePropertyName("overage"u8);
+            writer.WriteObjectValue(Overage, options);
             writer.WritePropertyName("administration"u8);
             writer.WriteObjectValue(Administration, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -165,10 +162,6 @@ namespace Azure.ResourceManager.Fabric.Models
                 }
                 if (prop.NameEquals("overage"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     overage = CapacityOverageProperties.DeserializeCapacityOverageProperties(prop.Value, options);
                     continue;
                 }
