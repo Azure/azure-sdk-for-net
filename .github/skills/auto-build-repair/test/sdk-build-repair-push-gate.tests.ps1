@@ -120,26 +120,27 @@ function Get-WorkflowBodyHash([string]$path) {
 Write-Host 'Source workflow'
 Assert ($workflow -match '(?ms)^\s+push-to-pull-request-branch:\r?\n\s+target: "triggering"') `
     'green repairs retain the PR-branch push safe output'
-Assert ($workflow -match '(?s)\*\*Gate the push on a green build\.\*\*.*final `result-<n>\.json`.*`success` property is exactly `true`') `
+Assert ($workflow -match '(?s)\*\*Gate the push on a green build\.\*\*.*`result\.json`.*process succeeded and its `success` property is exactly `true`') `
     'push eligibility comes from the final structured engine result'
-Assert ($workflow -match '(?s)Do not infer a green build from a successful tool invocation.*exhausted iterations') `
+Assert ($workflow -match '(?s)Do not infer a green build from tool completion.*exhausted iterations') `
     'tool completion and partial progress cannot be mistaken for a green build'
-Assert ($workflow -match '(?s)For every other terminal state.*`maxIterations` reached.*\*\*do not invoke `push-to-pull-request-branch`\*\*') `
+Assert ($workflow -match '(?s)For every other terminal state.*missing/unparseable JSON.*\*\*do not invoke `push-to-pull-request-branch`\*\*') `
     'all red-build stop conditions explicitly suppress the push safe output'
-Assert ($workflow -match 'attempted repair changes remain uncommitted in the ephemeral workspace and are discarded') `
+Assert ($workflow -match 'attempted changes remain uncommitted in the ephemeral workspace') `
     'failed repair edits are explicitly ephemeral'
 
 Write-Host 'Checked-in skill'
-Assert ($skill -match 'final structured result has `success: true`') `
+Assert ($skill -match 'Boolean `success: true`') `
     'skill permits commits only for a green final result'
-Assert ($skill -match '(?s)`maxIterations` attempts are reached without a green build.*do not commit any attempted changes') `
+Assert (($skill -match 'reaching the bound do not establish a green build') -and
+        ($skill -match 'Failed changes stay\s+uncommitted')) `
     'iteration exhaustion cannot commit partial progress'
-Assert ($skill -match 'If the build remains red for any reason, commit nothing') `
+Assert ($skill -match 'failing final results never authorize a push') `
     'skill applies the no-commit rule to every failure reason'
 
 Write-Host 'Failure report'
-Assert ($emitter -match "'failed'\s+\{\s*'- Build remains red - repair changes were not committed'\s*\}") `
-    'failed report states that repair changes were not committed'
+Assert ($emitter -match 'Repair failed - changes are not eligible for publication') `
+    'failed report states that repair changes are ineligible for publication'
 Assert ($emitter -notmatch 'Partial progress committed') `
     'failed report cannot claim a partial-progress commit'
 
@@ -147,6 +148,16 @@ Write-Host 'Stale contract guard'
 $contract = $workflow + "`n" + $skill + "`n" + $emitter
 Assert ($contract -notmatch '(?i)commit progress made so far|commit progress and report') `
     'old commit-on-failure instructions are absent'
+Assert ($workflow -match '--max-attempts "<maxIterations from repair-config.yml>"') `
+    'the existing configuration flows into the one engine invocation'
+Assert ($skill -match 'maxAttempts: <configured maxIterations>') `
+    'MCP receives the same configured attempt bound'
+Assert ($workflow -match 'Never run an outer retry loop' -and $skill -match 'Invoke \*\*exactly once\*\*') `
+    'workflow and skill leave all repair iterations inside the engine'
+Assert ($workflow -match 'grep -Fq -- ''--max-attempts''') `
+    'an older installed CLI fails the capability check'
+Assert ($contract -notmatch 're-invoke \(idempotent\)|re-invocation cap|one per attempt|count of `result-<n>\.json` files') `
+    'old outer-loop and result-file counting instructions are absent'
 
 Write-Host 'Compiled workflow metadata'
 $bodyHash = Get-WorkflowBodyHash $WorkflowPath

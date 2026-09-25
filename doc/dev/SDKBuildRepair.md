@@ -44,12 +44,20 @@ Disabling the variable prevents new repair jobs from starting. Cancel an already
 The agent:
 
 1. identifies and builds the changed SDK package;
-2. passes the build errors to `azsdk tsp client customized-update --edit-scope CustomCode`;
-3. repeats only while errors are improving, up to the language-specific limit in `.github/skills/auto-build-repair/repair-config.yml`;
+2. passes the build errors to `azsdk tsp client customized-update --edit-scope CustomCode` **once**, with `--max-attempts` set to `maxIterations` from `.github/skills/auto-build-repair/repair-config.yml`;
+3. lets the engine retry in the same conversation using regeneration/build feedback, without another workflow-side repair loop;
 4. commits custom-code fixes and reproducibly regenerated `Generated/` files through a protected safe-output job; and
 5. posts one pull request comment describing the result.
 
 The workflow does not edit TypeSpec or other specification inputs, move the pinned commit in `tsp-location.yaml`, change repository infrastructure, or auto-merge. Failures requiring a specification or generator change are reported as out of scope.
+
+The final response is captured as `result.json`. Its `attemptsUsed` counts patch proposals reaching host validation, not tool calls, baseline checks, or JSON files. Failure comments include actual final build/generation diagnostics, attempted edits when known, the stop reason, and next-step guidance. CLI failures before a valid response use captured stderr; a missing attempt count is reported as unknown.
+
+## Engine release dependency
+
+This requires [Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068) to be merged and released. Keep the consumer PR draft until then. The latest-release installer is unchanged; the skill checks that CLI help advertises `--max-attempts` and fails closed if unavailable. No minimum released version is assumed.
+
+The existing workflow eligibility, network/authentication, and safe-output publishing architecture are unchanged. This change does not add independent source receipts, a second validator, or a custom publisher.
 
 ## Authentication
 
@@ -79,3 +87,16 @@ gh run view <run-id> --log
 Successful repairs also produce a commit on the pull request branch and an `Auto Build Repair` summary comment. Unsuccessful runs report their stop reason in the pull request comment or workflow logs.
 
 The workflow uses per-pull-request concurrency, so a newer run for the same pull request queues until the in-progress run finishes.
+
+## Maintaining the skill
+
+With Node, PowerShell, and Bash (Git Bash on Windows) available, run the focused checks from the repository root:
+
+```powershell
+npm ci --prefix eng\common\scripts\eval
+node --test .github\skills\auto-build-repair\test\bounded-invocation.test.cjs
+pwsh -NoProfile -File .github\skills\auto-build-repair\test\emit-repair-report.tests.ps1
+pwsh -NoProfile -File .github\skills\auto-build-repair\test\sdk-build-repair-push-gate.tests.ps1
+```
+
+The capability eval is `evals/repair.eval.yaml`. It uses the real Copilot executor with a local fixture-backed MCP server, not a real SDK build or publishing service. Regenerate the workflow lock with the repository-compatible `gh aw compile sdk-build-repair` after editing its source.
