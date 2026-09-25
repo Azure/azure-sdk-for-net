@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects.Agents._Beta
 {
     /// <summary></summary>
-    public partial class ProjectsBeta
+    public partial class Beta
     {
     }
 }

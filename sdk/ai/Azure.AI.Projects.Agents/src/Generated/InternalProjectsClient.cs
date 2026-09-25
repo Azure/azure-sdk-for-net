@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Agents
             }
         };
         private readonly string _apiVersion;
-        private ProjectsBeta _cachedProjectsBeta;
+        private Beta _cachedBeta;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
@@ -79,11 +79,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of ProjectsBeta. </summary>
+        /// <summary> Initializes a new instance of Beta. </summary>
         [Experimental("AAIP001")]
-        public virtual ProjectsBeta GetProjectsBetaClient()
+        public virtual Beta GetBetaClient()
         {
-            return Volatile.Read(ref _cachedProjectsBeta) ?? Interlocked.CompareExchange(ref _cachedProjectsBeta, new ProjectsBeta(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectsBeta;
+            return Volatile.Read(ref _cachedBeta) ?? Interlocked.CompareExchange(ref _cachedBeta, new Beta(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBeta;
         }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>

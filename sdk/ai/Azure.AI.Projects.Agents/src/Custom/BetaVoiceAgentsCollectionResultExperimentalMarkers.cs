@@ -14,6 +14,12 @@ namespace Azure.AI.Projects.Agents
     public partial class BrowserAutomationToolboxTool { }
 }
 
+namespace Azure.AI.Projects.Agents._Beta
+{
+    [Experimental("AAIP001")]
+    public partial class Beta { }
+}
+
 namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
     // These internal collection-result helper types construct instances of experimental

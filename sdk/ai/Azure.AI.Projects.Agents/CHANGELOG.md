@@ -9,7 +9,6 @@
 - `OpenAI.RealtimeClientEventType` has been removed. The affected property now uses the existing `OpenAI.Realtime.RealtimeClientCommandKind` type instead.
 - `AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations()` and `GetBetaVoiceAgentTelephony()` now return `Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations`/`BetaVoiceAgentsTelephony` instead of the previous, no-longer-functional types of the same short name.
 - `AgentAdministrationClient.GenerateAgent`/`GenerateAgentAsync` have been removed; the operation they called no longer exists.
-- The `Beta` sub-client type has been renamed to `ProjectsBeta` (its generated name was too generic and collided with other libraries).
 
 ### Bugs Fixed
 
