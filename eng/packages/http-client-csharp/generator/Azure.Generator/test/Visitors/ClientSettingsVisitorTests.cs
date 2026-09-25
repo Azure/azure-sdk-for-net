@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
+using Azure.Generator.Visitors;
 using Microsoft.Extensions.Configuration;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -19,6 +20,103 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class ClientSettingsVisitorTests
     {
+        [Test]
+        public void DualAuthSettingsPreservesCustomizedConstructorOrdering()
+        {
+            var endpoint = InputFactory.EndpointParameter(
+                "endpoint", InputPrimitiveType.String, isRequired: true, isEndpoint: true);
+            var client = InputFactory.Client("TestClient", parameters: [endpoint]);
+            MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("x-custom-key", null),
+                oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["scope"], null, null, null)]),
+                clients: () => [client],
+                visitors: () => []);
+            var provider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ClientProvider>().Single();
+            var settingsCtor = provider.Constructors.Single(c =>
+                c.Signature.Parameters.Count == 1 &&
+                c.Signature.Parameters[0].Type.Equals(provider.ClientSettings!.Type));
+            var internalCtor = provider.Constructors.Single(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal));
+
+            // Model a customization that moves options before endpoint, and credentials to the front.
+            var parameters = internalCtor.Signature.Parameters;
+            internalCtor.Signature.Update(parameters: [parameters[0], parameters[2], parameters[1]]);
+            var arguments = settingsCtor.Signature.Initializer!.Arguments;
+            settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, [arguments[0], arguments[2], arguments[1]]));
+            foreach (var ctor in provider.Constructors.Where(c =>
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                c.Signature.Parameters.Count == 3 &&
+                c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential)) || p.Type.Equals(typeof(AzureKeyCredential)))))
+            {
+                var ctorParameters = ctor.Signature.Parameters;
+                ctor.Signature.Update(parameters: [ctorParameters[1], ctorParameters[2], ctorParameters[0]]);
+                var ctorArguments = ctor.Signature.Initializer!.Arguments;
+                ctor.Signature.Update(initializer: new ConstructorInitializer(false, [ctorArguments[0], ctorArguments[2], ctorArguments[1]]));
+            }
+
+            new TestClientSettingsVisitor().VisitClient(client, provider);
+
+            var result = settingsCtor.Signature.Initializer!.Arguments;
+            Assert.IsInstanceOf<TernaryConditionalExpression>(result[0]);
+            StringAssert.Contains("AzureKeyCredentialPolicy", result[0].ToDisplayString());
+            StringAssert.Contains("BearerTokenAuthenticationPolicy", result[0].ToDisplayString());
+            Assert.AreSame(arguments[2], result[1]);
+            Assert.AreSame(arguments[1], result[2]);
+            Assert.AreEqual(typeof(HttpPipelinePolicy), internalCtor.Signature.Parameters[0].Type.FrameworkType);
+        }
+
+        [Test]
+        public void DualAuthSettingsConstructorSelectsPolicyAndPreservesParameters(
+            [Values(null, "SharedAccessKey")] string? prefix,
+            [Values(false, true)] bool hoistedParameters)
+        {
+            var endpoint = InputFactory.EndpointParameter(
+                "endpoint", InputPrimitiveType.String, isRequired: true, isEndpoint: true);
+            var instanceId = InputFactory.PathParameter(
+                "instanceId", InputPrimitiveType.String, isRequired: true, scope: InputParameterScope.Client);
+            var tenantId = InputFactory.PathParameter(
+                "tenantId", InputPrimitiveType.String, isRequired: true, scope: InputParameterScope.Client);
+            var client = InputFactory.Client(
+                "TestClient", parameters: hoistedParameters ? [endpoint, instanceId, tenantId] : [endpoint]);
+
+            MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("x-custom-key", prefix),
+                oauth2Auth: () => new InputOAuth2Auth(
+                    [new InputOAuth2Flow(["https://first/.default", "https://second/.default"], null, null, null)]),
+                clients: () => [client]);
+
+            var provider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ClientProvider>().Single();
+            var settingsCtor = provider.Constructors.Single(c =>
+                c.Signature.Parameters.Count == 1 &&
+                c.Signature.Parameters[0].Type.Equals(provider.ClientSettings!.Type));
+            var initializer = settingsCtor.Signature.Initializer!;
+            var arguments = initializer.Arguments.Select(a => a.ToDisplayString()).ToArray();
+
+            Assert.IsFalse(initializer.IsBase);
+            Assert.AreEqual(hoistedParameters ? 5 : 3, arguments.Length);
+            var prefixArgument = prefix == null ? "" : ", AuthorizationApiKeyPrefix";
+            Assert.AreEqual(
+                "string.Equals(settings?.Credential?.CredentialSource, \"apikeycredential\", global::System.StringComparison.OrdinalIgnoreCase)" +
+                $" ? new global::Azure.Core.AzureKeyCredentialPolicy(new global::Azure.AzureKeyCredential(settings.Credential.Key), AuthorizationHeader{prefixArgument})" +
+                " : new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(settings?.CredentialProvider as global::Azure.Core.TokenCredential, AuthorizationScopes)",
+                arguments[0]);
+            Assert.AreEqual("settings?.Endpoint", arguments[1]);
+            if (hoistedParameters)
+            {
+                Assert.AreEqual("settings?.InstanceId", arguments[2]);
+                Assert.AreEqual("settings?.TenantId", arguments[3]);
+            }
+            Assert.AreEqual("settings?.Options", arguments[^1]);
+
+            Assert.AreEqual("\"x-custom-key\"", provider.Fields.Single(f => f.Name == "AuthorizationHeader").InitializationValue!.ToDisplayString());
+            var scopes = provider.Fields.Single(f => f.Name == "AuthorizationScopes").InitializationValue!.ToDisplayString();
+            StringAssert.Contains("\"https://first/.default\"", scopes);
+            StringAssert.Contains("\"https://second/.default\"", scopes);
+            if (prefix != null)
+            {
+                Assert.AreEqual($"\"{prefix}\"", provider.Fields.Single(f => f.Name == "AuthorizationApiKeyPrefix").InitializationValue!.ToDisplayString());
+            }
+        }
+
         [Test]
         public void ClientOptionsHasConfigurationSectionConstructorWithBaseCallToSectionNull()
         {
@@ -190,7 +288,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void SettingsConstructorPlacesCredentialAfterHoistedClientParameter()
+        public void SettingsConstructorPlacesCredentialAfterHoistedClientParameter([Values(false, true)] bool apiKey)
         {
             // Reproduces the case where an additional client-level parameter (e.g. an
             // instanceId hoisted onto the client via @clientInitialization) appears before
@@ -213,7 +311,8 @@ namespace Azure.Generator.Tests.Visitors
                 parameters: [endpointParam, instanceIdParam]);
 
             MockHelpers.LoadMockGenerator(
-                oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["https://test.azure.com/.default"], null, null, null)]),
+                apiKeyAuth: apiKey ? () => new InputApiKeyAuth("mock", null) : null,
+                oauth2Auth: apiKey ? null : () => new InputOAuth2Auth([new InputOAuth2Flow(["https://test.azure.com/.default"], null, null, null)]),
                 clients: () => [client]);
 
             var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
@@ -231,26 +330,27 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(initializer, "Settings constructor should have an initializer");
 
             // Find the public credential constructor the Settings constructor chains to.
+            var credentialType = apiKey ? typeof(AzureKeyCredential) : typeof(TokenCredential);
             var credentialCtor = clientProvider.Constructors.FirstOrDefault(c =>
                 c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
                 c.Signature.Parameters.Count == initializer!.Arguments.Count &&
-                c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential))));
+                c.Signature.Parameters.Any(p => p.Type.Equals(credentialType)));
             Assert.IsNotNull(credentialCtor,
-                "Client should have a public TokenCredential constructor matching the Settings chain arity");
+                "Client should have a public credential constructor matching the Settings chain arity");
 
             int credentialIndex = credentialCtor!.Signature.Parameters
-                .ToList().FindIndex(p => p.Type.Equals(typeof(TokenCredential)));
+                .ToList().FindIndex(p => p.Type.Equals(credentialType));
             Assert.Greater(credentialIndex, 1,
                 "With a hoisted client parameter, the credential is not the second parameter");
 
             // The credential argument must be at the credential parameter's actual position.
             var credentialArgDisplay = initializer!.Arguments[credentialIndex].ToDisplayString();
-            Assert.IsTrue(credentialArgDisplay.Contains("CredentialProvider"),
+            Assert.IsTrue(credentialArgDisplay.Contains(apiKey ? "CredentialSource" : "CredentialProvider"),
                 $"Credential argument should be at index {credentialIndex}. Found: {credentialArgDisplay}");
 
             // The hoisted parameter's slot (index 1) must NOT receive the credential.
             var hoistedArgDisplay = initializer.Arguments[1].ToDisplayString();
-            Assert.IsFalse(hoistedArgDisplay.Contains("CredentialProvider"),
+            Assert.IsFalse(hoistedArgDisplay.Contains("Credential"),
                 $"The hoisted parameter slot should not receive the credential. Found: {hoistedArgDisplay}");
         }
 
@@ -382,6 +482,11 @@ namespace Azure.Generator.Tests.Visitors
                 // no credential means no configuration-based construction.
                 Assert.Pass("No Settings constructor generated for client without credential support — expected behavior");
             }
+        }
+
+        private class TestClientSettingsVisitor : ClientSettingsVisitor
+        {
+            public void VisitClient(InputClient client, ClientProvider provider) => Visit(client, provider);
         }
     }
 }

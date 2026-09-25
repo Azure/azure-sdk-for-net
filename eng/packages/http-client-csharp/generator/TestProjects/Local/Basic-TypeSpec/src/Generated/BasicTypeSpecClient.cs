@@ -92,7 +92,7 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClient from a <see cref="BasicTypeSpecClientSettings"/>. </summary>
         /// <param name="settings"> The settings for BasicTypeSpecClient. </param>
         [Experimental("SCME0002")]
-        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(settings?.BasicTypeSpecUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public BasicTypeSpecClient(BasicTypeSpecClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new global::Azure.Core.AzureKeyCredentialPolicy(new global::Azure.AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(settings?.CredentialProvider as global::Azure.Core.TokenCredential, AuthorizationScopes), settings?.BasicTypeSpecUrl, settings?.Options)
         {
         }
 
