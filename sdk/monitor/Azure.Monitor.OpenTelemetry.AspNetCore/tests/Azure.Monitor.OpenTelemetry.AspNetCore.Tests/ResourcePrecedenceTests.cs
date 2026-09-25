@@ -1,0 +1,197 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using Xunit;
+
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
+{
+    [Collection("ManipulatesEnvironmentVariable")]
+    public class ResourcePrecedenceTests : IDisposable
+    {
+        private const string OtelServiceName = "OTEL_SERVICE_NAME";
+        private const string OtelResourceAttributes = "OTEL_RESOURCE_ATTRIBUTES";
+        private const string AppServiceSiteName = "WEBSITE_SITE_NAME";
+        private const string AppServiceInstanceId = "WEBSITE_INSTANCE_ID";
+        private const string AppServiceStampName = "WEBSITE_HOME_STAMPNAME";
+        private const string ContainerAppName = "CONTAINER_APP_NAME";
+
+        // A mock transmitter is registered for this connection string so these tests never upload. A real
+        // transmitter persists telemetry on shutdown and drains it in the background, where its HTTP calls
+        // are captured by the HttpClient instrumentation of whichever test runs next.
+        private const string TestConnectionString = "InstrumentationKey=unitTest-" + nameof(ResourcePrecedenceTests);
+        private const string ContainerAppReplicaName = "CONTAINER_APP_REPLICA_NAME";
+
+        private static readonly string[] EnvironmentVariableNames =
+        [
+            OtelServiceName,
+            OtelResourceAttributes,
+            AppServiceSiteName,
+            AppServiceInstanceId,
+            AppServiceStampName,
+            ContainerAppName,
+            ContainerAppReplicaName,
+        ];
+
+        private readonly Dictionary<string, string?> _originalEnvironmentVariables = [];
+
+        public ResourcePrecedenceTests()
+        {
+            foreach (var name in EnvironmentVariableNames)
+            {
+                _originalEnvironmentVariables[name] = Environment.GetEnvironmentVariable(name);
+                Environment.SetEnvironmentVariable(name, null);
+            }
+
+            Exporter.Internals.TransmitterFactory.Instance.Set(
+                connectionString: TestConnectionString,
+                transmitter: new Exporter.Tests.CommonTestFramework.MockTransmitter(new List<Exporter.Models.TelemetryItem>()));
+        }
+
+        public void Dispose()
+        {
+            foreach (var variable in _originalEnvironmentVariables)
+            {
+                Environment.SetEnvironmentVariable(variable.Key, variable.Value);
+            }
+        }
+
+        [Fact]
+        public void OtelServiceNameTakesPrecedenceOverAppServiceSiteName()
+        {
+            Environment.SetEnvironmentVariable(OtelServiceName, "otel-service-name");
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+            Environment.SetEnvironmentVariable(AppServiceStampName, "app-service-stamp");
+
+            var resource = CreateResource();
+
+            AssertAttribute(resource, "service.name", "otel-service-name");
+
+            // Proves the App Service detector's other attributes survive. cloud.platform cannot be used: the VM
+            // detector runs after it and overwrites that value wherever IMDS answers, including Azure-hosted CI.
+            AssertAttribute(resource, "azure.app.service.stamp", "app-service-stamp");
+        }
+
+        [Fact]
+        public void AppServiceSiteNameIsUsedWhenOtelServiceNameIsNotSet()
+        {
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+
+            AssertAttribute(CreateResource(), "service.name", "app-service-site-name");
+        }
+
+        [Fact]
+        public void OtelResourceAttributesServiceNameTakesPrecedenceOverAppServiceSiteName()
+        {
+            Environment.SetEnvironmentVariable(OtelResourceAttributes, "service.name=resource-service-name");
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+
+            AssertAttribute(CreateResource(), "service.name", "resource-service-name");
+        }
+
+        [Fact]
+        public void OtelServiceNameTakesPrecedenceOverOtelResourceAttributesServiceName()
+        {
+            Environment.SetEnvironmentVariable(OtelServiceName, "otel-service-name");
+            Environment.SetEnvironmentVariable(OtelResourceAttributes, "service.name=resource-service-name");
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+
+            AssertAttribute(CreateResource(), "service.name", "otel-service-name");
+        }
+
+        [Theory]
+        [InlineData(null, "container-app-name")]
+        [InlineData("otel-service-name", "otel-service-name")]
+        public void OtelServiceNameTakesPrecedenceOverContainerAppName(string? otelServiceName, string expectedServiceName)
+        {
+            Environment.SetEnvironmentVariable(OtelServiceName, otelServiceName);
+            Environment.SetEnvironmentVariable(ContainerAppName, "container-app-name");
+            Environment.SetEnvironmentVariable(ContainerAppReplicaName, "container-app-replica");
+
+            var resource = CreateResource();
+
+            AssertAttribute(resource, "service.name", expectedServiceName);
+            // These values reflect the currently vendored OpenTelemetry.Resources.Azure and will change to
+            // azure.app_service and azure.container_apps when re-vendored from 1.18.0-beta.2 or later.
+            AssertAttribute(resource, "cloud.platform", "azure_container_apps");
+        }
+
+        [Fact]
+        public void OtelResourceAttributesInstanceIdTakesPrecedenceOverAppServiceInstanceId()
+        {
+            Environment.SetEnvironmentVariable(OtelResourceAttributes, "service.instance.id=resource-instance");
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+            Environment.SetEnvironmentVariable(AppServiceInstanceId, "app-service-instance");
+
+            AssertAttribute(CreateResource(), "service.instance.id", "resource-instance");
+        }
+
+        [Fact]
+        public void OtelServiceNameFromConfigurationTakesPrecedenceOverAppServiceSiteName()
+        {
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                    [OtelServiceName] = "configured-service-name",
+                })
+                .Build();
+
+            AssertAttribute(CreateResource(configuration), "service.name", "configured-service-name");
+        }
+
+        [Fact]
+        public void ResourceConfiguredAfterUseAzureMonitorTakesPrecedenceOverOtelServiceName()
+        {
+            Environment.SetEnvironmentVariable(OtelServiceName, "otel-service-name");
+            Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+
+            var services = CreateServices(
+                configureBuilder: builder => builder.ConfigureResource(resource => resource.AddService("code-name")));
+
+            using var serviceProvider = services.BuildServiceProvider();
+            AssertAttribute(serviceProvider.GetRequiredService<TracerProvider>().GetResource(), "service.name", "code-name");
+            AssertAttribute(serviceProvider.GetRequiredService<MeterProvider>().GetResource(), "service.name", "code-name");
+            AssertAttribute(serviceProvider.GetRequiredService<LoggerProvider>().GetResource(), "service.name", "code-name");
+        }
+
+        private static Resource CreateResource(IConfiguration? configuration = null, Action<OpenTelemetryBuilder>? configureBuilder = null)
+        {
+            using var serviceProvider = CreateServices(configuration, configureBuilder).BuildServiceProvider();
+            return serviceProvider.GetRequiredService<TracerProvider>().GetResource();
+        }
+
+        private static ServiceCollection CreateServices(IConfiguration? configuration = null, Action<OpenTelemetryBuilder>? configureBuilder = null)
+        {
+            var services = new ServiceCollection();
+            if (configuration != null)
+            {
+                services.AddSingleton(configuration);
+            }
+
+            var builder = services.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = TestConnectionString;
+                    options.EnableLiveMetrics = false;
+                });
+            configureBuilder?.Invoke(builder);
+
+            return services;
+        }
+
+        private static void AssertAttribute(Resource resource, string key, string expectedValue)
+        {
+            Assert.Equal(expectedValue, resource.Attributes.Single(attribute => attribute.Key == key).Value);
+        }
+    }
+}
