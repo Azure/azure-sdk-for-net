@@ -1,15 +1,5 @@
 namespace Azure.Data.AI
 {
-    public static partial class AIModelFactory
-    {
-        public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessTime = default(System.TimeSpan?), System.TimeSpan? inferenceTime = default(System.TimeSpan?), System.TimeSpan? postProcessTime = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Data.AI.SemanticRerankingInferenceRequest SemanticRerankingInferenceRequest(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), string targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
-        public static Azure.Data.AI.SemanticRerankingMetaResult SemanticRerankingMetaResult(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
-        public static Azure.Data.AI.SemanticRerankingResult SemanticRerankingResult(System.Collections.Generic.IEnumerable<Azure.Data.AI.SemanticRerankingScore> scores = null, Azure.Data.AI.SemanticRerankingMetaResult meta = null) { throw null; }
-        public static Azure.Data.AI.SemanticRerankingScore SemanticRerankingScore(int? index = default(int?), string document = null, float? score = default(float?), System.Collections.Generic.IEnumerable<Azure.Data.AI.SentenceScore> sentenceScores = null) { throw null; }
-        public static Azure.Data.AI.SentenceScore SentenceScore(int index = 0, float score = 0f) { throw null; }
-        public static Azure.Data.AI.TokenUsageResult TokenUsageResult(int? totalTokens = default(int?)) { throw null; }
-    }
     public partial class AzureDataAIContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDataAIContext() { }
@@ -51,6 +41,16 @@ namespace Azure.Data.AI
         public System.Uri Endpoint { get { throw null; } set { } }
         public Azure.Data.AI.InferenceClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
+    public static partial class InferenceModelFactory
+    {
+        public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessTime = default(System.TimeSpan?), System.TimeSpan? inferenceTime = default(System.TimeSpan?), System.TimeSpan? postProcessTime = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Data.AI.SemanticRerankingInferenceRequest SemanticRerankingInferenceRequest(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), string targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
+        public static Azure.Data.AI.SemanticRerankingMetaResult SemanticRerankingMetaResult(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
+        public static Azure.Data.AI.SemanticRerankingResult SemanticRerankingResult(System.Collections.Generic.IEnumerable<Azure.Data.AI.SemanticRerankingScore> scores = null, Azure.Data.AI.SemanticRerankingMetaResult meta = null) { throw null; }
+        public static Azure.Data.AI.SemanticRerankingScore SemanticRerankingScore(int? index = default(int?), string document = null, float? score = default(float?), System.Collections.Generic.IEnumerable<Azure.Data.AI.SentenceScore> sentenceScores = null) { throw null; }
+        public static Azure.Data.AI.SentenceScore SentenceScore(int index = 0, float score = 0f) { throw null; }
+        public static Azure.Data.AI.TokenUsageResult TokenUsageResult(int? totalTokens = default(int?)) { throw null; }
     }
     public partial class LatencyResult : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.LatencyResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.LatencyResult>
     {

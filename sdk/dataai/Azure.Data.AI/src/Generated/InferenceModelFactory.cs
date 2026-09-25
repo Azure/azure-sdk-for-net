@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Data.AI
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AIModelFactory
+    public static partial class InferenceModelFactory
     {
         /// <summary> The input for a semantic reranking operation. </summary>
         /// <param name="query"> The query used to rank the documents. </param>
