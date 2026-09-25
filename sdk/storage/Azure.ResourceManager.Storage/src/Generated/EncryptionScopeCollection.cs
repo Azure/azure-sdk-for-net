@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary>
         /// Lists all the encryption scopes available under the specified storage account.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopesOperation IdEncryptionScopes_List
+        ///                         Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopesOperation IdEncryptionScopes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary>
         /// Lists all the encryption scopes available under the specified storage account.
-        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopesOperation IdEncryptionScopes_List
+        ///                         Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopesOperation IdEncryptionScopes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EncryptionScopeResource"/> that may take multiple service requests to iterate over. </returns>
