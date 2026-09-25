@@ -3681,7 +3681,7 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    Response<ListBlobsHierarchySegmentResponse> response;
+                    Response<ListBlobsHierarchySegmentResult> response;
 
                     /* Note that the query parameter showonly=deleted is hardcoded in the generated code.
                      * Once we migrate to the blob endpoint, we will need to specify showonly=deleted here.

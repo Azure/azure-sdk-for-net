@@ -784,7 +784,7 @@ namespace Azure.Storage.Blobs
         /// single segment of blob containers in the storage account, starting
         /// from the specified <paramref name="continuationToken"/>.  Use an empty
         /// <paramref name="continuationToken"/> to start enumeration from the beginning
-        /// and the <see cref="ListContainersSegmentResponse.NextMarker"/> if it's not
+        /// and the <see cref="ListContainersSegmentResult.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobContainersInternal"/>
         /// to continue enumerating the containers segment by segment.
         /// Containers are ordered lexicographically by name.
@@ -796,7 +796,7 @@ namespace Azure.Storage.Blobs
         /// <param name="continuationToken">
         /// An optional string value that identifies the segment of the list
         /// of blob containers to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListContainersSegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListContainersSegmentResult.NextMarker"/>
         /// if the listing operation did not return all blob containers remaining
         /// to be listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="continuationToken"/> parameter
@@ -833,7 +833,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<ListContainersSegmentResponse>> GetBlobContainersInternal(
+        internal async Task<Response<ListContainersSegmentResult>> GetBlobContainersInternal(
             string continuationToken,
             BlobContainerTraits traits,
 #pragma warning disable CA1801 // Review unused parameters
@@ -858,7 +858,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response<ListContainersSegmentResponse> response;
+                    Response<ListContainersSegmentResult> response;
 
                     if (async)
                     {
@@ -880,7 +880,7 @@ namespace Azure.Storage.Blobs
                             cancellationToken: cancellationToken);
                     }
 
-                    ListContainersSegmentResponse listContainersResponse = response.Value;
+                    ListContainersSegmentResult listContainersResponse = response.Value;
 
                     if ((traits & BlobContainerTraits.Metadata) != BlobContainerTraits.Metadata)
                     {
@@ -892,7 +892,7 @@ namespace Azure.Storage.Blobs
                             metadata: null))
                             .ToList();
 
-                        listContainersResponse = new ListContainersSegmentResponse(
+                        listContainersResponse = new ListContainersSegmentResult(
                             response.Value.ServiceEndpoint,
                             response.Value.Prefix,
                             response.Value.Marker,

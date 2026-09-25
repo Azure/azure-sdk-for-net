@@ -40,10 +40,26 @@ namespace Azure.Messaging.EventGrid.Namespaces
         string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.BrokerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.Messaging.EventGrid.Namespaces.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Messaging.EventGrid.Namespaces.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.EventGrid.Namespaces.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.EventGrid.Namespaces.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.EventGrid.Namespaces.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class EventGridNamespacesModelFactory
     {
         public static Azure.Messaging.EventGrid.Namespaces.AcknowledgeResult AcknowledgeResult(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Namespaces.FailedLockToken> failedLockTokens = null, System.Collections.Generic.IEnumerable<string> succeededLockTokens = null) { throw null; }
         public static Azure.Messaging.EventGrid.Namespaces.BrokerProperties BrokerProperties(string lockToken = null, int deliveryCount = 0) { throw null; }
+        public static Azure.Messaging.EventGrid.Namespaces.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Messaging.EventGrid.Namespaces.FailedLockToken FailedLockToken(string lockToken = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.Messaging.EventGrid.Namespaces.ReceiveDetails ReceiveDetails(Azure.Messaging.EventGrid.Namespaces.BrokerProperties brokerProperties = null, Azure.Messaging.CloudEvent @event = null) { throw null; }
         public static Azure.Messaging.EventGrid.Namespaces.ReceiveResult ReceiveResult(System.Collections.Generic.IEnumerable<Azure.Messaging.EventGrid.Namespaces.ReceiveDetails> details = null) { throw null; }

@@ -323,6 +323,21 @@ namespace Azure.Communication.JobRouter
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.DistributionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.DistributionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.JobRouter.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.Communication.JobRouter.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Communication.JobRouter.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.JobRouter.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.JobRouter.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.JobRouter.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.JobRouter.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class ExceptionAction : System.ClientModel.Primitives.IJsonModel<Azure.Communication.JobRouter.ExceptionAction>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.JobRouter.ExceptionAction>
     {
         protected ExceptionAction() { }
@@ -735,6 +750,7 @@ namespace Azure.Communication.JobRouter
         public static Azure.Communication.JobRouter.DirectMapRouterRule DirectMapRouterRule() { throw null; }
         public static Azure.Communication.JobRouter.DistributionMode DistributionMode(int minConcurrentOffers = 0, int maxConcurrentOffers = 0, bool? bypassSelectors = default(bool?), string kind = null) { throw null; }
         public static Azure.Communication.JobRouter.DistributionPolicy DistributionPolicy(Azure.ETag eTag = default(Azure.ETag), string id = null, string name = null, System.TimeSpan? offerExpiresAfter = default(System.TimeSpan?), Azure.Communication.JobRouter.DistributionMode mode = null) { throw null; }
+        public static Azure.Communication.JobRouter.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Communication.JobRouter.ExceptionAction ExceptionAction(string id = null, string kind = null) { throw null; }
         public static Azure.Communication.JobRouter.ExceptionPolicy ExceptionPolicy(Azure.ETag eTag = default(Azure.ETag), string id = null, string name = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.ExceptionRule> exceptionRules = null) { throw null; }
         public static Azure.Communication.JobRouter.ExceptionRule ExceptionRule(string id = null, Azure.Communication.JobRouter.ExceptionTrigger trigger = null, System.Collections.Generic.IEnumerable<Azure.Communication.JobRouter.ExceptionAction> actions = null) { throw null; }

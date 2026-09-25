@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.Queues.Models;
 using Azure.Core;
+using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
 {

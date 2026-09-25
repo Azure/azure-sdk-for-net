@@ -521,6 +521,20 @@ namespace Azure.AI.VoiceLive
         public static bool operator !=(Azure.AI.VoiceLive.EouThresholdLevel left, Azure.AI.VoiceLive.EouThresholdLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.AI.VoiceLive.VoiceLiveErrorDetails Error { get { throw null; } }
+        protected virtual Azure.AI.VoiceLive.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.VoiceLive.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.VoiceLive.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.VoiceLive.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FileSearchResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.FileSearchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.FileSearchResult>
     {
         internal FileSearchResult() { }
@@ -2821,6 +2835,7 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.CachedTokenDetails CachedTokenDetails(int textTokens = 0, int audioTokens = 0, int imageTokens = 0) { throw null; }
         public static Azure.AI.VoiceLive.ConversationRequestItem ConversationRequestItem(string type = null, string id = null) { throw null; }
         public static Azure.AI.VoiceLive.EouDetection EouDetection(string model = null) { throw null; }
+        public static Azure.AI.VoiceLive.ErrorResult ErrorResult(Azure.AI.VoiceLive.VoiceLiveErrorDetails error = null) { throw null; }
         public static Azure.AI.VoiceLive.FileSearchResult FileSearchResult(System.Collections.Generic.IDictionary<string, string> attributes = null, string fileId = null, string filename = null, float? score = default(float?), string text = null) { throw null; }
         public static Azure.AI.VoiceLive.FunctionCallItem FunctionCallItem(string id = null, string name = null, string callId = null, string arguments = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }
         public static Azure.AI.VoiceLive.FunctionCallOutputItem FunctionCallOutputItem(string id = null, string callId = null, string output = null, Azure.AI.VoiceLive.ItemParamStatus? status = default(Azure.AI.VoiceLive.ItemParamStatus?)) { throw null; }

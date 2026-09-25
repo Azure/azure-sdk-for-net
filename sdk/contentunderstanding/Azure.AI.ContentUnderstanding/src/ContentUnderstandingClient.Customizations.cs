@@ -329,7 +329,7 @@ namespace Azure.AI.ContentUnderstanding
                 allowInputTruncation: options.AllowInputTruncation,
                 clientRequestId: default,
                 cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResponse)result, result), result);
+            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResult)result, result), result);
         }
 
         /// <summary> Extract content and fields from input. The analysis result is embedded inline in the JSON response body (HTTP 200) without creating a long-running operation. </summary>
@@ -354,7 +354,7 @@ namespace Azure.AI.ContentUnderstanding
                 allowInputTruncation: options.AllowInputTruncation,
                 clientRequestId: default,
                 cancellationToken.ToRequestContext());
-            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResponse)result, result), result);
+            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResult)result, result), result);
         }
 
         /// <summary> Extract content and fields from binary input. The analysis result is embedded inline in the JSON response body (HTTP 200) without creating a long-running operation. </summary>
@@ -416,7 +416,7 @@ namespace Azure.AI.ContentUnderstanding
             string? processingLocation = options.ProcessingLocation?.ToString();
 
             Response result = await AnalyzeBinaryInlineOperationAsync(options.AnalyzerId, RequestContent.Create(options.BinaryInput), effectiveContentType, DefaultStringEncoding, processingLocation!, contentRange!, clientRequestId: default, allowInputTruncation: options.AllowInputTruncation, context: cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResponse)result, result), result);
+            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResult)result, result), result);
         }
 
         /// <summary> Extract content and fields from binary input using an options bag. The analysis result is embedded inline in the JSON response body (HTTP 200) without creating a long-running operation. </summary>
@@ -434,14 +434,14 @@ namespace Azure.AI.ContentUnderstanding
             string? processingLocation = options.ProcessingLocation?.ToString();
 
             Response result = AnalyzeBinaryInlineOperation(options.AnalyzerId, RequestContent.Create(options.BinaryInput), effectiveContentType, DefaultStringEncoding, processingLocation!, contentRange!, clientRequestId: default, allowInputTruncation: options.AllowInputTruncation, context: cancellationToken.ToRequestContext());
-            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResponse)result, result), result);
+            return Response.FromValue(GetSucceededInlineResult((ContentAnalyzerInlineResult)result, result), result);
         }
 
         /// <summary>
         /// Throws <see cref="RequestFailedException"/> when the inline analyze envelope is not Succeeded,
         /// matching completed LRO analyze behavior for failed operation status payloads.
         /// </summary>
-        private static AnalysisResult GetSucceededInlineResult(ContentAnalyzerInlineResponse inlineResponse, Response rawResponse)
+        private static AnalysisResult GetSucceededInlineResult(ContentAnalyzerInlineResult inlineResponse, Response rawResponse)
         {
             if (inlineResponse.Status == OperationState.Succeeded)
             {

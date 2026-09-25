@@ -161,6 +161,21 @@ namespace Azure.Developer.LoadTesting
         string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.Developer.LoadTesting.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Developer.LoadTesting.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Developer.LoadTesting.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.LoadTesting.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FileUploadResultOperation : Azure.Operation<System.BinaryData>
     {
         protected FileUploadResultOperation() { }
@@ -493,6 +508,7 @@ namespace Azure.Developer.LoadTesting
         public static Azure.Developer.LoadTesting.DimensionFilter DimensionFilter(string name = null, System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.Developer.LoadTesting.DimensionValue DimensionValue(string name = null, string value = null) { throw null; }
         public static Azure.Developer.LoadTesting.ErrorDetails ErrorDetails(string code = null, string message = null, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<string>> properties = null) { throw null; }
+        public static Azure.Developer.LoadTesting.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB = (long)0, long? httpConcurrency = default(long?)) { throw null; }
         public static Azure.Developer.LoadTesting.FunctionFlexConsumptionTargetResourceConfigurations FunctionFlexConsumptionTargetResourceConfigurations(System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.FunctionFlexConsumptionResourceConfiguration> configurations = null) { throw null; }
         public static Azure.Developer.LoadTesting.HourlyRecurrence HourlyRecurrence(Azure.Developer.LoadTesting.RecurrenceEnd recurrenceEnd = null, int interval = 0) { throw null; }

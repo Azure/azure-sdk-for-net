@@ -89,6 +89,21 @@ namespace Azure.Analytics.OnlineExperimentation
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.DiagnosticDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.DiagnosticDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.Analytics.OnlineExperimentation.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Analytics.OnlineExperimentation.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Analytics.OnlineExperimentation.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Analytics.OnlineExperimentation.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EventCountMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition>
     {
         public EventCountMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent @event) { }
@@ -276,6 +291,7 @@ namespace Azure.Analytics.OnlineExperimentation
         public static Azure.Analytics.OnlineExperimentation.AggregatedValue AggregatedValue(string eventName = null, string filter = null, string eventProperty = null) { throw null; }
         public static Azure.Analytics.OnlineExperimentation.AverageMetricDefinition AverageMetricDefinition(Azure.Analytics.OnlineExperimentation.AggregatedValue value = null) { throw null; }
         public static Azure.Analytics.OnlineExperimentation.DiagnosticDetail DiagnosticDetail(string message = null, Azure.Analytics.OnlineExperimentation.DiagnosticCode code = default(Azure.Analytics.OnlineExperimentation.DiagnosticCode)) { throw null; }
+        public static Azure.Analytics.OnlineExperimentation.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition EventCountMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent @event = null) { throw null; }
         public static Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition EventRateMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent @event = null, string rateCondition = null) { throw null; }
         public static Azure.Analytics.OnlineExperimentation.ExperimentMetric ExperimentMetric(string id = null, Azure.Analytics.OnlineExperimentation.LifecycleStage lifecycle = default(Azure.Analytics.OnlineExperimentation.LifecycleStage), string displayName = null, string description = null, System.Collections.Generic.IEnumerable<string> categories = null, Azure.Analytics.OnlineExperimentation.DesiredDirection desiredDirection = default(Azure.Analytics.OnlineExperimentation.DesiredDirection), Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition definition = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModifiedOn = default(System.DateTimeOffset)) { throw null; }

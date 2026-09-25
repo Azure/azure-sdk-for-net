@@ -39,6 +39,21 @@ namespace Azure.Messaging.WebPubSub.Chat
         public System.TimeSpan ExpiresAfter { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.Messaging.WebPubSub.Chat.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Messaging.WebPubSub.Chat.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Messaging.WebPubSub.Chat.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Messaging.WebPubSub.Chat.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MessageQueryOptions
     {
         public MessageQueryOptions() { }
@@ -99,6 +114,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public static partial class WebPubSubChatModelFactory
     {
+        public static Azure.Messaging.WebPubSub.Chat.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation WebPubSubChatConversation(string id = null, string parentRoom = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage WebPubSubChatMessage(string id = null, string createdBy = null, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent WebPubSubChatMessageContent(string text = null, System.BinaryData binary = null) { throw null; }

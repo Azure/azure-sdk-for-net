@@ -214,6 +214,7 @@ namespace Azure.AI.Translation.Document
         public static Azure.AI.Translation.Document.DocumentTranslateContent DocumentTranslateContent(System.IO.Stream document = null, System.Collections.Generic.IEnumerable<System.IO.Stream> glossary = null) { throw null; }
         public static Azure.AI.Translation.Document.DocumentTranslationFileFormat DocumentTranslationFileFormat(string format = null, System.Collections.Generic.IEnumerable<string> fileExtensions = null, System.Collections.Generic.IEnumerable<string> contentTypes = null, string defaultFormatVersion = null, System.Collections.Generic.IEnumerable<string> formatVersions = null, Azure.AI.Translation.Document.FileFormatType? type = default(Azure.AI.Translation.Document.FileFormatType?)) { throw null; }
         public static Azure.AI.Translation.Document.DocumentTranslationInput DocumentTranslationInput(Azure.AI.Translation.Document.TranslationSource source = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.TranslationTarget> targets = null, Azure.AI.Translation.Document.StorageInputUriKind? storageUriKind = default(Azure.AI.Translation.Document.StorageInputUriKind?)) { throw null; }
+        public static Azure.AI.Translation.Document.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.AI.Translation.Document.SupportedFileFormats SupportedFileFormats(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationFileFormat> value = null) { throw null; }
         public static Azure.AI.Translation.Document.TranslationBatch TranslationBatch(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationInput> inputs = null, Azure.AI.Translation.Document.BatchOptions options = null) { throw null; }
         public static Azure.AI.Translation.Document.TranslationGlossary TranslationGlossary(System.Uri glossaryUri = null, string format = null, string formatVersion = null, Azure.AI.Translation.Document.TranslationStorageSource? storageSource = default(Azure.AI.Translation.Document.TranslationStorageSource?)) { throw null; }
@@ -273,6 +274,21 @@ namespace Azure.AI.Translation.Document
         public static implicit operator Azure.AI.Translation.Document.DocumentTranslationStatus? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Translation.Document.DocumentTranslationStatus left, Azure.AI.Translation.Document.DocumentTranslationStatus right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.AI.Translation.Document.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Translation.Document.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Translation.Document.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Translation.Document.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FileFormatType : System.IEquatable<Azure.AI.Translation.Document.FileFormatType>
