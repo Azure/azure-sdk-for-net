@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="modelName"> The model name associated with this container (e.g., gpt-4, claude-3). </param>
         /// <param name="provider"> The AI provider associated with this container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelName"/> is null. </exception>
-        public ContextCacheContainerProperties(string modelName, AiProvider provider)
+        public ContextCacheContainerProperties(string modelName, AIProvider provider)
         {
             Argument.AssertNotNull(modelName, nameof(modelName));
 
@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="description"> Container description. </param>
         /// <param name="modelName"> The model name associated with this container (e.g., gpt-4, claude-3). </param>
         /// <param name="provider"> The AI provider associated with this container. </param>
-        /// <param name="timeToLive"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. If not specified at creation time, it defaults to 1 day. </param>
+        /// <param name="timeToLiveInDays"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. If not specified at creation time, it defaults to 1 day. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCacheContainerProperties(string description, string modelName, AiProvider provider, int? timeToLive, ContextCacheProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCacheContainerProperties(string description, string modelName, AIProvider provider, int? timeToLiveInDays, ContextCacheProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ModelName = modelName;
             Provider = provider;
-            TimeToLive = timeToLive;
+            TimeToLiveInDays = timeToLiveInDays;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The AI provider associated with this container. </summary>
         [WirePath("provider")]
-        public AiProvider Provider { get; set; }
+        public AIProvider Provider { get; set; }
 
         /// <summary> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. If not specified at creation time, it defaults to 1 day. </summary>
         [WirePath("timeToLive")]
-        public int? TimeToLive { get; set; }
+        public int? TimeToLiveInDays { get; set; }
 
         /// <summary> The status of the last operation. </summary>
         [WirePath("provisioningState")]
