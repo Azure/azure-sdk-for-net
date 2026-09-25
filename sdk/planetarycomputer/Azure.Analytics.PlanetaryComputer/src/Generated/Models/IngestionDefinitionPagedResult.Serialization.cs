@@ -14,63 +14,63 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class IngestionSourceSummaryPagedResponse : IJsonModel<IngestionSourceSummaryPagedResponse>
+    internal partial class IngestionDefinitionPagedResult : IJsonModel<IngestionDefinitionPagedResult>
     {
-        /// <summary> Initializes a new instance of <see cref="IngestionSourceSummaryPagedResponse"/> for deserialization. </summary>
-        internal IngestionSourceSummaryPagedResponse()
+        /// <summary> Initializes a new instance of <see cref="IngestionDefinitionPagedResult"/> for deserialization. </summary>
+        internal IngestionDefinitionPagedResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IngestionSourceSummaryPagedResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IngestionDefinitionPagedResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinitionPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIngestionSourceSummaryPagedResponse(document.RootElement, options);
+                        return DeserializeIngestionDefinitionPagedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionDefinitionPagedResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinitionPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionDefinitionPagedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IngestionSourceSummaryPagedResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IngestionDefinitionPagedResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionSourceSummaryPagedResponse IPersistableModel<IngestionSourceSummaryPagedResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IngestionDefinitionPagedResult IPersistableModel<IngestionDefinitionPagedResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IngestionSourceSummaryPagedResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IngestionDefinitionPagedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionSourceSummaryPagedResponse"/> from. </param>
-        public static explicit operator IngestionSourceSummaryPagedResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionDefinitionPagedResult"/> from. </param>
+        public static explicit operator IngestionDefinitionPagedResult(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeIngestionSourceSummaryPagedResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIngestionDefinitionPagedResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IngestionSourceSummaryPagedResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IngestionDefinitionPagedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,14 +81,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinitionPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionDefinitionPagedResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IngestionSourceSummary item in Value)
+            foreach (IngestionInformation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -117,40 +117,40 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IngestionSourceSummaryPagedResponse IJsonModel<IngestionSourceSummaryPagedResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IngestionDefinitionPagedResult IJsonModel<IngestionDefinitionPagedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IngestionSourceSummaryPagedResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IngestionDefinitionPagedResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionDefinitionPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionDefinitionPagedResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIngestionSourceSummaryPagedResponse(document.RootElement, options);
+            return DeserializeIngestionDefinitionPagedResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IngestionSourceSummaryPagedResponse DeserializeIngestionSourceSummaryPagedResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static IngestionDefinitionPagedResult DeserializeIngestionDefinitionPagedResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IngestionSourceSummary> value = default;
+            IList<IngestionInformation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IngestionSourceSummary> array = new List<IngestionSourceSummary>();
+                    List<IngestionInformation> array = new List<IngestionInformation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IngestionSourceSummary.DeserializeIngestionSourceSummary(item, options));
+                        array.Add(IngestionInformation.DeserializeIngestionInformation(item, options));
                     }
                     value = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IngestionSourceSummaryPagedResponse(value, nextLink, additionalBinaryDataProperties);
+            return new IngestionDefinitionPagedResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

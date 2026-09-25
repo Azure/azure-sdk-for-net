@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class IngestionDefinitionPagedResponse
+    internal partial class OperationPagedResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionDefinitionPagedResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationPagedResult"/>. </summary>
         /// <param name="value"> The items on the page. </param>
-        internal IngestionDefinitionPagedResponse(IEnumerable<IngestionInformation> value)
+        internal OperationPagedResult(IEnumerable<PlanetaryComputerOperation> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionDefinitionPagedResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationPagedResult"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionDefinitionPagedResponse(IList<IngestionInformation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationPagedResult(IList<PlanetaryComputerOperation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> The items on the page. </summary>
-        public IList<IngestionInformation> Value { get; }
+        public IList<PlanetaryComputerOperation> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
         public Uri NextLink { get; }
