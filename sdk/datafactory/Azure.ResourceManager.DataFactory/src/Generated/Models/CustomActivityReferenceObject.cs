@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Linked service references. </summary>
+        public IList<DataFactoryLinkedServiceReference> LinkedServices { get; }
+
         /// <summary> Dataset references. </summary>
         public IList<DatasetReference> Datasets { get; }
     }

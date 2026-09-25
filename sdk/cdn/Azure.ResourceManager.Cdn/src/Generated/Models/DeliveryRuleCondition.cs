@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCondition"/>. </summary>
+        protected DeliveryRuleCondition() : this(default)
+        {
+        }
+
         /// <summary> The name of the condition for the delivery rule. </summary>
         [WirePath("name")]
         internal DeliveryRuleMatchVariable Name { get; set; }

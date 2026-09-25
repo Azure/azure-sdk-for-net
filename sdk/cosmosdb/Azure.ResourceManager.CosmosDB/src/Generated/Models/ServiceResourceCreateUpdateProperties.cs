@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceCreateUpdateProperties"/>. </summary>
+        protected ServiceResourceCreateUpdateProperties() : this(default)
+        {
+        }
+
         /// <summary> Instance type for the service. </summary>
         [WirePath("instanceSize")]
         public CosmosDBServiceSize? InstanceSize { get; set; }

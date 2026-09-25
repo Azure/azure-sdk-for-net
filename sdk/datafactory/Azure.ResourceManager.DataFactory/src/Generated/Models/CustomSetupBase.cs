@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomSetupBase"/>. </summary>
+        protected CustomSetupBase() : this(default)
+        {
+        }
+
         /// <summary> The type of custom setup. </summary>
         internal string CustomSetupBaseType { get; set; }
     }

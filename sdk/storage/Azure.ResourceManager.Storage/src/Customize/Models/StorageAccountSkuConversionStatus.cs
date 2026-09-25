@@ -18,13 +18,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        // Prior GA had a public parameterless ctor; generated code only has an internal ctor.
-        // Users create instances to set TargetSkuName for SKU conversion requests.
-        /// <summary> Initializes a new instance of <see cref="StorageAccountSkuConversionStatus"/>. </summary>
-        public StorageAccountSkuConversionStatus()
-        {
-        }
-
         /// <summary> This property indicates the current sku conversion status. </summary>
         [WirePath("skuConversionStatus")]
         public StorageAccountSkuConversionState? SkuConversionStatus { get; }

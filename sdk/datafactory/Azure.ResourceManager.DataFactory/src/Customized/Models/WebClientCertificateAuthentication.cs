@@ -18,13 +18,5 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Property restored as workaround for issue #59298. </summary>
         public DataFactorySecret Pfx { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public WebClientCertificateAuthentication(DataFactoryElement<string> uri, DataFactorySecret pfx, DataFactorySecret password)
-            : base(uri)
-        {
-            Pfx = pfx;
-            Password = password;
-        }
     }
 }

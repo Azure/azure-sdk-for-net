@@ -4058,6 +4058,50 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBFleetspaceAccountConfiguration(resourceId, armLocation, default);
         }
 
+        /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
+        /// <param name="address"> The node's IP address. </param>
+        /// <param name="state"> The state of the node in Cassandra ring. </param>
+        /// <param name="status"></param>
+        /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
+        /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
+        /// <param name="tokens"> List of tokens this node covers. </param>
+        /// <param name="size"></param>
+        /// <param name="hostId"> The network ID of the node. </param>
+        /// <param name="rack"> The rack this node is part of. </param>
+        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="diskUsedKB"> The amount of disk used, in kB, of the directory /var/lib/cassandra. </param>
+        /// <param name="diskFreeKB"> The amount of disk free, in kB, of the directory /var/lib/cassandra. </param>
+        /// <param name="memoryUsedKB"> Used memory (calculated as total - free - buffers - cache), in kB. </param>
+        /// <param name="memoryBuffersAndCachedKB"> Memory used by kernel buffers (Buffers in /proc/meminfo) and page cache and slabs (Cached and SReclaimable in /proc/meminfo), in kB. </param>
+        /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
+        /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
+        /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
+        /// <returns> A new <see cref="Models.CassandraClusterDataCenterNodeItem"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IEnumerable<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        {
+            return new CassandraClusterDataCenterNodeItem(
+                address,
+                state,
+                status,
+                cassandraProcessStatus,
+                load,
+                (tokens ?? new ChangeTrackingList<string>()).ToList(),
+                size,
+                hostId,
+                rack,
+                timestamp,
+                diskUsedKB,
+                diskFreeKB,
+                memoryUsedKB,
+                memoryBuffersAndCachedKB,
+                memoryFreeKB,
+                memoryTotalKB,
+                cpuUsage,
+                default,
+                default);
+        }
+
         /// <summary> An Azure Cosmos DB database account. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
