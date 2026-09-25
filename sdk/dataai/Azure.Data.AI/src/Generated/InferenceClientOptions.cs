@@ -12,14 +12,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Data.AI
 {
-    /// <summary> Client options for <see cref="AzureDataAIClient"/>. </summary>
-    public partial class AzureDataAIClientOptions : ClientOptions
+    /// <summary> Client options for <see cref="InferenceClient"/>. </summary>
+    public partial class InferenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_09_01_Preview;
 
-        /// <summary> Initializes a new instance of AzureDataAIClientOptions. </summary>
+        /// <summary> Initializes a new instance of InferenceClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public AzureDataAIClientOptions(ServiceVersion version = LatestVersion)
+        public InferenceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -29,10 +29,10 @@ namespace Azure.Data.AI
             ConfigureLogging();
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClientOptions from configuration. </summary>
+        /// <summary> Initializes a new instance of InferenceClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
         [Experimental("SCME0002")]
-        internal AzureDataAIClientOptions(IConfigurationSection section) : base(section, null)
+        internal InferenceClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2026-09-01-preview";
             if (section is null || !section.Exists())

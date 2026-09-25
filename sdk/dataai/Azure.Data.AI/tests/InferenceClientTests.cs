@@ -11,12 +11,12 @@ using NUnit.Framework;
 
 namespace Azure.Data.AI.Tests
 {
-    public class AzureDataAIClientTests
+    public class InferenceClientTests
     {
         [Test]
         public void CanCreateApiKeyClient()
         {
-            var client = new AzureDataAIClient(
+            var client = new InferenceClient(
                 new Uri("https://example.inference.azure.com"),
                 new AzureKeyCredential("api-key"));
 
@@ -26,7 +26,7 @@ namespace Azure.Data.AI.Tests
         [Test]
         public void CanCreateTokenCredentialClient()
         {
-            var client = new AzureDataAIClient(
+            var client = new InferenceClient(
                 new Uri("https://example.inference.azure.com"),
                 new TestCredential());
 

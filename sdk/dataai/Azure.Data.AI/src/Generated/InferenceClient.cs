@@ -16,43 +16,43 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AI
 {
     /// <summary> Azure Data AI provides semantic reranking operations. </summary>
-    public partial class AzureDataAIClient
+    public partial class InferenceClient
     {
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private static readonly string[] AuthorizationScopes = new string[] { "https://dbinference.azure.com/.default" };
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AzureDataAIClient for mocking. </summary>
-        protected AzureDataAIClient()
+        /// <summary> Initializes a new instance of InferenceClient for mocking. </summary>
+        protected InferenceClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClient. </summary>
+        /// <summary> Initializes a new instance of InferenceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AzureDataAIClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureDataAIClientOptions())
+        public InferenceClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new InferenceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClient. </summary>
+        /// <summary> Initializes a new instance of InferenceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AzureDataAIClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureDataAIClientOptions())
+        public InferenceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new InferenceClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClient. </summary>
+        /// <summary> Initializes a new instance of InferenceClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AzureDataAIClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, AzureDataAIClientOptions options)
+        internal InferenceClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, InferenceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
-            options ??= new AzureDataAIClientOptions();
+            options ??= new InferenceClientOptions();
 
             _endpoint = endpoint;
             if (authenticationPolicy != null)
@@ -67,28 +67,28 @@ namespace Azure.Data.AI
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClient. </summary>
+        /// <summary> Initializes a new instance of InferenceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AzureDataAIClient(Uri endpoint, AzureKeyCredential credential, AzureDataAIClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
+        public InferenceClient(Uri endpoint, AzureKeyCredential credential, InferenceClientOptions options) : this(new AzureKeyCredentialPolicy(credential, AuthorizationHeader), endpoint, options)
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClient. </summary>
+        /// <summary> Initializes a new instance of InferenceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AzureDataAIClient(Uri endpoint, TokenCredential credential, AzureDataAIClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
+        public InferenceClient(Uri endpoint, TokenCredential credential, InferenceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
-        /// <summary> Initializes a new instance of AzureDataAIClient from a <see cref="AzureDataAIClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for AzureDataAIClient. </param>
+        /// <summary> Initializes a new instance of InferenceClient from a <see cref="InferenceClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for InferenceClient. </param>
         [Experimental("SCME0002")]
-        public AzureDataAIClient(AzureDataAIClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public InferenceClient(InferenceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Data.AI
         /// <returns> The response returned from the service. </returns>
         public virtual Response SemanticRerank(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureDataAIClient.SemanticRerank");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.SemanticRerank");
             scope.Start();
             try
             {
@@ -144,7 +144,7 @@ namespace Azure.Data.AI
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SemanticRerankAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AzureDataAIClient.SemanticRerank");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.SemanticRerank");
             scope.Start();
             try
             {

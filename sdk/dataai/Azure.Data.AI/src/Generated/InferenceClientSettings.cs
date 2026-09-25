@@ -12,15 +12,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Data.AI
 {
-    /// <summary> Represents the settings used to configure a <see cref="AzureDataAIClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
+    /// <summary> Represents the settings used to configure a <see cref="InferenceClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class AzureDataAIClientSettings : ClientSettings
+    public partial class InferenceClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
-        public AzureDataAIClientOptions Options { get; set; }
+        public InferenceClientOptions Options { get; set; }
 
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
@@ -33,7 +33,7 @@ namespace Azure.Data.AI
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new AzureDataAIClientOptions(optionsSection);
+                Options = new InferenceClientOptions(optionsSection);
             }
         }
     }

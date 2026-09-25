@@ -38,7 +38,11 @@ namespace Azure.Data.AI
         /// <param name="batchSize"> The number of documents processed in each batch. </param>
         /// <param name="sort"> Whether to return documents sorted by relevance score. </param>
         /// <param name="documentType"> The format of the submitted documents. </param>
-        /// <param name="targetPaths"> The JSON paths containing text to rank when the document type is JSON. </param>
+        /// <param name="targetPaths">
+        /// The property containing text to rank when the document type is JSON.
+        /// This property is required for JSON documents. Use dot notation for a nested property, for example `meta.content`.
+        /// You can specify multiple property paths separated by commas, for example `meta.content,id`.
+        /// </param>
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -78,7 +82,11 @@ namespace Azure.Data.AI
         /// <summary> The format of the submitted documents. </summary>
         public SemanticRerankingDocumentType? DocumentType { get; set; }
 
-        /// <summary> The JSON paths containing text to rank when the document type is JSON. </summary>
+        /// <summary>
+        /// The property containing text to rank when the document type is JSON.
+        /// This property is required for JSON documents. Use dot notation for a nested property, for example `meta.content`.
+        /// You can specify multiple property paths separated by commas, for example `meta.content,id`.
+        /// </summary>
         public string TargetPaths { get; set; }
 
         /// <summary> The name of the model used for the semantic reranking operation. </summary>

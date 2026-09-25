@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Data.AI
 {
     /// <summary></summary>
-    public partial class AzureDataAIClient
+    public partial class InferenceClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

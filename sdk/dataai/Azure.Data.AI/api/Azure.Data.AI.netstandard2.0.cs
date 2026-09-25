@@ -2,7 +2,7 @@ namespace Azure.Data.AI
 {
     public static partial class AIModelFactory
     {
-        public static Azure.Data.AI.LatencyResult LatencyResult(float? dataPreprocessTime = default(float?), float? inferenceTime = default(float?), float? postProcessTime = default(float?)) { throw null; }
+        public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessTime = default(System.TimeSpan?), System.TimeSpan? inferenceTime = default(System.TimeSpan?), System.TimeSpan? postProcessTime = default(System.TimeSpan?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingInferenceRequest SemanticRerankingInferenceRequest(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), string targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingMetaResult SemanticRerankingMetaResult(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
         public static Azure.Data.AI.SemanticRerankingResult SemanticRerankingResult(System.Collections.Generic.IEnumerable<Azure.Data.AI.SemanticRerankingScore> scores = null, Azure.Data.AI.SemanticRerankingMetaResult meta = null) { throw null; }
@@ -10,54 +10,54 @@ namespace Azure.Data.AI
         public static Azure.Data.AI.SentenceScore SentenceScore(int index = 0, float score = 0f) { throw null; }
         public static Azure.Data.AI.TokenUsageResult TokenUsageResult(int? totalTokens = default(int?)) { throw null; }
     }
-    public partial class AzureDataAIClient
-    {
-        protected AzureDataAIClient() { }
-        public AzureDataAIClient(Azure.Data.AI.AzureDataAIClientSettings settings) { }
-        public AzureDataAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public AzureDataAIClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Data.AI.AzureDataAIClientOptions options) { }
-        public AzureDataAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public AzureDataAIClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AI.AzureDataAIClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response SemanticRerank(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Data.AI.SemanticRerankingResult> SemanticRerank(Azure.Data.AI.SemanticRerankingInferenceRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> SemanticRerankAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.SemanticRerankingResult>> SemanticRerankAsync(Azure.Data.AI.SemanticRerankingInferenceRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class AzureDataAIClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddAzureDataAIClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddAzureDataAIClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Data.AI.AzureDataAIClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureDataAIClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureDataAIClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Data.AI.AzureDataAIClientSettings> configureSettings) { throw null; }
-    }
-    public partial class AzureDataAIClientOptions : Azure.Core.ClientOptions
-    {
-        public AzureDataAIClientOptions(Azure.Data.AI.AzureDataAIClientOptions.ServiceVersion version = Azure.Data.AI.AzureDataAIClientOptions.ServiceVersion.V2026_09_01_Preview) { }
-        public enum ServiceVersion
-        {
-            V2026_09_01_Preview = 1,
-        }
-    }
-    public partial class AzureDataAIClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public AzureDataAIClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Data.AI.AzureDataAIClientOptions Options { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
-    }
     public partial class AzureDataAIContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureDataAIContext() { }
         public static Azure.Data.AI.AzureDataAIContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    public partial class InferenceClient
+    {
+        protected InferenceClient() { }
+        public InferenceClient(Azure.Data.AI.InferenceClientSettings settings) { }
+        public InferenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public InferenceClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Data.AI.InferenceClientOptions options) { }
+        public InferenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public InferenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AI.InferenceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response SemanticRerank(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Data.AI.SemanticRerankingResult> SemanticRerank(Azure.Data.AI.SemanticRerankingInferenceRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SemanticRerankAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.SemanticRerankingResult>> SemanticRerankAsync(Azure.Data.AI.SemanticRerankingInferenceRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class InferenceClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddInferenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddInferenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Data.AI.InferenceClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedInferenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedInferenceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Data.AI.InferenceClientSettings> configureSettings) { throw null; }
+    }
+    public partial class InferenceClientOptions : Azure.Core.ClientOptions
+    {
+        public InferenceClientOptions(Azure.Data.AI.InferenceClientOptions.ServiceVersion version = Azure.Data.AI.InferenceClientOptions.ServiceVersion.V2026_09_01_Preview) { }
+        public enum ServiceVersion
+        {
+            V2026_09_01_Preview = 1,
+        }
+    }
+    public partial class InferenceClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public InferenceClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Data.AI.InferenceClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class LatencyResult : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.LatencyResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.LatencyResult>
     {
         internal LatencyResult() { }
-        public float? DataPreprocessTime { get { throw null; } }
-        public float? InferenceTime { get { throw null; } }
-        public float? PostProcessTime { get { throw null; } }
+        public System.TimeSpan? DataPreprocessTime { get { throw null; } }
+        public System.TimeSpan? InferenceTime { get { throw null; } }
+        public System.TimeSpan? PostProcessTime { get { throw null; } }
         protected virtual Azure.Data.AI.LatencyResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Data.AI.LatencyResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

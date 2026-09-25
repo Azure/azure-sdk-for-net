@@ -76,17 +76,17 @@ namespace Azure.Data.AI
             if (Optional.IsDefined(DataPreprocessTime))
             {
                 writer.WritePropertyName("dataPreprocessTime"u8);
-                writer.WriteNumberValue(DataPreprocessTime.Value);
+                writer.WriteNumberValue(DataPreprocessTime.Value.TotalMilliseconds);
             }
             if (Optional.IsDefined(InferenceTime))
             {
                 writer.WritePropertyName("inferenceTime"u8);
-                writer.WriteNumberValue(InferenceTime.Value);
+                writer.WriteNumberValue(InferenceTime.Value.TotalMilliseconds);
             }
             if (Optional.IsDefined(PostProcessTime))
             {
                 writer.WritePropertyName("postProcessTime"u8);
-                writer.WriteNumberValue(PostProcessTime.Value);
+                writer.WriteNumberValue(PostProcessTime.Value.TotalMilliseconds);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,9 +130,9 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            float? dataPreprocessTime = default;
-            float? inferenceTime = default;
-            float? postProcessTime = default;
+            TimeSpan? dataPreprocessTime = default;
+            TimeSpan? inferenceTime = default;
+            TimeSpan? postProcessTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    dataPreprocessTime = prop.Value.GetSingle();
+                    dataPreprocessTime = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (prop.NameEquals("inferenceTime"u8))
@@ -151,7 +151,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    inferenceTime = prop.Value.GetSingle();
+                    inferenceTime = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (prop.NameEquals("postProcessTime"u8))
@@ -160,7 +160,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    postProcessTime = prop.Value.GetSingle();
+                    postProcessTime = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (options.Format != "W")

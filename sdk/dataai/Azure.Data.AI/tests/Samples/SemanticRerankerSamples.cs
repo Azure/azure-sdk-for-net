@@ -14,7 +14,7 @@ namespace Azure.Data.AI.Tests.Samples
             #region Snippet:SemanticReranker_CreateClient
             Uri endpoint = new Uri("<semantic-reranker-endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<api-key>");
-            AzureDataAIClient client = new AzureDataAIClient(endpoint, credential);
+            InferenceClient client = new InferenceClient(endpoint, credential);
             #endregion Snippet:SemanticReranker_CreateClient
         }
     }

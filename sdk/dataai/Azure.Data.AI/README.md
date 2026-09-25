@@ -28,7 +28,7 @@ Create a client with an API key:
 ```C# Snippet:SemanticReranker_CreateClient
 Uri endpoint = new Uri("<semantic-reranker-endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<api-key>");
-AzureDataAIClient client = new AzureDataAIClient(endpoint, credential);
+InferenceClient client = new InferenceClient(endpoint, credential);
 ```
 
 Or authenticate with a `TokenCredential`, such as `DefaultAzureCredential` from
@@ -36,14 +36,14 @@ Or authenticate with a `TokenCredential`, such as `DefaultAzureCredential` from
 
 ```C#
 Uri endpoint = new Uri("<semantic-reranker-endpoint>");
-AzureDataAIClient client = new AzureDataAIClient(endpoint, new DefaultAzureCredential());
+InferenceClient client = new InferenceClient(endpoint, new DefaultAzureCredential());
 ```
 
 The generated bearer-token policy requests the `https://dbinference.azure.com/.default` scope.
 
 ## Key concepts
 
-Use `AzureDataAIClient.SemanticRerank` or `SemanticRerankAsync` to rerank documents directly.
+Use `InferenceClient.SemanticRerank` or `SemanticRerankAsync` to rerank documents directly.
 
 ## Examples
 

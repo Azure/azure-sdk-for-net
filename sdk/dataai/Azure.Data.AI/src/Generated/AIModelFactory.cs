@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +22,11 @@ namespace Azure.Data.AI
         /// <param name="batchSize"> The number of documents processed in each batch. </param>
         /// <param name="sort"> Whether to return documents sorted by relevance score. </param>
         /// <param name="documentType"> The format of the submitted documents. </param>
-        /// <param name="targetPaths"> The JSON paths containing text to rank when the document type is JSON. </param>
+        /// <param name="targetPaths">
+        /// The property containing text to rank when the document type is JSON.
+        /// This property is required for JSON documents. Use dot notation for a nested property, for example `meta.content`.
+        /// You can specify multiple property paths separated by commas, for example `meta.content,id`.
+        /// </param>
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
         /// <returns> A new <see cref="AI.SemanticRerankingInferenceRequest"/> instance for mocking. </returns>
@@ -96,11 +101,11 @@ namespace Azure.Data.AI
         }
 
         /// <summary> The result of the latency in the semantic reranking operation. </summary>
-        /// <param name="dataPreprocessTime"> The time spent on data preprocessing in the semantic reranking operation. </param>
-        /// <param name="inferenceTime"> The time spent on inference in the semantic reranking operation. </param>
-        /// <param name="postProcessTime"> The time spent on post-processing in the semantic reranking operation. </param>
+        /// <param name="dataPreprocessTime"> The time spent on data preprocessing in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="inferenceTime"> The time spent on inference in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="postProcessTime"> The time spent on post-processing in the semantic reranking operation, in milliseconds. </param>
         /// <returns> A new <see cref="AI.LatencyResult"/> instance for mocking. </returns>
-        public static LatencyResult LatencyResult(float? dataPreprocessTime = default, float? inferenceTime = default, float? postProcessTime = default)
+        public static LatencyResult LatencyResult(TimeSpan? dataPreprocessTime = default, TimeSpan? inferenceTime = default, TimeSpan? postProcessTime = default)
         {
             return new LatencyResult(dataPreprocessTime, inferenceTime, postProcessTime, additionalBinaryDataProperties: null);
         }
