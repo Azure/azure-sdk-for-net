@@ -19,42 +19,42 @@ namespace Azure.ResourceManager.Relationships.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
-        /// <param name="targetId"> The relationship target resource id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> is null. </exception>
-        public ServiceGroupMemberRelationshipProperties(ResourceIdentifier targetId)
+        /// <param name="sourceId"> The relationship source resource id. Must be a service group. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
+        public ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId)
         {
-            Argument.AssertNotNull(targetId, nameof(targetId));
+            Argument.AssertNotNull(sourceId, nameof(sourceId));
 
-            TargetId = targetId;
+            SourceId = sourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
-        /// <param name="sourceId"> The relationship source resource id. </param>
-        /// <param name="targetId"> The relationship target resource id. </param>
-        /// <param name="targetTenant"> The relationship target tenant id. </param>
+        /// <param name="sourceId"> The relationship source resource id. Must be a service group. </param>
+        /// <param name="targetId"> The relationship target resource id. Server-derived from the scoped resource. </param>
+        /// <param name="sourceTenant"> The relationship source tenant id. </param>
         /// <param name="originInformation"> Information about the origin of the relationship. </param>
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string sourceTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceId = sourceId;
             TargetId = targetId;
-            TargetTenant = targetTenant;
+            SourceTenant = sourceTenant;
             OriginInformation = originInformation;
             Metadata = metadata;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The relationship source resource id. </summary>
-        public ResourceIdentifier SourceId { get; }
+        /// <summary> The relationship source resource id. Must be a service group. </summary>
+        public ResourceIdentifier SourceId { get; set; }
 
-        /// <summary> The relationship target resource id. </summary>
-        public ResourceIdentifier TargetId { get; set; }
+        /// <summary> The relationship target resource id. Server-derived from the scoped resource. </summary>
+        public ResourceIdentifier TargetId { get; }
 
-        /// <summary> The relationship target tenant id. </summary>
-        public string TargetTenant { get; set; }
+        /// <summary> The relationship source tenant id. </summary>
+        public string SourceTenant { get; set; }
 
         /// <summary> Information about the origin of the relationship. </summary>
         public RelationshipOriginInformation OriginInformation { get; }
