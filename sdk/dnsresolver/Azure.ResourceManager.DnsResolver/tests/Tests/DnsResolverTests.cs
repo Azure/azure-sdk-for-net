@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollectionAsync();
             await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID;
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID;
             ;
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollectionAsync();
             await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID;
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollectionAsync();
             await CreateVirtualNetworkAsync();
             var vnetId = DefaultVnetID;
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
