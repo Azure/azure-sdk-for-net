@@ -14,7 +14,7 @@ namespace Azure.AI.Speech.Transcription
     [ModelReaderWriterBuildable(typeof(ChannelCombinedPhrases))]
     [ModelReaderWriterBuildable(typeof(EnhancedModeProperties))]
     [ModelReaderWriterBuildable(typeof(Error))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(InnerError))]
     [ModelReaderWriterBuildable(typeof(PhraseListProperties))]
     [ModelReaderWriterBuildable(typeof(TranscribedPhrase))]
