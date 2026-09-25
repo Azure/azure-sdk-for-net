@@ -18,6 +18,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
     [ModelReaderWriterBuildable(typeof(DeviceClass))]
     [ModelReaderWriterBuildable(typeof(DeviceClassesList))]
     [ModelReaderWriterBuildable(typeof(DeviceClassProperties))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(FileImportMetadata))]
     [ModelReaderWriterBuildable(typeof(ImportManifestMetadata))]
     [ModelReaderWriterBuildable(typeof(ImportUpdateInputItem))]

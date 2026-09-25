@@ -12,23 +12,23 @@ using Azure;
 namespace Azure.AI.Discovery
 {
     /// <summary> Response for indexing operations. </summary>
-    public partial class KnowledgeBaseIndexingOperationResponse : KnowledgeBaseOperationResponse
+    public partial class KnowledgeBaseIndexingOperationResult : KnowledgeBaseOperationResult
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexingOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexingOperationResult"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
-        internal KnowledgeBaseIndexingOperationResponse(string id, OperationState status) : base(id, status, KnowledgeBaseOperationType.Indexing)
+        internal KnowledgeBaseIndexingOperationResult(string id, OperationState status) : base(id, status, KnowledgeBaseOperationType.Indexing)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexingOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexingOperationResult"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
         /// <param name="operationType"> The type of operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="indexingResult"> Result details for indexing operations. </param>
-        internal KnowledgeBaseIndexingOperationResponse(string id, OperationState status, ResponseError error, KnowledgeBaseOperationType operationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IndexingOperationResult indexingResult) : base(id, status, error, operationType, additionalBinaryDataProperties)
+        internal KnowledgeBaseIndexingOperationResult(string id, OperationState status, ResponseError error, KnowledgeBaseOperationType operationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IndexingOperationResult indexingResult) : base(id, status, error, operationType, additionalBinaryDataProperties)
         {
             IndexingResult = indexingResult;
         }
