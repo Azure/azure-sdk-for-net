@@ -11,20 +11,20 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The result of the List Blobs API. </summary>
-    internal partial class ListBlobsFlatSegmentResponse
+    internal partial class ListBlobsFlatSegmentResult
     {
-        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="blobItems"> The list of blobs. </param>
-        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, IEnumerable<BlobItemInternal> blobItems)
+        internal ListBlobsFlatSegmentResult(string serviceEndpoint, string containerName, IEnumerable<BlobItemInternal> blobItems)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             BlobItems = blobItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="prefix"> The prefix of the list operation. </param>
@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="maxResults"> The maximum number of blobs to be returned with this operation. </param>
         /// <param name="blobItems"> The list of blobs. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
-        internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, IList<BlobItemInternal> blobItems, string nextMarker)
+        internal ListBlobsFlatSegmentResult(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, IList<BlobItemInternal> blobItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;

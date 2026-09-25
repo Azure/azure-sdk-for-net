@@ -11,25 +11,25 @@ using System.Linq;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The result of the List Containers API. </summary>
-    internal partial class ListContainersSegmentResponse
+    internal partial class ListContainersSegmentResult
     {
-        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerItems"> The list of containers. </param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, IEnumerable<ContainerItemInternal> containerItems)
+        internal ListContainersSegmentResult(string serviceEndpoint, IEnumerable<ContainerItemInternal> containerItems)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerItems = containerItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="prefix"> The prefix of the containers. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set returned with this operation. </param>
         /// <param name="maxResults"> The maximum number of containers to be returned with this operation. </param>
         /// <param name="containerItems"> The list of containers. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ContainerItemInternal> containerItems, string nextMarker)
+        internal ListContainersSegmentResult(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ContainerItemInternal> containerItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
