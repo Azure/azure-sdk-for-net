@@ -1596,7 +1596,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTraceOperationSlotAsyncCollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTraceOperationSlotAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1641,7 +1641,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTraceOperationSlotCollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTraceOperationSlotCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1686,7 +1686,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTraceOperationSlotV2AsyncCollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTraceOperationSlotV2AsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1731,7 +1731,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTraceOperationSlotV2CollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTraceOperationSlotV2CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTracesSlotAsyncCollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTracesSlotAsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1821,7 +1821,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTracesSlotCollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTracesSlotCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1866,7 +1866,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTracesSlotV2AsyncCollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTracesSlotV2AsyncCollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1911,7 +1911,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebWebAppsGetNetworkTracesSlotV2CollectionResultOfT(
+            return new WebSiteSlotResourceGetNetworkTracesSlotV2CollectionResultOfT(
                 _webAppsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

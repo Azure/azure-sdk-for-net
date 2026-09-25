@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RecommendedActionData, RecommendedActionResource>(new MicrosoftSqlRecommendedActionsListByDatabaseAdvisorAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RecommendedActionData, RecommendedActionResource>(new RecommendedActionCollectionGetAllAsyncCollectionResultOfT(
                 _databaseRecommendedActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RecommendedActionData, RecommendedActionResource>(new MicrosoftSqlRecommendedActionsListByDatabaseAdvisorCollectionResultOfT(
+            return new PageableWrapper<RecommendedActionData, RecommendedActionResource>(new RecommendedActionCollectionGetAllCollectionResultOfT(
                 _databaseRecommendedActionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

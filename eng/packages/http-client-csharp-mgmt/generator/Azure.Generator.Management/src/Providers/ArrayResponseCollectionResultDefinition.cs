@@ -38,7 +38,7 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly TypeProvider _backCompatProvider;
         private readonly string _methodName;
-        private readonly string _enclosingTypeName;
+        private readonly string _name;
 
         private readonly FieldProvider _clientField;
         private readonly IReadOnlyList<FieldProvider> _parameterFields;
@@ -67,7 +67,7 @@ namespace Azure.Generator.Management.Providers
             _constructorParameters = constructorParameters;
             _backCompatProvider = backCompatProvider;
             _methodName = methodName;
-            _enclosingTypeName = enclosingTypeName;
+            _name = ManagementClientGenerator.Instance.OutputLibrary.GetUniqueCollectionResultName($"{enclosingTypeName}{methodName}");
 
             _clientField = new FieldProvider(
                 FieldModifiers.Private | FieldModifiers.ReadOnly,
@@ -94,20 +94,7 @@ namespace Azure.Generator.Management.Providers
         protected override string BuildRelativeFilePath() =>
             Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
 
-        protected override string BuildName()
-        {
-            // Prefer CrossLanguageDefinitionId (e.g., "Compute.VirtualMachineExtensionImages.listVersions")
-            // converted to a valid C# identifier. CrossLanguageDefinitionId is stable across @@clientName
-            // customizations and uniquely identifies the operation, which avoids name collisions when
-            // multiple operations on the same enclosing type are surfaced under one user-facing method
-            // name (e.g., a tuple resource collection exposing two list operations both as "GetAll").
-            // Fall back to the enclosing type and method name if the CrossLanguageDefinitionId is not available.
-            var asyncSuffix = _isAsync ? "Async" : string.Empty;
-            var operationIdentifier = !string.IsNullOrEmpty(_serviceMethod.CrossLanguageDefinitionId)
-                ? _serviceMethod.CrossLanguageDefinitionId.ToIdentifierName()
-                : $"{_enclosingTypeName}_{_methodName}".ToIdentifierName();
-            return $"{operationIdentifier}{asyncSuffix}CollectionResultOfT";
-        }
+        protected override string BuildName() => $"{_name}CollectionResultOfT";
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;

@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GetByProviderRegistration");
+            return new ProviderRegistrationResourceGetByProviderRegistrationAsyncCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GetByProviderRegistration");
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GetByProviderRegistration");
+            return new ProviderRegistrationResourceGetByProviderRegistrationCollectionResultOfT(_operationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GetByProviderRegistration");
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftProviderHubProviderRegistrationsGenerateOperationsAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GenerateOperations");
+            return new ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GenerateOperations");
         }
 
         /// <summary>
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftProviderHubProviderRegistrationsGenerateOperationsCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GenerateOperations");
+            return new ProviderRegistrationResourceGenerateOperationsCollectionResultOfT(_providerRegistrationsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ProviderRegistrationResource.GenerateOperations");
         }
 
         /// <summary>

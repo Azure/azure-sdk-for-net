@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftDatabricksWorkspacesListAsyncCollectionResultOfT(
+            return new DatabricksWorkspaceResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
                 _outboundNetworkDependenciesEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Databricks
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftDatabricksWorkspacesListCollectionResultOfT(
+            return new DatabricksWorkspaceResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
                 _outboundNetworkDependenciesEndpointsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
