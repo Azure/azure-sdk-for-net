@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             AdvancedPlatformMetricsRuleType? ruleType = default;
-            bool enabled = default;
+            bool isEnabled = default;
             DateTimeOffset? lastModifiedOn = default;
             IReadOnlyList<MetricsEmitted> metricsEmitted = default;
             AdvancedPlatformMetricsRuleConfig ruleConfig = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             return new AdvancedPlatformMetricsRuleProperties(
                 ruleType,
-                enabled,
+                isEnabled,
                 lastModifiedOn,
                 metricsEmitted ?? new ChangeTrackingList<MetricsEmitted>(),
                 ruleConfig,

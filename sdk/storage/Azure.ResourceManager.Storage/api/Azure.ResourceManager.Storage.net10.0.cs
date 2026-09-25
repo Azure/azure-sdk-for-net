@@ -1688,8 +1688,8 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class AdvancedPlatformMetricsRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties>
     {
-        public AdvancedPlatformMetricsRuleProperties(bool enabled, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig ruleConfig) { }
-        public bool Enabled { get { throw null; } set { } }
+        public AdvancedPlatformMetricsRuleProperties(bool isEnabled, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig ruleConfig) { }
+        public bool IsEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Storage.Models.MetricsEmitted> MetricsEmitted { get { throw null; } }
         public Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig RuleConfig { get { throw null; } set { } }
@@ -1721,19 +1721,19 @@ namespace Azure.ResourceManager.Storage.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AiProvider : System.IEquatable<Azure.ResourceManager.Storage.Models.AiProvider>
+    public readonly partial struct AIProvider : System.IEquatable<Azure.ResourceManager.Storage.Models.AIProvider>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AiProvider(string value) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.AiProvider OpenAI { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Storage.Models.AiProvider other) { throw null; }
+        public AIProvider(string value) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.AIProvider OpenAI { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Storage.Models.AIProvider other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Storage.Models.AiProvider left, Azure.ResourceManager.Storage.Models.AiProvider right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.AiProvider (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Storage.Models.AiProvider? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Storage.Models.AiProvider left, Azure.ResourceManager.Storage.Models.AiProvider right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Storage.Models.AIProvider left, Azure.ResourceManager.Storage.Models.AIProvider right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AIProvider (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Storage.Models.AIProvider? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Storage.Models.AIProvider left, Azure.ResourceManager.Storage.Models.AIProvider right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1775,7 +1775,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.AccountSasContent AccountSasContent(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService services = default(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedService), Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType resourceTypes = default(Azure.ResourceManager.Storage.Models.StorageAccountSasSignedResourceType), Azure.ResourceManager.Storage.Models.StorageAccountSasPermission permissions = default(Azure.ResourceManager.Storage.Models.StorageAccountSasPermission), string ipAddressOrRange = null, Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol? protocols = default(Azure.ResourceManager.Storage.Models.StorageAccountHttpProtocol?), System.DateTimeOffset? sharedAccessStartOn = default(System.DateTimeOffset?), System.DateTimeOffset sharedAccessExpireOn = default(System.DateTimeOffset), string keyToSign = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig AdvancedPlatformMetricsRuleConfig(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType? filterType = default(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsFilterType?), System.Collections.Generic.IEnumerable<string> filterValues = null) { throw null; }
         public static Azure.ResourceManager.Storage.AdvancedPlatformMetricsRuleData AdvancedPlatformMetricsRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType? ruleType = default(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType?), bool enabled = false, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.MetricsEmitted> metricsEmitted = null, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig ruleConfig = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleProperties AdvancedPlatformMetricsRuleProperties(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType? ruleType = default(Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleType?), bool isEnabled = false, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.MetricsEmitted> metricsEmitted = null, Azure.ResourceManager.Storage.Models.AdvancedPlatformMetricsRuleConfig ruleConfig = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ArmEncryption ArmEncryption(Azure.ResourceManager.Storage.Models.InfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.Storage.Models.InfrastructureEncryption?), Azure.ResourceManager.Storage.Models.CustomerManagedKeyEncryption customerManagedKeyEncryption = null) { throw null; }
         public static Azure.ResourceManager.Storage.BlobContainerData BlobContainerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string version, bool? isDeleted, System.DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, Azure.ResourceManager.Storage.Models.StoragePublicAccessType? publicAccess, System.DateTimeOffset? lastModifiedOn, Azure.ResourceManager.Storage.Models.StorageLeaseStatus? leaseStatus, Azure.ResourceManager.Storage.Models.StorageLeaseState? leaseState, Azure.ResourceManager.Storage.Models.StorageLeaseDurationType? leaseDuration, System.Collections.Generic.IDictionary<string, string> metadata, Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy immutabilityPolicy, Azure.ResourceManager.Storage.Models.LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, Azure.ResourceManager.Storage.Models.ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.Storage.Models.BlobContainerImmutabilityPolicy BlobContainerImmutabilityPolicy(Azure.ETag? etag, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Storage.Models.UpdateHistoryEntry> updateHistory, int? immutabilityPeriodSinceCreationInDays, Azure.ResourceManager.Storage.Models.ImmutabilityPolicyState? state, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll) { throw null; }
@@ -1795,13 +1795,13 @@ namespace Azure.ResourceManager.Storage.Models
         public static Azure.ResourceManager.Storage.Models.BurstingConstants BurstingConstants(int? burstFloorIops = default(int?), double? burstIOScalar = default(double?), int? burstTimeframeSeconds = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.ContextCacheContainerData ContextCacheContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ContextCacheContainerPatch ContextCacheContainerPatch(Azure.ResourceManager.Storage.Models.ContextCacheContainerPropertiesPatch properties = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties ContextCacheContainerProperties(string description = null, string modelName = null, Azure.ResourceManager.Storage.Models.AiProvider provider = default(Azure.ResourceManager.Storage.Models.AiProvider), int? timeToLive = default(int?), Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.ContextCacheContainerPropertiesPatch ContextCacheContainerPropertiesPatch(string description = null, int? timeToLive = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties ContextCacheContainerProperties(string description = null, string modelName = null, Azure.ResourceManager.Storage.Models.AIProvider provider = default(Azure.ResourceManager.Storage.Models.AIProvider), int? timeToLiveInDays = default(int?), Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.ContextCacheContainerPropertiesPatch ContextCacheContainerPropertiesPatch(string description = null, int? timeToLiveInDays = default(int?)) { throw null; }
         public static Azure.ResourceManager.Storage.ContextCacheData ContextCacheData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Storage.Models.ContextCacheProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ContextCachePatch ContextCachePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Storage.Models.ContextCachePropertiesPatch properties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ContextCacheProperties ContextCacheProperties(Azure.ResourceManager.Storage.Models.ContextCacheAccountKind accountKind = default(Azure.ResourceManager.Storage.Models.ContextCacheAccountKind), string description = null, Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState? provisioningState = default(Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState?), Azure.ResourceManager.Storage.Models.ArmEncryption encryption = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.ContextCachePropertiesPatch ContextCachePropertiesPatch(string description = null, Azure.ResourceManager.Storage.Models.ArmEncryption encryption = null) { throw null; }
-        public static Azure.ResourceManager.Storage.Models.CustomerManagedKeyEncryption CustomerManagedKeyEncryption(Azure.ResourceManager.Storage.Models.KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, string keyEncryptionKeyUri = null) { throw null; }
+        public static Azure.ResourceManager.Storage.Models.CustomerManagedKeyEncryption CustomerManagedKeyEncryption(Azure.ResourceManager.Storage.Models.KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = null, System.Uri keyEncryptionKeyUri = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.DataShareConnection DataShareConnection(string dataShareUri = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.DataShareSource DataShareSource(Azure.ResourceManager.Storage.Models.StorageConnectorConnection connection = null, Azure.ResourceManager.Storage.Models.StorageConnectorAuthProperties authProperties = null) { throw null; }
         public static Azure.ResourceManager.Storage.Models.DataShareSourcePatch DataShareSourcePatch(Azure.ResourceManager.Storage.Models.StorageConnectorAuthPropertiesPatch authProperties = null) { throw null; }
@@ -2322,12 +2322,12 @@ namespace Azure.ResourceManager.Storage.Models
     }
     public partial class ContextCacheContainerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties>
     {
-        public ContextCacheContainerProperties(string modelName, Azure.ResourceManager.Storage.Models.AiProvider provider) { }
+        public ContextCacheContainerProperties(string modelName, Azure.ResourceManager.Storage.Models.AIProvider provider) { }
         public string Description { get { throw null; } set { } }
         public string ModelName { get { throw null; } set { } }
-        public Azure.ResourceManager.Storage.Models.AiProvider Provider { get { throw null; } set { } }
+        public Azure.ResourceManager.Storage.Models.AIProvider Provider { get { throw null; } set { } }
         public Azure.ResourceManager.Storage.Models.ContextCacheProvisioningState? ProvisioningState { get { throw null; } }
-        public int? TimeToLive { get { throw null; } set { } }
+        public int? TimeToLiveInDays { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Storage.Models.ContextCacheContainerProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2342,7 +2342,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public ContextCacheContainerPropertiesPatch() { }
         public string Description { get { throw null; } set { } }
-        public int? TimeToLive { get { throw null; } set { } }
+        public int? TimeToLiveInDays { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Storage.Models.ContextCacheContainerPropertiesPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Storage.Models.ContextCacheContainerPropertiesPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2452,7 +2452,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         public CustomerManagedKeyEncryption() { }
         public Azure.ResourceManager.Storage.Models.KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
-        public string KeyEncryptionKeyUri { get { throw null; } set { } }
+        public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Storage.Models.CustomerManagedKeyEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Storage.Models.CustomerManagedKeyEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TimeToLive))
+            if (Optional.IsDefined(TimeToLiveInDays))
             {
                 writer.WritePropertyName("timeToLive"u8);
-                writer.WriteNumberValue(TimeToLive.Value);
+                writer.WriteNumberValue(TimeToLiveInDays.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string description = default;
-            int? timeToLive = default;
+            int? timeToLiveInDays = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    timeToLive = prop.Value.GetInt32();
+                    timeToLiveInDays = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContextCacheContainerPropertiesPatch(description, timeToLive, additionalBinaryDataProperties);
+            return new ContextCacheContainerPropertiesPatch(description, timeToLiveInDays, additionalBinaryDataProperties);
         }
     }
 }

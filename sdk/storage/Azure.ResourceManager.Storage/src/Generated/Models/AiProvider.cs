@@ -12,16 +12,16 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The AI provider associated with a container. </summary>
-    public readonly partial struct AiProvider : IEquatable<AiProvider>
+    public readonly partial struct AIProvider : IEquatable<AIProvider>
     {
         private readonly string _value;
         /// <summary> OpenAI provider. </summary>
         private const string OpenAIValue = "OpenAI";
 
-        /// <summary> Initializes a new instance of <see cref="AiProvider"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIProvider"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AiProvider(string value)
+        public AIProvider(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> OpenAI provider. </summary>
-        public static AiProvider OpenAI { get; } = new AiProvider(OpenAIValue);
+        public static AIProvider OpenAI { get; } = new AIProvider(OpenAIValue);
 
-        /// <summary> Determines if two <see cref="AiProvider"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AIProvider"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AiProvider left, AiProvider right) => left.Equals(right);
+        public static bool operator ==(AIProvider left, AIProvider right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AiProvider"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AIProvider"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AiProvider left, AiProvider right) => !left.Equals(right);
+        public static bool operator !=(AIProvider left, AIProvider right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AiProvider"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AIProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AiProvider(string value) => new AiProvider(value);
+        public static implicit operator AIProvider(string value) => new AIProvider(value);
 
-        /// <summary> Converts a string to a <see cref="AiProvider"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AIProvider"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AiProvider?(string value) => value == null ? null : new AiProvider(value);
+        public static implicit operator AIProvider?(string value) => value == null ? null : new AIProvider(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AiProvider other && Equals(other);
+        public override bool Equals(object obj) => obj is AIProvider other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AiProvider other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AIProvider other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
