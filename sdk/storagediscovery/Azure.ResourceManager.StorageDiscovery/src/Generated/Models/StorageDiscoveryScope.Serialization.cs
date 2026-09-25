@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new StorageDiscoveryScope(displayName, resourceTypes, tagKeysOnly ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
