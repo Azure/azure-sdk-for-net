@@ -30,13 +30,15 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
+        /// <param name="capabilities"> The capabilities configured for the storage discovery workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, StorageDiscoveryCapabilitiesUpdate capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Description = description;
             WorkspaceRoots = workspaceRoots;
             Scopes = scopes;
+            Capabilities = capabilities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,5 +53,25 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> The scopes of the storage discovery workspace. </summary>
         public IList<StorageDiscoveryScope> Scopes { get; }
+
+        /// <summary> The capabilities configured for the storage discovery workspace. </summary>
+        internal StorageDiscoveryCapabilitiesUpdate Capabilities { get; set; }
+
+        /// <summary> The Azure Blob Storage capability configuration to update. </summary>
+        public AzureBlobStorageCapabilityPatch CapabilitiesAzureBlobStorage
+        {
+            get
+            {
+                return Capabilities is null ? default : Capabilities.AzureBlobStorage;
+            }
+            set
+            {
+                if (Capabilities is null)
+                {
+                    Capabilities = new StorageDiscoveryCapabilitiesUpdate();
+                }
+                Capabilities.AzureBlobStorage = value;
+            }
+        }
     }
 }
