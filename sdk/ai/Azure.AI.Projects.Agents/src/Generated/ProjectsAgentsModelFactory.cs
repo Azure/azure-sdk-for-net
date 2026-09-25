@@ -1030,6 +1030,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The RealtimeFunctionToolParameters. </summary>
         /// <returns> A new <see cref="Agents.RealtimeFunctionToolParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static RealtimeFunctionToolParameters RealtimeFunctionToolParameters()
         {
             return new RealtimeFunctionToolParameters(additionalBinaryDataProperties: null);

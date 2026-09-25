@@ -19,6 +19,14 @@
   - `VoiceAgentAudioInputConfigTranscriptionDelay`
   - `VoiceAgentSemanticVadTurnDetectionEagerness`
   - `WebSearchToolSearchContextSize`
+  - `CallableToolAllowedCaller`
+  - `ContainerMemoryLimit`
+  - `ContainerSkill`
+  - `InlineSkillParam`
+  - `InlineSkillSourceParam`
+  - `RealtimeFunctionToolParameters`
+  - `SkillReferenceParam`
+- Marked `VoiceResponseBaseStatus`, `VoiceResponseBaseOutputModality`, `VoiceAgentAudioInputConfigTranscriptionDelay`, `VoiceAgentSemanticVadTurnDetectionEagerness`, and `RealtimeFunctionToolParameters` (along with `VoiceResponseBase` and `VoiceResult`, which use them) `[Experimental]`, since they mirror OpenAI Realtime/Responses features not yet present in the published OpenAI .NET SDK and may need to change shape once/if OpenAI ships an equivalent. The remaining types moved by this fix are also used by pre-existing, stable Toolbox tool types (`ShellToolboxTool`, `MCPToolboxTool`, `WebSearchToolboxTool`, `CodeInterpreterToolboxTool`) and intentionally were not marked `[Experimental]`, to avoid affecting that stable surface.
 
 ### Other Changes
 

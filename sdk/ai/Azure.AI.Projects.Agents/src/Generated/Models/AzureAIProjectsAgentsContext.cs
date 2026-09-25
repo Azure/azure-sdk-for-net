@@ -193,7 +193,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeError))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeError is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.RealtimeFunctionToolParameters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeFunctionToolParameters))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.RealtimeFunctionToolParameters is experimental and may change in future versions.
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeItem))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.

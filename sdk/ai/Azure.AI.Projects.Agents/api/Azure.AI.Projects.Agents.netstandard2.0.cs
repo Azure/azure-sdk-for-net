@@ -3543,13 +3543,25 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum VoiceAgentAudioInputConfigTranscriptionDelay
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentAudioInputConfigTranscriptionDelay : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay>
     {
-        Minimal = 0,
-        Low = 1,
-        Medium = 2,
-        High = 3,
-        Xhigh = 4,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentAudioInputConfigTranscriptionDelay(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay High { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay Low { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay Medium { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay Minimal { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay Xhigh { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay left, Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay left, Azure.AI.Projects.Agents.VoiceAgentAudioInputConfigTranscriptionDelay right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class VoiceAgentAudioOutputConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAudioOutputConfig>
     {
@@ -4118,12 +4130,24 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum VoiceAgentSemanticVadTurnDetectionEagerness
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentSemanticVadTurnDetectionEagerness : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness>
     {
-        Low = 0,
-        Medium = 1,
-        High = 2,
-        Auto = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentSemanticVadTurnDetectionEagerness(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness Auto { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness High { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness Low { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness Medium { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness left, Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness left, Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetectionEagerness right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class VoiceAgentServerVadTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>
     {
@@ -4628,18 +4652,42 @@ namespace Azure.AI.Projects.Agents
         public static bool operator !=(Azure.AI.Projects.Agents.VoiceResponseBaseObject left, Azure.AI.Projects.Agents.VoiceResponseBaseObject right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum VoiceResponseBaseOutputModality
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceResponseBaseOutputModality : System.IEquatable<Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality>
     {
-        Text = 0,
-        Audio = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceResponseBaseOutputModality(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality Audio { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality Text { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality left, Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality left, Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public enum VoiceResponseBaseStatus
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceResponseBaseStatus : System.IEquatable<Azure.AI.Projects.Agents.VoiceResponseBaseStatus>
     {
-        Completed = 0,
-        Cancelled = 1,
-        Failed = 2,
-        Incomplete = 3,
-        InProgress = 4,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceResponseBaseStatus(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseStatus Cancelled { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseStatus Completed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseStatus Failed { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseStatus Incomplete { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceResponseBaseStatus InProgress { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceResponseBaseStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceResponseBaseStatus left, Azure.AI.Projects.Agents.VoiceResponseBaseStatus right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceResponseBaseStatus (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceResponseBaseStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceResponseBaseStatus left, Azure.AI.Projects.Agents.VoiceResponseBaseStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class VoiceResult : Azure.AI.Projects.Agents.VoiceResponseBase, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceResult>
     {
