@@ -12,6 +12,13 @@ using Azure.ResourceManager.Maintenance;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> An error response received from the Azure Maintenance service when acknowledging scheduled events. </summary>
+    /// <remarks>
+    /// <para>
+    /// A list acknowledgement can return HTTP 207 when individual scheduled events have different results. When
+    /// <c>AcknowledgeList</c> or <c>AcknowledgeListAsync</c> returns HTTP 207, deserialize the raw response content as this
+    /// type with <see cref="ModelReaderWriter.Read{T}(BinaryData, ModelReaderWriterOptions)"/> and inspect <see cref="Error"/>.<see cref="ScheduledEventsListAcknowledgeErrorDetails.Details"/>.
+    /// </para>
+    /// </remarks>
     public partial class ScheduledEventsListAcknowledgeError : IJsonModel<ScheduledEventsListAcknowledgeError>
     {
         internal ScheduledEventsListAcknowledgeError()
