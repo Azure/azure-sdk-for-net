@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation.Tests
         private class JwtTestBody
         {
             [JsonPropertyName("exp")]
-            public long ExpiresAt { get; set; }
+            public double ExpiresAt { get; set; }
 
             [JsonPropertyName("nbf")]
             public double NotBefore { get; set; }
@@ -80,19 +80,90 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
             string serializedToken = token.Serialize();
 
-            await ValidateSerializedToken(serializedToken, tokenBody);
+            var parsedToken = AttestationToken.Deserialize(serializedToken);
+            await Task.Yield();
+
+            // An unsecured token round-trips its body, but it carries no signature. Validation of unsecured
+            // tokens is covered by ValidateUnsecuredAttestationTokenFails.
+            Assert.AreEqual("none", parsedToken.Algorithm);
+            Assert.AreEqual(JsonSerializer.Serialize(tokenBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
+        }
+
+        [RecordedTest]
+        public async Task ValidateUnsecuredAttestationTokenFails()
+        {
+            // Regression test: a token with "alg": "none" carries no signature, so there is nothing to verify
+            // and it must never pass validation.
+            object tokenBody = new JwtTestBody
+            {
+                StringField = "Foo",
+                NotBefore = DateTimeOffset.Now.AddSeconds(-5).ToUnixTimeSeconds(),
+                ExpiresAt = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds(),
+            };
+
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+
+            // The token is well formed and inside its validity window, so the missing signature is the only
+            // reason to reject it.
+            Assert.AreEqual("none", parsedToken.Algorithm);
+            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions(), null));
+
+            // Callers who explicitly turn validation off still opt out entirely.
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateToken = false }, null));
+        }
+
+        [RecordedTest]
+        public async Task GetBodyOfEmptyBodiedTokenReturnsNull()
+        {
+            // The attestation service uses a token with an empty body to represent the absence of a value,
+            // for instance when an attestation type has no policy configured. Deserializing that body used to
+            // throw "The input does not contain any JSON tokens", which surfaced as a GetPolicy failure.
+            var token = new AttestationToken((AttestationTokenSigningKey)null);
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+            await Task.Yield();
+
+            Assert.AreEqual(0, parsedToken.TokenBodyBytes.Length);
+            Assert.IsNull(parsedToken.GetBody<StoredAttestationPolicy>());
+
+            // The body is empty regardless of the type requested, so no cached deserialization can leak in.
+            Assert.IsNull(parsedToken.GetBody<TestBody>());
+        }
+
+        [RecordedTest]
+        public async Task ParseTokenWithFloatingPointDateClaims()
+        {
+            // AttestationToken parses arbitrary JWTs, and RFC 7519 NumericDate may be non-integral,
+            // so these claims are read as double and must not be truncated.
+            long whole = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds();
+            string body = FormattableString.Invariant($"{{\"exp\":{whole}.0,\"nbf\":{whole}.0,\"iat\":{whole}.5}}");
+
+            var token = new AttestationToken(BinaryData.FromString(body));
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+            await Task.Yield();
+
+            // Whole-valued ".0" claims parse to the exact second (no JsonException, no rounding).
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(whole), parsedToken.ExpirationTime);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(whole), parsedToken.NotBeforeTime);
+
+            // A fractional claim keeps its sub-second component rather than being truncated.
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(whole + 0.5), parsedToken.IssuedAtTime);
         }
 
         [RecordedTest]
         public async Task ValidateJustExpiredAttestationToken()
         {
             // Create a JWT whose body has just expired.
-            object tokenBody = new JwtTestBody{
+            object tokenBody = new JwtTestBody
+            {
                 StringField = "Foo",
                 ExpiresAt = DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(5)).ToUnixTimeSeconds(),
             };
 
-            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            X509Certificate2 fullCertificate = TestEnvironment.PolicyManagementCertificate;
+            AsymmetricAlgorithm privateKey = TestEnvironment.PolicyManagementKey;
+
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
             // This check should fail since the token expired 5 seconds ago.
@@ -156,7 +227,7 @@ namespace Azure.Security.Attestation.Tests
 
             // ValidateTokenAsync will throw an exception if a callback is specified outside of an attestation client.
             // Note that validation callbacks are tested elsewhere in the AttestationClient codebase.
-            Assert.ThrowsAsync(typeof(Exception), async() => await ValidateSerializedToken(
+            Assert.ThrowsAsync(typeof(Exception), async () => await ValidateSerializedToken(
                 serializedToken,
                 tokenBody,
                 validationOptions));

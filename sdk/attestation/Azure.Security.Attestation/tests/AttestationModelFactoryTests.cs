@@ -160,7 +160,7 @@ namespace Azure.Security.Attestation.Tests
                 Assert.AreEqual("sgxCollateral", attestationResult.SgxCollateral);
 #pragma warning disable CS0618 // Type or member is obsolete
                 Assert.AreEqual("deprecatedVersion", attestationResult.DeprecatedVersion);
-                CollectionAssert.AreEqual(new byte[]{ 7, 8, 9 }, attestationResult.DeprecatedEnclaveHeldData.ToArray());
+                CollectionAssert.AreEqual(new byte[] { 7, 8, 9 }, attestationResult.DeprecatedEnclaveHeldData.ToArray());
                 CollectionAssert.AreEqual(new byte[] { 10, 11, 12 }, attestationResult.DeprecatedEnclaveHeldData2.ToArray());
                 Assert.AreEqual(6, attestationResult.DeprecatedProductId);
                 Assert.AreEqual("deprecatedMrEnclave", attestationResult.DeprecatedMrEnclave);
