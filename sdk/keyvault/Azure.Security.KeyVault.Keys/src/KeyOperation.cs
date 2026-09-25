@@ -35,12 +35,12 @@ namespace Azure.Security.KeyVault.Keys
         public static KeyOperation Decrypt { get; } = new KeyOperation("decrypt");
 
         /// <summary>
-        /// Gets a value that indicates the key can be used to sign with the <see cref="CryptographyClient.SignAsync"/> or <see cref="CryptographyClient.Sign"/> methods.
+        /// Gets a value that indicates the key can be used to sign with the <see cref="CryptographyClient.SignAsync(SignatureAlgorithm, byte[], System.Threading.CancellationToken)">SignAsync</see> or <see cref="CryptographyClient.Sign(SignatureAlgorithm, byte[], System.Threading.CancellationToken)">Sign</see> methods.
         /// </summary>
         public static KeyOperation Sign { get; } = new KeyOperation("sign");
 
         /// <summary>
-        /// Gets a value that indicates the key can be used to verify with the <see cref="CryptographyClient.VerifyAsync"/> or <see cref="CryptographyClient.Verify"/> methods.
+        /// Gets a value that indicates the key can be used to verify with the <see cref="CryptographyClient.VerifyAsync(SignatureAlgorithm, byte[], byte[], System.Threading.CancellationToken)">VerifyAsync</see> or <see cref="CryptographyClient.Verify(SignatureAlgorithm, byte[], byte[], System.Threading.CancellationToken)">Verify</see> methods.
         /// </summary>
         public static KeyOperation Verify { get; } = new KeyOperation("verify");
 

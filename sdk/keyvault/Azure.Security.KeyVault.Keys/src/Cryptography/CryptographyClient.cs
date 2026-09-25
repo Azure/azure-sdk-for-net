@@ -1110,6 +1110,148 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
+        /// Signs a message using a post-quantum ML-DSA (AKP) key.
+        /// </summary>
+        /// <param name="options">The <see cref="MLDsaSignOptions"/> describing the message or external mu to sign and any optional context.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
+        /// along with all other information needed to verify it. This information should be stored with the signature.
+        /// </returns>
+        /// <remarks>
+        /// The algorithm is inferred from the key and is not specified by the caller. This operation is always performed by the vault and is not supported by local-only clients.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The client was constructed with a local key and cannot perform this operation.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<SignResult> SignAsync(MLDsaSignOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Sign)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                ThrowIfLocalOnly(nameof(Sign));
+
+                return await _remoteProvider.SignAsync(options, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Signs a message using a post-quantum ML-DSA (AKP) key.
+        /// </summary>
+        /// <param name="options">The <see cref="MLDsaSignOptions"/> describing the message or external mu to sign and any optional context.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
+        /// along with all other information needed to verify it. This information should be stored with the signature.
+        /// </returns>
+        /// <remarks>
+        /// The algorithm is inferred from the key and is not specified by the caller. This operation is always performed by the vault and is not supported by local-only clients.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The client was constructed with a local key and cannot perform this operation.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual SignResult Sign(MLDsaSignOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Sign)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                ThrowIfLocalOnly(nameof(Sign));
+
+                return _remoteProvider.Sign(options, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verifies a signature using a post-quantum ML-DSA (AKP) key.
+        /// </summary>
+        /// <param name="options">The <see cref="MLDsaVerifyOptions"/> describing the signature to verify, the message or external mu, and any optional context.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
+        /// </returns>
+        /// <remarks>
+        /// The algorithm is inferred from the key and is not specified by the caller. This operation is always performed by the vault and is not supported by local-only clients.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The client was constructed with a local key and cannot perform this operation.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<VerifyResult> VerifyAsync(MLDsaVerifyOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Verify)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                ThrowIfLocalOnly(nameof(Verify));
+
+                return await _remoteProvider.VerifyAsync(options, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Verifies a signature using a post-quantum ML-DSA (AKP) key.
+        /// </summary>
+        /// <param name="options">The <see cref="MLDsaVerifyOptions"/> describing the signature to verify, the message or external mu, and any optional context.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property of the returned <see cref="VerifyResult"/> will be set to true.
+        /// </returns>
+        /// <remarks>
+        /// The algorithm is inferred from the key and is not specified by the caller. This operation is always performed by the vault and is not supported by local-only clients.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="InvalidOperationException">The client was constructed with a local key and cannot perform this operation.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual VerifyResult Verify(MLDsaVerifyOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(Verify)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                ThrowIfLocalOnly(nameof(Verify));
+
+                return _remoteProvider.Verify(options, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Signs the specified data.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use.</param>

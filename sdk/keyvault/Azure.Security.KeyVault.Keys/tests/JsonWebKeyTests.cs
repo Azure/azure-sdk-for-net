@@ -46,6 +46,28 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Shared));
         }
 
+        [TestCase("AKP")]
+        [TestCase("AKP-HSM")]
+        public void SerializeAkp(string keyType)
+        {
+            JsonWebKey jwk = new JsonWebKey
+            {
+                KeyType = new KeyType(keyType),
+                Algorithm = AkpAlgorithm.MLDsa65,
+                Pub = new byte[] { 1, 2, 3, 4, 5 },
+            };
+
+            ReadOnlyMemory<byte> serialized = jwk.Serialize();
+
+            using MemoryStream ms = new MemoryStream(serialized.ToArray());
+            JsonWebKey deserialized = new JsonWebKey();
+            deserialized.Deserialize(ms);
+
+            Assert.That(deserialized, Is.EqualTo(jwk).Using(JsonWebKeyComparer.Shared));
+            Assert.AreEqual(AkpAlgorithm.MLDsa65, deserialized.Algorithm);
+            CollectionAssert.AreEqual(jwk.Pub, deserialized.Pub);
+        }
+
         [Test]
         public void ToAes()
         {
@@ -518,6 +540,12 @@ namespace Azure.Security.KeyVault.Keys.Tests
                         && CollectionEquals(x.Y, y.Y);
                 }
 
+                if (x.KeyType == KeyType.Akp || x.KeyType == KeyType.AkpHsm)
+                {
+                    return Nullable.Equals(x.Algorithm, y.Algorithm)
+                        && CollectionEquals(x.Pub, y.Pub);
+                }
+
                 throw new NotImplementedException();
             }
 
@@ -541,6 +569,11 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 if (obj.KeyType == KeyType.Ec)
                 {
                     return HashCodeBuilder.Combine(obj.KeyType, obj.X);
+                }
+
+                if (obj.KeyType == KeyType.Akp || obj.KeyType == KeyType.AkpHsm)
+                {
+                    return HashCodeBuilder.Combine(obj.KeyType, obj.Pub);
                 }
 
                 throw new NotImplementedException();
