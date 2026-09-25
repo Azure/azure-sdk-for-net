@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
@@ -75,7 +76,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // key (Azure AD) obtained via the same credential used for Key Vault instead of an account key.
             var serviceClient = new BlobServiceClient(new Uri(TestEnvironment.StorageUri), TestEnvironment.Credential);
             DateTimeOffset expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            UserDelegationKey delegationKey = serviceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-5), expiresOn);
+            UserDelegationKey delegationKey = serviceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-5), expiresOn, CancellationToken.None);
 
             BlobSasBuilder sas = new BlobSasBuilder
             {
