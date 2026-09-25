@@ -64,9 +64,15 @@ namespace Azure.Generator.Management
                 // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+                ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(modelFactory);
             }
             else
             {
+                if (provider is ModelProvider model)
+                {
+                    ModelCompatibilityValidator.ValidateProperties(model);
+                    ModelCompatibilityValidator.ValidateFlattenedConstructors(model);
+                }
                 SerializationConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }
 
