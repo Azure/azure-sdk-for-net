@@ -130,6 +130,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("errorDetails"u8);
                 ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
             }
+            if (Optional.IsDefined(AdditionalData))
+            {
+                writer.WritePropertyName("additionalData"u8);
+                writer.WriteObjectValue(AdditionalData, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -182,6 +187,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string triggeredBy = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
+            AdditionalData additionalData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -264,6 +270,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerWorkloadOrchestrationContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("additionalData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalData = AdditionalData.DeserializeAdditionalData(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -280,6 +295,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 triggeredBy,
                 provisioningState,
                 errorDetails,
+                additionalData,
                 additionalBinaryDataProperties);
         }
     }

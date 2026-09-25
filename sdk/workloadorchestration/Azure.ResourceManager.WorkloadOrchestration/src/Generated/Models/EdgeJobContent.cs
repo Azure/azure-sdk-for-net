@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary>
     /// Base Job Parameter
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobContent"/>, <see cref="PublishJobParameter"/>, and <see cref="UninstallJobParameter"/>.
     /// </summary>
     public abstract partial class EdgeJobContent
     {

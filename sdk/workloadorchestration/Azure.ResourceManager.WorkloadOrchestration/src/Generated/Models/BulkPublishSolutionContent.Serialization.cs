@@ -112,6 +112,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SolutionConfiguration))
+            {
+                writer.WritePropertyName("solutionConfiguration"u8);
+                writer.WriteStringValue(SolutionConfiguration);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             IList<BulkPublishTargetDetails> targets = default;
             string solutionInstanceName = default;
             IList<EdgeSolutionDependencyContent> solutionDependencies = default;
+            string solutionConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,12 +195,17 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     solutionDependencies = array;
                     continue;
                 }
+                if (prop.NameEquals("solutionConfiguration"u8))
+                {
+                    solutionConfiguration = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), additionalBinaryDataProperties);
+            return new BulkPublishSolutionContent(targets, solutionInstanceName, solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(), solutionConfiguration, additionalBinaryDataProperties);
         }
     }
 }

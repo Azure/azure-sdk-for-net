@@ -86,26 +86,29 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("contextId"u8);
             writer.WriteStringValue(ContextId);
-            writer.WritePropertyName("targetSpecification"u8);
-            writer.WriteStartObject();
-            foreach (var item in TargetSpecification)
+            if (Optional.IsCollectionDefined(TargetSpecification))
             {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                writer.WritePropertyName("targetSpecification"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetSpecification)
                 {
-                    writer.WriteNullValue();
-                    continue;
-                }
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             writer.WritePropertyName("capabilities"u8);
             writer.WriteStartArray();
             foreach (string item in Capabilities)
@@ -212,6 +215,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 }
                 if (prop.NameEquals("targetSpecification"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
@@ -290,7 +297,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 description,
                 displayName,
                 contextId,
-                targetSpecification,
+                targetSpecification ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 capabilities,
                 hierarchyLevel,
                 status,

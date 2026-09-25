@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 writer.WritePropertyName("solutionTemplateId"u8);
                 writer.WriteStringValue(SolutionTemplateId);
             }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailableSolutionTemplateVersions))
             {
                 writer.WritePropertyName("availableSolutionTemplateVersions"u8);
@@ -137,6 +142,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             string solutionTemplateId = default;
+            string displayName = default;
             IReadOnlyList<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,6 +151,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 if (prop.NameEquals("solutionTemplateId"u8))
                 {
                     solutionTemplateId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("availableSolutionTemplateVersions"u8))
@@ -175,7 +186,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeSolutionProperties(solutionTemplateId, availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>(), provisioningState, additionalBinaryDataProperties);
+            return new EdgeSolutionProperties(solutionTemplateId, displayName, availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }
