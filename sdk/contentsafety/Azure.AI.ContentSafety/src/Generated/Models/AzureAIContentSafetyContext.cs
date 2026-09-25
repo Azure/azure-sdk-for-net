@@ -33,6 +33,7 @@ namespace Azure.AI.ContentSafety
     [ModelReaderWriterBuildable(typeof(DetectTextProtectedMaterialOptions))]
     [ModelReaderWriterBuildable(typeof(DetectTextProtectedMaterialResult))]
     [ModelReaderWriterBuildable(typeof(DocumentInjectionAnalysisResult))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(ImageCategoriesAnalysis))]
     [ModelReaderWriterBuildable(typeof(PagedTextBlocklist))]
     [ModelReaderWriterBuildable(typeof(PagedTextBlocklistItem))]
