@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TenantActivityLogAlerts;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
@@ -16,6 +17,41 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmTenantActivityLogAlertsModelFactory
     {
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tenantScope"> The tenant GUID. Must be provided for tenant-level and management group events rules. </param>
+        /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="description"> A description of this Activity Log Alert rule. </param>
+        /// <param name="conditionAllOf"> The list of Activity Log Alert rule conditions. </param>
+        /// <param name="actionsActionGroups"> The list of the Action Groups. </param>
+        /// <param name="location"> The location of the resource. Since Azure Activity Log Alerts is a global service, the location of the rules should always be 'global'. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="TenantActivityLogAlerts.TenantActivityLogAlertData"/> instance for mocking. </returns>
+        public static TenantActivityLogAlertData TenantActivityLogAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string tenantScope = default, IEnumerable<string> scopes = default, bool? isEnabled = default, string description = default, IEnumerable<TenantActivityLogAlertAnyOfOrLeafCondition> conditionAllOf = default, IEnumerable<TenantActivityLogAlertActionGroup> actionsActionGroups = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TenantActivityLogAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantScope is null && scopes is null && conditionAllOf is null && actionsActionGroups is null && isEnabled is null && description is null ? default : new AlertRuleProperties(
+                    tenantScope,
+                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                    new AlertRuleAllOfCondition((conditionAllOf ?? new ChangeTrackingList<TenantActivityLogAlertAnyOfOrLeafCondition>()).ToList(), default),
+                    new ActionList((actionsActionGroups ?? new ChangeTrackingList<TenantActivityLogAlertActionGroup>()).ToList(), default),
+                    isEnabled,
+                    description,
+                    default),
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
 
         /// <summary>
         /// An Activity Log Alert rule condition that is met when all its member conditions are met.
