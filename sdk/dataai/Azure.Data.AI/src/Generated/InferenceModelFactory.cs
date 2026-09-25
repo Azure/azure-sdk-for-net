@@ -101,13 +101,13 @@ namespace Azure.Data.AI
         }
 
         /// <summary> The result of the latency in the semantic reranking operation. </summary>
-        /// <param name="dataPreprocessTime"> The time spent on data preprocessing in the semantic reranking operation, in milliseconds. </param>
-        /// <param name="inferenceTime"> The time spent on inference in the semantic reranking operation, in milliseconds. </param>
-        /// <param name="postProcessTime"> The time spent on post-processing in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="dataPreprocessDuration"> The time spent on data preprocessing in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="inferenceDuration"> The time spent on inference in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="postProcessDuration"> The time spent on post-processing in the semantic reranking operation, in milliseconds. </param>
         /// <returns> A new <see cref="AI.LatencyResult"/> instance for mocking. </returns>
-        public static LatencyResult LatencyResult(TimeSpan? dataPreprocessTime = default, TimeSpan? inferenceTime = default, TimeSpan? postProcessTime = default)
+        public static LatencyResult LatencyResult(TimeSpan? dataPreprocessDuration = default, TimeSpan? inferenceDuration = default, TimeSpan? postProcessDuration = default)
         {
-            return new LatencyResult(dataPreprocessTime, inferenceTime, postProcessTime, additionalBinaryDataProperties: null);
+            return new LatencyResult(dataPreprocessDuration, inferenceDuration, postProcessDuration, additionalBinaryDataProperties: null);
         }
     }
 }

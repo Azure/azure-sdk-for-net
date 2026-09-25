@@ -22,25 +22,25 @@ namespace Azure.Data.AI
         }
 
         /// <summary> Initializes a new instance of <see cref="LatencyResult"/>. </summary>
-        /// <param name="dataPreprocessTime"> The time spent on data preprocessing in the semantic reranking operation, in milliseconds. </param>
-        /// <param name="inferenceTime"> The time spent on inference in the semantic reranking operation, in milliseconds. </param>
-        /// <param name="postProcessTime"> The time spent on post-processing in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="dataPreprocessDuration"> The time spent on data preprocessing in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="inferenceDuration"> The time spent on inference in the semantic reranking operation, in milliseconds. </param>
+        /// <param name="postProcessDuration"> The time spent on post-processing in the semantic reranking operation, in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatencyResult(TimeSpan? dataPreprocessTime, TimeSpan? inferenceTime, TimeSpan? postProcessTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatencyResult(TimeSpan? dataPreprocessDuration, TimeSpan? inferenceDuration, TimeSpan? postProcessDuration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DataPreprocessTime = dataPreprocessTime;
-            InferenceTime = inferenceTime;
-            PostProcessTime = postProcessTime;
+            DataPreprocessDuration = dataPreprocessDuration;
+            InferenceDuration = inferenceDuration;
+            PostProcessDuration = postProcessDuration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time spent on data preprocessing in the semantic reranking operation, in milliseconds. </summary>
-        public TimeSpan? DataPreprocessTime { get; }
+        public TimeSpan? DataPreprocessDuration { get; }
 
         /// <summary> The time spent on inference in the semantic reranking operation, in milliseconds. </summary>
-        public TimeSpan? InferenceTime { get; }
+        public TimeSpan? InferenceDuration { get; }
 
         /// <summary> The time spent on post-processing in the semantic reranking operation, in milliseconds. </summary>
-        public TimeSpan? PostProcessTime { get; }
+        public TimeSpan? PostProcessDuration { get; }
     }
 }

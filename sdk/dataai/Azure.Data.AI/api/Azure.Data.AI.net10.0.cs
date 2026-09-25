@@ -47,7 +47,7 @@ namespace Azure.Data.AI
     }
     public static partial class InferenceModelFactory
     {
-        public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessTime = default(System.TimeSpan?), System.TimeSpan? inferenceTime = default(System.TimeSpan?), System.TimeSpan? postProcessTime = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessDuration = default(System.TimeSpan?), System.TimeSpan? inferenceDuration = default(System.TimeSpan?), System.TimeSpan? postProcessDuration = default(System.TimeSpan?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingInferenceRequest SemanticRerankingInferenceRequest(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), string targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingMetaResult SemanticRerankingMetaResult(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
         public static Azure.Data.AI.SemanticRerankingResult SemanticRerankingResult(System.Collections.Generic.IEnumerable<Azure.Data.AI.SemanticRerankingScore> scores = null, Azure.Data.AI.SemanticRerankingMetaResult meta = null) { throw null; }
@@ -58,9 +58,9 @@ namespace Azure.Data.AI
     public partial class LatencyResult : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.LatencyResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.LatencyResult>
     {
         internal LatencyResult() { }
-        public System.TimeSpan? DataPreprocessTime { get { throw null; } }
-        public System.TimeSpan? InferenceTime { get { throw null; } }
-        public System.TimeSpan? PostProcessTime { get { throw null; } }
+        public System.TimeSpan? DataPreprocessDuration { get { throw null; } }
+        public System.TimeSpan? InferenceDuration { get { throw null; } }
+        public System.TimeSpan? PostProcessDuration { get { throw null; } }
         protected virtual Azure.Data.AI.LatencyResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Data.AI.LatencyResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

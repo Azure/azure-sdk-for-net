@@ -73,20 +73,20 @@ namespace Azure.Data.AI
             {
                 throw new FormatException($"The model {nameof(LatencyResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DataPreprocessTime))
+            if (Optional.IsDefined(DataPreprocessDuration))
             {
                 writer.WritePropertyName("dataPreprocessTime"u8);
-                writer.WriteNumberValue(DataPreprocessTime.Value.TotalMilliseconds);
+                writer.WriteNumberValue(DataPreprocessDuration.Value.TotalMilliseconds);
             }
-            if (Optional.IsDefined(InferenceTime))
+            if (Optional.IsDefined(InferenceDuration))
             {
                 writer.WritePropertyName("inferenceTime"u8);
-                writer.WriteNumberValue(InferenceTime.Value.TotalMilliseconds);
+                writer.WriteNumberValue(InferenceDuration.Value.TotalMilliseconds);
             }
-            if (Optional.IsDefined(PostProcessTime))
+            if (Optional.IsDefined(PostProcessDuration))
             {
                 writer.WritePropertyName("postProcessTime"u8);
-                writer.WriteNumberValue(PostProcessTime.Value.TotalMilliseconds);
+                writer.WriteNumberValue(PostProcessDuration.Value.TotalMilliseconds);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,9 +130,9 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            TimeSpan? dataPreprocessTime = default;
-            TimeSpan? inferenceTime = default;
-            TimeSpan? postProcessTime = default;
+            TimeSpan? dataPreprocessDuration = default;
+            TimeSpan? inferenceDuration = default;
+            TimeSpan? postProcessDuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    dataPreprocessTime = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
+                    dataPreprocessDuration = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (prop.NameEquals("inferenceTime"u8))
@@ -151,7 +151,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    inferenceTime = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
+                    inferenceDuration = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (prop.NameEquals("postProcessTime"u8))
@@ -160,7 +160,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    postProcessTime = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
+                    postProcessDuration = TimeSpan.FromMilliseconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +168,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LatencyResult(dataPreprocessTime, inferenceTime, postProcessTime, additionalBinaryDataProperties);
+            return new LatencyResult(dataPreprocessDuration, inferenceDuration, postProcessDuration, additionalBinaryDataProperties);
         }
     }
 }
