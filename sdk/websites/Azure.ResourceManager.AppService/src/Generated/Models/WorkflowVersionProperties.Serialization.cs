@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    definition = BinaryData.FromString(prop.Value.GetRawText());
+                    definition = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WorkflowVersionProperties(

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <summary>
         /// Gets or sets the provider specific properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HanaDBProviderInstanceProperties"/>, <see cref="Models.SapNetWeaverProviderInstanceProperties"/>, <see cref="Models.PrometheusOSProviderInstanceProperties"/>, <see cref="Models.DB2ProviderInstanceProperties"/>, <see cref="Models.PrometheusHAClusterProviderInstanceProperties"/>, <see cref="Models.MsSqlServerProviderInstanceProperties"/>, and <see cref="Models.OracleProviderInstanceProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DB2ProviderInstanceProperties"/>, <see cref="Models.HanaDBProviderInstanceProperties"/>, <see cref="Models.MsSqlServerProviderInstanceProperties"/>, <see cref="Models.OracleProviderInstanceProperties"/>, <see cref="Models.PrometheusHAClusterProviderInstanceProperties"/>, <see cref="Models.PrometheusOSProviderInstanceProperties"/>, and <see cref="Models.SapNetWeaverProviderInstanceProperties"/>.
         /// </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <returns> A new <see cref="Models.SapProviderInstanceSpecificProperties"/> instance for mocking. </returns>
