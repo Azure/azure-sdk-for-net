@@ -7,8 +7,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
