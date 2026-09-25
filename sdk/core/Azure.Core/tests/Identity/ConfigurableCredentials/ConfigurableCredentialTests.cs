@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -394,6 +395,96 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.IsNotNull(assertionCredential);
             Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created when EnableMtlsProofOfPossession is false.");
             Assert.IsNotNull(assertionCredential.Client);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        [NonParallelizable]
+        public async Task FederatedIdentity_EnvironmentOptOut_UsesBearerForBothExchanges(bool isChained)
+        {
+            const string credentialPath = "MyClient:Credential";
+            string sourcePath = isChained ? $"{credentialPath}:Sources:0" : credentialPath;
+            var configValues = new Dictionary<string, string>
+            {
+                [$"{sourcePath}:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                [$"{sourcePath}:TenantId"] = "test-tenant",
+                [$"{sourcePath}:ClientId"] = "test-client",
+                [$"{sourcePath}:ManagedIdentityIdKind"] = "ClientId",
+                [$"{sourcePath}:ManagedIdentityId"] = Guid.NewGuid().ToString(),
+                [$"{sourcePath}:AzureCloud"] = "public",
+                [$"{sourcePath}:EnableMtlsProofOfPossession"] = "true",
+                [$"{sourcePath}:DisableInstanceDiscovery"] = "true",
+            };
+            if (isChained)
+            {
+                configValues[$"{credentialPath}:CredentialSource"] = "ChainedTokenCredential";
+            }
+
+            using var environment = new TestEnvVar(new()
+            {
+                [$"{sourcePath.Replace(":", "__")}__EnableMtlsProofOfPossession"] = "false",
+                ["IDENTITY_ENDPOINT"] = "https://identity.endpoint/",
+                ["IDENTITY_HEADER"] = "mock-identity-header",
+                ["IDENTITY_SERVER_THUMBPRINT"] = null,
+                ["IMDS_ENDPOINT"] = null,
+                ["MSI_ENDPOINT"] = null,
+                ["MSI_SECRET"] = null,
+                ["AZURE_POD_IDENTITY_AUTHORITY_HOST"] = null,
+                ["AZURE_FEDERATED_TOKEN_FILE"] = null,
+                ["AZURE_AUTHORITY_HOST"] = null,
+                ["AZURE_REGIONAL_AUTHORITY_NAME"] = null,
+            });
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(configValues)
+                .AddEnvironmentVariables()
+                .Build();
+            var section = config.GetSection(credentialPath);
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var sourceOptions = isChained ? options.Sources[0] : options;
+            Assert.IsFalse(sourceOptions.EnableMtlsProofOfPossession);
+
+            int assertionRequests = 0;
+            int redemptionRequests = 0;
+            sourceOptions.Transport = new MockTransport(request =>
+            {
+                var response = new MockResponse(200);
+                if (request.Uri.Host == "identity.endpoint")
+                {
+                    assertionRequests++;
+                    Assert.That(Uri.UnescapeDataString(request.Uri.Query), Does.Contain("resource=api://AzureADTokenExchange"));
+                    response.SetContent($$"""{"access_token":"mi-assertion","expires_on":"{{DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds()}}","token_type":"Bearer"}""");
+                }
+                else
+                {
+                    redemptionRequests++;
+                    Assert.That(request.Uri.Path, Does.EndWith("/oauth2/v2.0/token"));
+                    using var stream = new MemoryStream();
+                    request.Content.WriteTo(stream, default);
+                    Assert.That(new BinaryData(stream.ToArray()).ToString(), Does.Contain("client_assertion=mi-assertion"));
+                    response.SetContent("""{"access_token":"bearer-token","expires_in":3600,"token_type":"Bearer"}""");
+                }
+                return response;
+            });
+
+            var credential = new ConfigurableCredential(options);
+            var innerCredential = GetInnerCredential(credential);
+            var sources = isChained
+                ? GetChainedTokenCredentialSources((ChainedTokenCredential)innerCredential)
+                : GetDefaultAzureCredentialSources((DefaultAzureCredential)innerCredential);
+            Assert.AreEqual(1, sources.Length);
+            Assert.IsInstanceOf<ClientAssertionCredential>(sources[0]);
+            Assert.IsNull(((ClientAssertionCredential)sources[0]).PopClient);
+
+            var context = new TokenRequestContext(new[] { "https://vault.azure.net/.default" }, isProofOfPossessionEnabled: true);
+            AccessToken token = IsAsync
+                ? await credential.GetTokenAsync(context)
+                : credential.GetToken(context);
+
+            Assert.AreEqual(1, assertionRequests);
+            Assert.AreEqual(1, redemptionRequests);
+            Assert.AreEqual("bearer-token", token.Token);
+            Assert.AreEqual("Bearer", token.TokenType);
+            Assert.IsNull(token.BindingCertificate);
         }
 
         [Test]
