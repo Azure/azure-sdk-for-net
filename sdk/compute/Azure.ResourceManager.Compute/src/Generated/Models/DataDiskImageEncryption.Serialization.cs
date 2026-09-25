@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.Compute.Models
                 throw new FormatException($"The model {nameof(DataDiskImageEncryption)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile, options);
+            }
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
         }
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataDiskImageSecurityProfile securityProfile = default;
             int lun = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -124,6 +130,15 @@ namespace Azure.ResourceManager.Compute.Models
                     diskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("securityProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = DataDiskImageSecurityProfile.DeserializeDataDiskImageSecurityProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("lun"u8))
                 {
                     lun = prop.Value.GetInt32();
@@ -134,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataDiskImageEncryption(diskEncryptionSetId, additionalBinaryDataProperties, lun);
+            return new DataDiskImageEncryption(diskEncryptionSetId, additionalBinaryDataProperties, securityProfile, lun);
         }
     }
 }
