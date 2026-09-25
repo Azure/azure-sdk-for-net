@@ -1,0 +1,56 @@
+# Synchronize provisioning TypeSpec pins with their corresponding management libraries.
+# API-version mismatches intentionally fail before any files are changed so that a
+# spec-repo PR can resolve the mismatch instead of silently changing generated inputs.
+
+trigger: none
+pr: none
+
+schedules:
+  - cron: '0 6 * * *'
+    displayName: 'Daily provisioning TypeSpec commit synchronization'
+    branches:
+      include:
+        - main
+    always: true
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+jobs:
+  - job: SyncProvisioningTypeSpecCommits
+    displayName: Synchronize provisioning TypeSpec commits
+    pool:
+      name: $(LINUXPOOL)
+      demands: ImageOverride -equals $(LINUXVMIMAGE)
+
+    steps:
+      - checkout: self
+        clean: false
+
+      - pwsh: |
+          ./eng/scripts/automation/Sync-ProvisioningTypeSpecCommits.ps1 `
+            -SdkRoot "$(Build.SourcesDirectory)/sdk" `
+            -Update
+        displayName: Validate and update provisioning TypeSpec commits
+
+      - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+        parameters:
+          PROwner: Azure
+          RepoOwner: Azure
+          RepoName: azure-sdk-for-net
+          BaseBranchName: refs/heads/main
+          PRBranchName: sync-provisioning-typespec-commits
+          CommitMsg: "Synchronize provisioning TypeSpec commits with management libraries"
+          PRTitle: "Synchronize provisioning TypeSpec commits"
+          PRBody: |
+            This scheduled pipeline runs daily and updates each Azure.Provisioning
+            library's `tsp-location.yaml` commit to the corresponding
+            Azure.ResourceManager library's TypeSpec commit.
+
+            The synchronization validates `metadata.json` API versions first. If
+            any provisioning API version differs from its management library, the
+            pipeline fails without changing files and reports the package,
+            management version, provisioning version, and the recommended action
+            to open an Azure/azure-rest-api-specs PR.
+          OpenAsDraft: true
