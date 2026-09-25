@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerServiceFleetLabelSelector(matchLabels ?? new ChangeTrackingDictionary<string, string>(), matchExpressions ?? new ChangeTrackingList<ContainerServiceFleetLabelSelectorRequirement>(), additionalBinaryDataProperties);
