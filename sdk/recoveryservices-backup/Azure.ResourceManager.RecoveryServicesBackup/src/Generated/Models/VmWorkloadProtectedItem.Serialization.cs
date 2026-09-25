@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "AzureVmWorkloadSAPAseDatabase":
                         return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element, options);
-                    case "AzureVmWorkloadSAPHanaDatabase":
-                        return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
                     case "AzureVmWorkloadSAPHanaDBInstance":
                         return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDatabase":
+                        return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
                     case "AzureVmWorkloadSQLDatabase":
                         return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
                 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Fabric provider specific settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SiteRecoveryFabricProviderCreationContent"/>, <see cref="InMageRcmFabricCreationContent"/>, and <see cref="VMwareV2FabricCreationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InMageRcmFabricCreationContent"/>, <see cref="SiteRecoveryFabricProviderCreationContent"/>, and <see cref="VMwareV2FabricCreationContent"/>.
     /// </summary>
     public abstract partial class FabricSpecificCreationContent
     {
