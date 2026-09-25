@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
         public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string NetworkSecurityGroupId
         {
             get
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
         }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string DscpConfigurationId
         {
             get
