@@ -54,6 +54,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ConversationAuthoringProjectSettings(confidenceThreshold, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Authoring.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents a supported language. </summary>
         /// <param name="languageName"> The language name. </param>
         /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>

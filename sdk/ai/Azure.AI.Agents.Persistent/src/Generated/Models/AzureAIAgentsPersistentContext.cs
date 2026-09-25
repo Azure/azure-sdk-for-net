@@ -70,7 +70,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(InternalAzureFunctionDefinition))]
     [ModelReaderWriterBuildable(typeof(InternalCodeInterpreterToolCallDetails))]
     [ModelReaderWriterBuildable(typeof(InternalFileDeletionStatus))]
-    [ModelReaderWriterBuildable(typeof(InternalFileListResponse))]
+    [ModelReaderWriterBuildable(typeof(InternalFileListResult))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionDefinition))]
     [ModelReaderWriterBuildable(typeof(InternalMessageImageFileDetails))]
     [ModelReaderWriterBuildable(typeof(InternalMessageTextDetails))]

@@ -729,7 +729,7 @@ namespace Azure.Storage.Files.DataLake
                 Permissions = response.Headers.TryGetValue(PermissionsHeader, out string sysPermissions) ? PathPermissions.ParseSymbolicPermissions(sysPermissions) : null,
             };
 
-        internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResponse> response)
+        internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResult> response)
         {
             if (response == null)
             {

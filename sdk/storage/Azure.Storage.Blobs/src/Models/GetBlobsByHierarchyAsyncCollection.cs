@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<ListBlobsHierarchySegmentResponse> response;
+            Response<ListBlobsHierarchySegmentResult> response;
 
             if (async)
             {

@@ -747,6 +747,7 @@ namespace Azure.AI.ContentUnderstanding
         public static Azure.AI.ContentUnderstanding.DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentTableCell> cells = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, Azure.AI.ContentUnderstanding.DocumentCaption caption = null, System.Collections.Generic.IEnumerable<Azure.AI.ContentUnderstanding.DocumentFootnote> footnotes = null, Azure.AI.ContentUnderstanding.SemanticRole? role = default(Azure.AI.ContentUnderstanding.SemanticRole?)) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentTableCell DocumentTableCell(Azure.AI.ContentUnderstanding.DocumentTableCellKind? kind = default(Azure.AI.ContentUnderstanding.DocumentTableCellKind?), int rowIndex = 0, int columnIndex = 0, int? rowSpan = default(int?), int? columnSpan = default(int?), string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, System.Collections.Generic.IEnumerable<string> elements = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.DocumentWord DocumentWord(string content = null, string source = null, Azure.AI.ContentUnderstanding.ContentSpan span = null, float? confidence = default(float?)) { throw null; }
+        public static Azure.AI.ContentUnderstanding.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.KnowledgeSource KnowledgeSource(string kind = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.LabeledDataKnowledgeSource LabeledDataKnowledgeSource(System.Uri containerUri = null, string prefix = null, string fileListPath = null) { throw null; }
         public static Azure.AI.ContentUnderstanding.SemanticChunkingStrategy SemanticChunkingStrategy(int? maxTokens = default(int?)) { throw null; }
@@ -1255,6 +1256,21 @@ namespace Azure.AI.ContentUnderstanding
         Azure.AI.ContentUnderstanding.DocumentWord System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentWord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentWord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.DocumentWord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.AI.ContentUnderstanding.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.ContentUnderstanding.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.ContentUnderstanding.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.ContentUnderstanding.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.ContentUnderstanding.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.ContentUnderstanding.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GenerationMethod : System.IEquatable<Azure.AI.ContentUnderstanding.GenerationMethod>

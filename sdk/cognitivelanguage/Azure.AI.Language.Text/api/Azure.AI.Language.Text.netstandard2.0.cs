@@ -1222,6 +1222,21 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.AI.Language.Text.AnalyzeTextError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.AI.Language.Text.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.AI.Language.Text.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Language.Text.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ExtractedSummaryActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ExtractedSummaryActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ExtractedSummaryActionResult>
     {
         internal ExtractedSummaryActionResult() { }
@@ -3514,6 +3529,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.EntitySynonym EntitySynonym(string synonym = null, string language = null) { throw null; }
         public static Azure.AI.Language.Text.EntitySynonyms EntitySynonyms(Azure.AI.Language.Text.EntityCategory entityType = default(Azure.AI.Language.Text.EntityCategory), System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitySynonym> synonyms = null) { throw null; }
         public static Azure.AI.Language.Text.EntityTag EntityTag(string name = null, double? confidenceScore = default(double?)) { throw null; }
+        public static Azure.AI.Language.Text.ErrorResult ErrorResult(Azure.AI.Language.Text.AnalyzeTextError error = null, string errorCode = null) { throw null; }
         public static Azure.AI.Language.Text.ExtractedSummaryActionResult ExtractedSummaryActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ExtractedSummarySentence> sentences = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.ExtractedSummarySentence ExtractedSummarySentence(string text = null, double rankScore = 0, int offset = 0, int length = 0) { throw null; }
         public static Azure.AI.Language.Text.ExtractiveSummarizationActionContent ExtractiveSummarizationActionContent(bool? loggingOptOut = default(bool?), string modelVersion = null, long? sentenceCount = default(long?), Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria? sortBy = default(Azure.AI.Language.Text.ExtractiveSummarizationSortingCriteria?), Azure.AI.Language.Text.StringIndexType? stringIndexType = default(Azure.AI.Language.Text.StringIndexType?), string query = null) { throw null; }

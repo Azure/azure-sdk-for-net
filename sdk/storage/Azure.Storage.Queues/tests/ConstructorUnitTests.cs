@@ -67,7 +67,7 @@ namespace Azure.Storage.Queues.Tests
         [Test]
         public void ListQueuesResponse_ShortConstructor_SetsProperties()
         {
-            var response = new ListQueuesResponse("https://account.queue.core.windows.net/", "prefix", 10, "nextMarker");
+            var response = new ListQueuesResult("https://account.queue.core.windows.net/", "prefix", 10, "nextMarker");
 
             Assert.AreEqual("https://account.queue.core.windows.net/", response.ServiceEndpoint);
             Assert.AreEqual("prefix", response.Prefix);
@@ -81,7 +81,7 @@ namespace Azure.Storage.Queues.Tests
         public void ListQueuesResponse_FullConstructor_SetsAllProperties()
         {
             var queueItems = new List<QueueItem>();
-            var response = new ListQueuesResponse("https://account.queue.core.windows.net/", "prefix", "marker", 10, queueItems, "nextMarker");
+            var response = new ListQueuesResult("https://account.queue.core.windows.net/", "prefix", "marker", 10, queueItems, "nextMarker");
 
             Assert.AreEqual("https://account.queue.core.windows.net/", response.ServiceEndpoint);
             Assert.AreEqual("prefix", response.Prefix);

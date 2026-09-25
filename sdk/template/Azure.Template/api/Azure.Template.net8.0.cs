@@ -29,6 +29,21 @@ namespace Azure.Template
         public virtual Azure.AsyncPageable<System.BinaryData> GetWidgetsAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Template.WidgetSuite> GetWidgetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class ErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.Template.ErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Template.ErrorResult>
+    {
+        internal ErrorResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        protected virtual Azure.Template.ErrorResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Template.ErrorResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Template.ErrorResult System.ClientModel.Primitives.IJsonModel<Azure.Template.ErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Template.ErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Template.ErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.Template.ErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Template.ErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Template.ErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FakedSharedModel : System.ClientModel.Primitives.IJsonModel<Azure.Template.FakedSharedModel>, System.ClientModel.Primitives.IPersistableModel<Azure.Template.FakedSharedModel>
     {
         public FakedSharedModel(string tag, System.DateTimeOffset createdOn) { }
@@ -84,6 +99,7 @@ namespace Azure.Template
     }
     public static partial class TemplateModelFactory
     {
+        public static Azure.Template.ErrorResult ErrorResult(Azure.ResponseError error = null, string errorCode = null) { throw null; }
         public static Azure.Template.FakedSharedModel FakedSharedModel(string tag = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Template.ResourceOperationStatusWidgetSuiteWidgetSuiteError ResourceOperationStatusWidgetSuiteWidgetSuiteError(string id = null, Azure.Template.OperationState status = default(Azure.Template.OperationState), Azure.ResponseError error = null, Azure.Template.WidgetSuite result = null) { throw null; }
         public static Azure.Template.WidgetSuite WidgetSuite(string name = null, string manufacturerId = null, Azure.Template.FakedSharedModel sharedModel = null) { throw null; }
