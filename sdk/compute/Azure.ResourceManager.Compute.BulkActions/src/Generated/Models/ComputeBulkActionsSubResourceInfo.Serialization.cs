@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Describes a reference to a sub-resource. </summary>
+    /// <summary> A reference to an Azure resource. </summary>
     public partial class ComputeBulkActionsSubResourceInfo : IJsonModel<ComputeBulkActionsSubResourceInfo>
     {
         /// <param name="data"> The data to parse. </param>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the request to cancel running operations in scheduled actions using the operation ids. </summary>
+    /// <summary> The eligible operations to cancel. </summary>
     public partial class CancelBulkOperationsContent : IJsonModel<CancelBulkOperationsContent>
     {
         /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsContent"/> for deserialization. </summary>
