@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Export command settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SnowflakeExportCopyCommand"/> and <see cref="AzureDatabricksDeltaLakeExportCommand"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDatabricksDeltaLakeExportCommand"/> and <see cref="SnowflakeExportCopyCommand"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownExportSettings))]
     public abstract partial class ExportSettings : IJsonModel<ExportSettings>
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SnowflakeExportCopyCommand":
-                        return SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(element, options);
                     case "AzureDatabricksDeltaLakeExportCommand":
                         return AzureDatabricksDeltaLakeExportCommand.DeserializeAzureDatabricksDeltaLakeExportCommand(element, options);
+                    case "SnowflakeExportCopyCommand":
+                        return SnowflakeExportCopyCommand.DeserializeSnowflakeExportCopyCommand(element, options);
                 }
             }
             return UnknownExportSettings.DeserializeUnknownExportSettings(element, options);

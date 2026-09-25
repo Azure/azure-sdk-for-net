@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// Determines how the stand-by scheme should be provided.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManualResourcePredictionsProfile"/> and <see cref="AutomaticResourcePredictionsProfile"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutomaticResourcePredictionsProfile"/> and <see cref="ManualResourcePredictionsProfile"/>.
     /// </summary>
     public abstract partial class ResourcePredictionsProfile
     {
