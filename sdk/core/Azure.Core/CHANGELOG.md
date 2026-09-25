@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added mTLS proof-of-possession support to `ClientCertificateCredential`, including subject name and issuer certificate authentication configured with `SendCertificateChain`. Proof-of-possession is used by default when requested; first-party applications can opt out by setting the `Azure.Identity.EnableClientCertificateMtlsProofOfPossession` AppContext switch (or `AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP` environment variable) to `false`.
-- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. It is enabled by default; set `EnableMtlsProofOfPossession` to `false` in the credential's JSON configuration to force bearer authentication for both exchanges.
+- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. It is enabled by default; set `EnableMtlsProofOfPossession` to `false` in the credential's JSON configuration to force bearer authentication for both exchanges. On a host that cannot provide a binding certificate, the flow falls back to a bearer token instead of failing, matching the direct managed identity flow.
 
 ### Breaking Changes
 

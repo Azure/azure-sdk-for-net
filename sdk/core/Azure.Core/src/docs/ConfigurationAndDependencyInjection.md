@@ -429,7 +429,7 @@ the `Credential` section as well.
 `ManagedIdentityIdKind` can be `ClientId`, `ResourceId`, or `ObjectId`. `AzureCloud` can be `public`, `usgov`, or `china`.
 mTLS proof-of-possession is enabled by default for both token exchanges in the managed identity federated identity flow. Set `EnableMtlsProofOfPossession` to `false` to force bearer authentication instead. The default is `true`.
 
-> mTLS proof-of-possession requires the application to reference the optional `Microsoft.Identity.Client.KeyAttestation` package and to run on a KeyGuard-capable host. MSAL resolves that package dynamically and Azure.Core does not ship it; when it is absent, a proof-of-possession request cannot obtain a binding certificate. Set `EnableMtlsProofOfPossession` to `false` to use bearer authentication instead.
+> mTLS proof-of-possession requires the application to reference the optional `Microsoft.Identity.Client.KeyAttestation` package and to run on a KeyGuard-capable host. MSAL resolves that package dynamically and Azure.Core does not ship it; when it is absent, a proof-of-possession request cannot obtain a binding certificate and the flow falls back to a bearer token. Set `EnableMtlsProofOfPossession` to `false` to skip the proof-of-possession attempt and always use bearer authentication.
 
 To opt out of mTLS proof-of-possession for both exchanges without editing JSON, set the
 environment variable matching the credential's configuration path before starting the

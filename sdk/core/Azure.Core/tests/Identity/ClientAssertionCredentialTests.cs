@@ -114,7 +114,7 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void DoesNotFallBackToBearerWhenProofOfPossessionExplicitlyRequested()
+        public async Task FallsBackToBearerWhenBindingCertificateUnavailable()
         {
             int bearerCalls = 0;
             var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
@@ -125,8 +125,13 @@ namespace Azure.Core.Tests.Identity
             var popClient = new MockMsalConfidentialClient(new MsalClientException(MsalError.MtlsCertificateNotProvided, "No binding certificate."));
             var credential = CreatePopCredential(bearerClient, popClient);
 
-            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
-            Assert.AreEqual(0, bearerCalls, "Bearer client must not be invoked when proof-of-possession is explicitly requested.");
+            // The host cannot bind a certificate (managed identity returned a bearer assertion), so the mTLS
+            // proof-of-possession redemption fails with MtlsCertificateNotProvided and the credential falls back
+            // to a bearer token instead of failing - matching the direct managed identity flow.
+            AccessToken token = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
+
+            Assert.AreEqual("bearer-token", token.Token);
+            Assert.AreEqual(1, bearerCalls, "Bearer client should be invoked once as the fallback.");
         }
 
         [Test]
@@ -146,12 +151,12 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void FailsClosedWhenAssertionHasNoBindingCertificate()
+        public async Task FallsBackToBearerWhenAssertionHasNoBindingCertificate()
         {
             // Exercises the real PoP MsalConfidentialClient (rather than an injected exception): the assertion
             // source returns a token with no binding certificate, so MSAL rejects the mTLS proof-of-possession
-            // request with MtlsCertificateNotProvided. The credential must fail closed (AuthenticationFailedException
-            // with the proof-of-possession diagnostic) and must not issue a bearer token request.
+            // request with MtlsCertificateNotProvided. The credential then falls back to a bearer token request,
+            // matching the graceful degradation of the direct managed identity flow on a non-capable host.
             int bearerCalls = 0;
             var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
             {
@@ -165,7 +170,7 @@ namespace Azure.Core.Tests.Identity
             };
             var options = new ClientAssertionCredentialOptions
             {
-                MsalClient = bearerClient,        // mock bearer client, to prove it is never invoked
+                MsalClient = bearerClient,        // mock bearer client used for the fallback
                 EnableMtlsProofOfPossession = true,
                 DisableInstanceDiscovery = true,  // avoid network for authority instance discovery
                 Pipeline = CredentialPipeline.GetInstance(null),
@@ -173,10 +178,10 @@ namespace Azure.Core.Tests.Identity
             // PopMsalClient is intentionally not set, so a real mTLS PoP MsalConfidentialClient is created.
             var credential = new ClientAssertionCredential(TenantId, ClientId, assertionSource, "api://AzureADTokenExchange/.default", options);
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
-                async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
-            Assert.That(ex.Message, Does.Contain("binding certificate"));
-            Assert.AreEqual(0, bearerCalls, "Bearer client must not be invoked when the proof-of-possession assertion lacks a binding certificate.");
+            AccessToken token = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
+
+            Assert.AreEqual("bearer-token", token.Token);
+            Assert.AreEqual(1, bearerCalls, "Bearer client should be invoked once as the fallback when the assertion lacks a binding certificate.");
         }
 
         [Test]
