@@ -327,9 +327,11 @@ namespace Azure.Core.Tests.Identity
                 AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionEnvVar);
         }
 
-        [Test]
+        [TestCase("false", null)]
+        [TestCase(null, "false")]
+        [TestCase(null, "0")]
         [NonParallelizable]
-        public async Task DisableSwitchForcesBearerTokenWhenProofOfPossessionRequested()
+        public async Task OptOutForcesBearerTokenWhenProofOfPossessionRequested(string switchValue, string environmentValue)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 #if NET9_0_OR_GREATER
@@ -345,9 +347,12 @@ namespace Azure.Core.Tests.Identity
             var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
             var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
 
-            using var enableSwitch = new TestAppContextSwitch(
-                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName,
-                "false");
+            using var enableSwitch = switchValue is null
+                ? null
+                : new TestAppContextSwitch(AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName, switchValue);
+            using var environment = new TestEnvVar(
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionEnvVar,
+                environmentValue);
             AccessToken token = IsAsync
                 ? await credential.GetTokenAsync(requestContext)
                 : credential.GetToken(requestContext);
