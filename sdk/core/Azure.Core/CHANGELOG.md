@@ -9,7 +9,7 @@
 
 ### Breaking Changes
 
-- Renamed the experimental `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` property and corresponding configuration setting to `EnableMtlsProofOfPossession`. The default behavior is unchanged: mTLS proof-of-possession remains enabled by default, and `EnableMtlsProofOfPossession = false` now expresses what `DisableMtlsProofOfPossession = true` previously did.
+- Renamed the experimental `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` property and corresponding configuration setting to `EnableMtlsProofOfPossession`. mTLS proof-of-possession is enabled by default for direct and configured managed identity when requested and supported. To force bearer authentication, replace `DisableMtlsProofOfPossession = true` with `EnableMtlsProofOfPossession = false` in code or credential configuration.
 
 ### Bugs Fixed
 
