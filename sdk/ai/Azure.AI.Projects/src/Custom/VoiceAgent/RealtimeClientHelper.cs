@@ -16,7 +16,7 @@ internal class RealtimeClientHelper
     /// Builds the WebSocket URI for a specific voice agent's realtime endpoint
     /// (<c>/agents/{agentName}/endpoint/protocols/voice</c>), matching the REST-documented
     /// conversation-history path (<c>/agents/{agentName}/endpoint/protocols/voice/conversations</c>)
-    /// exposed by <see cref="Azure.AI.Projects.Agents.BetaVoiceAgentsConversations"/>.
+    /// exposed by <see cref="Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations"/>.
     /// </summary>
     internal static Uri GetAgentWebSocketEndpoint(Uri endpoint, string agentName)
     {

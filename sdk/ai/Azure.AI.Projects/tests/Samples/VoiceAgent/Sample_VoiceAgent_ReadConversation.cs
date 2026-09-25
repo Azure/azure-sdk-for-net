@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;

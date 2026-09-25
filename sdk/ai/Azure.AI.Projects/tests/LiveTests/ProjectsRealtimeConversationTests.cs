@@ -181,7 +181,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
 
         Assert.That(conversationId, Is.Not.Null.And.Not.Empty, "Expected the response.done event to report a conversation ID when Store = true.");
 
-        Azure.AI.Projects.Agents.BetaVoiceAgentsConversations conversationsClient = client.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
+        Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations conversationsClient = client.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
 
         System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceConversation> getConversationResult = await conversationsClient.GetAgentConversationAsync(
             CONVERSATION_AGENT_NAME,
