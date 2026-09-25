@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// AkriConnectorsTagDigestSettings properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsTag"/> and <see cref="AkriConnectorsDigest"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsDigest"/> and <see cref="AkriConnectorsTag"/>.
     /// </summary>
     public abstract partial class AkriConnectorsTagDigestSettings
     {
