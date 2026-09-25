@@ -9,6 +9,7 @@
 - `OpenAI.RealtimeClientEventType` has been removed. The affected property now uses the existing `OpenAI.Realtime.RealtimeClientCommandKind` type instead.
 - `AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations()` and `GetBetaVoiceAgentTelephony()` now return `Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations`/`BetaVoiceAgentsTelephony` instead of the previous, no-longer-functional types of the same short name.
 - `AgentAdministrationClient.GenerateAgent`/`GenerateAgentAsync` have been removed; the operation they called no longer exists.
+- `ShellToolboxTool`, `MCPToolboxTool`, `WebSearchToolboxTool`, `CodeInterpreterToolboxTool`, `ToolboxShellEnvironment`, and `ToolboxShellContainerReferenceEnvironment` are now marked `[Experimental]` (diagnostic `AAIP001`), as a consequence of the namespace-leak fix described below. Code using these types needs `#pragma warning disable AAIP001` (or an equivalent suppression) to build.
 
 ### Bugs Fixed
 
@@ -26,7 +27,7 @@
   - `InlineSkillSourceParam`
   - `RealtimeFunctionToolParameters`
   - `SkillReferenceParam`
-- Marked `VoiceResponseBaseStatus`, `VoiceResponseBaseOutputModality`, `VoiceAgentAudioInputConfigTranscriptionDelay`, `VoiceAgentSemanticVadTurnDetectionEagerness`, and `RealtimeFunctionToolParameters` (along with `VoiceResponseBase` and `VoiceResult`, which use them) `[Experimental]`, since they mirror OpenAI Realtime/Responses features not yet present in the published OpenAI .NET SDK and may need to change shape once/if OpenAI ships an equivalent. The remaining types moved by this fix are also used by pre-existing, stable Toolbox tool types (`ShellToolboxTool`, `MCPToolboxTool`, `WebSearchToolboxTool`, `CodeInterpreterToolboxTool`) and intentionally were not marked `[Experimental]`, to avoid affecting that stable surface.
+- Marked all 13 types above (along with the pre-existing types that reference them: `VoiceResponseBase`, `VoiceResult`, `ShellToolboxTool`, `MCPToolboxTool`, `WebSearchToolboxTool`, `CodeInterpreterToolboxTool`, `ToolboxShellEnvironment`, `ToolboxShellContainerReferenceEnvironment`, and `ToolboxShellContainerAutoEnvironment`) `[Experimental]`, since they mirror OpenAI Realtime/Responses features not yet present in the published OpenAI .NET SDK and may need to change shape once/if OpenAI ships an equivalent. The Toolbox tool types first shipped in 3.0.0-beta.3 and the whole `3.0.0` line is still pre-GA, so this is treated as an in-flight beta breaking change (see above) rather than left unmarked, to avoid a larger break later once Toolboxes reaches GA and adoption is higher.
 
 ### Other Changes
 

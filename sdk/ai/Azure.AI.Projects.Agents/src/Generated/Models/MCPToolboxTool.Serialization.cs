@@ -87,7 +87,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
-                writer.WriteStringValue(ConnectorId.Value.ToSerialString());
+                writer.WriteStringValue(ConnectorId.Value.ToString());
             }
             if (Optional.IsDefined(TunnelId))
             {
@@ -138,7 +138,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (CallableToolAllowedCaller item in AllowedCallers)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -266,7 +266,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
+                    connectorId = new MCPToolboxToolConnectorId(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tunnel_id"u8))
@@ -324,7 +324,7 @@ namespace Azure.AI.Projects.Agents
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                        array.Add(new CallableToolAllowedCaller(item.GetString()));
                     }
                     allowedCallers = array;
                     continue;

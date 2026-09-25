@@ -1387,6 +1387,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ContainerSkill"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ContainerSkill ContainerSkill(string @type = default)
         {
             return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
@@ -1396,6 +1397,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skillId"> The ID of the referenced skill. </param>
         /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
         /// <returns> A new <see cref="Agents.SkillReferenceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
         {
             return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
@@ -1406,6 +1408,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
         /// <returns> A new <see cref="Agents.InlineSkillParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
         {
             return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
@@ -1414,6 +1417,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Inline skill payload. </summary>
         /// <param name="data"> Base64-encoded skill zip bundle. </param>
         /// <returns> A new <see cref="Agents.InlineSkillSourceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
         {
             return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
@@ -1573,6 +1577,7 @@ namespace Azure.AI.Projects.Agents
         /// If not provided, the service assumes auto.
         /// </param>
         /// <returns> A new <see cref="Agents.CodeInterpreterToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData internalContainer = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -1634,7 +1639,7 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.WebSearchToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP002")]
+        [Experimental("AAIP001")]
         public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, WebSearchToolFilters filters = default, WebSearchToolApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, WebSearchConfiguration customSearchConfiguration = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -1662,6 +1667,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="allowedCallers"></param>
         /// <param name="environment"> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </param>
         /// <returns> A new <see cref="Agents.ShellToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ShellToolboxTool ShellToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, ToolboxShellEnvironment environment = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -1683,6 +1689,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"> The type of the shell execution environment. </param>
         /// <returns> A new <see cref="Agents.ToolboxShellEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxShellEnvironment ToolboxShellEnvironment(string @type = default)
         {
             return new UnknownToolboxShellEnvironment(@type, additionalBinaryDataProperties: null);
@@ -1694,6 +1701,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
         /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
         /// <returns> A new <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxShellContainerAutoEnvironment ToolboxShellContainerAutoEnvironment(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ToolboxShellNetworkPolicy networkPolicy = default)
         {
             fileIds ??= new ChangeTrackingList<string>();
@@ -1729,6 +1737,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> An existing container environment for a shell tool stored in a toolbox. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
         /// <returns> A new <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxShellContainerReferenceEnvironment ToolboxShellContainerReferenceEnvironment(string containerId = default)
         {
             return new ToolboxShellContainerReferenceEnvironment("container_reference", additionalBinaryDataProperties: null, containerId);
@@ -1771,6 +1780,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, MCPToolboxToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();

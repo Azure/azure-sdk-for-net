@@ -2,26 +2,88 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public enum MCPToolboxToolConnectorId
+    public readonly partial struct MCPToolboxToolConnectorId : IEquatable<MCPToolboxToolConnectorId>
     {
-        /// <summary> ConnectorDropbox. </summary>
-        ConnectorDropbox,
-        /// <summary> ConnectorGmail. </summary>
-        ConnectorGmail,
-        /// <summary> ConnectorGooglecalendar. </summary>
-        ConnectorGooglecalendar,
-        /// <summary> ConnectorGoogledrive. </summary>
-        ConnectorGoogledrive,
-        /// <summary> ConnectorMicrosoftteams. </summary>
-        ConnectorMicrosoftteams,
-        /// <summary> ConnectorOutlookcalendar. </summary>
-        ConnectorOutlookcalendar,
-        /// <summary> ConnectorOutlookemail. </summary>
-        ConnectorOutlookemail,
-        /// <summary> ConnectorSharepoint. </summary>
-        ConnectorSharepoint
+        private readonly string _value;
+        private const string ConnectorDropboxValue = "connector_dropbox";
+        private const string ConnectorGmailValue = "connector_gmail";
+        private const string ConnectorGooglecalendarValue = "connector_googlecalendar";
+        private const string ConnectorGoogledriveValue = "connector_googledrive";
+        private const string ConnectorMicrosoftteamsValue = "connector_microsoftteams";
+        private const string ConnectorOutlookcalendarValue = "connector_outlookcalendar";
+        private const string ConnectorOutlookemailValue = "connector_outlookemail";
+        private const string ConnectorSharepointValue = "connector_sharepoint";
+
+        /// <summary> Initializes a new instance of <see cref="MCPToolboxToolConnectorId"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MCPToolboxToolConnectorId(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ConnectorDropbox. </summary>
+        public static MCPToolboxToolConnectorId ConnectorDropbox { get; } = new MCPToolboxToolConnectorId(ConnectorDropboxValue);
+
+        /// <summary> Gets the ConnectorGmail. </summary>
+        public static MCPToolboxToolConnectorId ConnectorGmail { get; } = new MCPToolboxToolConnectorId(ConnectorGmailValue);
+
+        /// <summary> Gets the ConnectorGooglecalendar. </summary>
+        public static MCPToolboxToolConnectorId ConnectorGooglecalendar { get; } = new MCPToolboxToolConnectorId(ConnectorGooglecalendarValue);
+
+        /// <summary> Gets the ConnectorGoogledrive. </summary>
+        public static MCPToolboxToolConnectorId ConnectorGoogledrive { get; } = new MCPToolboxToolConnectorId(ConnectorGoogledriveValue);
+
+        /// <summary> Gets the ConnectorMicrosoftteams. </summary>
+        public static MCPToolboxToolConnectorId ConnectorMicrosoftteams { get; } = new MCPToolboxToolConnectorId(ConnectorMicrosoftteamsValue);
+
+        /// <summary> Gets the ConnectorOutlookcalendar. </summary>
+        public static MCPToolboxToolConnectorId ConnectorOutlookcalendar { get; } = new MCPToolboxToolConnectorId(ConnectorOutlookcalendarValue);
+
+        /// <summary> Gets the ConnectorOutlookemail. </summary>
+        public static MCPToolboxToolConnectorId ConnectorOutlookemail { get; } = new MCPToolboxToolConnectorId(ConnectorOutlookemailValue);
+
+        /// <summary> Gets the ConnectorSharepoint. </summary>
+        public static MCPToolboxToolConnectorId ConnectorSharepoint { get; } = new MCPToolboxToolConnectorId(ConnectorSharepointValue);
+
+        /// <summary> Determines if two <see cref="MCPToolboxToolConnectorId"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(MCPToolboxToolConnectorId left, MCPToolboxToolConnectorId right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="MCPToolboxToolConnectorId"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(MCPToolboxToolConnectorId left, MCPToolboxToolConnectorId right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="MCPToolboxToolConnectorId"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MCPToolboxToolConnectorId(string value) => new MCPToolboxToolConnectorId(value);
+
+        /// <summary> Converts a string to a <see cref="MCPToolboxToolConnectorId"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MCPToolboxToolConnectorId?(string value) => value == null ? null : new MCPToolboxToolConnectorId(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MCPToolboxToolConnectorId other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(MCPToolboxToolConnectorId other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

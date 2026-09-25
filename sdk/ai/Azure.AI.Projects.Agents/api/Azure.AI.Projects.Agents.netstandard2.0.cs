@@ -975,10 +975,22 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolboxTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.BrowserAutomationToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum CallableToolAllowedCaller
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CallableToolAllowedCaller : System.IEquatable<Azure.AI.Projects.Agents.CallableToolAllowedCaller>
     {
-        Direct = 0,
-        Programmatic = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CallableToolAllowedCaller(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.CallableToolAllowedCaller Direct { get { throw null; } }
+        public static Azure.AI.Projects.Agents.CallableToolAllowedCaller Programmatic { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.CallableToolAllowedCaller other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.CallableToolAllowedCaller left, Azure.AI.Projects.Agents.CallableToolAllowedCaller right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.CallableToolAllowedCaller (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.CallableToolAllowedCaller? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.CallableToolAllowedCaller left, Azure.AI.Projects.Agents.CallableToolAllowedCaller right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public static partial class ClientConnectionProviderExtensions
     {
@@ -1057,12 +1069,24 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ContainerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ContainerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum ContainerMemoryLimit
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerMemoryLimit : System.IEquatable<Azure.AI.Projects.Agents.ContainerMemoryLimit>
     {
-        _1g = 0,
-        _4g = 1,
-        _16g = 2,
-        _64g = 3,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerMemoryLimit(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.ContainerMemoryLimit _16g { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ContainerMemoryLimit _1g { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ContainerMemoryLimit _4g { get { throw null; } }
+        public static Azure.AI.Projects.Agents.ContainerMemoryLimit _64g { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.ContainerMemoryLimit other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.ContainerMemoryLimit left, Azure.AI.Projects.Agents.ContainerMemoryLimit right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.ContainerMemoryLimit (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.ContainerMemoryLimit? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.ContainerMemoryLimit left, Azure.AI.Projects.Agents.ContainerMemoryLimit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public abstract partial class ContainerSkill : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ContainerSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ContainerSkill>
     {
@@ -1493,16 +1517,28 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.MCPToolboxTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.MCPToolboxTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum MCPToolboxToolConnectorId
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MCPToolboxToolConnectorId : System.IEquatable<Azure.AI.Projects.Agents.MCPToolboxToolConnectorId>
     {
-        ConnectorDropbox = 0,
-        ConnectorGmail = 1,
-        ConnectorGooglecalendar = 2,
-        ConnectorGoogledrive = 3,
-        ConnectorMicrosoftteams = 4,
-        ConnectorOutlookcalendar = 5,
-        ConnectorOutlookemail = 6,
-        ConnectorSharepoint = 7,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MCPToolboxToolConnectorId(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorDropbox { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorGmail { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorGooglecalendar { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorGoogledrive { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorMicrosoftteams { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorOutlookcalendar { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorOutlookemail { get { throw null; } }
+        public static Azure.AI.Projects.Agents.MCPToolboxToolConnectorId ConnectorSharepoint { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.MCPToolboxToolConnectorId other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.MCPToolboxToolConnectorId left, Azure.AI.Projects.Agents.MCPToolboxToolConnectorId right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.MCPToolboxToolConnectorId (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.MCPToolboxToolConnectorId? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.MCPToolboxToolConnectorId left, Azure.AI.Projects.Agents.MCPToolboxToolConnectorId right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public static partial class McpToolExtensions
     {
@@ -4780,11 +4816,23 @@ namespace Azure.AI.Projects.Agents
             }
         }
     }
-    public enum WebSearchToolSearchContextSize
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WebSearchToolSearchContextSize : System.IEquatable<Azure.AI.Projects.Agents.WebSearchToolSearchContextSize>
     {
-        Low = 0,
-        Medium = 1,
-        High = 2,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WebSearchToolSearchContextSize(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.WebSearchToolSearchContextSize High { get { throw null; } }
+        public static Azure.AI.Projects.Agents.WebSearchToolSearchContextSize Low { get { throw null; } }
+        public static Azure.AI.Projects.Agents.WebSearchToolSearchContextSize Medium { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.WebSearchToolSearchContextSize other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.WebSearchToolSearchContextSize left, Azure.AI.Projects.Agents.WebSearchToolSearchContextSize right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.WebSearchToolSearchContextSize (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.WebSearchToolSearchContextSize? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.WebSearchToolSearchContextSize left, Azure.AI.Projects.Agents.WebSearchToolSearchContextSize right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class WorkflowAgentDefinition : Azure.AI.Projects.Agents.ProjectsAgentDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.WorkflowAgentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.WorkflowAgentDefinition>
     {

@@ -6,9 +6,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
-using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 
 #pragma warning disable AAIP001
 namespace Azure.AI.Projects.Agents.Tests;

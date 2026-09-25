@@ -21,28 +21,63 @@ namespace Azure.AI.Projects.Agents
     // not yet present in the published OpenAI .NET SDK, so they're marked experimental in case
     // their shape needs to change once/if OpenAI ships an equivalent.
     //
-    // The 4 enums are converted to extensible enums (empty partial struct with the same name)
+    // Closed enums are converted to extensible enums (empty partial struct with the same name)
     // rather than redeclared as closed enums: a closed enum's generated Serialization.cs is a
     // separate top-level extension-methods class that wouldn't inherit [Experimental] from a
     // partial enum redeclaration, so referencing the enum's own (de)serialization helpers would
     // still error. An extensible enum keeps every generated member (constants, conversions,
     // equality) inside this same partial struct, so [Experimental] applies to all of them.
-    // There are no existing usages of these 4 types, so this shape change carries no risk.
     //
-    // NOTE: of the 13 types moved by the namespace-leak fix, only these 5 are used exclusively
-    // by Voice Agents code. The other 8 (CallableToolAllowedCaller, ContainerMemoryLimit,
-    // ContainerSkill, InlineSkillParam, InlineSkillSourceParam, SkillReferenceParam,
-    // MCPToolboxToolConnectorId, WebSearchToolSearchContextSize) are also referenced by
-    // pre-existing, stable, non-Voice-Agent Toolbox tool types (ShellToolboxTool,
-    // MCPToolboxTool, WebSearchToolboxTool, CodeInterpreterToolboxTool,
-    // ToolboxShellContainerAutoEnvironment) that already ship on main. Marking those 8
-    // experimental would cascade the [Experimental] requirement onto those stable types and
-    // break existing (non-Voice-Agent) samples/tests, so they intentionally stay un-marked.
+    // All 13 types moved by the namespace-leak fix are marked here. 8 of them (below) are also
+    // referenced by pre-existing Toolbox tool types (ShellToolboxTool, MCPToolboxTool,
+    // WebSearchToolboxTool, CodeInterpreterToolboxTool, ToolboxShellContainerAutoEnvironment),
+    // which cascades [Experimental] onto those types too. This is intentional: those Toolbox
+    // types first shipped in 3.0.0-beta.3, the whole 3.0.0 line is still pre-GA (ApiCompatVersion
+    // is 2.0.0), and this package's changelog already has precedent for breaking changes between
+    // beta releases (see 3.0.0-beta.1). Marking these types now - while the surface is still
+    // beta and adoption is low - avoids a harder, larger break later if OpenAI ships real
+    // equivalents with different shapes after Toolboxes reaches GA. The one affected sample
+    // (Sample_ToolboxesCRUD.cs) is updated with an AAIP001 suppression alongside this change.
     [Experimental("AAIP001")] public partial struct VoiceResponseBaseStatus { }
     [Experimental("AAIP001")] public partial struct VoiceResponseBaseOutputModality { }
     [Experimental("AAIP001")] public partial struct VoiceAgentAudioInputConfigTranscriptionDelay { }
     [Experimental("AAIP001")] public partial struct VoiceAgentSemanticVadTurnDetectionEagerness { }
     [Experimental("AAIP001")] public partial class RealtimeFunctionToolParameters { }
+
+    // Cascades onto ShellToolboxTool, MCPToolboxTool, CodeInterpreterToolboxTool.
+    [Experimental("AAIP001")] public partial struct CallableToolAllowedCaller { }
+    // Cascades onto ToolboxShellContainerAutoEnvironment (via ShellToolboxTool).
+    [Experimental("AAIP001")] public partial struct ContainerMemoryLimit { }
+    [Experimental("AAIP001")] public abstract partial class ContainerSkill { }
+    [Experimental("AAIP001")] public partial class InlineSkillParam { }
+    [Experimental("AAIP001")] public partial class InlineSkillSourceParam { }
+    [Experimental("AAIP001")] public partial class SkillReferenceParam { }
+    // Cascades onto MCPToolboxTool.
+    [Experimental("AAIP001")] public partial struct MCPToolboxToolConnectorId { }
+    // Cascades onto WebSearchToolboxTool.
+    [Experimental("AAIP001")] public partial struct WebSearchToolSearchContextSize { }
+
+    // These 3 Toolbox tool types have no other Custom-file customization, so their
+    // [Experimental] marker (cascaded from the types above) is declared here instead of in a
+    // dedicated Custom file. CodeInterpreterToolboxTool and MCPToolboxTool are marked in their
+    // own existing Custom files since they already have other customizations there.
+    [Experimental("AAIP001")] public partial class ShellToolboxTool { }
+    [Experimental("AAIP001")] public partial class ToolboxShellContainerAutoEnvironment { }
+    [Experimental("AAIP001")] public partial class WebSearchToolboxTool { }
+
+    // ShellToolboxTool's only public constructor requires a ToolboxShellEnvironment instance
+    // (the abstract base for ToolboxShellContainerAutoEnvironment and its sibling
+    // ToolboxShellContainerReferenceEnvironment), and the base's own generated discriminator
+    // switch (DeserializeToolboxShellEnvironment) references the experimental
+    // ToolboxShellContainerAutoEnvironment directly. So ShellToolboxTool can't be used at all
+    // without also touching this hierarchy; the whole cluster is marked experimental together.
+    [Experimental("AAIP001")] public abstract partial class ToolboxShellEnvironment { }
+    [Experimental("AAIP001")] public partial class ToolboxShellContainerReferenceEnvironment { }
+    // Internal "unknown discriminator value" fallback types for the ContainerSkill and
+    // ToolboxShellEnvironment polymorphic hierarchies; not part of the public API surface, but
+    // their generated (de)serialization code references the experimental base/sibling types.
+    [Experimental("AAIP001")] internal partial class UnknownContainerSkill { }
+    [Experimental("AAIP001")] internal partial class UnknownToolboxShellEnvironment { }
 }
 
 namespace Azure.AI.Projects.Agents._Beta

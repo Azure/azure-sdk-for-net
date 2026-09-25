@@ -89,7 +89,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(MemoryLimit))
             {
                 writer.WritePropertyName("memory_limit"u8);
-                writer.WriteStringValue(MemoryLimit.Value.ToSerialString());
+                writer.WriteStringValue(MemoryLimit.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Skills))
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
                         memoryLimit = null;
                         continue;
                     }
-                    memoryLimit = prop.Value.GetString().ToContainerMemoryLimit();
+                    memoryLimit = new ContainerMemoryLimit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))
