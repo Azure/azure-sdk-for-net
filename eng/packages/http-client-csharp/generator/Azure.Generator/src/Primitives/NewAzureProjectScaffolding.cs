@@ -27,7 +27,7 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientGenerator.Instance.Configuration.PackageName} client library for developing .NET applications with rich experience.",
+                Description = $"The {AzureClientGenerator.Instance.Configuration.PackageName} client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.",
                 AssemblyTitle = $"SDK Code Generation {AzureClientGenerator.Instance.Configuration.PackageName}",
                 Version = "1.0.0-beta.1",
                 PackageTags = AzureClientGenerator.Instance.TypeFactory.PrimaryNamespace,
@@ -308,7 +308,7 @@ namespace Azure.Generator.Primitives
             return $"""
                 # {packageName} client library for .NET
 
-                {packageName} is a client library for developing .NET applications with rich experience.
+                The {packageName} client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.
 
                 ## Getting started
 
