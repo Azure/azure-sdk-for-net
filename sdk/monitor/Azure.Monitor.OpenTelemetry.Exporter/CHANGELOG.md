@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added the `Azure.Monitor.OpenTelemetry.Exporter.StorageSubDirectory` AppContext value, settable with `AppContext.SetData` or a `runtimeconfig.json` configProperty, so that the processes or entry points of one application can share a persistent storage directory. By default the directory name is derived from the process name and `AppContext.BaseDirectory`, which splits storage when components of one application differ in either, and a component that runs rarely never drains its backlog. When set, the value replaces those two inputs; the instrumentation key and user name still contribute, so different users and resources stay isolated. Behaviour is unchanged when the value is not set.
+  ([#62997](https://github.com/Azure/azure-sdk-for-net/issues/62997))
+
 ### Breaking Changes
 
 ### Bugs Fixed

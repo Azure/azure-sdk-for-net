@@ -8,12 +8,27 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Data Lake Analytics U-SQL activity. </summary>
     public partial class DataLakeAnalyticsUsqlActivity : ExecutionActivity
     {
+        /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/>. </summary>
+        /// <param name="name"> Activity name. </param>
+        /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
+        public DataLakeAnalyticsUsqlActivity(string name, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService) : base(name)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(scriptPath, nameof(scriptPath));
+            Argument.AssertNotNull(scriptLinkedService, nameof(scriptLinkedService));
+
+            TypeProperties = new DataLakeAnalyticsUSQLActivityTypeProperties(scriptPath, scriptLinkedService);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUsqlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>

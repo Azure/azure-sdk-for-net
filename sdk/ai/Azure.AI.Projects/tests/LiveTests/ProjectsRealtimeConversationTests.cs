@@ -202,7 +202,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         Console.WriteLine($"[REST] LIST conversation items -> {items.Count} item(s)");
         Assert.That(items, Is.Not.Empty, "Expected at least one persisted conversation item.");
 
-        List<Azure.AI.Projects.Agents.VoiceResponse> responses = await conversationsClient
+        List<Azure.AI.Projects.Agents.VoiceResult> responses = await conversationsClient
             .GetAgentConversationResponsesAsync(CONVERSATION_AGENT_NAME, conversationId, cancellationToken: timeout.Token)
             .ToListAsync();
         Console.WriteLine($"[REST] LIST conversation responses -> {responses.Count} response(s)");

@@ -7,12 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Dataworld. </summary>
     public partial class DataworldLinkedService : DataFactoryLinkedServiceProperties
     {
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/>. </summary>
+        /// <param name="apiToken"> The api token for the Dataworld source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
+        public DataworldLinkedService(DataFactorySecret apiToken) : base("Dataworld")
+        {
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
+
+            TypeProperties = new DataworldLinkedServiceTypeProperties(apiToken);
+        }
+
         /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

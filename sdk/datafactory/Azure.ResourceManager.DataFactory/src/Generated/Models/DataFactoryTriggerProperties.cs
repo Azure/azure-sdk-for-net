@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryTriggerProperties"/>. </summary>
+        protected DataFactoryTriggerProperties() : this(default)
+        {
+        }
+
         /// <summary> Trigger type. </summary>
         internal string TriggerType { get; set; }
 

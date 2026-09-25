@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountBackupPolicy"/>. </summary>
+        protected CosmosDBAccountBackupPolicy() : this(default)
+        {
+        }
+
         /// <summary> Describes the mode of backups. </summary>
         [WirePath("type")]
         internal BackupPolicyType BackupPolicyType { get; set; }

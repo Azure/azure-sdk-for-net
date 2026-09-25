@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Cdn
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleSetData"/>. </summary>
+        public FrontDoorRuleSetData()
+        {
+        }
+
         /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
         [WirePath("properties")]
         internal CdnRuleSetProperties Properties { get; }

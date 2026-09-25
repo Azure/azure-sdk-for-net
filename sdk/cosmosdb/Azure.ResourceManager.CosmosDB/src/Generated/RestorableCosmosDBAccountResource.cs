@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1142,5 +1143,35 @@ namespace Azure.ResourceManager.CosmosDB
                 context,
                 "RestorableCosmosDBAccountResource.GetRestorableTables");
         }
+
+        /// <summary>
+        /// Lists the restorable Azure Cosmos DB MongoDB collections for a given database under a database account.
+        ///             Back-compat overload that delegates to <see cref="RestorableCosmosDBAccountResource.GetRestorableMongoDBCollectionsAsync(string,string,string,CancellationToken)"/>.
+        /// </summary>
+        /// <param name="restorableMongoDBDatabaseRid"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<RestorableMongoDBCollection> GetRestorableMongoDBCollectionsAsync(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken)
+        {
+            return GetRestorableMongoDBCollectionsAsync(restorableMongoDBDatabaseRid: restorableMongoDBDatabaseRid, startTime: default, endTime: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the restorable Azure Cosmos DB MongoDB collections for a given database under a database account.
+        ///             Back-compat overload that delegates to <see cref="RestorableCosmosDBAccountResource.GetRestorableMongoDBCollections(string,string,string,CancellationToken)"/>.
+        /// </summary>
+        /// <param name="restorableMongoDBDatabaseRid"></param>
+        /// <param name="cancellationToken"></param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<RestorableMongoDBCollection> GetRestorableMongoDBCollections(string restorableMongoDBDatabaseRid, CancellationToken cancellationToken)
+        {
+            return GetRestorableMongoDBCollections(restorableMongoDBDatabaseRid: restorableMongoDBDatabaseRid, startTime: default, endTime: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

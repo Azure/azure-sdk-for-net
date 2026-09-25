@@ -754,14 +754,14 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<VoiceResponse> GetAgentConversationResponse(string agentName, string conversationId, string responseId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<VoiceResult> GetAgentConversationResponse(string agentName, string conversationId, string responseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
             ClientResult result = GetAgentConversationResponse(agentName, conversationId, responseId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((VoiceResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((VoiceResult)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -775,14 +775,14 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<VoiceResponse>> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<VoiceResult>> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
 
             ClientResult result = await GetAgentConversationResponseAsync(agentName, conversationId, responseId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((VoiceResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((VoiceResult)result, result.GetRawResponse());
         }
 
         /// <summary>
