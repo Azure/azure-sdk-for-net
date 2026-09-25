@@ -185,6 +185,114 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
+        public async Task NonCapableHostFallsBackToBearerAndReusesCachedTokenAcrossCalls()
+        {
+            // Real Client and PopClient (neither injected) so the bearer client's MSAL token cache is exercised
+            // across repeated calls - the interaction a mocked bearer client cannot reproduce. On a non-capable
+            // host every proof-of-possession attempt fails with MtlsCertificateNotProvided and falls back to a
+            // bearer token; the credential stays stateless (it re-attempts PoP each call and never latches).
+            const string assertionScope = "api://AzureADTokenExchange/.default";
+            int popAssertionCalls = 0;     // assertion source invoked by the PoP client (proof-of-possession context)
+            int bearerAssertionCalls = 0;  // assertion source invoked by the bearer client (bearer context)
+            int tokenRequests = 0;         // bearer redemptions that reached the token endpoint
+
+            var assertionSource = new MockTokenCredential
+            {
+                TokenFactory = (context, cancellationToken) =>
+                {
+                    if (context.IsProofOfPossessionEnabled)
+                    {
+                        popAssertionCalls++;
+                    }
+                    else
+                    {
+                        bearerAssertionCalls++;
+                    }
+                    // Non-capable host: the managed identity returns a bearer assertion with no binding certificate.
+                    return new AccessToken("assertion-token", DateTimeOffset.UtcNow.AddHours(1));
+                },
+            };
+            var options = new ClientAssertionCredentialOptions
+            {
+                EnableMtlsProofOfPossession = true,
+                DisableInstanceDiscovery = true,
+                Transport = new MockTransport(MockTokenTransportFactory(new TransportConfig
+                {
+                    TokenFactory = request =>
+                    {
+                        tokenRequests++;
+                        return "bearer-token";
+                    },
+                })),
+            };
+            // Neither MsalClient nor PopMsalClient is set, so both are real MsalConfidentialClient instances.
+            var credential = new ClientAssertionCredential(TenantId, ClientId, assertionSource, assertionScope, options);
+
+            AccessToken first = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
+            AccessToken second = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
+
+            Assert.AreEqual("bearer-token", first.Token);
+            Assert.AreEqual("bearer-token", second.Token);
+            // PoP is re-attempted on every call - the credential is stateless and never latches to bearer.
+            Assert.AreEqual(2, popAssertionCalls, "PoP must be retried on each call; the credential must not latch to bearer.");
+            // The bearer fallback redeems once; the second call is served from the bearer client's cache.
+            Assert.AreEqual(1, tokenRequests, "The second call should be served from the bearer client's cache.");
+            Assert.AreEqual(1, bearerAssertionCalls, "The bearer assertion should be built once; the second call hits the cache.");
+        }
+
+        [Test]
+        public async Task DoesNotServeCachedBearerTokenWhenPopFailsTransiently()
+        {
+            // Real bearer Client (only the PoP client is mocked) so a genuine cached bearer token exists after the
+            // first call's fallback. A transient managed-identity error on the next PoP attempt must surface rather
+            // than silently serving that cached bearer token: PoP is still achievable on a capable host, so a
+            // transient failure must not downgrade a request that asked for proof-of-possession.
+            const string assertionScope = "api://AzureADTokenExchange/.default";
+            int tokenRequests = 0;
+            int popCalls = 0;
+            var popClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
+            {
+                popCalls++;
+                if (popCalls == 1)
+                {
+                    // First call: non-capable host (no binding certificate) -> falls back and warms the bearer cache.
+                    throw new MsalClientException(MsalError.MtlsCertificateNotProvided, "No binding certificate.");
+                }
+                // Second call: a transient managed-identity error (for example IMDS throttling).
+                throw new MsalServiceException("throttled", "Managed identity endpoint returned 429.");
+            });
+            var assertionSource = new MockTokenCredential
+            {
+                TokenFactory = (context, cancellationToken) => new AccessToken("assertion-token", DateTimeOffset.UtcNow.AddHours(1)),
+            };
+            var options = new ClientAssertionCredentialOptions
+            {
+                PopMsalClient = popClient,        // mock PoP client that flips behavior across calls
+                EnableMtlsProofOfPossession = true,
+                DisableInstanceDiscovery = true,
+                Transport = new MockTransport(MockTokenTransportFactory(new TransportConfig
+                {
+                    TokenFactory = request =>
+                    {
+                        tokenRequests++;
+                        return "bearer-token";
+                    },
+                })),
+                // MsalClient is intentionally not set, so the bearer Client is a real MsalConfidentialClient with a cache.
+            };
+            var credential = new ClientAssertionCredential(TenantId, ClientId, assertionSource, assertionScope, options);
+
+            AccessToken first = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
+            Assert.AreEqual("bearer-token", first.Token);
+            Assert.AreEqual(1, tokenRequests, "The first call should fall back and cache a bearer token.");
+
+            // The transient PoP failure surfaces; the credential does not silently serve the cached bearer token.
+            Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
+            Assert.AreEqual(1, tokenRequests, "A transient PoP-path failure must not serve the cached bearer token.");
+        }
+
+        [Test]
         public async Task UsesBearerWhenMtlsProofOfPossessionDisabled()
         {
             const string assertionScope = "api://AzureADTokenExchange/.default";
