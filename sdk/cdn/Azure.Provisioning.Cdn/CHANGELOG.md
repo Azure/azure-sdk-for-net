@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2026-09-24)
 
 ### Bugs Fixed
 
-### Other Changes
+- Restored resource name requirements lost during the TypeSpec migration for
+  `FrontDoorOriginGroup`, `FrontDoorOrigin`, and `FrontDoorRoute`. These
+  resources now use Azure's documented 1-50 character constraints instead of
+  the inherited 1-24 lowercase defaults. The authoritative 50-character limit
+  also replaces beta.2's historical 90-character value, so automatically
+  generated names may change or be truncated sooner when upgrading.
 
 ## 1.0.0-beta.3 (2026-06-25)
 
