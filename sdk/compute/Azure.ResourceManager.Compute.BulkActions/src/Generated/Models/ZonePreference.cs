@@ -11,15 +11,15 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> A zone preference with a zone identifier and rank. </summary>
+    /// <summary> An availability zone and its allocation priority. </summary>
     public partial class ZonePreference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ZonePreference"/>. </summary>
-        /// <param name="zone"> The zone identifier. </param>
-        /// <param name="rank"> The rank of this zone in the priority order. </param>
+        /// <param name="zone"> The availability zone identifier. </param>
+        /// <param name="rank"> The customer-defined priority rank for this availability zone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
         public ZonePreference(string zone, int rank)
         {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ZonePreference"/>. </summary>
-        /// <param name="zone"> The zone identifier. </param>
-        /// <param name="rank"> The rank of this zone in the priority order. </param>
+        /// <param name="zone"> The availability zone identifier. </param>
+        /// <param name="rank"> The customer-defined priority rank for this availability zone. </param>
         /// <param name="targetMaxCapacity"> The maximum capacity to place in this zone. The sum across capped zones must not exceed the requested capacity, and when every zone preference is capped the sum must equal the requested capacity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ZonePreference(string zone, int rank, int? targetMaxCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The zone identifier. </summary>
+        /// <summary> The availability zone identifier. </summary>
         public string Zone { get; set; }
 
-        /// <summary> The rank of this zone in the priority order. </summary>
+        /// <summary> The customer-defined priority rank for this availability zone. </summary>
         public int Rank { get; set; }
 
         /// <summary> The maximum capacity to place in this zone. The sum across capped zones must not exceed the requested capacity, and when every zone preference is capped the sum must equal the requested capacity. </summary>

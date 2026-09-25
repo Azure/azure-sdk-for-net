@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
+    /// <summary> The preferences for distributing virtual machines across availability zones. </summary>
     public partial class ZoneAllocationPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
-        /// <param name="distributionStrategy"> The distribution strategy for zone allocation. </param>
-        /// <param name="zonePreferences"> The zone preferences for allocation priority. </param>
+        /// <param name="distributionStrategy"> The strategy used to distribute virtual machines across availability zones. </param>
+        /// <param name="zonePreferences"> The availability zones and their allocation priorities. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ZoneAllocationPolicy(DistributionStrategy? distributionStrategy, IList<ZonePreference> zonePreferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The distribution strategy for zone allocation. </summary>
+        /// <summary> The strategy used to distribute virtual machines across availability zones. </summary>
         public DistributionStrategy? DistributionStrategy { get; set; }
 
-        /// <summary> The zone preferences for allocation priority. </summary>
+        /// <summary> The availability zones and their allocation priorities. </summary>
         public IList<ZonePreference> ZonePreferences { get; }
     }
 }

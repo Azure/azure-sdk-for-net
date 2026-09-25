@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The priority profile for flex VM creation. </summary>
+    /// <summary> The priority and allocation preferences for virtual machines. </summary>
     public partial class PriorityProfile : IJsonModel<PriorityProfile>
     {
         /// <param name="data"> The data to parse. </param>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Extra details needed to run the user's request. </summary>
+    /// <summary> The execution settings for a bulk action. </summary>
     public partial class BulkActionExecutionParameterDetail : IJsonModel<BulkActionExecutionParameterDetail>
     {
         /// <param name="data"> The data to parse. </param>

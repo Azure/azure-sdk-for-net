@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </summary>
         public IList<ComputeBulkActionsSubResourceInfo> LoadBalancerBackendAddressPools { get; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string SubnetId
         {
             get

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> These describe errors that occur at the resource level. </summary>
+    /// <summary> An error that occurred while processing one virtual machine. </summary>
     public partial class ComputeBulkOperationError : IJsonModel<ComputeBulkOperationError>
     {
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationError"/> for deserialization. </summary>

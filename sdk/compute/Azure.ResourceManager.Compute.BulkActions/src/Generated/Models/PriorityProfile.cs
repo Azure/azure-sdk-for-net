@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The priority profile for flex VM creation. </summary>
+    /// <summary> The priority and allocation preferences for virtual machines. </summary>
     public partial class PriorityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PriorityProfile"/>. </summary>
-        /// <param name="type"> The priority type for VM allocation. </param>
-        /// <param name="maxPricePerVM"> Price per hour of each Spot VM will never exceed this. Available from 2026-04-06-preview. </param>
-        /// <param name="evictionPolicy"> Eviction Policy to follow when evicting Spot VMs. Available from 2026-04-06-preview. </param>
-        /// <param name="allocationStrategy"> The allocation strategy for VM size selection. </param>
+        /// <param name="type"> The priority type for virtual machine allocation. </param>
+        /// <param name="maxPricePerVM"> The maximum hourly price, in US dollars, for each Spot virtual machine. </param>
+        /// <param name="evictionPolicy"> The action applied to a Spot virtual machine when Azure evicts it. </param>
+        /// <param name="allocationStrategy"> The strategy used to select a virtual machine size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PriorityProfile(PriorityType? @type, float? maxPricePerVM, EvictionPolicy? evictionPolicy, AllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The priority type for VM allocation. </summary>
+        /// <summary> The priority type for virtual machine allocation. </summary>
         public PriorityType? Type { get; set; }
 
-        /// <summary> Price per hour of each Spot VM will never exceed this. Available from 2026-04-06-preview. </summary>
+        /// <summary> The maximum hourly price, in US dollars, for each Spot virtual machine. </summary>
         public float? MaxPricePerVM { get; set; }
 
-        /// <summary> Eviction Policy to follow when evicting Spot VMs. Available from 2026-04-06-preview. </summary>
+        /// <summary> The action applied to a Spot virtual machine when Azure evicts it. </summary>
         public EvictionPolicy? EvictionPolicy { get; set; }
 
-        /// <summary> The allocation strategy for VM size selection. </summary>
+        /// <summary> The strategy used to select a virtual machine size. </summary>
         public AllocationStrategy? AllocationStrategy { get; set; }
     }
 }

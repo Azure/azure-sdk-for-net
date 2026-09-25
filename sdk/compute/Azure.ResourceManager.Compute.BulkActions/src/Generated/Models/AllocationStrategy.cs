@@ -11,15 +11,15 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The allocation strategy for VM size selection. </summary>
+    /// <summary> The strategy Bulk Actions uses to select a virtual machine size. </summary>
     public readonly partial struct AllocationStrategy : IEquatable<AllocationStrategy>
     {
         private readonly string _value;
-        /// <summary> Platform prioritizes VM sizes with the lowest hourly cost. </summary>
+        /// <summary> Bulk Actions prioritizes virtual machine sizes with the lowest hourly cost. </summary>
         private const string LowestPriceValue = "LowestPrice";
-        /// <summary> Customer specifies a rank for each VM size, platform uses VM sizes in rank order. </summary>
+        /// <summary> Bulk Actions considers virtual machine sizes in the customer-specified rank order. </summary>
         private const string PrioritizedValue = "Prioritized";
-        /// <summary> Platform prioritizes VM sizes with the highest available capacity first. </summary>
+        /// <summary> Bulk Actions prioritizes virtual machine sizes with the highest available capacity. </summary>
         private const string CapacityOptimizedValue = "CapacityOptimized";
 
         /// <summary> Initializes a new instance of <see cref="AllocationStrategy"/>. </summary>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Platform prioritizes VM sizes with the lowest hourly cost. </summary>
+        /// <summary> Bulk Actions prioritizes virtual machine sizes with the lowest hourly cost. </summary>
         public static AllocationStrategy LowestPrice { get; } = new AllocationStrategy(LowestPriceValue);
 
-        /// <summary> Customer specifies a rank for each VM size, platform uses VM sizes in rank order. </summary>
+        /// <summary> Bulk Actions considers virtual machine sizes in the customer-specified rank order. </summary>
         public static AllocationStrategy Prioritized { get; } = new AllocationStrategy(PrioritizedValue);
 
-        /// <summary> Platform prioritizes VM sizes with the highest available capacity first. </summary>
+        /// <summary> Bulk Actions prioritizes virtual machine sizes with the highest available capacity. </summary>
         public static AllocationStrategy CapacityOptimized { get; } = new AllocationStrategy(CapacityOptimizedValue);
 
         /// <summary> Determines if two <see cref="AllocationStrategy"/> values are the same. </summary>

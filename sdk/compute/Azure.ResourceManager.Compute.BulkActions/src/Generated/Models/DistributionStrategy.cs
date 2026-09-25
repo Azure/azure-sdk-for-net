@@ -11,17 +11,17 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The distribution strategy for zone allocation. </summary>
+    /// <summary> The strategy Bulk Actions uses to distribute virtual machines across availability zones. </summary>
     public readonly partial struct DistributionStrategy : IEquatable<DistributionStrategy>
     {
         private readonly string _value;
-        /// <summary> Platform attempts to place as many VMs as possible in a single zone, falls back to multiple zones if needed. </summary>
+        /// <summary> Bulk Actions attempts to place as many virtual machines as possible in one availability zone and uses additional zones when needed. </summary>
         private const string BestEffortSingleZoneValue = "BestEffortSingleZone";
-        /// <summary> Platform uses customer-provided zone rankings to allocate VMs. </summary>
+        /// <summary> Bulk Actions considers availability zones in the customer-specified rank order. </summary>
         private const string PrioritizedValue = "Prioritized";
-        /// <summary> Platform attempts to evenly distribute VMs across all available zones with best effort. </summary>
+        /// <summary> Bulk Actions attempts to distribute virtual machines evenly across the available zones. </summary>
         private const string BestEffortBalancedValue = "BestEffortBalanced";
-        /// <summary> Platform must evenly distribute VMs across zones, request is rejected if exact balance cannot be achieved. </summary>
+        /// <summary> Bulk Actions distributes virtual machines evenly across zones and rejects the request when an even distribution cannot be achieved. </summary>
         private const string StrictBalancedValue = "StrictBalanced";
 
         /// <summary> Initializes a new instance of <see cref="DistributionStrategy"/>. </summary>
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Platform attempts to place as many VMs as possible in a single zone, falls back to multiple zones if needed. </summary>
+        /// <summary> Bulk Actions attempts to place as many virtual machines as possible in one availability zone and uses additional zones when needed. </summary>
         public static DistributionStrategy BestEffortSingleZone { get; } = new DistributionStrategy(BestEffortSingleZoneValue);
 
-        /// <summary> Platform uses customer-provided zone rankings to allocate VMs. </summary>
+        /// <summary> Bulk Actions considers availability zones in the customer-specified rank order. </summary>
         public static DistributionStrategy Prioritized { get; } = new DistributionStrategy(PrioritizedValue);
 
-        /// <summary> Platform attempts to evenly distribute VMs across all available zones with best effort. </summary>
+        /// <summary> Bulk Actions attempts to distribute virtual machines evenly across the available zones. </summary>
         public static DistributionStrategy BestEffortBalanced { get; } = new DistributionStrategy(BestEffortBalancedValue);
 
-        /// <summary> Platform must evenly distribute VMs across zones, request is rejected if exact balance cannot be achieved. </summary>
+        /// <summary> Bulk Actions distributes virtual machines evenly across zones and rejects the request when an even distribution cannot be achieved. </summary>
         public static DistributionStrategy StrictBalanced { get; } = new DistributionStrategy(StrictBalancedValue);
 
         /// <summary> Determines if two <see cref="DistributionStrategy"/> values are the same. </summary>

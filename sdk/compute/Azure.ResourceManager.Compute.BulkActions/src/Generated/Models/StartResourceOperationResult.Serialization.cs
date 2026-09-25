@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a start request. </summary>
+    /// <summary> The result of a bulk start action. </summary>
     public partial class StartResourceOperationResult : IJsonModel<StartResourceOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="StartResourceOperationResult"/> for deserialization. </summary>

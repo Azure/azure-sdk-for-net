@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Describes the fallback operation that was performed. </summary>
+    /// <summary> Information about the fallback operation attempted after the requested operation did not succeed. </summary>
     public partial class ComputeBulkFallbackOperationInfo : IJsonModel<ComputeBulkFallbackOperationInfo>
     {
         /// <summary> Initializes a new instance of <see cref="ComputeBulkFallbackOperationInfo"/> for deserialization. </summary>
