@@ -51,6 +51,11 @@ namespace Azure.Search.Documents.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
+        protected VectorQuery() : this(default)
+        {
+        }
+
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
         public int? KNearestNeighborsCount { get; set; }
 

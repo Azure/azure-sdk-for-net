@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
@@ -72,6 +73,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="knowledgeBaseName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public KnowledgeBaseRetrievalClient(Uri endpoint, string knowledgeBaseName, TokenCredential credential, SearchClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, knowledgeBaseName, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
+        [Experimental("SCME0002")]
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -216,6 +224,44 @@ namespace Azure.Search.Documents.KnowledgeBases
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Retrieve(RequestContent content, RequestContext context)
+        {
+            return Retrieve(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] KnowledgeBase retrieves relevant data from backing stores.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context)
+        {
+            return RetrieveAsync(content: content, querySourceAuthorization: default, queryWorkIQSourceAuthorization: default, context: context);
         }
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>

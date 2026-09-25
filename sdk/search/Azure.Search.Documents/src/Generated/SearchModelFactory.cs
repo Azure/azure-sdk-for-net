@@ -6031,6 +6031,23 @@ namespace Azure.Search.Documents.Models
             return SearchOptions(includeTotalCount: includeTotalCount, facets: facets, filter: filter, highlightFieldsRaw: highlightFieldsRaw, highlightPostTag: highlightPostTag, highlightPreTag: highlightPreTag, minimumCoverage: minimumCoverage, orderByRaw: orderByRaw, queryType: queryType, scoringStatistics: scoringStatistics, sessionId: sessionId, scoringParameters: scoringParameters, scoringProfile: scoringProfile, debug: debug, searchText: searchText, searchFieldsRaw: searchFieldsRaw, searchMode: searchMode, queryLanguage: default, querySpeller: default, selectRaw: selectRaw, skip: skip, size: size, semanticConfigurationName: semanticConfigurationName, semanticErrorMode: semanticErrorMode, semanticMaxWaitInMilliseconds: semanticMaxWaitInMilliseconds, semanticQuery: semanticQuery, queryAnswerRaw: queryAnswerRaw, queryCaptionRaw: queryCaptionRaw, queryRewritesRaw: default, semanticFields: default, vectorQueries: vectorQueries, filterMode: filterMode, hybridSearch: default);
         }
 
+        /// <summary>
+        /// The query parameters for vector and hybrid search queries.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
+        /// </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
+        /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
+        /// <param name="kind"> Type of query. </param>
+        /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        {
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
+        }
+
         /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
@@ -6204,6 +6221,22 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeSourceReference KnowledgeSourceReference(string name)
         {
             return KnowledgeSourceReference(name: name, enableImageServing: default, enableFreshness: default);
+        }
+
+        /// <summary>
+        /// Represents a knowledge source definition.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/>, and <see cref="Indexes.Models.WebKnowledgeSource"/>.
+        /// </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeSource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
+        {
+            return KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
         }
 
         /// <summary> Knowledge Source targeting a search index. </summary>
@@ -6425,6 +6458,22 @@ namespace Azure.Search.Documents.Models
             return KnowledgeBaseRetrievalRequest(messages: default, intents: intents, maxRuntimeInSeconds: maxRuntimeInSeconds, maxOutputSize: default, maxOutputDocuments: default, maxOutputSizeInTokens: maxOutputSizeInTokens, retrievalReasoningEffort: default, includeActivity: includeActivity, outputMode: default, knowledgeSourceParams: knowledgeSourceParams);
         }
 
+        /// <summary>
+        /// Base type for knowledge source runtime parameters.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/>, and <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/>.
+        /// </summary>
+        /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceParams"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string kind)
+        {
+            return KnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, neverQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, resultsProcessing: default, maxOutputDocuments: default, kind: kind, enableImageServing: default);
+        }
+
         /// <summary> Specifies runtime parameters for a search index knowledge source. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
@@ -6487,6 +6536,21 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response, IEnumerable<KnowledgeBaseActivityRecord> activity, IEnumerable<KnowledgeBaseReference> references)
         {
             return KnowledgeBaseRetrievalResponse(response: response, activity: activity, references: references, responseSensitivityLabelInfo: default);
+        }
+
+        /// <summary>
+        /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
+        /// </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id, string @type, int? elapsedMs, KnowledgeBaseErrorDetail error)
+        {
+            return KnowledgeBaseActivityRecord(id: id, @type: @type, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default);
         }
 
         /// <summary> Represents an LLM web summarization activity record. </summary>
@@ -6590,6 +6654,57 @@ namespace Azure.Search.Documents.Models
                 encryptionKey,
                 default,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
+        /// <param name="documentCount"> The number of documents in the index. </param>
+        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
+        /// <returns> A new SearchIndexStatistics instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize)
+        {
+            return SearchIndexStatistics(documentCount: documentCount, storageSize: storageSize, vectorIndexSize: default);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter)
+        {
+            return SearchServiceCounters(aliasCounter: default, documentCounter: documentCounter, indexCounter: indexCounter, indexerCounter: indexerCounter, dataSourceCounter: dataSourceCounter, storageSizeCounter: storageSizeCounter, synonymMapCounter: synonymMapCounter, skillsetCounter: default, vectorIndexSizeCounter: default, knowledgeBaseCounter: default, knowledgeSourceCounter: default);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
+        {
+            return SearchServiceCounters(aliasCounter: default, documentCounter: documentCounter, indexCounter: indexCounter, indexerCounter: indexerCounter, dataSourceCounter: dataSourceCounter, storageSizeCounter: storageSizeCounter, synonymMapCounter: synonymMapCounter, skillsetCounter: skillsetCounter, vectorIndexSizeCounter: default, knowledgeBaseCounter: default, knowledgeSourceCounter: default);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
+        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument)
+        {
+            return SearchServiceLimits(maxFieldsPerIndex: maxFieldsPerIndex, maxFieldNestingDepthPerIndex: maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex: maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument: maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: default, maxCumulativeIndexerRuntimeSeconds: default, maxVectorIndexSizePerIndexInBytes: default);
         }
     }
 }
