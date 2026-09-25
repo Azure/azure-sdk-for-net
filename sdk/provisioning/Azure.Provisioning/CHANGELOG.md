@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Added support for explicitly tagged raw Bicep expressions in `BicepValue<BinaryData>` using the `text/vnd.microsoft.bicep` media type.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed `BicepValue<BinaryData>` literal compilation to validate JSON and emit it through Bicep's `json(...)` function while preserving generated base64-encoded properties.
 
 ### Other Changes
 
