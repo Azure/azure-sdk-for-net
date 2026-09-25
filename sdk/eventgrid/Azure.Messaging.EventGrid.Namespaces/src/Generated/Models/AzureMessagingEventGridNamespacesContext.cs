@@ -14,19 +14,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AcknowledgeRequest))]
     [ModelReaderWriterBuildable(typeof(AcknowledgeResult))]
     [ModelReaderWriterBuildable(typeof(BrokerProperties))]
-    [ModelReaderWriterBuildable(typeof(CloudEventInternal))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(FailedLockToken))]
-    [ModelReaderWriterBuildable(typeof(PublishResult))]
     [ModelReaderWriterBuildable(typeof(ReceiveDetails))]
     [ModelReaderWriterBuildable(typeof(ReceiveResult))]
-    [ModelReaderWriterBuildable(typeof(RejectRequest))]
     [ModelReaderWriterBuildable(typeof(RejectResult))]
-    [ModelReaderWriterBuildable(typeof(ReleaseRequest))]
     [ModelReaderWriterBuildable(typeof(ReleaseResult))]
-    [ModelReaderWriterBuildable(typeof(RenewLocksRequest))]
     [ModelReaderWriterBuildable(typeof(RenewLocksResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureMessagingEventGridNamespacesContext : ModelReaderWriterContext

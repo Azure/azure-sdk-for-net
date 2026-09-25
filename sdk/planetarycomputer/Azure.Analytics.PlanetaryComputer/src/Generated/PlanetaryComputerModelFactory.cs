@@ -18,6 +18,14 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class PlanetaryComputerModelFactory
     {
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Microsoft Planetary Computer Pro geo-catalog operation. </summary>
         /// <param name="id"> Operation id. </param>

@@ -14,11 +14,7 @@ namespace Azure.Storage.Queues
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(KeyInfo))]
-    [ModelReaderWriterBuildable(typeof(ListOfSentMessage))]
-    [ModelReaderWriterBuildable(typeof(ListQueuesResponse))]
     [ModelReaderWriterBuildable(typeof(PeekedMessage))]
-    [ModelReaderWriterBuildable(typeof(PeekedMessages))]
     [ModelReaderWriterBuildable(typeof(QueueAccessPolicy))]
     [ModelReaderWriterBuildable(typeof(QueueAnalyticsLogging))]
     [ModelReaderWriterBuildable(typeof(QueueCorsRule))]
@@ -30,9 +26,6 @@ namespace Azure.Storage.Queues
     [ModelReaderWriterBuildable(typeof(QueueServiceProperties))]
     [ModelReaderWriterBuildable(typeof(QueueServiceStatistics))]
     [ModelReaderWriterBuildable(typeof(QueueSignedIdentifier))]
-    [ModelReaderWriterBuildable(typeof(QueueSignedIdentifiers))]
-    [ModelReaderWriterBuildable(typeof(ReceivedMessage))]
-    [ModelReaderWriterBuildable(typeof(ReceivedMessages))]
     [ModelReaderWriterBuildable(typeof(SendReceipt))]
     [ModelReaderWriterBuildable(typeof(UserDelegationKey))]
     public partial class AzureStorageQueuesContext : ModelReaderWriterContext

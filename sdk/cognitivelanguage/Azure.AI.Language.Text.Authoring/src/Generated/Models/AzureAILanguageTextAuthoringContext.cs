@@ -14,7 +14,6 @@ namespace Azure.AI.Language.Text.Authoring
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CopyProjectAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionDocumentEvalResult))]
     [ModelReaderWriterBuildable(typeof(CustomEntityRecognitionEvalSummary))]
     [ModelReaderWriterBuildable(typeof(CustomHealthcareDocumentEvalResult))]
@@ -37,6 +36,7 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(DocumentSingleLabelClassificationEvalResult))]
     [ModelReaderWriterBuildable(typeof(DocumentTextSentimentEvalResult))]
     [ModelReaderWriterBuildable(typeof(EntityRecognitionEvalSummary))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(ExportedCustomAbstractiveSummarizationDocument))]
     [ModelReaderWriterBuildable(typeof(ExportedCustomAbstractiveSummarizationProjectAsset))]
     [ModelReaderWriterBuildable(typeof(ExportedCustomEntityRecognitionDocument))]
@@ -55,17 +55,6 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(ExportedModelManifest))]
     [ModelReaderWriterBuildable(typeof(MultiLabelClassEvalSummary))]
     [ModelReaderWriterBuildable(typeof(MultiLabelClassificationEvalSummary))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringAssignedDeploymentResource))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringAssignedProjectDeploymentsMetadata))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringDocumentEvaluationResult))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringExportedTrainedModel))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringPrebuiltEntity))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringProjectDeployment))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringProjectMetadata))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringProjectTrainedModel))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringSupportedLanguage))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringTrainingConfigVersion))]
-    [ModelReaderWriterBuildable(typeof(PagedTextAnalysisAuthoringTrainingJobState))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SentimentEvalSummary))]
     [ModelReaderWriterBuildable(typeof(SingleLabelClassEvalSummary))]
@@ -125,9 +114,6 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(TextAuthoringTrainingState))]
     [ModelReaderWriterBuildable(typeof(TextAuthoringUnassignDeploymentResourcesDetails))]
     [ModelReaderWriterBuildable(typeof(TextSentimentEvalSummary))]
-    [ModelReaderWriterBuildable(typeof(UnknownTextAuthoringDocumentEvalResult))]
-    [ModelReaderWriterBuildable(typeof(UnknownTextAuthoringEvalSummary))]
-    [ModelReaderWriterBuildable(typeof(UnknownTextAuthoringExportedProjectAsset))]
     public partial class AzureAILanguageTextAuthoringContext : ModelReaderWriterContext
     {
     }
