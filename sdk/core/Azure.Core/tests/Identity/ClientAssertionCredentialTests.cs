@@ -180,6 +180,47 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
+        public async Task UsesBearerWhenMtlsProofOfPossessionDisabled()
+        {
+            const string assertionScope = "api://AzureADTokenExchange/.default";
+            int assertionCalls = 0;
+            var assertionSource = new MockTokenCredential
+            {
+                TokenFactory = (context, cancellationToken) =>
+                {
+                    assertionCalls++;
+                    Assert.IsFalse(context.IsProofOfPossessionEnabled);
+                    CollectionAssert.AreEqual(new[] { assertionScope }, context.Scopes);
+                    return new AccessToken("assertion-token", DateTimeOffset.UtcNow.AddHours(1));
+                },
+            };
+            var options = new ClientAssertionCredentialOptions
+            {
+                EnableMtlsProofOfPossession = false,
+                DisableInstanceDiscovery = true,
+                Transport = new MockTransport(MockTokenTransportFactory(new TransportConfig
+                {
+                    TokenFactory = request =>
+                    {
+                        using var stream = new MemoryStream();
+                        request.Content.WriteTo(stream, default);
+                        Assert.That(new BinaryData(stream.ToArray()).ToString(), Does.Contain("client_assertion=assertion-token"));
+                        return "bearer-token";
+                    },
+                })),
+            };
+            var credential = new ClientAssertionCredential(TenantId, ClientId, assertionSource, assertionScope, options);
+
+            AccessToken token = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
+
+            Assert.IsNull(credential.PopClient);
+            Assert.AreEqual(1, assertionCalls);
+            Assert.AreEqual("bearer-token", token.Token);
+            Assert.AreEqual("Bearer", token.TokenType);
+            Assert.IsNull(token.BindingCertificate);
+        }
+
+        [Test]
         public async Task PopAssertionPropagatesContextCancellationAndCertificate()
         {
 #pragma warning disable SYSLIB0026 // Empty certificate is sufficient to verify reference propagation.
