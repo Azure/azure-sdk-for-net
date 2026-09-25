@@ -2806,7 +2806,32 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(141, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(131, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that a receive operation completed with no events while the AMQP link had no
+        ///   credit available, which suggests that the configured prefetch size limit may be
+        ///   constraining receive throughput.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being read from.</param>
+        /// <param name="consumerGroup">The name of the consumer group associated with the receive operation.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition being read from.</param>
+        /// <param name="prefetchSizeInBytes">The configured prefetch size limit, in bytes.</param>
+        /// <param name="totalLinkCredit">The total link credit calculated from the prefetch size limit.</param>
+        ///
+        [Event(132, Level = EventLevel.Warning, Message = "The configured PrefetchSizeInBytes ({3} bytes) may be limiting receive throughput for Event Hub: {0} (Consumer Group: '{1}', Partition Id: '{2}').  A receive operation completed with no events while the AMQP link had no credit available.  The link credit is calculated from PrefetchSizeInBytes and the observed message sizes; current total link credit: {4}.  If receive operations are slower than expected, consider increasing PrefetchSizeInBytes.")]
+        public virtual void PrefetchSizeLimitReached(string eventHubName,
+                                                     string consumerGroup,
+                                                     string partitionId,
+                                                     long prefetchSizeInBytes,
+                                                     long totalLinkCredit)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(132, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, prefetchSizeInBytes, totalLinkCredit);
             }
         }
 
