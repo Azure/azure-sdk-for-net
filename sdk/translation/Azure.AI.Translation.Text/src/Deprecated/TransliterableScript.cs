@@ -12,7 +12,7 @@ namespace Azure.AI.Translation.Text
     public partial class TransliterableScript : LanguageScript
     {
         /// <summary> List of scripts available to convert text to. </summary>
-        [Obsolete("TransliterableScript is deprecated and will be removed in a future release. Please use ToScripts instead.")]
+        [Obsolete("TransliterableScript is deprecated and will be removed in a future release. Please use ToScripts instead.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<LanguageScript> TargetLanguageScripts { get; }
     }

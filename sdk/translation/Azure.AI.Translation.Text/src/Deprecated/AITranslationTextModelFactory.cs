@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Model factory for models. </summary>
-    [Obsolete("This class is deprecated. Use TranslationTextModelFactory instead.")]
+    [Obsolete("This class is deprecated. Use TranslationTextModelFactory instead.", error: true)]
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class AITranslationTextModelFactory
     {

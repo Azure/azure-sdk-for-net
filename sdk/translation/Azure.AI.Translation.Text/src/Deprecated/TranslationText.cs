@@ -11,22 +11,22 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationText
     {
         /// <summary> An object giving the translated text in the script specified by the toScript parameter. </summary>
-        [Obsolete("Transliteration is deprecated and will be removed in a future release.")]
+        [Obsolete("Transliteration is deprecated and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TransliteratedText Transliteration { get; }
 
         /// <summary> A string representing the language code of the target language. </summary>
-        [Obsolete("TargetLanguage is deprecated. Use Language instead.")]
+        [Obsolete("TargetLanguage is deprecated. Use Language instead.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string TargetLanguage { get; }
 
         /// <summary> Alignment information. </summary>
-        [Obsolete("Alignment is deprecated and will be removed in a future release.")]
+        [Obsolete("Alignment is deprecated and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public TranslatedTextAlignment Alignment { get; }
 
         /// <summary> Sentence boundaries in the input and output texts. </summary>
-        [Obsolete("SentenceBoundaries is deprecated and will be removed in a future release.")]
+        [Obsolete("SentenceBoundaries is deprecated and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)] public SentenceBoundaries SentenceBoundaries { get; }
     }
 }

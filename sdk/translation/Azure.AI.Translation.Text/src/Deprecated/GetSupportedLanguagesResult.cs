@@ -11,7 +11,7 @@ namespace Azure.AI.Translation.Text
     public partial class GetSupportedLanguagesResult
     {
         /// <summary> Languages that support dictionary API. </summary>
-        [Obsolete("Dictionary is deprecated and will be removed in a future release.")]
+        [Obsolete("Dictionary is deprecated and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyDictionary<string, SourceDictionaryLanguage> Dictionary { get; }
     }
