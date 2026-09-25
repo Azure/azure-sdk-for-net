@@ -181,6 +181,25 @@ function Update-PackageVersionSuffix {
     }
 }
 
+function Update-MgmtPackageChangelog {
+    param(
+        [object]$generatedPackage
+    )
+
+    if ($generatedPackage.result -eq "failed" -or -not $generatedPackage.packageName.StartsWith("Azure.ResourceManager.")) {
+        return
+    }
+
+    Write-Host "Start to update changelog for package: $($generatedPackage.packageName)"
+    pwsh -File (Join-Path $PSScriptRoot "Automation-Sdk-UpdateChangelog.ps1") `
+        -PackagePath $generatedPackage.packageFolder `
+        -SdkRepoPath $sdkPath
+
+    if ($LASTEXITCODE -ne 0) {
+        throw "[ERROR] Failed to generate changelog for package: $($generatedPackage.packageName)"
+    }
+}
+
 $autorestConfigYaml = ""
 if ($autorestConfig) {
     $autorestConfig | Set-Content "config.md"
@@ -344,6 +363,11 @@ if ($relatedTypeSpecProjectFolder) {
         }
     }
 }
+
+foreach ($generatedPackage in $generatedSDKPackages) {
+    Update-MgmtPackageChangelog -generatedPackage $generatedPackage
+}
+
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }
