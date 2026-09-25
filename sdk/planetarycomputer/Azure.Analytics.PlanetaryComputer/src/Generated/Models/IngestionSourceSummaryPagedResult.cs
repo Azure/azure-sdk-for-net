@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class IngestionRunPagedResponse
+    internal partial class IngestionSourceSummaryPagedResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionRunPagedResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSourceSummaryPagedResult"/>. </summary>
         /// <param name="value"> The items on the page. </param>
-        internal IngestionRunPagedResponse(IEnumerable<IngestionRun> value)
+        internal IngestionSourceSummaryPagedResult(IEnumerable<IngestionSourceSummary> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionRunPagedResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IngestionSourceSummaryPagedResult"/>. </summary>
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionRunPagedResponse(IList<IngestionRun> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionSourceSummaryPagedResult(IList<IngestionSourceSummary> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> The items on the page. </summary>
-        public IList<IngestionRun> Value { get; }
+        public IList<IngestionSourceSummary> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
         public Uri NextLink { get; }
