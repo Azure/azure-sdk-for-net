@@ -45,15 +45,27 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> The type used for update operations of the AppLink. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.AppLinkPatch"/> instance for mocking. </returns>
-        public static AppLinkPatch AppLinkPatch(IDictionary<string, string> tags = default)
+        public static AppLinkPatch AppLinkPatch(IDictionary<string, string> tags = default, ManagedServiceIdentityUpdate identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
-        /// <summary> AppLink Member resource. </summary>
+        /// <summary> The update-specific managed service identity (all fields optional for PATCH). </summary>
+        /// <param name="type"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceIdentityUpdate"/> instance for mocking. </returns>
+        public static ManagedServiceIdentityUpdate ManagedServiceIdentityUpdate(ManagedServiceIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
+
+            return new ManagedServiceIdentityUpdate(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
+        }
+
+        /// <summary> A member of an Azure Kubernetes Application Network resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -107,10 +119,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="eastWestGatewayVisibility"> East-West gateway visibility. </param>
         /// <param name="privateConnectSubnetResourceId"> Delegated Subnet to AppLink. </param>
+        /// <param name="network"> The network name for an Azure Kubernetes Application Network member. </param>
         /// <returns> A new <see cref="Models.AppLinkConnectivityProfile"/> instance for mocking. </returns>
-        public static AppLinkConnectivityProfile AppLinkConnectivityProfile(AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default, ResourceIdentifier privateConnectSubnetResourceId = default)
+        public static AppLinkConnectivityProfile AppLinkConnectivityProfile(AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default, ResourceIdentifier privateConnectSubnetResourceId = default, string network = default)
         {
-            return new AppLinkConnectivityProfile(eastWestGatewayVisibility is null ? default : new EastWestGatewayProfile(eastWestGatewayVisibility.GetValueOrDefault(), default), privateConnectSubnetResourceId is null ? default : new PrivateConnectProfile(privateConnectSubnetResourceId, default), default);
+            return new AppLinkConnectivityProfile(eastWestGatewayVisibility is null ? default : new EastWestGatewayProfile(eastWestGatewayVisibility.GetValueOrDefault(), default), privateConnectSubnetResourceId is null ? default : new PrivateConnectProfile(privateConnectSubnetResourceId, default), network, default);
         }
 
         /// <summary> The type used for update operations of the AppLinkMember. </summary>
@@ -124,13 +137,30 @@ namespace Azure.ResourceManager.AppNetwork.Models
             return new AppLinkMemberPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the AppLinkMember. </summary>
         /// <param name="upgradeProfile"> Upgrade profile. </param>
-        /// <param name="observabilityMetricsEndpoint"> Metrics endpoint URL. </param>
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <returns> A new <see cref="Models.AppLinkMemberUpdateProperties"/> instance for mocking. </returns>
-        public static AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default)
+        public static AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(UpgradeProfileUpdate upgradeProfile = default, ConnectivityProfileUpdate connectivityProfile = default)
         {
-            return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(observabilityMetricsEndpoint is null ? default : new MetricsProfile(observabilityMetricsEndpoint, default), default), connectivityProfile, default);
+            return new AppLinkMemberUpdateProperties(upgradeProfile, connectivityProfile, default);
+        }
+
+        /// <param name="mode"> Upgrade mode. </param>
+        /// <param name="fullyManagedUpgradeReleaseChannel"> Release channel. </param>
+        /// <param name="selfManagedUpgradeVersion"> Istio version. </param>
+        /// <returns> A new <see cref="Models.UpgradeProfileUpdate"/> instance for mocking. </returns>
+        public static UpgradeProfileUpdate UpgradeProfileUpdate(AppLinkUpgradeMode? mode = default, AppLinkUpgradeReleaseChannel? fullyManagedUpgradeReleaseChannel = default, string selfManagedUpgradeVersion = default)
+        {
+            return new UpgradeProfileUpdate(mode, fullyManagedUpgradeReleaseChannel is null ? default : new FullyManagedUpgradeProfileUpdate(fullyManagedUpgradeReleaseChannel, default), selfManagedUpgradeVersion is null ? default : new SelfManagedUpgradeProfileUpdate(selfManagedUpgradeVersion, default), default);
+        }
+
+        /// <param name="eastWestGatewayVisibility"> East-West gateway visibility. </param>
+        /// <param name="network"> The network name for an Azure Kubernetes Application Network member. </param>
+        /// <returns> A new <see cref="Models.ConnectivityProfileUpdate"/> instance for mocking. </returns>
+        public static ConnectivityProfileUpdate ConnectivityProfileUpdate(AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default, string network = default)
+        {
+            return new ConnectivityProfileUpdate(eastWestGatewayVisibility is null ? default : new EastWestGatewayProfileUpdate(eastWestGatewayVisibility, default), network, default);
         }
 
         /// <summary> AppLinkMember upgrade history. </summary>

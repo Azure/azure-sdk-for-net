@@ -23,33 +23,19 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AppLinkMemberUpdateProperties"/>. </summary>
         /// <param name="upgradeProfile"> Upgrade profile. </param>
-        /// <param name="observabilityProfile"> Observability profile. </param>
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkMemberUpdateProperties(AppLinkUpgradeProfile upgradeProfile, ObservabilityProfile observabilityProfile, AppLinkConnectivityProfile connectivityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkMemberUpdateProperties(UpgradeProfileUpdate upgradeProfile, ConnectivityProfileUpdate connectivityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradeProfile = upgradeProfile;
-            ObservabilityProfile = observabilityProfile;
             ConnectivityProfile = connectivityProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Upgrade profile. </summary>
-        public AppLinkUpgradeProfile UpgradeProfile { get; set; }
-
-        /// <summary> Observability profile. </summary>
-        internal ObservabilityProfile ObservabilityProfile { get; set; }
+        public UpgradeProfileUpdate UpgradeProfile { get; set; }
 
         /// <summary> Connectivity profile. </summary>
-        public AppLinkConnectivityProfile ConnectivityProfile { get; set; }
-
-        /// <summary> Metrics endpoint URL. </summary>
-        public string ObservabilityMetricsEndpoint
-        {
-            get
-            {
-                return ObservabilityProfile is null ? default : ObservabilityProfile.MetricsEndpoint;
-            }
-        }
+        public ConnectivityProfileUpdate ConnectivityProfile { get; set; }
     }
 }

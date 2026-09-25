@@ -25,11 +25,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AppLinkConnectivityProfile"/>. </summary>
         /// <param name="eastWestGateway"> East-West gateway profile. </param>
         /// <param name="privateConnect"> Private connect profile. </param>
+        /// <param name="network"> The network name for an Azure Kubernetes Application Network member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkConnectivityProfile(EastWestGatewayProfile eastWestGateway, PrivateConnectProfile privateConnect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkConnectivityProfile(EastWestGatewayProfile eastWestGateway, PrivateConnectProfile privateConnect, string network, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EastWestGateway = eastWestGateway;
             PrivateConnect = privateConnect;
+            Network = network;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +40,9 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <summary> Private connect profile. </summary>
         internal PrivateConnectProfile PrivateConnect { get; set; }
+
+        /// <summary> The network name for an Azure Kubernetes Application Network member. </summary>
+        public string Network { get; set; }
 
         /// <summary> East-West gateway visibility. </summary>
         public AppLinkEastWestGatewayVisibility? EastWestGatewayVisibility
