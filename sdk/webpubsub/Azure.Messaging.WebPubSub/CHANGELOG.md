@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed synchronous client access URI generation with Microsoft Entra ID authentication to include the requested initial groups.
+
 ### Other Changes
 
 - Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
