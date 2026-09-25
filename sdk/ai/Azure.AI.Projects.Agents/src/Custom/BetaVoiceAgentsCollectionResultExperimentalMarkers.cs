@@ -20,6 +20,22 @@ namespace Azure.AI.Projects.Agents._Beta
     public partial class Beta { }
 }
 
+namespace Azure.AI.Projects.Agents
+{
+    // InternalProjectsClient's generated _cachedBeta field is typed as the [Experimental]
+    // Beta sub-client, but the generator doesn't mark the field itself [Experimental] (unlike
+    // the analogous fields it generates directly in AgentAdministrationClient's customization).
+    // Re-declare the field here with the attribute instead of marking the whole class
+    // [Experimental], which would otherwise cascade into the public, non-experimental
+    // AgentAdministrationClient.
+    [CodeGenSuppress("_cachedBeta")]
+    internal partial class InternalProjectsClient
+    {
+        [Experimental("AAIP001")]
+        private Azure.AI.Projects.Agents._Beta.Beta _cachedBeta;
+    }
+}
+
 namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
     // These internal collection-result helper types construct instances of experimental

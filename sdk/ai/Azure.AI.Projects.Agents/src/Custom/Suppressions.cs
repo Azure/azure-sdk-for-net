@@ -3,6 +3,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 
+// AZC0012: The generated type name "Beta" is too generic and has a high chance of collision
+// with BCL types or types from other libraries. Suppressed rather than renamed to avoid a
+// breaking change to the public API surface.
+[assembly: SuppressMessage("Naming", "AZC0012:Avoid single word type names", Justification = "Beta is a namespaced sub-client accessor (Azure.AI.Projects.Agents._Beta.Beta); renaming it would be a breaking change.", Scope = "type", Target = "~T:Azure.AI.Projects.Agents._Beta.Beta")]
+
 // AZC0015: We return AsyncCollectionResult<T> and CollectionResult<T> instead of Pageable<T>.
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns ClientResult<AgentRecord>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetAgent(System.String,System.Threading.CancellationToken)")]
 [assembly: SuppressMessage("Usage", "AZC0015", Justification = "Returns Task<ClientResult<AgentRecord>>.", Scope = "member", Target = "~M:Azure.AI.Projects.Agents.AgentAdministrationClient.GetAgentAsync(System.String,System.Threading.CancellationToken)")]

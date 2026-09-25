@@ -25,7 +25,6 @@ namespace Azure.AI.Projects.Agents
             }
         };
         private readonly string _apiVersion;
-        private Beta _cachedBeta;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
