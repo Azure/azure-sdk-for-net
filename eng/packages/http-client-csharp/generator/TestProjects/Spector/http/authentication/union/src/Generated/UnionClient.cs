@@ -37,7 +37,7 @@ namespace Authentication.Union
         public UnionClient(Uri endpoint, TokenCredential credential, UnionClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options) => throw null;
 
         [Experimental("SCME0002")]
-        public UnionClient(UnionClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options) => throw null;
+        public UnionClient(UnionClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new global::Azure.Core.AzureKeyCredentialPolicy(new global::Azure.AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(settings?.CredentialProvider as global::Azure.Core.TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -28,8 +28,8 @@ namespace Azure.Generator.Visitors
     /// <item>ClientProvider: Changes the internal AuthenticationPolicy constructor parameter type to
     /// HttpPipelinePolicy (Azure clients use Azure.Core policy types instead of the base library's
     /// AuthenticationPolicy), and modifies the Settings constructor to chain to the appropriate
-    /// credential constructor (or to the internal constructor with null auth policy when no
-    /// credentials are configured).</item>
+    /// credential constructor, select an authentication policy at runtime for dual-auth clients,
+    /// or pass a null policy when the client has no authentication.</item>
     /// </list>
     /// </summary>
     internal class ClientSettingsVisitor : ScmLibraryVisitor
@@ -127,6 +127,7 @@ namespace Azure.Generator.Visitors
         private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor, ConstructorProvider? tokenCredCtor, ConstructorProvider? keyCredCtor)
         {
             var settingsParam = settingsCtor.Signature.Parameters[0];
+            ValueExpression? tokenCredentialArg = null;
 
             if (tokenCredCtor != null)
             {
@@ -134,15 +135,11 @@ namespace Azure.Generator.Visitors
 #pragma warning disable SCME0002
                 var credentialProviderAccess = settingsParam.NullConditional().Property(nameof(ClientSettings.CredentialProvider));
 #pragma warning restore SCME0002
-                var tokenCredentialArg = new AsExpression(credentialProviderAccess, TokenCredentialType);
-
-                BuildSettingsInitializer(settingsCtor, tokenCredCtor, tokenCredentialArg, TokenCredentialType);
+                tokenCredentialArg = new AsExpression(credentialProviderAccess, TokenCredentialType);
             }
-            else if (keyCredCtor != null)
+
+            if (keyCredCtor != null)
             {
-                // Key-credential only library.
-                // Build a ternary: check CredentialSource == "apikeycredential" (case-insensitive),
-                // construct AzureKeyCredential if true, otherwise pass null.
 #pragma warning disable SCME0002
                 var credentialAccess = settingsParam.NullConditional().Property(nameof(ClientSettings.Credential));
                 var credentialSourceProp = credentialAccess.NullConditional().Property(nameof(CredentialSettings.CredentialSource));
@@ -158,6 +155,18 @@ namespace Azure.Generator.Visitors
 #pragma warning restore SCME0002
                 var newKeyCredential = New.Instance(AzureKeyCredentialType, [keyAccess]);
 
+                if (tokenCredCtor != null)
+                {
+                    var policyArg = new TernaryConditionalExpression(
+                        stringEqualsCall,
+                        CreateSettingsPolicy(keyCredCtor, newKeyCredential),
+                        CreateSettingsPolicy(tokenCredCtor, tokenCredentialArg!));
+                    var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
+                    settingsCtor.Signature.Update(initializer: new ConstructorInitializer(
+                        false, [policyArg, .. existingArgs.Skip(1)]));
+                    return;
+                }
+
                 var keyCredentialArg = new TernaryConditionalExpression(
                     stringEqualsCall,
                     newKeyCredential,
@@ -165,6 +174,18 @@ namespace Azure.Generator.Visitors
 
                 BuildSettingsInitializer(settingsCtor, keyCredCtor, keyCredentialArg, AzureKeyCredentialType);
             }
+            else if (tokenCredCtor != null)
+            {
+                BuildSettingsInitializer(settingsCtor, tokenCredCtor, tokenCredentialArg!, TokenCredentialType);
+            }
+        }
+
+        private static ValueExpression CreateSettingsPolicy(ConstructorProvider credentialCtor, ValueExpression credential)
+        {
+            // Reuse the credential constructor's policy so headers, prefixes and scopes stay identical.
+            var expression = credentialCtor.Signature.Initializer!.Arguments[0];
+            var policy = (NewInstanceExpression)(expression is ScopedApi scoped ? scoped.Original : expression);
+            return policy with { Parameters = [credential, .. policy.Parameters.Skip(1)] };
         }
 
         // Rebuilds the Settings constructor's chained initializer to target the public credential
