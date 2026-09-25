@@ -86,9 +86,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceConversation is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceConversation))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceConversation is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResponse is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceResponse))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResponse is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResult is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceResult))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResult is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsSkill))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.

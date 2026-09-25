@@ -68,7 +68,7 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultVoiceResponse)result).LastId;
+                nextToken = ((AgentsPagedResultVoiceResult)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultVoiceResponse)page).LastId;
+            string nextPage = ((AgentsPagedResultVoiceResult)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));

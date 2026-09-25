@@ -11,64 +11,64 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
-    internal partial class AgentsPagedResultVoiceResponse : IJsonModel<AgentsPagedResultVoiceResponse>
+    internal partial class AgentsPagedResultVoiceResult : IJsonModel<AgentsPagedResultVoiceResult>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResponse"/> for deserialization. </summary>
-        internal AgentsPagedResultVoiceResponse()
+        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResult"/> for deserialization. </summary>
+        internal AgentsPagedResultVoiceResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgentsPagedResultVoiceResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentsPagedResultVoiceResponse(document.RootElement, options);
+                        return DeserializeAgentsPagedResultVoiceResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentsPagedResultVoiceResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgentsPagedResultVoiceResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceResponse IPersistableModel<AgentsPagedResultVoiceResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgentsPagedResultVoiceResult IPersistableModel<AgentsPagedResultVoiceResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentsPagedResultVoiceResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgentsPagedResultVoiceResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultVoiceResponse"/> from. </param>
-        public static explicit operator AgentsPagedResultVoiceResponse(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="AgentsPagedResultVoiceResult"/> from. </param>
+        public static explicit operator AgentsPagedResultVoiceResult(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAgentsPagedResultVoiceResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAgentsPagedResultVoiceResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentsPagedResultVoiceResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgentsPagedResultVoiceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,14 +79,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
-            foreach (VoiceResponse item in Data)
+            foreach (VoiceResult item in Data)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -122,30 +122,30 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentsPagedResultVoiceResponse IJsonModel<AgentsPagedResultVoiceResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgentsPagedResultVoiceResult IJsonModel<AgentsPagedResultVoiceResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentsPagedResultVoiceResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgentsPagedResultVoiceResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultVoiceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentsPagedResultVoiceResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsPagedResultVoiceResponse(document.RootElement, options);
+            return DeserializeAgentsPagedResultVoiceResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentsPagedResultVoiceResponse DeserializeAgentsPagedResultVoiceResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgentsPagedResultVoiceResult DeserializeAgentsPagedResultVoiceResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<VoiceResponse> data = default;
+            IList<VoiceResult> data = default;
             string firstId = default;
             string lastId = default;
             bool hasMore = default;
@@ -154,10 +154,10 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("data"u8))
                 {
-                    List<VoiceResponse> array = new List<VoiceResponse>();
+                    List<VoiceResult> array = new List<VoiceResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VoiceResponse.DeserializeVoiceResponse(item, options));
+                        array.Add(VoiceResult.DeserializeVoiceResult(item, options));
                     }
                     data = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultVoiceResponse(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultVoiceResult(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

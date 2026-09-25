@@ -11,27 +11,27 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The response data for a requested list of items. </summary>
     [Experimental("AAIP001")]
-    internal partial class AgentsPagedResultVoiceResponse
+    internal partial class AgentsPagedResultVoiceResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResult"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        internal AgentsPagedResultVoiceResponse(IEnumerable<VoiceResponse> data, bool hasMore)
+        internal AgentsPagedResultVoiceResult(IEnumerable<VoiceResult> data, bool hasMore)
         {
             Data = data.ToList();
             HasMore = hasMore;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentsPagedResultVoiceResult"/>. </summary>
         /// <param name="data"> The requested list of items. </param>
         /// <param name="firstId"> The first ID represented in this list. </param>
         /// <param name="lastId"> The last ID represented in this list. </param>
         /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsPagedResultVoiceResponse(IList<VoiceResponse> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentsPagedResultVoiceResult(IList<VoiceResult> data, string firstId, string lastId, bool hasMore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             FirstId = firstId;
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The requested list of items. </summary>
-        public IList<VoiceResponse> Data { get; }
+        public IList<VoiceResult> Data { get; }
 
         /// <summary> The first ID represented in this list. </summary>
         public string FirstId { get; }

@@ -13,7 +13,7 @@ using Azure.AI.Projects.Agents;
 namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
     [Experimental("AAIP001")]
-    internal partial class BetaVoiceAgentsConversationsGetAgentConversationResponsesAsyncCollectionResultOfT : AsyncCollectionResult<VoiceResponse>
+    internal partial class BetaVoiceAgentsConversationsGetAgentConversationResponsesAsyncCollectionResultOfT : AsyncCollectionResult<VoiceResult>
     {
         private readonly BetaVoiceAgentsConversations _client;
         private readonly string _agentName;
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
                 ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
                 yield return result;
 
-                nextToken = ((AgentsPagedResultVoiceResponse)result).LastId;
+                nextToken = ((AgentsPagedResultVoiceResult)result).LastId;
                 if (string.IsNullOrEmpty(nextToken))
                 {
                     yield break;
@@ -84,7 +84,7 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            string nextPage = ((AgentsPagedResultVoiceResponse)page).LastId;
+            string nextPage = ((AgentsPagedResultVoiceResult)page).LastId;
             if (!string.IsNullOrEmpty(nextPage))
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage));
@@ -98,9 +98,9 @@ namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<VoiceResponse> GetValuesFromPageAsync(ClientResult page)
+        protected override async IAsyncEnumerable<VoiceResult> GetValuesFromPageAsync(ClientResult page)
         {
-            foreach (VoiceResponse item in ((AgentsPagedResultVoiceResponse)page).Data)
+            foreach (VoiceResult item in ((AgentsPagedResultVoiceResult)page).Data)
             {
                 yield return item;
                 await Task.Yield();
