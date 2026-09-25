@@ -17,6 +17,23 @@ namespace Azure.Security.KeyVault.Administration
         public string RoleName { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultRoleScope RoleScope { get { throw null; } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EkmConnectivityMode : System.IEquatable<Azure.Security.KeyVault.Administration.EkmConnectivityMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EkmConnectivityMode(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.EkmConnectivityMode PrivateEndpoint { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.EkmConnectivityMode Public { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.EkmConnectivityMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.EkmConnectivityMode left, Azure.Security.KeyVault.Administration.EkmConnectivityMode right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.EkmConnectivityMode (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.EkmConnectivityMode? (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.EkmConnectivityMode left, Azure.Security.KeyVault.Administration.EkmConnectivityMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class EkmProxyClientCertificateInfo : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>
     {
         internal EkmProxyClientCertificateInfo() { }
@@ -113,7 +130,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2026_01_01_Preview) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -125,6 +142,7 @@ namespace Azure.Security.KeyVault.Administration
             V7_6 = 5,
             V2025_07_01 = 6,
             V2026_01_01_Preview = 7,
+            V2026_07_01_Preview = 8,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -134,7 +152,11 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo EkmProxyClientCertificateInfo(System.Collections.Generic.IEnumerable<System.BinaryData> caCertificates = null, string subjectCommonName = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.EkmProxyInfo EkmProxyInfo(string apiVersion = null, string proxyVendor = null, string proxyName = null, string ekmVendor = null, string ekmProduct = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.GetSettingsResult GetSettingsResult(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultSetting> settings = null) { throw null; }
-        public static Azure.Security.KeyVault.Administration.KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = null, string pathPrefix = null, System.Collections.Generic.IEnumerable<System.BinaryData> serverCaCertificates = null, string serverSubjectCommonName = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = null, string pathPrefix = null, System.Collections.Generic.IEnumerable<System.BinaryData> serverCaCertificates = null, string serverSubjectCommonName = null, Azure.Security.KeyVault.Administration.EkmConnectivityMode? connectivityMode = default(Azure.Security.KeyVault.Administration.EkmConnectivityMode?)) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint KeyVaultEkmPrivateEndpoint(string name = null, string location = null, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState? provisioningState = default(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState?), Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties properties = null, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState privateLinkServiceConnectionState = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState KeyVaultEkmPrivateEndpointConnectionState(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus? status = default(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation KeyVaultEkmPrivateEndpointOperation(string jobId = null, string privateEndpointName = null, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType? operationType = default(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType?), Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus? status = default(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus?), string statusDetails = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), string errorCode = null, string errorMessage = null) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties KeyVaultEkmPrivateEndpointProperties(string privateLinkServiceAlias = null, string privateLinkServiceConnectionName = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultPermission KeyVaultPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultDataAction> dataActions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultDataAction> notDataActions = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(Azure.Security.KeyVault.Administration.KeyVaultRoleScope? scope = default(Azure.Security.KeyVault.Administration.KeyVaultRoleScope?), string roleDefinitionId = null, string principalId = null) { throw null; }
@@ -249,12 +271,22 @@ namespace Azure.Security.KeyVault.Administration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyInfo>> CheckEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> CreateEkmConnection(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> CreateEkmConnectionAsync(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation> CreateEkmPrivateEndpoint(Azure.WaitUntil waitUntil, string privateEndpointName, string privateLinkServiceAlias, string requestMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>> CreateEkmPrivateEndpointAsync(Azure.WaitUntil waitUntil, string privateEndpointName, string privateLinkServiceAlias, string requestMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> DeleteEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> DeleteEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation> DeleteEkmPrivateEndpoint(Azure.WaitUntil waitUntil, string privateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>> DeleteEkmPrivateEndpointAsync(Azure.WaitUntil waitUntil, string privateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo> GetEkmCertificate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo>> GetEkmCertificateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> GetEkmConnection(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> GetEkmConnectionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint> GetEkmPrivateEndpoint(string privateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>> GetEkmPrivateEndpointAsync(string privateEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation> GetEkmPrivateEndpointOperationStatus(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>> GetEkmPrivateEndpointOperationStatusAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>> GetEkmPrivateEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>>> GetEkmPrivateEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection> UpdateEkmConnection(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>> UpdateEkmConnectionAsync(Azure.Security.KeyVault.Administration.KeyVaultEkmConnection ekmConnection, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -277,6 +309,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultEkmConnection : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>
     {
         public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<byte[]> serverCaCertificates) { }
+        public Azure.Security.KeyVault.Administration.EkmConnectivityMode? ConnectivityMode { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public string PathPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> ServerCaCertificates { get { throw null; } }
@@ -292,6 +325,154 @@ namespace Azure.Security.KeyVault.Administration
         Azure.Security.KeyVault.Administration.KeyVaultEkmConnection System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KeyVaultEkmPrivateEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>
+    {
+        internal KeyVaultEkmPrivateEndpoint() { }
+        public string Location { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties Properties { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class KeyVaultEkmPrivateEndpointConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>
+    {
+        internal KeyVaultEkmPrivateEndpointConnectionState() { }
+        public string ActionsRequired { get { throw null; } }
+        public string Description { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus? Status { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultEkmPrivateEndpointConnectionStatus : System.IEquatable<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultEkmPrivateEndpointConnectionStatus(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus Approved { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus Disconnected { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus Pending { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus Rejected { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointConnectionStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KeyVaultEkmPrivateEndpointOperation : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>
+    {
+        internal KeyVaultEkmPrivateEndpointOperation() { }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public string JobId { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType? OperationType { get { throw null; } }
+        public string PrivateEndpointName { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
+        public Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus? Status { get { throw null; } }
+        public string StatusDetails { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static explicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation (Azure.Response response) { throw null; }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultEkmPrivateEndpointOperationStatus : System.IEquatable<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultEkmPrivateEndpointOperationStatus(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus Canceled { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus Failed { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus NotStarted { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus Running { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultEkmPrivateEndpointOperationType : System.IEquatable<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultEkmPrivateEndpointOperationType(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType Create { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType Delete { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType? (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointOperationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class KeyVaultEkmPrivateEndpointProperties : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>
+    {
+        internal KeyVaultEkmPrivateEndpointProperties() { }
+        public string PrivateLinkServiceAlias { get { throw null; } }
+        public string PrivateLinkServiceConnectionName { get { throw null; } }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyVaultEkmPrivateEndpointProvisioningState : System.IEquatable<Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyVaultEkmPrivateEndpointProvisioningState(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState Deleting { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState Failed { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState Succeeded { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState left, Azure.Security.KeyVault.Administration.KeyVaultEkmPrivateEndpointProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KeyVaultPermission : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultPermission>
     {

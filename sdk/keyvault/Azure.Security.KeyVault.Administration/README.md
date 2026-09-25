@@ -203,6 +203,12 @@ The following section provides several code snippets using the `client` created 
   * [Getting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#getting-an-ekm-connection)
   * [Checking an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#checking-an-ekm-connection)
   * [Deleting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#deleting-an-ekm-connection)
+* EKM proxy private endpoints
+  * [Creating an EKM proxy private endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointSync.md#creating-an-ekm-proxy-private-endpoint)
+  * [Getting an EKM proxy private endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointSync.md#getting-an-ekm-proxy-private-endpoint)
+  * [Listing EKM proxy private endpoints](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointSync.md#listing-ekm-proxy-private-endpoints)
+  * [Creating a private EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointSync.md#creating-a-private-ekm-connection)
+  * [Deleting an EKM proxy private endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointSync.md#deleting-an-ekm-proxy-private-endpoint)
 
 ### Async examples
 
@@ -222,6 +228,12 @@ The following section provides several code snippets using the `client` created 
   * [Updating an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#updating-an-ekm-connection)
   * [Retrieving the EKM client certificate](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#retrieving-the-ekm-client-certificate)
   * [Deleting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#deleting-an-ekm-connection)
+* EKM proxy private endpoints
+  * [Creating an EKM proxy private endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointAsync.md#creating-an-ekm-proxy-private-endpoint)
+  * [Getting an EKM proxy private endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointAsync.md#getting-an-ekm-proxy-private-endpoint)
+  * [Listing EKM proxy private endpoints](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointAsync.md#listing-ekm-proxy-private-endpoints)
+  * [Creating a private EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointAsync.md#creating-a-private-ekm-connection)
+  * [Deleting an EKM proxy private endpoint](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample6_EkmPrivateEndpointAsync.md#deleting-an-ekm-proxy-private-endpoint)
 
 ## Troubleshooting
 

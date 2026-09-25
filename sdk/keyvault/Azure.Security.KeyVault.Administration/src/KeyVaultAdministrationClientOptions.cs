@@ -95,6 +95,11 @@ namespace Azure.Security.KeyVault.Administration
             /// The Key Vault API version 2026-01-01-preview.
             /// </summary>
             V2026_01_01_Preview = 7,
+
+            /// <summary>
+            /// The Key Vault API version 2026-07-01-preview.
+            /// </summary>
+            V2026_07_01_Preview = 8,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -114,6 +119,7 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_6 => "7.6",
                 ServiceVersion.V2025_07_01 => "2025-07-01",
                 ServiceVersion.V2026_01_01_Preview => "2026-01-01-preview",
+                ServiceVersion.V2026_07_01_Preview => "2026-07-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(Version), Version, null)
             };
         }
@@ -143,6 +149,9 @@ namespace Azure.Security.KeyVault.Administration
                     return true;
                 case "2026-01-01-preview":
                     serviceVersion = ServiceVersion.V2026_01_01_Preview;
+                    return true;
+                case "2026-07-01-preview":
+                    serviceVersion = ServiceVersion.V2026_07_01_Preview;
                     return true;
                 default:
                     return false;

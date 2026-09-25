@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -279,6 +280,228 @@ namespace Azure.Security.KeyVault.Administration
             {
                 Response result = await DeleteEkmConnectionAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
                 return Response.FromValue((KeyVaultEkmConnection)result, result);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Gets an existing External Key Manager (EKM) proxy private endpoint. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="privateEndpointName">The name of the private endpoint to get.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="privateEndpointName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="privateEndpointName"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual Response<KeyVaultEkmPrivateEndpoint> GetEkmPrivateEndpoint(string privateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(GetEkmPrivateEndpoint)}");
+            scope.Start();
+            try
+            {
+                Response result = GetEkmPrivateEndpoint(privateEndpointName, cancellationToken.ToRequestContext());
+                return Response.FromValue((KeyVaultEkmPrivateEndpoint)result, result);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Gets an existing External Key Manager (EKM) proxy private endpoint. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="privateEndpointName">The name of the private endpoint to get.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="privateEndpointName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="privateEndpointName"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual async Task<Response<KeyVaultEkmPrivateEndpoint>> GetEkmPrivateEndpointAsync(string privateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(GetEkmPrivateEndpoint)}");
+            scope.Start();
+            try
+            {
+                Response result = await GetEkmPrivateEndpointAsync(privateEndpointName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return Response.FromValue((KeyVaultEkmPrivateEndpoint)result, result);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Lists all External Key Manager (EKM) proxy private endpoints on the pool. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual Response<IReadOnlyList<KeyVaultEkmPrivateEndpoint>> GetEkmPrivateEndpoints(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(GetEkmPrivateEndpoints)}");
+            scope.Start();
+            try
+            {
+                Response result = GetEkmPrivateEndpoints(cancellationToken.ToRequestContext());
+                return Response.FromValue(((EkmPrivateEndpointListResult)result).Value, result);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Lists all External Key Manager (EKM) proxy private endpoints on the pool. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual async Task<Response<IReadOnlyList<KeyVaultEkmPrivateEndpoint>>> GetEkmPrivateEndpointsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(GetEkmPrivateEndpoints)}");
+            scope.Start();
+            try
+            {
+                Response result = await GetEkmPrivateEndpointsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return Response.FromValue(((EkmPrivateEndpointListResult)result).Value, result);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Creates an External Key Manager (EKM) proxy private endpoint. A pool may have up to two private endpoints. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
+        /// <param name="privateEndpointName">The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens.</param>
+        /// <param name="privateLinkServiceAlias">Alias of the Private Link Service that the private endpoint connects to.</param>
+        /// <param name="requestMessage">An optional message shown to the Private Link Service owner when approving the private endpoint connection.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="privateEndpointName"/> or <paramref name="privateLinkServiceAlias"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="privateEndpointName"/> or <paramref name="privateLinkServiceAlias"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual Operation<KeyVaultEkmPrivateEndpointOperation> CreateEkmPrivateEndpoint(WaitUntil waitUntil, string privateEndpointName, string privateLinkServiceAlias, string requestMessage = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateLinkServiceAlias, nameof(privateLinkServiceAlias));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(CreateEkmPrivateEndpoint)}");
+            scope.Start();
+            try
+            {
+                EkmPrivateEndpointCreateParameters parameters = new EkmPrivateEndpointCreateParameters(privateLinkServiceAlias) { RequestMessage = requestMessage };
+                return CreateEkmPrivateEndpoint(waitUntil, privateEndpointName, parameters, cancellationToken);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Creates an External Key Manager (EKM) proxy private endpoint. A pool may have up to two private endpoints. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
+        /// <param name="privateEndpointName">The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens.</param>
+        /// <param name="privateLinkServiceAlias">Alias of the Private Link Service that the private endpoint connects to.</param>
+        /// <param name="requestMessage">An optional message shown to the Private Link Service owner when approving the private endpoint connection.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="privateEndpointName"/> or <paramref name="privateLinkServiceAlias"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="privateEndpointName"/> or <paramref name="privateLinkServiceAlias"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual async Task<Operation<KeyVaultEkmPrivateEndpointOperation>> CreateEkmPrivateEndpointAsync(WaitUntil waitUntil, string privateEndpointName, string privateLinkServiceAlias, string requestMessage = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            Argument.AssertNotNullOrEmpty(privateLinkServiceAlias, nameof(privateLinkServiceAlias));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(CreateEkmPrivateEndpoint)}");
+            scope.Start();
+            try
+            {
+                EkmPrivateEndpointCreateParameters parameters = new EkmPrivateEndpointCreateParameters(privateLinkServiceAlias) { RequestMessage = requestMessage };
+                return await CreateEkmPrivateEndpointAsync(waitUntil, privateEndpointName, parameters, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Deletes an existing External Key Manager (EKM) proxy private endpoint. The operation is rejected while an EKM connection still references the private endpoint. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
+        /// <param name="privateEndpointName">The name of the private endpoint to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="privateEndpointName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="privateEndpointName"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual Operation<KeyVaultEkmPrivateEndpointOperation> DeleteEkmPrivateEndpoint(WaitUntil waitUntil, string privateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(DeleteEkmPrivateEndpoint)}");
+            scope.Start();
+            try
+            {
+                Operation<BinaryData> result = DeleteEkmPrivateEndpoint(waitUntil, privateEndpointName, cancellationToken.ToRequestContext());
+                return ProtocolOperationHelpers.Convert(result, response => (KeyVaultEkmPrivateEndpointOperation)response, ClientDiagnostics, $"{nameof(KeyVaultEkmClient)}.{nameof(DeleteEkmPrivateEndpoint)}");
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Deletes an existing External Key Manager (EKM) proxy private endpoint. The operation is rejected while an EKM connection still references the private endpoint. This operation requires <c>ekm/write</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="waitUntil"><see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation.</param>
+        /// <param name="privateEndpointName">The name of the private endpoint to delete.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="privateEndpointName"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="privateEndpointName"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual async Task<Operation<KeyVaultEkmPrivateEndpointOperation>> DeleteEkmPrivateEndpointAsync(WaitUntil waitUntil, string privateEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointName, nameof(privateEndpointName));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(DeleteEkmPrivateEndpoint)}");
+            scope.Start();
+            try
+            {
+                Operation<BinaryData> result = await DeleteEkmPrivateEndpointAsync(waitUntil, privateEndpointName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return ProtocolOperationHelpers.Convert(result, response => (KeyVaultEkmPrivateEndpointOperation)response, ClientDiagnostics, $"{nameof(KeyVaultEkmClient)}.{nameof(DeleteEkmPrivateEndpoint)}");
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Gets the status of an External Key Manager (EKM) proxy private endpoint create or delete operation. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="jobId">The identifier of the private endpoint operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="jobId"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual Response<KeyVaultEkmPrivateEndpointOperation> GetEkmPrivateEndpointOperationStatus(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(GetEkmPrivateEndpointOperationStatus)}");
+            scope.Start();
+            try
+            {
+                Response result = GetEkmPrivateEndpointOperationStatus(jobId, cancellationToken.ToRequestContext());
+                return Response.FromValue((KeyVaultEkmPrivateEndpointOperation)result, result);
+            }
+            catch (Exception ex) { scope.Failed(ex); throw; }
+        }
+
+        /// <summary>
+        /// Gets the status of an External Key Manager (EKM) proxy private endpoint create or delete operation. This operation requires <c>ekm/read</c> permission.
+        /// Only available with service version <see cref="KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
+        /// </summary>
+        /// <param name="jobId">The identifier of the private endpoint operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="jobId"/> is an empty string.</exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code.</exception>
+        public virtual async Task<Response<KeyVaultEkmPrivateEndpointOperation>> GetEkmPrivateEndpointOperationStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(KeyVaultEkmClient)}.{nameof(GetEkmPrivateEndpointOperationStatus)}");
+            scope.Start();
+            try
+            {
+                Response result = await GetEkmPrivateEndpointOperationStatusAsync(jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return Response.FromValue((KeyVaultEkmPrivateEndpointOperation)result, result);
             }
             catch (Exception ex) { scope.Failed(ex); throw; }
         }
