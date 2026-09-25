@@ -541,6 +541,9 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdate MaintenanceUpdate(Azure.ResourceManager.Maintenance.Models.MaintenanceScope? maintenanceScope = default(Azure.ResourceManager.Maintenance.Models.MaintenanceScope?), Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType? impactType = default(Azure.ResourceManager.Maintenance.Models.MaintenanceImpactType?), Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? status = default(Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus?), int? impactDurationInSec = default(int?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceVmTagSettings MaintenanceVmTagSettings(System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> tags = null, Azure.ResourceManager.Maintenance.Models.MaintenanceVmTagOperator? filterOperator = default(Azure.ResourceManager.Maintenance.Models.MaintenanceVmTagOperator?)) { throw null; }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceWindowsPatchSettings MaintenanceWindowsPatchSettings(System.Collections.Generic.IEnumerable<string> kbNumbersToExclude = null, System.Collections.Generic.IEnumerable<string> kbNumbersToInclude = null, System.Collections.Generic.IEnumerable<string> classificationsToInclude = null, bool? isExcludeKbsRebootRequired = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails ScheduledEventsAcknowledgeErrorDetails(string target = null, string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError ScheduledEventsListAcknowledgeError(Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails error = null) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails ScheduledEventsListAcknowledgeErrorDetails(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails> details = null) { throw null; }
     }
     public partial class MaintenanceConfigurationAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>
     {
@@ -820,5 +823,51 @@ namespace Azure.ResourceManager.Maintenance.Models
         public string ResourceParentName { get { throw null; } }
         public string ResourceParentType { get { throw null; } }
         public string ResourceType { get { throw null; } }
+    }
+    public partial class ScheduledEventsAcknowledgeErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>
+    {
+        internal ScheduledEventsAcknowledgeErrorDetails() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Target { get { throw null; } }
+        protected virtual Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScheduledEventsListAcknowledgeError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>
+    {
+        internal ScheduledEventsListAcknowledgeError() { }
+        public Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails Error { get { throw null; } }
+        protected virtual Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScheduledEventsListAcknowledgeErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>
+    {
+        internal ScheduledEventsListAcknowledgeErrorDetails() { }
+        public string Code { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Maintenance.Models.ScheduledEventsAcknowledgeErrorDetails> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maintenance.Models.ScheduledEventsListAcknowledgeErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
