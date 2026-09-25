@@ -115,6 +115,62 @@ Describe "Get-TestAssemblyWeights" {
     $parameters.Keys | Should -Contain "RetryBaseDelaySeconds"
   }
 
+  It "includes HTTP response diagnostics when an Analytics query fails" {
+    $socket = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 0)
+    $socket.Start()
+    $port = ([System.Net.IPEndPoint]$socket.LocalEndpoint).Port
+    $socket.Stop()
+
+    $readyFile = Join-Path $TestDrive "listener-ready"
+    $server = Start-ThreadJob -ArgumentList $port, $readyFile -ScriptBlock {
+      param($Port, $ReadyFile)
+
+      $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, $Port)
+      $listener.Start()
+      Set-Content -Path $ReadyFile -Value "ready"
+
+      try {
+        $body = '{"message":"Analytics access denied"}'
+        $response = "HTTP/1.1 403 Forbidden`r`n" +
+          "X-TFS-Session: test-session`r`n" +
+          "Content-Type: application/json`r`n" +
+          "Content-Length: $([System.Text.Encoding]::UTF8.GetByteCount($body))`r`n" +
+          "Connection: close`r`n`r`n$body"
+        $bytes = [System.Text.Encoding]::UTF8.GetBytes($response)
+        1..2 | ForEach-Object {
+          $client = $listener.AcceptTcpClient()
+          $stream = $client.GetStream()
+          $stream.Write($bytes, 0, $bytes.Length)
+          $stream.Dispose()
+          $client.Dispose()
+        }
+      }
+      finally {
+        $listener.Stop()
+      }
+    }
+
+    try {
+      while (-not (Test-Path $readyFile)) {
+        Start-Sleep -Milliseconds 25
+      }
+
+      {
+        Invoke-TestResultsQueries `
+          -Queries @([PSCustomObject]@{ Batch = 1; Url = "http://127.0.0.1:$port/" }) `
+          -AccessToken "token" `
+          -ThrottleLimit 1 `
+          -WindowLabel "test" `
+          -MaxRetryAttempts 1 `
+          -RetryBaseDelaySeconds 1
+      } | Should -Throw "*HTTP status: 403 Forbidden*X-TFS-Session: test-session*Analytics access denied*"
+    }
+    finally {
+      Stop-Job $server -ErrorAction SilentlyContinue
+      Remove-Job $server -Force -ErrorAction SilentlyContinue
+    }
+  }
+
   It "requires one observation for a low assembly count" {
     $durations = @{
       "assembly-1.dll" = [System.Collections.Generic.List[int]]@(10)
