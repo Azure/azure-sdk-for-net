@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// <summary>
 /// Extension methods for sequences of <see cref="Item"/> instances.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class ItemExtensions
 {
     /// <summary>

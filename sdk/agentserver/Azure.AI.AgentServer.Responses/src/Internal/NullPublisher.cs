@@ -21,6 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// TTL-based eviction) for modes where the events will never be replayed.
 /// </para>
 /// </remarks>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class NullPublisher : IAsyncObserver<ResponseStreamEvent>
 {
     private long _nextSequenceNumber;
@@ -30,7 +31,7 @@ internal sealed class NullPublisher : IAsyncObserver<ResponseStreamEvent>
     /// </summary>
     public ValueTask OnNextAsync(ResponseStreamEvent value)
     {
-        value.SequenceNumber = _nextSequenceNumber++;
+        value.SequenceNumber = (int)_nextSequenceNumber++;
         return ValueTask.CompletedTask;
     }
 

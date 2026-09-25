@@ -16,8 +16,8 @@ public class TextContentAnnotationTests
         return (stream, msg);
     }
 
-    private static Annotation CreateTestAnnotation()
-        => new UrlCitationBody(new Uri("https://example.com"), 0, 10, "Example");
+    private static ResponseMessageAnnotation CreateTestAnnotation()
+        => new UriCitationMessageAnnotation(new Uri("https://example.com"), 0, 10, "Example");
 
     [Test]
     public void EmitAnnotationAdded_ReturnsAnnotationAddedEvent()

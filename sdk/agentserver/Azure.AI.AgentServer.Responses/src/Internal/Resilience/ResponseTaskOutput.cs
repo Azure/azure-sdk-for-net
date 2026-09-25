@@ -12,6 +12,7 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// <c>TaskRun</c> can observe the terminal disposition. Serialized by Core via
 /// <see cref="System.Text.Json.JsonSerializer"/>, so it is a plain POCO.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseTaskOutput
 {
     /// <summary>Initializes a new instance of the <see cref="ResponseTaskOutput"/> class.</summary>

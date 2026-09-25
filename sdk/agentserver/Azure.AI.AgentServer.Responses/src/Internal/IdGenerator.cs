@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Generates unique identifiers with embedded partition keys in the format
 /// <c>{prefix}_{partitionKey}{entropy}</c> (50-character body).
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class IdGenerator
 {
     private const int PartitionKeyHexLength = 16;
@@ -235,41 +236,40 @@ internal static class IdGenerator
     // ─── Item dispatch ──────────────────────────────────────────────
 
     /// <summary>
-    /// Generates a correctly prefixed ID for the given <see cref="Models.Item"/> subtype.
+    /// Generates a correctly prefixed ID for the given <see cref="Item"/> subtype.
     /// Each item type receives a distinct prefix so IDs are self-describing.
     /// </summary>
     /// <param name="item">The input item whose type determines the ID prefix.</param>
     /// <param name="partitionKeyHint">Optional existing ID for partition key propagation.</param>
     /// <returns>A new ID with the appropriate type-specific prefix, or <c>null</c> for non-convertible items.</returns>
-    public static string? NewItemId(Models.Item item, string? partitionKeyHint = "")
+    public static string? NewItemId(Item item, string? partitionKeyHint = "")
     {
         return item switch
         {
-            Models.ItemMessage => NewMessageItemId(partitionKeyHint),
-            Models.ItemOutputMessage => NewOutputMessageItemId(partitionKeyHint),
-            Models.ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
-            Models.FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
-            Models.ItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
-            Models.ItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
-            Models.ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),
-            Models.ComputerCallOutputItemParam => NewComputerCallOutputItemId(partitionKeyHint),
-            Models.ItemFileSearchToolCall => NewFileSearchCallItemId(partitionKeyHint),
-            Models.ItemWebSearchToolCall => NewWebSearchCallItemId(partitionKeyHint),
-            Models.ItemImageGenToolCall => NewImageGenCallItemId(partitionKeyHint),
-            Models.ItemCodeInterpreterToolCall => NewCodeInterpreterCallItemId(partitionKeyHint),
-            Models.ItemLocalShellToolCall => NewLocalShellCallItemId(partitionKeyHint),
-            Models.ItemLocalShellToolCallOutput => NewLocalShellCallOutputItemId(partitionKeyHint),
-            Models.FunctionShellCallItemParam => NewFunctionShellCallItemId(partitionKeyHint),
-            Models.FunctionShellCallOutputItemParam => NewFunctionShellCallOutputItemId(partitionKeyHint),
-            Models.ApplyPatchToolCallItemParam => NewApplyPatchCallItemId(partitionKeyHint),
-            Models.ApplyPatchToolCallOutputItemParam => NewApplyPatchCallOutputItemId(partitionKeyHint),
-            Models.ItemMcpListTools => NewMcpListToolsItemId(partitionKeyHint),
-            Models.ItemMcpToolCall => NewMcpCallItemId(partitionKeyHint),
-            Models.ItemMcpApprovalRequest => NewMcpApprovalRequestItemId(partitionKeyHint),
-            Models.MCPApprovalResponse => NewMcpApprovalResponseItemId(partitionKeyHint),
-            Models.ItemReasoningItem => NewReasoningItemId(partitionKeyHint),
-            Models.CompactionSummaryItemParam => NewCompactionItemId(partitionKeyHint),
-            Models.ItemReferenceParam => null, // resolved externally
+            MessageResponseItem message => message.Role == MessageRole.Assistant
+                ? NewOutputMessageItemId(partitionKeyHint)
+                : NewMessageItemId(partitionKeyHint),
+            ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
+            FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
+            Models.OutputItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),
+            Models.OutputItemCustomToolCallOutput => NewCustomToolCallOutputItemId(partitionKeyHint),
+            ItemComputerToolCall => NewComputerCallItemId(partitionKeyHint),
+            ComputerCallOutputItemParam => NewComputerCallOutputItemId(partitionKeyHint),
+            ItemFileSearchToolCall => NewFileSearchCallItemId(partitionKeyHint),
+            ItemWebSearchToolCall => NewWebSearchCallItemId(partitionKeyHint),
+            ItemImageGenToolCall => NewImageGenCallItemId(partitionKeyHint),
+            ItemCodeInterpreterToolCall => NewCodeInterpreterCallItemId(partitionKeyHint),
+            ApplyPatchToolCallItemParam => NewApplyPatchCallItemId(partitionKeyHint),
+            ApplyPatchToolCallOutputItemParam => NewApplyPatchCallOutputItemId(partitionKeyHint),
+            ItemMcpListTools => NewMcpListToolsItemId(partitionKeyHint),
+            ItemMcpToolCall => NewMcpCallItemId(partitionKeyHint),
+            ItemMcpApprovalRequest => NewMcpApprovalRequestItemId(partitionKeyHint),
+            MCPApprovalResponse => NewMcpApprovalResponseItemId(partitionKeyHint),
+            ItemReasoningItem => NewReasoningItemId(partitionKeyHint),
+            ItemReferenceParam => null, // resolved externally
+
+            // The shell and compaction items exist only on the request side of the spec
+            // (the ItemField union); they are never response items, so they fall through.
             _ => null,
         };
     }

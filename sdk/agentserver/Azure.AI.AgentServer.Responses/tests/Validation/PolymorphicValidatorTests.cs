@@ -33,54 +33,6 @@ public class PolymorphicValidatorTests
     // US1 — Reject Invalid Polymorphic Input Values on CreateResponse
     // =======================================================================
 
-    // T014: InputParamValidator accepts string input
-    [Test]
-    public void InputParam_AcceptsString()
-    {
-        var result = ValidateElement("\"hello world\"", InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.True);
-    }
-
-    // T015: InputParamValidator accepts array input
-    [Test]
-    public void InputParam_AcceptsArray()
-    {
-        var result = ValidateElement("[]", InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.True);
-    }
-
-    // T016: InputParamValidator rejects number input
-    [Test]
-    public void InputParam_RejectsNumber()
-    {
-        var result = ValidateElement("42", InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.False);
-        XAssert.Contains(result.Errors, e => e.Path == "$");
-    }
-
-    // T017: InputParamValidator rejects boolean input
-    [Test]
-    public void InputParam_RejectsBoolean()
-    {
-        var result = ValidateElement("true", InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.False);
-        XAssert.Contains(result.Errors, e => e.Path == "$");
-    }
-
-    // T018: InputParamValidator rejects object input
-    [Test]
-    public void InputParam_RejectsObject()
-    {
-        var result = ValidateElement("{}", InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.False);
-        XAssert.Contains(result.Errors, e => e.Path == "$");
-    }
-
     // T019: CreateResponsePayloadValidator rejects "input": 42
     [Test]
     public void CreateResponse_Input42_ReturnsError()
@@ -109,32 +61,6 @@ public class PolymorphicValidatorTests
 
         Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.input");
-    }
-
-    // T021b: InputParamValidator validates array items — valid Item objects accepted
-    [Test]
-    public void InputParam_AcceptsValidItemArray()
-    {
-        // A valid function_call_output Item with all required fields
-        var result = ValidateElement(
-            """[{"type": "function_call_output", "call_id": "call_1", "output": "result"}]""",
-            InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.True);
-    }
-
-    // T021c: InputParamValidator validates array items — invalid items produce indexed errors
-    [Test]
-    public void InputParam_RejectsInvalidItemInArray()
-    {
-        // An array containing a number (not an Item object) — should fail item validation
-        var result = ValidateElement(
-            """[42]""",
-            InputParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.False);
-        // Error path should contain array index
-        XAssert.Contains(result.Errors, e => e.Path.Contains("[0]"));
     }
 
     // T021d: CreateResponse input array items are validated end-to-end
@@ -218,16 +144,6 @@ public class PolymorphicValidatorTests
 
         Assert.That(result.IsValid, Is.False);
         XAssert.Contains(result.Errors, e => e.Path == "$.conversation");
-    }
-
-    // T030: ConversationParamValidator rejects array input
-    [Test]
-    public void ConversationParam_RejectsArray()
-    {
-        var result = ValidateElement("[]", ConversationParamValidator.Validate);
-
-        Assert.That(result.IsValid, Is.False);
-        XAssert.Contains(result.Errors, e => e.Path == "$");
     }
 
     // =======================================================================

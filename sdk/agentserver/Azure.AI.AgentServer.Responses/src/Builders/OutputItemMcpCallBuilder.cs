@@ -10,6 +10,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for an MCP tool call output item. Provides methods
 /// for lifecycle events and streaming arguments.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
 {
     private readonly string _serverLabel;
@@ -49,11 +50,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemMcpToolCall(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            name: _name,
-            arguments: "");
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(string.Empty)) { Id = _itemId };
         item.Status = MCPToolCallStatus.InProgress;
         return EmitAdded(item);
     }
@@ -64,8 +61,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseMCPCallInProgressEvent"/>.</returns>
     public virtual ResponseMCPCallInProgressEvent EmitInProgress()
     {
-        return new ResponseMCPCallInProgressEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId);
+        return new ResponseMCPCallInProgressEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId };
     }
 
     /// <summary>
@@ -75,8 +71,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseMCPCallArgumentsDeltaEvent"/> with the delta.</returns>
     public virtual ResponseMCPCallArgumentsDeltaEvent EmitArgumentsDelta(string delta)
     {
-        return new ResponseMCPCallArgumentsDeltaEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, delta);
+        return new ResponseMCPCallArgumentsDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, Delta = BinaryData.FromString(delta) };
     }
 
     /// <summary>
@@ -87,8 +82,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseMCPCallArgumentsDoneEvent EmitArgumentsDone(string arguments)
     {
         _finalArguments = arguments;
-        return new ResponseMCPCallArgumentsDoneEvent(
-            _stream.NextSequenceNumber(), _outputIndex, _itemId, arguments);
+        return new ResponseMCPCallArgumentsDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), OutputIndex = (int)(_outputIndex), ItemId = _itemId, ToolArguments = BinaryData.FromString(arguments) };
     }
 
     // ── Sub-Item Convenience Generators (S-053/S-054/S-055) ────
@@ -135,8 +129,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseMCPCallCompletedEvent EmitCompleted()
     {
         _terminalStatus = MCPToolCallStatus.Completed;
-        return new ResponseMCPCallCompletedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPCallCompletedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -147,8 +140,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     public virtual ResponseMCPCallFailedEvent EmitFailed()
     {
         _terminalStatus = MCPToolCallStatus.Failed;
-        return new ResponseMCPCallFailedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex);
+        return new ResponseMCPCallFailedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex) };
     }
 
     /// <summary>
@@ -159,11 +151,7 @@ public class OutputItemMcpCallBuilder : OutputItemBuilder<OutputItemMcpToolCall>
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this MCP call.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var item = new OutputItemMcpToolCall(
-            id: _itemId,
-            serverLabel: _serverLabel,
-            name: _name,
-            arguments: _finalArguments ?? "");
+        var item = new OutputItemMcpToolCall(_serverLabel, _name, BinaryData.FromString(_finalArguments ?? "{}")) { Id = _itemId };
         item.Status = _terminalStatus ?? MCPToolCallStatus.Completed;
         return EmitDone(item);
     }

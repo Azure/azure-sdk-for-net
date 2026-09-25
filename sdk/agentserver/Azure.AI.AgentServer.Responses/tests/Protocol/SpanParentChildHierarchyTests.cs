@@ -261,10 +261,10 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
             ActivityKind.Client);
 
         // Yield default lifecycle
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> HandlerWithMultipleFrameworkSpans(
@@ -290,10 +290,10 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
             // Simulate SDK call
         }
 
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> HandlerWithNestedSpans(
@@ -313,10 +313,10 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
             "chat openai/gpt-4o",
             ActivityKind.Client);
 
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> HandlerWithAsyncBoundarySpan(
@@ -334,9 +334,9 @@ public sealed class SpanParentChildHierarchyTests : IDisposable
             "chat openai/gpt-4o",
             ActivityKind.Client);
 
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
     }
 }

@@ -47,7 +47,7 @@ public class ConvenienceGeneratorTests
         var events = msg.TextContent("The answer").ToList();
 
         var delta = XAssert.IsType<ResponseTextDeltaEvent>(events[1]);
-        Assert.That(delta.Delta, Is.EqualTo("The answer"));
+        Assert.That(delta.Delta.ToString(), Is.EqualTo("The answer"));
     }
 
     [Test]
@@ -66,8 +66,8 @@ public class ConvenienceGeneratorTests
         var done = XAssert.IsType<ResponseTextDoneEvent>(events[3]);
         XAssert.IsType<ResponseContentPartDoneEvent>(events[4]);
 
-        Assert.That(d1.Delta, Is.EqualTo("Hel"));
-        Assert.That(d2.Delta, Is.EqualTo("lo"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("Hel"));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("lo"));
         Assert.That(done.Text, Is.EqualTo("Hello"));
     }
 
@@ -136,9 +136,9 @@ public class ConvenienceGeneratorTests
         var d2 = XAssert.IsType<ResponseFunctionCallArgumentsDeltaEvent>(events[1]);
         var done = XAssert.IsType<ResponseFunctionCallArgumentsDoneEvent>(events[2]);
 
-        Assert.That(d1.Delta, Is.EqualTo("{\"city\":"));
-        Assert.That(d2.Delta, Is.EqualTo("\"Seattle\"}"));
-        Assert.That(done.Arguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("{\"city\":"));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("\"Seattle\"}"));
+        Assert.That(done.FunctionArguments.ToString(), Is.EqualTo("{\"city\":\"Seattle\"}"));
     }
 
     // ──────────────────────────────────────────────────────────
@@ -233,7 +233,7 @@ public class ConvenienceGeneratorTests
         var events = await CollectAsync(mcp.Arguments(ToAsync("{\"k\":", "\"v\"}"), default));
 
         var done = XAssert.IsType<ResponseMCPCallArgumentsDoneEvent>(events[2]);
-        Assert.That(done.Arguments, Is.EqualTo("{\"k\":\"v\"}"));
+        Assert.That(done.ToolArguments.ToString(), Is.EqualTo("{\"k\":\"v\"}"));
     }
 
     // ──────────────────────────────────────────────────────────
@@ -363,8 +363,8 @@ public class ConvenienceGeneratorTests
 
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[3]);
         var fc = XAssert.IsType<OutputItemFunctionToolCall>(done.Item);
-        Assert.That(fc.Arguments, Is.EqualTo("{\"city\":\"NYC\"}"));
-        Assert.That(fc.Name, Is.EqualTo("get_weather"));
+        Assert.That(fc.FunctionArguments.ToString(), Is.EqualTo("{\"city\":\"NYC\"}"));
+        Assert.That(fc.FunctionName, Is.EqualTo("get_weather"));
         Assert.That(fc.CallId, Is.EqualTo("call_1"));
     }
 
@@ -376,7 +376,7 @@ public class ConvenienceGeneratorTests
     public void OutputItemFunctionCallOutput_EmitsAddedAndDone()
     {
         var stream = CreateStream();
-        var output = BinaryData.FromString("\"72 degrees\"");
+        var output = BinaryData.FromString("72 degrees");
 
         var events = stream.OutputItemFunctionCallOutput("call_1", output).ToList();
 
@@ -389,14 +389,14 @@ public class ConvenienceGeneratorTests
     public void OutputItemFunctionCallOutput_DoneContainsCallIdAndOutput()
     {
         var stream = CreateStream();
-        var output = BinaryData.FromString("\"72 degrees\"");
+        var output = BinaryData.FromString("72 degrees");
 
         var events = stream.OutputItemFunctionCallOutput("call_1", output).ToList();
 
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[1]);
         var fco = XAssert.IsType<OutputItemFunctionToolCallOutput>(done.Item);
         Assert.That(fco.CallId, Is.EqualTo("call_1"));
-        Assert.That(fco.Output.ToString(), Is.EqualTo("\"72 degrees\""));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72 degrees"));
     }
 
     // ──────────────────────────────────────────────────────────
@@ -545,8 +545,8 @@ public class ConvenienceGeneratorTests
         XAssert.IsType<ResponseImageGenCallCompletedEvent>(events[3]);
         var done = XAssert.IsType<ResponseOutputItemDoneEvent>(events[4]);
         var item = XAssert.IsType<OutputItemImageGenToolCall>(done.Item);
-        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
-        Assert.That(item.Result, Is.EqualTo(resultBase64));
+        Assert.That(item.Status, Is.EqualTo(ImageGenerationCallStatus.Completed));
+        Assert.That(Convert.ToBase64String(item.ImageResultBytes.ToArray()), Is.EqualTo(resultBase64));
     }
 
     [Test]

@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Defines the contract for handling response creation requests.
 /// Override this class and register it in DI to provide your agent logic.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public abstract class ResponseHandler
 {
     /// <summary>

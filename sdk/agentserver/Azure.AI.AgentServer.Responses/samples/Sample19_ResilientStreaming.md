@@ -98,7 +98,7 @@ public class ResilientStreamingHandler : ResponseHandler
     private static int NextPhaseIndex(ResponseContext context)
     {
         int completedPhases = context.IsRecovery
-            ? context.PersistedResponse?.Output?.Count ?? 0
+            ? context.PersistedResponse?.OutputItems?.Count ?? 0
             : 0;
         return Math.Min(completedPhases, PhaseOrder.Length);
     }

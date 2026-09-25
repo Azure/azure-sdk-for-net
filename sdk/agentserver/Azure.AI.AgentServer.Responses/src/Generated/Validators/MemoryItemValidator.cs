@@ -80,6 +80,7 @@ internal static partial class MemoryItemValidator
     private static ValidationResult DispatchValidation(string typeValue, JsonElement element) => typeValue switch
     {
         "chat_summary" => ChatSummaryMemoryItemValidator.Validate(element),
+        "procedural" => ProceduralMemoryItemValidator.Validate(element),
         "user_profile" => UserProfileMemoryItemValidator.Validate(element),
         _ => ValidationResult.Success,  // Unknown type — forward compatible
     };

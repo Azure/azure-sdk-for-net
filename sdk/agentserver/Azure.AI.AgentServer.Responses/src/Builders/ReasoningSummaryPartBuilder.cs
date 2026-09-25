@@ -9,6 +9,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Scoped builder for a single reasoning summary part. Provides methods
 /// for the summary part lifecycle: added, text delta, text done, and part done events.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ReasoningSummaryPartBuilder
 {
     private readonly ResponseEventStream _stream;
@@ -57,9 +58,8 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException($"Cannot call EmitAdded — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Added;
 
-        var part = new ResponseReasoningSummaryPartAddedEventPart(text: "");
-        return new ResponseReasoningSummaryPartAddedEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, part);
+        var part = new ReasoningSummaryTextPart(string.Empty);
+        return new ResponseReasoningSummaryPartAddedEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), SummaryIndex = (int)(_summaryIndex), Part = part };
     }
 
     /// <summary>
@@ -74,8 +74,7 @@ public class ReasoningSummaryPartBuilder
         if (_finalText is not null)
             throw new InvalidOperationException("Cannot emit deltas after EmitTextDone has been called.");
 
-        return new ResponseReasoningSummaryTextDeltaEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, text);
+        return new ResponseReasoningSummaryTextDeltaEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), SummaryIndex = (int)(_summaryIndex), Delta = text };
     }
 
     /// <summary>
@@ -91,8 +90,7 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException("EmitTextDone has already been called.");
 
         _finalText = finalText;
-        return new ResponseReasoningSummaryTextDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, finalText);
+        return new ResponseReasoningSummaryTextDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), SummaryIndex = (int)(_summaryIndex), Text = finalText };
     }
 
     /// <summary>
@@ -105,8 +103,7 @@ public class ReasoningSummaryPartBuilder
             throw new InvalidOperationException($"Cannot call EmitDone — builder is in '{_lifecycleState}' state.");
         _lifecycleState = BuilderLifecycleState.Done;
 
-        var part = new ResponseReasoningSummaryPartDoneEventPart(text: _finalText ?? string.Empty);
-        return new ResponseReasoningSummaryPartDoneEvent(
-            _stream.NextSequenceNumber(), _itemId, _outputIndex, _summaryIndex, part);
+        var part = new ReasoningSummaryTextPart(_finalText ?? string.Empty);
+        return new ResponseReasoningSummaryPartDoneEvent { SequenceNumber = (int)(_stream.NextSequenceNumber()), ItemId = _itemId, OutputIndex = (int)(_outputIndex), SummaryIndex = (int)(_summaryIndex), Part = part };
     }
 }

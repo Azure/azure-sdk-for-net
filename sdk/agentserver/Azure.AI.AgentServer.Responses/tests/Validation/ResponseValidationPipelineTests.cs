@@ -170,8 +170,8 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var resp = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, resp);
+        var resp = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = resp };
         await Task.CompletedTask;
         // Simulate a response validation error after response.created
         throw new ResponseValidationException(
@@ -184,8 +184,8 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var resp = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, resp);
+        var resp = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = resp };
         await Task.CompletedTask;
         throw new ResponseValidationException(
         [
@@ -206,10 +206,10 @@ public class ResponseValidationPipelineTests : ProtocolTestBase
         ResponseContext ctx,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var resp = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, resp);
+        var resp = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = resp };
         resp.SetCompleted();
-        yield return new ResponseCompletedEvent(0, resp);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = resp };
         await Task.CompletedTask;
     }
 }

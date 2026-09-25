@@ -36,8 +36,6 @@ internal static partial class RealtimeMCPProtocolErrorValidator
             errors.Add(new ValidationError("$.code", "Required property 'code' is missing"));
         else
         {
-            if (codeProp.ValueKind != JsonValueKind.Number)
-                errors.Add(new ValidationError("$.code", $"Expected integer, got {codeProp.ValueKind}"));
         }
 
         // Required: message

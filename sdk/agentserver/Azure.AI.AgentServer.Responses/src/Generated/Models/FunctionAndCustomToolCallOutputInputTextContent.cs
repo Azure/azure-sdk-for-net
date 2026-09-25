@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Input text. </summary>
-    public partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
+    internal partial class FunctionAndCustomToolCallOutputInputTextContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
