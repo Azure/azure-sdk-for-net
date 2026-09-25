@@ -1,0 +1,6 @@
+directory: specification/inferenceservice/data-plane/InferenceService
+commit: 39936a8f4236d39f932a89017e94d79e27d71619
+repo: Azure/azure-rest-api-specs-pr
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
