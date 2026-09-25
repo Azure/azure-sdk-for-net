@@ -7,8 +7,8 @@
 - Added the provisional TypeSpec-generated `InferenceClient` for Semantic Reranker operations.
 - Added API-key authentication for the `Ocp-Apim-Subscription-Key` header.
 - Added Microsoft Entra authentication using the `https://dbinference.azure.com/.default` scope.
-- Added per-sentence relevance scores through `SemanticRerankingScore.SentenceScores`, opted into with `SemanticRerankingInferenceRequest.ReturnSentenceScore`.
-- Added result ordering control through `SemanticRerankingInferenceRequest.Sort`.
+- Added per-sentence relevance scores through `SemanticRerankingScore.SentenceScores`, opted into with `SemanticRerankingInferenceContent.ReturnSentenceScore`.
+- Added result ordering control through `SemanticRerankingInferenceContent.Sort`.
 - Added the `InferenceModelFactory` mocking factory.
 
 ### Breaking Changes

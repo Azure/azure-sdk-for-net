@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.Data.AI
 {
     /// <summary> The result of a semantic reranking operation. </summary>
-    public partial class SemanticRerankingResult
+    public partial class SemanticRerankingInferenceResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingResult"/>. </summary>
-        internal SemanticRerankingResult()
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceResult"/>. </summary>
+        internal SemanticRerankingInferenceResult()
         {
             Scores = new ChangeTrackingList<SemanticRerankingScore>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceResult"/>. </summary>
         /// <param name="scores"> The relevance scores for the submitted documents. </param>
         /// <param name="meta"> Additional metadata about the semantic reranking operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticRerankingResult(IList<SemanticRerankingScore> scores, SemanticRerankingMetaResult meta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticRerankingInferenceResult(IList<SemanticRerankingScore> scores, SemanticRerankingMetaResult meta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scores = scores;
             Meta = meta;

@@ -12,16 +12,16 @@ using System.Linq;
 namespace Azure.Data.AI
 {
     /// <summary> The input for a semantic reranking operation. </summary>
-    public partial class SemanticRerankingInferenceRequest
+    public partial class SemanticRerankingInferenceContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceContent"/>. </summary>
         /// <param name="query"> The query used to rank the documents. </param>
         /// <param name="documents"> The documents to rank against the query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> or <paramref name="documents"/> is null. </exception>
-        public SemanticRerankingInferenceRequest(string query, IEnumerable<string> documents)
+        public SemanticRerankingInferenceContent(string query, IEnumerable<string> documents)
         {
             Argument.AssertNotNull(query, nameof(query));
             Argument.AssertNotNull(documents, nameof(documents));
@@ -30,7 +30,7 @@ namespace Azure.Data.AI
             Documents = documents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankingInferenceContent"/>. </summary>
         /// <param name="query"> The query used to rank the documents. </param>
         /// <param name="documents"> The documents to rank against the query. </param>
         /// <param name="returnDocuments"> Whether the response should include the submitted documents. </param>
@@ -46,7 +46,7 @@ namespace Azure.Data.AI
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticRerankingInferenceRequest(string query, IList<string> documents, bool? returnDocuments, int? topK, int? batchSize, bool? sort, SemanticRerankingDocumentType? documentType, string targetPaths, string model, bool? returnSentenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticRerankingInferenceContent(string query, IList<string> documents, bool? returnDocuments, int? topK, int? batchSize, bool? sort, SemanticRerankingDocumentType? documentType, string targetPaths, string model, bool? returnSentenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             Documents = documents;

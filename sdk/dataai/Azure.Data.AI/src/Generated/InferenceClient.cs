@@ -165,12 +165,12 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SemanticRerankingResult> SemanticRerank(SemanticRerankingInferenceRequest request, CancellationToken cancellationToken = default)
+        public virtual Response<SemanticRerankingInferenceResult> SemanticRerank(SemanticRerankingInferenceContent request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             Response result = SemanticRerank(request, cancellationToken.ToRequestContext());
-            return Response.FromValue((SemanticRerankingResult)result, result);
+            return Response.FromValue((SemanticRerankingInferenceResult)result, result);
         }
 
         /// <summary> Reranks documents by their relevance to a query. </summary>
@@ -178,12 +178,12 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SemanticRerankingResult>> SemanticRerankAsync(SemanticRerankingInferenceRequest request, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SemanticRerankingInferenceResult>> SemanticRerankAsync(SemanticRerankingInferenceContent request, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             Response result = await SemanticRerankAsync(request, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SemanticRerankingResult)result, result);
+            return Response.FromValue((SemanticRerankingInferenceResult)result, result);
         }
     }
 }

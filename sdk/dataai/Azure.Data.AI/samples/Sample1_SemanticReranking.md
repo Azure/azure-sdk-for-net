@@ -11,7 +11,7 @@ InferenceClient client = new InferenceClient(endpoint, credential);
 Submit a query and documents:
 
 ```C#
-var request = new SemanticRerankingInferenceRequest(
+var request = new SemanticRerankingInferenceContent(
     "What is the capital of France?",
     new[]
     {
@@ -23,5 +23,5 @@ var request = new SemanticRerankingInferenceRequest(
     ReturnDocuments = true
 };
 
-Response<SemanticRerankingResult> response = await client.SemanticRerankAsync(request);
+Response<SemanticRerankingInferenceResult> response = await client.SemanticRerankAsync(request);
 ```

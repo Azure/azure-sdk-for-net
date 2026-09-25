@@ -37,13 +37,13 @@ namespace Azure.Data.AI.Tests
         public void RequestRequiresQuery()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new SemanticRerankingInferenceRequest(null, new[] { "document" }));
+                new SemanticRerankingInferenceContent(null, new[] { "document" }));
         }
 
         [Test]
         public void RequestSerializesSentenceScoreOption()
         {
-            var request = new SemanticRerankingInferenceRequest("query", new[] { "document" })
+            var request = new SemanticRerankingInferenceContent("query", new[] { "document" })
             {
                 ReturnDocuments = true,
                 ReturnSentenceScore = true
@@ -76,7 +76,7 @@ namespace Azure.Data.AI.Tests
                 }
                 """);
 
-            SemanticRerankingResult result = ModelReaderWriter.Read<SemanticRerankingResult>(
+            SemanticRerankingInferenceResult result = ModelReaderWriter.Read<SemanticRerankingInferenceResult>(
                 json,
                 ModelReaderWriterOptions.Json,
                 AzureDataAIContext.Default);
