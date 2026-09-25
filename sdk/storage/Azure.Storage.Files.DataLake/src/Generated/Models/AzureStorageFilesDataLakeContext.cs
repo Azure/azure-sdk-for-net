@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.DataLake
     [ModelReaderWriterBuildable(typeof(BlobPropertiesInternal))]
     [ModelReaderWriterBuildable(typeof(FileSystemItem))]
     [ModelReaderWriterBuildable(typeof(FileSystemList))]
-    [ModelReaderWriterBuildable(typeof(ListBlobsHierarchySegmentResponse))]
+    [ModelReaderWriterBuildable(typeof(ListBlobsHierarchySegmentResult))]
     [ModelReaderWriterBuildable(typeof(Path))]
     [ModelReaderWriterBuildable(typeof(PathList))]
     [ModelReaderWriterBuildable(typeof(SetAccessControlRecursiveResponse))]

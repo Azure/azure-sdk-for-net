@@ -1855,7 +1855,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="Persistent.VectorStoreChunkingStrategyResponse"/> instance for mocking. </returns>
         public static VectorStoreChunkingStrategyResponse VectorStoreChunkingStrategyResponse(string @type = default)
         {
-            return new UnknownVectorStoreChunkingStrategyResponse(new VectorStoreChunkingStrategyResponseType(@type), additionalBinaryDataProperties: null);
+            return new UnknownVectorStoreChunkingStrategyResult(new VectorStoreChunkingStrategyResponseType(@type), additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is returned when the chunking strategy is unknown. Typically, this is because the file was indexed before the chunking_strategy concept was introduced in the API. </summary>
