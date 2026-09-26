@@ -227,6 +227,80 @@ destinationResource: await blobs.FromContainerAsync(
 await transferOperation.WaitForCompletionAsync();
 ```
 
+### Transfer from a Blob Snapshot
+
+To transfer from a specific blob snapshot, set the `Snapshot` property on the source `BlobStorageResourceOptions`. The snapshot identifier can be obtained from `BlobSnapshotInfo.Snapshot` when creating a snapshot or from `BlobItem.Snapshot` when listing blobs.
+
+Download a blob snapshot to a local file.
+
+```C# Snippet:TransferFromSnapshot_Download
+// Specify the snapshot identifier in the source resource options to
+// download the content of the blob at the time the snapshot was taken.
+BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+{
+    Snapshot = snapshotId
+};
+
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
+    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+    destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
+await transferOperation.WaitForCompletionAsync();
+```
+
+Copy a blob snapshot to a new blob.
+
+```C# Snippet:TransferFromSnapshot_Copy
+// Specify the snapshot identifier in the source resource options to
+// copy the content of the blob at the time the snapshot was taken.
+BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+{
+    Snapshot = snapshotId
+};
+
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
+    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
+await transferOperation.WaitForCompletionAsync();
+```
+
+### Transfer from a Blob Version
+
+To transfer from a specific blob version, set the `VersionId` property on the source `BlobStorageResourceOptions`. The version identifier can be obtained from `BlobProperties.VersionId` or `BlobItem.VersionId`. Blob versioning must be enabled on the storage account for version identifiers to be available.
+
+Download a specific blob version to a local file.
+
+```C# Snippet:TransferFromVersion_Download
+// Specify the version ID in the source resource options to download
+// the content of the blob from a previous version.
+// Note: Blob versioning must be enabled on the storage account.
+BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+{
+    VersionId = versionId
+};
+
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
+    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+    destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
+await transferOperation.WaitForCompletionAsync();
+```
+
+Copy a specific blob version to a new blob.
+
+```C# Snippet:TransferFromVersion_Copy
+// Specify the version ID in the source resource options to copy
+// the content of the blob from a previous version.
+// Note: Blob versioning must be enabled on the storage account.
+BlockBlobStorageResourceOptions sourceOptions = new BlockBlobStorageResourceOptions
+{
+    VersionId = versionId
+};
+
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
+    sourceResource: BlobsStorageResourceProvider.FromClient(sourceBlobClient, sourceOptions),
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
+await transferOperation.WaitForCompletionAsync();
+```
+
 ### Resume using ShareFilesStorageResourceProvider
 
 To resume a transfer with Blob(s), valid credentials must be provided. See the sample below.
