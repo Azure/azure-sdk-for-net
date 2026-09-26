@@ -253,6 +253,8 @@ Describe 'Real offline SDK ApiCompat task' -Tag 'IntegrationTest' {
         $report.hasBreakingChange | Should -BeTrue
         @($report.details.apiChanges.targetFramework | Sort-Object -Unique) | Should -Be @('net10.0', 'net8.0')
         $report.details.diagnostics | Should -Contain 'Current artifact scope: Configuration=Debug; TargetFrameworks=net10.0, net8.0.'
+        $report.details.diagnostics -join ' ' | Should -Match 'including listed and unlisted SemVer 2.0 versions'
+        $report.details.limitations -join ' ' | Should -Match 'internal version-query contract and search-index freshness'
         $report.details.limitations -join ' ' | Should -Not -Match 'not a full multi-target package comparison'
         Should -Invoke Get-SdkChangeBaseline -Times 1 -Exactly -ParameterFilter { $TargetFramework -eq 'net8.0' }
     }

@@ -89,22 +89,81 @@ BeforeAll {
 }
 
 Describe 'Latest stable NuGet baseline' -Tag 'UnitTest' {
-    It 'uses the actual public registry and orders stable NuGet versions numerically' {
-        Mock Invoke-RestMethod { [pscustomobject]@{ versions = @('1.9.0', '2.0.0-beta.9', '1.10.0', '1.10.0+metadata', '1.2.0') } }
+    BeforeAll {
+        function New-TestVersionQuery {
+            param([object[]]$Versions, [string]$PackageId = 'Azure.Example', [bool]$Listed = $true)
+            return [pscustomobject]@{
+                totalHits = $Versions.Count
+                data = @($Versions | ForEach-Object {
+                    [pscustomobject]@{
+                        PackageRegistration = [pscustomobject]@{ Id = $PackageId }
+                        Version = $_
+                        Listed = $Listed
+                        IsLatestStable = $false
+                    }
+                })
+            }
+        }
+    }
+
+    It 'uses the permitted metadata endpoint and orders stable NuGet versions numerically' {
+        Mock Invoke-RestMethod { New-TestVersionQuery @('1.9.0', '2.0.0-beta.9', '1.10.0+metadata', '1.2.0') }
         Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '1.10.0'
         Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter {
-            $Uri -eq 'https://api.nuget.org/v3-flatcontainer/azure.example/index.json'
+            $Uri -eq 'https://azuresearch-usnc.nuget.org/search/query?q=packageid%3AAzure.Example&skip=0&take=1000&sortBy=created-asc&semVerLevel=2.0.0&ignoreFilter=true' -and
+            $Method -eq 'Get' -and $TimeoutSec -eq 60 -and $MaximumRetryCount -eq 3
         }
     }
 
     It 'does not treat stable 0.x versions as previews' {
-        Mock Invoke-RestMethod { [pscustomobject]@{ versions = @('0.2.0', '0.3.0-preview.1') } }
+        Mock Invoke-RestMethod { New-TestVersionQuery @('0.2.0', '0.3.0-preview.1') }
         Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '0.2.0'
     }
 
     It 'accepts NuGet legacy four-part stable versions' {
-        Mock Invoke-RestMethod { [pscustomobject]@{ versions = @('1.2.3', '1.2.3.4') } }
+        Mock Invoke-RestMethod { New-TestVersionQuery @('1.2.3', '1.2.3.4') }
         Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '1.2.3.4'
+    }
+
+    It 'includes an unlisted-only stable release even when IsLatestStable is false' {
+        Mock Invoke-RestMethod { New-TestVersionQuery @('1.0.0', '2.0.0', '3.0.0-beta.1') -Listed $false }
+        Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '2.0.0'
+    }
+
+    It 'matches package identity case-insensitively' {
+        Mock Invoke-RestMethod { New-TestVersionQuery @('1.0.0') -PackageId 'azure.example' }
+        Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '1.0.0'
+    }
+
+    It 'enumerates short pages and does not choose by creation order or listed status' {
+        Mock Invoke-RestMethod {
+            param($Uri)
+            $response = if ($Uri -match '&skip=0&') {
+                New-TestVersionQuery @('1.9.0', '9.0.0-beta.1')
+            } else {
+                New-TestVersionQuery @('1.10.0', '1.2.0') -Listed $false
+            }
+            $response.totalHits = 4
+            $response
+        }
+        Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '1.10.0'
+        Should -Invoke Invoke-RestMethod -Times 2 -Exactly
+        Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter { $Uri -match '&skip=2&take=1000&' }
+    }
+
+    It 'handles a full page before finding the latest stable version on the next page' {
+        Mock Invoke-RestMethod {
+            param($Uri)
+            $response = if ($Uri -match '&skip=0&') {
+                New-TestVersionQuery @(0..999 | ForEach-Object { "1.0.$_" })
+            } else {
+                New-TestVersionQuery @('2.0.0')
+            }
+            $response.totalHits = 1001
+            $response
+        }
+        Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -Be '2.0.0'
+        Should -Invoke Invoke-RestMethod -Times 1 -Exactly -ParameterFilter { $Uri -match '&skip=1000&' }
     }
 
     It 'returns no baseline for <Name>' -TestCases @(
@@ -112,20 +171,12 @@ Describe 'Latest stable NuGet baseline' -Tag 'UnitTest' {
         @{ Name = 'an empty version index'; Versions = @() }
     ) {
         param($Versions)
-        Mock Invoke-RestMethod { [pscustomobject]@{ versions = $Versions } }
-        Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -BeNullOrEmpty
-    }
-
-    It 'only treats an HTTP 404 as an absent package' {
-        Mock Invoke-RestMethod {
-            throw [Microsoft.PowerShell.Commands.HttpResponseException]::new(
-                'Not Found', [System.Net.Http.HttpResponseMessage]::new([System.Net.HttpStatusCode]::NotFound))
-        }
+        Mock Invoke-RestMethod { New-TestVersionQuery $Versions }
         Get-SdkChangeLatestGaVersion 'Azure.Example' | Should -BeNullOrEmpty
     }
 
     It 'propagates HTTP <Status> rather than reporting first release' -TestCases @(
-        @{ Status = 401 }, @{ Status = 403 }, @{ Status = 429 }, @{ Status = 500 }
+        @{ Status = 401 }, @{ Status = 403 }, @{ Status = 404 }, @{ Status = 429 }, @{ Status = 500 }
     ) {
         param($Status)
         Mock Invoke-RestMethod {
@@ -140,16 +191,118 @@ Describe 'Latest stable NuGet baseline' -Tag 'UnitTest' {
         { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*Network unavailable*'
     }
 
-    It 'rejects malformed version indexes' -TestCases @(
-        @{ Response = [pscustomobject]@{ other = @() } },
-        @{ Response = [pscustomobject]@{ versions = '1.0.0' } },
-        @{ Response = [pscustomobject]@{ versions = @('1.0.0', 'not-a-version') } },
-        @{ Response = [pscustomobject]@{ versions = @(1) } },
-        @{ Response = $null }
+    It 'rejects malformed version query <Name>' -TestCases @(
+        @{ Name = 'missing data'; Response = [pscustomobject]@{ totalHits = 0 } },
+        @{ Name = 'missing count'; Response = [pscustomobject]@{ data = @() } },
+        @{ Name = 'scalar data'; Response = [pscustomobject]@{ totalHits = 1; data = '1.0.0' } },
+        @{ Name = 'negative count'; Response = [pscustomobject]@{ totalHits = -1; data = @() } },
+        @{ Name = 'string count'; Response = [pscustomobject]@{ totalHits = '0'; data = @() } },
+        @{ Name = 'fractional count'; Response = [pscustomobject]@{ totalHits = 0.5; data = @() } },
+        @{ Name = 'null data'; Response = [pscustomobject]@{ totalHits = 0; data = $null } },
+        @{ Name = 'empty response'; Response = $null }
     ) {
         param($Response)
         Mock Invoke-RestMethod { $Response }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*malformed version query*'
+    }
+
+    It 'rejects invalid version <Version>' -TestCases @(
+        @{ Version = 'not-a-version' }, @{ Version = '' }, @{ Version = 1 }, @{ Version = $null }
+    ) {
+        param($Version)
+        Mock Invoke-RestMethod { New-TestVersionQuery @($Version) }
         { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw
+    }
+
+    It 'rejects invalid package metadata <Name>' -TestCases @(
+        @{ Name = 'wrong package ID'; Field = 'PackageRegistration'; Value = [pscustomobject]@{ Id = 'Azure.Example.Other' } },
+        @{ Name = 'missing package ID'; Field = 'PackageRegistration'; Value = [pscustomobject]@{} },
+        @{ Name = 'null registration'; Field = 'PackageRegistration'; Value = $null },
+        @{ Name = 'non-boolean listed flag'; Field = 'Listed'; Value = 'false' },
+        @{ Name = 'null listed flag'; Field = 'Listed'; Value = $null }
+    ) {
+        param($Field, $Value)
+        Mock Invoke-RestMethod {
+            $response = New-TestVersionQuery @('1.0.0')
+            $response.data[0].$Field = $Value
+            $response
+        }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*invalid package metadata*'
+    }
+
+    It 'rejects missing metadata field <Field>' -TestCases @(
+        @{ Field = 'PackageRegistration' }, @{ Field = 'Version' }, @{ Field = 'Listed' }
+    ) {
+        param($Field)
+        Mock Invoke-RestMethod {
+            $response = New-TestVersionQuery @('1.0.0')
+            $response.data[0].PSObject.Properties.Remove($Field)
+            $response
+        }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*invalid package metadata*'
+    }
+
+    It 'rejects an inconsistent page count <Count>' -TestCases @(
+        @{ Count = 0 }, @{ Count = 1 }
+    ) {
+        param($Count)
+        Mock Invoke-RestMethod {
+            $response = New-TestVersionQuery @('1.0.0', '2.0.0')
+            $response.totalHits = $Count
+            $response
+        }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*incomplete or inconsistent*'
+    }
+
+    It 'rejects an empty first page when versions were reported' {
+        Mock Invoke-RestMethod { [pscustomobject]@{ totalHits = 1; data = @() } }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*incomplete or inconsistent*'
+    }
+
+    It 'rejects a query beyond the service pagination limit' {
+        Mock Invoke-RestMethod { [pscustomobject]@{ totalHits = 11001; data = @() } }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*pagination limit*'
+    }
+
+    It 'rejects an oversized page rather than silently truncating it' {
+        Mock Invoke-RestMethod { New-TestVersionQuery @(0..1000 | ForEach-Object { "1.0.$_" }) }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*incomplete or inconsistent*'
+    }
+
+    It 'rejects a <Failure> on a later page rather than using an incomplete baseline' -TestCases @(
+        @{ Failure = 'changed count' }, @{ Failure = 'duplicate version' }, @{ Failure = 'empty page' },
+        @{ Failure = 'HTTP failure' }
+    ) {
+        param($Failure)
+        Mock Invoke-RestMethod {
+            param($Uri)
+            $response = New-TestVersionQuery @('1.0.0')
+            $response.totalHits = 2
+            if ($Uri -match '&skip=1&') {
+                switch ($Failure) {
+                    'changed count' { $response.totalHits = 3 }
+                    'empty page' { $response.data = @() }
+                    'HTTP failure' { throw [System.Net.Http.HttpRequestException]::new('Network unavailable') }
+                }
+            }
+            $response
+        }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw
+        Should -Invoke Invoke-RestMethod -Times 2 -Exactly
+    }
+
+    It 'rejects duplicate normalized versions within one page' {
+        Mock Invoke-RestMethod { New-TestVersionQuery @('1.0', '1.0.0') }
+        { Get-SdkChangeLatestGaVersion 'Azure.Example' } | Should -Throw '*duplicate version*'
+    }
+
+    It 'rejects invalid package ID <PackageId> before contacting NuGet' -TestCases @(
+        @{ PackageId = '' }, @{ PackageId = 'Azure.Example&ignoreFilter=false' }, @{ PackageId = 'a/b' }
+    ) {
+        param($PackageId)
+        Mock Invoke-RestMethod { throw 'Should not call NuGet.' }
+        { Get-SdkChangeLatestGaVersion $PackageId } | Should -Throw '*Invalid NuGet package ID*'
+        Should -Invoke Invoke-RestMethod -Times 0 -Exactly
     }
 }
 

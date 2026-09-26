@@ -20,6 +20,21 @@ not generate suppressions or implement a second compatibility policy.
 Baseline packages and dependencies are restored using the SDK repository's
 `NuGet.Config`, including its approved Azure Artifacts feed.
 
+Version discovery uses NuGet.org's metadata-only
+[`/search/query` endpoint](https://github.com/NuGet/NuGetGallery/blob/main/src/NuGet.Services.SearchService.Core/README.md#searchquery---internal-v2-search-endpoint)
+on `azuresearch-usnc.nuget.org`, which CI permits without allowing package
+downloads from `api.nuget.org`. An exact package-ID query with
+`ignoreFilter=true` and `semVerLevel=2.0.0` includes unlisted and prerelease
+versions; the detector enumerates every page and selects the highest stable
+NuGet version locally. It does not rely on listed-only V3 search/autocomplete,
+`IsLatestStable`, or the mirror's cached version list.
+
+This NuGetGallery internal API is not a stability-guaranteed public contract.
+The report records that dependency and search-index freshness limitation.
+Malformed metadata, changing counts, duplicate versions, incomplete pages,
+pagination limits, and HTTP errors (including 404) fail extraction. Only a
+valid complete result with no stable versions identifies a missing GA baseline.
+
 Run the common entry point from an SDK or local spec workflow:
 
 ```text

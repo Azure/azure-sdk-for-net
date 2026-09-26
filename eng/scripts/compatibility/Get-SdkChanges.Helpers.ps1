@@ -427,29 +427,50 @@ function Get-SdkChangeLatestGaVersion {
     param([string]$PackageId)
 
     if ($PackageId -notmatch '^[A-Za-z0-9_.-]+$') { throw "Invalid NuGet package ID: $PackageId" }
-    $uri = "https://api.nuget.org/v3-flatcontainer/$($PackageId.ToLowerInvariant())/index.json"
-    try {
-        $response = Invoke-RestMethod -Uri $uri -Method Get -TimeoutSec 60 -MaximumRetryCount 3 -RetryIntervalSec 2 -ErrorAction Stop
-    }
-    catch [Microsoft.PowerShell.Commands.HttpResponseException] {
-        if ($null -ne $_.Exception.Response -and [int]$_.Exception.Response.StatusCode -eq 404) { return $null }
-        throw
-    }
-    if ($null -eq $response -or $null -eq $response.PSObject.Properties['versions'] -or
-        $response.versions -isnot [System.Collections.IList]) {
-        throw "NuGet returned a malformed version index for $PackageId."
-    }
+    # The metadata-only query includes unlisted versions without accessing the blocked package-content host.
+    $query = [uri]::EscapeDataString("packageid:$PackageId")
+    $skip = 0
+    $totalHits = $null
+    $seen = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $latest = $null
-    foreach ($text in $response.versions) {
-        if ($text -isnot [string]) {
-            throw "NuGet returned an invalid version for ${PackageId}: $text"
+    do {
+        $uri = "https://azuresearch-usnc.nuget.org/search/query?q=$query&skip=$skip&take=1000&sortBy=created-asc&semVerLevel=2.0.0&ignoreFilter=true"
+        $response = Invoke-RestMethod -Uri $uri -Method Get -TimeoutSec 60 -MaximumRetryCount 3 -RetryIntervalSec 2 -ErrorAction Stop
+        if ($response -isnot [pscustomobject] -or !$response.PSObject.Properties['totalHits'] -or
+            !$response.PSObject.Properties['data'] -or $response.data -isnot [System.Collections.IList] -or
+            ($response.totalHits -isnot [int] -and $response.totalHits -isnot [long]) -or $response.totalHits -lt 0) {
+            throw "NuGet returned a malformed version query for $PackageId."
         }
-        $version = [NuGet.Versioning.NuGetVersion]::new($text)
-        if (!$version.IsPrerelease -and
-            ($null -eq $latest -or [NuGet.Versioning.VersionComparer]::VersionRelease.Compare($version, $latest) -gt 0)) {
-            $latest = $version
+        if ($null -ne $totalHits -and $response.totalHits -ne $totalHits) {
+            throw "NuGet version count changed during enumeration for $PackageId. Run extraction again."
         }
-    }
+        $totalHits = $response.totalHits
+        if ($totalHits -gt 11000 -or $skip -gt 10000) {
+            throw "NuGet version query exceeds the supported pagination limit for $PackageId."
+        }
+        if ($response.data.Count -gt 1000 -or $skip + $response.data.Count -gt $totalHits -or
+            ($response.data.Count -eq 0 -and $skip -lt $totalHits)) {
+            throw "NuGet returned an incomplete or inconsistent version query for $PackageId."
+        }
+        foreach ($item in $response.data) {
+            if ($item -isnot [pscustomobject] -or !$item.PSObject.Properties['PackageRegistration'] -or
+                $item.PackageRegistration -isnot [pscustomobject] -or !$item.PackageRegistration.PSObject.Properties['Id'] -or
+                $item.PackageRegistration.Id -isnot [string] -or $item.PackageRegistration.Id -ine $PackageId -or
+                !$item.PSObject.Properties['Version'] -or $item.Version -isnot [string] -or
+                !$item.PSObject.Properties['Listed'] -or $item.Listed -isnot [bool]) {
+                throw "NuGet returned invalid package metadata in the version query for $PackageId."
+            }
+            $version = [NuGet.Versioning.NuGetVersion]::new($item.Version)
+            if (!$seen.Add($version.ToNormalizedString())) {
+                throw "NuGet returned a duplicate version for $PackageId. Run extraction again."
+            }
+            if (!$version.IsPrerelease -and
+                ($null -eq $latest -or [NuGet.Versioning.VersionComparer]::VersionRelease.Compare($version, $latest) -gt 0)) {
+                $latest = $version
+            }
+        }
+        $skip += $response.data.Count
+    } while ($skip -lt $totalHits)
     if ($null -ne $latest) { return $latest.ToNormalizedString() }
     return $null
 }
@@ -901,9 +922,13 @@ function Invoke-SdkChangeExtraction {
         }
         $version = Get-SdkChangeLatestGaVersion $outer.Properties.PackageId
         $changes = @()
-        $diagnostics = @("Current artifact scope: Configuration=$($outer.Properties.Configuration); TargetFrameworks=$($frameworks -join ', ').")
+        $diagnostics = @(
+            "Current artifact scope: Configuration=$($outer.Properties.Configuration); TargetFrameworks=$($frameworks -join ', ').",
+            'Baseline discovery: NuGet.org metadata query (azuresearch-usnc.nuget.org/search/query), including listed and unlisted SemVer 2.0 versions.'
+        )
         $limitations = @(
             'Metadata/API compatibility does not determine runtime behavior or wire-contract compatibility.',
+            'Baseline discovery depends on NuGetGallery''s internal version-query contract and search-index freshness; malformed or incomplete responses fail extraction.',
             'Freshness uses portable/embedded PDB source checksums and evaluated build-input timestamps. Build-time-generated inputs and timestamp-preserving changes to non-source build inputs require a fresh build.',
             'Approved ApiCompat suppressions and NoWarn are honored; suppressed differences are not listed.'
         )
