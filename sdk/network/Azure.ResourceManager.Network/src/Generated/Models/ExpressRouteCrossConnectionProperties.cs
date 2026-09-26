@@ -12,7 +12,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of ExpressRouteCrossConnection. </summary>
     internal partial class ExpressRouteCrossConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -30,20 +29,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sTag"> The identifier of the circuit traffic. </param>
         /// <param name="peeringLocation"> The peering location of the ExpressRoute circuit. </param>
         /// <param name="bandwidthInMbps"> The circuit bandwidth In Mbps. </param>
-        /// <param name="expressRouteCircuit"> The ExpressRouteCircuit. </param>
+        /// <param name="expressRouteCircuitId"> The ExpressRouteCircuit. </param>
         /// <param name="serviceProviderProvisioningState"> The provisioning state of the circuit in the connectivity provider system. </param>
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
         /// <param name="peerings"> The list of peerings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCrossConnectionProperties(string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, ResourceIdentifier expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCrossConnectionProperties(string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, ResourceIdentifier expressRouteCircuitId, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryAzurePort = primaryAzurePort;
             SecondaryAzurePort = secondaryAzurePort;
             STag = sTag;
             PeeringLocation = peeringLocation;
             BandwidthInMbps = bandwidthInMbps;
-            ExpressRouteCircuit = expressRouteCircuit;
+            ExpressRouteCircuitId = expressRouteCircuitId;
             ServiceProviderProvisioningState = serviceProviderProvisioningState;
             ServiceProviderNotes = serviceProviderNotes;
             ProvisioningState = provisioningState;
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ExpressRouteCircuit. </summary>
         [WirePath("expressRouteCircuit")]
-        public ResourceIdentifier ExpressRouteCircuit { get; set; }
+        public ResourceIdentifier ExpressRouteCircuitId { get; set; }
 
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         [WirePath("serviceProviderProvisioningState")]

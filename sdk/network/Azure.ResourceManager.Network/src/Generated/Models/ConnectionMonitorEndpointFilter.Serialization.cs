@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilter)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(FilterType.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Items))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ConnectionMonitorEndpointFilterType? @type = default;
+            ConnectionMonitorEndpointFilterType? filterType = default;
             IList<ConnectionMonitorEndpointFilterItem> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @type = new ConnectionMonitorEndpointFilterType(prop.Value.GetString());
+                    filterType = new ConnectionMonitorEndpointFilterType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("items"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectionMonitorEndpointFilter(@type, items ?? new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(), additionalBinaryDataProperties);
+            return new ConnectionMonitorEndpointFilter(filterType, items ?? new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(), additionalBinaryDataProperties);
         }
     }
 }

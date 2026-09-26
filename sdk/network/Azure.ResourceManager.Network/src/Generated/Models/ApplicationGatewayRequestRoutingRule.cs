@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>
         [WirePath("properties.entraJWTValidationConfig")]
-        public ResourceIdentifier EntraJWTValidationConfig
+        public ResourceIdentifier EntraJwtValidationConfigId
         {
             get
             {
-                return Properties is null ? default : Properties.EntraJWTValidationConfig;
+                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
             }
             set
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
-                Properties.EntraJWTValidationConfig = value;
+                Properties.EntraJwtValidationConfigId = value;
             }
         }
 

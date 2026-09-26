@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> VirtualNetworkGateway properties. </summary>
     internal partial class VirtualNetworkGatewayPropertiesFormat : IJsonModel<VirtualNetworkGatewayPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite"u8);
-                writer.WriteObjectValue(GatewayDefaultSite, options);
+                ((IJsonModel<WritableSubResource>)GatewayDefaultSite).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? activeActive = default;
             bool? enableHighBandwidthVpnGateway = default;
             bool? disableIPSecReplayProtection = default;
-            NetworkSubResource gatewayDefaultSite = default;
+            WritableSubResource gatewayDefaultSite = default;
             VirtualNetworkGatewaySku sku = default;
             VpnClientConfiguration vpnClientConfiguration = default;
             IList<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups = default;
@@ -413,7 +414,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    gatewayDefaultSite = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
+                    gatewayDefaultSite = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

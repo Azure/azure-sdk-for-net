@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Private Endpoint VNet Policies. </summary>
         [WirePath("properties.privateEndpointVNetPolicies")]
-        public PrivateEndpointVnetPolicy? PrivateEndpointVNetPolicies
+        public PrivateEndpointVnetPolicy? PrivateEndpointVnetPolicy
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointVNetPolicies;
+                return Properties is null ? default : Properties.PrivateEndpointVnetPolicy;
             }
             set
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new VirtualNetworkPropertiesFormat();
                 }
-                Properties.PrivateEndpointVNetPolicies = value;
+                Properties.PrivateEndpointVnetPolicy = value;
             }
         }
 

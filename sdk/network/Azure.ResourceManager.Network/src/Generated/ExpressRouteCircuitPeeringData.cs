@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The ExpressRoute connection. </summary>
         [WirePath("properties.expressRouteConnection")]
-        public ResourceIdentifier ExpressRouteConnection
+        public ResourceIdentifier ExpressRouteConnectionId
         {
             get
             {
-                return Properties is null ? default : Properties.ExpressRouteConnection;
+                return Properties is null ? default : Properties.ExpressRouteConnectionId;
             }
             set
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
                 }
-                Properties.ExpressRouteConnection = value;
+                Properties.ExpressRouteConnectionId = value;
             }
         }
 

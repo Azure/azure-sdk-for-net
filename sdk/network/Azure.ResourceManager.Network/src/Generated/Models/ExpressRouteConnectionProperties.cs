@@ -12,25 +12,21 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of the ExpressRouteConnection subresource. </summary>
     internal partial class ExpressRouteConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionProperties"/>. </summary>
-        /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expressRouteCircuitPeering"/> is null. </exception>
-        public ExpressRouteConnectionProperties(ResourceIdentifier expressRouteCircuitPeering)
+        /// <param name="expressRouteCircuitPeeringId"> The ExpressRoute circuit peering. </param>
+        public ExpressRouteConnectionProperties(ResourceIdentifier expressRouteCircuitPeeringId)
         {
-            Argument.AssertNotNull(expressRouteCircuitPeering, nameof(expressRouteCircuitPeering));
-
-            ExpressRouteCircuitPeering = expressRouteCircuitPeering;
+            ExpressRouteCircuitPeeringId = expressRouteCircuitPeeringId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
-        /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
+        /// <param name="expressRouteCircuitPeeringId"> The ExpressRoute circuit peering. </param>
         /// <param name="authorizationKey"> Authorization key to establish the connection. </param>
         /// <param name="routingWeight"> The routing weight associated to the connection. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
@@ -38,10 +34,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteConnectionProperties(NetworkProvisioningState? provisioningState, ResourceIdentifier expressRouteCircuitPeering, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteConnectionProperties(NetworkProvisioningState? provisioningState, ResourceIdentifier expressRouteCircuitPeeringId, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfigurationNfv routingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            ExpressRouteCircuitPeering = expressRouteCircuitPeering;
+            ExpressRouteCircuitPeeringId = expressRouteCircuitPeeringId;
             AuthorizationKey = authorizationKey;
             RoutingWeight = routingWeight;
             EnableInternetSecurity = enableInternetSecurity;
@@ -57,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ExpressRoute circuit peering. </summary>
         [WirePath("expressRouteCircuitPeering")]
-        public ResourceIdentifier ExpressRouteCircuitPeering { get; set; }
+        public ResourceIdentifier ExpressRouteCircuitPeeringId { get; set; }
 
         /// <summary> Authorization key to establish the connection. </summary>
         [WirePath("authorizationKey")]

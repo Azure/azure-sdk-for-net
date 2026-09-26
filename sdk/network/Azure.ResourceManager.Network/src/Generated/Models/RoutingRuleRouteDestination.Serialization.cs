@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
 
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(RoutingRuleRouteDestination)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(DestinationType.ToString());
             writer.WritePropertyName("destinationAddress"u8);
             writer.WriteStringValue(DestinationAddress);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -115,37 +114,6 @@ namespace Azure.ResourceManager.Network.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRoutingRuleRouteDestination(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RoutingRuleRouteDestination DeserializeRoutingRuleRouteDestination(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            RoutingRuleDestinationType @type = default;
-            string destinationAddress = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new RoutingRuleDestinationType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("destinationAddress"u8))
-                {
-                    destinationAddress = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new RoutingRuleRouteDestination(@type, destinationAddress, additionalBinaryDataProperties);
         }
     }
 }

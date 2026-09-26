@@ -14,7 +14,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of the load balancer backend addresses. </summary>
     internal partial class LoadBalancerBackendAddressPropertiesFormat : IJsonModel<LoadBalancerBackendAddressPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -95,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("networkInterfaceIPConfiguration"u8);
                 writer.WriteObjectValue(NetworkInterfaceIPConfiguration, options);
             }
-            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
+            if (Optional.IsDefined(LoadBalancerFrontendIPConfigurationId))
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
-                writer.WriteStringValue(LoadBalancerFrontendIPConfiguration);
+                SerializeLoadBalancerFrontendIPConfigurationId(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
             {
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource subnet = default;
             string ipAddress = default;
             NetworkSubResource networkInterfaceIPConfiguration = default;
-            ResourceIdentifier loadBalancerFrontendIPConfiguration = default;
+            ResourceIdentifier loadBalancerFrontendIPConfigurationId = default;
             IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
             LoadBalancerBackendAddressAdminState? adminState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -201,11 +200,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("loadBalancerFrontendIPConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    loadBalancerFrontendIPConfiguration = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeLoadBalancerFrontendIPConfigurationId(prop, ref loadBalancerFrontendIPConfigurationId);
                     continue;
                 }
                 if (prop.NameEquals("inboundNatRulesPortMapping"u8))
@@ -241,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                 subnet,
                 ipAddress,
                 networkInterfaceIPConfiguration,
-                loadBalancerFrontendIPConfiguration,
+                loadBalancerFrontendIPConfigurationId,
                 inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(),
                 adminState,
                 additionalBinaryDataProperties);

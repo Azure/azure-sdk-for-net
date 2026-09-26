@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
 
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
@@ -118,41 +117,6 @@ namespace Azure.ResourceManager.Network.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualNetworkEncryption(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VirtualNetworkEncryption DeserializeVirtualNetworkEncryption(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            bool enabled = default;
-            VirtualNetworkEncryptionEnforcement? enforcement = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("enabled"u8))
-                {
-                    enabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("enforcement"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enforcement = new VirtualNetworkEncryptionEnforcement(prop.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new VirtualNetworkEncryption(enabled, enforcement, additionalBinaryDataProperties);
         }
     }
 }

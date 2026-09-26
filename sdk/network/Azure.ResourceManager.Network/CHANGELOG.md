@@ -8,6 +8,11 @@
 
 ### Bugs Fixed
 
+- Restored preferred management model property names while retaining obsolete forwarding aliases for the previous names.
+- Preserved resource-reference wire formats and deserialization of renamed required properties.
+- Restored `WritableSubResource` types for virtual hub IP configurations, virtual network gateway default sites, and virtual network peering references.
+- Restored flattened gateway and peering address-prefix properties as forwarding accessors to their address-space models.
+
 ### Other Changes
 
 ## 1.18.0-beta.1 (2026-09-20)

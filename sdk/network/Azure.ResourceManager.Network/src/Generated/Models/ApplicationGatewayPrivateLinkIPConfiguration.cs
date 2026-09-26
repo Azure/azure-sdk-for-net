@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
         [WirePath("properties.primary")]
-        public bool? Primary
+        public bool? IsPrimary
         {
             get
             {
-                return Properties is null ? default : Properties.Primary;
+                return Properties is null ? default : Properties.IsPrimary;
             }
             set
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
                 }
-                Properties.Primary = value;
+                Properties.IsPrimary = value;
             }
         }
 
