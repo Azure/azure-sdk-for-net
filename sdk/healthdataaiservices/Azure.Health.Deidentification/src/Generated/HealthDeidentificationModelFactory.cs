@@ -110,6 +110,15 @@ namespace Azure.Health.Deidentification
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Deidentification.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Details of a single document in a job. </summary>
         /// <param name="id"> Id of the document details. </param>
         /// <param name="inputLocation"> Location for the input. </param>
