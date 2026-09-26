@@ -25,6 +25,15 @@ namespace Azure.Messaging.WebPubSub.Chat
             return new WebPubSubChatConversation(id, parentRoom, etag, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Chat.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents a chat message. </summary>
         /// <param name="id"> Message identifier. </param>
         /// <param name="createdBy"> User who created the message. </param>

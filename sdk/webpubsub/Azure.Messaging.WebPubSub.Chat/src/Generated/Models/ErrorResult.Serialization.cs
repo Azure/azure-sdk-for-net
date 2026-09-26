@@ -8,68 +8,63 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 
 namespace Azure.Messaging.WebPubSub.Chat
 {
-    internal partial class GenerateClientTokenResponse : IJsonModel<GenerateClientTokenResponse>
+    /// <summary> A response containing error details. </summary>
+    public partial class ErrorResult : IJsonModel<ErrorResult>
     {
-        /// <summary> Initializes a new instance of <see cref="GenerateClientTokenResponse"/> for deserialization. </summary>
-        internal GenerateClientTokenResponse()
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/> for deserialization. </summary>
+        internal ErrorResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateClientTokenResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ErrorResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateClientTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGenerateClientTokenResponse(document.RootElement, options);
+                        return DeserializeErrorResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenerateClientTokenResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateClientTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingWebPubSubChatContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GenerateClientTokenResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ErrorResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GenerateClientTokenResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ErrorResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateClientTokenResponse IPersistableModel<GenerateClientTokenResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ErrorResult IPersistableModel<ErrorResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GenerateClientTokenResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GenerateClientTokenResponse"/> from. </param>
-        public static explicit operator GenerateClientTokenResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGenerateClientTokenResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ErrorResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GenerateClientTokenResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ErrorResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,13 +75,13 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateClientTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateClientTokenResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorResult)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("token"u8);
-            writer.WriteStringValue(Token);
+            writer.WritePropertyName("error"u8);
+            ((IJsonModel<ResponseError>)Error).Write(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -106,37 +101,37 @@ namespace Azure.Messaging.WebPubSub.Chat
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenerateClientTokenResponse IJsonModel<GenerateClientTokenResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ErrorResult IJsonModel<ErrorResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GenerateClientTokenResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ErrorResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenerateClientTokenResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ErrorResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenerateClientTokenResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ErrorResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenerateClientTokenResponse(document.RootElement, options);
+            return DeserializeErrorResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GenerateClientTokenResponse DeserializeGenerateClientTokenResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ErrorResult DeserializeErrorResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string token = default;
-            string contentType = default;
+            ResponseError error = default;
+            string errorCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("token"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    token = prop.Value.GetString();
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureMessagingWebPubSubChatContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +139,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GenerateClientTokenResponse(token, contentType, additionalBinaryDataProperties);
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties);
         }
     }
 }
