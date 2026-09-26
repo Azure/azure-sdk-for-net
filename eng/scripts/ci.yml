@@ -45,3 +45,8 @@ extends:
         inputs:
           useGlobalJson: true
           performMultiLevelLookup: true
+
+      - pwsh: |
+          . (Join-Path "$(Build.SourcesDirectory)" eng common scripts Helpers PSModule-Helpers.ps1)
+          Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
+        displayName: Install compatibility test YAML dependency
