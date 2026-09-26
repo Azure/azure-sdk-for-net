@@ -54,7 +54,7 @@ public static class ResponsesServerServiceCollectionExtensions
         // PostConfigure: apply environment variable overrides for SDK-level options
         services.PostConfigure<ResponsesServerOptions>(options =>
         {
-            if (options.DefaultFetchHistoryCount == ResponsesServerOptions.DefaultFetchHistoryCountValue)
+            if (!options.IsDefaultFetchHistoryCountConfigured)
             {
                 var envValue = Environment.GetEnvironmentVariable(
                     "DEFAULT_FETCH_HISTORY_ITEM_COUNT");

@@ -361,6 +361,11 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             {
                 foreach (var respId in responseIds)
                 {
+                    if (_historyItemIds.TryGetValue(respId, out var historyIds))
+                    {
+                        allIds.AddRange(historyIds);
+                    }
+
                     if (_inputItemIds.TryGetValue(respId, out var inputIds))
                     {
                         allIds.AddRange(inputIds);

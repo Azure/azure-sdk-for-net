@@ -249,6 +249,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
                 {
                     if (_records.TryGetValue(respId, out var r))
                     {
+                        allIds.AddRange(r.HistoryItemIds);
                         allIds.AddRange(r.InputItemIds);
                         allIds.AddRange(r.OutputItemIds);
                     }

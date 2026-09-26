@@ -109,10 +109,13 @@ public class InMemoryResponsesProviderTests : IDisposable
             response.Id, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
         var limited = (await _provider.GetHistoryItemIdsAsync(
             response.Id, response.Conversation.Id, 10, PlatformContext.Empty)).ToList();
+        var conversationOnly = (await _provider.GetHistoryItemIdsAsync(
+            null, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
 
         Assert.That(unlimited, Has.Count.EqualTo(122));
         Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));
         Assert.That(limited, Is.EqualTo(unlimited.TakeLast(10)));
+        Assert.That(conversationOnly, Is.EqualTo(unlimited));
     }
 
     // ---------------------------------------------------------------

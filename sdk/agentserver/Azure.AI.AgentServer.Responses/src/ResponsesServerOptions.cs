@@ -41,8 +41,11 @@ public class ResponsesServerOptions
             }
 
             _defaultFetchHistoryCount = value;
+            IsDefaultFetchHistoryCountConfigured = true;
         }
     }
+
+    internal bool IsDefaultFetchHistoryCountConfigured { get; private set; }
 
     /// <summary>
     /// The default value for <see cref="DefaultFetchHistoryCount"/>.
