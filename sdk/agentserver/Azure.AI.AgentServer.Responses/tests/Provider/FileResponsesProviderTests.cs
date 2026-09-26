@@ -161,6 +161,33 @@ public class FileResponsesProviderTests : IDisposable
     }
 
     [Test]
+    public async Task GetHistoryItemIdsAsync_UnlimitedReturnsAllItems()
+    {
+        var provider = NewProvider();
+        var historyIds = Enumerable.Range(0, 120).Select(i => $"history_{i}").ToArray();
+        var input = new OutputItemMessage(
+            "input_1", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>());
+        var response = new Models.ResponseObject("resp_history", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+        };
+        response.Output.Add(new OutputItemMessage(
+            "output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        await provider.CreateResponseAsync(
+            new CreateResponseRequest(response, new[] { input }, historyIds),
+            PlatformContext.Empty);
+
+        var unlimited = (await provider.GetHistoryItemIdsAsync(
+            response.Id, null, -1, PlatformContext.Empty)).ToList();
+        var limited = (await provider.GetHistoryItemIdsAsync(
+            response.Id, null, 10, PlatformContext.Empty)).ToList();
+
+        Assert.That(unlimited, Has.Count.EqualTo(122));
+        Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));
+        Assert.That(limited, Is.EqualTo(unlimited.TakeLast(10)));
+    }
+
+    [Test]
     public async Task Corrupt_Envelope_File_Is_Skipped_On_Rehydrate()
     {
         var writer = NewProvider();
