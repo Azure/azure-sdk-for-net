@@ -8,10 +8,12 @@
 
 - `OpenAI.RealtimeClientEventType` has been removed. The affected property now uses the existing `OpenAI.Realtime.RealtimeClientCommandKind` type instead.
 - `AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations()` and `GetBetaVoiceAgentTelephony()` now return `Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations`/`BetaVoiceAgentsTelephony` instead of the previous, no-longer-functional types of the same short name.
-- `AgentAdministrationClient.GenerateAgent`/`GenerateAgentAsync` have been removed; the operation they called no longer exists.
+- `AgentAdministrationClient.GenerateAgent`/`GenerateAgentAsync` are no longer directly callable on `AgentAdministrationClient`. This is unrelated to the namespace-leak fix: it comes from an upstream spec reorganization that moved the operation to a new `BetaAgents` sub-client, reachable via the new `AgentAdministrationClient.GetBetaAgentsClient()`. Update call sites from `client.GenerateAgent(...)` to `client.GetBetaAgentsClient().GenerateAgent(...)`.
 - `ShellToolboxTool`, `MCPToolboxTool`, `WebSearchToolboxTool`, `CodeInterpreterToolboxTool`, `ToolboxShellEnvironment`, and `ToolboxShellContainerReferenceEnvironment` are now marked `[Experimental]` (diagnostic `AAIP001`), as a consequence of the namespace-leak fix described below. Code using these types needs `#pragma warning disable AAIP001` (or an equivalent suppression) to build.
 
 ### Bugs Fixed
+
+- Fixed `AgentAdministrationClient.GenerateAgent`/`GenerateAgentAsync` (and the `BetaAgents` sub-client that now hosts them) being completely inaccessible: the generated `BetaAgents` type was only reachable through an internal aggregator client (`InternalProjectsClient`), so there was no public path to it at all. Added `AgentAdministrationClient.GetBetaAgentsClient()` and restored the strongly-typed `GenerateAgent(GenerateVoiceAgentRequest, ...)`/`GenerateAgentAsync(...)` overloads that previously existed directly on `AgentAdministrationClient`.
 
 - Fixed a bug where several Voice Agents-related types were incorrectly generated into the `OpenAI` namespace instead of `Azure.AI.Projects.Agents`:
   - `VoiceResponseBaseStatus`

@@ -57,6 +57,7 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
+    private Azure.AI.Projects.Agents._Beta.BetaAgents _cachedBetaAgents;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
@@ -1093,6 +1094,16 @@ public partial class AgentAdministrationClient
     public virtual AgentToolboxes GetAgentToolboxes()
     {
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
+    }
+
+    /// <summary>
+    /// Gets the lazily-initialized BetaAgents sub-client. The generated BetaAgents type is
+    /// otherwise only reachable through the internal InternalProjectsClient aggregator, which
+    /// would leave its operations (e.g. GenerateAgent) completely inaccessible externally.
+    /// </summary>
+    public virtual Azure.AI.Projects.Agents._Beta.BetaAgents GetBetaAgentsClient()
+    {
+        return Volatile.Read(ref _cachedBetaAgents) ?? Interlocked.CompareExchange(ref _cachedBetaAgents, new Azure.AI.Projects.Agents._Beta.BetaAgents(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBetaAgents;
     }
 
     /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
