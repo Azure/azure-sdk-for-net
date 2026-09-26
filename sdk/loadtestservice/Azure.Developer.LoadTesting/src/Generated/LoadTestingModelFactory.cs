@@ -297,6 +297,15 @@ namespace Azure.Developer.LoadTesting
             return new TestPreferences(enableAIErrorInsights, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="LoadTesting.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Test app components. </summary>
         /// <param name="components">
         /// Azure resource collection { resource id (fully qualified resource Id e.g
