@@ -235,6 +235,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>
+        [WirePath("properties.gatewayDefaultSite")]
+        public WritableSubResource GatewayDefaultSite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayDefaultSite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayPropertiesFormat();
+                }
+                Properties.GatewayDefaultSite = value;
+            }
+        }
+
         /// <summary> The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway. </summary>
         [WirePath("properties.sku")]
         public VirtualNetworkGatewaySku Sku
@@ -496,24 +514,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
                 Properties.AutoScaleBounds = value;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.gatewayDefaultSite.id")]
-        public ResourceIdentifier GatewayDefaultSiteId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.GatewayDefaultSiteId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayPropertiesFormat();
-                }
-                Properties.GatewayDefaultSiteId = value;
             }
         }
     }

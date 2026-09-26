@@ -14,7 +14,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of the ExpressRouteConnection subresource. </summary>
     internal partial class ExpressRouteConnectionProperties : IJsonModel<ExpressRouteConnectionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionProperties"/> for deserialization. </summary>
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("expressRouteCircuitPeering"u8);
-            writer.WriteStringValue(ExpressRouteCircuitPeering);
+            SerializeExpressRouteCircuitPeeringId(writer, options);
             if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NetworkProvisioningState? provisioningState = default;
-            ResourceIdentifier expressRouteCircuitPeering = default;
+            ResourceIdentifier expressRouteCircuitPeeringId = default;
             string authorizationKey = default;
             int? routingWeight = default;
             bool? enableInternetSecurity = default;
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("expressRouteCircuitPeering"u8))
                 {
-                    expressRouteCircuitPeering = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeExpressRouteCircuitPeeringId(prop, ref expressRouteCircuitPeeringId);
                     continue;
                 }
                 if (prop.NameEquals("authorizationKey"u8))
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ExpressRouteConnectionProperties(
                 provisioningState,
-                expressRouteCircuitPeering,
+                expressRouteCircuitPeeringId,
                 authorizationKey,
                 routingWeight,
                 enableInternetSecurity,

@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+- Preserved the legacy `ExpressRouteLinkData`, `PeerExpressRouteCircuitConnectionData`, `VpnSiteLinkData`, and `VpnSiteLinkConnectionData` model APIs alongside their new child-resource counterparts.
+- Preserved the legacy `FlowLogProperties` model name and its `FormatType` property for flow log format configuration.
+- Restored the legacy `RoutingConfiguration` and `PropagatedRouteTable` model names and their resource property types.
+
 ### Other Changes
 
 ## 1.1.0 (2026-04-16)

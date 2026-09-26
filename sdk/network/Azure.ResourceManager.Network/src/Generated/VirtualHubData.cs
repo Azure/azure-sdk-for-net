@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -96,6 +97,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of all virtual hub route table v2s associated with this VirtualHub. </summary>
+        [WirePath("properties.virtualHubRouteTableV2s")]
+        public IList<VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualHubRouteTableV2S;
+            }
+        }
+
         /// <summary> The sku of this VirtualHub. </summary>
         [WirePath("properties.sku")]
         public string Sku
@@ -124,6 +139,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of references to IpConfigurations. </summary>
+        [WirePath("properties.ipConfigurations")]
+        public IReadOnlyList<WritableSubResource> IPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.IPConfigurations;
+            }
+        }
+
         /// <summary> VirtualRouter ASN. </summary>
         [WirePath("properties.virtualRouterAsn")]
         public long? VirtualRouterAsn
@@ -139,6 +168,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualHubProperties();
                 }
                 Properties.VirtualRouterAsn = value;
+            }
+        }
+
+        /// <summary> VirtualRouter IPs. </summary>
+        [WirePath("properties.virtualRouterIps")]
+        public IList<string> VirtualRouterIPs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualRouterIPs;
             }
         }
 

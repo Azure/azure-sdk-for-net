@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24", }, new SubnetData() { AddressPrefix = "10.0.2.0/24", } }
             };
 
@@ -70,8 +67,8 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(vnetName, getVnetResponse.Value.Data.Name);
             Assert.NotNull(getVnetResponse.Value.Data.ResourceGuid);
             Assert.AreEqual("Succeeded", getVnetResponse.Value.Data.ProvisioningState.ToString());
-            Assert.AreEqual("10.1.1.1", getVnetResponse.Value.Data.DhcpOptions.DnsServers[0]);
-            Assert.AreEqual("10.1.2.4", getVnetResponse.Value.Data.DhcpOptions.DnsServers[1]);
+            Assert.AreEqual("10.1.1.1", getVnetResponse.Value.Data.DhcpOptionsDnsServers[0]);
+            Assert.AreEqual("10.1.2.4", getVnetResponse.Value.Data.DhcpOptionsDnsServers[1]);
             Assert.AreEqual("10.0.0.0/16", getVnetResponse.Value.Data.AddressSpace.AddressPrefixes[0]);
             Assert.AreEqual(subnet1Name, getVnetResponse.Value.Data.Subnets[0].Name);
             Assert.AreEqual(subnet2Name, getVnetResponse.Value.Data.Subnets[1].Name);
@@ -120,10 +117,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24" } }
             };
 
@@ -196,10 +190,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24", }, new SubnetData() { AddressPrefix = "10.0.2.0/24" } }
             };
 
@@ -311,10 +302,7 @@ namespace Azure.ResourceManager.Network.Tests
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
-                DhcpOptions = new DhcpOptions()
-                {
-                    DnsServers = { "10.1.1.1", "10.1.2.4" }
-                },
+                DhcpOptionsDnsServers = { "10.1.1.1", "10.1.2.4" },
                 Subnets = { new SubnetData() { AddressPrefix = "10.0.1.0/24" } }
             };
 

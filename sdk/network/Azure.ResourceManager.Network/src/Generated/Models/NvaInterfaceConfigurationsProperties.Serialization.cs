@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet, options);
             }
-            if (Optional.IsCollectionDefined(Type))
+            if (Optional.IsCollectionDefined(PropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStartArray();
-                foreach (NvaNicType item in Type)
+                foreach (NvaNicType item in PropertiesType)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NvaInVnetSubnetReferenceProperties subnet = default;
-            IList<NvaNicType> @type = default;
+            IList<NvaNicType> propertiesType = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(new NvaNicType(item.GetString()));
                     }
-                    @type = array;
+                    propertiesType = array;
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NvaInterfaceConfigurationsProperties(subnet, @type ?? new ChangeTrackingList<NvaNicType>(), name, additionalBinaryDataProperties);
+            return new NvaInterfaceConfigurationsProperties(subnet, propertiesType ?? new ChangeTrackingList<NvaNicType>(), name, additionalBinaryDataProperties);
         }
     }
 }

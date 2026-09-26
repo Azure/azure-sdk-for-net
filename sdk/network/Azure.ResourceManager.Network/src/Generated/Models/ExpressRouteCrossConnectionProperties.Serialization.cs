@@ -14,7 +14,6 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of ExpressRouteCrossConnection. </summary>
     internal partial class ExpressRouteCrossConnectionProperties : IJsonModel<ExpressRouteCrossConnectionProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -100,10 +99,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(ExpressRouteCircuit))
+            if (Optional.IsDefined(ExpressRouteCircuitId))
             {
                 writer.WritePropertyName("expressRouteCircuit"u8);
-                writer.WriteStringValue(ExpressRouteCircuit);
+                SerializeExpressRouteCircuitId(writer, options);
             }
             if (Optional.IsDefined(ServiceProviderProvisioningState))
             {
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
             int? sTag = default;
             string peeringLocation = default;
             int? bandwidthInMbps = default;
-            ResourceIdentifier expressRouteCircuit = default;
+            ResourceIdentifier expressRouteCircuitId = default;
             ServiceProviderProvisioningState? serviceProviderProvisioningState = default;
             string serviceProviderNotes = default;
             NetworkProvisioningState? provisioningState = default;
@@ -220,11 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("expressRouteCircuit"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    expressRouteCircuit = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeExpressRouteCircuitId(prop, ref expressRouteCircuitId);
                     continue;
                 }
                 if (prop.NameEquals("serviceProviderProvisioningState"u8))
@@ -275,7 +270,7 @@ namespace Azure.ResourceManager.Network.Models
                 sTag,
                 peeringLocation,
                 bandwidthInMbps,
-                expressRouteCircuit,
+                expressRouteCircuitId,
                 serviceProviderProvisioningState,
                 serviceProviderNotes,
                 provisioningState,
