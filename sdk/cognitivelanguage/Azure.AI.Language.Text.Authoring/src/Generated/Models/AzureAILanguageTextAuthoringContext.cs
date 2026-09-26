@@ -37,6 +37,7 @@ namespace Azure.AI.Language.Text.Authoring
     [ModelReaderWriterBuildable(typeof(DocumentSingleLabelClassificationEvalResult))]
     [ModelReaderWriterBuildable(typeof(DocumentTextSentimentEvalResult))]
     [ModelReaderWriterBuildable(typeof(EntityRecognitionEvalSummary))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(ExportedCustomAbstractiveSummarizationDocument))]
     [ModelReaderWriterBuildable(typeof(ExportedCustomAbstractiveSummarizationProjectAsset))]
     [ModelReaderWriterBuildable(typeof(ExportedCustomEntityRecognitionDocument))]

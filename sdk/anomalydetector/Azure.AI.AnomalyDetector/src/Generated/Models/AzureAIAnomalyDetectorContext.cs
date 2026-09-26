@@ -20,7 +20,7 @@ namespace Azure.AI.AnomalyDetector
     [ModelReaderWriterBuildable(typeof(AnomalyValue))]
     [ModelReaderWriterBuildable(typeof(CorrelationChanges))]
     [ModelReaderWriterBuildable(typeof(DiagnosticsInfo))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(ModelInfo))]
     [ModelReaderWriterBuildable(typeof(ModelList))]
     [ModelReaderWriterBuildable(typeof(ModelState))]

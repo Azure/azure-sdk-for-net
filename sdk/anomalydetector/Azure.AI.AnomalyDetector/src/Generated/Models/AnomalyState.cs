@@ -21,7 +21,7 @@ namespace Azure.AI.AnomalyDetector
         internal AnomalyState(DateTimeOffset timestamp)
         {
             Timestamp = timestamp;
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<ErrorResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyState"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IList<ErrorResponse> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyState(DateTimeOffset timestamp, AnomalyValue value, IList<ErrorResult> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             Value = value;
@@ -44,6 +44,6 @@ namespace Azure.AI.AnomalyDetector
         public AnomalyValue Value { get; }
 
         /// <summary> Error message for the current time stamp. </summary>
-        public IList<ErrorResponse> Errors { get; }
+        public IList<ErrorResult> Errors { get; }
     }
 }

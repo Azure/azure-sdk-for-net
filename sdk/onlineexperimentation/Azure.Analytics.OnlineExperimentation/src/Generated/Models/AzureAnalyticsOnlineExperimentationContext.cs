@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.Analytics.OnlineExperimentation
 {
@@ -16,6 +17,7 @@ namespace Azure.Analytics.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(AggregatedValue))]
     [ModelReaderWriterBuildable(typeof(AverageMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(DiagnosticDetail))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(EventCountMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(EventRateMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(ExperimentMetric))]
@@ -24,6 +26,7 @@ namespace Azure.Analytics.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(ObservedEvent))]
     [ModelReaderWriterBuildable(typeof(PagedExperimentMetric))]
     [ModelReaderWriterBuildable(typeof(PercentileMetricDefinition))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SumMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(UnknownExperimentMetricDefinition))]
     [ModelReaderWriterBuildable(typeof(UserCountMetricDefinition))]
