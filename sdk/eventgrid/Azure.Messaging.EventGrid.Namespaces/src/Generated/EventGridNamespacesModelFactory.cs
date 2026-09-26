@@ -15,6 +15,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EventGridNamespacesModelFactory
     {
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Namespaces.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Details of the Receive operation response. </summary>
         /// <param name="details"> Array of receive responses, one per cloud event. </param>
