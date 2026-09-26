@@ -1,4 +1,4 @@
-#Requires -Version 7.0
+#Requires -Version 7.6
 <#
 .SYNOPSIS
 Compares existing SDK assemblies with the latest stable NuGet release, without building the SDK.

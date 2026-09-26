@@ -1,4 +1,5 @@
 #Requires -Version 7.0
+# These helpers report runtime mismatches without loading the detector's SDK assemblies.
 
 . (Join-Path $PSScriptRoot '..' '..' 'common' 'scripts' 'logging.ps1')
 

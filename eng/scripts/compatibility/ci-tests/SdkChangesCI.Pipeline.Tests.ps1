@@ -136,4 +136,18 @@ Describe 'Automatic SDK PR YAML integration' -Tag 'UnitTest' {
             $_['pwsh'] -is [string] -and $_.pwsh -match 'Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7"'
         }).Count | Should -Be 1
     }
+
+    It 'installs the YAML dependency before the engineering scripts pipeline discovers unit tests' {
+        $pipeline = Get-Content -LiteralPath (Join-Path $repo 'eng' 'scripts' 'ci.yml') -Raw | ConvertFrom-Yaml
+        $pipeline.extends.template | Should -Be '/eng/common/pipelines/templates/stages/archetype-sdk-tool-pwsh.yml'
+        $pipeline.extends.parameters.TargetDirectory | Should -Be 'eng/scripts/'
+        $pipeline.extends.parameters.TargetTags | Should -Be 'UnitTest'
+        $install = @(Get-YamlObjects $pipeline.extends.parameters.PreTestSteps | Where-Object {
+            $_['pwsh'] -is [string] -and $_.pwsh -match 'Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7"'
+        })
+        $install.Count | Should -Be 1
+        $install[0].pwsh | Should -Match 'PSModule-Helpers.ps1'
+        $install[0].pwsh | Should -Match '\| Import-Module'
+        $install[0].Contains('condition') | Should -BeFalse
+    }
 }

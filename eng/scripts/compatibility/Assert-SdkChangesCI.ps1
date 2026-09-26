@@ -1,4 +1,5 @@
 #Requires -Version 7.0
+# Report validation does not load MSBuild and must report errors collected on unsupported hosts.
 <#
 .SYNOPSIS
 Enforces collected native SDK API verdicts after existing CI validations and before report publication.

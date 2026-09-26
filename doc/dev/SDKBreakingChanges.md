@@ -40,8 +40,11 @@ Generate and compile current artifacts separately when needed. Matching
 portable or embedded PDBs are required to verify source checksums; build-input
 timestamps supplement that check. The PowerShell host must run on a .NET
 runtime compatible with the selected SDK's MSBuild diagnostic reader. For the
-current .NET 10 SDK, use PowerShell 7.6 or newer; installing an SDK alone does
-not upgrade PowerShell.
+current .NET 10 SDK, the detector requires PowerShell 7.6 or newer; installing
+an SDK alone does not upgrade PowerShell. The CI collector, assertion, and
+reporting helpers retain PowerShell 7.0 support because they do not load
+MSBuild. This lets an unsupported host publish explicit prerequisite errors
+and fail the final assertion, rather than exit before producing any reports.
 
 The detector evaluates all declared target frameworks unless `TargetFramework`
 is set in the environment. `Configuration` must match the prepared artifacts:
@@ -131,7 +134,7 @@ Each classified .NET change includes a `mitigation` route:
 
 | Route | Preconditions and entry point |
 | --- | --- |
-| `generator` | A documented deterministic generator pattern below matches and its preconditions are verified. Invoke the SDK's existing [mitigate-breaking-changes skill](../../.github/skills/mitigate-breaking-changes/SKILL.md), then regenerate using the existing generator and matching previous contract. |
+| `generator` | A documented deterministic generator pattern below matches and its preconditions are verified. Invoke the SDK's existing [mitigate-breaking-changes skill](https://github.com/Azure/azure-sdk-for-net/blob/main/.github/skills/mitigate-breaking-changes/SKILL.md), then regenerate using the existing generator and matching previous contract. |
 | `client customization` | A verified client-layer change can preserve public and wire behavior. Use `azsdk_customized_code_update` with the selected change, local TypeSpec project, and approved edit scope. This is the current name of the tool previously called `azsdk_typespec_customized_code_update`. |
 | `manual` | The mapping, semantics, generator support, or owner decision is missing. Explain what must be established; do not apply an automatic fix. |
 
@@ -216,7 +219,7 @@ overload.
 representation of unchanged HTTP conditional headers.
 
 **Resolution:** Route to `generator` only when the existing
-[BackCompatHelper](../../eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Utilities/BackCompatHelper.cs)
+[BackCompatHelper](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Utilities/BackCompatHelper.cs)
 can match the previous public method to a current method with the same name,
 return type, remaining parameters, and supported conditional-header
 transformation. Existing custom overloads and approved method removals must
@@ -238,9 +241,9 @@ its input values.
 constructor argument positions.
 
 **Resolution:** The existing
-[ModelFactoryVisitor](../../eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Visitors/ModelFactoryVisitor.cs)
+[ModelFactoryVisitor](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Visitors/ModelFactoryVisitor.cs)
 and
-[ModelFactoryBackwardCompatHelper](../../eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Visitors/ModelFactoryBackwardCompatHelper.cs)
+[ModelFactoryBackwardCompatHelper](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/Azure.Generator.Management/src/Visitors/ModelFactoryBackwardCompatHelper.cs)
 restore supported previous-contract methods and repair argument forwarding.
 Use `generator` only after verifying that the old types and parameters still
 map to the current model and that the removal was not approved. Invoke the

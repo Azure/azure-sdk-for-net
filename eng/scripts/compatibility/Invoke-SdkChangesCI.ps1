@@ -1,4 +1,5 @@
 #Requires -Version 7.0
+# Keep reporting runnable on older hosts so detector prerequisites are captured in published artifacts.
 <#
 .SYNOPSIS
 Collects native SDK API change reports for the packages selected by this CI job.

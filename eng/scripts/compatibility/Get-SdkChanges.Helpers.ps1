@@ -1,4 +1,4 @@
-#Requires -Version 7.0
+#Requires -Version 7.6
 
 function Invoke-SdkChangeProcess {
     param([string[]]$Arguments, [string]$WorkingDirectory)

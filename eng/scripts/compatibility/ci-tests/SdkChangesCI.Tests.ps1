@@ -144,6 +144,22 @@ Describe 'SDK CI package selection' -Tag 'UnitTest' {
 Describe 'SDK CI runtime prerequisites' -Tag 'UnitTest' {
     BeforeEach { $repo = New-CIRepository }
 
+    It 'requires PowerShell <Version> for <Script> without preventing prerequisite reporting' -TestCases @(
+        @{ Script = 'Get-SdkChanges.ps1'; Version = '7.6' },
+        @{ Script = 'Get-SdkChanges.Helpers.ps1'; Version = '7.6' },
+        @{ Script = 'Invoke-SdkChangesCI.ps1'; Version = '7.0' },
+        @{ Script = 'Assert-SdkChangesCI.ps1'; Version = '7.0' },
+        @{ Script = 'SdkChangesCI.Helpers.ps1'; Version = '7.0' }
+    ) {
+        param($Script, $Version)
+        $tokens = $null
+        $parseErrors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile(
+            (Join-Path $PSScriptRoot '..' $Script), [ref]$tokens, [ref]$parseErrors)
+        $parseErrors.Count | Should -Be 0
+        $ast.ScriptRequirements.RequiredPSVersion | Should -Be ([version]$Version)
+    }
+
     It 'records the actual PowerShell executable and runtime, not just the installed SDK' {
         $runtime = Get-SdkChangesCIRuntime $repo.Root
         $runtime.powerShellVersion | Should -Be $PSVersionTable.PSVersion.ToString()
@@ -159,6 +175,31 @@ Describe 'SDK CI runtime prerequisites' -Tag 'UnitTest' {
         $runtime = Get-SdkChangesCIRuntime $repo.Root
         $runtime.supported | Should -BeFalse
         $runtime.error | Should -Match 'Installing the .NET SDK does not upgrade pwsh'
+    }
+
+    It 'persists and enforces real runtime prerequisite errors without launching the detector' {
+        Mock Set-PipelineVariable {}
+        Mock LogInfo {}
+        Mock LogWarning {}
+        Mock Invoke-SdkChangesCIProcess { throw 'The detector must not run on an unsupported host.' }
+        New-CIPackage $repo 'Azure.One' | Out-Null
+        $major = [System.Environment]::Version.Major + 1
+        Write-SdkChangesCIJson (Join-Path $repo.Root 'global.json') @{ sdk = @{ version = "$major.0.100" } }
+
+        $result = Invoke-CICollection $repo 'Azure.One'
+        $summary = Read-SdkChangesCIJson (Join-Path $result.Directory 'summary.json')
+        $summary.runtime.requiredRuntimeMajor | Should -Be $major
+        $summary.runtime.supported | Should -BeFalse
+        $summary.counts.detectorErrors | Should -Be 1
+        $summary.errors | Should -Contain $summary.runtime.error
+        $packageError = Read-SdkChangesCIJson (Join-Path $result.Directory 'Azure.One' 'error.json')
+        $packageError.message | Should -Be $summary.runtime.error
+        $packageError.message | Should -Match 'Installing the .NET SDK does not upgrade pwsh'
+        Test-Path -LiteralPath (Join-Path $result.Directory 'Azure.One' 'sdk-changes.json') | Should -BeFalse
+        $verdict = Test-SdkChangesCIReports $result.Directory 'Azure.One'
+        $verdict.Passed | Should -BeFalse
+        $verdict.Errors | Should -Contain $summary.runtime.error
+        Should -Invoke Invoke-SdkChangesCIProcess -Times 0 -Exactly
     }
 
     It 'reports missing or invalid SDK metadata' -TestCases @(
