@@ -146,7 +146,7 @@ Injected into every `CreateAsync` call, `ResponseContext` provides access to the
 
 - **`GetInputItemsAsync(resolveReferences, cancellationToken)`** — returns the resolved input items from the request. Item references are resolved to their content by default; pass `resolveReferences: false` to receive them as-is. Computed once and cached.
 - **`GetInputTextAsync(resolveReferences, cancellationToken)`** — shorthand that resolves input items and concatenates all text content from `ItemMessage` entries.
-- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **`GetHistoryAsync(cancellationToken)`** — returns output items from previous responses in the conversation chain (oldest-first). Uses `previous_response_id` to walk the conversation and resolves items via the provider. Limit controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: `-1`, unlimited). Positive values retain only the newest items.
 - **`ResponseId`** — the unique ID for this response, used to construct child item IDs.
 - **`ClientHeaders`** — forwarded HTTP headers from the original client request.
 - **`QueryParameters`** — query parameters from the original request.

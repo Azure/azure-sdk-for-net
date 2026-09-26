@@ -333,11 +333,11 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
+        var allIds = new List<string>();
+
         // previousResponseId path: return history + input + output of the previous response
         if (previousResponseId is not null)
         {
-            var allIds = new List<string>();
-
             if (_historyItemIds.TryGetValue(previousResponseId, out var historyIds))
             {
                 allIds.AddRange(historyIds);
@@ -352,14 +352,11 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             {
                 allIds.AddRange(outputIds);
             }
-
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
         }
 
         // conversationId path: return all item IDs from all responses in the conversation
         if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
         {
-            var allIds = new List<string>();
             lock (responseIds)
             {
                 foreach (var respId in responseIds)
@@ -375,11 +372,16 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
                     }
                 }
             }
-
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
         }
 
-        return Task.FromResult(Enumerable.Empty<string>());
+        var uniqueIds = allIds.Distinct().ToList();
+        IEnumerable<string> result = limit switch
+        {
+            -1 => uniqueIds,
+            <= 0 => Enumerable.Empty<string>(),
+            _ => uniqueIds.TakeLast(limit),
+        };
+        return Task.FromResult(result);
     }
 
     private static string? GetItemId(OutputItem item)

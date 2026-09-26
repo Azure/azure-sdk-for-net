@@ -170,6 +170,7 @@ public class FileResponsesProviderTests : IDisposable
         var response = new Models.ResponseObject("resp_history", "gpt-4o")
         {
             Status = ResponseStatus.Completed,
+            Conversation = new ConversationReference("conv_history"),
         };
         response.Output.Add(new OutputItemMessage(
             "output_1", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
@@ -178,9 +179,9 @@ public class FileResponsesProviderTests : IDisposable
             PlatformContext.Empty);
 
         var unlimited = (await provider.GetHistoryItemIdsAsync(
-            response.Id, null, -1, PlatformContext.Empty)).ToList();
+            response.Id, response.Conversation.Id, -1, PlatformContext.Empty)).ToList();
         var limited = (await provider.GetHistoryItemIdsAsync(
-            response.Id, null, 10, PlatformContext.Empty)).ToList();
+            response.Id, response.Conversation.Id, 10, PlatformContext.Empty)).ToList();
 
         Assert.That(unlimited, Has.Count.EqualTo(122));
         Assert.That(unlimited.Take(120), Is.EqualTo(historyIds));

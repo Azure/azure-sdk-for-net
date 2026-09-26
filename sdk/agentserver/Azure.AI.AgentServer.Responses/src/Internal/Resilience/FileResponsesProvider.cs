@@ -232,18 +232,17 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
+        var allIds = new List<string>();
+
         if (previousResponseId is not null && _records.TryGetValue(previousResponseId, out var prev))
         {
-            var allIds = new List<string>();
             allIds.AddRange(prev.HistoryItemIds);
             allIds.AddRange(prev.InputItemIds);
             allIds.AddRange(prev.OutputItemIds);
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
         }
 
         if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
         {
-            var allIds = new List<string>();
             lock (responseIds)
             {
                 foreach (var respId in responseIds)
@@ -255,11 +254,16 @@ internal sealed class FileResponsesProvider : ResponsesProvider
                     }
                 }
             }
-
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
         }
 
-        return Task.FromResult(Enumerable.Empty<string>());
+        var uniqueIds = allIds.Distinct().ToList();
+        IEnumerable<string> result = limit switch
+        {
+            -1 => uniqueIds,
+            <= 0 => Enumerable.Empty<string>(),
+            _ => uniqueIds.TakeLast(limit),
+        };
+        return Task.FromResult(result);
     }
 
     /// <summary>

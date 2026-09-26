@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.8 (2026-08-12)
 
+### Bugs Fixed
+- Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
+  automatic truncation of conversation history. Positive limits remain supported.
+
 ### Features Added
 - Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
   are composed directly on the `Azure.AI.AgentServer.Core` durable-task and event-stream primitives
