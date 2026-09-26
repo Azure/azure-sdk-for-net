@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -17,35 +16,35 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The result of the List Blobs API. </summary>
-    internal partial class ListBlobsFlatSegmentResponse : IPersistableModel<ListBlobsFlatSegmentResponse>, IXmlSerializable
+    /// <summary> The result of the List Blobs Hierarchical API. </summary>
+    internal partial class ListBlobsHierarchySegmentResult : IPersistableModel<ListBlobsHierarchySegmentResult>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/> for deserialization. </summary>
-        internal ListBlobsFlatSegmentResponse()
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResult"/> for deserialization. </summary>
+        internal ListBlobsHierarchySegmentResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListBlobsFlatSegmentResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListBlobsHierarchySegmentResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsFlatSegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeListBlobsFlatSegmentResponse(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeListBlobsHierarchySegmentResult(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListBlobsFlatSegmentResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListBlobsHierarchySegmentResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsFlatSegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
@@ -65,22 +64,22 @@ namespace Azure.Storage.Blobs.Models
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListBlobsFlatSegmentResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListBlobsHierarchySegmentResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListBlobsFlatSegmentResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListBlobsHierarchySegmentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListBlobsFlatSegmentResponse IPersistableModel<ListBlobsFlatSegmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListBlobsHierarchySegmentResult IPersistableModel<ListBlobsHierarchySegmentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListBlobsFlatSegmentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ListBlobsHierarchySegmentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListBlobsFlatSegmentResponse"/> from. </param>
-        public static explicit operator ListBlobsFlatSegmentResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListBlobsHierarchySegmentResult"/> from. </param>
+        public static explicit operator ListBlobsHierarchySegmentResult(Response response)
         {
             using Stream stream = response.ContentStream;
             if (stream == null)
@@ -88,7 +87,7 @@ namespace Azure.Storage.Blobs.Models
                 return default;
             }
 
-            return DeserializeListBlobsFlatSegmentResponse(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return DeserializeListBlobsHierarchySegmentResult(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -113,10 +112,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsFlatSegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(ListBlobsFlatSegmentResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListBlobsHierarchySegmentResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartAttribute("ServiceEndpoint");
@@ -125,6 +124,12 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartAttribute("ContainerName");
             writer.WriteValue(ContainerName);
             writer.WriteEndAttribute();
+            if (Optional.IsDefined(Delimiter))
+            {
+                writer.WriteStartElement("Delimiter");
+                writer.WriteValue(Delimiter);
+                writer.WriteEndElement();
+            }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WriteStartElement("Prefix");
@@ -144,12 +149,7 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteEndElement();
             }
             writer.WriteStartElement("Blobs");
-            foreach (BlobItemInternal item in BlobItems)
-            {
-                writer.WriteStartElement("Blob");
-                writer.WriteObjectValue(item, options);
-                writer.WriteEndElement();
-            }
+            writer.WriteObjectValue(HierarchicalList, options);
             writer.WriteEndElement();
             if (Optional.IsDefined(NextMarker))
             {
@@ -161,7 +161,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListBlobsFlatSegmentResponse DeserializeListBlobsFlatSegmentResponse(XElement element, ModelReaderWriterOptions options)
+        internal static ListBlobsHierarchySegmentResult DeserializeListBlobsHierarchySegmentResult(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
@@ -170,10 +170,11 @@ namespace Azure.Storage.Blobs.Models
 
             string serviceEndpoint = default;
             string containerName = default;
+            string delimiter = default;
             string prefix = default;
             string marker = default;
             int? maxResults = default;
-            IList<BlobItemInternal> blobItems = default;
+            BlobHierarchyList hierarchicalList = default;
             string nextMarker = default;
 
             foreach (var attr in element.Attributes())
@@ -194,6 +195,11 @@ namespace Azure.Storage.Blobs.Models
             foreach (var child in element.Elements())
             {
                 string localName = child.Name.LocalName;
+                if (localName == "Delimiter")
+                {
+                    delimiter = (string)child;
+                    continue;
+                }
                 if (localName == "Prefix")
                 {
                     prefix = (string)child;
@@ -211,12 +217,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "Blobs")
                 {
-                    List<BlobItemInternal> array = new List<BlobItemInternal>();
-                    foreach (var e in child.Elements("Blob"))
-                    {
-                        array.Add(BlobItemInternal.DeserializeBlobItemInternal(e, options));
-                    }
-                    blobItems = array;
+                    hierarchicalList = BlobHierarchyList.DeserializeBlobHierarchyList(child, options);
                     continue;
                 }
                 if (localName == "NextMarker")
@@ -225,13 +226,14 @@ namespace Azure.Storage.Blobs.Models
                     continue;
                 }
             }
-            return new ListBlobsFlatSegmentResponse(
+            return new ListBlobsHierarchySegmentResult(
                 serviceEndpoint,
                 containerName,
+                delimiter,
                 prefix,
                 marker,
                 maxResults,
-                blobItems,
+                hierarchicalList,
                 nextMarker);
         }
 
