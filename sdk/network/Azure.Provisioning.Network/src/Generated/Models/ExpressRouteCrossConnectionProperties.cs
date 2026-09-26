@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<int> _sTag;
         private BicepValue<string> _peeringLocation;
         private BicepValue<int> _bandwidthInMbps;
-        private BicepValue<ResourceIdentifier> _expressRouteCircuit;
+        private BicepValue<ResourceIdentifier> _expressRouteCircuitId;
         private BicepValue<ServiceProviderProvisioningState> _serviceProviderProvisioningState;
         private BicepValue<string> _serviceProviderNotes;
         private BicepValue<NetworkProvisioningState> _provisioningState;
@@ -80,18 +80,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteCircuit. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuit
+        /// <summary> Gets or sets the ExpressRouteCircuitId. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuitId
         {
             get
             {
                 Initialize();
-                return _expressRouteCircuit;
+                return _expressRouteCircuitId;
             }
             set
             {
                 Initialize();
-                _expressRouteCircuit.Assign(value);
+                _expressRouteCircuitId.Assign(value);
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.Network
             _sTag = DefineProperty<int>(nameof(STag), new string[] { "sTag" }, isOutput: true);
             _peeringLocation = DefineProperty<string>(nameof(PeeringLocation), new string[] { "peeringLocation" }, isOutput: true);
             _bandwidthInMbps = DefineProperty<int>(nameof(BandwidthInMbps), new string[] { "bandwidthInMbps" }, isOutput: true);
-            _expressRouteCircuit = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteCircuit), new string[] { "expressRouteCircuit" });
+            _expressRouteCircuitId = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteCircuitId), new string[] { "expressRouteCircuit" });
             _serviceProviderProvisioningState = DefineProperty<ServiceProviderProvisioningState>(nameof(ServiceProviderProvisioningState), new string[] { "serviceProviderProvisioningState" });
             _serviceProviderNotes = DefineProperty<string>(nameof(ServiceProviderNotes), new string[] { "serviceProviderNotes" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

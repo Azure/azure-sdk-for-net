@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private NetworkVirtualAppliancePropertiesFormat _properties;
         private ManagedServiceIdentity _identity;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new NetworkVirtualAppliance. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -116,7 +117,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -460,7 +461,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<NetworkVirtualAppliancePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

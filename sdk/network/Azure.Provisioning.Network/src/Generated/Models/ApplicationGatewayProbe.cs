@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private ApplicationGatewayProbePropertiesFormat _properties;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepValue<string> _type;
 
         /// <summary> Creates a new ApplicationGatewayProbe. </summary>
@@ -53,7 +54,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -120,40 +121,6 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
                 Properties.Path = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Interval. </summary>
-        public BicepValue<int> Interval
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Interval;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayProbePropertiesFormat();
-                }
-                Properties.Interval = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Timeout. </summary>
-        public BicepValue<int> Timeout
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Timeout;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayProbePropertiesFormat();
-                }
-                Properties.Timeout = value;
             }
         }
 
@@ -242,23 +209,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EnableProbeProxyProtocolHeader. </summary>
-        public BicepValue<bool> EnableProbeProxyProtocolHeader
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableProbeProxyProtocolHeader;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayProbePropertiesFormat();
-                }
-                Properties.EnableProbeProxyProtocolHeader = value;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -295,7 +245,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ApplicationGatewayProbePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }

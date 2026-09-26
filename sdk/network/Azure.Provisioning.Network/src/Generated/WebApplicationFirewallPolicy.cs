@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private WebApplicationFirewallPolicyPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new WebApplicationFirewallPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -101,7 +102,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -248,7 +249,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<WebApplicationFirewallPolicyPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

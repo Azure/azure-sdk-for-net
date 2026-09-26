@@ -61,7 +61,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Destination. </summary>
-        public RoutingRuleRouteDestination Destination
+        internal RoutingRuleRouteDestination Destination
         {
             get
             {
@@ -87,6 +87,23 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _nextHop, value);
+            }
+        }
+
+        /// <summary> Gets or sets the DestinationAddress. </summary>
+        public BicepValue<string> DestinationAddress
+        {
+            get
+            {
+                return Destination is null ? default : Destination.DestinationAddress;
+            }
+            set
+            {
+                if (Destination is null)
+                {
+                    Destination = new RoutingRuleRouteDestination();
+                }
+                Destination.DestinationAddress = value;
             }
         }
 

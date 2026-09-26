@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _privateIPAddress;
         private BicepValue<NetworkIPAllocationMethod> _privateIPAllocationMethod;
         private NetworkSubResource _subnet;
-        private BicepValue<bool> _primary;
+        private BicepValue<bool> _isPrimary;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ApplicationGatewayPrivateLinkIPConfigurationProperties. </summary>
@@ -70,18 +70,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Primary. </summary>
-        public BicepValue<bool> Primary
+        /// <summary> Gets or sets the IsPrimary. </summary>
+        public BicepValue<bool> IsPrimary
         {
             get
             {
                 Initialize();
-                return _primary;
+                return _isPrimary;
             }
             set
             {
                 Initialize();
-                _primary.Assign(value);
+                _isPrimary.Assign(value);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Network
             _privateIPAddress = DefineProperty<string>(nameof(PrivateIPAddress), new string[] { "privateIPAddress" });
             _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>(nameof(PrivateIPAllocationMethod), new string[] { "privateIPAllocationMethod" });
             _subnet = DefineModelProperty<NetworkSubResource>(nameof(Subnet), new string[] { "subnet" });
-            _primary = DefineProperty<bool>(nameof(Primary), new string[] { "primary" });
+            _isPrimary = DefineProperty<bool>(nameof(IsPrimary), new string[] { "primary" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _rewriteRuleSet;
         private NetworkSubResource _redirectConfiguration;
         private NetworkSubResource _loadDistributionPolicy;
-        private BicepValue<ResourceIdentifier> _entraJWTValidationConfig;
+        private BicepValue<ResourceIdentifier> _entraJwtValidationConfigId;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ApplicationGatewayRequestRoutingRulePropertiesFormat. </summary>
@@ -166,18 +166,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EntraJWTValidationConfig. </summary>
-        public BicepValue<ResourceIdentifier> EntraJWTValidationConfig
+        /// <summary> Gets or sets the EntraJwtValidationConfigId. </summary>
+        public BicepValue<ResourceIdentifier> EntraJwtValidationConfigId
         {
             get
             {
                 Initialize();
-                return _entraJWTValidationConfig;
+                return _entraJwtValidationConfigId;
             }
             set
             {
                 Initialize();
-                _entraJWTValidationConfig.Assign(value);
+                _entraJwtValidationConfigId.Assign(value);
             }
         }
 
@@ -323,7 +323,7 @@ namespace Azure.Provisioning.Network
             _rewriteRuleSet = DefineModelProperty<NetworkSubResource>(nameof(RewriteRuleSet), new string[] { "rewriteRuleSet" });
             _redirectConfiguration = DefineModelProperty<NetworkSubResource>(nameof(RedirectConfiguration), new string[] { "redirectConfiguration" });
             _loadDistributionPolicy = DefineModelProperty<NetworkSubResource>(nameof(LoadDistributionPolicy), new string[] { "loadDistributionPolicy" });
-            _entraJWTValidationConfig = DefineProperty<ResourceIdentifier>(nameof(EntraJWTValidationConfig), new string[] { "entraJWTValidationConfig" });
+            _entraJwtValidationConfigId = DefineProperty<ResourceIdentifier>(nameof(EntraJwtValidationConfigId), new string[] { "entraJWTValidationConfig" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

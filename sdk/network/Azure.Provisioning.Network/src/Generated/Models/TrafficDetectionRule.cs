@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Ddos Custom Policy traffic detection rule. </summary>
     public partial class TrafficDetectionRule : ProvisionableConstruct
     {
-        private BicepValue<DdosCustomPolicyProtocol> _trafficType;
+        private BicepValue<DdosTrafficType> _trafficType;
         private BicepValue<int> _packetsPerSecond;
 
         /// <summary> Creates a new TrafficDetectionRule. </summary>
@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the TrafficType. </summary>
-        public BicepValue<DdosCustomPolicyProtocol> TrafficType
+        public BicepValue<DdosTrafficType> TrafficType
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _trafficType = DefineProperty<DdosCustomPolicyProtocol>(nameof(TrafficType), new string[] { "trafficType" });
+            _trafficType = DefineProperty<DdosTrafficType>(nameof(TrafficType), new string[] { "trafficType" });
             _packetsPerSecond = DefineProperty<int>(nameof(PacketsPerSecond), new string[] { "packetsPerSecond" });
             DefineAdditionalProperties();
         }

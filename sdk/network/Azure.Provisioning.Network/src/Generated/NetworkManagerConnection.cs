@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -19,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private SystemData _systemData;
         private NetworkManagerConnectionProperties _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new NetworkManagerConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -79,7 +80,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -143,7 +144,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkManagerConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

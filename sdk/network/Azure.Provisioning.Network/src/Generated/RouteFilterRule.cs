@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -18,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private RouteFilterRulePropertiesFormat _properties;
         private BicepValue<AzureLocation> _location;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<RouteFilter> _parent;
 
         /// <summary> Creates a new RouteFilterRule. </summary>
@@ -84,7 +85,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -180,7 +181,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<RouteFilterRulePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<RouteFilter>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

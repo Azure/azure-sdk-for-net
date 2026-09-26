@@ -94,23 +94,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteCircuitPeering. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuitPeering
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuitPeering;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteConnectionProperties();
-                }
-                Properties.ExpressRouteCircuitPeering = value;
-            }
-        }
-
         /// <summary> Gets or sets the AuthorizationKey. </summary>
         public BicepValue<string> AuthorizationKey
         {

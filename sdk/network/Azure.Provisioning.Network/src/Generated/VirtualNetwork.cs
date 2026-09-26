@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private VirtualNetworkPropertiesFormat _properties;
         private ExtendedAzureLocation _extendedLocation;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new VirtualNetwork. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -117,7 +118,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -271,23 +272,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Encryption. </summary>
-        public VirtualNetworkEncryption Encryption
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Encryption;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPropertiesFormat();
-                }
-                Properties.Encryption = value;
-            }
-        }
-
         /// <summary> Gets or sets the IPAllocations. </summary>
         public BicepList<NetworkSubResource> IPAllocations
         {
@@ -315,23 +299,6 @@ namespace Azure.Provisioning.Network
                     Properties = new VirtualNetworkPropertiesFormat();
                 }
                 return Properties.FlowLogs;
-            }
-        }
-
-        /// <summary> Gets or sets the PrivateEndpointVNetPolicies. </summary>
-        public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVNetPolicies
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointVNetPolicies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPropertiesFormat();
-                }
-                Properties.PrivateEndpointVNetPolicies = value;
             }
         }
 
@@ -369,6 +336,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Enforcement. </summary>
+        public BicepValue<VirtualNetworkEncryptionEnforcement> EncryptionEnforcement
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionEnforcement;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.EncryptionEnforcement = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> DefaultPublicNatGatewayId
         {
@@ -392,7 +376,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<VirtualNetworkPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

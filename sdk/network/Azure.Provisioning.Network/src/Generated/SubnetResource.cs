@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -17,7 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SubnetPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<VirtualNetwork> _parent;
 
         /// <summary> Creates a new SubnetResource. </summary>
@@ -68,7 +69,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -319,40 +320,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpointNetworkPolicies. </summary>
-        public BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicies
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                Properties.PrivateEndpointNetworkPolicies = value;
-            }
-        }
-
-        /// <summary> Gets or sets the PrivateLinkServiceNetworkPolicies. </summary>
-        public BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> PrivateLinkServiceNetworkPolicies
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicies;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                Properties.PrivateLinkServiceNetworkPolicies = value;
-            }
-        }
-
         /// <summary> Gets or sets the ApplicationGatewayIPConfigurations. </summary>
         public BicepList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations
         {
@@ -462,7 +429,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<SubnetPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<VirtualNetwork>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

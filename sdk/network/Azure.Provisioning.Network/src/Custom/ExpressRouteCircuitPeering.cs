@@ -5,12 +5,19 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network;
 
 public partial class ExpressRouteCircuitPeering
 {
+    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
+    /// <inheritdoc cref="ExpressRouteConnection"/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use ExpressRouteConnection instead.")]
+    public BicepValue<ResourceIdentifier> ExpressRouteConnectionId => ExpressRouteConnection;
+
     /// <summary> Gets the peer ExpressRoute circuit connection resources. </summary>
     [CodeGenMember("PeeredConnections")]
     public BicepList<PeerExpressRouteCircuitConnection> PeeredConnectionResources
@@ -25,7 +32,8 @@ public partial class ExpressRouteCircuitPeering
         }
     }
 
-    /// <summary> Gets the peer ExpressRoute circuit connection data models. </summary>
+    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
+    /// <inheritdoc cref="PeeredConnectionResources"/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This property is deprecated and it will be removed in a future version. Please use PeeredConnectionResources instead.")]
     public BicepList<PeerExpressRouteCircuitConnectionData> PeeredConnections
@@ -43,21 +51,4 @@ public partial class ExpressRouteCircuitPeering
     partial void DefineAdditionalProperties()
     {
     }
-}
-
-internal partial class ExpressRouteCircuitPeeringPropertiesFormat
-{
-#pragma warning disable CS0618
-    private BicepList<PeerExpressRouteCircuitConnectionData> _peeredConnectionData;
-
-    internal BicepList<PeerExpressRouteCircuitConnectionData> PeeredConnectionData
-    {
-        get { Initialize(); return _peeredConnectionData; }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _peeredConnectionData = DefineListProperty<PeerExpressRouteCircuitConnectionData>("PeeredConnections", new string[] { "peeredConnections" }, isOutput: true);
-    }
-#pragma warning restore CS0618
 }

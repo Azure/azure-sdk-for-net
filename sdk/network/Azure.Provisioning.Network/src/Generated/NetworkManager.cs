@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private NetworkManagerProperties _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private SystemData _systemData;
 
         /// <summary> Creates a new NetworkManager. </summary>
@@ -103,7 +104,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -208,7 +209,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<NetworkManagerProperties>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             DefineAdditionalProperties();
         }

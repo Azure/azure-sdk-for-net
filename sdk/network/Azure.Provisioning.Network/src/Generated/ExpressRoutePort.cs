@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private ExpressRoutePortPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
 
         /// <summary> Creates a new ExpressRoutePort. </summary>
@@ -102,7 +103,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -294,7 +295,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ExpressRoutePortPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }

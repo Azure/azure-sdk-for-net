@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Provisioning;
 using Azure.Provisioning.Resources;
 
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.Network
         private ContainerNetworkInterfaceConfigurationPropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<string> _type;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new ContainerNetworkInterfaceConfiguration. </summary>
         public ContainerNetworkInterfaceConfiguration()
@@ -64,7 +65,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -127,7 +128,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<ContainerNetworkInterfaceConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

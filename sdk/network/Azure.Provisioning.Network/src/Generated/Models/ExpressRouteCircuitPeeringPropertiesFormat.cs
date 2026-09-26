@@ -30,7 +30,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _lastModifiedBy;
         private NetworkSubResource _routeFilter;
         private IPv6ExpressRouteCircuitPeeringConfig _ipv6PeeringConfig;
-        private BicepValue<ResourceIdentifier> _expressRouteConnection;
+        private BicepValue<ResourceIdentifier> _expressRouteConnectionId;
         private BicepList<ExpressRouteCircuitConnection> _connections;
         private BicepList<PeerExpressRouteCircuitConnection> _peeredConnections;
 
@@ -284,18 +284,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteConnection. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteConnection
+        /// <summary> Gets or sets the ExpressRouteConnectionId. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteConnectionId
         {
             get
             {
                 Initialize();
-                return _expressRouteConnection;
+                return _expressRouteConnectionId;
             }
             set
             {
                 Initialize();
-                _expressRouteConnection.Assign(value);
+                _expressRouteConnectionId.Assign(value);
             }
         }
 
@@ -362,7 +362,7 @@ namespace Azure.Provisioning.Network
             _lastModifiedBy = DefineProperty<string>(nameof(LastModifiedBy), new string[] { "lastModifiedBy" }, isOutput: true);
             _routeFilter = DefineModelProperty<NetworkSubResource>(nameof(RouteFilter), new string[] { "routeFilter" });
             _ipv6PeeringConfig = DefineModelProperty<IPv6ExpressRouteCircuitPeeringConfig>(nameof(IPv6PeeringConfig), new string[] { "ipv6PeeringConfig" });
-            _expressRouteConnection = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteConnection), new string[] { "expressRouteConnection" });
+            _expressRouteConnectionId = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteConnectionId), new string[] { "expressRouteConnection" });
             _connections = DefineListProperty<ExpressRouteCircuitConnection>(nameof(Connections), new string[] { "connections" });
             _peeredConnections = DefineListProperty<PeerExpressRouteCircuitConnection>(nameof(PeeredConnections), new string[] { "peeredConnections" }, isOutput: true);
             DefineAdditionalProperties();

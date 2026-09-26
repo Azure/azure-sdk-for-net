@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<int> _timeLimitInSeconds;
         private PacketCaptureStorageLocation _storageLocation;
         private BicepList<PacketCaptureFilter> _filters;
-        private BicepValue<bool> _continuousCapture;
+        private BicepValue<bool> _isContinuousCapture;
         private PacketCaptureSettings _captureSettings;
 
         /// <summary> Creates a new PacketCaptureCreateOrUpdateContent. </summary>
@@ -149,18 +149,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ContinuousCapture. </summary>
-        public BicepValue<bool> ContinuousCapture
+        /// <summary> Gets or sets the IsContinuousCapture. </summary>
+        public BicepValue<bool> IsContinuousCapture
         {
             get
             {
                 Initialize();
-                return _continuousCapture;
+                return _isContinuousCapture;
             }
             set
             {
                 Initialize();
-                _continuousCapture.Assign(value);
+                _isContinuousCapture.Assign(value);
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Provisioning.Network
             _timeLimitInSeconds = DefineProperty<int>(nameof(TimeLimitInSeconds), new string[] { "timeLimitInSeconds" });
             _storageLocation = DefineModelProperty<PacketCaptureStorageLocation>(nameof(StorageLocation), new string[] { "storageLocation" }, isRequired: true);
             _filters = DefineListProperty<PacketCaptureFilter>(nameof(Filters), new string[] { "filters" });
-            _continuousCapture = DefineProperty<bool>(nameof(ContinuousCapture), new string[] { "continuousCapture" });
+            _isContinuousCapture = DefineProperty<bool>(nameof(IsContinuousCapture), new string[] { "continuousCapture" });
             _captureSettings = DefineModelProperty<PacketCaptureSettings>(nameof(CaptureSettings), new string[] { "captureSettings" });
             DefineAdditionalProperties();
         }

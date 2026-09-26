@@ -30,8 +30,8 @@ namespace Azure.Provisioning.Network
         private BicepList<ServiceDelegation> _delegations;
         private BicepValue<string> _purpose;
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> _privateEndpointNetworkPolicies;
-        private BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> _privateLinkServiceNetworkPolicies;
+        private BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> _privateEndpointNetworkPolicy;
+        private BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> _privateLinkServiceNetworkPolicy;
         private BicepList<ApplicationGatewayIPConfiguration> _applicationGatewayIPConfigurations;
         private BicepValue<SharingScope> _sharingScope;
         private BicepValue<bool> _defaultOutboundAccess;
@@ -248,33 +248,33 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpointNetworkPolicies. </summary>
-        public BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicies
+        /// <summary> Gets or sets the PrivateEndpointNetworkPolicy. </summary>
+        public BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicy
         {
             get
             {
                 Initialize();
-                return _privateEndpointNetworkPolicies;
+                return _privateEndpointNetworkPolicy;
             }
             set
             {
                 Initialize();
-                _privateEndpointNetworkPolicies.Assign(value);
+                _privateEndpointNetworkPolicy.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the PrivateLinkServiceNetworkPolicies. </summary>
-        public BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> PrivateLinkServiceNetworkPolicies
+        /// <summary> Gets or sets the PrivateLinkServiceNetworkPolicy. </summary>
+        public BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> PrivateLinkServiceNetworkPolicy
         {
             get
             {
                 Initialize();
-                return _privateLinkServiceNetworkPolicies;
+                return _privateLinkServiceNetworkPolicy;
             }
             set
             {
                 Initialize();
-                _privateLinkServiceNetworkPolicies.Assign(value);
+                _privateLinkServiceNetworkPolicy.Assign(value);
             }
         }
 
@@ -407,8 +407,8 @@ namespace Azure.Provisioning.Network
             _delegations = DefineListProperty<ServiceDelegation>(nameof(Delegations), new string[] { "delegations" });
             _purpose = DefineProperty<string>(nameof(Purpose), new string[] { "purpose" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _privateEndpointNetworkPolicies = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>(nameof(PrivateEndpointNetworkPolicies), new string[] { "privateEndpointNetworkPolicies" });
-            _privateLinkServiceNetworkPolicies = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>(nameof(PrivateLinkServiceNetworkPolicies), new string[] { "privateLinkServiceNetworkPolicies" });
+            _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>(nameof(PrivateEndpointNetworkPolicy), new string[] { "privateEndpointNetworkPolicies" });
+            _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>(nameof(PrivateLinkServiceNetworkPolicy), new string[] { "privateLinkServiceNetworkPolicies" });
             _applicationGatewayIPConfigurations = DefineListProperty<ApplicationGatewayIPConfiguration>(nameof(ApplicationGatewayIPConfigurations), new string[] { "applicationGatewayIPConfigurations" });
             _sharingScope = DefineProperty<SharingScope>(nameof(SharingScope), new string[] { "sharingScope" });
             _defaultOutboundAccess = DefineProperty<bool>(nameof(DefaultOutboundAccess), new string[] { "defaultOutboundAccess" });

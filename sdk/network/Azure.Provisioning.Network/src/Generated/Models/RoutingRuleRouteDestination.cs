@@ -13,27 +13,11 @@ namespace Azure.Provisioning.Network
     /// <summary> Route destination. </summary>
     public partial class RoutingRuleRouteDestination : ProvisionableConstruct
     {
-        private BicepValue<RoutingRuleDestinationType> _type;
         private BicepValue<string> _destinationAddress;
 
         /// <summary> Creates a new RoutingRuleRouteDestination. </summary>
         public RoutingRuleRouteDestination()
         {
-        }
-
-        /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<RoutingRuleDestinationType> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-            set
-            {
-                Initialize();
-                _type.Assign(value);
-            }
         }
 
         /// <summary> Gets or sets the DestinationAddress. </summary>
@@ -55,7 +39,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _type = DefineProperty<RoutingRuleDestinationType>(nameof(Type), new string[] { "type" }, isRequired: true);
             _destinationAddress = DefineProperty<string>(nameof(DestinationAddress), new string[] { "destinationAddress" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Resources;
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.Network
     {
         private ApplicationGatewayBackendSettingsPropertiesFormat _properties;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepValue<string> _type;
 
         /// <summary> Creates a new ApplicationGatewayBackendSettings. </summary>
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -105,23 +106,6 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
                 Properties.Protocol = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Timeout. </summary>
-        public BicepValue<int> Timeout
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Timeout;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
-                }
-                Properties.Timeout = value;
             }
         }
 
@@ -176,23 +160,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EnableL4ClientIPPreservation. </summary>
-        public BicepValue<bool> EnableL4ClientIPPreservation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableL4ClientIPPreservation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
-                }
-                Properties.EnableL4ClientIPPreservation = value;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -229,7 +196,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ApplicationGatewayBackendSettingsPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }

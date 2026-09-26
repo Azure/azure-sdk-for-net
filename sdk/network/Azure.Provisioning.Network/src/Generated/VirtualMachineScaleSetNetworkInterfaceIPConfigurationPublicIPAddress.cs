@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Network
         private PublicIPAddressPropertiesFormat _properties;
         private ExtendedAzureLocation _extendedLocation;
         private PublicIPAddressSku _sku;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepList<string> _zones;
         private ResourceReference<VirtualMachineScaleSetNetworkInterfaceIPConfiguration> _parent;
 
@@ -135,7 +136,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -441,7 +442,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<PublicIPAddressPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _sku = DefineModelProperty<PublicIPAddressSku>(nameof(Sku), new string[] { "sku" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _parent = DefineResource<VirtualMachineScaleSetNetworkInterfaceIPConfiguration>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

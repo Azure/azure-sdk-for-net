@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -19,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private ExpressRouteCrossConnectionProperties _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new ExpressRouteCrossConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -99,7 +100,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -170,23 +171,6 @@ namespace Azure.Provisioning.Network
                     Properties = new ExpressRouteCrossConnectionProperties();
                 }
                 return Properties.BandwidthInMbps;
-            }
-        }
-
-        /// <summary> Gets or sets the ExpressRouteCircuit. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuit
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuit;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCrossConnectionProperties();
-                }
-                Properties.ExpressRouteCircuit = value;
             }
         }
 
@@ -263,7 +247,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ExpressRouteCrossConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

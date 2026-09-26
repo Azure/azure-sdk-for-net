@@ -331,7 +331,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ConnectionMonitorType. </summary>
-        public BicepValue<ConnectionMonitorEndpointType> ConnectionMonitorType
+        public BicepValue<ConnectionMonitorType> ConnectionMonitorType
         {
             get
             {

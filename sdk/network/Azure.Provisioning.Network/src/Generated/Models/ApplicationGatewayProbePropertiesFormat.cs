@@ -16,14 +16,14 @@ namespace Azure.Provisioning.Network
         private BicepValue<ApplicationGatewayProtocol> _protocol;
         private BicepValue<string> _host;
         private BicepValue<string> _path;
-        private BicepValue<int> _interval;
-        private BicepValue<int> _timeout;
+        private BicepValue<int> _intervalInSeconds;
+        private BicepValue<int> _timeoutInSeconds;
         private BicepValue<int> _unhealthyThreshold;
         private BicepValue<bool> _pickHostNameFromBackendHttpSettings;
         private BicepValue<bool> _pickHostNameFromBackendSettings;
         private BicepValue<int> _minServers;
         private ApplicationGatewayProbeHealthResponseMatch _match;
-        private BicepValue<bool> _enableProbeProxyProtocolHeader;
+        private BicepValue<bool> _isProbeProxyProtocolHeaderEnabled;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<int> _port;
 
@@ -77,33 +77,33 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Interval. </summary>
-        public BicepValue<int> Interval
+        /// <summary> Gets or sets the IntervalInSeconds. </summary>
+        public BicepValue<int> IntervalInSeconds
         {
             get
             {
                 Initialize();
-                return _interval;
+                return _intervalInSeconds;
             }
             set
             {
                 Initialize();
-                _interval.Assign(value);
+                _intervalInSeconds.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the Timeout. </summary>
-        public BicepValue<int> Timeout
+        /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        public BicepValue<int> TimeoutInSeconds
         {
             get
             {
                 Initialize();
-                return _timeout;
+                return _timeoutInSeconds;
             }
             set
             {
                 Initialize();
-                _timeout.Assign(value);
+                _timeoutInSeconds.Assign(value);
             }
         }
 
@@ -182,18 +182,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EnableProbeProxyProtocolHeader. </summary>
-        public BicepValue<bool> EnableProbeProxyProtocolHeader
+        /// <summary> Gets or sets the IsProbeProxyProtocolHeaderEnabled. </summary>
+        public BicepValue<bool> IsProbeProxyProtocolHeaderEnabled
         {
             get
             {
                 Initialize();
-                return _enableProbeProxyProtocolHeader;
+                return _isProbeProxyProtocolHeaderEnabled;
             }
             set
             {
                 Initialize();
-                _enableProbeProxyProtocolHeader.Assign(value);
+                _isProbeProxyProtocolHeaderEnabled.Assign(value);
             }
         }
 
@@ -229,14 +229,14 @@ namespace Azure.Provisioning.Network
             _protocol = DefineProperty<ApplicationGatewayProtocol>(nameof(Protocol), new string[] { "protocol" });
             _host = DefineProperty<string>(nameof(Host), new string[] { "host" });
             _path = DefineProperty<string>(nameof(Path), new string[] { "path" });
-            _interval = DefineProperty<int>(nameof(Interval), new string[] { "interval" });
-            _timeout = DefineProperty<int>(nameof(Timeout), new string[] { "timeout" });
+            _intervalInSeconds = DefineProperty<int>(nameof(IntervalInSeconds), new string[] { "interval" });
+            _timeoutInSeconds = DefineProperty<int>(nameof(TimeoutInSeconds), new string[] { "timeout" });
             _unhealthyThreshold = DefineProperty<int>(nameof(UnhealthyThreshold), new string[] { "unhealthyThreshold" });
             _pickHostNameFromBackendHttpSettings = DefineProperty<bool>(nameof(PickHostNameFromBackendHttpSettings), new string[] { "pickHostNameFromBackendHttpSettings" });
             _pickHostNameFromBackendSettings = DefineProperty<bool>(nameof(PickHostNameFromBackendSettings), new string[] { "pickHostNameFromBackendSettings" });
             _minServers = DefineProperty<int>(nameof(MinServers), new string[] { "minServers" });
             _match = DefineModelProperty<ApplicationGatewayProbeHealthResponseMatch>(nameof(Match), new string[] { "match" });
-            _enableProbeProxyProtocolHeader = DefineProperty<bool>(nameof(EnableProbeProxyProtocolHeader), new string[] { "enableProbeProxyProtocolHeader" });
+            _isProbeProxyProtocolHeaderEnabled = DefineProperty<bool>(nameof(IsProbeProxyProtocolHeaderEnabled), new string[] { "enableProbeProxyProtocolHeader" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _port = DefineProperty<int>(nameof(Port), new string[] { "port" });
             DefineAdditionalProperties();

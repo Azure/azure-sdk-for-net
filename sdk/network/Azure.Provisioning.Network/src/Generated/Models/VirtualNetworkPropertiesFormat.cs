@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Network
         private VirtualNetworkEncryption _encryption;
         private BicepList<NetworkSubResource> _ipAllocations;
         private BicepList<FlowLog> _flowLogs;
-        private BicepValue<PrivateEndpointVnetPolicy> _privateEndpointVNetPolicies;
+        private BicepValue<PrivateEndpointVnetPolicy> _privateEndpointVnetPolicy;
         private NetworkSubResource _defaultPublicNatGateway;
 
         /// <summary> Creates a new VirtualNetworkPropertiesFormat. </summary>
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
-        public VirtualNetworkEncryption Encryption
+        internal VirtualNetworkEncryption Encryption
         {
             get
             {
@@ -232,18 +232,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PrivateEndpointVNetPolicies. </summary>
-        public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVNetPolicies
+        /// <summary> Gets or sets the PrivateEndpointVnetPolicy. </summary>
+        public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy
         {
             get
             {
                 Initialize();
-                return _privateEndpointVNetPolicies;
+                return _privateEndpointVnetPolicy;
             }
             set
             {
                 Initialize();
-                _privateEndpointVNetPolicies.Assign(value);
+                _privateEndpointVnetPolicy.Assign(value);
             }
         }
 
@@ -291,6 +291,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Enforcement. </summary>
+        public BicepValue<VirtualNetworkEncryptionEnforcement> EncryptionEnforcement
+        {
+            get
+            {
+                return Encryption is null ? default : Encryption.Enforcement;
+            }
+            set
+            {
+                if (Encryption is null)
+                {
+                    Encryption = new VirtualNetworkEncryption();
+                }
+                Encryption.Enforcement = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> DefaultPublicNatGatewayId
         {
@@ -318,7 +335,7 @@ namespace Azure.Provisioning.Network
             _encryption = DefineModelProperty<VirtualNetworkEncryption>(nameof(Encryption), new string[] { "encryption" });
             _ipAllocations = DefineListProperty<NetworkSubResource>(nameof(IPAllocations), new string[] { "ipAllocations" });
             _flowLogs = DefineListProperty<FlowLog>(nameof(FlowLogs), new string[] { "flowLogs" }, isOutput: true);
-            _privateEndpointVNetPolicies = DefineProperty<PrivateEndpointVnetPolicy>(nameof(PrivateEndpointVNetPolicies), new string[] { "privateEndpointVNetPolicies" });
+            _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>(nameof(PrivateEndpointVnetPolicy), new string[] { "privateEndpointVNetPolicies" });
             _defaultPublicNatGateway = DefineModelProperty<NetworkSubResource>(nameof(DefaultPublicNatGateway), new string[] { "defaultPublicNatGateway" }, isOutput: true);
             DefineAdditionalProperties();
         }

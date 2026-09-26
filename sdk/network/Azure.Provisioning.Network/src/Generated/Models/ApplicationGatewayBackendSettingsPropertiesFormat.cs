@@ -17,12 +17,12 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<int> _port;
         private BicepValue<ApplicationGatewayProtocol> _protocol;
-        private BicepValue<int> _timeout;
+        private BicepValue<int> _timeoutInSeconds;
         private NetworkSubResource _probe;
         private BicepList<WritableSubResource> _trustedRootCertificates;
         private BicepValue<string> _hostName;
         private BicepValue<bool> _pickHostNameFromBackendAddress;
-        private BicepValue<bool> _enableL4ClientIPPreservation;
+        private BicepValue<bool> _isL4ClientIPPreservationEnabled;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ApplicationGatewayBackendSettingsPropertiesFormat. </summary>
@@ -60,18 +60,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Timeout. </summary>
-        public BicepValue<int> Timeout
+        /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        public BicepValue<int> TimeoutInSeconds
         {
             get
             {
                 Initialize();
-                return _timeout;
+                return _timeoutInSeconds;
             }
             set
             {
                 Initialize();
-                _timeout.Assign(value);
+                _timeoutInSeconds.Assign(value);
             }
         }
 
@@ -135,18 +135,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EnableL4ClientIPPreservation. </summary>
-        public BicepValue<bool> EnableL4ClientIPPreservation
+        /// <summary> Gets or sets the IsL4ClientIPPreservationEnabled. </summary>
+        public BicepValue<bool> IsL4ClientIPPreservationEnabled
         {
             get
             {
                 Initialize();
-                return _enableL4ClientIPPreservation;
+                return _isL4ClientIPPreservationEnabled;
             }
             set
             {
                 Initialize();
-                _enableL4ClientIPPreservation.Assign(value);
+                _isL4ClientIPPreservationEnabled.Assign(value);
             }
         }
 
@@ -183,12 +183,12 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _port = DefineProperty<int>(nameof(Port), new string[] { "port" });
             _protocol = DefineProperty<ApplicationGatewayProtocol>(nameof(Protocol), new string[] { "protocol" });
-            _timeout = DefineProperty<int>(nameof(Timeout), new string[] { "timeout" });
+            _timeoutInSeconds = DefineProperty<int>(nameof(TimeoutInSeconds), new string[] { "timeout" });
             _probe = DefineModelProperty<NetworkSubResource>(nameof(Probe), new string[] { "probe" });
             _trustedRootCertificates = DefineListProperty<WritableSubResource>(nameof(TrustedRootCertificates), new string[] { "trustedRootCertificates" });
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" });
             _pickHostNameFromBackendAddress = DefineProperty<bool>(nameof(PickHostNameFromBackendAddress), new string[] { "pickHostNameFromBackendAddress" });
-            _enableL4ClientIPPreservation = DefineProperty<bool>(nameof(EnableL4ClientIPPreservation), new string[] { "enableL4ClientIpPreservation" });
+            _isL4ClientIPPreservationEnabled = DefineProperty<bool>(nameof(IsL4ClientIPPreservationEnabled), new string[] { "enableL4ClientIpPreservation" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

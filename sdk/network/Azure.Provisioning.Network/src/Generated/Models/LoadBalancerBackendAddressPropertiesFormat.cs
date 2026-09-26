@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _subnet;
         private BicepValue<string> _ipAddress;
         private NetworkSubResource _networkInterfaceIPConfiguration;
-        private BicepValue<ResourceIdentifier> _loadBalancerFrontendIPConfiguration;
+        private BicepValue<ResourceIdentifier> _loadBalancerFrontendIPConfigurationId;
         private BicepList<NatRulePortMapping> _inboundNatRulesPortMapping;
         private BicepValue<LoadBalancerBackendAddressAdminState> _adminState;
 
@@ -82,18 +82,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the LoadBalancerFrontendIPConfiguration. </summary>
-        public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfiguration
+        /// <summary> Gets or sets the LoadBalancerFrontendIPConfigurationId. </summary>
+        public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfigurationId
         {
             get
             {
                 Initialize();
-                return _loadBalancerFrontendIPConfiguration;
+                return _loadBalancerFrontendIPConfigurationId;
             }
             set
             {
                 Initialize();
-                _loadBalancerFrontendIPConfiguration.Assign(value);
+                _loadBalancerFrontendIPConfigurationId.Assign(value);
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.Provisioning.Network
             _subnet = DefineModelProperty<NetworkSubResource>(nameof(Subnet), new string[] { "subnet" });
             _ipAddress = DefineProperty<string>(nameof(IPAddress), new string[] { "ipAddress" });
             _networkInterfaceIPConfiguration = DefineModelProperty<NetworkSubResource>(nameof(NetworkInterfaceIPConfiguration), new string[] { "networkInterfaceIPConfiguration" }, isOutput: true);
-            _loadBalancerFrontendIPConfiguration = DefineProperty<ResourceIdentifier>(nameof(LoadBalancerFrontendIPConfiguration), new string[] { "loadBalancerFrontendIPConfiguration" });
+            _loadBalancerFrontendIPConfigurationId = DefineProperty<ResourceIdentifier>(nameof(LoadBalancerFrontendIPConfigurationId), new string[] { "loadBalancerFrontendIPConfiguration" });
             _inboundNatRulesPortMapping = DefineListProperty<NatRulePortMapping>(nameof(InboundNatRulesPortMapping), new string[] { "inboundNatRulesPortMapping" }, isOutput: true);
             _adminState = DefineProperty<LoadBalancerBackendAddressAdminState>(nameof(AdminState), new string[] { "adminState" });
             DefineAdditionalProperties();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private IpamPoolProperties _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<NetworkManager> _parent;
 
         /// <summary> Creates a new IpamPool. </summary>
@@ -113,7 +114,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -147,7 +148,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<IpamPoolProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<NetworkManager>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

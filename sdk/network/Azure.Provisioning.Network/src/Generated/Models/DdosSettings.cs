@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Contains the DDoS protection settings of the public IP. </summary>
     public partial class DdosSettings : ProvisionableConstruct
     {
-        private BicepValue<DdosSettingsProtectionCoverage> _protectionMode;
+        private BicepValue<DdosSettingsProtectionMode> _protectionMode;
         private NetworkSubResource _ddosProtectionPlan;
 
         /// <summary> Creates a new DdosSettings. </summary>
@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ProtectionMode. </summary>
-        public BicepValue<DdosSettingsProtectionCoverage> ProtectionMode
+        public BicepValue<DdosSettingsProtectionMode> ProtectionMode
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _protectionMode = DefineProperty<DdosSettingsProtectionCoverage>(nameof(ProtectionMode), new string[] { "protectionMode" });
+            _protectionMode = DefineProperty<DdosSettingsProtectionMode>(nameof(ProtectionMode), new string[] { "protectionMode" });
             _ddosProtectionPlan = DefineModelProperty<NetworkSubResource>(nameof(DdosProtectionPlan), new string[] { "ddosProtectionPlan" });
             DefineAdditionalProperties();
         }

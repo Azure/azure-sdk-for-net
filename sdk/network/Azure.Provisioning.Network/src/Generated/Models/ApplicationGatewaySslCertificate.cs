@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private ApplicationGatewaySslCertificatePropertiesFormat _properties;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepValue<string> _type;
 
         /// <summary> Creates a new ApplicationGatewaySslCertificate. </summary>
@@ -54,7 +55,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -156,7 +157,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ApplicationGatewaySslCertificatePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();
         }

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Network
     internal partial class ExpressRouteConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<ResourceIdentifier> _expressRouteCircuitPeering;
+        private BicepValue<ResourceIdentifier> _expressRouteCircuitPeeringId;
         private BicepValue<string> _authorizationKey;
         private BicepValue<int> _routingWeight;
         private BicepValue<bool> _enableInternetSecurity;
@@ -38,18 +38,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteCircuitPeering. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuitPeering
+        /// <summary> Gets or sets the ExpressRouteCircuitPeeringId. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuitPeeringId
         {
             get
             {
                 Initialize();
-                return _expressRouteCircuitPeering;
+                return _expressRouteCircuitPeeringId;
             }
             set
             {
                 Initialize();
-                _expressRouteCircuitPeering.Assign(value);
+                _expressRouteCircuitPeeringId.Assign(value);
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _expressRouteCircuitPeering = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteCircuitPeering), new string[] { "expressRouteCircuitPeering" }, isRequired: true);
+            _expressRouteCircuitPeeringId = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteCircuitPeeringId), new string[] { "expressRouteCircuitPeering" }, isRequired: true);
             _authorizationKey = DefineProperty<string>(nameof(AuthorizationKey), new string[] { "authorizationKey" });
             _routingWeight = DefineProperty<int>(nameof(RoutingWeight), new string[] { "routingWeight" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });

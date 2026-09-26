@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -20,7 +21,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private FlowLogPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private InternalNetworkManagedServiceIdentity _identity;
         private ResourceReference<NetworkWatcher> _parent;
 
@@ -102,7 +103,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -312,7 +313,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<FlowLogPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<InternalNetworkManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

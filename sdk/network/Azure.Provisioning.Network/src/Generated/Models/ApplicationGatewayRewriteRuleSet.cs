@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private ApplicationGatewayRewriteRuleSetPropertiesFormat _properties;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new ApplicationGatewayRewriteRuleSet. </summary>
         public ApplicationGatewayRewriteRuleSet()
@@ -52,7 +53,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -97,7 +98,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ApplicationGatewayRewriteRuleSetPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,8 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private PrivateEndpointIPConfigurationProperties _properties;
         private BicepValue<string> _name;
-        private BicepValue<string> _type;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new PrivateEndpointIPConfiguration. </summary>
         public PrivateEndpointIPConfiguration()
@@ -53,18 +53,8 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Type. </summary>
-        public BicepValue<string> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-        }
-
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -130,8 +120,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<PrivateEndpointIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

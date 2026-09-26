@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private ServiceGatewayPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ServiceGatewaySku _sku;
         private BicepList<string> _zones;
 
@@ -115,7 +116,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -241,7 +242,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ServiceGatewayPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _sku = DefineModelProperty<ServiceGatewaySku>(nameof(Sku), new string[] { "sku" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             DefineAdditionalProperties();

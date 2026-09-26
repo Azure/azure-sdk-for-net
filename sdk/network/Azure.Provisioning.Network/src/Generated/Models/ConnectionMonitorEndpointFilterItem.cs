@@ -13,27 +13,11 @@ namespace Azure.Provisioning.Network
     /// <summary> Describes the connection monitor endpoint filter item. </summary>
     public partial class ConnectionMonitorEndpointFilterItem : ProvisionableConstruct
     {
-        private BicepValue<ConnectionMonitorEndpointFilterItemType> _type;
         private BicepValue<string> _address;
 
         /// <summary> Creates a new ConnectionMonitorEndpointFilterItem. </summary>
         public ConnectionMonitorEndpointFilterItem()
         {
-        }
-
-        /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<ConnectionMonitorEndpointFilterItemType> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-            set
-            {
-                Initialize();
-                _type.Assign(value);
-            }
         }
 
         /// <summary> Gets or sets the Address. </summary>
@@ -55,7 +39,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _type = DefineProperty<ConnectionMonitorEndpointFilterItemType>(nameof(Type), new string[] { "type" });
             _address = DefineProperty<string>(nameof(Address), new string[] { "address" });
             DefineAdditionalProperties();
         }

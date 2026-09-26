@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private ExpressRouteGatewayPropertiesAutoScaleConfiguration _autoScaleConfiguration;
         private BicepList<ExpressRouteConnection> _expressRouteConnections;
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<ResourceIdentifier> _virtualHub;
+        private BicepValue<ResourceIdentifier> _virtualHubId;
         private BicepValue<bool> _allowNonVirtualWanTraffic;
 
         /// <summary> Creates a new ExpressRouteGatewayProperties. </summary>
@@ -65,18 +65,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the VirtualHub. </summary>
-        public BicepValue<ResourceIdentifier> VirtualHub
+        /// <summary> Gets or sets the VirtualHubId. </summary>
+        public BicepValue<ResourceIdentifier> VirtualHubId
         {
             get
             {
                 Initialize();
-                return _virtualHub;
+                return _virtualHubId;
             }
             set
             {
                 Initialize();
-                _virtualHub.Assign(value);
+                _virtualHubId.Assign(value);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Network
             _autoScaleConfiguration = DefineModelProperty<ExpressRouteGatewayPropertiesAutoScaleConfiguration>(nameof(AutoScaleConfiguration), new string[] { "autoScaleConfiguration" });
             _expressRouteConnections = DefineListProperty<ExpressRouteConnection>(nameof(ExpressRouteConnections), new string[] { "expressRouteConnections" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _virtualHub = DefineProperty<ResourceIdentifier>(nameof(VirtualHub), new string[] { "virtualHub" }, isRequired: true);
+            _virtualHubId = DefineProperty<ResourceIdentifier>(nameof(VirtualHubId), new string[] { "virtualHub" }, isRequired: true);
             _allowNonVirtualWanTraffic = DefineProperty<bool>(nameof(AllowNonVirtualWanTraffic), new string[] { "allowNonVirtualWanTraffic" });
             DefineAdditionalProperties();
         }

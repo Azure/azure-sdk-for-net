@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _cidr;
         private BicepValue<string> _signedMessage;
         private BicepValue<string> _authorizationMessage;
-        private BicepValue<ResourceIdentifier> _customIPPrefixParent;
+        private BicepValue<ResourceIdentifier> _parentCustomIPPrefixId;
         private BicepList<NetworkSubResource> _childCustomIPPrefixes;
         private BicepValue<CommissionedState> _commissionedState;
         private BicepValue<bool> _expressRouteAdvertise;
@@ -96,18 +96,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the CustomIPPrefixParent. </summary>
-        public BicepValue<ResourceIdentifier> CustomIPPrefixParent
+        /// <summary> Gets or sets the ParentCustomIPPrefixId. </summary>
+        public BicepValue<ResourceIdentifier> ParentCustomIPPrefixId
         {
             get
             {
                 Initialize();
-                return _customIPPrefixParent;
+                return _parentCustomIPPrefixId;
             }
             set
             {
                 Initialize();
-                _customIPPrefixParent.Assign(value);
+                _parentCustomIPPrefixId.Assign(value);
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.Provisioning.Network
             _cidr = DefineProperty<string>(nameof(Cidr), new string[] { "cidr" });
             _signedMessage = DefineProperty<string>(nameof(SignedMessage), new string[] { "signedMessage" });
             _authorizationMessage = DefineProperty<string>(nameof(AuthorizationMessage), new string[] { "authorizationMessage" });
-            _customIPPrefixParent = DefineProperty<ResourceIdentifier>(nameof(CustomIPPrefixParent), new string[] { "customIpPrefixParent" });
+            _parentCustomIPPrefixId = DefineProperty<ResourceIdentifier>(nameof(ParentCustomIPPrefixId), new string[] { "customIpPrefixParent" });
             _childCustomIPPrefixes = DefineListProperty<NetworkSubResource>(nameof(ChildCustomIPPrefixes), new string[] { "childCustomIpPrefixes" }, isOutput: true);
             _commissionedState = DefineProperty<CommissionedState>(nameof(CommissionedState), new string[] { "commissionedState" });
             _expressRouteAdvertise = DefineProperty<bool>(nameof(ExpressRouteAdvertise), new string[] { "expressRouteAdvertise" });

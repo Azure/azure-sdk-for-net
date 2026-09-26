@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private PrivateDnsZoneGroupPropertiesFormat _properties;
         private ResourceReference<PrivateEndpoint> _parent;
 
@@ -53,7 +54,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -128,7 +129,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<PrivateDnsZoneGroupPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<PrivateEndpoint>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

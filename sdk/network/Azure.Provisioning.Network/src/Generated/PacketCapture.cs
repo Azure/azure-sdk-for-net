@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -18,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private PacketCaptureResultProperties _properties;
         private ResourceReference<NetworkWatcher> _parent;
 
@@ -65,7 +66,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -240,23 +241,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ContinuousCapture. </summary>
-        public BicepValue<bool> ContinuousCapture
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ContinuousCapture;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PacketCaptureResultProperties();
-                }
-                Properties.ContinuousCapture = value;
-            }
-        }
-
         /// <summary> Gets or sets the CaptureSettings. </summary>
         public PacketCaptureSettings CaptureSettings
         {
@@ -294,7 +278,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<PacketCaptureResultProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

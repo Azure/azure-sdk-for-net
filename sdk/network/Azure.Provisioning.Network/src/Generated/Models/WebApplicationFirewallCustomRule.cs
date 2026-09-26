@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class WebApplicationFirewallCustomRule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepValue<int> _priority;
         private BicepValue<WebApplicationFirewallState> _state;
         private BicepValue<ApplicationGatewayFirewallRateLimitDuration> _rateLimitDuration;
@@ -45,7 +46,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -179,7 +180,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _priority = DefineProperty<int>(nameof(Priority), new string[] { "priority" }, isRequired: true);
             _state = DefineProperty<WebApplicationFirewallState>(nameof(State), new string[] { "state" });
             _rateLimitDuration = DefineProperty<ApplicationGatewayFirewallRateLimitDuration>(nameof(RateLimitDuration), new string[] { "rateLimitDuration" });

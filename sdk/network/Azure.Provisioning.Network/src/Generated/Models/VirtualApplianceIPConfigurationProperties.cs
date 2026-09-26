@@ -13,25 +13,25 @@ namespace Azure.Provisioning.Network
     /// <summary> Represents a single IP configuration properties. </summary>
     internal partial class VirtualApplianceIPConfigurationProperties : ProvisionableConstruct
     {
-        private BicepValue<bool> _primary;
+        private BicepValue<bool> _isPrimary;
 
         /// <summary> Creates a new VirtualApplianceIPConfigurationProperties. </summary>
         public VirtualApplianceIPConfigurationProperties()
         {
         }
 
-        /// <summary> Gets or sets the Primary. </summary>
-        public BicepValue<bool> Primary
+        /// <summary> Gets or sets the IsPrimary. </summary>
+        public BicepValue<bool> IsPrimary
         {
             get
             {
                 Initialize();
-                return _primary;
+                return _isPrimary;
             }
             set
             {
                 Initialize();
-                _primary.Assign(value);
+                _isPrimary.Assign(value);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _primary = DefineProperty<bool>(nameof(Primary), new string[] { "primary" });
+            _isPrimary = DefineProperty<bool>(nameof(IsPrimary), new string[] { "primary" });
             DefineAdditionalProperties();
         }
 

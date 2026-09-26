@@ -51,12 +51,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Primary. </summary>
-        public BicepValue<bool> VirtualApplianceIPPrimary
+        /// <summary> Gets or sets the IsPrimary. </summary>
+        public BicepValue<bool> VirtualApplianceIPIsPrimary
         {
             get
             {
-                return Properties is null ? default : Properties.Primary;
+                return Properties is null ? default : Properties.IsPrimary;
             }
             set
             {
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new VirtualApplianceIPConfigurationProperties();
                 }
-                Properties.Primary = value;
+                Properties.IsPrimary = value;
             }
         }
 

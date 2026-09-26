@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -18,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private VirtualNetworkPeeringPropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<VirtualNetwork> _parent;
 
         /// <summary> Creates a new VirtualNetworkPeering. </summary>
@@ -69,7 +70,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -246,15 +247,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the RemoteVirtualNetworkEncryption. </summary>
-        public VirtualNetworkEncryption RemoteVirtualNetworkEncryption
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RemoteVirtualNetworkEncryption;
-            }
-        }
-
         /// <summary> Gets or sets the PeeringState. </summary>
         public BicepValue<VirtualNetworkPeeringState> PeeringState
         {
@@ -332,23 +324,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PeerCompleteVnets. </summary>
-        public BicepValue<bool> PeerCompleteVnets
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PeerCompleteVnets;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPeeringPropertiesFormat();
-                }
-                Properties.PeerCompleteVnets = value;
-            }
-        }
-
         /// <summary> Gets or sets the EnableOnlyIPv6Peering. </summary>
         public BicepValue<bool> EnableOnlyIPv6Peering
         {
@@ -417,6 +392,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Enforcement. </summary>
+        public BicepValue<VirtualNetworkEncryptionEnforcement> RemoteVirtualNetworkEncryptionEnforcement
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPeeringPropertiesFormat();
+                }
+                return Properties.RemoteVirtualNetworkEncryptionEnforcement;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualNetworkPeering. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -424,7 +412,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualNetworkPeeringPropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<VirtualNetwork>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<bool> _doNotVerifyRemoteGateways;
         private BicepValue<Guid> _resourceGuid;
-        private BicepValue<bool> _peerCompleteVnets;
+        private BicepValue<bool> _areCompleteVnetsPeered;
         private BicepValue<bool> _enableOnlyIPv6Peering;
         private BicepList<string> _localSubnetNames;
         private BicepList<string> _remoteSubnetNames;
@@ -192,7 +192,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the RemoteVirtualNetworkEncryption. </summary>
-        public VirtualNetworkEncryption RemoteVirtualNetworkEncryption
+        internal VirtualNetworkEncryption RemoteVirtualNetworkEncryption
         {
             get
             {
@@ -266,18 +266,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PeerCompleteVnets. </summary>
-        public BicepValue<bool> PeerCompleteVnets
+        /// <summary> Gets or sets the AreCompleteVnetsPeered. </summary>
+        public BicepValue<bool> AreCompleteVnetsPeered
         {
             get
             {
                 Initialize();
-                return _peerCompleteVnets;
+                return _areCompleteVnetsPeered;
             }
             set
             {
                 Initialize();
-                _peerCompleteVnets.Assign(value);
+                _areCompleteVnetsPeered.Assign(value);
             }
         }
 
@@ -343,6 +343,15 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Enforcement. </summary>
+        public BicepValue<VirtualNetworkEncryptionEnforcement> RemoteVirtualNetworkEncryptionEnforcement
+        {
+            get
+            {
+                return RemoteVirtualNetworkEncryption is null ? default : RemoteVirtualNetworkEncryption.Enforcement;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualNetworkPeeringPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -363,7 +372,7 @@ namespace Azure.Provisioning.Network
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _doNotVerifyRemoteGateways = DefineProperty<bool>(nameof(DoNotVerifyRemoteGateways), new string[] { "doNotVerifyRemoteGateways" });
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
-            _peerCompleteVnets = DefineProperty<bool>(nameof(PeerCompleteVnets), new string[] { "peerCompleteVnets" });
+            _areCompleteVnetsPeered = DefineProperty<bool>(nameof(AreCompleteVnetsPeered), new string[] { "peerCompleteVnets" });
             _enableOnlyIPv6Peering = DefineProperty<bool>(nameof(EnableOnlyIPv6Peering), new string[] { "enableOnlyIPv6Peering" });
             _localSubnetNames = DefineListProperty<string>(nameof(LocalSubnetNames), new string[] { "localSubnetNames" });
             _remoteSubnetNames = DefineListProperty<string>(nameof(RemoteSubnetNames), new string[] { "remoteSubnetNames" });

@@ -14,27 +14,11 @@ namespace Azure.Provisioning.Network
     /// <summary> Describes a connection monitor output destination. </summary>
     public partial class ConnectionMonitorOutput : ProvisionableConstruct
     {
-        private BicepValue<OutputType> _type;
         private ConnectionMonitorWorkspaceSettings _workspaceSettings;
 
         /// <summary> Creates a new ConnectionMonitorOutput. </summary>
         public ConnectionMonitorOutput()
         {
-        }
-
-        /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<OutputType> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-            set
-            {
-                Initialize();
-                _type.Assign(value);
-            }
         }
 
         /// <summary> Gets or sets the WorkspaceSettings. </summary>
@@ -73,7 +57,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _type = DefineProperty<OutputType>(nameof(Type), new string[] { "type" });
             _workspaceSettings = DefineModelProperty<ConnectionMonitorWorkspaceSettings>(nameof(WorkspaceSettings), new string[] { "workspaceSettings" });
             DefineAdditionalProperties();
         }

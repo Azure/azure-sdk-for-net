@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network;
@@ -10,6 +12,26 @@ namespace Azure.Provisioning.Network;
 [CodeGenType("Subnet")]
 public partial class SubnetResource
 {
+    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
+    /// <inheritdoc cref="PrivateEndpointNetworkPolicies"/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointNetworkPolicies instead.")]
+    public BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicy
+    {
+        get => PrivateEndpointNetworkPolicies;
+        set => PrivateEndpointNetworkPolicies = value;
+    }
+
+    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
+    /// <inheritdoc cref="PrivateLinkServiceNetworkPolicies"/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateLinkServiceNetworkPolicies instead.")]
+    public BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> PrivateLinkServiceNetworkPolicy
+    {
+        get => PrivateLinkServiceNetworkPolicies;
+        set => PrivateLinkServiceNetworkPolicies = value;
+    }
+
     /// <summary> Supported API versions retained for compatibility. </summary>
     public static partial class ResourceVersions
     {

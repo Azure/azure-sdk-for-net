@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private VirtualNetworkGatewayPropertiesFormat _properties;
         private ExtendedAzureLocation _extendedLocation;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
 
         /// <summary> Creates a new VirtualNetworkGateway. </summary>
@@ -118,7 +119,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -616,7 +617,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<VirtualNetworkGatewayPropertiesFormat>(nameof(Properties), new string[] { "properties" }, isRequired: true);
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }

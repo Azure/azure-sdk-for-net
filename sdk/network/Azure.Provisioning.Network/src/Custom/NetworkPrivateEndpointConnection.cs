@@ -3,10 +3,23 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Network;
 
 public partial class NetworkPrivateEndpointConnection
 {
+    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
+    /// <inheritdoc cref="PrivateLinkServiceConnectionState"/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateLinkServiceConnectionState instead.")]
+    public NetworkPrivateLinkServiceConnectionState ConnectionState
+    {
+        get => PrivateLinkServiceConnectionState;
+        set => PrivateLinkServiceConnectionState = value;
+    }
+
     /// <summary> Supported API versions retained for compatibility. </summary>
     public static partial class ResourceVersions
     {

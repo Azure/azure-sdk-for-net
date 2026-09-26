@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private SystemData _systemData;
         private RoutingRulePropertiesFormat _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ResourceReference<NetworkManagerRoutingRules> _parent;
 
         /// <summary> Creates a new NetworkManagerRoutingRule. </summary>
@@ -82,7 +83,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -149,23 +150,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Destination. </summary>
-        public RoutingRuleRouteDestination Destination
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Destination;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RoutingRulePropertiesFormat();
-                }
-                Properties.Destination = value;
-            }
-        }
-
         /// <summary> Gets or sets the NextHop. </summary>
         public RoutingRuleNextHop NextHop
         {
@@ -183,6 +167,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DestinationAddress. </summary>
+        public BicepValue<string> DestinationAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DestinationAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRulePropertiesFormat();
+                }
+                Properties.DestinationAddress = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NetworkManagerRoutingRule. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -191,7 +192,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RoutingRulePropertiesFormat>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<NetworkManagerRoutingRules>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
