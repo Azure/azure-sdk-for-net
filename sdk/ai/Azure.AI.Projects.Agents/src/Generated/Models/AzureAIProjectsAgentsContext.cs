@@ -4,7 +4,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 using OpenAI.Realtime;
 using OpenAI.Responses;
 
@@ -76,11 +75,20 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkillVersion is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultSkillVersion))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkillVersion is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyBindingListItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AgentsPagedResultTelephonyBindingListItem))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyBindingListItem is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyCallSummary is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultTelephonyCallSummary))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyCallSummary is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxObject))]
     [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxVersionObject))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceConversation is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceConversation))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceConversation is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResult is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceResult))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResult is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsSkill))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
@@ -95,6 +103,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationPreviewToolboxTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationToolboxTool is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(BrowserAutomationToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.BrowserAutomationToolboxTool is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions is experimental and may change in future versions.
@@ -102,9 +113,13 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CodeConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CodeInterpreterToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CodeInterpreterToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CodeInterpreterToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ContainerSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerSkill))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ContainerSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
     [ModelReaderWriterBuildable(typeof(CreateSessionRequest))]
@@ -143,15 +158,21 @@ namespace Azure.AI.Projects.Agents
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotHarness is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HeaderTelemetryEndpointAuth))]
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.InlineSkillParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.InlineSkillParam is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.InlineSkillSourceParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.InlineSkillSourceParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalCreateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InternalUpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(InvocationsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(InvocationsWsProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(McpProtocolConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.MCPToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.MCPToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinitionFunction))]
@@ -182,7 +203,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeError))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeError is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.RealtimeFunctionToolParameters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeFunctionToolParameters))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.RealtimeFunctionToolParameters is experimental and may change in future versions.
 #pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(RealtimeItem))]
 #pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeItem is experimental and may change in future versions.
@@ -212,7 +235,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(SessionDirectoryEntry))]
     [ModelReaderWriterBuildable(typeof(SessionFileWriteResult))]
     [ModelReaderWriterBuildable(typeof(SessionLogEvent))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ShellToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ShellToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ShellToolboxTool is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SipTelephonyTransferDestination is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SipTelephonyTransferDestination))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SipTelephonyTransferDestination is experimental and may change in future versions.
@@ -225,7 +250,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillReference is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillReference))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillReference is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillReferenceParam is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillReferenceParam))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillReferenceParam is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillVersion is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillVersion))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillVersion is experimental and may change in future versions.
@@ -298,9 +325,15 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ToolboxSearchPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolboxSearchPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ToolboxSearchPreviewToolboxTool is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ToolboxShellContainerAutoEnvironment is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolboxShellContainerAutoEnvironment))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ToolboxShellContainerAutoEnvironment is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ToolboxShellContainerReferenceEnvironment is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolboxShellContainerReferenceEnvironment))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ToolboxShellContainerReferenceEnvironment is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ToolboxShellEnvironment is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolboxShellEnvironment))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ToolboxShellEnvironment is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolboxShellNetworkPolicy))]
     [ModelReaderWriterBuildable(typeof(ToolboxShellNetworkPolicyDisabled))]
     [ModelReaderWriterBuildable(typeof(ToolboxSkill))]
@@ -326,7 +359,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentOptimizationDatasetInput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationDatasetInput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentOptimizationDatasetInput is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownContainerSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownContainerSkill))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownContainerSkill is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownCreateTelephonyBindingContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownCreateTelephonyBindingContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownCreateTelephonyBindingContent is experimental and may change in future versions.
@@ -344,7 +379,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyTransferDestination is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownTelephonyTransferDestination))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyTransferDestination is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownToolboxShellEnvironment is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownToolboxShellEnvironment))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownToolboxShellEnvironment is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownToolboxShellNetworkPolicy))]
     [ModelReaderWriterBuildable(typeof(UnknownToolboxSkill))]
     [ModelReaderWriterBuildable(typeof(UnknownToolboxTool))]
@@ -525,7 +562,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.WebSearchToolApproximateLocation is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchToolApproximateLocation))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.WebSearchToolApproximateLocation is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WebSearchToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchToolboxTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WebSearchToolboxTool is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.WebSearchToolFilters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.WebSearchToolFilters is experimental and may change in future versions.

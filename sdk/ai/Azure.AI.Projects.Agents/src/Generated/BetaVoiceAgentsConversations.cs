@@ -5,20 +5,15 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
+using OpenAI.Realtime;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
-    /// <summary>
-    /// Read-only, endpoint-scoped retrieval of the conversations, responses, transcript items, per-turn
-    /// metrics, and audio recorded by a voice agent. For a `voice` agent, the service is the sole writer of
-    /// responses and items, so only
-    /// reads plus a cascading conversation delete are exposed — there are no response/item create, update, or
-    /// delete routes. All persistence is governed by the definition's `store` flag: when `store = false` (the
-    /// default) nothing is persisted, so these routes return `404`. The merged-recording routes additionally
-    /// require the session to have ended and return `409` while it is still in progress.
-    /// </summary>
+    /// <summary> The BetaVoiceAgentsConversations sub-client. </summary>
     public partial class BetaVoiceAgentsConversations
     {
         private readonly Uri _endpoint;
@@ -47,6 +42,206 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        /// [Protocol Method] Returns the conversations persisted for the specified voice agent endpoint.
+        /// Conversations are present when the session's effective `store` setting is `true`, whether inherited from the
+        /// agent definition or enabled by the WebSocket session override.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetAgentConversations(string agentName, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationsCollectionResult(
+                    this,
+                    agentName,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the conversations persisted for the specified voice agent endpoint.
+        /// Conversations are present when the session's effective `store` setting is `true`, whether inherited from the
+        /// agent definition or enabled by the WebSocket session override.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetAgentConversationsAsync(string agentName, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversations");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns the conversations persisted for the specified voice agent endpoint.
+        /// Conversations are present when the session's effective `store` setting is `true`, whether inherited from the
+        /// agent definition or enabled by the WebSocket session override.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<VoiceConversation> GetAgentConversations(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationsCollectionResultOfT(
+                this,
+                agentName,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Returns the conversations persisted for the specified voice agent endpoint.
+        /// Conversations are present when the session's effective `store` setting is `true`, whether inherited from the
+        /// agent definition or enabled by the WebSocket session override.
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<VoiceConversation> GetAgentConversationsAsync(string agentName, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationsAsyncCollectionResultOfT(
+                this,
+                agentName,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
 
         /// <summary>
         /// [Protocol Method] Retrieves a single conversation recorded for the specified voice agent endpoint by its id.
@@ -263,6 +458,218 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// [Protocol Method] Returns a paged collection of the responses (model inference turns) recorded for the specified
+        /// conversation. The per-response `output` projection may be omitted here; use the response-items route
+        /// for the canonical paged output. Returns `404` when the conversation was not persisted (`store = false`).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose responses are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetAgentConversationResponses(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationResponses");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationResponsesCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paged collection of the responses (model inference turns) recorded for the specified
+        /// conversation. The per-response `output` projection may be omitted here; use the response-items route
+        /// for the canonical paged output. Returns `404` when the conversation was not persisted (`store = false`).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose responses are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationResponses");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationResponsesAsyncCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a paged collection of the responses (model inference turns) recorded for the specified
+        /// conversation. The per-response `output` projection may be omitted here; use the response-items route
+        /// for the canonical paged output. Returns `404` when the conversation was not persisted (`store = false`).
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose responses are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual CollectionResult<VoiceResult> GetAgentConversationResponses(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationResponsesCollectionResultOfT(
+                this,
+                agentName,
+                conversationId,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Returns a paged collection of the responses (model inference turns) recorded for the specified
+        /// conversation. The per-response `output` projection may be omitted here; use the response-items route
+        /// for the canonical paged output. Returns `404` when the conversation was not persisted (`store = false`).
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose responses are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual AsyncCollectionResult<VoiceResult> GetAgentConversationResponsesAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationResponsesAsyncCollectionResultOfT(
+                this,
+                agentName,
+                conversationId,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
         /// [Protocol Method] Retrieves a single response from the specified conversation by its id, including its `output` items,
         /// `usage`, and status. Returns `404` when the conversation or response was not persisted (`store = false`).
         /// <list type="bullet">
@@ -376,6 +783,450 @@ namespace Azure.AI.Projects.Agents
 
             ClientResult result = await GetAgentConversationResponseAsync(agentName, conversationId, responseId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((VoiceResult)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paged collection of the output items produced by a specific response (the response's output
+        /// projection). For the complete ordered conversation history — including user input and client-created
+        /// tool outputs — use the conversation items route instead. Returns `404` when the conversation or
+        /// response was not persisted (`store = false`).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the response. </param>
+        /// <param name="responseId"> The id of the response whose output items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationResponseItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationResponseItemsCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    responseId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paged collection of the output items produced by a specific response (the response's output
+        /// projection). For the complete ordered conversation history — including user input and client-created
+        /// tool outputs — use the conversation items route instead. Returns `404` when the conversation or
+        /// response was not persisted (`store = false`).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the response. </param>
+        /// <param name="responseId"> The id of the response whose output items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationResponseItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+                Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationResponseItemsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    responseId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a paged collection of the output items produced by a specific response (the response's output
+        /// projection). For the complete ordered conversation history — including user input and client-created
+        /// tool outputs — use the conversation items route instead. Returns `404` when the conversation or
+        /// response was not persisted (`store = false`).
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the response. </param>
+        /// <param name="responseId"> The id of the response whose output items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP002")]
+        public virtual CollectionResult<RealtimeItem> GetAgentConversationResponseItems(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationResponseItemsCollectionResultOfT(
+                this,
+                agentName,
+                conversationId,
+                responseId,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Returns a paged collection of the output items produced by a specific response (the response's output
+        /// projection). For the complete ordered conversation history — including user input and client-created
+        /// tool outputs — use the conversation items route instead. Returns `404` when the conversation or
+        /// response was not persisted (`store = false`).
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation that contains the response. </param>
+        /// <param name="responseId"> The id of the response whose output items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="responseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP002")]
+        public virtual AsyncCollectionResult<RealtimeItem> GetAgentConversationResponseItemsAsync(string agentName, string conversationId, string responseId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+            Argument.AssertNotNullOrEmpty(responseId, nameof(responseId));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationResponseItemsAsyncCollectionResultOfT(
+                this,
+                agentName,
+                conversationId,
+                responseId,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paged collection of items — the complete ordered conversation history, including user input,
+        /// assistant output, and client-created tool outputs (transcripts + tool events). Returns `404` when the
+        /// conversation was not persisted (`store = false`).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual CollectionResult GetAgentConversationItems(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationItemsCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns a paged collection of items — the complete ordered conversation history, including user input,
+        /// assistant output, and client-created tool outputs (transcripts + tool events). Returns `404` when the
+        /// conversation was not persisted (`store = false`).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncCollectionResult GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit, string order, string after, string before, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationItems");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+                return new BetaVoiceAgentsConversationsGetAgentConversationItemsAsyncCollectionResult(
+                    this,
+                    agentName,
+                    conversationId,
+                    limit,
+                    order,
+                    after,
+                    before,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a paged collection of items — the complete ordered conversation history, including user input,
+        /// assistant output, and client-created tool outputs (transcripts + tool events). Returns `404` when the
+        /// conversation was not persisted (`store = false`).
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP002")]
+        public virtual CollectionResult<RealtimeItem> GetAgentConversationItems(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationItemsCollectionResultOfT(
+                this,
+                agentName,
+                conversationId,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
+        }
+
+        /// <summary>
+        /// Returns a paged collection of items — the complete ordered conversation history, including user input,
+        /// assistant output, and client-created tool outputs (transcripts + tool events). Returns `404` when the
+        /// conversation was not persisted (`store = false`).
+        /// </summary>
+        /// <param name="agentName"> The name of the agent. </param>
+        /// <param name="conversationId"> The id of the conversation whose items are listed. </param>
+        /// <param name="limit">
+        /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+        /// default is 20.
+        /// </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="after">
+        /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+        /// </param>
+        /// <param name="before">
+        /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
+        /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
+        /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP002")]
+        public virtual AsyncCollectionResult<RealtimeItem> GetAgentConversationItemsAsync(string agentName, string conversationId, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
+
+            return new BetaVoiceAgentsConversationsGetAgentConversationItemsAsyncCollectionResultOfT(
+                this,
+                agentName,
+                conversationId,
+                limit,
+                order?.ToString(),
+                after,
+                before,
+                cancellationToken.ToRequestOptions());
         }
 
         /// <summary>

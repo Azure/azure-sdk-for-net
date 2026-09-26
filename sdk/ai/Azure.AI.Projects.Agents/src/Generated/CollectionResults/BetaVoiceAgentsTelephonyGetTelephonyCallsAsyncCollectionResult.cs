@@ -7,8 +7,9 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
     internal partial class BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResult : AsyncCollectionResult
     {

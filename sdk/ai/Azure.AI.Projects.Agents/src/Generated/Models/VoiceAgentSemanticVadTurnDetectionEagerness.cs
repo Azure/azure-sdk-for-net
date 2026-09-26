@@ -2,18 +2,72 @@
 
 #nullable disable
 
-namespace OpenAI
+using System;
+using System.ComponentModel;
+
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public enum VoiceAgentSemanticVadTurnDetectionEagerness
+    public readonly partial struct VoiceAgentSemanticVadTurnDetectionEagerness : IEquatable<VoiceAgentSemanticVadTurnDetectionEagerness>
     {
-        /// <summary> Low. </summary>
-        Low,
-        /// <summary> Medium. </summary>
-        Medium,
-        /// <summary> High. </summary>
-        High,
-        /// <summary> Auto. </summary>
-        Auto
+        private readonly string _value;
+        private const string LowValue = "low";
+        private const string MediumValue = "medium";
+        private const string HighValue = "high";
+        private const string AutoValue = "auto";
+
+        /// <summary> Initializes a new instance of <see cref="VoiceAgentSemanticVadTurnDetectionEagerness"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VoiceAgentSemanticVadTurnDetectionEagerness(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Low. </summary>
+        public static VoiceAgentSemanticVadTurnDetectionEagerness Low { get; } = new VoiceAgentSemanticVadTurnDetectionEagerness(LowValue);
+
+        /// <summary> Gets the Medium. </summary>
+        public static VoiceAgentSemanticVadTurnDetectionEagerness Medium { get; } = new VoiceAgentSemanticVadTurnDetectionEagerness(MediumValue);
+
+        /// <summary> Gets the High. </summary>
+        public static VoiceAgentSemanticVadTurnDetectionEagerness High { get; } = new VoiceAgentSemanticVadTurnDetectionEagerness(HighValue);
+
+        /// <summary> Gets the Auto. </summary>
+        public static VoiceAgentSemanticVadTurnDetectionEagerness Auto { get; } = new VoiceAgentSemanticVadTurnDetectionEagerness(AutoValue);
+
+        /// <summary> Determines if two <see cref="VoiceAgentSemanticVadTurnDetectionEagerness"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VoiceAgentSemanticVadTurnDetectionEagerness left, VoiceAgentSemanticVadTurnDetectionEagerness right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VoiceAgentSemanticVadTurnDetectionEagerness"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VoiceAgentSemanticVadTurnDetectionEagerness left, VoiceAgentSemanticVadTurnDetectionEagerness right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentSemanticVadTurnDetectionEagerness"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentSemanticVadTurnDetectionEagerness(string value) => new VoiceAgentSemanticVadTurnDetectionEagerness(value);
+
+        /// <summary> Converts a string to a <see cref="VoiceAgentSemanticVadTurnDetectionEagerness"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceAgentSemanticVadTurnDetectionEagerness?(string value) => value == null ? null : new VoiceAgentSemanticVadTurnDetectionEagerness(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VoiceAgentSemanticVadTurnDetectionEagerness other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(VoiceAgentSemanticVadTurnDetectionEagerness other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

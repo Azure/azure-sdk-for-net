@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
@@ -56,7 +57,7 @@ public class AgentTelephonyTests : AgentsTestBase
             {
                 try
                 {
-                    await telephonyClient.DeleteTelephonyBindingAsync(agentName, existing.Id, existing.Etag, CancellationToken.None);
+                    await telephonyClient.DeleteTelephonyBindingAsync(agentName, existing.Id, existing.Etag, cancellationToken: CancellationToken.None);
                 }
                 catch { }
             }
@@ -70,7 +71,7 @@ public class AgentTelephonyTests : AgentsTestBase
         };
 
         // Create
-        TelephonyBinding created = await telephonyClient.CreateTelephonyBindingAsync(agentName, content, CancellationToken.None);
+        TelephonyBinding created = await telephonyClient.CreateTelephonyBindingAsync(agentName, content, cancellationToken: CancellationToken.None);
         Assert.That(created, Is.InstanceOf<TwilioTelephonyBinding>());
         Assert.That(created.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(created.ConnectionName, Is.EqualTo("cs-e2e-tests-twilio-connection"));
@@ -79,7 +80,7 @@ public class AgentTelephonyTests : AgentsTestBase
         try
         {
             // Get
-            TelephonyBinding retrieved = await telephonyClient.GetTelephonyBindingAsync(agentName, created.Id, CancellationToken.None);
+            TelephonyBinding retrieved = await telephonyClient.GetTelephonyBindingAsync(agentName, created.Id, cancellationToken: CancellationToken.None);
             Assert.That(retrieved.Id, Is.EqualTo(created.Id));
             Assert.That(retrieved.Label, Is.EqualTo("cs-e2e-tests-binding"));
 
@@ -90,7 +91,7 @@ public class AgentTelephonyTests : AgentsTestBase
             Assert.That(listedBinding.Etag, Is.Not.Null.And.Not.Empty);
 
             // Delete
-            await telephonyClient.DeleteTelephonyBindingAsync(agentName, created.Id, listedBinding.Etag, CancellationToken.None);
+            await telephonyClient.DeleteTelephonyBindingAsync(agentName, created.Id, listedBinding.Etag, cancellationToken: CancellationToken.None);
 
             bindings = await telephonyClient.GetTelephonyBindingsAsync(agentName).ToListAsync();
             Assert.That(bindings.Select(b => b.Id), Does.Not.Contain(created.Id));
@@ -100,7 +101,7 @@ public class AgentTelephonyTests : AgentsTestBase
             // Best-effort cleanup if an assertion above failed before the delete step ran.
             try
             {
-                await telephonyClient.DeleteTelephonyBindingAsync(agentName, created.Id, "*", CancellationToken.None);
+                await telephonyClient.DeleteTelephonyBindingAsync(agentName, created.Id, "*", cancellationToken: CancellationToken.None);
             }
             catch { }
             throw;
@@ -114,7 +115,7 @@ public class AgentTelephonyTests : AgentsTestBase
         BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
 
-        List<TelephonyCallSummary> calls = await telephonyClient.GetTelephonyCallsAsync(agentName, (TelephonyProvider?)null).ToListAsync();
+        List<TelephonyCallSummary> calls = await telephonyClient.GetTelephonyCallsAsync(agentName, foundryFeatures: default, provider: (TelephonyProvider?)null).ToListAsync();
         Console.WriteLine($"[REST] LIST telephony calls -> {calls.Count} call(s)");
 
         Assert.That(calls, Is.Not.Null);
@@ -135,7 +136,7 @@ public class AgentTelephonyTests : AgentsTestBase
         BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
 
-        TelephonyTransferTargets targets = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, CancellationToken.None);
+        TelephonyTransferTargets targets = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, cancellationToken: CancellationToken.None);
         Assert.That(targets.TransferTargets, Is.Empty, "A freshly created agent must have no configured transfer targets.");
 
         TelephonyTransferTarget newTarget = new(
@@ -143,16 +144,16 @@ public class AgentTelephonyTests : AgentsTestBase
             description: "Transfers to the sales desk for pricing questions.",
             destination: new PSTNTelephonyTransferDestination("+14255550123"));
 
-        TelephonyTransferTargets replaced = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", [newTarget], CancellationToken.None);
+        TelephonyTransferTargets replaced = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", [newTarget], cancellationToken: CancellationToken.None);
         Assert.That(replaced.TransferTargets, Has.Count.EqualTo(1));
         Assert.That(replaced.TransferTargets[0].Name, Is.EqualTo("sales_desk"));
         Assert.That(replaced.TransferTargets[0].Destination, Is.InstanceOf<PSTNTelephonyTransferDestination>());
 
-        TelephonyTransferTargets confirmed = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, CancellationToken.None);
+        TelephonyTransferTargets confirmed = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, cancellationToken: CancellationToken.None);
         Assert.That(confirmed.TransferTargets, Has.Count.EqualTo(1));
         Assert.That(confirmed.TransferTargets[0].Name, Is.EqualTo("sales_desk"));
 
-        TelephonyTransferTargets cleared = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", Array.Empty<TelephonyTransferTarget>(), CancellationToken.None);
+        TelephonyTransferTargets cleared = await telephonyClient.ReplaceTelephonyTransferTargetsAsync(agentName, "*", Array.Empty<TelephonyTransferTarget>(), cancellationToken: CancellationToken.None);
         Assert.That(cleared.TransferTargets, Is.Empty);
     }
 
@@ -171,18 +172,18 @@ public class AgentTelephonyTests : AgentsTestBase
         const string fakeBindingId = "twilio:+10000000000";
 
         ClientResultException getException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.GetTelephonyBindingAsync(agentName, fakeBindingId, CancellationToken.None));
+            () => telephonyClient.GetTelephonyBindingAsync(agentName, fakeBindingId, cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] GET unknown telephony binding -> {getException.Status}");
         Assert.That(getException.Status, Is.EqualTo(404));
 
         BinaryContent updateContent = BinaryContent.Create(BinaryData.FromObjectAsJson(new { status = "suspended" }));
         ClientResultException updateException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.UpdateTelephonyBindingAsync(agentName, fakeBindingId, "*", updateContent, new RequestOptions()));
+            () => telephonyClient.UpdateTelephonyBindingAsync(agentName, fakeBindingId, "*", updateContent, options: new RequestOptions()));
         Console.WriteLine($"[REST] UPDATE unknown telephony binding -> {updateException.Status}");
         Assert.That(updateException.Status, Is.EqualTo(404));
 
         ClientResultException deleteException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.DeleteTelephonyBindingAsync(agentName, fakeBindingId, "*", CancellationToken.None));
+            () => telephonyClient.DeleteTelephonyBindingAsync(agentName, fakeBindingId, "*", cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] DELETE unknown telephony binding -> {deleteException.Status}");
         Assert.That(deleteException.Status, Is.EqualTo(404));
     }
@@ -201,17 +202,17 @@ public class AgentTelephonyTests : AgentsTestBase
         const string fakeCallId = "cs-e2e-tests-nonexistent-call";
 
         ClientResultException getException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.GetTelephonyCallAsync(agentName, fakeCallId, CancellationToken.None));
+            () => telephonyClient.GetTelephonyCallAsync(agentName, fakeCallId, cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] GET unknown telephony call -> {getException.Status}");
         Assert.That(getException.Status, Is.EqualTo(404));
 
         ClientResultException transferException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.TransferTelephonyCallAsync(agentName, fakeCallId, "nonexistent-target", CancellationToken.None));
+            () => telephonyClient.TransferTelephonyCallAsync(agentName, fakeCallId, "nonexistent-target", cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] TRANSFER unknown telephony call -> {transferException.Status}");
         Assert.That(transferException.Status, Is.EqualTo(404));
 
         ClientResultException endException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.EndTelephonyCallAsync(agentName, fakeCallId, CancellationToken.None));
+            () => telephonyClient.EndTelephonyCallAsync(agentName, fakeCallId, cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] END unknown telephony call -> {endException.Status}");
         Assert.That(endException.Status, Is.EqualTo(404));
     }
@@ -236,7 +237,7 @@ public class AgentTelephonyTests : AgentsTestBase
         const string fakeCallJobId = "cs-e2e-tests-nonexistent-call-job";
 
         ClientResultException getException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.GetTelephonyCallJobAsync(agentName, fakeCallJobId, CancellationToken.None));
+            () => telephonyClient.GetTelephonyCallJobAsync(agentName, fakeCallJobId, cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] GET unknown telephony call job -> {getException.Status}");
         Assert.That(getException.Status, Is.EqualTo(400).Or.EqualTo(404));
 
@@ -244,7 +245,7 @@ public class AgentTelephonyTests : AgentsTestBase
         // service rejects an unconditional "*" for this endpoint, so a well-formed fake revision is
         // passed instead (matching azure-ai-projects' (Python) equivalent test).
         ClientResultException cancelException = Assert.ThrowsAsync<ClientResultException>(
-            () => telephonyClient.CancelTelephonyCallJobAsync(agentName, fakeCallJobId, "0", CancellationToken.None));
+            () => telephonyClient.CancelTelephonyCallJobAsync(agentName, fakeCallJobId, "0", cancellationToken: CancellationToken.None));
         Console.WriteLine($"[REST] CANCEL unknown telephony call job -> {cancelException.Status}");
         Assert.That(cancelException.Status, Is.EqualTo(400).Or.EqualTo(404));
     }

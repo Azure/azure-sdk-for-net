@@ -2,20 +2,76 @@
 
 #nullable disable
 
-namespace OpenAI
+using System;
+using System.ComponentModel;
+
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public enum VoiceResponseBaseStatus
+    public readonly partial struct VoiceResponseBaseStatus : IEquatable<VoiceResponseBaseStatus>
     {
-        /// <summary> Completed. </summary>
-        Completed,
-        /// <summary> Cancelled. </summary>
-        Cancelled,
-        /// <summary> Failed. </summary>
-        Failed,
-        /// <summary> Incomplete. </summary>
-        Incomplete,
-        /// <summary> InProgress. </summary>
-        InProgress
+        private readonly string _value;
+        private const string CompletedValue = "completed";
+        private const string CancelledValue = "cancelled";
+        private const string FailedValue = "failed";
+        private const string IncompleteValue = "incomplete";
+        private const string InProgressValue = "in_progress";
+
+        /// <summary> Initializes a new instance of <see cref="VoiceResponseBaseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VoiceResponseBaseStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Completed. </summary>
+        public static VoiceResponseBaseStatus Completed { get; } = new VoiceResponseBaseStatus(CompletedValue);
+
+        /// <summary> Gets the Cancelled. </summary>
+        public static VoiceResponseBaseStatus Cancelled { get; } = new VoiceResponseBaseStatus(CancelledValue);
+
+        /// <summary> Gets the Failed. </summary>
+        public static VoiceResponseBaseStatus Failed { get; } = new VoiceResponseBaseStatus(FailedValue);
+
+        /// <summary> Gets the Incomplete. </summary>
+        public static VoiceResponseBaseStatus Incomplete { get; } = new VoiceResponseBaseStatus(IncompleteValue);
+
+        /// <summary> Gets the InProgress. </summary>
+        public static VoiceResponseBaseStatus InProgress { get; } = new VoiceResponseBaseStatus(InProgressValue);
+
+        /// <summary> Determines if two <see cref="VoiceResponseBaseStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VoiceResponseBaseStatus left, VoiceResponseBaseStatus right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VoiceResponseBaseStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VoiceResponseBaseStatus left, VoiceResponseBaseStatus right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VoiceResponseBaseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceResponseBaseStatus(string value) => new VoiceResponseBaseStatus(value);
+
+        /// <summary> Converts a string to a <see cref="VoiceResponseBaseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VoiceResponseBaseStatus?(string value) => value == null ? null : new VoiceResponseBaseStatus(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VoiceResponseBaseStatus other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(VoiceResponseBaseStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

@@ -2,16 +2,68 @@
 
 #nullable disable
 
-namespace OpenAI
+using System;
+using System.ComponentModel;
+
+namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public enum WebSearchToolSearchContextSize
+    public readonly partial struct WebSearchToolSearchContextSize : IEquatable<WebSearchToolSearchContextSize>
     {
-        /// <summary> Low. </summary>
-        Low,
-        /// <summary> Medium. </summary>
-        Medium,
-        /// <summary> High. </summary>
-        High
+        private readonly string _value;
+        private const string LowValue = "low";
+        private const string MediumValue = "medium";
+        private const string HighValue = "high";
+
+        /// <summary> Initializes a new instance of <see cref="WebSearchToolSearchContextSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WebSearchToolSearchContextSize(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Low. </summary>
+        public static WebSearchToolSearchContextSize Low { get; } = new WebSearchToolSearchContextSize(LowValue);
+
+        /// <summary> Gets the Medium. </summary>
+        public static WebSearchToolSearchContextSize Medium { get; } = new WebSearchToolSearchContextSize(MediumValue);
+
+        /// <summary> Gets the High. </summary>
+        public static WebSearchToolSearchContextSize High { get; } = new WebSearchToolSearchContextSize(HighValue);
+
+        /// <summary> Determines if two <see cref="WebSearchToolSearchContextSize"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(WebSearchToolSearchContextSize left, WebSearchToolSearchContextSize right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="WebSearchToolSearchContextSize"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(WebSearchToolSearchContextSize left, WebSearchToolSearchContextSize right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="WebSearchToolSearchContextSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebSearchToolSearchContextSize(string value) => new WebSearchToolSearchContextSize(value);
+
+        /// <summary> Converts a string to a <see cref="WebSearchToolSearchContextSize"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebSearchToolSearchContextSize?(string value) => value == null ? null : new WebSearchToolSearchContextSize(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is WebSearchToolSearchContextSize other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(WebSearchToolSearchContextSize other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

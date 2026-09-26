@@ -760,6 +760,8 @@ namespace Azure.AI.Projects.Agents
         ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
         ///   will improve accuracy and latency.
         /// </param>
+        /// <param name="languages"> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
+        /// <param name="keywords"> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
         /// <param name="prompt">
         /// An optional text to guide the model's style or continue a previous audio
         ///   segment.
@@ -777,13 +779,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
         {
+            languages ??= new ChangeTrackingList<string>();
+            keywords ??= new ChangeTrackingList<string>();
             customSpeech ??= new ChangeTrackingDictionary<string, string>();
             phraseList ??= new ChangeTrackingList<string>();
 
             return new VoiceAgentInputTranscription(
                 language,
+                languages.ToList(),
+                keywords.ToList(),
                 prompt,
                 delay,
                 model,
@@ -1023,7 +1029,8 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The RealtimeFunctionToolParameters. </summary>
-        /// <returns> A new <see cref="OpenAI.RealtimeFunctionToolParameters"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.RealtimeFunctionToolParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static RealtimeFunctionToolParameters RealtimeFunctionToolParameters()
         {
             return new RealtimeFunctionToolParameters(additionalBinaryDataProperties: null);
@@ -1376,10 +1383,11 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ContainerSkill.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.InlineSkillParam"/> and <see cref="OpenAI.SkillReferenceParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.InlineSkillParam"/> and <see cref="Agents.SkillReferenceParam"/>.
         /// </summary>
         /// <param name="type"></param>
-        /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.ContainerSkill"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ContainerSkill ContainerSkill(string @type = default)
         {
             return new UnknownContainerSkill(new ContainerSkillType(@type), additionalBinaryDataProperties: null);
@@ -1388,7 +1396,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The SkillReferenceParam. </summary>
         /// <param name="skillId"> The ID of the referenced skill. </param>
         /// <param name="version"> Optional skill version. Use a positive integer or 'latest'. Omit for default. </param>
-        /// <returns> A new <see cref="OpenAI.SkillReferenceParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.SkillReferenceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillReferenceParam SkillReferenceParam(string skillId = default, string version = default)
         {
             return new SkillReferenceParam(ContainerSkillType.SkillReference, additionalBinaryDataProperties: null, skillId, version);
@@ -1398,7 +1407,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        /// <returns> A new <see cref="OpenAI.InlineSkillParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.InlineSkillParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static InlineSkillParam InlineSkillParam(string name = default, string description = default, InlineSkillSourceParam source = default)
         {
             return new InlineSkillParam(ContainerSkillType.Inline, additionalBinaryDataProperties: null, name, description, source);
@@ -1406,43 +1416,11 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Inline skill payload. </summary>
         /// <param name="data"> Base64-encoded skill zip bundle. </param>
-        /// <returns> A new <see cref="OpenAI.InlineSkillSourceParam"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.InlineSkillSourceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static InlineSkillSourceParam InlineSkillSourceParam(string data = default)
         {
             return new InlineSkillSourceParam("base64", "application/zip", data, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The inputs for generating a voice agent. Only `kind` and `name` are always required.
-        /// The authoring service expands these inputs into a full, editable `VoiceAgentDefinition`, which is then created through `POST /agents`.
-        /// The generated `instructions` and audio/voice settings are stored as separate fields on the resulting agent
-        /// definition, so the caller can edit or override any of them afterward via standard agent versioning.
-        /// </summary>
-        /// <param name="name"> The unique name for the agent to create. Must be a non-empty DNS-like agent name. </param>
-        /// <param name="modelType"> Optional inference mode. When omitted, the authoring service uses `managed`. When supplied, use `managed` or `self_deployed`. </param>
-        /// <param name="model"> Optional model identifier. Required when `model_type` is `self_deployed`; optional when `model_type` is `managed` or omitted. The service never invents a customer deployment name. </param>
-        /// <param name="useCase"> An optional authoring use case. An empty string is accepted. </param>
-        /// <param name="goal"> An optional natural-language description of what the agent should do. When supplied, it seeds the generated instructions. </param>
-        /// <param name="description"> An optional agent description. The authoring service resolves its fallback when omitted. </param>
-        /// <param name="tools"> Optional tools carried through verbatim onto the generated agent (see `VoiceAgentTool`). </param>
-        /// <param name="draft"> (Preview) When `true`, the generated voice agent is created as a draft — an editable, unpublished version the caller can review and refine before publishing it via the standard create/version path. The service defaults to `false` if a value is not specified by the caller, in which case the agent is created and published normally. </param>
-        /// <returns> A new <see cref="Agents.GenerateVoiceAgentRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static GenerateVoiceAgentRequest GenerateVoiceAgentRequest(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
-        {
-            tools ??= new ChangeTrackingList<VoiceAgentTool>();
-
-            return new GenerateVoiceAgentRequest(
-                "voice",
-                name,
-                modelType,
-                model,
-                useCase,
-                goal,
-                description,
-                tools.ToList(),
-                draft,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Multipart request body for creating a new code-based agent (POST /agents). Inherits from CreateAgentVersionFromCodeContent for future extensibility. </summary>
@@ -1561,6 +1539,994 @@ namespace Azure.AI.Projects.Agents
         public static SessionLogEvent SessionLogEvent(SessionLogEventKind @event = default, string data = default)
         {
             return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An abstract representation of a tool stored in a toolbox.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
+        /// </summary>
+        /// <param name="type"> The type of tool. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ToolboxTool"/> instance for mocking. </returns>
+        public static ToolboxTool ToolboxTool(string @type = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new UnknownToolboxTool(@type.ToToolboxToolType(), name, description, toolConfigs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A code interpreter tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="allowedCallers"></param>
+        /// <param name="internalContainer">
+        /// The code interpreter container. Can be a container ID or an object that
+        /// specifies uploaded file IDs to make available to your code, along with an
+        /// optional `memory_limit` setting.
+        /// If not provided, the service assumes auto.
+        /// </param>
+        /// <returns> A new <see cref="Agents.CodeInterpreterToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData internalContainer = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
+
+            return new CodeInterpreterToolboxTool(
+                ToolboxToolType.CodeInterpreter,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                allowedCallers.ToList(),
+                internalContainer);
+        }
+
+        /// <summary> A file search tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
+        /// <param name="rankingOptions"> Ranking options for search. </param>
+        /// <param name="filters"></param>
+        /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
+        /// <returns> A new <see cref="Agents.FileSearchToolboxTool"/> instance for mocking. </returns>
+        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxNumResults = default, object rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            vectorStoreIds ??= new ChangeTrackingList<string>();
+
+            return new FileSearchToolboxTool(
+                ToolboxToolType.FileSearch,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                maxNumResults,
+                rankingOptions,
+                filters,
+                vectorStoreIds.ToList());
+        }
+
+        /// <summary> A web search tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="filters"></param>
+        /// <param name="userLocation"></param>
+        /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
+        /// <param name="customSearchConfiguration">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <returns> A new <see cref="Agents.WebSearchToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, WebSearchToolFilters filters = default, WebSearchToolApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, WebSearchConfiguration customSearchConfiguration = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WebSearchToolboxTool(
+                ToolboxToolType.WebSearch,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                filters,
+                userLocation,
+                searchContextSize,
+                customSearchConfiguration);
+        }
+
+        /// <summary> A shell tool stored in a toolbox. This model is additive to toolbox configuration and does not modify the OpenAI tool contract or existing toolbox tool definitions. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="allowedCallers"></param>
+        /// <param name="environment"> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </param>
+        /// <returns> A new <see cref="Agents.ShellToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ShellToolboxTool ShellToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, ToolboxShellEnvironment environment = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
+
+            return new ShellToolboxTool(
+                ToolboxToolType.Shell,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                allowedCallers.ToList(),
+                environment);
+        }
+
+        /// <summary>
+        /// An execution environment for a shell tool stored in a toolbox. This environment model is scoped to toolbox configuration and does not modify the OpenAI shell environment contract.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> and <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/>.
+        /// </summary>
+        /// <param name="type"> The type of the shell execution environment. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ToolboxShellEnvironment ToolboxShellEnvironment(string @type = default)
+        {
+            return new UnknownToolboxShellEnvironment(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
+        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
+        /// <param name="memoryLimit"></param>
+        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
+        /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ToolboxShellContainerAutoEnvironment ToolboxShellContainerAutoEnvironment(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ToolboxShellNetworkPolicy networkPolicy = default)
+        {
+            fileIds ??= new ChangeTrackingList<string>();
+            skills ??= new ChangeTrackingList<ContainerSkill>();
+
+            return new ToolboxShellContainerAutoEnvironment(
+                "container_auto",
+                additionalBinaryDataProperties: null,
+                fileIds.ToList(),
+                memoryLimit,
+                skills.ToList(),
+                networkPolicy);
+        }
+
+        /// <summary>
+        /// Network access policy for an automatically provisioned toolbox shell container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/>.
+        /// </summary>
+        /// <param name="type"> The type of network access policy. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicy"/> instance for mocking. </returns>
+        public static ToolboxShellNetworkPolicy ToolboxShellNetworkPolicy(string @type = default)
+        {
+            return new UnknownToolboxShellNetworkPolicy(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A network policy that disables outbound access from a toolbox shell container. </summary>
+        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/> instance for mocking. </returns>
+        public static ToolboxShellNetworkPolicyDisabled ToolboxShellNetworkPolicyDisabled()
+        {
+            return new ToolboxShellNetworkPolicyDisabled("disabled", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An existing container environment for a shell tool stored in a toolbox. </summary>
+        /// <param name="containerId"> The ID of the referenced container. </param>
+        /// <returns> A new <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ToolboxShellContainerReferenceEnvironment ToolboxShellContainerReferenceEnvironment(string containerId = default)
+        {
+            return new ToolboxShellContainerReferenceEnvironment("container_reference", additionalBinaryDataProperties: null, containerId);
+        }
+
+        /// <summary> An MCP tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
+        /// <param name="serverUri">
+        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
+        ///   `tunnel_id` must be provided.
+        /// </param>
+        /// <param name="connectorId">
+        /// Identifier for service connectors, like those available in ChatGPT. One of
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more
+        ///   about service connectors [here](/docs/guides/tools-remote-mcp#connectors).
+        ///   Currently supported `connector_id` values are:
+        /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
+        /// </param>
+        /// <param name="tunnelId">
+        /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of
+        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided.
+        /// </param>
+        /// <param name="authorization">
+        /// An OAuth access token that can be used with a remote MCP server, either
+        ///   with a custom MCP server URL or a service connector. Your application
+        ///   must handle the OAuth authorization flow and provide the token here.
+        /// </param>
+        /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
+        /// <param name="headers"></param>
+        /// <param name="allowedTools"></param>
+        /// <param name="allowedCallers"></param>
+        /// <param name="requireApprovalInternal"></param>
+        /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
+        /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
+        /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, MCPToolboxToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+            headers ??= new ChangeTrackingDictionary<string, string>();
+            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
+
+            return new MCPToolboxTool(
+                ToolboxToolType.Mcp,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                serverLabel,
+                serverUri,
+                connectorId,
+                tunnelId,
+                authorization,
+                serverDescription,
+                headers,
+                allowedTools,
+                allowedCallers.ToList(),
+                requireApprovalInternal,
+                deferLoading,
+                projectConnectionId);
+        }
+
+        /// <summary> An Azure AI Search tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
+        /// <returns> A new <see cref="Agents.AzureAISearchToolboxTool"/> instance for mocking. </returns>
+        public static AzureAISearchToolboxTool AzureAISearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolOptions azureAiSearch = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new AzureAISearchToolboxTool(
+                ToolboxToolType.AzureAiSearch,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                azureAiSearch);
+        }
+
+        /// <summary> An OpenAPI tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="functionDefinition"> The openapi function definition. </param>
+        /// <returns> A new <see cref="Agents.OpenApiToolboxTool"/> instance for mocking. </returns>
+        public static OpenApiToolboxTool OpenApiToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new OpenApiToolboxTool(
+                ToolboxToolType.Openapi,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                functionDefinition);
+        }
+
+        /// <summary> An A2A tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
+        /// <returns> A new <see cref="Agents.A2AToolboxTool"/> instance for mocking. </returns>
+        public static A2AToolboxTool A2AToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new A2AToolboxTool(
+                ToolboxToolType.A2a,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                a2aVersion);
+        }
+
+        /// <summary> An A2A tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <returns> A new <see cref="Agents.A2APreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new A2APreviewToolboxTool(
+                ToolboxToolType.A2aPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard);
+        }
+
+        /// <summary> A browser automation tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BrowserAutomationPreviewToolboxTool(
+                ToolboxToolType.BrowserAutomationPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                toolParameters);
+        }
+
+        /// <summary> A browser automation tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
+        /// <returns> A new <see cref="Agents.BrowserAutomationToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static BrowserAutomationToolboxTool BrowserAutomationToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new BrowserAutomationToolboxTool(
+                ToolboxToolType.BrowserAutomation,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                toolParameters);
+        }
+
+        /// <summary> A reminder tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ReminderPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ReminderPreviewToolboxTool ReminderPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ReminderPreviewToolboxTool(ToolboxToolType.ReminderPreview, name, description, toolConfigs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A WorkIQ tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <returns> A new <see cref="Agents.WorkIQPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WorkIQPreviewToolboxTool WorkIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WorkIQPreviewToolboxTool(
+                ToolboxToolType.WorkIqPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                projectConnectionId);
+        }
+
+        /// <summary> A FabricIQ tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
+        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
+        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
+        /// <param name="requireApprovalInternal"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
+        /// <returns> A new <see cref="Agents.FabricIQPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FabricIQPreviewToolboxTool FabricIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApprovalInternal = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new FabricIQPreviewToolboxTool(
+                ToolboxToolType.FabricIqPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                serverUri,
+                requireApprovalInternal);
+        }
+
+        /// <summary> A WebIQ tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
+        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
+        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <returns> A new <see cref="Agents.WebIQPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, BinaryData requireApprovalInternal = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WebIQPreviewToolboxTool(
+                ToolboxToolType.WebIqPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                requireApprovalInternal);
+        }
+
+        /// <summary> A toolbox search tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ToolboxSearchPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ToolboxSearchPreviewToolboxTool ToolboxSearchPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ToolboxSearchPreviewToolboxTool(ToolboxToolType.ToolboxSearchPreview, name, description, toolConfigs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A toolbox search tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <returns> A new <see cref="Agents.ToolSearchToolboxTool"/> instance for mocking. </returns>
+        public static ToolSearchToolboxTool ToolSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new ToolSearchToolboxTool(ToolboxToolType.ToolboxSearch, name, description, toolConfigs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A skill source included in a toolbox.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxSkillReference"/>.
+        /// </summary>
+        /// <param name="type"> The type of skill source. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSkill"/> instance for mocking. </returns>
+        public static ToolboxSkill ToolboxSkill(string @type = default)
+        {
+            return new UnknownToolboxSkill(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A reference to an existing skill to include in a toolbox. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="version"> The version of the skill. If not specified, the skill's default version is used. When a version is specified, the reference is pinned to that immutable version. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSkillReference"/> instance for mocking. </returns>
+        public static ToolboxSkillReference ToolboxSkillReference(string name = default, string version = default)
+        {
+            return new ToolboxSkillReference("skill_reference", additionalBinaryDataProperties: null, name, version);
+        }
+
+        /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
+        /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
+        /// <returns> A new <see cref="Agents.ToolboxPolicies"/> instance for mocking. </returns>
+        public static ToolboxPolicies ToolboxPolicies(ContentFilterConfiguration raiConfig = default)
+        {
+            return new ToolboxPolicies(raiConfig, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A specific version of a toolbox. </summary>
+        /// <param name="metadata">
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </param>
+        /// <param name="id"> The unique identifier of the toolbox version. </param>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
+        /// <param name="description"> A human-readable description of the toolbox. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the toolbox version was created. </param>
+        /// <param name="tools"> The list of tools contained in this toolbox version. </param>
+        /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
+        /// <param name="policies"> Policy configuration for the toolbox version. </param>
+        /// <returns> A new <see cref="Agents.ToolboxVersion"/> instance for mocking. </returns>
+        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default, IEnumerable<ToolboxTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            tools ??= new ChangeTrackingList<ToolboxTool>();
+            skills ??= new ChangeTrackingList<ToolboxSkill>();
+
+            return new ToolboxVersion(
+                metadata,
+                id,
+                name,
+                version,
+                description,
+                createdOn,
+                tools.ToList(),
+                skills.ToList(),
+                policies,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
+        /// <param name="id"> The unique identifier of the toolbox. </param>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="updatedOn"> The Unix timestamp (seconds) when the toolbox was last updated. This value changes when a new toolbox version is created or the toolbox is updated. </param>
+        /// <param name="versions"> The versions associated with the toolbox. </param>
+        /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
+        /// <returns> A new <see cref="Agents.ToolboxRecord"/> instance for mocking. </returns>
+        public static ToolboxRecord ToolboxRecord(string id = default, string name = default, DateTimeOffset updatedOn = default, ToolboxVersions versions = default, string defaultVersion = default)
+        {
+            return new ToolboxRecord(
+                id,
+                name,
+                updatedOn,
+                versions,
+                defaultVersion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The versions associated with a toolbox. </summary>
+        /// <param name="latest"> The latest version of the toolbox. </param>
+        /// <returns> A new <see cref="Agents.ToolboxVersions"/> instance for mocking. </returns>
+        public static ToolboxVersions ToolboxVersions(ToolboxVersion latest = default)
+        {
+            return new ToolboxVersions(latest, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A skill resource. </summary>
+        /// <param name="id"> The unique identifier of the skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="description"> A human-readable description of the skill. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
+        /// <param name="latestVersion"> The latest version for the skill. </param>
+        /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdOn = default, string defaultVersion = default, string latestVersion = default)
+        {
+            return new AgentsSkill(
+                id,
+                name,
+                description,
+                createdOn,
+                defaultVersion,
+                latestVersion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A deleted skill. </summary>
+        /// <param name="id"> The unique identifier of the deleted skill. </param>
+        /// <param name="name"> The unique name of the skill. </param>
+        /// <param name="deleted"> Whether the skill was successfully deleted. </param>
+        /// <returns> A new <see cref="Agents.SkillDeletionResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SkillDeletionResult SkillDeletionResult(string id = default, string name = default, bool deleted = default)
+        {
+            return new SkillDeletionResult(id, name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline content for defining a simple skill without uploading files. Follows the agentskills.io SKILL.md specification. </summary>
+        /// <param name="description"> A human-readable description of what the skill does and when to use it. </param>
+        /// <param name="instructions"> The skill instructions in markdown format. This is the body content of the SKILL.md file. </param>
+        /// <param name="license"> License name or reference to a bundled license file. </param>
+        /// <param name="compatibility"> Environment requirements or compatibility notes for the skill. </param>
+        /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
+        /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
+        /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            allowedTools ??= new ChangeTrackingList<string>();
+
+            return new SkillInlineContent(
+                description,
+                instructions,
+                license,
+                compatibility,
+                metadata,
+                allowedTools.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A specific version of a skill. </summary>
+        /// <param name="id"> The unique identifier of the skill version. </param>
+        /// <param name="skillId"> The identifier of the parent skill. </param>
+        /// <param name="name"> The name of the skill version. </param>
+        /// <param name="version"> The version identifier. Skill versions are immutable. </param>
+        /// <param name="description"> A human-readable description of the skill version. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
+        /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default)
+        {
+            return new SkillVersion(
+                id,
+                skillId,
+                name,
+                version,
+                description,
+                createdOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A deleted skill version. </summary>
+        /// <param name="id"> The unique identifier of the deleted skill version. </param>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
+        /// <param name="version"> The version that was deleted. </param>
+        /// <returns> A new <see cref="Agents.SkillVersionDeletionResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SkillVersionDeletionResult SkillVersionDeletionResult(string id = default, string name = default, bool deleted = default, string version = default)
+        {
+            return new SkillVersionDeletionResult(id, name, deleted, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response from uploading a file to a session sandbox. </summary>
+        /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
+        /// <param name="bytesWritten"> Number of bytes written. </param>
+        /// <returns> A new <see cref="Agents.SessionFileWriteResult"/> instance for mocking. </returns>
+        public static SessionFileWriteResult SessionFileWriteResult(string path = default, long bytesWritten = default)
+        {
+            return new SessionFileWriteResult(path, bytesWritten, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A single entry in a directory listing. </summary>
+        /// <param name="name"> The name of the file or directory. </param>
+        /// <param name="sizeInBytes"> The size in bytes (0 for directories). </param>
+        /// <param name="isDirectory"> Whether this entry is a directory. </param>
+        /// <param name="modifiedOn"> The Unix timestamp (in seconds) when the file was last modified. </param>
+        /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
+        public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long sizeInBytes = default, bool isDirectory = default, DateTimeOffset modifiedOn = default)
+        {
+            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-supplied inputs for an optimization job. </summary>
+        /// <param name="agent"> The agent (and pinned version) being optimized. </param>
+        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
+        /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
+        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
+        /// <param name="options"> Tuning knobs and run-mode. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationJobInputs AgentOptimizationJobInputs(OptimizedAgentIdentifier agent = default, AgentOptimizationDatasetInput trainDataset = default, AgentOptimizationDatasetInput validationDataset = default, IEnumerable<AgentOptimizationEvaluatorRef> evaluators = default, AgentOptimizationOptions options = default)
+        {
+            evaluators ??= new ChangeTrackingList<AgentOptimizationEvaluatorRef>();
+
+            return new AgentOptimizationJobInputs(
+                agent,
+                trainDataset,
+                validationDataset,
+                evaluators.ToList(),
+                options,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
+        /// <param name="agentName"> Registered Foundry agent name (required). </param>
+        /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
+        /// <returns> A new <see cref="Agents.OptimizedAgentIdentifier"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static OptimizedAgentIdentifier OptimizedAgentIdentifier(string agentName = default, string agentVersion = default)
+        {
+            return new OptimizedAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base discriminated model for dataset input. Either inline items or a registered reference.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationInlineDatasetInput"/> and <see cref="Agents.AgentOptimizationReferenceDatasetInput"/>.
+        /// </summary>
+        /// <param name="type"> Dataset input type discriminator. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetInput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationDatasetInput AgentOptimizationDatasetInput(string @type = default)
+        {
+            return new UnknownAgentOptimizationDatasetInput(new AgentOptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline dataset — items supplied directly in the request body. </summary>
+        /// <param name="items"> Dataset items. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationInlineDatasetInput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationInlineDatasetInput AgentOptimizationInlineDatasetInput(IEnumerable<AgentOptimizationDatasetItem> items = default)
+        {
+            items ??= new ChangeTrackingList<AgentOptimizationDatasetItem>();
+
+            return new AgentOptimizationInlineDatasetInput(AgentOptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
+        }
+
+        /// <summary> A single item in an inline dataset. </summary>
+        /// <param name="query"> The user query / prompt. </param>
+        /// <param name="groundTruth"> Expected ground truth answer. </param>
+        /// <param name="desiredTurnCount"> Desired number of conversation turns for simulation mode (1-20). </param>
+        /// <param name="criteria"> Per-item evaluation criteria. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetItem"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationDatasetItem AgentOptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredTurnCount = default, IEnumerable<AgentOptimizationDatasetCriterion> criteria = default)
+        {
+            criteria ??= new ChangeTrackingList<AgentOptimizationDatasetCriterion>();
+
+            return new AgentOptimizationDatasetItem(query, groundTruth, desiredTurnCount, criteria.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
+        /// <param name="name"> Criterion name. </param>
+        /// <param name="instruction"> Criterion instruction / description. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetCriterion"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationDatasetCriterion AgentOptimizationDatasetCriterion(string name = default, string instruction = default)
+        {
+            return new AgentOptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a registered Foundry dataset. </summary>
+        /// <param name="name"> Registered dataset name. </param>
+        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationReferenceDatasetInput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationReferenceDatasetInput AgentOptimizationReferenceDatasetInput(string name = default, string version = default)
+        {
+            return new AgentOptimizationReferenceDatasetInput(AgentOptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
+        }
+
+        /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
+        /// <param name="name"> Evaluator name. </param>
+        /// <param name="version"> Evaluator version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationEvaluatorRef"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationEvaluatorRef AgentOptimizationEvaluatorRef(string name = default, string version = default)
+        {
+            return new AgentOptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
+        /// <param name="maxCandidates"> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </param>
+        /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
+        /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
+        /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
+        /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
+        /// <param name="maxStalls"> Maximum number of consecutive reflective minibatch rejections before stopping early. A 'stall' occurs when the optimizer proposes a prompt change, evaluates it on a small subset, and the score does not improve — so no full validation-set evaluation is triggered. The counter resets whenever a minibatch passes and its full-validation score beats the current best. Only a sustained plateau of `max_stalls` consecutive minibatch failures triggers the stop. The service defaults to 5 if a value is not specified by the caller. Must be &gt;= 1 when set. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationOptions AgentOptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, AgentsEvaluationLevel? evaluationLevel = default, int? maxStalls = default)
+        {
+            optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AgentOptimizationOptions(
+                maxCandidates,
+                optimizationConfig,
+                evalModel,
+                optimizationModel,
+                evaluationLevel,
+                maxStalls,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
+        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
+        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
+        /// <param name="candidates"> All evaluated candidates including baseline. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJobResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationJobResult AgentOptimizationJobResult(string baseline = default, string best = default, IEnumerable<AgentOptimizationCandidate> candidates = default)
+        {
+            candidates ??= new ChangeTrackingList<AgentOptimizationCandidate>();
+
+            return new AgentOptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
+        /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
+        /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
+        /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
+        /// <param name="avgScore"> Average composite score across all tasks. </param>
+        /// <param name="avgTokens"> Average token usage across all tasks. </param>
+        /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
+        /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
+        /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationCandidate"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
+        {
+            mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AgentOptimizationCandidate(
+                candidateId,
+                name,
+                mutations,
+                avgScore,
+                avgTokens,
+                evalId,
+                evalRunId,
+                promotion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Promotion metadata recorded when a candidate is deployed to a Foundry agent. </summary>
+        /// <param name="promotedOn"> Timestamp when promotion occurred, represented in Unix time. </param>
+        /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
+        /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
+        /// <returns> A new <see cref="Agents.PromotionInfo"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static PromotionInfo PromotionInfo(DateTimeOffset promotedOn = default, string agentName = default, string agentVersion = default)
+        {
+            return new PromotionInfo(promotedOn, agentName, agentVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
+        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
+        /// <param name="bestScore"> Best score observed so far across all candidates. </param>
+        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        /// <returns> A new <see cref="Agents.AgentOptimizationJobProgress"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentOptimizationJobProgress AgentOptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSeconds = default)
+        {
+            return new AgentOptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The inputs for generating a voice agent. Only `kind` and `name` are always required.
+        /// The authoring service expands these inputs into a full, editable `VoiceAgentDefinition`, which is then created through `POST /agents`.
+        /// The generated `instructions` and audio/voice settings are stored as separate fields on the resulting agent
+        /// definition, so the caller can edit or override any of them afterward via standard agent versioning.
+        /// </summary>
+        /// <param name="name"> The unique name for the agent to create. Must be a non-empty DNS-like agent name. </param>
+        /// <param name="modelType"> Optional inference mode. When omitted, the authoring service uses `managed`. When supplied, use `managed` or `self_deployed`. </param>
+        /// <param name="model"> Optional model identifier. Required when `model_type` is `self_deployed`; optional when `model_type` is `managed` or omitted. The service never invents a customer deployment name. </param>
+        /// <param name="useCase"> An optional authoring use case. An empty string is accepted. </param>
+        /// <param name="goal"> An optional natural-language description of what the agent should do. When supplied, it seeds the generated instructions. </param>
+        /// <param name="description"> An optional agent description. The authoring service resolves its fallback when omitted. </param>
+        /// <param name="tools"> Optional tools carried through verbatim onto the generated agent (see `VoiceAgentTool`). </param>
+        /// <param name="draft"> (Preview) When `true`, the generated voice agent is created as a draft — an editable, unpublished version the caller can review and refine before publishing it via the standard create/version path. The service defaults to `false` if a value is not specified by the caller, in which case the agent is created and published normally. </param>
+        /// <returns> A new <see cref="Agents.GenerateVoiceAgentRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static GenerateVoiceAgentRequest GenerateVoiceAgentRequest(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
+        {
+            tools ??= new ChangeTrackingList<VoiceAgentTool>();
+
+            return new GenerateVoiceAgentRequest(
+                "voice",
+                name,
+                modelType,
+                model,
+                useCase,
+                goal,
+                description,
+                tools.ToList(),
+                draft,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2346,931 +3312,6 @@ namespace Azure.AI.Projects.Agents
         public static TelephonyCallJobCancellation TelephonyCallJobCancellation(string requestedBy = default, string mode = default, DateTimeOffset requestedOn = default, long revision = default)
         {
             return new TelephonyCallJobCancellation(requestedBy, mode, requestedOn, revision, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
-        /// </summary>
-        /// <param name="type"> The type of tool. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <returns> A new <see cref="Agents.ToolboxTool"/> instance for mocking. </returns>
-        public static ToolboxTool ToolboxTool(string @type = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new UnknownToolboxTool(@type.ToToolboxToolType(), name, description, toolConfigs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A code interpreter tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="allowedCallers"></param>
-        /// <param name="internalContainer">
-        /// The code interpreter container. Can be a container ID or an object that
-        /// specifies uploaded file IDs to make available to your code, along with an
-        /// optional `memory_limit` setting.
-        /// If not provided, the service assumes auto.
-        /// </param>
-        /// <returns> A new <see cref="Agents.CodeInterpreterToolboxTool"/> instance for mocking. </returns>
-        public static CodeInterpreterToolboxTool CodeInterpreterToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData internalContainer = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
-
-            return new CodeInterpreterToolboxTool(
-                ToolboxToolType.CodeInterpreter,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                allowedCallers.ToList(),
-                internalContainer);
-        }
-
-        /// <summary> A file search tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="maxNumResults"> The maximum number of results to return. This number should be between 1 and 50 inclusive. </param>
-        /// <param name="rankingOptions"> Ranking options for search. </param>
-        /// <param name="filters"></param>
-        /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        /// <returns> A new <see cref="Agents.FileSearchToolboxTool"/> instance for mocking. </returns>
-        public static FileSearchToolboxTool FileSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, long? maxNumResults = default, object rankingOptions = default, BinaryData filters = default, IEnumerable<string> vectorStoreIds = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-            vectorStoreIds ??= new ChangeTrackingList<string>();
-
-            return new FileSearchToolboxTool(
-                ToolboxToolType.FileSearch,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                maxNumResults,
-                rankingOptions,
-                filters,
-                vectorStoreIds.ToList());
-        }
-
-        /// <summary> A web search tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="filters"></param>
-        /// <param name="userLocation"></param>
-        /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        /// <param name="customSearchConfiguration">
-        /// The project connections attached to this tool. There can be a maximum of 1 connection
-        /// resource attached to the tool.
-        /// </param>
-        /// <returns> A new <see cref="Agents.WebSearchToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP002")]
-        public static WebSearchToolboxTool WebSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, WebSearchToolFilters filters = default, WebSearchToolApproximateLocation userLocation = default, WebSearchToolSearchContextSize? searchContextSize = default, WebSearchConfiguration customSearchConfiguration = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new WebSearchToolboxTool(
-                ToolboxToolType.WebSearch,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                filters,
-                userLocation,
-                searchContextSize,
-                customSearchConfiguration);
-        }
-
-        /// <summary> A shell tool stored in a toolbox. This model is additive to toolbox configuration and does not modify the OpenAI tool contract or existing toolbox tool definitions. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="allowedCallers"></param>
-        /// <param name="environment"> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </param>
-        /// <returns> A new <see cref="Agents.ShellToolboxTool"/> instance for mocking. </returns>
-        public static ShellToolboxTool ShellToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, ToolboxShellEnvironment environment = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
-
-            return new ShellToolboxTool(
-                ToolboxToolType.Shell,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                allowedCallers.ToList(),
-                environment);
-        }
-
-        /// <summary>
-        /// An execution environment for a shell tool stored in a toolbox. This environment model is scoped to toolbox configuration and does not modify the OpenAI shell environment contract.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> and <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/>.
-        /// </summary>
-        /// <param name="type"> The type of the shell execution environment. </param>
-        /// <returns> A new <see cref="Agents.ToolboxShellEnvironment"/> instance for mocking. </returns>
-        public static ToolboxShellEnvironment ToolboxShellEnvironment(string @type = default)
-        {
-            return new UnknownToolboxShellEnvironment(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An automatically provisioned container environment for a shell tool stored in a toolbox. </summary>
-        /// <param name="fileIds"> An optional list of uploaded files to make available to your code. </param>
-        /// <param name="memoryLimit"></param>
-        /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
-        /// <param name="networkPolicy"> The network access policy for the container. When omitted, the service defaults to disabled outbound network access. </param>
-        /// <returns> A new <see cref="Agents.ToolboxShellContainerAutoEnvironment"/> instance for mocking. </returns>
-        public static ToolboxShellContainerAutoEnvironment ToolboxShellContainerAutoEnvironment(IEnumerable<string> fileIds = default, ContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ToolboxShellNetworkPolicy networkPolicy = default)
-        {
-            fileIds ??= new ChangeTrackingList<string>();
-            skills ??= new ChangeTrackingList<ContainerSkill>();
-
-            return new ToolboxShellContainerAutoEnvironment(
-                "container_auto",
-                additionalBinaryDataProperties: null,
-                fileIds.ToList(),
-                memoryLimit,
-                skills.ToList(),
-                networkPolicy);
-        }
-
-        /// <summary>
-        /// Network access policy for an automatically provisioned toolbox shell container.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/>.
-        /// </summary>
-        /// <param name="type"> The type of network access policy. </param>
-        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicy"/> instance for mocking. </returns>
-        public static ToolboxShellNetworkPolicy ToolboxShellNetworkPolicy(string @type = default)
-        {
-            return new UnknownToolboxShellNetworkPolicy(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A network policy that disables outbound access from a toolbox shell container. </summary>
-        /// <returns> A new <see cref="Agents.ToolboxShellNetworkPolicyDisabled"/> instance for mocking. </returns>
-        public static ToolboxShellNetworkPolicyDisabled ToolboxShellNetworkPolicyDisabled()
-        {
-            return new ToolboxShellNetworkPolicyDisabled("disabled", additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An existing container environment for a shell tool stored in a toolbox. </summary>
-        /// <param name="containerId"> The ID of the referenced container. </param>
-        /// <returns> A new <see cref="Agents.ToolboxShellContainerReferenceEnvironment"/> instance for mocking. </returns>
-        public static ToolboxShellContainerReferenceEnvironment ToolboxShellContainerReferenceEnvironment(string containerId = default)
-        {
-            return new ToolboxShellContainerReferenceEnvironment("container_reference", additionalBinaryDataProperties: null, containerId);
-        }
-
-        /// <summary> An MCP tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUri">
-        /// The URL for the MCP server. One of `server_url`, `connector_id`, or
-        ///   `tunnel_id` must be provided.
-        /// </param>
-        /// <param name="connectorId">
-        /// Identifier for service connectors, like those available in ChatGPT. One of
-        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided. Learn more
-        ///   about service connectors [here](/docs/guides/tools-remote-mcp#connectors).
-        ///   Currently supported `connector_id` values are:
-        /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
-        /// </param>
-        /// <param name="tunnelId">
-        /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of
-        ///   `server_url`, `connector_id`, or `tunnel_id` must be provided.
-        /// </param>
-        /// <param name="authorization">
-        /// An OAuth access token that can be used with a remote MCP server, either
-        ///   with a custom MCP server URL or a service connector. Your application
-        ///   must handle the OAuth authorization flow and provide the token here.
-        /// </param>
-        /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
-        /// <param name="headers"></param>
-        /// <param name="allowedTools"></param>
-        /// <param name="allowedCallers"></param>
-        /// <param name="requireApprovalInternal"></param>
-        /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
-        /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
-        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, MCPToolboxToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, BinaryData allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-            headers ??= new ChangeTrackingDictionary<string, string>();
-            allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
-
-            return new MCPToolboxTool(
-                ToolboxToolType.Mcp,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                serverLabel,
-                serverUri,
-                connectorId,
-                tunnelId,
-                authorization,
-                serverDescription,
-                headers,
-                allowedTools,
-                allowedCallers.ToList(),
-                requireApprovalInternal,
-                deferLoading,
-                projectConnectionId);
-        }
-
-        /// <summary> An Azure AI Search tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="azureAiSearch"> The azure ai search index resource. </param>
-        /// <returns> A new <see cref="Agents.AzureAISearchToolboxTool"/> instance for mocking. </returns>
-        public static AzureAISearchToolboxTool AzureAISearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolOptions azureAiSearch = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new AzureAISearchToolboxTool(
-                ToolboxToolType.AzureAiSearch,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                azureAiSearch);
-        }
-
-        /// <summary> An OpenAPI tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="functionDefinition"> The openapi function definition. </param>
-        /// <returns> A new <see cref="Agents.OpenApiToolboxTool"/> instance for mocking. </returns>
-        public static OpenApiToolboxTool OpenApiToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new OpenApiToolboxTool(
-                ToolboxToolType.Openapi,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                functionDefinition);
-        }
-
-        /// <summary> An A2A tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
-        /// <param name="agentCardPath">
-        /// The path to the agent card relative to the `base_url`.
-        /// If not provided, defaults to  `/.well-known/agent-card.json`
-        /// </param>
-        /// <param name="projectConnectionId">
-        /// The connection ID in the project for the A2A server.
-        /// The connection stores authentication and other connection details needed to connect to the A2A server.
-        /// </param>
-        /// <param name="sendCredentialsForAgentCard">
-        /// When `true`, Foundry sends its credentials when fetching the remote
-        /// agent's Agent Card. The service defaults to `false` if a value is not
-        /// specified by the caller (anonymous fetch).
-        /// </param>
-        /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
-        /// <returns> A new <see cref="Agents.A2AToolboxTool"/> instance for mocking. </returns>
-        public static A2AToolboxTool A2AToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new A2AToolboxTool(
-                ToolboxToolType.A2a,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                baseUrl,
-                agentCardPath,
-                projectConnectionId,
-                sendCredentialsForAgentCard,
-                a2aVersion);
-        }
-
-        /// <summary> An A2A tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="baseUrl"> Base URL of the agent. </param>
-        /// <param name="agentCardPath">
-        /// The path to the agent card relative to the `base_url`.
-        /// If not provided, defaults to  `/.well-known/agent-card.json`
-        /// </param>
-        /// <param name="projectConnectionId">
-        /// The connection ID in the project for the A2A server.
-        /// The connection stores authentication and other connection details needed to connect to the A2A server.
-        /// </param>
-        /// <param name="sendCredentialsForAgentCard">
-        /// When `true`, Foundry sends its credentials when fetching the remote
-        /// agent's Agent Card. The service defaults to `false` if a value is not
-        /// specified by the caller (anonymous fetch).
-        /// </param>
-        /// <returns> A new <see cref="Agents.A2APreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new A2APreviewToolboxTool(
-                ToolboxToolType.A2aPreview,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                baseUrl,
-                agentCardPath,
-                projectConnectionId,
-                sendCredentialsForAgentCard);
-        }
-
-        /// <summary> A browser automation tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
-        /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new BrowserAutomationPreviewToolboxTool(
-                ToolboxToolType.BrowserAutomationPreview,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                toolParameters);
-        }
-
-        /// <summary> A reminder tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <returns> A new <see cref="Agents.ReminderPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ReminderPreviewToolboxTool ReminderPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new ReminderPreviewToolboxTool(ToolboxToolType.ReminderPreview, name, description, toolConfigs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A WorkIQ tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <returns> A new <see cref="Agents.WorkIQPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static WorkIQPreviewToolboxTool WorkIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new WorkIQPreviewToolboxTool(
-                ToolboxToolType.WorkIqPreview,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                projectConnectionId);
-        }
-
-        /// <summary> A FabricIQ tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>
-        /// <param name="serverLabel"> (Optional) The label of the FabricIQ MCP server to connect to. </param>
-        /// <param name="serverUri"> (Optional) The URL of the FabricIQ MCP server. If not provided, the URL from the project connection will be used. </param>
-        /// <param name="requireApprovalInternal"> (Optional) Whether the agent requires approval before executing actions. Default is always. </param>
-        /// <returns> A new <see cref="Agents.FabricIQPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static FabricIQPreviewToolboxTool FabricIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, Uri serverUri = default, BinaryData requireApprovalInternal = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new FabricIQPreviewToolboxTool(
-                ToolboxToolType.FabricIqPreview,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                projectConnectionId,
-                serverLabel,
-                serverUri,
-                requireApprovalInternal);
-        }
-
-        /// <summary> A WebIQ tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
-        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
-        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
-        /// <returns> A new <see cref="Agents.WebIQPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, BinaryData requireApprovalInternal = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new WebIQPreviewToolboxTool(
-                ToolboxToolType.WebIqPreview,
-                name,
-                description,
-                toolConfigs,
-                additionalBinaryDataProperties: null,
-                projectConnectionId,
-                serverLabel,
-                requireApprovalInternal);
-        }
-
-        /// <summary> A toolbox search tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <returns> A new <see cref="Agents.ToolboxSearchPreviewToolboxTool"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ToolboxSearchPreviewToolboxTool ToolboxSearchPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new ToolboxSearchPreviewToolboxTool(ToolboxToolType.ToolboxSearchPreview, name, description, toolConfigs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A toolbox search tool stored in a toolbox. </summary>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="toolConfigs">
-        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
-        /// Resolution order: exact tool name match takes priority over `*`.
-        /// Unknown tool names are silently ignored at runtime.
-        /// </param>
-        /// <returns> A new <see cref="Agents.ToolSearchToolboxTool"/> instance for mocking. </returns>
-        public static ToolSearchToolboxTool ToolSearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
-        {
-            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
-
-            return new ToolSearchToolboxTool(ToolboxToolType.ToolboxSearch, name, description, toolConfigs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// A skill source included in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxSkillReference"/>.
-        /// </summary>
-        /// <param name="type"> The type of skill source. </param>
-        /// <returns> A new <see cref="Agents.ToolboxSkill"/> instance for mocking. </returns>
-        public static ToolboxSkill ToolboxSkill(string @type = default)
-        {
-            return new UnknownToolboxSkill(@type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A reference to an existing skill to include in a toolbox. </summary>
-        /// <param name="name"> The name of the skill. </param>
-        /// <param name="version"> The version of the skill. If not specified, the skill's default version is used. When a version is specified, the reference is pinned to that immutable version. </param>
-        /// <returns> A new <see cref="Agents.ToolboxSkillReference"/> instance for mocking. </returns>
-        public static ToolboxSkillReference ToolboxSkillReference(string name = default, string version = default)
-        {
-            return new ToolboxSkillReference("skill_reference", additionalBinaryDataProperties: null, name, version);
-        }
-
-        /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
-        /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
-        /// <returns> A new <see cref="Agents.ToolboxPolicies"/> instance for mocking. </returns>
-        public static ToolboxPolicies ToolboxPolicies(ContentFilterConfiguration raiConfig = default)
-        {
-            return new ToolboxPolicies(raiConfig, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A specific version of a toolbox. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="id"> The unique identifier of the toolbox version. </param>
-        /// <param name="name"> The name of the toolbox. </param>
-        /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
-        /// <param name="description"> A human-readable description of the toolbox. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the toolbox version was created. </param>
-        /// <param name="tools"> The list of tools contained in this toolbox version. </param>
-        /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
-        /// <param name="policies"> Policy configuration for the toolbox version. </param>
-        /// <returns> A new <see cref="Agents.ToolboxVersion"/> instance for mocking. </returns>
-        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default, IEnumerable<ToolboxTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            tools ??= new ChangeTrackingList<ToolboxTool>();
-            skills ??= new ChangeTrackingList<ToolboxSkill>();
-
-            return new ToolboxVersion(
-                metadata,
-                id,
-                name,
-                version,
-                description,
-                createdOn,
-                tools.ToList(),
-                skills.ToList(),
-                policies,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
-        /// <param name="id"> The unique identifier of the toolbox. </param>
-        /// <param name="name"> The name of the toolbox. </param>
-        /// <param name="updatedOn"> The Unix timestamp (seconds) when the toolbox was last updated. This value changes when a new toolbox version is created or the toolbox is updated. </param>
-        /// <param name="versions"> The versions associated with the toolbox. </param>
-        /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
-        /// <returns> A new <see cref="Agents.ToolboxRecord"/> instance for mocking. </returns>
-        public static ToolboxRecord ToolboxRecord(string id = default, string name = default, DateTimeOffset updatedOn = default, ToolboxVersions versions = default, string defaultVersion = default)
-        {
-            return new ToolboxRecord(
-                id,
-                name,
-                updatedOn,
-                versions,
-                defaultVersion,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The versions associated with a toolbox. </summary>
-        /// <param name="latest"> The latest version of the toolbox. </param>
-        /// <returns> A new <see cref="Agents.ToolboxVersions"/> instance for mocking. </returns>
-        public static ToolboxVersions ToolboxVersions(ToolboxVersion latest = default)
-        {
-            return new ToolboxVersions(latest, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A skill resource. </summary>
-        /// <param name="id"> The unique identifier of the skill. </param>
-        /// <param name="name"> The unique name of the skill. </param>
-        /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill was created. </param>
-        /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
-        /// <param name="latestVersion"> The latest version for the skill. </param>
-        /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdOn = default, string defaultVersion = default, string latestVersion = default)
-        {
-            return new AgentsSkill(
-                id,
-                name,
-                description,
-                createdOn,
-                defaultVersion,
-                latestVersion,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A deleted skill. </summary>
-        /// <param name="id"> The unique identifier of the deleted skill. </param>
-        /// <param name="name"> The unique name of the skill. </param>
-        /// <param name="deleted"> Whether the skill was successfully deleted. </param>
-        /// <returns> A new <see cref="Agents.SkillDeletionResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SkillDeletionResult SkillDeletionResult(string id = default, string name = default, bool deleted = default)
-        {
-            return new SkillDeletionResult(id, name, deleted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Inline content for defining a simple skill without uploading files. Follows the agentskills.io SKILL.md specification. </summary>
-        /// <param name="description"> A human-readable description of what the skill does and when to use it. </param>
-        /// <param name="instructions"> The skill instructions in markdown format. This is the body content of the SKILL.md file. </param>
-        /// <param name="license"> License name or reference to a bundled license file. </param>
-        /// <param name="compatibility"> Environment requirements or compatibility notes for the skill. </param>
-        /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
-        /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
-        /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            allowedTools ??= new ChangeTrackingList<string>();
-
-            return new SkillInlineContent(
-                description,
-                instructions,
-                license,
-                compatibility,
-                metadata,
-                allowedTools.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A specific version of a skill. </summary>
-        /// <param name="id"> The unique identifier of the skill version. </param>
-        /// <param name="skillId"> The identifier of the parent skill. </param>
-        /// <param name="name"> The name of the skill version. </param>
-        /// <param name="version"> The version identifier. Skill versions are immutable. </param>
-        /// <param name="description"> A human-readable description of the skill version. </param>
-        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
-        /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default)
-        {
-            return new SkillVersion(
-                id,
-                skillId,
-                name,
-                version,
-                description,
-                createdOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A deleted skill version. </summary>
-        /// <param name="id"> The unique identifier of the deleted skill version. </param>
-        /// <param name="name"> The name of the skill. </param>
-        /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
-        /// <param name="version"> The version that was deleted. </param>
-        /// <returns> A new <see cref="Agents.SkillVersionDeletionResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static SkillVersionDeletionResult SkillVersionDeletionResult(string id = default, string name = default, bool deleted = default, string version = default)
-        {
-            return new SkillVersionDeletionResult(id, name, deleted, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response from uploading a file to a session sandbox. </summary>
-        /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
-        /// <param name="bytesWritten"> Number of bytes written. </param>
-        /// <returns> A new <see cref="Agents.SessionFileWriteResult"/> instance for mocking. </returns>
-        public static SessionFileWriteResult SessionFileWriteResult(string path = default, long bytesWritten = default)
-        {
-            return new SessionFileWriteResult(path, bytesWritten, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A single entry in a directory listing. </summary>
-        /// <param name="name"> The name of the file or directory. </param>
-        /// <param name="sizeInBytes"> The size in bytes (0 for directories). </param>
-        /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedOn"> The Unix timestamp (in seconds) when the file was last modified. </param>
-        /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
-        public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long sizeInBytes = default, bool isDirectory = default, DateTimeOffset modifiedOn = default)
-        {
-            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Caller-supplied inputs for an optimization job. </summary>
-        /// <param name="agent"> The agent (and pinned version) being optimized. </param>
-        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
-        /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
-        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
-        /// <param name="options"> Tuning knobs and run-mode. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationJobInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationJobInputs AgentOptimizationJobInputs(OptimizedAgentIdentifier agent = default, AgentOptimizationDatasetInput trainDataset = default, AgentOptimizationDatasetInput validationDataset = default, IEnumerable<AgentOptimizationEvaluatorRef> evaluators = default, AgentOptimizationOptions options = default)
-        {
-            evaluators ??= new ChangeTrackingList<AgentOptimizationEvaluatorRef>();
-
-            return new AgentOptimizationJobInputs(
-                agent,
-                trainDataset,
-                validationDataset,
-                evaluators.ToList(),
-                options,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
-        /// <param name="agentName"> Registered Foundry agent name (required). </param>
-        /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
-        /// <returns> A new <see cref="Agents.OptimizedAgentIdentifier"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static OptimizedAgentIdentifier OptimizedAgentIdentifier(string agentName = default, string agentVersion = default)
-        {
-            return new OptimizedAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Base discriminated model for dataset input. Either inline items or a registered reference.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationInlineDatasetInput"/> and <see cref="Agents.AgentOptimizationReferenceDatasetInput"/>.
-        /// </summary>
-        /// <param name="type"> Dataset input type discriminator. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetInput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationDatasetInput AgentOptimizationDatasetInput(string @type = default)
-        {
-            return new UnknownAgentOptimizationDatasetInput(new AgentOptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Inline dataset — items supplied directly in the request body. </summary>
-        /// <param name="items"> Dataset items. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationInlineDatasetInput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationInlineDatasetInput AgentOptimizationInlineDatasetInput(IEnumerable<AgentOptimizationDatasetItem> items = default)
-        {
-            items ??= new ChangeTrackingList<AgentOptimizationDatasetItem>();
-
-            return new AgentOptimizationInlineDatasetInput(AgentOptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
-        }
-
-        /// <summary> A single item in an inline dataset. </summary>
-        /// <param name="query"> The user query / prompt. </param>
-        /// <param name="groundTruth"> Expected ground truth answer. </param>
-        /// <param name="desiredTurnCount"> Desired number of conversation turns for simulation mode (1-20). </param>
-        /// <param name="criteria"> Per-item evaluation criteria. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationDatasetItem AgentOptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredTurnCount = default, IEnumerable<AgentOptimizationDatasetCriterion> criteria = default)
-        {
-            criteria ??= new ChangeTrackingList<AgentOptimizationDatasetCriterion>();
-
-            return new AgentOptimizationDatasetItem(query, groundTruth, desiredTurnCount, criteria.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
-        /// <param name="name"> Criterion name. </param>
-        /// <param name="instruction"> Criterion instruction / description. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationDatasetCriterion"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationDatasetCriterion AgentOptimizationDatasetCriterion(string name = default, string instruction = default)
-        {
-            return new AgentOptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Reference to a registered Foundry dataset. </summary>
-        /// <param name="name"> Registered dataset name. </param>
-        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationReferenceDatasetInput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationReferenceDatasetInput AgentOptimizationReferenceDatasetInput(string name = default, string version = default)
-        {
-            return new AgentOptimizationReferenceDatasetInput(AgentOptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
-        }
-
-        /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
-        /// <param name="name"> Evaluator name. </param>
-        /// <param name="version"> Evaluator version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationEvaluatorRef"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationEvaluatorRef AgentOptimizationEvaluatorRef(string name = default, string version = default)
-        {
-            return new AgentOptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
-        /// <param name="maxCandidates"> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </param>
-        /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
-        /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
-        /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
-        /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
-        /// <param name="maxStalls"> Maximum number of consecutive reflective minibatch rejections before stopping early. A 'stall' occurs when the optimizer proposes a prompt change, evaluates it on a small subset, and the score does not improve — so no full validation-set evaluation is triggered. The counter resets whenever a minibatch passes and its full-validation score beats the current best. Only a sustained plateau of `max_stalls` consecutive minibatch failures triggers the stop. The service defaults to 5 if a value is not specified by the caller. Must be &gt;= 1 when set. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationOptions AgentOptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, AgentsEvaluationLevel? evaluationLevel = default, int? maxStalls = default)
-        {
-            optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new AgentOptimizationOptions(
-                maxCandidates,
-                optimizationConfig,
-                evalModel,
-                optimizationModel,
-                evaluationLevel,
-                maxStalls,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
-        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
-        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
-        /// <param name="candidates"> All evaluated candidates including baseline. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationJobResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationJobResult AgentOptimizationJobResult(string baseline = default, string best = default, IEnumerable<AgentOptimizationCandidate> candidates = default)
-        {
-            candidates ??= new ChangeTrackingList<AgentOptimizationCandidate>();
-
-            return new AgentOptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
-        /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
-        /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
-        /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
-        /// <param name="avgScore"> Average composite score across all tasks. </param>
-        /// <param name="avgTokens"> Average token usage across all tasks. </param>
-        /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
-        /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
-        /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationCandidate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
-        {
-            mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new AgentOptimizationCandidate(
-                candidateId,
-                name,
-                mutations,
-                avgScore,
-                avgTokens,
-                evalId,
-                evalRunId,
-                promotion,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Promotion metadata recorded when a candidate is deployed to a Foundry agent. </summary>
-        /// <param name="promotedOn"> Timestamp when promotion occurred, represented in Unix time. </param>
-        /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
-        /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
-        /// <returns> A new <see cref="Agents.PromotionInfo"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static PromotionInfo PromotionInfo(DateTimeOffset promotedOn = default, string agentName = default, string agentVersion = default)
-        {
-            return new PromotionInfo(promotedOn, agentName, agentVersion, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
-        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
-        /// <param name="bestScore"> Best score observed so far across all candidates. </param>
-        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationJobProgress"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentOptimizationJobProgress AgentOptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSeconds = default)
-        {
-            return new AgentOptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

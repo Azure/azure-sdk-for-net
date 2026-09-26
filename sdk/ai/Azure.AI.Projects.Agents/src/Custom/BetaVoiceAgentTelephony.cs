@@ -1,5 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#pragma warning disable SA1402 // File may only contain a single type - intentional: model accessibility markers alongside the sub-client they support
 
 using System;
 using System.ClientModel;
@@ -9,18 +11,53 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.AI.Projects.Agents;
+namespace Azure.AI.Projects.Agents
+{
+    // These model types are only reachable through AgentTelephony operations the TypeSpec
+    // source marks Access.internal (see client.tsp's "AgentTelephony sub-client" section), so
+    // the generator emits them internal too. BetaVoiceAgentsTelephony re-exposes the operations
+    // themselves publicly below (with simplified signatures); these types must be re-exposed
+    // to match, or the public methods that return/accept them would be inaccessible. No
+    // [CodeGenType] is needed since the name already matches the generated type -- the generator
+    // detects this same-named Custom declaration and adjusts its own generated declaration's
+    // accessibility to match.
+    [Experimental("AAIP001")]
+    public abstract partial class TelephonyBinding { }
 
-[Experimental("AAIP001")]
-[CodeGenType("AgentTelephony")]
-[CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetTelephonyCalls", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyCallStatus?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyCallStatus?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetTelephonyCalls", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+    [Experimental("AAIP001")]
+    public abstract partial class CreateTelephonyBindingContent { }
+
+    [Experimental("AAIP001")]
+    public partial class TelephonyCallJob { }
+
+    [Experimental("AAIP001")]
+    public partial class CreateTelephonyCallJobContent { }
+
+    [Experimental("AAIP001")]
+    public partial class TelephonyCallRecord { }
+
+    [Experimental("AAIP001")]
+    public partial class TelephonyTransferTargets { }
+
+    [Experimental("AAIP001")]
+    public partial class TelephonyTransferTarget { }
+
+    [Experimental("AAIP001")]
+    public partial class TelephonyCallSummary { }
+
+    [Experimental("AAIP001")]
+    public readonly partial struct TelephonyCallStatus { }
+}
+
+namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
+{
+// The TypeSpec source marks most AgentTelephony operations Access.internal (only the
+// list-bindings operation is public), presumably because they're still being finalized for
+// public consumption. The generator therefore emits their strongly-typed convenience overloads
+// as `internal`. This file re-exposes them publicly with simplified signatures (omitting the
+// foundryFeatures opt-in, matching the pattern used elsewhere for this preview surface), mirroring
+// what main's BetaVoiceAgentTelephony.cs customization did before the namespace-leak fix moved
+// this sub-client from the Azure.AI.Projects.Agents namespace into Azure.AI.Projects.Agents._Beta.VoiceAgents.
 public partial class BetaVoiceAgentsTelephony
 {
     /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
@@ -57,112 +94,6 @@ public partial class BetaVoiceAgentsTelephony
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
-    }
-
-    /// <summary> Returns the telephony bindings owned by the voice agent named in the path. </summary>
-    /// <param name="agentName"> The name of the voice agent whose bindings are listed. </param>
-    /// <param name="provider"> Filters bindings by provider. </param>
-    /// <param name="status"> Filters bindings by lifecycle status. </param>
-    /// <param name="limit">
-    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-    /// default is 20.
-    /// </param>
-    /// <param name="order">
-    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-    /// for descending order.
-    /// </param>
-    /// <param name="after">
-    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-    /// </param>
-    /// <param name="before">
-    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-    /// </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual CollectionResult<TelephonyBindingListItem> GetTelephonyBindings(string agentName, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-        return new InternalOpenAICollectionResultOfT<TelephonyBindingListItem>(
-            Pipeline,
-            messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetTelephonyBindingsRequest(
-                    agentName: localCollectionOptions.ExtraQueryMap["agentName"],
-                    provider: localCollectionOptions.ExtraQueryMap[nameof(TelephonyProvider)],
-                    status: localCollectionOptions.ExtraQueryMap[nameof(TelephonyBindingStatus)],
-                    foundryFeatures: default,
-                    limit: localCollectionOptions.Limit,
-                    order: localCollectionOptions.Order,
-                    after: localCollectionOptions.AfterId,
-                    before: localCollectionOptions.BeforeId,
-                    options: localRequestOptions),
-            dataItemDeserializer: (e, o) => TelephonyBindingListItem.DeserializeTelephonyBindingListItem(e, o),
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: new Dictionary<string, string>() {
-                { "agentName", agentName },
-                { nameof(TelephonyProvider), provider?.ToString() },
-                { nameof(TelephonyBindingStatus),  status?.ToString() },
-            }),
-            cancellationToken.ToRequestOptions());
-    }
-
-    /// <summary> Returns the telephony bindings owned by the voice agent named in the path. </summary>
-    /// <param name="agentName"> The name of the voice agent whose bindings are listed. </param>
-    /// <param name="provider"> Filters bindings by provider. </param>
-    /// <param name="status"> Filters bindings by lifecycle status. </param>
-    /// <param name="limit">
-    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
-    /// default is 20.
-    /// </param>
-    /// <param name="order">
-    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
-    /// for descending order.
-    /// </param>
-    /// <param name="after">
-    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
-    /// </param>
-    /// <param name="before">
-    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
-    /// </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual AsyncCollectionResult<TelephonyBindingListItem> GetTelephonyBindingsAsync(string agentName, TelephonyProvider? provider = default, TelephonyBindingStatus? status = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-        return new InternalOpenAIAsyncCollectionResultOfT<TelephonyBindingListItem>(
-            Pipeline,
-            messageGenerator: (localCollectionOptions, localRequestOptions)
-                => CreateGetTelephonyBindingsRequest(
-                    agentName: localCollectionOptions.ExtraQueryMap["agentName"],
-                    provider: localCollectionOptions.ExtraQueryMap[nameof(TelephonyProvider)],
-                    status: localCollectionOptions.ExtraQueryMap[nameof(TelephonyBindingStatus)],
-                    foundryFeatures: default,
-                    limit: localCollectionOptions.Limit,
-                    order: localCollectionOptions.Order,
-                    after: localCollectionOptions.AfterId,
-                    before: localCollectionOptions.BeforeId,
-                    options: localRequestOptions),
-            dataItemDeserializer: (e, o) => TelephonyBindingListItem.DeserializeTelephonyBindingListItem(e, o),
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: new Dictionary<string, string>() {
-                { "agentName", agentName },
-                { nameof(TelephonyProvider), provider?.ToString() },
-                { nameof(TelephonyBindingStatus),  status?.ToString() },
-            }),
-            cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Retrieves a telephony binding owned by the voice agent named in the path. </summary>
@@ -218,6 +149,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="bindingId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [Experimental("AAIP001")]
     public virtual ClientResult UpdateTelephonyBinding(string agentName, string bindingId, string ifMatch, BinaryContent content, RequestOptions options = null)
     {
         return UpdateTelephonyBinding(
@@ -247,6 +179,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="bindingId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
+    [Experimental("AAIP001")]
     public virtual async Task<ClientResult> UpdateTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, BinaryContent content, RequestOptions options = null)
     {
         return await UpdateTelephonyBindingAsync(
@@ -267,6 +200,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="bindingId"/> or <paramref name="ifMatch"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="bindingId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
     public virtual ClientResult DeleteTelephonyBinding(string agentName, string bindingId, string ifMatch, CancellationToken cancellationToken = default)
     {
         return DeleteTelephonyBinding(
@@ -286,6 +220,7 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="bindingId"/> or <paramref name="ifMatch"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="bindingId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
     public virtual async Task<ClientResult> DeleteTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, CancellationToken cancellationToken = default)
     {
         return await DeleteTelephonyBindingAsync(
@@ -328,21 +263,19 @@ public partial class BetaVoiceAgentsTelephony
     [Experimental("AAIP001")]
     public virtual CollectionResult<TelephonyCallSummary> GetTelephonyCalls(string agentName, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-        return new BetaVoiceAgentsTelephonyGetTelephonyCallsCollectionResultOfT(
-            client: this,
+        return GetTelephonyCalls(
             agentName: agentName,
             foundryFeatures: default,
-            provider: provider?.ToString(),
-            status: status?.ToString(),
+            provider: provider,
+            status: status,
             startedAfter: startedAfter,
             startedBefore: startedBefore,
             limit: limit,
-            order: order?.ToString(),
+            order: order,
             after: after,
             before: before,
-            options: cancellationToken.ToRequestOptions());
+            cancellationToken: cancellationToken
+        );
     }
 
     /// <summary> Returns the durable inbound call history for the voice agent named in the path. </summary>
@@ -376,21 +309,19 @@ public partial class BetaVoiceAgentsTelephony
     [Experimental("AAIP001")]
     public virtual AsyncCollectionResult<TelephonyCallSummary> GetTelephonyCallsAsync(string agentName, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-
-        return new BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
-            client: this,
+        return GetTelephonyCallsAsync(
             agentName: agentName,
             foundryFeatures: default,
-            provider: provider?.ToString(),
-            status: status?.ToString(),
+            provider: provider,
+            status: status,
             startedAfter: startedAfter,
             startedBefore: startedBefore,
             limit: limit,
-            order: order?.ToString(),
+            order: order,
             after: after,
             before: before,
-            options: cancellationToken.ToRequestOptions());
+            cancellationToken: cancellationToken
+        );
     }
 
     /// <summary> Retrieves a durable inbound call record owned by the voice agent named in the path. </summary>
@@ -652,6 +583,7 @@ public partial class BetaVoiceAgentsTelephony
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
     }
+
     /// <summary> Requests cancellation of a durable outbound call job. A connected call is allowed to finish. </summary>
     /// <param name="agentName"></param>
     /// <param name="callJobId"></param>
@@ -691,4 +623,5 @@ public partial class BetaVoiceAgentsTelephony
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
     }
+}
 }

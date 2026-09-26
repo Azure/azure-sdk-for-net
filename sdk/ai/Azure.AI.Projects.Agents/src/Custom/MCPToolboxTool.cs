@@ -4,10 +4,15 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
+// Marked experimental because ConnectorId (MCPToolboxToolConnectorId) and AllowedCallers
+// (CallableToolAllowedCaller) were moved here by the OpenAI-namespace-leak fix; see
+// CodeGenStubs.Experimental.cs for the full rationale.
+[Experimental("AAIP001")]
 public partial class MCPToolboxTool
 {
     [CodeGenMember("RequireApproval")]

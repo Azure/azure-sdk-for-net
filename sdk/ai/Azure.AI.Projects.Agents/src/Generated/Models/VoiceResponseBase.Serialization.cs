@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
@@ -80,7 +79,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -98,7 +97,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (VoiceResponseBaseOutputModality item in OutputModalities)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +179,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToVoiceResponseBaseStatus();
+                    status = new VoiceResponseBaseStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -210,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                     List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVoiceResponseBaseOutputModality());
+                        array.Add(new VoiceResponseBaseOutputModality(item.GetString()));
                     }
                     outputModalities = array;
                     continue;

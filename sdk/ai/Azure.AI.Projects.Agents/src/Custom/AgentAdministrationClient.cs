@@ -57,14 +57,15 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
+    private Azure.AI.Projects.Agents._Beta.BetaAgents _cachedBetaAgents;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     [Experimental("AAIP001")]
-    private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
+    private Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
-    private BetaVoiceAgentsTelephony _cachedAgentTelephony;
+    private Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsTelephony _cachedAgentTelephony;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -1095,6 +1096,16 @@ public partial class AgentAdministrationClient
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
+    /// <summary>
+    /// Gets the lazily-initialized BetaAgents sub-client. The generated BetaAgents type is
+    /// otherwise only reachable through the internal InternalProjectsClient aggregator, which
+    /// would leave its operations (e.g. GenerateAgent) completely inaccessible externally.
+    /// </summary>
+    public virtual Azure.AI.Projects.Agents._Beta.BetaAgents GetBetaAgentsClient()
+    {
+        return Volatile.Read(ref _cachedBetaAgents) ?? Interlocked.CompareExchange(ref _cachedBetaAgents, new Azure.AI.Projects.Agents._Beta.BetaAgents(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBetaAgents;
+    }
+
     /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
     [Experimental("AAIP001")]
     public virtual ProjectAgentSkills GetAgentSkills()
@@ -1123,51 +1134,17 @@ public partial class AgentAdministrationClient
 
     /// <summary> Gets the client for the voice Agent. </summary>
     [Experimental("AAIP001")]
-    public virtual BetaVoiceAgentsConversations GetBetaVoiceAgentEndpointConversations()
+    public virtual Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations GetBetaVoiceAgentEndpointConversations()
     {
-        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new BetaVoiceAgentsConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 
     /// <summary>
     /// Gets the AgentTelephony sub-client.
     /// </summary>
     [Experimental("AAIP001")]
-    public virtual BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
+    public virtual Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
     {
-        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
-    }
-
-    /// <summary>
-    /// Generates and creates an agent from kind-specific high-level inputs.
-    /// The generated definition remains fully editable through the standard agent versioning operations.
-    /// </summary>
-    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
-    {
-        return GenerateAgent(
-            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary>
-    /// Generates and creates an agent from kind-specific high-level inputs.
-    /// The generated definition remains fully editable through the standard agent versioning operations.
-    /// </summary>
-    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
-    {
-        return await GenerateAgentAsync(
-            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 }

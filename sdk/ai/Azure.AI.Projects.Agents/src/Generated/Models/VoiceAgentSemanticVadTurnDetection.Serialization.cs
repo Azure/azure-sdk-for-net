@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -75,7 +74,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Eagerness))
             {
                 writer.WritePropertyName("eagerness"u8);
-                writer.WriteStringValue(Eagerness.Value.ToSerialString());
+                writer.WriteStringValue(Eagerness.Value.ToString());
             }
             if (Optional.IsDefined(CreateResponse))
             {
@@ -142,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    eagerness = prop.Value.GetString().ToVoiceAgentSemanticVadTurnDetectionEagerness();
+                    eagerness = new VoiceAgentSemanticVadTurnDetectionEagerness(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("create_response"u8))

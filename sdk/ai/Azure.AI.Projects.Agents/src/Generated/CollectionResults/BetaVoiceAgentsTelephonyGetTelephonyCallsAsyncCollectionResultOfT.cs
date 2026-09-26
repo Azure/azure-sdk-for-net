@@ -8,8 +8,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
     [Experimental("AAIP001")]
     internal partial class BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResultOfT : AsyncCollectionResult<TelephonyCallSummary>

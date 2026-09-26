@@ -3,10 +3,15 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
+// Marked experimental because AllowedCallers (CallableToolAllowedCaller) and Container's
+// underlying ContainerSkill hierarchy were moved here by the OpenAI-namespace-leak fix; see
+// CodeGenStubs.Experimental.cs for the full rationale.
+[Experimental("AAIP001")]
 public partial class CodeInterpreterToolboxTool
 {
     [CodeGenMember("Container")]
