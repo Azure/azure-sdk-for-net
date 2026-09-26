@@ -1,0 +1,6 @@
+directory: specification/edgeoperator/resource-manager/Microsoft.EdgeOperator/BillingConfigurations
+commit: 3f385bffcadc76b3ce6b8a9753b23e266d61c723
+repo: Azure/azure-rest-api-specs-pr
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
