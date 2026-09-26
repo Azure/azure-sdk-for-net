@@ -269,13 +269,12 @@ internal sealed class ResponseEndpointHandler
         bool useResilientTask = store
             || (pickMultiTurn && (isBackground || !isStreaming));
 
-        var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
+        var execution = _tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
 
         // Record the creation-time session ID and user ID key on the execution
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
         execution.AgentSessionId = request.AgentSessionId;
-        execution.UserIdKey = platformContext.UserIdKey;
 
         var context = new ResponseContextImpl(
             responseId,
@@ -311,7 +310,7 @@ internal sealed class ResponseEndpointHandler
         }
 
         // Get cancellation token from provider (supports external cancel)
-        var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(responseId);
+        var providerCt = await _cancellationProvider.GetResponseCancellationTokenAsync(execution.LifecycleId);
 
         if (isStreaming)
         {
@@ -440,7 +439,7 @@ internal sealed class ResponseEndpointHandler
                 // immediately; it drains later inside Core as a steered re-entry.
                 if (run.IsQueued)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
@@ -489,7 +488,7 @@ internal sealed class ResponseEndpointHandler
                 // it drains later inside Core as a steered re-entry.
                 if (run.IsQueued)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     return JsonForClient(BuildQueuedEnvelope(request, context, responseId));
                 }
 
@@ -537,7 +536,7 @@ internal sealed class ResponseEndpointHandler
                 // and Python run_sync §6.2.
                 if (execution.PersistenceFailed)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     if (execution.PersistenceException is ResponsesApiException or BadRequestException)
                     {
                         throw execution.PersistenceException;
@@ -554,7 +553,7 @@ internal sealed class ResponseEndpointHandler
                 // directly to avoid a spurious ResourceNotFoundException from the orchestrator read.
                 if (execution.ClientDisconnected)
                 {
-                    _tracker.TryEvict(responseId);
+                    _tracker.TryEvict(execution);
                     httpContext.Items[SessionIdResponseHeaderFilter.SessionIdKey] = execution.AgentSessionId;
                     return JsonForClient(execution.Response?.Snapshot() ?? BuildQueuedEnvelope(request, context, responseId));
                 }
@@ -644,7 +643,7 @@ internal sealed class ResponseEndpointHandler
         ResponseExecution execution,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var stream = await _eventStreamRegistry.GetOrCreateAsync(responseId, cancellationToken)
+        var stream = await _eventStreamRegistry.GetOrCreateAsync(execution.LifecycleId, cancellationToken)
             .ConfigureAwait(false);
         var enumerator = stream.Subscribe().WithCancellation(cancellationToken).ConfigureAwait(false).GetAsyncEnumerator();
         var createdSeen = false;
@@ -729,6 +728,8 @@ internal sealed class ResponseEndpointHandler
     {
         var payload = BuildRecoveryPayload(
             responseId, request, platformContext, clientHeaders, queryParameters);
+        var partition = ResponseStorePartition.FromContext(platformContext);
+        var lifecycleId = partition.GetLifecycleId(responseId);
 
         var taskName = pickMultiTurn
             ? ResponsesResilientTaskHandler.MultiTurnTaskName
@@ -737,19 +738,20 @@ internal sealed class ResponseEndpointHandler
         var definition = httpContext.RequestServices
             .GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(taskName);
 
-        // Multi-turn: the chain id is the task id and the response id is the per-turn input id; a
+        // Multi-turn: the user-scoped chain id is the task id and the user-scoped response id is the
+        // per-turn input id; a
         // previous_response_id becomes the ifLastInputId fork precondition (Core rejects a turn that
-        // does not extend the most recent turn). One-shot: task id == input id == response id.
+        // does not extend the most recent turn). One-shot: task id == input id == lifecycle id.
         var runOptions = pickMultiTurn
             ? new RunOptions
             {
-                TaskId = chainId!,
-                InputId = responseId,
+                TaskId = partition.GetLifecycleId(chainId!),
+                InputId = lifecycleId,
                 IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
                     ? null
-                    : request.PreviousResponseId,
+                    : partition.GetLifecycleId(request.PreviousResponseId),
             }
-            : new RunOptions { TaskId = responseId, InputId = responseId };
+            : new RunOptions { TaskId = lifecycleId, InputId = lifecycleId };
 
         try
         {
@@ -872,7 +874,7 @@ internal sealed class ResponseEndpointHandler
                 "Getting response {ResponseId} with SSE replay: HasUserId={HasUserId} HasCallId={HasCallId}",
                 responseId, platformContext.UserIdKey is not null, platformContext.CallId is not null);
             // Apply B2 guards: SSE replay requires background + streaming + store.
-            if (_tracker.TryGet(responseId, out var execution) && execution is not null)
+            if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
             {
                 // User-key enforcement for in-flight responses
                 execution.EnforceUserIsolation(platformContext);
@@ -951,7 +953,11 @@ internal sealed class ResponseEndpointHandler
             }
 
             return new SseReplayResult(
-                _eventStreamRegistry, responseId, SharedJsonOptions.Instance, _logger,
+                _eventStreamRegistry,
+                ResponseStorePartition.FromContext(platformContext).GetLifecycleId(responseId),
+                responseId,
+                SharedJsonOptions.Instance,
+                _logger,
                 FoundryEnvironment.SseKeepAliveInterval, startingAfter);
         }
 
@@ -997,7 +1003,7 @@ internal sealed class ResponseEndpointHandler
         // Guard: if response is in-flight, reject deletion.
         // With eager eviction, all tracked executions are in-flight — completed
         // responses are evicted by FinalizeExecutionAsync and served from the provider.
-        if (_tracker.TryGet(responseId, out var execution) && execution is not null)
+        if (_tracker.TryGet(responseId, platformContext, out var execution) && execution is not null)
         {
             // User-key enforcement for in-flight responses
             execution.EnforceUserIsolation(platformContext);
@@ -1018,7 +1024,7 @@ internal sealed class ResponseEndpointHandler
             // could exist in storage. Best-effort delete — ignore NotFound.
             if (execution.PersistenceFailed)
             {
-                _tracker.TryEvict(responseId);
+                _tracker.TryEvict(execution);
 
                 try
                 {
@@ -1031,7 +1037,7 @@ internal sealed class ResponseEndpointHandler
 
                 try
                 {
-                    await _eventStreamRegistry.DeleteAsync(responseId);
+                    await _eventStreamRegistry.DeleteAsync(execution.LifecycleId);
                 }
                 catch (Exception ex)
                 {
@@ -1069,7 +1075,7 @@ internal sealed class ResponseEndpointHandler
             }
             catch (TimeoutException)
             {
-                _tracker.TryEvict(responseId);
+                _tracker.TryEvict(execution);
             }
         }
 
@@ -1084,7 +1090,8 @@ internal sealed class ResponseEndpointHandler
         // Clean up event stream — deleted responses should not be replayable.
         try
         {
-            await _eventStreamRegistry.DeleteAsync(responseId);
+            await _eventStreamRegistry.DeleteAsync(
+                ResponseStorePartition.FromContext(platformContext).GetLifecycleId(responseId));
         }
         catch (Exception ex)
         {

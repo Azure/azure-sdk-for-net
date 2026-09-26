@@ -19,17 +19,26 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class ResponseExecution : IDisposable
 {
+    public ResponseExecution(string responseId,
+        bool isBackground = false, bool isStreaming = false, bool store = true)
+        : this(responseId, ResponseStorePartition.FromContext(PlatformContext.Empty), isBackground, isStreaming, store)
+    {
+    }
+
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseExecution"/>.
     /// </summary>
     /// <param name="responseId">The unique response identifier.</param>
+    /// <param name="partition">The user partition that owns the execution.</param>
     /// <param name="isBackground">Whether the response was created with <c>background=true</c>.</param>
     /// <param name="isStreaming">Whether the response was created with <c>stream=true</c>.</param>
     /// <param name="store">Whether the response should be stored for later retrieval.</param>
-    public ResponseExecution(string responseId,
+    public ResponseExecution(string responseId, ResponseStorePartition partition,
         bool isBackground = false, bool isStreaming = false, bool store = true)
     {
         ResponseId = responseId;
+        Partition = partition;
+        UserIdKey = partition.UserIdKey;
         IsBackground = isBackground;
         IsStreaming = isStreaming;
         Store = store;
@@ -38,6 +47,12 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>Gets the unique response identifier.</summary>
     public string ResponseId { get; }
+
+    /// <summary>Gets the user partition that owns this execution.</summary>
+    public ResponseStorePartition Partition { get; }
+
+    /// <summary>Gets the internal user-scoped identifier for lifecycle state.</summary>
+    public string LifecycleId => Partition.GetLifecycleId(ResponseId);
 
     /// <summary>Gets whether the response was created with <c>background=true</c>.</summary>
     public bool IsBackground { get; }
@@ -76,7 +91,7 @@ internal sealed class ResponseExecution : IDisposable
     /// provide the same key; mismatches are treated as "not found" (404) to prevent
     /// information leakage across user partitions.
     /// </summary>
-    public string? UserIdKey { get; set; }
+    public string? UserIdKey { get; }
 
     /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
@@ -272,18 +287,17 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>
     /// Enforces the user ID key for in-flight responses.
-    /// If this execution was created with a user ID key, the caller must
-    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// The caller must provide the same key, including the absence of a key for
+    /// anonymous executions; mismatches are treated as "not found" to prevent
     /// cross-user information leakage.
     /// </summary>
     /// <param name="context">The caller's platform context.</param>
     /// <exception cref="ResourceNotFoundException">
-    /// Thrown when the execution has a user ID key and the caller's key does not match.
+    /// Thrown when the caller's user ID key does not match the execution.
     /// </exception>
     public void EnforceUserIsolation(PlatformContext context)
     {
-        if (UserIdKey is not null
-            && !string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
+        if (!string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
         {
             throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
         }
