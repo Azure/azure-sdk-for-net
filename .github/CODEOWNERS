@@ -903,8 +903,8 @@
 # AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @raych1
-/eng/common/                                                       @Azure/azure-sdk-eng
+/eng/                                                              @danieljurek @raych1 @Azure/azure-sdk-write-net-core
+/eng/common/                                                       @Azure/azure-sdk-eng @Azure/azure-sdk-sync-approvers @Azure/azure-sdk-write-net-core
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines
