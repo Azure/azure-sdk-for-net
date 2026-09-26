@@ -55,7 +55,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                IngestionDefinitionPagedResponse result = (IngestionDefinitionPagedResponse)response;
+                IngestionDefinitionPagedResult result = (IngestionDefinitionPagedResult)response;
                 nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)

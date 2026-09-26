@@ -104,7 +104,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (ErrorResponse item in Errors)
+                foreach (ErrorResult item in Errors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Defender.Easm
             }
             IList<AssetChainKindSummaryResult> affectedAssetsSummary = default;
             IList<DiscoveryGroupSummaryResult> affectedGroupsSummary = default;
-            IList<ErrorResponse> errors = default;
+            IList<ErrorResult> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,10 +184,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<ErrorResponse> array = new List<ErrorResponse>();
+                    List<ErrorResult> array = new List<ErrorResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item, options));
+                        array.Add(ErrorResult.DeserializeErrorResult(item, options));
                     }
                     errors = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssetChainSummaryResult(affectedAssetsSummary, affectedGroupsSummary, errors ?? new ChangeTrackingList<ErrorResponse>(), additionalBinaryDataProperties);
+            return new AssetChainSummaryResult(affectedAssetsSummary, affectedGroupsSummary, errors ?? new ChangeTrackingList<ErrorResult>(), additionalBinaryDataProperties);
         }
     }
 }
