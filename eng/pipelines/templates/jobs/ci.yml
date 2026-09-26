@@ -39,11 +39,35 @@ parameters:
   - name: LimitForPullRequest
     type: boolean
     default: false
+  - name: VerifyMgmtTypeSpecCommit
+    type: boolean
+    default: false
   - name: ExcludePaths
     type: object
     default: []
 
 jobs:
+  # Management pipelines set LimitForPullRequest because their tests run in aggregate.
+  # VerifyMgmtTypeSpecCommit covers management pipelines that intentionally run their own PR tests.
+  - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), or(eq(parameters.LimitForPullRequest, true), eq(parameters.VerifyMgmtTypeSpecCommit, true))) }}:
+    - job: VerifyMgmtTypeSpecCommit
+      displayName: Verify management TypeSpec commit
+      pool:
+        name: $(LINUXPOOL)
+        image: $(LINUXVMIMAGE)
+        os: linux
+      steps:
+        - checkout: self
+          fetchDepth: 0
+          fetchFilter: tree:0
+          fetchTags: false
+
+        - pwsh: >
+            ./eng/scripts/Verify-Mgmt-TypeSpecCommit.ps1
+            -ServiceDirectory "${{ parameters.ServiceDirectory }}"
+            -ChangedFilesOnly
+          displayName: Verify TypeSpec commit is from specs main
+
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
     # Build matrix - larger LOC batches (1.2M) for fewer jobs and lower per-job overhead.
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
