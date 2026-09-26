@@ -24,7 +24,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             AffectedAssetsSummary = affectedAssetsSummary.ToList();
             AffectedGroupsSummary = affectedGroupsSummary.ToList();
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<ErrorResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetChainSummaryResult"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssetChainSummaryResult(IList<AssetChainKindSummaryResult> affectedAssetsSummary, IList<DiscoveryGroupSummaryResult> affectedGroupsSummary, IList<ErrorResponse> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssetChainSummaryResult(IList<AssetChainKindSummaryResult> affectedAssetsSummary, IList<DiscoveryGroupSummaryResult> affectedGroupsSummary, IList<ErrorResult> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AffectedAssetsSummary = affectedAssetsSummary;
             AffectedGroupsSummary = affectedGroupsSummary;
@@ -47,6 +47,6 @@ namespace Azure.Analytics.Defender.Easm
         public IList<DiscoveryGroupSummaryResult> AffectedGroupsSummary { get; }
 
         /// <summary> The list of exceptions. </summary>
-        public IList<ErrorResponse> Errors { get; }
+        public IList<ErrorResult> Errors { get; }
     }
 }

@@ -9,26 +9,26 @@ using System;
 using System.Collections.Generic;
 using Azure;
 
-namespace Azure.Analytics.Defender.Easm
+namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> A response containing error details. </summary>
-    public partial class ErrorResponse
+    public partial class ErrorResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/>. </summary>
         /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ResponseError error)
+        internal ErrorResult(ResponseError error)
         {
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorResult"/>. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="errorCode"> String error code indicating what went wrong. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorResponse(ResponseError error, string errorCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ErrorResult(ResponseError error, string errorCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
             ErrorCode = errorCode;

@@ -11,15 +11,15 @@ using Azure;
 
 namespace Azure.AI.Discovery
 {
-    internal partial class UnknownKnowledgeBaseOperationResponse : KnowledgeBaseOperationResponse
+    internal partial class UnknownKnowledgeBaseOperationResult : KnowledgeBaseOperationResult
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeBaseOperationResult"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
         /// <param name="operationType"> The type of operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeBaseOperationResponse(string id, OperationState status, ResponseError error, KnowledgeBaseOperationType operationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, status, error, operationType != default ? operationType : "unknown", additionalBinaryDataProperties)
+        internal UnknownKnowledgeBaseOperationResult(string id, OperationState status, ResponseError error, KnowledgeBaseOperationType operationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, status, error, operationType != default ? operationType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

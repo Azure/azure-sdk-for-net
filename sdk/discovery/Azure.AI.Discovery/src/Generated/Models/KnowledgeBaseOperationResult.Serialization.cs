@@ -14,66 +14,66 @@ namespace Azure.AI.Discovery
 {
     /// <summary>
     /// Response indicating the KnowledgeBase operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseIndexingOperationResponse"/> and <see cref="KnowledgeBaseSearchOperationResponse"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseIndexingOperationResult"/> and <see cref="KnowledgeBaseSearchOperationResult"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownKnowledgeBaseOperationResponse))]
-    public abstract partial class KnowledgeBaseOperationResponse : IJsonModel<KnowledgeBaseOperationResponse>
+    [PersistableModelProxy(typeof(UnknownKnowledgeBaseOperationResult))]
+    public abstract partial class KnowledgeBaseOperationResult : IJsonModel<KnowledgeBaseOperationResult>
     {
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResponse"/> for deserialization. </summary>
-        internal KnowledgeBaseOperationResponse()
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResult"/> for deserialization. </summary>
+        internal KnowledgeBaseOperationResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeBaseOperationResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KnowledgeBaseOperationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKnowledgeBaseOperationResponse(document.RootElement, options);
+                        return DeserializeKnowledgeBaseOperationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseOperationResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeBaseOperationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KnowledgeBaseOperationResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeBaseOperationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KnowledgeBaseOperationResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KnowledgeBaseOperationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseOperationResponse IPersistableModel<KnowledgeBaseOperationResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeBaseOperationResult IPersistableModel<KnowledgeBaseOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KnowledgeBaseOperationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeBaseOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBaseOperationResponse"/> from. </param>
-        public static explicit operator KnowledgeBaseOperationResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KnowledgeBaseOperationResult"/> from. </param>
+        public static explicit operator KnowledgeBaseOperationResult(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeKnowledgeBaseOperationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKnowledgeBaseOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KnowledgeBaseOperationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeBaseOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseOperationResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeBaseOperationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -119,24 +119,24 @@ namespace Azure.AI.Discovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KnowledgeBaseOperationResponse IJsonModel<KnowledgeBaseOperationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeBaseOperationResult IJsonModel<KnowledgeBaseOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KnowledgeBaseOperationResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KnowledgeBaseOperationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KnowledgeBaseOperationResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeBaseOperationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeBaseOperationResponse(document.RootElement, options);
+            return DeserializeKnowledgeBaseOperationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KnowledgeBaseOperationResponse DeserializeKnowledgeBaseOperationResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static KnowledgeBaseOperationResult DeserializeKnowledgeBaseOperationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,12 +147,12 @@ namespace Azure.AI.Discovery
                 switch (discriminator.GetString())
                 {
                     case "Indexing":
-                        return KnowledgeBaseIndexingOperationResponse.DeserializeKnowledgeBaseIndexingOperationResponse(element, options);
+                        return KnowledgeBaseIndexingOperationResult.DeserializeKnowledgeBaseIndexingOperationResult(element, options);
                     case "Search":
-                        return KnowledgeBaseSearchOperationResponse.DeserializeKnowledgeBaseSearchOperationResponse(element, options);
+                        return KnowledgeBaseSearchOperationResult.DeserializeKnowledgeBaseSearchOperationResult(element, options);
                 }
             }
-            return UnknownKnowledgeBaseOperationResponse.DeserializeUnknownKnowledgeBaseOperationResponse(element, options);
+            return UnknownKnowledgeBaseOperationResult.DeserializeUnknownKnowledgeBaseOperationResult(element, options);
         }
     }
 }
