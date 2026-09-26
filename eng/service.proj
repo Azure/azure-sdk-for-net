@@ -98,15 +98,19 @@
   </Target>
 
 
-  <Target Name="InstallTspClient">
-    <MSBuild Projects="@(ProjectReference)"
-             Targets="InstallTspClient"
-             BuildInParallel="false"
-             SkipNonexistentProjects="false"
-             SkipNonexistentTargets="true" />
+  <!-- Every project's InstallTspClient target runs "npm ci" against the same shared
+       eng/common/tsp-client folder, so looping over the projects reinstalls it once per
+       project. Detect whether the batch contains any TypeSpec project and install once. -->
+  <Target Name="InstallTspClient" Condition="'$(SkipTspClientInstall)' != 'true'">
+    <ItemGroup>
+      <_TypeSpecProjectReference Include="@(ProjectReference)"
+                                 Condition="$([System.String]::Copy('%(RootDir)%(Directory)').TrimEnd('/').TrimEnd('\').EndsWith('src')) and Exists('%(RootDir)%(Directory)../tsp-location.yaml')" />
+    </ItemGroup>
+    <Exec Command="npm ci --prefix $(MSBuildThisFileDirectory)common/tsp-client"
+          Condition="'@(_TypeSpecProjectReference)' != ''" />
   </Target>
 
-  <Target Name="BuildPlugin">
+  <Target Name="BuildPlugin" Condition="'$(SkipBuildPlugin)' != 'true'">
     <Exec Command="dotnet build $(MSBuildThisFileDirectory)packages\plugins\client\Client.Plugin\" />
   </Target>
 
