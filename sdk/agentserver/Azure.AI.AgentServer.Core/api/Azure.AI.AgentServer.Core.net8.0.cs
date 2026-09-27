@@ -36,6 +36,13 @@ namespace Azure.AI.AgentServer.Core
         public string? AdditionalServerIdentity { get { throw null; } set { } }
         public System.TimeSpan ShutdownTimeout { get { throw null; } set { } }
     }
+    public sealed partial class AgentRestoreContext
+    {
+        public AgentRestoreContext(string sessionId, string restoreId, System.Collections.Generic.IReadOnlyDictionary<string, string>? sessionEnvironmentOverrides = null) { }
+        public string RestoreId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> SessionEnvironmentOverrides { get { throw null; } }
+        public string SessionId { get { throw null; } }
+    }
     public sealed partial class FoundryAgentRequestContext
     {
         public FoundryAgentRequestContext() { }
@@ -72,6 +79,11 @@ namespace Azure.AI.AgentServer.Core
         public static string? SessionId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
+    }
+    public partial interface IAgentSnapshotLifecycle
+    {
+        System.Threading.Tasks.Task AfterRestoreAsync(Azure.AI.AgentServer.Core.AgentRestoreContext context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task BeforeSnapshotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public partial class PlatformContext
     {

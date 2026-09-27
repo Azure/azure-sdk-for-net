@@ -194,6 +194,39 @@ public class SampleEndToEndTests
         await app.App.StopAsync();
     }
 
+    [Test]
+    public async Task ReadMe_SnapshotLifecycle_AfterRestoreReturns200()
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        builder.Services.AddSingleton<
+            IAgentSnapshotLifecycle,
+            Snippets.ReadMeSnippets.DatabaseSnapshotLifecycle>();
+
+        var app = builder.Build();
+        await app.App.StartAsync();
+
+        var client = app.App.GetTestClient();
+        var response = await client.PostAsync(
+            "/_agent/after-restore",
+            new StringContent(
+                """
+                {
+                  "session_context": {
+                    "session_id": "session-1",
+                    "restore_id": "restore-1"
+                  }
+                }
+                """,
+                System.Text.Encoding.UTF8,
+                "application/json"));
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(await response.Content.ReadAsStringAsync(), Is.EqualTo("""{"status":"ok"}"""));
+
+        await app.App.StopAsync();
+    }
+
     // Helper types
     private class GreetingConfig
     {
