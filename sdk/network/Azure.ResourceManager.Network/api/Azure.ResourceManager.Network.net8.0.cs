@@ -21314,6 +21314,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public NetworkResourceData() { }
         public string Name { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead. The setter no longer works and has no effect.")]
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
         public string Type { get { throw null; } }
         protected override Azure.ResourceManager.Network.Models.NetworkSubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

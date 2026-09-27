@@ -18,7 +18,7 @@ The package is **not release-ready**.
 |---|---|
 | Provisioning generation | Succeeds from the shared spec commit. |
 | Provisioning compilation and API export | Pass for `netstandard2.0`, `net8.0`, and `net10.0`; API listings are current. |
-| Provisioning ApiCompat | 201 diagnostics per framework; normal package builds fail this gate. |
+| Provisioning ApiCompat | 166 diagnostics per framework; normal package builds fail this gate. |
 | Standard test project | Blocked by two compilation errors listed below. |
 | Management compilation, API export, and ApiCompat | Pass; no active management ApiCompat diagnostics. |
 | Recommended property names | `IsPrimary`, `DisableTraceRoute`, and `ConfigurationPolicyGroups` match management. Agreed naming exceptions are listed below. |
@@ -31,9 +31,9 @@ three frameworks.
 | Diagnostic | Count | Meaning |
 |---|---:|---|
 | `CP0001` | 0 | Removed public types |
-| `CP0002` | 177 | Removed or incompatible public member signatures |
+| `CP0002` | 142 | Removed or incompatible public member signatures |
 | `CP0011` | 24 | Changed enum numeric values |
-| **Total** | **201** | |
+| **Total** | **166** | |
 
 A changed property type can produce missing-getter and missing-setter
 diagnostics even when the property name still exists. Diagnostic counts
@@ -44,18 +44,26 @@ therefore differ from logical member counts.
 | Category | Diagnostics | Affected members |
 |---|---:|---:|
 | Property type changed | 47 | 44 properties |
-| Property missing | 58 | 54 properties |
+| Property missing | 23 | 19 properties |
 | Property became read-only | 48 | 48 properties |
 | Enum member missing | 24 | 24 fields |
-| **Total** | **177** | **170** |
+| **Total** | **142** | **135** |
 
 Missing properties:
 
 | Category | Diagnostics | Properties | Details |
 |---|---:|---:|---|
-| Renamed and type changed | 50 | 49 | 47 `ResourceType` properties now appear as `Type`/`string`, plus `ConnectionMonitorEndpoint.EndpointType` and `CustomIPPrefix.ChildCustomIPPrefixList`. |
+| Renamed and type changed | 3 | 2 | `ConnectionMonitorEndpoint.EndpointType` and `CustomIPPrefix.ChildCustomIPPrefixList`. |
 | Flattened wrapper missing | 3 | 2 | `LoadBalancerInboundNatPool.Properties` and `LoadBalancingRule.Properties`. |
-| No generated equivalent | 5 | 3 | One `SystemData` getter and two `AdditionalProperties` bags. |
+| No generated equivalent | 17 | 15 | Twelve `ResourceType` getters without a generated `Type` property, one `SystemData` getter, and two `AdditionalProperties` bags. |
+
+The twelve missing `ResourceType` properties are deferred:
+`ApplicationGatewayEntraJwtValidationConfig`, `ApplicationGatewayRewriteRuleSet`,
+`AzureFirewallApplicationRuleCollectionData`, `AzureFirewallNatRuleCollectionData`,
+`AzureFirewallNetworkRuleCollectionData`, `NetworkIPConfiguration`,
+`P2SConnectionConfiguration`, `VirtualNetworkGatewayIPConfiguration`,
+`VirtualNetworkGatewayPolicyGroup`, `VngClientConnectionConfiguration`,
+`VpnClientRevokedCertificate`, and `VpnClientRootCertificate`.
 
 Changed property types:
 
@@ -77,6 +85,17 @@ Changed property types:
 | `IPsecIntegrity` | 2 |
 
 ## Other outstanding issues
+
+### Resource type compatibility
+
+Thirty-five provisioning models retain hidden, obsolete, getter-only
+`ResourceType` aliases that forward to their generated `Type` properties.
+The aliases preserve the Bicep reference and output-only behavior rather than
+defining a second property at the same wire path. `Type` remains the preferred API.
+
+Management's `NetworkResourceData.ResourceType` is also hidden and obsolete.
+Its getter converts the generated `Type` value to `ResourceType?`; its setter
+intentionally does nothing, as stated in its deprecation message.
 
 ### Test compilation
 
