@@ -22225,6 +22225,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.VpnServerConfigurationPolicyGroupData> PreviousConfigurationPolicyGroupAssociations { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer functions.")]
         public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace VpnClientAddressPool { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> VpnClientAddressPrefixes { get { throw null; } }

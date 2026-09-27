@@ -15,10 +15,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Compatibility declaration for the P2SConnectionConfiguration type. </summary>
     public partial class P2SConnectionConfiguration : NetworkResourceData
     {
-        /// <summary> Compatibility member. </summary>
-        public IList<string> VpnClientAddressPrefixes { get; } = new List<string>();
+        // Preserve the flattened API because the address-space model now has multiple properties and is no longer flattened.
+        /// <summary> A list of address blocks reserved for P2S VPN clients in CIDR notation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.vpnClientAddressPool.addressPrefixes")]
+        public IList<string> VpnClientAddressPrefixes
+        {
+            get
+            {
+                VpnClientAddressPool ??= new VirtualNetworkAddressSpace();
+                return VpnClientAddressPool.AddressPrefixes;
+            }
+        }
 
         /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and no longer functions.")]
         public RoutingConfiguration RoutingConfiguration { get; set; }
 
         /// <summary> Gets a read-only view of the configuration policy groups. </summary>
