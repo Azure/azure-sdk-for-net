@@ -5,6 +5,7 @@ using Azure.AI.AgentServer.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
@@ -16,6 +17,28 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
     [Explicit("Snippets are compiled to prevent rot but require a running server to execute.")]
     public class ReadMeSnippets
     {
+        #region Snippet:Core_ReadMe_SnapshotLifecycle
+
+        public sealed class DatabaseSnapshotLifecycle : IAgentSnapshotLifecycle
+        {
+            public Task BeforeSnapshotAsync(CancellationToken cancellationToken = default)
+            {
+                // Close connections and release state that must not be captured.
+                return Task.CompletedTask;
+            }
+
+            public Task AfterRestoreAsync(
+                AgentRestoreContext context,
+                CancellationToken cancellationToken = default)
+            {
+                // Environment overrides are already applied. Recreate clients
+                // or other state that was initialized before the snapshot.
+                return Task.CompletedTask;
+            }
+        }
+
+        #endregion
+
         [Test]
         public void CreateBuilder()
         {
@@ -47,6 +70,17 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             app.UseAgentServerCore();
             app.MapGet("/hello", () => "Hello!");
             app.Run();
+
+            #endregion
+        }
+
+        [Test]
+        public void ConfigureSnapshotLifecycle()
+        {
+            #region Snippet:Core_ReadMe_ConfigureSnapshotLifecycle
+
+            var builder = AgentHost.CreateBuilder();
+            builder.Services.AddSingleton<IAgentSnapshotLifecycle, DatabaseSnapshotLifecycle>();
 
             #endregion
         }

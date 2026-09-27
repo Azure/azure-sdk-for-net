@@ -30,6 +30,11 @@
 - Added `ResilientTaskSettings : ClientSettings` and configuration-bound
   `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
   now accepts its credential and project endpoint from one settings object.
+- Added the private `POST /_agent/before-snapshot` and `POST /_agent/after-restore`
+  lifecycle endpoints for memory snapshot capture and restoration. Applications can
+  register an `IAgentSnapshotLifecycle` singleton to release and rebuild process state;
+  Core applies session environment overrides first and provides serialized, idempotent
+  retry handling.
 
 ### Breaking Changes
 
