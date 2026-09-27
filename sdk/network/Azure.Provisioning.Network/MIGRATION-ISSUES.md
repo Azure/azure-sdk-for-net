@@ -5,7 +5,7 @@
 - SDK PR: [#63070](https://github.com/Azure/azure-sdk-for-net/pull/63070)
 - Spec PR: [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
 - Provisioning spec commit: `0aa6bd92d3113c57472f0be6ac307383f139fd0e`
-- Management spec commit: `e7db521d4d3d76f5306cf39c50ce44a04bd8e3c5` (adds the C# numeric bandwidth rename; provisioning remains pinned until its API-version bump)
+- Management spec commit: `fcc3feb29d0bb5aa12829e8649deda5f8087fae9` (includes the C# numeric bandwidth rename and model-level managed identity substitution; provisioning remains pinned until its API-version bump)
 - Provisioning emitter: `@azure-typespec/http-client-csharp-provisioning@1.0.0-alpha.20260916.3`
 - TypeSpec compiler: `1.15.0`
 - API versions: Network `2025-05-01`; Compute `2018-10-01`
