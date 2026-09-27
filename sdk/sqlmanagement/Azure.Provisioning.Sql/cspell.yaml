@@ -1,4 +1,4 @@
 import:
-  - ../../../.vscode/cspell.json
+  - ../cspell.yaml
 words:
   - azprovision
