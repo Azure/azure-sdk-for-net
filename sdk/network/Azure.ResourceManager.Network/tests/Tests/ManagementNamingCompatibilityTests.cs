@@ -16,6 +16,63 @@ namespace Azure.ResourceManager.Network.Tests
 {
     public class ManagementNamingCompatibilityTests
     {
+        [Test]
+        public void ConfigurationPolicyGroupsPreserveWireValuesAndReadOnlyAlias()
+        {
+            const string id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/vpnServerConfigurations/server/configurationPolicyGroups/group";
+            var model = new P2SConnectionConfiguration();
+            IList<WritableSubResource> groups = model.ConfigurationPolicyGroups;
+#pragma warning disable CS0618
+            IReadOnlyList<WritableSubResource> associations = model.ConfigurationPolicyGroupAssociations;
+#pragma warning restore CS0618
+            Assert.That(groups, Is.Empty);
+            Assert.That(associations, Is.Empty);
+
+            var group = new WritableSubResource { Id = new ResourceIdentifier(id) };
+            groups.Add(group);
+            Assert.That(associations.Count, Is.EqualTo(1));
+            Assert.That(associations[0], Is.SameAs(group));
+
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(model, new ModelReaderWriterOptions("W")));
+            var properties = json.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("configurationPolicyGroupAssociations")[0].GetProperty("id").GetString(),
+                Is.EqualTo(id));
+            Assert.That(properties.TryGetProperty("configurationPolicyGroups", out _), Is.False);
+
+            var roundTrip = ModelReaderWriter.Read<P2SConnectionConfiguration>(BinaryData.FromString(json.RootElement.GetRawText()));
+            Assert.That(roundTrip.ConfigurationPolicyGroups[0].Id, Is.EqualTo(group.Id));
+#pragma warning disable CS0618
+            Assert.That(roundTrip.ConfigurationPolicyGroupAssociations[0], Is.SameAs(roundTrip.ConfigurationPolicyGroups[0]));
+#pragma warning restore CS0618
+            groups.Clear();
+            Assert.That(associations, Is.Empty);
+        }
+
+        [Test]
+        public void PolicyGroupFactoryParametersPopulateGeneratedCollection()
+        {
+            var group = new WritableSubResource
+            {
+                Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Network/vpnServerConfigurations/server/configurationPolicyGroups/group")
+            };
+            var model = ArmNetworkModelFactory.P2SConnectionConfiguration(
+                @type: "Microsoft.Network/p2sVpnGateways/p2sConnectionConfigurations",
+                configurationPolicyGroupAssociations: new[] { group });
+            var legacyModel = ArmNetworkModelFactory.P2SConnectionConfiguration(
+                id: default, name: default, resourceType: default, etag: default,
+                vpnClientAddressPrefixes: default, routingConfiguration: default,
+                enableInternetSecurity: default, configurationPolicyGroupAssociations: new[] { group },
+                previousConfigurationPolicyGroupAssociations: default, provisioningState: default);
+
+            foreach (var configuration in new[] { model, legacyModel })
+            {
+                Assert.That(configuration.ConfigurationPolicyGroups[0], Is.SameAs(group));
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(configuration, new ModelReaderWriterOptions("W")));
+                Assert.That(json.RootElement.GetProperty("properties").GetProperty("configurationPolicyGroupAssociations")[0]
+                    .GetProperty("id").GetString(), Is.EqualTo(group.Id.ToString()));
+            }
+        }
+
         [TestCase(typeof(VirtualNetworkGatewayData), "CustomRoutesAddressPrefixes", "CustomRoutes", "customRoutes")]
         [TestCase(typeof(VirtualNetworkPeeringData), "LocalAddressPrefixes", "LocalAddressSpace", "localAddressSpace")]
         [TestCase(typeof(VirtualNetworkPeeringData), "LocalVirtualNetworkAddressPrefixes", "LocalVirtualNetworkAddressSpace", "localVirtualNetworkAddressSpace")]

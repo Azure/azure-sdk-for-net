@@ -9664,35 +9664,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
-        /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
-        /// <param name="configurationPolicyGroupAssociations"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
-        /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
-        /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = default, string name = default, string @type = default, VirtualNetworkAddressSpace vpnClientAddressPool = default, RoutingConfigurationNfv routingConfiguration = default, bool? enableInternetSecurity = default, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = default, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new P2SConnectionConfiguration(
-                id,
-                default,
-                name,
-                @type,
-                vpnClientAddressPool is null && routingConfiguration is null && enableInternetSecurity is null && configurationPolicyGroupAssociations is null && previousConfigurationPolicyGroupAssociations is null && provisioningState is null ? default : new P2SConnectionConfigurationProperties(
-                    vpnClientAddressPool,
-                    routingConfiguration,
-                    enableInternetSecurity,
-                    (configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>()).ToList(),
-                    provisioningState,
-                    default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
         /// <param name="isDefault"> Shows if this is a Default VpnServerConfigurationPolicyGroup or not. </param>
         /// <param name="priority"> Priority for VpnServerConfigurationPolicyGroup. </param>
         /// <param name="policyMembers"> Multiple PolicyMembers for VpnServerConfigurationPolicyGroup. </param>
@@ -15786,37 +15757,6 @@ namespace Azure.ResourceManager.Network.Models
                 etag);
         }
 
-        /// <summary> P2SConnectionConfiguration Resource. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="vpnClientAddressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
-        /// <param name="routingConfiguration"></param>
-        /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
-        /// <param name="configurationPolicyGroupAssociations"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
-        /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
-        /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
-        /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<string> vpnClientAddressPrefixes, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState)
-        {
-            return new P2SConnectionConfiguration(
-                id,
-                default,
-                name,
-                default,
-                vpnClientAddressPrefixes is null && enableInternetSecurity is null && configurationPolicyGroupAssociations is null && previousConfigurationPolicyGroupAssociations is null && provisioningState is null ? default : new P2SConnectionConfigurationProperties(
-                    vpnClientAddressPrefixes is null ? default : new VirtualNetworkAddressSpace((vpnClientAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default, default),
-                    default,
-                    enableInternetSecurity,
-                    (configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>()).ToList(),
-                    provisioningState,
-                    default),
-                etag);
-        }
-
         /// <summary> Peerings in a virtual network resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -21278,7 +21218,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="vpnClientAddressPool"> The reference to the address space resource which represents Address space for P2S VpnClient. </param>
         /// <param name="routingConfiguration"></param>
         /// <param name="enableInternetSecurity"> Flag indicating whether the enable internet security flag is turned on for the P2S Connections or not. </param>
-        /// <param name="configurationPolicyGroups"></param>
+        /// <param name="configurationPolicyGroups"> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </param>
         /// <param name="previousConfigurationPolicyGroupAssociations"> List of previous Configuration Policy Groups that this P2SConnectionConfiguration was attached to. </param>
         /// <param name="provisioningState"> The provisioning state of the P2SConnectionConfiguration resource. </param>
         /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
@@ -21290,11 +21230,11 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                vpnClientAddressPool is null && enableInternetSecurity is null && previousConfigurationPolicyGroupAssociations is null && provisioningState is null ? default : new P2SConnectionConfigurationProperties(
+                vpnClientAddressPool is null && enableInternetSecurity is null && configurationPolicyGroups is null && previousConfigurationPolicyGroupAssociations is null && provisioningState is null ? default : new P2SConnectionConfigurationProperties(
                     vpnClientAddressPool,
                     default,
                     enableInternetSecurity,
-                    default,
+                    (configurationPolicyGroups ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>()).ToList(),
                     provisioningState,
                     default),

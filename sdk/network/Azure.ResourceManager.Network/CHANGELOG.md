@@ -12,8 +12,11 @@
 - Preserved resource-reference wire formats and deserialization of renamed required properties.
 - Restored `WritableSubResource` types for virtual hub IP configurations, virtual network gateway default sites, and virtual network peering references.
 - Restored flattened gateway and peering address-prefix properties as forwarding accessors to their address-space models.
+- Restored the writable `P2SConnectionConfiguration.ConfigurationPolicyGroups` collection and its serialization; `ConfigurationPolicyGroupAssociations` now provides an obsolete read-only view of the same collection.
 
 ### Other Changes
+
+- Marked the unsupported `NetworkVirtualApplianceConnectionData.ConnectionRoutingConfiguration` compatibility property obsolete and hidden from IntelliSense; use `RoutingConfiguration` instead.
 
 ## 1.18.0-beta.1 (2026-09-20)
 

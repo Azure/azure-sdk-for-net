@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -75,6 +76,20 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new P2SConnectionConfigurationProperties();
                 }
                 Properties.EnableInternetSecurity = value;
+            }
+        }
+
+        /// <summary> List of Configuration Policy Groups that this P2SConnectionConfiguration is attached to. </summary>
+        [WirePath("properties.configurationPolicyGroupAssociations")]
+        public IList<WritableSubResource> ConfigurationPolicyGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SConnectionConfigurationProperties();
+                }
+                return Properties.ConfigurationPolicyGroups;
             }
         }
 

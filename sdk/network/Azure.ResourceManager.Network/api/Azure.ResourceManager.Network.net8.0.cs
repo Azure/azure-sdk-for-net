@@ -6016,6 +6016,7 @@ namespace Azure.ResourceManager.Network
         public NetworkVirtualApplianceConnectionData() { }
         public long? Asn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> BgpPeerAddress { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use RoutingConfiguration instead.")]
         public Azure.ResourceManager.Network.Models.RoutingConfiguration ConnectionRoutingConfiguration { get { throw null; } set { } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }
         public string NamePropertiesName { get { throw null; } set { } }
@@ -22217,6 +22218,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class P2SConnectionConfiguration : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.P2SConnectionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.P2SConnectionConfiguration>
     {
         public P2SConnectionConfiguration() { }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroups instead.")]
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> ConfigurationPolicyGroupAssociations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ConfigurationPolicyGroups { get { throw null; } }
         public bool? EnableInternetSecurity { get { throw null; } set { } }

@@ -15,6 +15,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ArmNetworkModelFactory type. </summary>
+    [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(VirtualNetworkAddressSpace), typeof(RoutingConfigurationNfv), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?), typeof(ETag?))]
+    [CodeGenSuppress("P2SConnectionConfiguration", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(ETag?), typeof(IEnumerable<string>), typeof(RoutingConfiguration), typeof(bool?), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<VpnServerConfigurationPolicyGroupData>), typeof(NetworkProvisioningState?))]
     [CodeGenSuppress("EffectiveBaseSecurityAdminRule", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(IEnumerable<NetworkManagerSecurityGroupItem>), typeof(IEnumerable<NetworkConfigurationGroup>), typeof(string))]
     [CodeGenSuppress("PeerRouteList", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?))]
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
@@ -26,9 +28,46 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        // Preserve the released parameter name while initializing the renamed generated collection.
+        /// <summary> Initializes a new instance of <see cref="Models.P2SConnectionConfiguration"/>. </summary>
+        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = default, string name = default, string @type = default, VirtualNetworkAddressSpace vpnClientAddressPool = default, RoutingConfigurationNfv routingConfiguration = default, bool? enableInternetSecurity = default, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = default, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new P2SConnectionConfiguration(
+                id,
+                default,
+                name,
+                @type,
+                vpnClientAddressPool is null && routingConfiguration is null && enableInternetSecurity is null && configurationPolicyGroupAssociations is null && previousConfigurationPolicyGroupAssociations is null && provisioningState is null ? default : new P2SConnectionConfigurationProperties(
+                    vpnClientAddressPool,
+                    routingConfiguration,
+                    enableInternetSecurity,
+                    (configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>()).ToList(),
+                    provisioningState,
+                    default),
+                eTag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.P2SConnectionConfiguration"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<string> vpnClientAddressPrefixes, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState)
+        {
+            return P2SConnectionConfiguration(
+                id: id,
+                name: name,
+                @type: default,
+                vpnClientAddressPool: vpnClientAddressPrefixes is null ? default : new VirtualNetworkAddressSpace(vpnClientAddressPrefixes.ToList(), default, default),
+                routingConfiguration: default,
+                enableInternetSecurity: enableInternetSecurity,
+                configurationPolicyGroupAssociations: configurationPolicyGroupAssociations,
+                previousConfigurationPolicyGroupAssociations: previousConfigurationPolicyGroupAssociations,
+                provisioningState: provisioningState,
+                eTag: etag);
+        }
+
         // Restores the released enum-shaped factory overload and delegates it to the canonical overload that accepts
         // the Boolean IsOnlyIPv6PeeringEnabled value.
-        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Network.HubVirtualNetworkConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Network.HubVirtualNetworkConnectionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is deprecated and is no longer supported by the service.")]
         public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
@@ -128,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         // Adds the model factory method omitted for the custom canonical shared network manager connection model.
-        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Network.NetworkManagerConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerConnectionData"/>. </summary>
         public static NetworkManagerConnectionData NetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, ETag? etag = default)
         {
             var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
@@ -136,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         // Restores the released subscription-specific factory API over the canonical shared connection model.
-        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Network.SubscriptionNetworkManagerConnectionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Network.SubscriptionNetworkManagerConnectionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete. Please use NetworkManagerConnectionData instead.")]
         public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string type = default, string eTag = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
