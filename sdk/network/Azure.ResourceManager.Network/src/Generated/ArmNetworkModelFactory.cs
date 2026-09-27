@@ -10492,41 +10492,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="bandwidthInGbps"> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </param>
-        /// <param name="ipConfigurations"> A list of IPConfigurations of the virtual network appliance. </param>
-        /// <param name="privateIPAddressVersion"> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.VirtualNetworkApplianceData"/> instance for mocking. </returns>
-        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, double? bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualNetworkApplianceData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                bandwidthInGbps is null && ipConfigurations is null && privateIPAddressVersion is null && provisioningState is null && resourceGuid is null && subnet is null ? default : new VirtualNetworkAppliancePropertiesFormat(
-                    bandwidthInGbps,
-                    (ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>()).ToList(),
-                    privateIPAddressVersion,
-                    provisioningState,
-                    resourceGuid,
-                    subnet,
-                    default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
@@ -20628,40 +20593,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                etag);
-        }
-
-        /// <summary> A virtual network appliance in a resource group. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="bandwidthInGbps"></param>
-        /// <param name="ipConfigurations"> A list of IPConfigurations of the virtual network appliance. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <returns> A new <see cref="Network.VirtualNetworkApplianceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? etag = default, string bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default)
-        {
-            return new VirtualNetworkApplianceData(
-                id,
-                name,
-                default,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                ipConfigurations is null && provisioningState is null && resourceGuid is null && subnet is null ? default : new VirtualNetworkAppliancePropertiesFormat(
-                    default,
-                    (ipConfigurations ?? new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>()).ToList(),
-                    default,
-                    provisioningState,
-                    resourceGuid,
-                    subnet,
-                    default),
                 etag);
         }
 

@@ -8438,6 +8438,7 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkApplianceData : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.VirtualNetworkApplianceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.VirtualNetworkApplianceData>
     {
         public VirtualNetworkApplianceData() { }
+        public double? BandwidthGbps { get { throw null; } set { } }
         public string BandwidthInGbps { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.VirtualNetworkApplianceIPConfiguration> IPConfigurations { get { throw null; } }

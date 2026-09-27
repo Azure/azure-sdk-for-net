@@ -4,7 +4,8 @@
 
 - SDK PR: [#63070](https://github.com/Azure/azure-sdk-for-net/pull/63070)
 - Spec PR: [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
-- Spec commit: `0aa6bd92d3113c57472f0be6ac307383f139fd0e` (shared with management)
+- Provisioning spec commit: `0aa6bd92d3113c57472f0be6ac307383f139fd0e`
+- Management spec commit: `e7db521d4d3d76f5306cf39c50ce44a04bd8e3c5` (adds the C# numeric bandwidth rename; provisioning remains pinned until its API-version bump)
 - Provisioning emitter: `@azure-typespec/http-client-csharp-provisioning@1.0.0-alpha.20260916.3`
 - TypeSpec compiler: `1.15.0`
 - API versions: Network `2025-05-01`; Compute `2018-10-01`
@@ -16,7 +17,7 @@ The package is **not release-ready**.
 
 | Area | Status |
 |---|---|
-| Provisioning generation | Succeeds from the shared spec commit. |
+| Provisioning generation | Succeeds from the provisioning spec commit above. |
 | Provisioning compilation and API export | Pass for `netstandard2.0`, `net8.0`, and `net10.0`; API listings are current. |
 | Provisioning ApiCompat | 107 diagnostics per framework; normal package builds fail this gate. |
 | Standard test project | Blocked by the read-only `NetworkSecurityGroup.Id` assignment listed below. |
@@ -74,7 +75,40 @@ Changed property types:
 | `VpnAuthenticationType` | 3 |
 | `IPsecIntegrity` | 2 |
 
+### Deferred provisioning API-version bump
+
+Before fixing `ManagedRuleSetRuleGroup.Rules` and
+`VirtualNetworkAppliance.BandwidthInGbps` compatibility, bump the provisioning
+Network API version from `2025-05-01` to match the management generation version.
+The exact target version must be confirmed before the bump.
+
+Swagger and TypeSpec agree that `rules` changes from `string[]` to `int32[]` in
+`2026-01-01`, and `bandwidthInGbps` changes from `string` to `float64` in
+`2025-07-01`. However, regeneration with saved inputs already produces `int32[]`
+and `float64` in `tspCodeModel.json` with provisioning configured for `2025-05-01`.
+The mismatch precedes C# generation; its cause within version selection or the
+shared code-model pipeline is not yet established.
+
+Provisioning fixes for these two properties are intentionally deferred until the
+API-version bump. The C# `clientName` customization introducing `BandwidthGbps`
+for management is shared with provisioning and must be accounted for when
+updating the provisioning spec pin and regenerating.
+
 ## Compatibility customizations
+
+### Management numeric bandwidth
+
+Management uses the C# client name `BandwidthGbps` for the numeric
+`VirtualNetworkApplianceData` property while preserving the wire path
+`properties.bandwidthInGbps`. The released string property `BandwidthInGbps`
+forwards to it using invariant-culture parsing and round-trip formatting; null
+clears the numeric value, and invalid numeric text throws rather than being
+silently ignored.
+
+Both existing management model-factory overloads retain their signatures and
+populate the same numeric property. Custom factory implementations are needed
+because the generated compatibility methods otherwise discard the bandwidth
+argument after the property rename. Provisioning code is unchanged.
 
 ### Strong property types
 

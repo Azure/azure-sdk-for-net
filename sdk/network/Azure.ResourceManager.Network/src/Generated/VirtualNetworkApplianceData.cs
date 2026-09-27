@@ -44,6 +44,24 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
+        /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
+        [WirePath("properties.bandwidthInGbps")]
+        public double? BandwidthGbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BandwidthGbps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkAppliancePropertiesFormat();
+                }
+                Properties.BandwidthGbps = value;
+            }
+        }
+
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("properties.ipConfigurations")]
         public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IPConfigurations
