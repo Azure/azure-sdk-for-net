@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _description;
         private BicepValue<string> _service;
-        private BicepList<string> _serviceResources;
+        private BicepList<ResourceIdentifier> _serviceResources;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ServiceEndpointPolicyDefinitionPropertiesFormat. </summary>
@@ -54,7 +55,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ServiceResources. </summary>
-        public BicepList<string> ServiceResources
+        public BicepList<ResourceIdentifier> ServiceResources
         {
             get
             {
@@ -84,7 +85,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _service = DefineProperty<string>(nameof(Service), new string[] { "service" });
-            _serviceResources = DefineListProperty<string>(nameof(ServiceResources), new string[] { "serviceResources" });
+            _serviceResources = DefineListProperty<ResourceIdentifier>(nameof(ServiceResources), new string[] { "serviceResources" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

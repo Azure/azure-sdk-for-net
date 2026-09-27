@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> IP Configuration of a VPN Gateway Resource. </summary>
     public partial class VpnGatewayIPConfiguration : ProvisionableConstruct
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _publicIPAddress;
         private BicepValue<string> _privateIPAddress;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             _publicIPAddress = DefineProperty<string>(nameof(PublicIPAddress), new string[] { "publicIpAddress" });
             _privateIPAddress = DefineProperty<string>(nameof(PrivateIPAddress), new string[] { "privateIpAddress" });
             DefineAdditionalProperties();

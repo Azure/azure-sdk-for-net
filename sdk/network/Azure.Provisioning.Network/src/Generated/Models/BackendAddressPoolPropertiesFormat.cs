@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Properties of the backend address pool. </summary>
     internal partial class BackendAddressPoolPropertiesFormat : ProvisionableConstruct
     {
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepList<GatewayLoadBalancerTunnelInterface> _tunnelInterfaces;
         private BicepList<LoadBalancerBackendAddress> _loadBalancerBackendAddresses;
         private BicepList<NetworkInterfaceIPConfiguration> _backendIPConfigurations;
@@ -34,7 +34,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -213,7 +213,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>(nameof(TunnelInterfaces), new string[] { "tunnelInterfaces" });
             _loadBalancerBackendAddresses = DefineListProperty<LoadBalancerBackendAddress>(nameof(LoadBalancerBackendAddresses), new string[] { "loadBalancerBackendAddresses" });
             _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>(nameof(BackendIPConfigurations), new string[] { "backendIPConfigurations" }, isOutput: true);

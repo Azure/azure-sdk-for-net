@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class ApplicationGatewayCustomError : ProvisionableConstruct
     {
         private BicepValue<ApplicationGatewayCustomErrorStatusCode> _statusCode;
-        private BicepValue<string> _customErrorPageUri;
+        private BicepValue<Uri> _customErrorPageUri;
 
         /// <summary> Creates a new ApplicationGatewayCustomError. </summary>
         public ApplicationGatewayCustomError()
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the CustomErrorPageUri. </summary>
-        public BicepValue<string> CustomErrorPageUri
+        public BicepValue<Uri> CustomErrorPageUri
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _statusCode = DefineProperty<ApplicationGatewayCustomErrorStatusCode>(nameof(StatusCode), new string[] { "statusCode" });
-            _customErrorPageUri = DefineProperty<string>(nameof(CustomErrorPageUri), new string[] { "customErrorPageUrl" });
+            _customErrorPageUri = DefineProperty<Uri>(nameof(CustomErrorPageUri), new string[] { "customErrorPageUrl" });
             DefineAdditionalProperties();
         }
 

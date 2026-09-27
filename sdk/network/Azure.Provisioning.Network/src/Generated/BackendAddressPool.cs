@@ -95,7 +95,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {

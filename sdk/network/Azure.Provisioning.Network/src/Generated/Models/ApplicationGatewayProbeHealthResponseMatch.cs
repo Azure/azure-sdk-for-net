@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Application gateway probe health response match. </summary>
     public partial class ApplicationGatewayProbeHealthResponseMatch : ProvisionableConstruct
     {
-        private BicepValue<string> _body;
+        private BicepValue<BinaryData> _body;
         private BicepList<string> _statusCodes;
 
         /// <summary> Creates a new ApplicationGatewayProbeHealthResponseMatch. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Body. </summary>
-        public BicepValue<string> Body
+        public BicepValue<BinaryData> Body
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _body = DefineProperty<string>(nameof(Body), new string[] { "body" });
+            _body = DefineProperty<BinaryData>(nameof(Body), new string[] { "body" });
             _statusCodes = DefineListProperty<string>(nameof(StatusCodes), new string[] { "statusCodes" });
             DefineAdditionalProperties();
         }

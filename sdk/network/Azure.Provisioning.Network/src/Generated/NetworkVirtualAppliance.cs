@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -407,7 +408,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the PrivateIPAddress. </summary>
-        public BicepValue<string> PrivateIPAddress
+        public BicepValue<IPAddress> PrivateIPAddress
         {
             get
             {

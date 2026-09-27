@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _service;
         private NetworkSubResource _networkIdentifier;
-        private BicepList<string> _locations;
+        private BicepList<AzureLocation> _locations;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ServiceEndpointProperties. </summary>
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Locations. </summary>
-        public BicepList<string> Locations
+        public BicepList<AzureLocation> Locations
         {
             get
             {
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _service = DefineProperty<string>(nameof(Service), new string[] { "service" });
             _networkIdentifier = DefineModelProperty<NetworkSubResource>(nameof(NetworkIdentifier), new string[] { "networkIdentifier" });
-            _locations = DefineListProperty<string>(nameof(Locations), new string[] { "locations" });
+            _locations = DefineListProperty<AzureLocation>(nameof(Locations), new string[] { "locations" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

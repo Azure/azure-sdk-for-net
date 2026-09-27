@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Network manager security group item. </summary>
     public partial class NetworkManagerSecurityGroupItem : ProvisionableConstruct
     {
-        private BicepValue<string> _networkGroupId;
+        private BicepValue<ResourceIdentifier> _networkGroupId;
 
         /// <summary> Creates a new NetworkManagerSecurityGroupItem. </summary>
         public NetworkManagerSecurityGroupItem()
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the NetworkGroupId. </summary>
-        public BicepValue<string> NetworkGroupId
+        public BicepValue<ResourceIdentifier> NetworkGroupId
         {
             get
             {
@@ -39,7 +40,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _networkGroupId = DefineProperty<string>(nameof(NetworkGroupId), new string[] { "networkGroupId" }, isRequired: true);
+            _networkGroupId = DefineProperty<ResourceIdentifier>(nameof(NetworkGroupId), new string[] { "networkGroupId" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

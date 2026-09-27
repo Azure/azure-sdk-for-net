@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> IpGroups associated with azure firewall. </summary>
     public partial class AzureFirewallIPGroups : ProvisionableConstruct
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _changeNumber;
 
         /// <summary> Creates a new AzureFirewallIPGroups. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -45,7 +46,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _changeNumber = DefineProperty<string>(nameof(ChangeNumber), new string[] { "changeNumber" }, isOutput: true);
             DefineAdditionalProperties();
         }

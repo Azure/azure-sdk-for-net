@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class VpnServerConfigVpnClientRootCertificate : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _publicCertData;
+        private BicepValue<BinaryData> _publicCertData;
 
         /// <summary> Creates a new VpnServerConfigVpnClientRootCertificate. </summary>
         public VpnServerConfigVpnClientRootCertificate()
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the PublicCertData. </summary>
-        public BicepValue<string> PublicCertData
+        public BicepValue<BinaryData> PublicCertData
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _publicCertData = DefineProperty<string>(nameof(PublicCertData), new string[] { "publicCertData" });
+            _publicCertData = DefineProperty<BinaryData>(nameof(PublicCertData), new string[] { "publicCertData" });
             DefineAdditionalProperties();
         }
 

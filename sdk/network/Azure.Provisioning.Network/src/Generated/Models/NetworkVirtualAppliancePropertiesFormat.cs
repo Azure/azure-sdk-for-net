@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -33,7 +34,7 @@ namespace Azure.Provisioning.Network
         private VirtualApplianceDelegationProperties _delegation;
         private PartnerManagedResourceProperties _partnerManagedResource;
         private BicepList<NvaInterfaceConfigurationsProperties> _nvaInterfaceConfigurations;
-        private BicepValue<string> _privateIPAddress;
+        private BicepValue<IPAddress> _privateIPAddress;
 
         /// <summary> Creates a new NetworkVirtualAppliancePropertiesFormat. </summary>
         public NetworkVirtualAppliancePropertiesFormat()
@@ -291,7 +292,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the PrivateIPAddress. </summary>
-        public BicepValue<string> PrivateIPAddress
+        public BicepValue<IPAddress> PrivateIPAddress
         {
             get
             {
@@ -357,7 +358,7 @@ namespace Azure.Provisioning.Network
             _delegation = DefineModelProperty<VirtualApplianceDelegationProperties>(nameof(Delegation), new string[] { "delegation" });
             _partnerManagedResource = DefineModelProperty<PartnerManagedResourceProperties>(nameof(PartnerManagedResource), new string[] { "partnerManagedResource" });
             _nvaInterfaceConfigurations = DefineListProperty<NvaInterfaceConfigurationsProperties>(nameof(NvaInterfaceConfigurations), new string[] { "nvaInterfaceConfigurations" });
-            _privateIPAddress = DefineProperty<string>(nameof(PrivateIPAddress), new string[] { "privateIpAddress" }, isOutput: true);
+            _privateIPAddress = DefineProperty<IPAddress>(nameof(PrivateIPAddress), new string[] { "privateIpAddress" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

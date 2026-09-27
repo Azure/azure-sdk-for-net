@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,13 +17,13 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _name;
         private BicepValue<EndpointType> _type;
-        private BicepValue<string> _resourceId;
+        private BicepValue<ResourceIdentifier> _resourceId;
         private BicepValue<string> _address;
         private ConnectionMonitorEndpointFilter _filter;
         private ConnectionMonitorEndpointScope _scope;
         private BicepValue<CoverageLevel> _coverageLevel;
         private ConnectionMonitorEndpointLocationDetails _locationDetails;
-        private BicepValue<string> _subscriptionId;
+        private BicepValue<Guid> _subscriptionId;
 
         /// <summary> Creates a new ConnectionMonitorEndpoint. </summary>
         public ConnectionMonitorEndpoint()
@@ -59,7 +61,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -149,7 +151,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the SubscriptionId. </summary>
-        public BicepValue<string> SubscriptionId
+        public BicepValue<Guid> SubscriptionId
         {
             get
             {
@@ -186,13 +188,13 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _type = DefineProperty<EndpointType>(nameof(Type), new string[] { "type" });
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" });
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _address = DefineProperty<string>(nameof(Address), new string[] { "address" });
             _filter = DefineModelProperty<ConnectionMonitorEndpointFilter>(nameof(Filter), new string[] { "filter" });
             _scope = DefineModelProperty<ConnectionMonitorEndpointScope>(nameof(Scope), new string[] { "scope" });
             _coverageLevel = DefineProperty<CoverageLevel>(nameof(CoverageLevel), new string[] { "coverageLevel" });
             _locationDetails = DefineModelProperty<ConnectionMonitorEndpointLocationDetails>(nameof(LocationDetails), new string[] { "locationDetails" });
-            _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" });
+            _subscriptionId = DefineProperty<Guid>(nameof(SubscriptionId), new string[] { "subscriptionId" });
             DefineAdditionalProperties();
         }
 

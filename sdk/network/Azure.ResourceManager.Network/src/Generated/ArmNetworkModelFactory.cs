@@ -932,12 +932,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint's subnet. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. </param>
-        /// <param name="type"> The resource type. </param>
+        /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointIPConfiguration"/> instance for mocking. </returns>
-        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string groupId = default, string memberName = default, string privateIPAddress = default, string name = default, string @type = default, ETag? eTag = default)
+        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string groupId, string memberName, IPAddress privateIPAddress, string name, string privateEndpointIPConfigurationType, ETag? eTag)
         {
-            return new PrivateEndpointIPConfiguration(groupId is null && memberName is null && privateIPAddress is null ? default : new PrivateEndpointIPConfigurationProperties(groupId, memberName, privateIPAddress, default), name, default, eTag, default);
+            return new PrivateEndpointIPConfiguration(groupId is null && memberName is null && privateIPAddress is null ? default : new PrivateEndpointIPConfigurationProperties(groupId, memberName, privateIPAddress, default), name, privateEndpointIPConfigurationType, eTag, default);
         }
 
         /// <summary> DNS settings of a network interface. </summary>
@@ -1296,14 +1296,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ServiceEndpointPolicyDefinitionData"/> instance for mocking. </returns>
-        public static ServiceEndpointPolicyDefinitionData ServiceEndpointPolicyDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, string description = default, string service = default, IEnumerable<string> serviceResources = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static ServiceEndpointPolicyDefinitionData ServiceEndpointPolicyDefinitionData(ResourceIdentifier id, string name, string @type, string description, string service, IEnumerable<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
             return new ServiceEndpointPolicyDefinitionData(
                 id,
                 default,
                 name,
                 @type,
-                description is null && service is null && serviceResources is null && provisioningState is null ? default : new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, (serviceResources ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
+                description is null && service is null && serviceResources is null && provisioningState is null ? default : new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, (serviceResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), provisioningState, default),
                 eTag);
         }
 
@@ -1513,7 +1513,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.ResourceNavigationLink"/> instance for mocking. </returns>
-        public static ResourceNavigationLink ResourceNavigationLink(ResourceIdentifier id = default, string name = default, string @type = default, string linkedResourceType = default, ResourceIdentifier link = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static ResourceNavigationLink ResourceNavigationLink(ResourceIdentifier id, string name, string @type, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
             return new ResourceNavigationLink(
                 id,
@@ -1534,7 +1534,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="locations"> A list of locations. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.ServiceAssociationLink"/> instance for mocking. </returns>
-        public static ServiceAssociationLink ServiceAssociationLink(ResourceIdentifier id = default, string name = default, string @type = default, string linkedResourceType = default, ResourceIdentifier link = default, NetworkProvisioningState? provisioningState = default, bool? allowDelete = default, IEnumerable<string> locations = default, ETag? eTag = default)
+        public static ServiceAssociationLink ServiceAssociationLink(ResourceIdentifier id, string name, string @type, ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IEnumerable<AzureLocation> locations, ETag? eTag)
         {
             return new ServiceAssociationLink(
                 id,
@@ -1546,7 +1546,7 @@ namespace Azure.ResourceManager.Network.Models
                     link,
                     provisioningState,
                     allowDelete,
-                    (locations ?? new ChangeTrackingList<string>()).ToList(),
+                    (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
                     default),
                 eTag);
         }
@@ -1598,7 +1598,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.BackendAddressPoolData"/> instance for mocking. </returns>
-        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default, IEnumerable<WritableSubResource> loadBalancingRules = default, IEnumerable<WritableSubResource> outboundRules = default, IEnumerable<WritableSubResource> inboundNatRules = default, NetworkProvisioningState? provisioningState = default, int? drainPeriodInSeconds = default, BackendAddressSyncMode? syncMode = default, ResourceIdentifier outboundRuleId = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
+        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IEnumerable<WritableSubResource> loadBalancingRules, IEnumerable<WritableSubResource> outboundRules, IEnumerable<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, BackendAddressSyncMode? syncMode, ResourceIdentifier outboundRuleId, ResourceIdentifier virtualNetworkId, ETag? eTag)
         {
             return new BackendAddressPoolData(
                 id,
@@ -6742,7 +6742,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
-        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, VirtualApplianceSkuProperties nvaSku = default, string addressPrefix = default, string addressPrefixV6 = default, IEnumerable<string> bootStrapConfigurationBlobs = default, IEnumerable<string> cloudInitConfigurationBlobs = default, string cloudInitConfiguration = default, long? virtualApplianceAsn = default, string sshPublicKey = default, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = default, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = default, IEnumerable<InternetIngressPublicIpsProperties> internetIngressPublicIPs = default, IEnumerable<WritableSubResource> virtualApplianceSites = default, IEnumerable<WritableSubResource> virtualApplianceConnections = default, IEnumerable<WritableSubResource> inboundSecurityRules = default, NetworkProvisioningState? provisioningState = default, string deploymentType = default, VirtualApplianceDelegationProperties delegation = default, PartnerManagedResourceProperties partnerManagedResource = default, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default, IEnumerable<NetworkIPVersion> addressFamily = default, string privateIPAddress = default, string privateIPAddressV6 = default, NetworkVirtualApplianceMigrationStatus migrationStatus = default, ResourceIdentifier virtualHubId = default, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, VirtualApplianceSkuProperties nvaSku, string addressPrefix, string addressPrefixV6, IEnumerable<string> bootStrapConfigurationBlobs, IEnumerable<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics, IEnumerable<InternetIngressPublicIpsProperties> internetIngressPublicIPs, IEnumerable<WritableSubResource> virtualApplianceSites, IEnumerable<WritableSubResource> virtualApplianceConnections, IEnumerable<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, IEnumerable<NetworkIPVersion> addressFamily, IPAddress privateIPAddress, string privateIPAddressV6, NetworkVirtualApplianceMigrationStatus migrationStatus, ResourceIdentifier virtualHubId, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -12816,6 +12816,135 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <summary> An IP Configuration of the private endpoint. </summary>
+        /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
+        /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
+        /// <param name="privateIPAddress"></param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. </param>
+        /// <param name="type"></param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointIPConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string groupId = default, string memberName = default, string privateIPAddress = default, string name = default, string @type = default, ETag? eTag = default)
+        {
+            return new PrivateEndpointIPConfiguration(groupId is null && memberName is null ? default : new PrivateEndpointIPConfigurationProperties(groupId, memberName, default, default), name, default, eTag, default);
+        }
+
+        /// <summary> Service Endpoint policy definitions. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
+        /// <param name="service"> Service endpoint name. </param>
+        /// <param name="serviceResources"></param>
+        /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ServiceEndpointPolicyDefinitionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceEndpointPolicyDefinitionData ServiceEndpointPolicyDefinitionData(ResourceIdentifier id = default, string name = default, string @type = default, string description = default, string service = default, IEnumerable<string> serviceResources = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new ServiceEndpointPolicyDefinitionData(
+                id,
+                default,
+                name,
+                @type,
+                description is null && service is null && provisioningState is null ? default : new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, default, provisioningState, default),
+                eTag);
+        }
+
+        /// <summary> ResourceNavigationLink resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="linkedResourceType"></param>
+        /// <param name="link"> Link to the external resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.ResourceNavigationLink"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResourceNavigationLink ResourceNavigationLink(ResourceIdentifier id = default, string name = default, string @type = default, string linkedResourceType = default, ResourceIdentifier link = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new ResourceNavigationLink(
+                id,
+                default,
+                name,
+                @type,
+                link is null && provisioningState is null ? default : new ResourceNavigationLinkFormat(default, link, provisioningState, default),
+                eTag);
+        }
+
+        /// <summary> ServiceAssociationLink resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="linkedResourceType"></param>
+        /// <param name="link"> Link to the external resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
+        /// <param name="allowDelete"> If true, the resource can be deleted. </param>
+        /// <param name="locations"></param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.ServiceAssociationLink"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAssociationLink ServiceAssociationLink(ResourceIdentifier id = default, string name = default, string @type = default, string linkedResourceType = default, ResourceIdentifier link = default, NetworkProvisioningState? provisioningState = default, bool? allowDelete = default, IEnumerable<string> locations = default, ETag? eTag = default)
+        {
+            return new ServiceAssociationLink(
+                id,
+                default,
+                name,
+                @type,
+                link is null && provisioningState is null && allowDelete is null ? default : new ServiceAssociationLinkPropertiesFormat(
+                    default,
+                    link,
+                    provisioningState,
+                    allowDelete,
+                    default,
+                    default),
+                eTag);
+        }
+
+        /// <summary> Pool of backend IP addresses. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"></param>
+        /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
+        /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
+        /// <param name="backendIPConfigurations"> An array of references to IP addresses defined in network interfaces. </param>
+        /// <param name="loadBalancingRules"> An array of references to load balancing rules that use this backend address pool. </param>
+        /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
+        /// <param name="inboundNatRules"> An array of references to inbound NAT rules that use this backend address pool. </param>
+        /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
+        /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
+        /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
+        /// <param name="outboundRuleId"> Resource ID. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.BackendAddressPoolData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackendAddressPoolData BackendAddressPoolData(ResourceIdentifier id = default, string name = default, string @type = default, string location = default, IEnumerable<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default, IEnumerable<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default, IEnumerable<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default, IEnumerable<WritableSubResource> loadBalancingRules = default, IEnumerable<WritableSubResource> outboundRules = default, IEnumerable<WritableSubResource> inboundNatRules = default, NetworkProvisioningState? provisioningState = default, int? drainPeriodInSeconds = default, BackendAddressSyncMode? syncMode = default, ResourceIdentifier outboundRuleId = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
+        {
+            return new BackendAddressPoolData(
+                id,
+                default,
+                name,
+                @type,
+                tunnelInterfaces is null && loadBalancerBackendAddresses is null && backendIPConfigurations is null && loadBalancingRules is null && outboundRuleId is null && outboundRules is null && inboundNatRules is null && provisioningState is null && drainPeriodInSeconds is null && virtualNetworkId is null && syncMode is null ? default : new BackendAddressPoolPropertiesFormat(
+                    default,
+                    (tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>()).ToList(),
+                    (loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>()).ToList(),
+                    (backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>()).ToList(),
+                    (loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    outboundRuleId is null ? default : new NetworkSubResource(outboundRuleId, default),
+                    (outboundRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (inboundNatRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    provisioningState,
+                    drainPeriodInSeconds,
+                    virtualNetworkId is null ? default : new NetworkSubResource(virtualNetworkId, default),
+                    syncMode,
+                    default),
+                eTag);
+        }
+
         /// <summary> Load balancer backend addresses. </summary>
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="loadBalancerFrontendIPConfiguration"></param>
@@ -13758,6 +13887,81 @@ namespace Azure.ResourceManager.Network.Models
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> NetworkVirtualAppliance Resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="nvaSku"> Network Virtual Appliance SKU. </param>
+        /// <param name="addressPrefix"> Address Prefix. </param>
+        /// <param name="addressPrefixV6"> Address Prefix for Dual-Stack NVAs. </param>
+        /// <param name="bootStrapConfigurationBlobs"> BootStrapConfigurationBlobs storage URLs. </param>
+        /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
+        /// <param name="cloudInitConfiguration"> CloudInitConfiguration string in plain text. </param>
+        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
+        /// <param name="sshPublicKey"> Public key for SSH login. </param>
+        /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. This property is not compatible with the NVA deployed in VNets. </param>
+        /// <param name="internetIngressPublicIPs"> List of Resource Uri of Public IPs for Internet Ingress Scenario. </param>
+        /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
+        /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
+        /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </param>
+        /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
+        /// <param name="addressFamily"> The address families to deploy the NVA in. ["IPv4", "IPv6"] deploys a dual-stack NVA (the vHub/VNet must also be dual-stack). ["IPv4"], an empty array, or omitting the field deploys an IPv4-only NVA. The value "IPv6" may only appear in combination with "IPv4"; standalone ["IPv6"] is reserved for future use and is rejected by the service today. </param>
+        /// <param name="privateIPAddress"></param>
+        /// <param name="privateIPAddressV6"> An Internal Load Balancer's HA port frontend IPv6 address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. This field appears in dual-stack NVAs. </param>
+        /// <param name="migrationStatus"> The migration status of the Network Virtual Appliance. </param>
+        /// <param name="virtualHubId"> Resource ID. </param>
+        /// <param name="networkInterfaceConfigurations"></param>
+        /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, VirtualApplianceSkuProperties nvaSku = default, string addressPrefix = default, string addressPrefixV6 = default, IEnumerable<string> bootStrapConfigurationBlobs = default, IEnumerable<string> cloudInitConfigurationBlobs = default, string cloudInitConfiguration = default, long? virtualApplianceAsn = default, string sshPublicKey = default, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = default, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = default, IEnumerable<InternetIngressPublicIpsProperties> internetIngressPublicIPs = default, IEnumerable<WritableSubResource> virtualApplianceSites = default, IEnumerable<WritableSubResource> virtualApplianceConnections = default, IEnumerable<WritableSubResource> inboundSecurityRules = default, NetworkProvisioningState? provisioningState = default, string deploymentType = default, VirtualApplianceDelegationProperties delegation = default, PartnerManagedResourceProperties partnerManagedResource = default, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default, IEnumerable<NetworkIPVersion> addressFamily = default, string privateIPAddress = default, string privateIPAddressV6 = default, NetworkVirtualApplianceMigrationStatus migrationStatus = default, ResourceIdentifier virtualHubId = default, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        {
+            return new NetworkVirtualApplianceData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                nvaSku is null && addressPrefix is null && addressPrefixV6 is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIPs is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && addressFamily is null && privateIPAddressV6 is null && migrationStatus is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                    nvaSku,
+                    addressPrefix,
+                    addressPrefixV6,
+                    (bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>()).ToList(),
+                    virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),
+                    (cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>()).ToList(),
+                    cloudInitConfiguration,
+                    virtualApplianceAsn,
+                    sshPublicKey,
+                    (virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>()).ToList(),
+                    networkInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormatNetworkProfile((networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>()).ToList(), default),
+                    (additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>()).ToList(),
+                    (internetIngressPublicIPs ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>()).ToList(),
+                    (virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    provisioningState,
+                    deploymentType,
+                    delegation,
+                    partnerManagedResource,
+                    (nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>()).ToList(),
+                    (addressFamily ?? new ChangeTrackingList<NetworkIPVersion>()).ToList(),
+                    default,
+                    privateIPAddressV6,
+                    migrationStatus,
+                    default),
+                identity,
+                eTag);
         }
 
         /// <summary> Information on the configuration of flow log and traffic analytics (optional) . </summary>
@@ -15131,7 +15335,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="delegation"> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
-        /// <param name="privateIpAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
+        /// <param name="privateIpAddress"></param>
         /// <param name="virtualHubId"> Resource ID. </param>
         /// <param name="networkInterfaceConfigurations"></param>
         /// <param name="identity"> The service principal that has read access to cloud-init and config blob. </param>
@@ -15147,7 +15351,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIps is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && privateIpAddress is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && internetIngressPublicIps is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     default,
@@ -15170,7 +15374,7 @@ namespace Azure.ResourceManager.Network.Models
                     partnerManagedResource,
                     (nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>()).ToList(),
                     default,
-                    privateIpAddress,
+                    default,
                     default,
                     default,
                     default),
@@ -16878,12 +17082,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
-        /// <param name="privateIPAddress"></param>
+        /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint's subnet. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointIPConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string name = default, string privateEndpointIPConfigurationType = default, ETag? etag = default, string groupId = default, string memberName = default, IPAddress privateIPAddress = default)
         {
-            return new PrivateEndpointIPConfiguration(groupId is null && memberName is null ? default : new PrivateEndpointIPConfigurationProperties(groupId, memberName, default, default), name, privateEndpointIPConfigurationType, etag, default);
+            return new PrivateEndpointIPConfiguration(groupId is null && memberName is null && privateIPAddress is null ? default : new PrivateEndpointIPConfigurationProperties(groupId, memberName, privateIPAddress, default), name, privateEndpointIPConfigurationType, etag, default);
         }
 
         /// <summary> Private link service resource. </summary>
@@ -17154,7 +17358,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="service"> Service endpoint name. </param>
-        /// <param name="serviceResources"></param>
+        /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
         /// <returns> A new <see cref="Network.ServiceEndpointPolicyDefinitionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -17165,7 +17369,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                description is null && service is null && provisioningState is null ? default : new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, default, provisioningState, default),
+                description is null && service is null && serviceResources is null && provisioningState is null ? default : new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, (serviceResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), provisioningState, default),
                 etag);
         }
 
@@ -17333,7 +17537,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"></param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="linkedResourceType"></param>
+        /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
         /// <returns> A new <see cref="Models.ResourceNavigationLink"/> instance for mocking. </returns>
@@ -17345,7 +17549,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                link is null && provisioningState is null ? default : new ResourceNavigationLinkFormat(default, link, provisioningState, default),
+                linkedResourceType is null && link is null && provisioningState is null ? default : new ResourceNavigationLinkFormat(linkedResourceType, link, provisioningState, default),
                 etag);
         }
 
@@ -17354,11 +17558,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"></param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="linkedResourceType"></param>
+        /// <param name="linkedResourceType"> Resource type of the linked resource. </param>
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service association link resource. </param>
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
-        /// <param name="locations"></param>
+        /// <param name="locations"> A list of locations. </param>
         /// <returns> A new <see cref="Models.ServiceAssociationLink"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceAssociationLink ServiceAssociationLink(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, ResourceType? linkedResourceType = default, ResourceIdentifier link = default, NetworkProvisioningState? provisioningState = default, bool? allowDelete = default, IEnumerable<AzureLocation> locations = default)
@@ -17368,12 +17572,12 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                link is null && provisioningState is null && allowDelete is null ? default : new ServiceAssociationLinkPropertiesFormat(
-                    default,
+                linkedResourceType is null && link is null && provisioningState is null && allowDelete is null && locations is null ? default : new ServiceAssociationLinkPropertiesFormat(
+                    linkedResourceType,
                     link,
                     provisioningState,
                     allowDelete,
-                    default,
+                    (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
                     default),
                 etag);
         }
@@ -17415,7 +17619,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"></param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"></param>
+        /// <param name="location"> The location of the backend address pool. </param>
         /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
         /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
         /// <param name="backendIPConfigurations"> An array of references to IP addresses defined in network interfaces. </param>
@@ -17436,8 +17640,8 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                tunnelInterfaces is null && loadBalancerBackendAddresses is null && backendIPConfigurations is null && loadBalancingRules is null && outboundRuleId is null && outboundRules is null && inboundNatRules is null && provisioningState is null && drainPeriodInSeconds is null && virtualNetworkId is null && syncMode is null ? default : new BackendAddressPoolPropertiesFormat(
-                    default,
+                location is null && tunnelInterfaces is null && loadBalancerBackendAddresses is null && backendIPConfigurations is null && loadBalancingRules is null && outboundRuleId is null && outboundRules is null && inboundNatRules is null && provisioningState is null && drainPeriodInSeconds is null && virtualNetworkId is null && syncMode is null ? default : new BackendAddressPoolPropertiesFormat(
+                    location,
                     (tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>()).ToList(),
                     (loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>()).ToList(),
                     (backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>()).ToList(),
@@ -19897,7 +20101,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="delegation"> The delegation for the Virtual Appliance. Only appliable for SaaS NVA. </param>
         /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
-        /// <param name="privateIPAddress"></param>
+        /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
         /// <returns> A new <see cref="Network.NetworkVirtualApplianceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkVirtualApplianceData NetworkVirtualApplianceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ETag? etag = default, VirtualApplianceSkuProperties nvaSku = default, string addressPrefix = default, IEnumerable<string> bootStrapConfigurationBlobs = default, ResourceIdentifier virtualHubId = default, IEnumerable<string> cloudInitConfigurationBlobs = default, string cloudInitConfiguration = default, long? virtualApplianceAsn = default, string sshPublicKey = default, IEnumerable<VirtualApplianceNicProperties> virtualApplianceNics = default, IEnumerable<VirtualApplianceNetworkInterfaceConfiguration> networkInterfaceConfigurations = default, IEnumerable<VirtualApplianceAdditionalNicProperties> additionalNics = default, IEnumerable<WritableSubResource> internetIngressPublicIPs = default, IEnumerable<WritableSubResource> virtualApplianceSites = default, IEnumerable<WritableSubResource> virtualApplianceConnections = default, IEnumerable<WritableSubResource> inboundSecurityRules = default, NetworkProvisioningState? provisioningState = default, string deploymentType = default, VirtualApplianceDelegationProperties delegation = default, PartnerManagedResourceProperties partnerManagedResource = default, IEnumerable<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default, IPAddress privateIPAddress = default)
@@ -19909,7 +20113,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null ? default : new NetworkVirtualAppliancePropertiesFormat(
+                nvaSku is null && addressPrefix is null && bootStrapConfigurationBlobs is null && virtualHubId is null && cloudInitConfigurationBlobs is null && cloudInitConfiguration is null && virtualApplianceAsn is null && sshPublicKey is null && virtualApplianceNics is null && networkInterfaceConfigurations is null && additionalNics is null && virtualApplianceSites is null && virtualApplianceConnections is null && inboundSecurityRules is null && provisioningState is null && deploymentType is null && delegation is null && partnerManagedResource is null && nvaInterfaceConfigurations is null && privateIPAddress is null ? default : new NetworkVirtualAppliancePropertiesFormat(
                     nvaSku,
                     addressPrefix,
                     default,
@@ -19932,7 +20136,7 @@ namespace Azure.ResourceManager.Network.Models
                     partnerManagedResource,
                     (nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>()).ToList(),
                     default,
-                    default,
+                    privateIPAddress,
                     default,
                     default,
                     default),
@@ -22676,7 +22880,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"></param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"></param>
+        /// <param name="location"> The location of the backend address pool. </param>
         /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
         /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
         /// <param name="backendIPConfigurations"> An array of references to IP addresses defined in network interfaces. </param>
@@ -22696,8 +22900,8 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                tunnelInterfaces is null && loadBalancerBackendAddresses is null && backendIPConfigurations is null && loadBalancingRules is null && outboundRuleId is null && outboundRules is null && inboundNatRules is null && provisioningState is null && drainPeriodInSeconds is null && virtualNetworkId is null ? default : new BackendAddressPoolPropertiesFormat(
-                    default,
+                location is null && tunnelInterfaces is null && loadBalancerBackendAddresses is null && backendIPConfigurations is null && loadBalancingRules is null && outboundRuleId is null && outboundRules is null && inboundNatRules is null && provisioningState is null && drainPeriodInSeconds is null && virtualNetworkId is null ? default : new BackendAddressPoolPropertiesFormat(
+                    location,
                     (tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>()).ToList(),
                     (loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>()).ToList(),
                     (backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>()).ToList(),

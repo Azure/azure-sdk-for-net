@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Describes the source of connection monitor. </summary>
     public partial class ConnectionMonitorSource : ProvisionableConstruct
     {
-        private BicepValue<string> _resourceId;
+        private BicepValue<ResourceIdentifier> _resourceId;
         private BicepValue<int> _port;
 
         /// <summary> Creates a new ConnectionMonitorSource. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" }, isRequired: true);
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isRequired: true);
             _port = DefineProperty<int>(nameof(Port), new string[] { "port" });
             DefineAdditionalProperties();
         }

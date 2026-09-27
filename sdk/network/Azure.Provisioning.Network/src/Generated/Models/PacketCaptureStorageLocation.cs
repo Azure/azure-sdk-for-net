@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> The storage location for a packet capture session. </summary>
     public partial class PacketCaptureStorageLocation : ProvisionableConstruct
     {
-        private BicepValue<string> _storageId;
+        private BicepValue<ResourceIdentifier> _storageId;
         private BicepValue<string> _storagePath;
         private BicepValue<string> _filePath;
         private BicepValue<string> _localPath;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the StorageId. </summary>
-        public BicepValue<string> StorageId
+        public BicepValue<ResourceIdentifier> StorageId
         {
             get
             {
@@ -87,7 +88,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _storageId = DefineProperty<string>(nameof(StorageId), new string[] { "storageId" });
+            _storageId = DefineProperty<ResourceIdentifier>(nameof(StorageId), new string[] { "storageId" });
             _storagePath = DefineProperty<string>(nameof(StoragePath), new string[] { "storagePath" });
             _filePath = DefineProperty<string>(nameof(FilePath), new string[] { "filePath" });
             _localPath = DefineProperty<string>(nameof(LocalPath), new string[] { "localPath" });

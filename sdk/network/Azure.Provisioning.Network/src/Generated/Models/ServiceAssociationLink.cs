@@ -65,7 +65,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the LinkedResourceType. </summary>
-        public BicepValue<string> LinkedResourceType
+        public BicepValue<ResourceType> LinkedResourceType
         {
             get
             {
@@ -101,7 +101,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Locations. </summary>
-        public BicepList<string> Locations
+        public BicepList<AzureLocation> Locations
         {
             get
             {

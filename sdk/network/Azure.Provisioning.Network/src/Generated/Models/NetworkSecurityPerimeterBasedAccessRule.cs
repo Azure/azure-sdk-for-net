@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -15,8 +16,8 @@ namespace Azure.Provisioning.Network
     public partial class NetworkSecurityPerimeterBasedAccessRule : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
-        private BicepValue<string> _perimeterGuid;
-        private BicepValue<string> _location;
+        private BicepValue<Guid> _perimeterGuid;
+        private BicepValue<AzureLocation> _location;
 
         /// <summary> Creates a new NetworkSecurityPerimeterBasedAccessRule. </summary>
         public NetworkSecurityPerimeterBasedAccessRule()
@@ -34,7 +35,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the PerimeterGuid. </summary>
-        public BicepValue<string> PerimeterGuid
+        public BicepValue<Guid> PerimeterGuid
         {
             get
             {
@@ -44,7 +45,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -58,8 +59,8 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _perimeterGuid = DefineProperty<string>(nameof(PerimeterGuid), new string[] { "perimeterGuid" }, isOutput: true);
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" }, isOutput: true);
+            _perimeterGuid = DefineProperty<Guid>(nameof(PerimeterGuid), new string[] { "perimeterGuid" }, isOutput: true);
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

@@ -76,7 +76,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the LinkedResourceType. </summary>
-        public BicepValue<string> LinkedResourceType
+        public BicepValue<ResourceType> LinkedResourceType
         {
             get
             {

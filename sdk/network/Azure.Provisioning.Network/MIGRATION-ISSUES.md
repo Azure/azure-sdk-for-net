@@ -4,7 +4,7 @@
 
 - SDK PR: [#63070](https://github.com/Azure/azure-sdk-for-net/pull/63070)
 - Spec PR: [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
-- Spec commit: `6fbbece49d73e6fb44324d825f282d377b5a3978` (shared with management)
+- Spec commit: `0aa6bd92d3113c57472f0be6ac307383f139fd0e` (shared with management)
 - Provisioning emitter: `@azure-typespec/http-client-csharp-provisioning@1.0.0-alpha.20260916.3`
 - TypeSpec compiler: `1.15.0`
 - API versions: Network `2025-05-01`; Compute `2018-10-01`
@@ -18,9 +18,10 @@ The package is **not release-ready**.
 |---|---|
 | Provisioning generation | Succeeds from the shared spec commit. |
 | Provisioning compilation and API export | Pass for `netstandard2.0`, `net8.0`, and `net10.0`; API listings are current. |
-| Provisioning ApiCompat | 133 diagnostics per framework; normal package builds fail this gate. |
+| Provisioning ApiCompat | 107 diagnostics per framework; normal package builds fail this gate. |
 | Standard test project | Blocked by the read-only `NetworkSecurityGroup.Id` assignment listed below. |
 | Management compilation, API export, and ApiCompat | Pass; no active management ApiCompat diagnostics. |
+| Management strong-type regeneration | Not a no-op: seven internal property types change and six model-factory overloads are added; existing public signatures are retained. |
 | Recommended property names | `IsPrimary`, `DisableTraceRoute`, and `ConfigurationPolicyGroups` match management. Agreed naming exceptions are listed below. |
 
 ## Remaining API compatibility issues
@@ -31,9 +32,9 @@ three frameworks.
 | Diagnostic | Count | Meaning |
 |---|---:|---|
 | `CP0001` | 0 | Removed public types |
-| `CP0002` | 109 | Removed or incompatible public member signatures |
+| `CP0002` | 83 | Removed or incompatible public member signatures |
 | `CP0011` | 24 | Changed enum numeric values |
-| **Total** | **133** | |
+| **Total** | **107** | |
 
 A changed property type can produce missing-getter and missing-setter
 diagnostics even when the property name still exists. Diagnostic counts
@@ -43,11 +44,11 @@ therefore differ from logical member counts.
 
 | Category | Diagnostics | Affected members |
 |---|---:|---:|
-| Property type changed | 32 | 29 properties |
+| Property type changed | 3 | 3 properties |
 | Property missing | 5 | 3 properties |
-| Property became read-only | 48 | 48 properties |
+| Property became read-only | 51 | 51 properties |
 | Enum member missing | 24 | 24 fields |
-| **Total** | **109** | **104** |
+| **Total** | **83** | **81** |
 
 Missing properties:
 
@@ -60,7 +61,6 @@ Changed property types:
 
 | Category | Diagnostics | Properties | Details |
 |---|---:|---:|---|
-| Strong type became `string` | 29 | 26 | Includes `ResourceIdentifier`, `ResourceType`, `BinaryData`, `Guid`, `AzureLocation`, `IPAddress`, and `Uri` values or collection elements. |
 | Other type changes | 3 | 3 | `BicepList<string>` to `BicepList<int>`, `BicepValue<string>` to `BicepValue<double>`, and `ManagedServiceIdentity` to `InternalNetworkManagedServiceIdentity`. |
 
 ### Changed enum numeric values
@@ -75,6 +75,39 @@ Changed property types:
 | `IPsecIntegrity` | 2 |
 
 ## Compatibility customizations
+
+### Strong property types
+
+C# `alternateType` customizations restore all 26 provisioning properties whose
+strong types or collection element types had become `string`. The restored
+types are `ResourceIdentifier`, `ResourceType`, `AzureLocation`, `Guid`,
+`IPAddress`, `Uri`, and `BinaryData`. The three `BinaryData` properties use
+TypeSpec `unknown`, matching the management library's existing raw-JSON
+representation rather than introducing byte/base64 encoding.
+
+The exact ApiCompat delta is 26 removed diagnostics per framework, with none
+added. Three setter diagnostics formerly grouped with these type changes remain:
+`ResourceNavigationLink.LinkedResourceType`, `ServiceAssociationLink.LinkedResourceType`,
+and `ServiceAssociationLink.Locations`. They are now counted in the read-only
+category; this change restores their types, not their missing setters.
+
+The management public property types were already strong, but seven underlying
+internal properties were still string-based. Shared TypeSpec customizations
+therefore also change the following management internals and their serializers:
+
+| Internal management model | Changed properties |
+|---|---|
+| `BackendAddressPoolPropertiesFormat` | `Location` |
+| `NetworkVirtualAppliancePropertiesFormat` | `PrivateIPAddress` |
+| `PrivateEndpointIPConfigurationProperties` | `PrivateIPAddress` |
+| `ResourceNavigationLinkFormat` | `LinkedResourceType` |
+| `ServiceAssociationLinkPropertiesFormat` | `LinkedResourceType`, `Locations` |
+| `ServiceEndpointPolicyDefinitionPropertiesFormat` | `ServiceResources` |
+
+`ArmNetworkModelFactory` gains six corresponding strongly typed overloads while
+retaining the old overloads. Management ApiCompat passes, but the expectation of
+unchanged management generated code and API output is not met. Existing
+management custom compatibility members have not been changed.
 
 ### Resource type compatibility
 

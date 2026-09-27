@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Cross tenant scopes. </summary>
     public partial class CrossTenantScopes : ProvisionableConstruct
     {
-        private BicepValue<string> _tenantId;
+        private BicepValue<Guid> _tenantId;
         private BicepList<string> _managementGroups;
         private BicepList<string> _subscriptions;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the TenantId. </summary>
-        public BicepValue<string> TenantId
+        public BicepValue<Guid> TenantId
         {
             get
             {
@@ -56,7 +57,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _tenantId = DefineProperty<string>(nameof(TenantId), new string[] { "tenantId" }, isOutput: true);
+            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" }, isOutput: true);
             _managementGroups = DefineListProperty<string>(nameof(ManagementGroups), new string[] { "managementGroups" }, isOutput: true);
             _subscriptions = DefineListProperty<string>(nameof(Subscriptions), new string[] { "subscriptions" }, isOutput: true);
             DefineAdditionalProperties();

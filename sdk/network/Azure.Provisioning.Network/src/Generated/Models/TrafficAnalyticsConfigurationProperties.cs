@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _enabled;
         private BicepValue<string> _workspaceId;
         private BicepValue<string> _workspaceRegion;
-        private BicepValue<string> _workspaceResourceId;
+        private BicepValue<ResourceIdentifier> _workspaceResourceId;
         private BicepValue<int> _trafficAnalyticsIntervalInMinutes;
 
         /// <summary> Creates a new TrafficAnalyticsConfigurationProperties. </summary>
@@ -70,7 +71,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the WorkspaceResourceId. </summary>
-        public BicepValue<string> WorkspaceResourceId
+        public BicepValue<ResourceIdentifier> WorkspaceResourceId
         {
             get
             {
@@ -106,7 +107,7 @@ namespace Azure.Provisioning.Network
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _workspaceId = DefineProperty<string>(nameof(WorkspaceId), new string[] { "workspaceId" });
             _workspaceRegion = DefineProperty<string>(nameof(WorkspaceRegion), new string[] { "workspaceRegion" });
-            _workspaceResourceId = DefineProperty<string>(nameof(WorkspaceResourceId), new string[] { "workspaceResourceId" });
+            _workspaceResourceId = DefineProperty<ResourceIdentifier>(nameof(WorkspaceResourceId), new string[] { "workspaceResourceId" });
             _trafficAnalyticsIntervalInMinutes = DefineProperty<int>(nameof(TrafficAnalyticsIntervalInMinutes), new string[] { "trafficAnalyticsInterval" });
             DefineAdditionalProperties();
         }

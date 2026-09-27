@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,8 +14,8 @@ namespace Azure.Provisioning.Network
     /// <summary> Hub Item. </summary>
     public partial class ConnectivityHub : ProvisionableConstruct
     {
-        private BicepValue<string> _resourceId;
-        private BicepValue<string> _resourceType;
+        private BicepValue<ResourceIdentifier> _resourceId;
+        private BicepValue<ResourceType> _resourceType;
 
         /// <summary> Creates a new ConnectivityHub. </summary>
         public ConnectivityHub()
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -37,7 +38,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ResourceType. </summary>
-        public BicepValue<string> ResourceType
+        public BicepValue<ResourceType> ResourceType
         {
             get
             {
@@ -55,8 +56,8 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" });
-            _resourceType = DefineProperty<string>(nameof(ResourceType), new string[] { "resourceType" });
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
+            _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "resourceType" });
             DefineAdditionalProperties();
         }
 

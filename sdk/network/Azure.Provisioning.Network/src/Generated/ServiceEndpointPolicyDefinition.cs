@@ -128,7 +128,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the ServiceResources. </summary>
-        public BicepList<string> ServiceResources
+        public BicepList<ResourceIdentifier> ServiceResources
         {
             get
             {

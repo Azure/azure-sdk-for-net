@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Properties of ResourceNavigationLink. </summary>
     internal partial class ResourceNavigationLinkFormat : ProvisionableConstruct
     {
-        private BicepValue<string> _linkedResourceType;
+        private BicepValue<ResourceType> _linkedResourceType;
         private BicepValue<ResourceIdentifier> _link;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the LinkedResourceType. </summary>
-        public BicepValue<string> LinkedResourceType
+        public BicepValue<ResourceType> LinkedResourceType
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _linkedResourceType = DefineProperty<string>(nameof(LinkedResourceType), new string[] { "linkedResourceType" });
+            _linkedResourceType = DefineProperty<ResourceType>(nameof(LinkedResourceType), new string[] { "linkedResourceType" });
             _link = DefineProperty<ResourceIdentifier>(nameof(Link), new string[] { "link" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _groupId;
         private BicepValue<string> _memberName;
-        private BicepValue<string> _privateIPAddress;
+        private BicepValue<IPAddress> _privateIPAddress;
 
         /// <summary> Creates a new PrivateEndpointIPConfigurationProperties. </summary>
         public PrivateEndpointIPConfigurationProperties()
@@ -53,7 +54,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the PrivateIPAddress. </summary>
-        public BicepValue<string> PrivateIPAddress
+        public BicepValue<IPAddress> PrivateIPAddress
         {
             get
             {
@@ -73,7 +74,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _groupId = DefineProperty<string>(nameof(GroupId), new string[] { "groupId" });
             _memberName = DefineProperty<string>(nameof(MemberName), new string[] { "memberName" });
-            _privateIPAddress = DefineProperty<string>(nameof(PrivateIPAddress), new string[] { "privateIPAddress" });
+            _privateIPAddress = DefineProperty<IPAddress>(nameof(PrivateIPAddress), new string[] { "privateIPAddress" });
             DefineAdditionalProperties();
         }
 
