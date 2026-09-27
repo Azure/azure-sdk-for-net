@@ -1280,7 +1280,6 @@
     {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
-        "azprovision",
         "cias",
         "droppeded",
         "dtcs",
