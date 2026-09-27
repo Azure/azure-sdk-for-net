@@ -108,6 +108,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the EntraJwtValidationConfigId. </summary>
+        public BicepValue<ResourceIdentifier> EntraJwtValidationConfigId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.EntraJwtValidationConfigId = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

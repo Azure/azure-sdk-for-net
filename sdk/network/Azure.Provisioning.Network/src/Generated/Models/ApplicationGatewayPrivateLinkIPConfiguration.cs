@@ -108,6 +108,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the IsPrimary. </summary>
+        public BicepValue<bool> IsPrimary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPrimary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
+                }
+                Properties.IsPrimary = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

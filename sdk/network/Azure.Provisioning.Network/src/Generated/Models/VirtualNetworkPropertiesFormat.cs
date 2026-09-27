@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
-        internal VirtualNetworkEncryption Encryption
+        public VirtualNetworkEncryption Encryption
         {
             get
             {
@@ -288,23 +288,6 @@ namespace Azure.Provisioning.Network
                     DdosProtectionPlan = new NetworkSubResource();
                 }
                 DdosProtectionPlan.Id = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Enforcement. </summary>
-        public BicepValue<VirtualNetworkEncryptionEnforcement> EncryptionEnforcement
-        {
-            get
-            {
-                return Encryption is null ? default : Encryption.Enforcement;
-            }
-            set
-            {
-                if (Encryption is null)
-                {
-                    Encryption = new VirtualNetworkEncryption();
-                }
-                Encryption.Enforcement = value;
             }
         }
 

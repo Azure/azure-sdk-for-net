@@ -114,12 +114,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ConfigurationPolicyGroupAssociations. </summary>
-        public BicepList<WritableSubResource> ConfigurationPolicyGroupAssociations
+        /// <summary> Gets or sets the ConfigurationPolicyGroups. </summary>
+        public BicepList<WritableSubResource> ConfigurationPolicyGroups
         {
             get
             {
-                return Properties is null ? default : Properties.ConfigurationPolicyGroupAssociations;
+                return Properties is null ? default : Properties.ConfigurationPolicyGroups;
             }
             set
             {
@@ -127,7 +127,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new P2SConnectionConfigurationProperties();
                 }
-                Properties.ConfigurationPolicyGroupAssociations = value;
+                Properties.ConfigurationPolicyGroups = value;
             }
         }
 

@@ -150,6 +150,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Destination. </summary>
+        public RoutingRuleRouteDestination Destination
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Destination;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRulePropertiesFormat();
+                }
+                Properties.Destination = value;
+            }
+        }
+
         /// <summary> Gets or sets the NextHop. </summary>
         public RoutingRuleNextHop NextHop
         {
@@ -164,23 +181,6 @@ namespace Azure.Provisioning.Network
                     Properties = new RoutingRulePropertiesFormat();
                 }
                 Properties.NextHop = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DestinationAddress. </summary>
-        public BicepValue<string> DestinationAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DestinationAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RoutingRulePropertiesFormat();
-                }
-                Properties.DestinationAddress = value;
             }
         }
 

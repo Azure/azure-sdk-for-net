@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private ContainerNetworkInterfaceIPConfigurationPropertiesFormat _properties;
         private BicepValue<string> _name;
+        private BicepValue<string> _containerNetworkInterfaceIpConfigurationType;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new ContainerNetworkInterfaceIPConfiguration. </summary>
@@ -40,6 +41,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _name;
+            }
+        }
+
+        /// <summary> Gets the ContainerNetworkInterfaceIpConfigurationType. </summary>
+        public BicepValue<string> ContainerNetworkInterfaceIpConfigurationType
+        {
+            get
+            {
+                Initialize();
+                return _containerNetworkInterfaceIpConfigurationType;
             }
         }
 
@@ -68,6 +79,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ContainerNetworkInterfaceIPConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _containerNetworkInterfaceIpConfigurationType = DefineProperty<string>(nameof(ContainerNetworkInterfaceIpConfigurationType), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

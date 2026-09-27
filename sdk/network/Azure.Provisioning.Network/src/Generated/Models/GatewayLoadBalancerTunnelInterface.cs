@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<int> _port;
         private BicepValue<int> _identifier;
         private BicepValue<GatewayLoadBalancerTunnelProtocol> _protocol;
+        private BicepValue<GatewayLoadBalancerTunnelInterfaceType> _interfaceType;
 
         /// <summary> Creates a new GatewayLoadBalancerTunnelInterface. </summary>
         public GatewayLoadBalancerTunnelInterface()
@@ -67,6 +68,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the InterfaceType. </summary>
+        public BicepValue<GatewayLoadBalancerTunnelInterfaceType> InterfaceType
+        {
+            get
+            {
+                Initialize();
+                return _interfaceType;
+            }
+            set
+            {
+                Initialize();
+                _interfaceType.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for GatewayLoadBalancerTunnelInterface. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -74,6 +90,7 @@ namespace Azure.Provisioning.Network
             _port = DefineProperty<int>(nameof(Port), new string[] { "port" });
             _identifier = DefineProperty<int>(nameof(Identifier), new string[] { "identifier" });
             _protocol = DefineProperty<GatewayLoadBalancerTunnelProtocol>(nameof(Protocol), new string[] { "protocol" });
+            _interfaceType = DefineProperty<GatewayLoadBalancerTunnelInterfaceType>(nameof(InterfaceType), new string[] { "type" });
             DefineAdditionalProperties();
         }
 

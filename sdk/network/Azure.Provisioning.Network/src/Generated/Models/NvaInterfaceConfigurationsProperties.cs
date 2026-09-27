@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class NvaInterfaceConfigurationsProperties : ProvisionableConstruct
     {
         private NvaInVnetSubnetReferenceProperties _subnet;
+        private BicepList<NvaNicType> _propertiesType;
         private BicepValue<string> _name;
 
         /// <summary> Creates a new NvaInterfaceConfigurationsProperties. </summary>
@@ -34,6 +35,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _subnet, value);
+            }
+        }
+
+        /// <summary> Gets or sets the PropertiesType. </summary>
+        public BicepList<NvaNicType> PropertiesType
+        {
+            get
+            {
+                Initialize();
+                return _propertiesType;
+            }
+            set
+            {
+                Initialize();
+                _propertiesType.Assign(value);
             }
         }
 
@@ -74,6 +90,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _subnet = DefineModelProperty<NvaInVnetSubnetReferenceProperties>(nameof(Subnet), new string[] { "subnet" });
+            _propertiesType = DefineListProperty<NvaNicType>(nameof(PropertiesType), new string[] { "type" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();
         }

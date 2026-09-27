@@ -320,6 +320,40 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the PrivateEndpointNetworkPolicy. </summary>
+        public BicepValue<VirtualNetworkPrivateEndpointNetworkPolicy> PrivateEndpointNetworkPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.PrivateEndpointNetworkPolicy = value;
+            }
+        }
+
+        /// <summary> Gets or sets the PrivateLinkServiceNetworkPolicy. </summary>
+        public BicepValue<VirtualNetworkPrivateLinkServiceNetworkPolicy> PrivateLinkServiceNetworkPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.PrivateLinkServiceNetworkPolicy = value;
+            }
+        }
+
         /// <summary> Gets or sets the ApplicationGatewayIPConfigurations. </summary>
         public BicepList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations
         {

@@ -357,6 +357,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ExpressRouteConnectionId. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteConnectionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteConnectionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
+                }
+                Properties.ExpressRouteConnectionId = value;
+            }
+        }
+
         /// <summary> Gets or sets the Connections. </summary>
         public BicepList<ExpressRouteCircuitConnection> Connections
         {

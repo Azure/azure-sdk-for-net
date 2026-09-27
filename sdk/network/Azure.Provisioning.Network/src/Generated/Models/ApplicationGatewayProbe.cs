@@ -124,6 +124,40 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the IntervalInSeconds. </summary>
+        public BicepValue<int> IntervalInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntervalInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.IntervalInSeconds = value;
+            }
+        }
+
+        /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        public BicepValue<int> TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.TimeoutInSeconds = value;
+            }
+        }
+
         /// <summary> Gets or sets the UnhealthyThreshold. </summary>
         public BicepValue<int> UnhealthyThreshold
         {
@@ -206,6 +240,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
                 Properties.Match = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsProbeProxyProtocolHeaderEnabled. </summary>
+        public BicepValue<bool> IsProbeProxyProtocolHeaderEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsProbeProxyProtocolHeaderEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.IsProbeProxyProtocolHeaderEnabled = value;
             }
         }
 

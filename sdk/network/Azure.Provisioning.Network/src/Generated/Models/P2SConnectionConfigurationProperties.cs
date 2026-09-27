@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private VirtualNetworkAddressSpace _vpnClientAddressPool;
         private RoutingConfiguration _routingConfiguration;
         private BicepValue<bool> _enableInternetSecurity;
-        private BicepList<WritableSubResource> _configurationPolicyGroupAssociations;
+        private BicepList<WritableSubResource> _configurationPolicyGroups;
         private BicepList<VpnServerConfigurationPolicyGroup> _previousConfigurationPolicyGroupAssociations;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
@@ -71,18 +71,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ConfigurationPolicyGroupAssociations. </summary>
-        public BicepList<WritableSubResource> ConfigurationPolicyGroupAssociations
+        /// <summary> Gets or sets the ConfigurationPolicyGroups. </summary>
+        public BicepList<WritableSubResource> ConfigurationPolicyGroups
         {
             get
             {
                 Initialize();
-                return _configurationPolicyGroupAssociations;
+                return _configurationPolicyGroups;
             }
             set
             {
                 Initialize();
-                _configurationPolicyGroupAssociations.Assign(value);
+                _configurationPolicyGroups.Assign(value);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.Network
             _vpnClientAddressPool = DefineModelProperty<VirtualNetworkAddressSpace>(nameof(VpnClientAddressPool), new string[] { "vpnClientAddressPool" });
             _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
-            _configurationPolicyGroupAssociations = DefineListProperty<WritableSubResource>(nameof(ConfigurationPolicyGroupAssociations), new string[] { "configurationPolicyGroupAssociations" });
+            _configurationPolicyGroups = DefineListProperty<WritableSubResource>(nameof(ConfigurationPolicyGroups), new string[] { "configurationPolicyGroupAssociations" });
             _previousConfigurationPolicyGroupAssociations = DefineListProperty<VpnServerConfigurationPolicyGroup>(nameof(PreviousConfigurationPolicyGroupAssociations), new string[] { "previousConfigurationPolicyGroupAssociations" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();

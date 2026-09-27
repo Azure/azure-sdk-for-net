@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private PrivateEndpointIPConfigurationProperties _properties;
         private BicepValue<string> _name;
+        private BicepValue<string> _privateEndpointIPConfigurationType;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new PrivateEndpointIPConfiguration. </summary>
@@ -50,6 +51,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the PrivateEndpointIPConfigurationType. </summary>
+        public BicepValue<string> PrivateEndpointIPConfigurationType
+        {
+            get
+            {
+                Initialize();
+                return _privateEndpointIPConfigurationType;
             }
         }
 
@@ -120,6 +131,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<PrivateEndpointIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _privateEndpointIPConfigurationType = DefineProperty<string>(nameof(PrivateEndpointIPConfigurationType), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

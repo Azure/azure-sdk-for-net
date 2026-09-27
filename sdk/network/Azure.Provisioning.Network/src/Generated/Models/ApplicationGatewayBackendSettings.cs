@@ -109,6 +109,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the TimeoutInSeconds. </summary>
+        public BicepValue<int> TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.TimeoutInSeconds = value;
+            }
+        }
+
         /// <summary> Gets or sets the TrustedRootCertificates. </summary>
         public BicepList<WritableSubResource> TrustedRootCertificates
         {
@@ -157,6 +174,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
                 }
                 Properties.PickHostNameFromBackendAddress = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IsL4ClientIPPreservationEnabled. </summary>
+        public BicepValue<bool> IsL4ClientIPPreservationEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsL4ClientIPPreservationEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.IsL4ClientIPPreservationEnabled = value;
             }
         }
 

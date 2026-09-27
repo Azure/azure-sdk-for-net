@@ -192,7 +192,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the RemoteVirtualNetworkEncryption. </summary>
-        internal VirtualNetworkEncryption RemoteVirtualNetworkEncryption
+        public VirtualNetworkEncryption RemoteVirtualNetworkEncryption
         {
             get
             {
@@ -340,15 +340,6 @@ namespace Azure.Provisioning.Network
                     RemoteVirtualNetwork = new NetworkSubResource();
                 }
                 RemoteVirtualNetwork.Id = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Enforcement. </summary>
-        public BicepValue<VirtualNetworkEncryptionEnforcement> RemoteVirtualNetworkEncryptionEnforcement
-        {
-            get
-            {
-                return RemoteVirtualNetworkEncryption is null ? default : RemoteVirtualNetworkEncryption.Enforcement;
             }
         }
 

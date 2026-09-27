@@ -139,6 +139,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the VirtualHubId. </summary>
+        public BicepValue<ResourceIdentifier> VirtualHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHubId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                Properties.VirtualHubId = value;
+            }
+        }
+
         /// <summary> Gets or sets the AllowNonVirtualWanTraffic. </summary>
         public BicepValue<bool> AllowNonVirtualWanTraffic
         {

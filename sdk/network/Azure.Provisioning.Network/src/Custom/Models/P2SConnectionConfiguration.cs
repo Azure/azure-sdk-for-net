@@ -9,13 +9,13 @@ namespace Azure.Provisioning.Network;
 
 public partial class P2SConnectionConfiguration
 {
-    // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
-    /// <inheritdoc cref="ConfigurationPolicyGroupAssociations"/>
+    // Preserve the previous TypeSpec name while recommending the restored generated name used by management.
+    /// <inheritdoc cref="ConfigurationPolicyGroups"/>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroupAssociations instead.")]
-    public BicepList<WritableSubResource> ConfigurationPolicyGroups
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use ConfigurationPolicyGroups instead.")]
+    public BicepList<WritableSubResource> ConfigurationPolicyGroupAssociations
     {
-        get => ConfigurationPolicyGroupAssociations;
-        set => ConfigurationPolicyGroupAssociations = value;
+        get => ConfigurationPolicyGroups;
+        set => ConfigurationPolicyGroups = value;
     }
 }

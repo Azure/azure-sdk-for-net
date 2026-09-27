@@ -51,23 +51,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the IsPrimary. </summary>
-        public BicepValue<bool> VirtualApplianceIPIsPrimary
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IsPrimary;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualApplianceIPConfigurationProperties();
-                }
-                Properties.IsPrimary = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for VirtualApplianceIPConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {

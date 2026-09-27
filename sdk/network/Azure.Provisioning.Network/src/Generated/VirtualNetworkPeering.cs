@@ -247,6 +247,15 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the RemoteVirtualNetworkEncryption. </summary>
+        public VirtualNetworkEncryption RemoteVirtualNetworkEncryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteVirtualNetworkEncryption;
+            }
+        }
+
         /// <summary> Gets or sets the PeeringState. </summary>
         public BicepValue<VirtualNetworkPeeringState> PeeringState
         {
@@ -324,6 +333,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AreCompleteVnetsPeered. </summary>
+        public BicepValue<bool> AreCompleteVnetsPeered
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AreCompleteVnetsPeered;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPeeringPropertiesFormat();
+                }
+                Properties.AreCompleteVnetsPeered = value;
+            }
+        }
+
         /// <summary> Gets or sets the EnableOnlyIPv6Peering. </summary>
         public BicepValue<bool> EnableOnlyIPv6Peering
         {
@@ -389,19 +415,6 @@ namespace Azure.Provisioning.Network
                     Properties = new VirtualNetworkPeeringPropertiesFormat();
                 }
                 Properties.RemoteVirtualNetworkId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Enforcement. </summary>
-        public BicepValue<VirtualNetworkEncryptionEnforcement> RemoteVirtualNetworkEncryptionEnforcement
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPeeringPropertiesFormat();
-                }
-                return Properties.RemoteVirtualNetworkEncryptionEnforcement;
             }
         }
 

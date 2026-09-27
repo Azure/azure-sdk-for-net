@@ -272,6 +272,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Encryption. </summary>
+        public VirtualNetworkEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Gets or sets the IPAllocations. </summary>
         public BicepList<NetworkSubResource> IPAllocations
         {
@@ -299,6 +316,23 @@ namespace Azure.Provisioning.Network
                     Properties = new VirtualNetworkPropertiesFormat();
                 }
                 return Properties.FlowLogs;
+            }
+        }
+
+        /// <summary> Gets or sets the PrivateEndpointVnetPolicy. </summary>
+        public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointVnetPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.PrivateEndpointVnetPolicy = value;
             }
         }
 
@@ -333,23 +367,6 @@ namespace Azure.Provisioning.Network
                     Properties = new VirtualNetworkPropertiesFormat();
                 }
                 Properties.DdosProtectionPlanId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Enforcement. </summary>
-        public BicepValue<VirtualNetworkEncryptionEnforcement> EncryptionEnforcement
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EncryptionEnforcement;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPropertiesFormat();
-                }
-                Properties.EncryptionEnforcement = value;
             }
         }
 
