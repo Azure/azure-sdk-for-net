@@ -8,11 +8,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    // NOTE: These helpers translate between the classic (pre-1.4.0) model shapes and the
-    // generated "*Patch" model shapes introduced for API version 2026-07-01. The wire format
-    // for both shapes is identical (same JSON property names), so these conversions are lossless
-    // and are used to preserve the public property types on NetworkCloudClusterPatch and
-    // NetworkCloudVirtualMachinePatch for backward compatibility.
+    // These helpers preserve the pre-1.4.0 property types while the generated properties expose
+    // PATCH-specific models. Converting a sparse PATCH model to a classic model can materialize
+    // required value-type defaults and does not preserve unknown properties. The conversion only
+    // occurs when a caller uses a legacy compatibility property.
     internal static class NetworkCloudPatchCompatibility
     {
         public static AdministrativeCredentials ToClassic(AdministrativeCredentialsPatch value)

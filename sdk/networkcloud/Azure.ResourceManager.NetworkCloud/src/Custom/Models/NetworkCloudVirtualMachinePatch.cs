@@ -3,7 +3,7 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using System.ComponentModel;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -11,17 +11,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class NetworkCloudVirtualMachinePatch
     {
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
-        [CodeGenMember("VmImageRepositoryCredentials")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ImageRepositoryCredentials VmImageRepositoryCredentials
         {
-            get => Properties is null ? null : NetworkCloudPatchCompatibility.ToClassic(Properties.VmImageRepositoryCredentials);
+            get => NetworkCloudPatchCompatibility.ToClassic(VmImageRepositoryCredentialsPatch);
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachinePatchProperties();
-                }
-                Properties.VmImageRepositoryCredentials = NetworkCloudPatchCompatibility.ToPatch(value);
+                VmImageRepositoryCredentialsPatch = NetworkCloudPatchCompatibility.ToPatch(value);
             }
         }
     }

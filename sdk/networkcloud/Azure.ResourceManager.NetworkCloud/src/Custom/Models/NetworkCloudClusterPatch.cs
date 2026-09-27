@@ -5,7 +5,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
@@ -31,91 +30,64 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         // NetworkCloudPatchCompatibility.
 
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
-        [CodeGenMember("AggregatorOrSingleRackDefinition")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition
         {
-            get => Properties is null ? null : NetworkCloudPatchCompatibility.ToClassic(Properties.AggregatorOrSingleRackDefinition);
+            get => NetworkCloudPatchCompatibility.ToClassic(AggregatorOrSingleRackDefinitionPatch);
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.AggregatorOrSingleRackDefinition = NetworkCloudPatchCompatibility.ToPatch(value);
+                AggregatorOrSingleRackDefinitionPatch = NetworkCloudPatchCompatibility.ToPatch(value);
             }
         }
 
         /// <summary> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </summary>
-        [CodeGenMember("ClusterServicePrincipal")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ServicePrincipalInformation ClusterServicePrincipal
         {
-            get => Properties is null ? null : NetworkCloudPatchCompatibility.ToClassic(Properties.ClusterServicePrincipal);
+            get => NetworkCloudPatchCompatibility.ToClassic(ClusterServicePrincipalPatch);
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.ClusterServicePrincipal = NetworkCloudPatchCompatibility.ToPatch(value);
+                ClusterServicePrincipalPatch = NetworkCloudPatchCompatibility.ToPatch(value);
             }
         }
 
         /// <summary> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </summary>
-        [CodeGenMember("ComputeDeploymentThreshold")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ValidationThreshold ComputeDeploymentThreshold
         {
-            get => Properties is null ? null : NetworkCloudPatchCompatibility.ToClassic(Properties.ComputeDeploymentThreshold);
+            get => NetworkCloudPatchCompatibility.ToClassic(ComputeDeploymentThresholdPatch);
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.ComputeDeploymentThreshold = NetworkCloudPatchCompatibility.ToPatch(value);
+                ComputeDeploymentThresholdPatch = NetworkCloudPatchCompatibility.ToPatch(value);
             }
         }
 
         /// <summary> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </summary>
-        [CodeGenMember("ComputeRackDefinitions")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<NetworkCloudRackDefinition> ComputeRackDefinitions
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                return new NetworkCloudRackDefinitionCompatList(Properties.ComputeRackDefinitions);
-            }
+            get => new NetworkCloudRackDefinitionCompatList(ComputeRackDefinitionsPatch);
         }
 
         /// <summary> The configuration for use of a key vault to store secrets for later retrieval by the operator. </summary>
-        [CodeGenMember("SecretArchive")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ClusterSecretArchive SecretArchive
         {
-            get => Properties is null ? null : NetworkCloudPatchCompatibility.ToClassic(Properties.SecretArchive);
+            get => NetworkCloudPatchCompatibility.ToClassic(SecretArchivePatch);
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.SecretArchive = NetworkCloudPatchCompatibility.ToPatch(value);
+                SecretArchivePatch = NetworkCloudPatchCompatibility.ToPatch(value);
             }
         }
 
         /// <summary> The strategy for updating the cluster. </summary>
-        [CodeGenMember("UpdateStrategy")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ClusterUpdateStrategy UpdateStrategy
         {
-            get => Properties is null ? null : NetworkCloudPatchCompatibility.ToClassic(Properties.UpdateStrategy);
+            get => NetworkCloudPatchCompatibility.ToClassic(UpdateStrategyPatch);
             set
             {
-                if (Properties is null)
-                {
-                    Properties = new ClusterPatchProperties();
-                }
-                Properties.UpdateStrategy = NetworkCloudPatchCompatibility.ToPatch(value);
+                UpdateStrategyPatch = NetworkCloudPatchCompatibility.ToPatch(value);
             }
         }
     }

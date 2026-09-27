@@ -1045,6 +1045,41 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 default);
         }
 
+        /// <param name="identity"> The identity for the resource. </param>
+        /// <param name="aggregatorOrSingleRackDefinitionPatch"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterServicePrincipalPatch"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
+        /// <param name="computeDeploymentThresholdPatch"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitionsPatch"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
+        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchivePatch"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
+        /// <param name="updateStrategyPatch"> The strategy for updating the cluster. </param>
+        /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkCloudClusterPatch"/> instance for mocking. </returns>
+        public static NetworkCloudClusterPatch NetworkCloudClusterPatch(ManagedServiceIdentity identity = default, NetworkCloudRackDefinitionPatch aggregatorOrSingleRackDefinitionPatch = default, AnalyticsOutputSettings analyticsOutputSettings = default, string clusterLocation = default, ServicePrincipalInformationPatch clusterServicePrincipalPatch = default, CommandOutputSettings commandOutputSettings = default, ValidationThresholdPatch computeDeploymentThresholdPatch = default, IEnumerable<NetworkCloudRackDefinitionPatch> computeRackDefinitionsPatch = default, RuntimeProtectionConfigurationPatch runtimeProtectionConfiguration = default, ClusterSecretArchivePatch secretArchivePatch = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategyPatch updateStrategyPatch = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkCloudClusterPatch(identity, aggregatorOrSingleRackDefinitionPatch is null && analyticsOutputSettings is null && clusterLocation is null && clusterServicePrincipalPatch is null && commandOutputSettings is null && computeDeploymentThresholdPatch is null && computeRackDefinitionsPatch is null && runtimeProtectionConfiguration is null && secretArchivePatch is null && secretArchiveSettings is null && updateStrategyPatch is null && vulnerabilityScanningContainerScan is null ? default : new ClusterPatchProperties(
+                aggregatorOrSingleRackDefinitionPatch,
+                analyticsOutputSettings,
+                clusterLocation,
+                clusterServicePrincipalPatch,
+                commandOutputSettings,
+                computeDeploymentThresholdPatch,
+                (computeRackDefinitionsPatch ?? new ChangeTrackingList<NetworkCloudRackDefinitionPatch>()).ToList(),
+                runtimeProtectionConfiguration,
+                secretArchivePatch,
+                secretArchiveSettings,
+                updateStrategyPatch,
+                vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettingsPatch(vulnerabilityScanningContainerScan, default),
+                default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
         /// <summary> RackDefinitionPatch represents details regarding the rack for patch operations. </summary>
         /// <param name="availabilityZone"> The zone name used for this rack when created. Availability zones are used for workload placement. </param>
         /// <param name="bareMetalMachineConfigurationData"> The unordered list of bare metal machine configuration. </param>
@@ -2294,6 +2329,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static ImageRepositoryCredentials ImageRepositoryCredentials(string password = default, string registryUriString = default, string username = default)
         {
             return new ImageRepositoryCredentials(password, registryUriString, username, default);
+        }
+
+        /// <param name="identity"> The identity for the resource. </param>
+        /// <param name="vmImageRepositoryCredentialsPatch"> The credentials used to login to the image repository that has access to the specified image. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkCloudVirtualMachinePatch"/> instance for mocking. </returns>
+        public static NetworkCloudVirtualMachinePatch NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity = default, ImageRepositoryCredentialsPatch vmImageRepositoryCredentialsPatch = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkCloudVirtualMachinePatch(identity, vmImageRepositoryCredentialsPatch is null ? default : new VirtualMachinePatchProperties(vmImageRepositoryCredentialsPatch, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> ImageRepositoryCredentialsPatch represents the credentials used to login to the image repository for patch operations. </summary>
