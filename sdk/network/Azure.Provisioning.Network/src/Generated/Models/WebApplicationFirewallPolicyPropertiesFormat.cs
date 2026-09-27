@@ -11,7 +11,6 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Defines web application firewall policy properties. </summary>
     internal partial class WebApplicationFirewallPolicyPropertiesFormat : ProvisionableConstruct
     {
         private PolicySettings _policySettings;
@@ -22,7 +21,6 @@ namespace Azure.Provisioning.Network
         private ManagedRulesDefinition _managedRules;
         private BicepList<WritableSubResource> _httpListeners;
         private BicepList<WritableSubResource> _pathBasedRules;
-        private BicepList<ApplicationGatewayForContainersReferenceDefinition> _applicationGatewayForContainers;
 
         /// <summary> Creates a new WebApplicationFirewallPolicyPropertiesFormat. </summary>
         public WebApplicationFirewallPolicyPropertiesFormat()
@@ -124,16 +122,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ApplicationGatewayForContainers. </summary>
-        public BicepList<ApplicationGatewayForContainersReferenceDefinition> ApplicationGatewayForContainers
-        {
-            get
-            {
-                Initialize();
-                return _applicationGatewayForContainers;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for WebApplicationFirewallPolicyPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -146,7 +134,6 @@ namespace Azure.Provisioning.Network
             _managedRules = DefineModelProperty<ManagedRulesDefinition>(nameof(ManagedRules), new string[] { "managedRules" }, isRequired: true);
             _httpListeners = DefineListProperty<WritableSubResource>(nameof(HttpListeners), new string[] { "httpListeners" }, isOutput: true);
             _pathBasedRules = DefineListProperty<WritableSubResource>(nameof(PathBasedRules), new string[] { "pathBasedRules" }, isOutput: true);
-            _applicationGatewayForContainers = DefineListProperty<ApplicationGatewayForContainersReferenceDefinition>(nameof(ApplicationGatewayForContainers), new string[] { "applicationGatewayForContainers" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

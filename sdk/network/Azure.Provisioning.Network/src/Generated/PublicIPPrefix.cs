@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -159,6 +160,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> The list of all referenced PublicIPAddresses. </summary>
+        [CodeGenMember("PublicIPAddresses")]
+        public BicepList<SubResource> PublicIPAddresses
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddresses;
+            }
+        }
+
         /// <summary> Gets or sets the PublicIPAddressVersion. </summary>
         public BicepValue<NetworkIPVersion> PublicIPAddressVersion
         {
@@ -220,19 +231,6 @@ namespace Azure.Provisioning.Network
                     Properties = new PublicIPPrefixPropertiesFormat();
                 }
                 return Properties.IPPrefix;
-            }
-        }
-
-        /// <summary> Gets the PublicIPAddresses. </summary>
-        public BicepList<ReferencedPublicIPAddress> PublicIPAddresses
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPPrefixPropertiesFormat();
-                }
-                return Properties.PublicIPAddresses;
             }
         }
 

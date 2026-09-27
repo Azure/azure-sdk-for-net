@@ -9,6 +9,8 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -93,8 +95,9 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the BackendAddressPools. </summary>
-        public BicepList<NetworkSubResource> BackendAddressPools
+        /// <summary> An array of references to pool of DIPs. </summary>
+        [CodeGenMember("BackendAddressPools")]
+        public BicepList<WritableSubResource> BackendAddressPools
         {
             get
             {

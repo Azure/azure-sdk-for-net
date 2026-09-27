@@ -10,6 +10,8 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -110,6 +112,24 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
+        [CodeGenMember("FrontEndIPConfiguration")]
+        public BicepList<WritableSubResource> FrontEndIPConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontEndIPConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DdosCustomPolicyPropertiesFormat();
+                }
+                Properties.FrontEndIPConfiguration = value;
+            }
+        }
+
         /// <summary> Gets the ResourceGuid. </summary>
         public BicepValue<Guid> ResourceGuid
         {
@@ -150,23 +170,6 @@ namespace Azure.Provisioning.Network
                     Properties = new DdosCustomPolicyPropertiesFormat();
                 }
                 Properties.DetectionRules = value;
-            }
-        }
-
-        /// <summary> Gets or sets the FrontEndIPConfiguration. </summary>
-        public BicepList<NetworkSubResource> FrontEndIPConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FrontEndIPConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DdosCustomPolicyPropertiesFormat();
-                }
-                Properties.FrontEndIPConfiguration = value;
             }
         }
 

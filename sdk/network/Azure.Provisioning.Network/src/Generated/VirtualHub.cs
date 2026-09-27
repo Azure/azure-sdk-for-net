@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -121,6 +122,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> List of references to IpConfigurations. </summary>
+        [CodeGenMember("IPConfigurations")]
+        public BicepList<WritableSubResource> IPConfigurations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPConfigurations;
+            }
+        }
+
         /// <summary> Gets or sets the AddressPrefix. </summary>
         public BicepValue<string> AddressPrefix
         {
@@ -225,19 +236,6 @@ namespace Azure.Provisioning.Network
                     Properties = new VirtualHubProperties();
                 }
                 return Properties.BgpConnections;
-            }
-        }
-
-        /// <summary> Gets the IPConfigurations. </summary>
-        public BicepList<NetworkSubResource> IPConfigurations
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualHubProperties();
-                }
-                return Properties.IPConfigurations;
             }
         }
 

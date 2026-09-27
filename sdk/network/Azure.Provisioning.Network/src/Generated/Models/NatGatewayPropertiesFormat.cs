@@ -13,14 +13,9 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Nat Gateway properties. </summary>
     internal partial class NatGatewayPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<int> _idleTimeoutInMinutes;
-        private BicepList<NetworkSubResource> _publicIPAddresses;
-        private BicepList<NetworkSubResource> _publicIPAddressesV6;
-        private BicepList<NetworkSubResource> _publicIPPrefixes;
-        private BicepList<NetworkSubResource> _publicIPPrefixesV6;
         private BicepList<WritableSubResource> _subnets;
         private NetworkSubResource _sourceVirtualNetwork;
         private NetworkSubResource _serviceGateway;
@@ -44,66 +39,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _idleTimeoutInMinutes.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PublicIPAddresses. </summary>
-        public BicepList<NetworkSubResource> PublicIPAddresses
-        {
-            get
-            {
-                Initialize();
-                return _publicIPAddresses;
-            }
-            set
-            {
-                Initialize();
-                _publicIPAddresses.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PublicIPAddressesV6. </summary>
-        public BicepList<NetworkSubResource> PublicIPAddressesV6
-        {
-            get
-            {
-                Initialize();
-                return _publicIPAddressesV6;
-            }
-            set
-            {
-                Initialize();
-                _publicIPAddressesV6.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PublicIPPrefixes. </summary>
-        public BicepList<NetworkSubResource> PublicIPPrefixes
-        {
-            get
-            {
-                Initialize();
-                return _publicIPPrefixes;
-            }
-            set
-            {
-                Initialize();
-                _publicIPPrefixes.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PublicIPPrefixesV6. </summary>
-        public BicepList<NetworkSubResource> PublicIPPrefixesV6
-        {
-            get
-            {
-                Initialize();
-                return _publicIPPrefixesV6;
-            }
-            set
-            {
-                Initialize();
-                _publicIPPrefixesV6.Assign(value);
             }
         }
 
@@ -206,10 +141,6 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _idleTimeoutInMinutes = DefineProperty<int>(nameof(IdleTimeoutInMinutes), new string[] { "idleTimeoutInMinutes" });
-            _publicIPAddresses = DefineListProperty<NetworkSubResource>(nameof(PublicIPAddresses), new string[] { "publicIpAddresses" });
-            _publicIPAddressesV6 = DefineListProperty<NetworkSubResource>(nameof(PublicIPAddressesV6), new string[] { "publicIpAddressesV6" });
-            _publicIPPrefixes = DefineListProperty<NetworkSubResource>(nameof(PublicIPPrefixes), new string[] { "publicIpPrefixes" });
-            _publicIPPrefixesV6 = DefineListProperty<NetworkSubResource>(nameof(PublicIPPrefixesV6), new string[] { "publicIpPrefixesV6" });
             _subnets = DefineListProperty<WritableSubResource>(nameof(Subnets), new string[] { "subnets" }, isOutput: true);
             _sourceVirtualNetwork = DefineModelProperty<NetworkSubResource>(nameof(SourceVirtualNetwork), new string[] { "sourceVirtualNetwork" });
             _serviceGateway = DefineModelProperty<NetworkSubResource>(nameof(ServiceGateway), new string[] { "serviceGateway" });

@@ -11,13 +11,11 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> DDoS custom policy properties. </summary>
     internal partial class DdosCustomPolicyPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepList<DdosDetectionRule> _detectionRules;
-        private BicepList<NetworkSubResource> _frontEndIPConfiguration;
 
         /// <summary> Creates a new DdosCustomPolicyPropertiesFormat. </summary>
         public DdosCustomPolicyPropertiesFormat()
@@ -59,21 +57,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the FrontEndIPConfiguration. </summary>
-        public BicepList<NetworkSubResource> FrontEndIPConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _frontEndIPConfiguration;
-            }
-            set
-            {
-                Initialize();
-                _frontEndIPConfiguration.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for DdosCustomPolicyPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -81,7 +64,6 @@ namespace Azure.Provisioning.Network
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _detectionRules = DefineListProperty<DdosDetectionRule>(nameof(DetectionRules), new string[] { "detectionRules" });
-            _frontEndIPConfiguration = DefineListProperty<NetworkSubResource>(nameof(FrontEndIPConfiguration), new string[] { "frontEndIpConfiguration" });
             DefineAdditionalProperties();
         }
 

@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -124,6 +125,24 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _eTag;
+            }
+        }
+
+        /// <summary> Array of IpAllocation which reference this VNET. </summary>
+        [CodeGenMember("IPAllocations")]
+        public BicepList<WritableSubResource> IPAllocations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAllocations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.IPAllocations = value;
             }
         }
 
@@ -286,23 +305,6 @@ namespace Azure.Provisioning.Network
                     Properties = new VirtualNetworkPropertiesFormat();
                 }
                 Properties.Encryption = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IPAllocations. </summary>
-        public BicepList<NetworkSubResource> IPAllocations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPAllocations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkPropertiesFormat();
-                }
-                Properties.IPAllocations = value;
             }
         }
 

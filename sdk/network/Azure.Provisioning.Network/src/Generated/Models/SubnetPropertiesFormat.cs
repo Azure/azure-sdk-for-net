@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Properties of the subnet. </summary>
     internal partial class SubnetPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<string> _addressPrefix;
@@ -24,7 +23,6 @@ namespace Azure.Provisioning.Network
         private BicepList<PrivateEndpoint> _privateEndpoints;
         private BicepList<NetworkIPConfiguration> _ipConfigurations;
         private BicepList<NetworkIPConfigurationProfile> _ipConfigurationProfiles;
-        private BicepList<NetworkSubResource> _ipAllocations;
         private BicepList<ResourceNavigationLink> _resourceNavigationLinks;
         private BicepList<ServiceAssociationLink> _serviceAssociationLinks;
         private BicepList<ServiceDelegation> _delegations;
@@ -175,21 +173,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _ipConfigurationProfiles;
-            }
-        }
-
-        /// <summary> Gets or sets the IPAllocations. </summary>
-        public BicepList<NetworkSubResource> IPAllocations
-        {
-            get
-            {
-                Initialize();
-                return _ipAllocations;
-            }
-            set
-            {
-                Initialize();
-                _ipAllocations.Assign(value);
             }
         }
 
@@ -401,7 +384,6 @@ namespace Azure.Provisioning.Network
             _privateEndpoints = DefineListProperty<PrivateEndpoint>(nameof(PrivateEndpoints), new string[] { "privateEndpoints" }, isOutput: true);
             _ipConfigurations = DefineListProperty<NetworkIPConfiguration>(nameof(IPConfigurations), new string[] { "ipConfigurations" }, isOutput: true);
             _ipConfigurationProfiles = DefineListProperty<NetworkIPConfigurationProfile>(nameof(IPConfigurationProfiles), new string[] { "ipConfigurationProfiles" }, isOutput: true);
-            _ipAllocations = DefineListProperty<NetworkSubResource>(nameof(IPAllocations), new string[] { "ipAllocations" });
             _resourceNavigationLinks = DefineListProperty<ResourceNavigationLink>(nameof(ResourceNavigationLinks), new string[] { "resourceNavigationLinks" }, isOutput: true);
             _serviceAssociationLinks = DefineListProperty<ServiceAssociationLink>(nameof(ServiceAssociationLinks), new string[] { "serviceAssociationLinks" }, isOutput: true);
             _delegations = DefineListProperty<ServiceDelegation>(nameof(Delegations), new string[] { "delegations" });

@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Properties of the virtual network. </summary>
     internal partial class VirtualNetworkPropertiesFormat : ProvisionableConstruct
     {
         private VirtualNetworkAddressSpace _addressSpace;
@@ -27,7 +26,6 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _ddosProtectionPlan;
         private VirtualNetworkBgpCommunities _bgpCommunities;
         private VirtualNetworkEncryption _encryption;
-        private BicepList<NetworkSubResource> _ipAllocations;
         private BicepList<FlowLog> _flowLogs;
         private BicepValue<PrivateEndpointVnetPolicy> _privateEndpointVnetPolicy;
         private NetworkSubResource _defaultPublicNatGateway;
@@ -207,21 +205,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the IPAllocations. </summary>
-        public BicepList<NetworkSubResource> IPAllocations
-        {
-            get
-            {
-                Initialize();
-                return _ipAllocations;
-            }
-            set
-            {
-                Initialize();
-                _ipAllocations.Assign(value);
-            }
-        }
-
         /// <summary> Gets the FlowLogs. </summary>
         public BicepList<FlowLog> FlowLogs
         {
@@ -316,7 +299,6 @@ namespace Azure.Provisioning.Network
             _ddosProtectionPlan = DefineModelProperty<NetworkSubResource>(nameof(DdosProtectionPlan), new string[] { "ddosProtectionPlan" });
             _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>(nameof(BgpCommunities), new string[] { "bgpCommunities" });
             _encryption = DefineModelProperty<VirtualNetworkEncryption>(nameof(Encryption), new string[] { "encryption" });
-            _ipAllocations = DefineListProperty<NetworkSubResource>(nameof(IPAllocations), new string[] { "ipAllocations" });
             _flowLogs = DefineListProperty<FlowLog>(nameof(FlowLogs), new string[] { "flowLogs" }, isOutput: true);
             _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>(nameof(PrivateEndpointVnetPolicy), new string[] { "privateEndpointVNetPolicies" });
             _defaultPublicNatGateway = DefineModelProperty<NetworkSubResource>(nameof(DefaultPublicNatGateway), new string[] { "defaultPublicNatGateway" }, isOutput: true);

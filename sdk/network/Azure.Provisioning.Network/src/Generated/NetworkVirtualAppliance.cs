@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -123,6 +124,24 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _eTag;
+            }
+        }
+
+        /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
+        [CodeGenMember("InternetIngressPublicIPs")]
+        public BicepList<WritableSubResource> InternetIngressPublicIPs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InternetIngressPublicIPs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                Properties.InternetIngressPublicIPs = value;
             }
         }
 
@@ -268,23 +287,6 @@ namespace Azure.Provisioning.Network
                     Properties = new NetworkVirtualAppliancePropertiesFormat();
                 }
                 Properties.AdditionalNics = value;
-            }
-        }
-
-        /// <summary> Gets or sets the InternetIngressPublicIPs. </summary>
-        public BicepList<InternetIngressPublicIpsProperties> InternetIngressPublicIPs
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InternetIngressPublicIPs;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkVirtualAppliancePropertiesFormat();
-                }
-                Properties.InternetIngressPublicIPs = value;
             }
         }
 

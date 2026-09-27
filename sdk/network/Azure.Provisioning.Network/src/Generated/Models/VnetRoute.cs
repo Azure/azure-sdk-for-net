@@ -15,7 +15,6 @@ namespace Azure.Provisioning.Network
     {
         private StaticRoutesConfig _staticRoutesConfig;
         private BicepList<StaticRoute> _staticRoutes;
-        private BicepList<NetworkSubResource> _bgpConnections;
 
         /// <summary> Creates a new VnetRoute. </summary>
         public VnetRoute()
@@ -52,23 +51,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the BgpConnections. </summary>
-        public BicepList<NetworkSubResource> BgpConnections
-        {
-            get
-            {
-                Initialize();
-                return _bgpConnections;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for VnetRoute. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _staticRoutesConfig = DefineModelProperty<StaticRoutesConfig>(nameof(StaticRoutesConfig), new string[] { "staticRoutesConfig" });
             _staticRoutes = DefineListProperty<StaticRoute>(nameof(StaticRoutes), new string[] { "staticRoutes" });
-            _bgpConnections = DefineListProperty<NetworkSubResource>(nameof(BgpConnections), new string[] { "bgpConnections" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

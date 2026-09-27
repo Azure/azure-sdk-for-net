@@ -12,7 +12,6 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Network Virtual Appliance definition. </summary>
     internal partial class NetworkVirtualAppliancePropertiesFormat : ProvisionableConstruct
     {
         private VirtualApplianceSkuProperties _nvaSku;
@@ -26,7 +25,6 @@ namespace Azure.Provisioning.Network
         private BicepList<VirtualApplianceNicProperties> _virtualApplianceNics;
         private NetworkVirtualAppliancePropertiesFormatNetworkProfile _networkProfile;
         private BicepList<VirtualApplianceAdditionalNicProperties> _additionalNics;
-        private BicepList<InternetIngressPublicIpsProperties> _internetIngressPublicIPs;
         private BicepList<WritableSubResource> _virtualApplianceSites;
         private BicepList<WritableSubResource> _virtualApplianceConnections;
         private BicepList<WritableSubResource> _inboundSecurityRules;
@@ -197,21 +195,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the InternetIngressPublicIPs. </summary>
-        public BicepList<InternetIngressPublicIpsProperties> InternetIngressPublicIPs
-        {
-            get
-            {
-                Initialize();
-                return _internetIngressPublicIPs;
-            }
-            set
-            {
-                Initialize();
-                _internetIngressPublicIPs.Assign(value);
-            }
-        }
-
         /// <summary> Gets the VirtualApplianceSites. </summary>
         public BicepList<WritableSubResource> VirtualApplianceSites
         {
@@ -366,7 +349,6 @@ namespace Azure.Provisioning.Network
             _virtualApplianceNics = DefineListProperty<VirtualApplianceNicProperties>(nameof(VirtualApplianceNics), new string[] { "virtualApplianceNics" }, isOutput: true);
             _networkProfile = DefineModelProperty<NetworkVirtualAppliancePropertiesFormatNetworkProfile>(nameof(NetworkProfile), new string[] { "networkProfile" });
             _additionalNics = DefineListProperty<VirtualApplianceAdditionalNicProperties>(nameof(AdditionalNics), new string[] { "additionalNics" });
-            _internetIngressPublicIPs = DefineListProperty<InternetIngressPublicIpsProperties>(nameof(InternetIngressPublicIPs), new string[] { "internetIngressPublicIps" });
             _virtualApplianceSites = DefineListProperty<WritableSubResource>(nameof(VirtualApplianceSites), new string[] { "virtualApplianceSites" }, isOutput: true);
             _virtualApplianceConnections = DefineListProperty<WritableSubResource>(nameof(VirtualApplianceConnections), new string[] { "virtualApplianceConnections" }, isOutput: true);
             _inboundSecurityRules = DefineListProperty<WritableSubResource>(nameof(InboundSecurityRules), new string[] { "inboundSecurityRules" }, isOutput: true);

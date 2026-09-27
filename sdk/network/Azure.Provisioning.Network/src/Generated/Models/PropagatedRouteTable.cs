@@ -14,7 +14,6 @@ namespace Azure.Provisioning.Network
     public partial class PropagatedRouteTable : ProvisionableConstruct
     {
         private BicepList<string> _labels;
-        private BicepList<NetworkSubResource> _ids;
 
         /// <summary> Creates a new PropagatedRouteTable. </summary>
         public PropagatedRouteTable()
@@ -36,27 +35,11 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Ids. </summary>
-        public BicepList<NetworkSubResource> Ids
-        {
-            get
-            {
-                Initialize();
-                return _ids;
-            }
-            set
-            {
-                Initialize();
-                _ids.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for PropagatedRouteTable. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _labels = DefineListProperty<string>(nameof(Labels), new string[] { "labels" });
-            _ids = DefineListProperty<NetworkSubResource>(nameof(Ids), new string[] { "ids" });
             DefineAdditionalProperties();
         }
 

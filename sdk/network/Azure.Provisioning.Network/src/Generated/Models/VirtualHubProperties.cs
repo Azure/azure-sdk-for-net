@@ -12,7 +12,6 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Parameters for VirtualHub. </summary>
     internal partial class VirtualHubProperties : ProvisionableConstruct
     {
         private NetworkSubResource _virtualWan;
@@ -29,7 +28,6 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _sku;
         private BicepValue<RoutingState> _routingState;
         private BicepList<WritableSubResource> _bgpConnections;
-        private BicepList<NetworkSubResource> _ipConfigurations;
         private BicepList<WritableSubResource> _routeMaps;
         private BicepValue<long> _virtualRouterAsn;
         private BicepList<string> _virtualRouterIPs;
@@ -235,16 +233,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _bgpConnections;
-            }
-        }
-
-        /// <summary> Gets the IPConfigurations. </summary>
-        public BicepList<NetworkSubResource> IPConfigurations
-        {
-            get
-            {
-                Initialize();
-                return _ipConfigurations;
             }
         }
 
@@ -502,7 +490,6 @@ namespace Azure.Provisioning.Network
             _sku = DefineProperty<string>(nameof(Sku), new string[] { "sku" });
             _routingState = DefineProperty<RoutingState>(nameof(RoutingState), new string[] { "routingState" }, isOutput: true);
             _bgpConnections = DefineListProperty<WritableSubResource>(nameof(BgpConnections), new string[] { "bgpConnections" }, isOutput: true);
-            _ipConfigurations = DefineListProperty<NetworkSubResource>(nameof(IPConfigurations), new string[] { "ipConfigurations" }, isOutput: true);
             _routeMaps = DefineListProperty<WritableSubResource>(nameof(RouteMaps), new string[] { "routeMaps" }, isOutput: true);
             _virtualRouterAsn = DefineProperty<long>(nameof(VirtualRouterAsn), new string[] { "virtualRouterAsn" });
             _virtualRouterIPs = DefineListProperty<string>(nameof(VirtualRouterIPs), new string[] { "virtualRouterIps" });

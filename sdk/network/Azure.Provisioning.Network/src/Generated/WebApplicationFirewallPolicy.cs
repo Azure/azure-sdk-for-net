@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -108,6 +109,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _eTag;
+            }
+        }
+
+        /// <summary> A collection of references to application gateway for containers. </summary>
+        [CodeGenMember("ApplicationGatewayForContainers")]
+        public BicepList<SubResource> ApplicationGatewayForContainers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationGatewayForContainers;
             }
         }
 
@@ -224,19 +235,6 @@ namespace Azure.Provisioning.Network
                     Properties = new WebApplicationFirewallPolicyPropertiesFormat();
                 }
                 return Properties.PathBasedRules;
-            }
-        }
-
-        /// <summary> Gets the ApplicationGatewayForContainers. </summary>
-        public BicepList<ApplicationGatewayForContainersReferenceDefinition> ApplicationGatewayForContainers
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebApplicationFirewallPolicyPropertiesFormat();
-                }
-                return Properties.ApplicationGatewayForContainers;
             }
         }
 

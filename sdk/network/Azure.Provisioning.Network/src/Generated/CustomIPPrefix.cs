@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -140,6 +141,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _zones.Assign(value);
+            }
+        }
+
+        /// <summary> The list of all referenced PublicIpPrefixes. </summary>
+        [CodeGenMember("PublicIPPrefixes")]
+        public BicepList<WritableSubResource> PublicIPPrefixes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPPrefixes;
             }
         }
 
@@ -323,19 +334,6 @@ namespace Azure.Provisioning.Network
                     Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.PrefixType = value;
-            }
-        }
-
-        /// <summary> Gets the PublicIPPrefixes. </summary>
-        public BicepList<NetworkSubResource> PublicIPPrefixes
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIPPrefixPropertiesFormat();
-                }
-                return Properties.PublicIPPrefixes;
             }
         }
 

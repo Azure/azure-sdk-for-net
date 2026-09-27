@@ -18,8 +18,8 @@ The package is **not release-ready**.
 |---|---|
 | Provisioning generation | Succeeds from the shared spec commit. |
 | Provisioning compilation and API export | Pass for `netstandard2.0`, `net8.0`, and `net10.0`; API listings are current. |
-| Provisioning ApiCompat | 166 diagnostics per framework; normal package builds fail this gate. |
-| Standard test project | Blocked by two compilation errors listed below. |
+| Provisioning ApiCompat | 151 diagnostics per framework; normal package builds fail this gate. |
+| Standard test project | Blocked by the read-only `NetworkSecurityGroup.Id` assignment listed below. |
 | Management compilation, API export, and ApiCompat | Pass; no active management ApiCompat diagnostics. |
 | Recommended property names | `IsPrimary`, `DisableTraceRoute`, and `ConfigurationPolicyGroups` match management. Agreed naming exceptions are listed below. |
 
@@ -31,9 +31,9 @@ three frameworks.
 | Diagnostic | Count | Meaning |
 |---|---:|---|
 | `CP0001` | 0 | Removed public types |
-| `CP0002` | 142 | Removed or incompatible public member signatures |
+| `CP0002` | 127 | Removed or incompatible public member signatures |
 | `CP0011` | 24 | Changed enum numeric values |
-| **Total** | **166** | |
+| **Total** | **151** | |
 
 A changed property type can produce missing-getter and missing-setter
 diagnostics even when the property name still exists. Diagnostic counts
@@ -43,11 +43,11 @@ therefore differ from logical member counts.
 
 | Category | Diagnostics | Affected members |
 |---|---:|---:|
-| Property type changed | 47 | 44 properties |
+| Property type changed | 32 | 29 properties |
 | Property missing | 23 | 19 properties |
 | Property became read-only | 48 | 48 properties |
 | Enum member missing | 24 | 24 fields |
-| **Total** | **142** | **135** |
+| **Total** | **127** | **120** |
 
 Missing properties:
 
@@ -69,7 +69,6 @@ Changed property types:
 
 | Category | Diagnostics | Properties | Details |
 |---|---:|---:|---|
-| Resource-reference shape changed | 15 | 15 | `WritableSubResource`/`SubResource` collections became `NetworkSubResource` or service-specific model collections. |
 | Strong type became `string` | 29 | 26 | Includes `ResourceIdentifier`, `ResourceType`, `BinaryData`, `Guid`, `AzureLocation`, `IPAddress`, and `Uri` values or collection elements. |
 | Other type changes | 3 | 3 | `BicepList<string>` to `BicepList<int>`, `BicepValue<string>` to `BicepValue<double>`, and `ManagedServiceIdentity` to `InternalNetworkManagedServiceIdentity`. |
 
@@ -84,7 +83,7 @@ Changed property types:
 | `VpnAuthenticationType` | 3 |
 | `IPsecIntegrity` | 2 |
 
-## Other outstanding issues
+## Compatibility customizations
 
 ### Resource type compatibility
 
@@ -97,15 +96,23 @@ Management's `NetworkResourceData.ResourceType` is also hidden and obsolete.
 Its getter converts the generated `Type` value to `ResourceType?`; its setter
 intentionally does nothing, as stated in its deprecation message.
 
+### Resource-reference collections
+
+The fifteen collection type changes are restored through `CodeGenMember`
+overrides on their declaring models. Regenerated flattened properties use
+`BicepList<WritableSubResource>` or `BicepList<SubResource>`, preserving their
+existing setters, output-only behavior, and wire paths. Writable references
+serialize as objects containing `id`, not scalar IDs.
+
+`CustomIPPrefix.ChildCustomIPPrefixList` remains in the separate renamed-and-type-
+changed category; its generated replacement is still `ChildCustomIPPrefixes`.
+
+## Other outstanding issues
+
 ### Test compilation
 
-`tests\BasicNetworkTests.cs` cannot compile because:
-
-- Line 215 assigns `WritableSubResource` where `BicepValue<NetworkSubResource>`
-  is required.
-- Line 593 assigns the read-only `NetworkSecurityGroup.Id` property.
-
-The standard tests cannot run until these errors are addressed.
+`tests\BasicNetworkTests.cs:593` assigns the read-only `NetworkSecurityGroup.Id`
+property. This is the remaining compilation blocker for the standard tests.
 
 ### Resource-reference Bicep shape
 

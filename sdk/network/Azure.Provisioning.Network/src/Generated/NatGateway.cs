@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -143,25 +144,9 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the IdleTimeoutInMinutes. </summary>
-        public BicepValue<int> IdleTimeoutInMinutes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NatGatewayPropertiesFormat();
-                }
-                Properties.IdleTimeoutInMinutes = value;
-            }
-        }
-
-        /// <summary> Gets or sets the PublicIPAddresses. </summary>
-        public BicepList<NetworkSubResource> PublicIPAddresses
+        /// <summary> An array of public ip addresses V4 associated with the nat gateway resource. </summary>
+        [CodeGenMember("PublicIPAddresses")]
+        public BicepList<WritableSubResource> PublicIPAddresses
         {
             get
             {
@@ -177,8 +162,9 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PublicIPAddressesV6. </summary>
-        public BicepList<NetworkSubResource> PublicIPAddressesV6
+        /// <summary> An array of public ip addresses V6 associated with the nat gateway resource. </summary>
+        [CodeGenMember("PublicIPAddressesV6")]
+        public BicepList<WritableSubResource> PublicIPAddressesV6
         {
             get
             {
@@ -194,8 +180,9 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PublicIPPrefixes. </summary>
-        public BicepList<NetworkSubResource> PublicIPPrefixes
+        /// <summary> An array of public ip prefixes V4 associated with the nat gateway resource. </summary>
+        [CodeGenMember("PublicIPPrefixes")]
+        public BicepList<WritableSubResource> PublicIPPrefixes
         {
             get
             {
@@ -211,8 +198,9 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PublicIPPrefixesV6. </summary>
-        public BicepList<NetworkSubResource> PublicIPPrefixesV6
+        /// <summary> An array of public ip prefixes V6 associated with the nat gateway resource. </summary>
+        [CodeGenMember("PublicIPPrefixesV6")]
+        public BicepList<WritableSubResource> PublicIPPrefixesV6
         {
             get
             {
@@ -225,6 +213,23 @@ namespace Azure.Provisioning.Network
                     Properties = new NatGatewayPropertiesFormat();
                 }
                 Properties.PublicIPPrefixesV6 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the IdleTimeoutInMinutes. </summary>
+        public BicepValue<int> IdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NatGatewayPropertiesFormat();
+                }
+                Properties.IdleTimeoutInMinutes = value;
             }
         }
 

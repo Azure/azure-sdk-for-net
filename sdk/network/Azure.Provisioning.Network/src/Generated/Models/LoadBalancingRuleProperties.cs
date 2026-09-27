@@ -16,7 +16,6 @@ namespace Azure.Provisioning.Network
     {
         private NetworkSubResource _frontendIPConfiguration;
         private NetworkSubResource _backendAddressPool;
-        private BicepList<NetworkSubResource> _backendAddressPools;
         private NetworkSubResource _probe;
         private BicepValue<LoadBalancingTransportProtocol> _protocol;
         private BicepValue<LoadDistribution> _loadDistribution;
@@ -61,21 +60,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _backendAddressPool, value);
-            }
-        }
-
-        /// <summary> Gets or sets the BackendAddressPools. </summary>
-        public BicepList<NetworkSubResource> BackendAddressPools
-        {
-            get
-            {
-                Initialize();
-                return _backendAddressPools;
-            }
-            set
-            {
-                Initialize();
-                _backendAddressPools.Assign(value);
             }
         }
 
@@ -296,7 +280,6 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _frontendIPConfiguration = DefineModelProperty<NetworkSubResource>(nameof(FrontendIPConfiguration), new string[] { "frontendIPConfiguration" });
             _backendAddressPool = DefineModelProperty<NetworkSubResource>(nameof(BackendAddressPool), new string[] { "backendAddressPool" });
-            _backendAddressPools = DefineListProperty<NetworkSubResource>(nameof(BackendAddressPools), new string[] { "backendAddressPools" });
             _probe = DefineModelProperty<NetworkSubResource>(nameof(Probe), new string[] { "probe" });
             _protocol = DefineProperty<LoadBalancingTransportProtocol>(nameof(Protocol), new string[] { "protocol" }, isRequired: true);
             _loadDistribution = DefineProperty<LoadDistribution>(nameof(LoadDistribution), new string[] { "loadDistribution" });

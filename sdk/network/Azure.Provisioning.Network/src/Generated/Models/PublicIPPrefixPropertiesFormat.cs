@@ -12,14 +12,12 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Public IP prefix properties. </summary>
     internal partial class PublicIPPrefixPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<NetworkIPVersion> _publicIPAddressVersion;
         private BicepList<IPTag> _ipTags;
         private BicepValue<int> _prefixLength;
         private BicepValue<string> _ipPrefix;
-        private BicepList<ReferencedPublicIPAddress> _publicIPAddresses;
         private NetworkSubResource _loadBalancerFrontendIPConfiguration;
         private NetworkSubResource _customIPPrefix;
         private BicepValue<Guid> _resourceGuid;
@@ -83,16 +81,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _ipPrefix;
-            }
-        }
-
-        /// <summary> Gets the PublicIPAddresses. </summary>
-        public BicepList<ReferencedPublicIPAddress> PublicIPAddresses
-        {
-            get
-            {
-                Initialize();
-                return _publicIPAddresses;
             }
         }
 
@@ -190,7 +178,6 @@ namespace Azure.Provisioning.Network
             _ipTags = DefineListProperty<IPTag>(nameof(IPTags), new string[] { "ipTags" });
             _prefixLength = DefineProperty<int>(nameof(PrefixLength), new string[] { "prefixLength" });
             _ipPrefix = DefineProperty<string>(nameof(IPPrefix), new string[] { "ipPrefix" }, isOutput: true);
-            _publicIPAddresses = DefineListProperty<ReferencedPublicIPAddress>(nameof(PublicIPAddresses), new string[] { "publicIPAddresses" }, isOutput: true);
             _loadBalancerFrontendIPConfiguration = DefineModelProperty<NetworkSubResource>(nameof(LoadBalancerFrontendIPConfiguration), new string[] { "loadBalancerFrontendIpConfiguration" }, isOutput: true);
             _customIPPrefix = DefineModelProperty<NetworkSubResource>(nameof(CustomIPPrefix), new string[] { "customIPPrefix" });
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);

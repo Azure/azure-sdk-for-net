@@ -9,6 +9,8 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Network
 {
@@ -90,6 +92,24 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _parent.Value = value;
+            }
+        }
+
+        /// <summary> Array of IpAllocation which reference this subnet. </summary>
+        [CodeGenMember("IPAllocations")]
+        public BicepList<WritableSubResource> IPAllocations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IPAllocations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SubnetPropertiesFormat();
+                }
+                Properties.IPAllocations = value;
             }
         }
 
@@ -231,23 +251,6 @@ namespace Azure.Provisioning.Network
                     Properties = new SubnetPropertiesFormat();
                 }
                 return Properties.IPConfigurationProfiles;
-            }
-        }
-
-        /// <summary> Gets or sets the IPAllocations. </summary>
-        public BicepList<NetworkSubResource> IPAllocations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPAllocations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubnetPropertiesFormat();
-                }
-                Properties.IPAllocations = value;
             }
         }
 

@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Custom IP prefix properties. </summary>
     internal partial class CustomIPPrefixPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<string> _asn;
@@ -26,7 +25,6 @@ namespace Azure.Provisioning.Network
         private BicepValue<CidrAdvertisingGeoCode> _geo;
         private BicepValue<bool> _noInternetAdvertise;
         private BicepValue<CustomIPPrefixType> _prefixType;
-        private BicepList<NetworkSubResource> _publicIPPrefixes;
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<string> _failedReason;
         private BicepValue<NetworkProvisioningState> _provisioningState;
@@ -196,16 +194,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the PublicIPPrefixes. </summary>
-        public BicepList<NetworkSubResource> PublicIPPrefixes
-        {
-            get
-            {
-                Initialize();
-                return _publicIPPrefixes;
-            }
-        }
-
         /// <summary> Gets the ResourceGuid. </summary>
         public BicepValue<Guid> ResourceGuid
         {
@@ -251,7 +239,6 @@ namespace Azure.Provisioning.Network
             _geo = DefineProperty<CidrAdvertisingGeoCode>(nameof(Geo), new string[] { "geo" });
             _noInternetAdvertise = DefineProperty<bool>(nameof(NoInternetAdvertise), new string[] { "noInternetAdvertise" });
             _prefixType = DefineProperty<CustomIPPrefixType>(nameof(PrefixType), new string[] { "prefixType" });
-            _publicIPPrefixes = DefineListProperty<NetworkSubResource>(nameof(PublicIPPrefixes), new string[] { "publicIpPrefixes" }, isOutput: true);
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _failedReason = DefineProperty<string>(nameof(FailedReason), new string[] { "failedReason" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
