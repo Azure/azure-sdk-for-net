@@ -18,7 +18,7 @@ The package is **not release-ready**.
 |---|---|
 | Provisioning generation | Succeeds from the shared spec commit. |
 | Provisioning compilation and API export | Pass for `netstandard2.0`, `net8.0`, and `net10.0`; API listings are current. |
-| Provisioning ApiCompat | 150 diagnostics per framework; normal package builds fail this gate. |
+| Provisioning ApiCompat | 133 diagnostics per framework; normal package builds fail this gate. |
 | Standard test project | Blocked by the read-only `NetworkSecurityGroup.Id` assignment listed below. |
 | Management compilation, API export, and ApiCompat | Pass; no active management ApiCompat diagnostics. |
 | Recommended property names | `IsPrimary`, `DisableTraceRoute`, and `ConfigurationPolicyGroups` match management. Agreed naming exceptions are listed below. |
@@ -31,9 +31,9 @@ three frameworks.
 | Diagnostic | Count | Meaning |
 |---|---:|---|
 | `CP0001` | 0 | Removed public types |
-| `CP0002` | 126 | Removed or incompatible public member signatures |
+| `CP0002` | 109 | Removed or incompatible public member signatures |
 | `CP0011` | 24 | Changed enum numeric values |
-| **Total** | **150** | |
+| **Total** | **133** | |
 
 A changed property type can produce missing-getter and missing-setter
 diagnostics even when the property name still exists. Diagnostic counts
@@ -44,10 +44,10 @@ therefore differ from logical member counts.
 | Category | Diagnostics | Affected members |
 |---|---:|---:|
 | Property type changed | 32 | 29 properties |
-| Property missing | 22 | 18 properties |
+| Property missing | 5 | 3 properties |
 | Property became read-only | 48 | 48 properties |
 | Enum member missing | 24 | 24 fields |
-| **Total** | **126** | **119** |
+| **Total** | **109** | **104** |
 
 Missing properties:
 
@@ -55,15 +55,6 @@ Missing properties:
 |---|---:|---:|---|
 | Renamed and type changed | 2 | 1 | `ConnectionMonitorEndpoint.EndpointType`. |
 | Flattened wrapper missing | 3 | 2 | `LoadBalancerInboundNatPool.Properties` and `LoadBalancingRule.Properties`. |
-| No generated equivalent | 17 | 15 | Twelve `ResourceType` getters without a generated `Type` property, one `SystemData` getter, and two `AdditionalProperties` bags. |
-
-The twelve missing `ResourceType` properties are deferred:
-`ApplicationGatewayEntraJwtValidationConfig`, `ApplicationGatewayRewriteRuleSet`,
-`AzureFirewallApplicationRuleCollectionData`, `AzureFirewallNatRuleCollectionData`,
-`AzureFirewallNetworkRuleCollectionData`, `NetworkIPConfiguration`,
-`P2SConnectionConfiguration`, `VirtualNetworkGatewayIPConfiguration`,
-`VirtualNetworkGatewayPolicyGroup`, `VngClientConnectionConfiguration`,
-`VpnClientRevokedCertificate`, and `VpnClientRootCertificate`.
 
 Changed property types:
 
@@ -109,7 +100,42 @@ getter-only `BicepList<WritableSubResource>` with its own backing field. It expo
 the same output-only `properties.childCustomIpPrefixes` Bicep path as the unchanged
 generated `ChildCustomIPPrefixes` property, which remains the preferred API.
 
+### Properties without generated equivalents
+
+All fifteen properties in this category are restored with
+`EditorBrowsable(Never)`, without `Obsolete`. The thirteen output properties have
+their own backing fields and preserve the signatures, Bicep paths, and output
+behavior from tag `Azure.Provisioning.Network_1.1.0`. The two additional-properties
+bags are compatibility-only auto-properties and are not registered for Bicep
+generation:
+
+| Properties | Bicep path | Behavior |
+|---|---|---|
+| Twelve `ResourceType` properties listed below | `type` | Getter-only `BicepValue<ResourceType>`, output-only. |
+| `DdosProtectionPlan.SystemData` | `systemData` | Getter-only `SystemData`, output-only. |
+| `LoadBalancerInboundNatPoolProperties.AdditionalProperties` and `LoadBalancingRuleProperties.AdditionalProperties` | None | Writable `BicepDictionary<BinaryData>` auto-properties; values are ignored by Bicep generation. |
+
+The restored `ResourceType` properties belong to
+`ApplicationGatewayEntraJwtValidationConfig`, `ApplicationGatewayRewriteRuleSet`,
+`AzureFirewallApplicationRuleCollectionData`, `AzureFirewallNatRuleCollectionData`,
+`AzureFirewallNetworkRuleCollectionData`, `NetworkIPConfiguration`,
+`P2SConnectionConfiguration`, `VirtualNetworkGatewayIPConfiguration`,
+`VirtualNetworkGatewayPolicyGroup`, `VngClientConnectionConfiguration`,
+`VpnClientRevokedCertificate`, and `VpnClientRootCertificate`.
+
+The released dictionaries used an uppercase `AdditionalProperties` Bicep path,
+but additional-properties support was never implemented. The restored properties
+have no explicit backing field or Bicep definition; they satisfy API compatibility
+only.
+
 ## Other outstanding issues
+
+### Additional-properties support
+
+[Issue #60666](https://github.com/Azure/azure-sdk-for-net/issues/60666) tracks
+additional-properties support in the provisioning generator. The restored
+`AdditionalProperties` properties are intentionally nonfunctional: neither
+literal nor expression entries are emitted to Bicep.
 
 ### Test compilation
 
