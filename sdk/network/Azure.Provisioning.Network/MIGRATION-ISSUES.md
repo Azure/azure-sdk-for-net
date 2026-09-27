@@ -18,7 +18,7 @@ The package is **not release-ready**.
 |---|---|
 | Provisioning generation | Succeeds from the shared spec commit. |
 | Provisioning compilation and API export | Pass for `netstandard2.0`, `net8.0`, and `net10.0`; API listings are current. |
-| Provisioning ApiCompat | 151 diagnostics per framework; normal package builds fail this gate. |
+| Provisioning ApiCompat | 150 diagnostics per framework; normal package builds fail this gate. |
 | Standard test project | Blocked by the read-only `NetworkSecurityGroup.Id` assignment listed below. |
 | Management compilation, API export, and ApiCompat | Pass; no active management ApiCompat diagnostics. |
 | Recommended property names | `IsPrimary`, `DisableTraceRoute`, and `ConfigurationPolicyGroups` match management. Agreed naming exceptions are listed below. |
@@ -31,9 +31,9 @@ three frameworks.
 | Diagnostic | Count | Meaning |
 |---|---:|---|
 | `CP0001` | 0 | Removed public types |
-| `CP0002` | 127 | Removed or incompatible public member signatures |
+| `CP0002` | 126 | Removed or incompatible public member signatures |
 | `CP0011` | 24 | Changed enum numeric values |
-| **Total** | **151** | |
+| **Total** | **150** | |
 
 A changed property type can produce missing-getter and missing-setter
 diagnostics even when the property name still exists. Diagnostic counts
@@ -44,16 +44,16 @@ therefore differ from logical member counts.
 | Category | Diagnostics | Affected members |
 |---|---:|---:|
 | Property type changed | 32 | 29 properties |
-| Property missing | 23 | 19 properties |
+| Property missing | 22 | 18 properties |
 | Property became read-only | 48 | 48 properties |
 | Enum member missing | 24 | 24 fields |
-| **Total** | **127** | **120** |
+| **Total** | **126** | **119** |
 
 Missing properties:
 
 | Category | Diagnostics | Properties | Details |
 |---|---:|---:|---|
-| Renamed and type changed | 3 | 2 | `ConnectionMonitorEndpoint.EndpointType` and `CustomIPPrefix.ChildCustomIPPrefixList`. |
+| Renamed and type changed | 2 | 1 | `ConnectionMonitorEndpoint.EndpointType`. |
 | Flattened wrapper missing | 3 | 2 | `LoadBalancerInboundNatPool.Properties` and `LoadBalancingRule.Properties`. |
 | No generated equivalent | 17 | 15 | Twelve `ResourceType` getters without a generated `Type` property, one `SystemData` getter, and two `AdditionalProperties` bags. |
 
@@ -104,8 +104,10 @@ overrides on their declaring models. Regenerated flattened properties use
 existing setters, output-only behavior, and wire paths. Writable references
 serialize as objects containing `id`, not scalar IDs.
 
-`CustomIPPrefix.ChildCustomIPPrefixList` remains in the separate renamed-and-type-
-changed category; its generated replacement is still `ChildCustomIPPrefixes`.
+`CustomIPPrefix.ChildCustomIPPrefixList` is restored as a hidden, obsolete,
+getter-only `BicepList<WritableSubResource>` with its own backing field. It exposes
+the same output-only `properties.childCustomIpPrefixes` Bicep path as the unchanged
+generated `ChildCustomIPPrefixes` property, which remains the preferred API.
 
 ## Other outstanding issues
 

@@ -1892,6 +1892,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Asn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AuthorizationMessage { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkSubResource> ChildCustomIPPrefixes { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ChildCustomIPPrefixes instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ChildCustomIPPrefixList { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Cidr { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.CommissionedState> CommissionedState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
