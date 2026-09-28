@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatasetLocation"/>. </summary>
+        protected DatasetLocation() : this(default)
+        {
+        }
+
         /// <summary> Type of dataset storage location. </summary>
         internal string DatasetLocationType { get; set; }
 

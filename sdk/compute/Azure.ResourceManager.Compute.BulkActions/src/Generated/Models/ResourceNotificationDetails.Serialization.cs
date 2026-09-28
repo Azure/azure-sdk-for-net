@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Resource notification details containing notification metadata like the resource context. </summary>
+    /// <summary> Caller-provided context associated with a virtual machine operation. </summary>
     internal partial class ResourceNotificationDetails : IJsonModel<ResourceNotificationDetails>
     {
         /// <param name="data"> The data to parse. </param>

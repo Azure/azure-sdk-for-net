@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryCredential"/>. </summary>
+        protected DataFactoryCredential() : this(default)
+        {
+        }
+
         /// <summary> Type of credential. </summary>
         internal string CredentialType { get; set; }
 

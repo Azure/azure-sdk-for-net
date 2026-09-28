@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RegistryEndpointTrustedSigningKey"/>. </summary>
+        protected RegistryEndpointTrustedSigningKey() : this(default)
+        {
+        }
+
         /// <summary> The trust type for the registry endpoint. </summary>
         internal RegistryEndpointTrustedSigningKeyType Type { get; set; }
     }

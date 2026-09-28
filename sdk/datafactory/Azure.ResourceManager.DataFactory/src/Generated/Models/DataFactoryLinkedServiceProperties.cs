@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
+        protected DataFactoryLinkedServiceProperties() : this(default)
+        {
+        }
+
         /// <summary> Type of linked service. </summary>
         internal string LinkedServiceType { get; set; }
 

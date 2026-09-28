@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FrontDoorSecretProperties"/>. </summary>
+        protected FrontDoorSecretProperties() : this(default)
+        {
+        }
+
         /// <summary> The type of the secret resource. </summary>
         [WirePath("type")]
         internal SecretType SecretType { get; set; }

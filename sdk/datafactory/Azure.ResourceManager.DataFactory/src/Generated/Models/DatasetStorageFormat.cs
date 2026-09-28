@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DatasetStorageFormat"/>. </summary>
+        protected DatasetStorageFormat() : this(default)
+        {
+        }
+
         /// <summary> Type of dataset storage format. </summary>
         internal string DatasetStorageFormatType { get; set; }
 

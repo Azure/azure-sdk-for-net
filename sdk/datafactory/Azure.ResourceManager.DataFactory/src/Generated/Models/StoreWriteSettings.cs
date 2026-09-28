@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
+        protected StoreWriteSettings() : this(default)
+        {
+        }
+
         /// <summary> The write setting type. </summary>
         internal string StoreWriteSettingsType { get; set; }
 

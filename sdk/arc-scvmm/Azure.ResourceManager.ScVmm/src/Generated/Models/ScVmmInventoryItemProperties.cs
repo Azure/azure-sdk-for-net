@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.ScVmm.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemProperties"/>. </summary>
+        protected ScVmmInventoryItemProperties() : this(default)
+        {
+        }
+
         /// <summary> They inventory type. </summary>
         internal ScVmmInventoryType InventoryType { get; set; }
 

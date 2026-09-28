@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowProperties"/>. </summary>
+        protected DataFactoryDataFlowProperties() : this(default)
+        {
+        }
+
         /// <summary> Type of data flow. </summary>
         internal string DataFlowType { get; set; }
 

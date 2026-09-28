@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
+        protected SecurityPolicyProperties() : this(default)
+        {
+        }
+
         /// <summary> The type of the Security policy to create. </summary>
         [WirePath("type")]
         internal SecurityPolicyType PolicyType { get; set; }

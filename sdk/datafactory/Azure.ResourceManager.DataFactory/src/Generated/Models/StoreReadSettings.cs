@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StoreReadSettings"/>. </summary>
+        protected StoreReadSettings() : this(default)
+        {
+        }
+
         /// <summary> The read setting type. </summary>
         internal string StoreReadSettingsType { get; set; }
 

@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorsRegistrySettings"/>. </summary>
+        protected AkriConnectorsRegistrySettings() : this(default)
+        {
+        }
+
         /// <summary> Gets or sets the RegistrySettingsType. </summary>
         internal AkriConnectorsRegistrySettingsType RegistrySettingsType { get; set; }
     }

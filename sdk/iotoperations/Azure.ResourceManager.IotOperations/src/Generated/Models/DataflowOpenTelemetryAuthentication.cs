@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataflowOpenTelemetryAuthentication"/>. </summary>
+        protected DataflowOpenTelemetryAuthentication() : this(default)
+        {
+        }
+
         /// <summary> The authentication method. </summary>
         internal DataflowOpenTelemetryAuthenticationMethod Method { get; set; }
     }

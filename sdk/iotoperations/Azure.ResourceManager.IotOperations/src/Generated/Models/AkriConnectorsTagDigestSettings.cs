@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AkriConnectorsTagDigestSettings"/>. </summary>
+        protected AkriConnectorsTagDigestSettings() : this(default)
+        {
+        }
+
         /// <summary> The tag or digest type. </summary>
         internal AkriConnectorsTagDigestType TagDigestType { get; set; }
     }

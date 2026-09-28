@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(ModelName);
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider.ToString());
-            if (Optional.IsDefined(TimeToLive))
+            if (Optional.IsDefined(TimeToLiveInDays))
             {
                 writer.WritePropertyName("timeToLive"u8);
-                writer.WriteNumberValue(TimeToLive.Value);
+                writer.WriteNumberValue(TimeToLiveInDays.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Storage.Models
             }
             string description = default;
             string modelName = default;
-            AiProvider provider = default;
-            int? timeToLive = default;
+            AIProvider provider = default;
+            int? timeToLiveInDays = default;
             ContextCacheProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("provider"u8))
                 {
-                    provider = new AiProvider(prop.Value.GetString());
+                    provider = new AIProvider(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeToLive"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    timeToLive = prop.Value.GetInt32();
+                    timeToLiveInDays = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage.Models
                 description,
                 modelName,
                 provider,
-                timeToLive,
+                timeToLiveInDays,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

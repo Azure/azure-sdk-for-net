@@ -66,7 +66,7 @@ await foreach (RealtimeItem item in conversationsClient.GetAgentConversationItem
     Console.WriteLine($"Conversation item: {item.Kind}");
 }
 
-await foreach (VoiceResponse response in conversationsClient.GetAgentConversationResponsesAsync(agentName, conversationId))
+await foreach (VoiceResult response in conversationsClient.GetAgentConversationResponsesAsync(agentName, conversationId))
 {
     Console.WriteLine($"Response {response.Id} status: {response.Status}");
 }

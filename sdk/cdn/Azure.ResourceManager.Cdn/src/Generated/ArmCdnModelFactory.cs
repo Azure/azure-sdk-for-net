@@ -4213,5 +4213,85 @@ namespace Azure.ResourceManager.Cdn.Models
                     default),
                 default);
         }
+
+        /// <summary> A profile is a logical grouping of endpoints that share the same settings. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
+        /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
+        /// <param name="resourceState"> Resource status of the profile. </param>
+        /// <param name="provisioningState"> Provisioning status of the profile. </param>
+        /// <param name="frontDoorId"> The Id of the frontdoor. </param>
+        /// <param name="originResponseTimeoutSeconds"> Send and receive timeout on forwarding request to the origin. When timeout is reached, the request fails and returns. </param>
+        /// <returns> A new <see cref="Cdn.ProfileData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProfileData ProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CdnSkuName? skuName, string kind, ProfileResourceState? resourceState, ProfileProvisioningState? provisioningState, Guid? frontDoorId, int? originResponseTimeoutSeconds)
+        {
+            return new ProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resourceState is null && provisioningState is null && frontDoorId is null && originResponseTimeoutSeconds is null ? default : new ProfileProperties(
+                    resourceState,
+                    provisioningState,
+                    default,
+                    frontDoorId,
+                    originResponseTimeoutSeconds,
+                    default,
+                    default),
+                skuName is null ? default : new CdnSku(skuName, default),
+                kind,
+                default,
+                default);
+        }
+
+        /// <summary> Defines web application firewall policy for Azure CDN. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
+        /// <param name="policySettings"> Describes  policySettings for policy. </param>
+        /// <param name="rateLimitRules"> List of rules. </param>
+        /// <param name="customRules"> List of rules. </param>
+        /// <param name="managedRuleSets"> List of rule sets. </param>
+        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSkuName? skuName, WafPolicySettings policySettings, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, IEnumerable<SubResource> endpointLinks, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState)
+        {
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    rateLimitRules is null ? default : new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
+                    customRules is null ? default : new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
+                    managedRuleSets is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
+                    (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    default,
+                    provisioningState,
+                    resourceState,
+                    default),
+                etag,
+                skuName is null ? default : new CdnSku(skuName, default),
+                default);
+        }
     }
 }

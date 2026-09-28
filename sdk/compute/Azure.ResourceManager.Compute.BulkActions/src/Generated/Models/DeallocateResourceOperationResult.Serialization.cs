@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a deallocate request. </summary>
+    /// <summary> The result of a bulk deallocate action. </summary>
     public partial class DeallocateResourceOperationResult : IJsonModel<DeallocateResourceOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="DeallocateResourceOperationResult"/> for deserialization. </summary>

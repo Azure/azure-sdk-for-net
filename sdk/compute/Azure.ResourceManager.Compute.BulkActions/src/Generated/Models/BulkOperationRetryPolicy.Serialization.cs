@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The retry policy for the user request. </summary>
+    /// <summary> The retry settings for a bulk action. </summary>
     public partial class BulkOperationRetryPolicy : IJsonModel<BulkOperationRetryPolicy>
     {
         /// <param name="data"> The data to parse. </param>
