@@ -16,7 +16,6 @@ namespace Azure.Provisioning.Network
     /// <summary> Peerings in a virtual network resource. </summary>
     public partial class VirtualNetworkPeering : ProvisionableResource
     {
-        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private VirtualNetworkPeeringPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
@@ -27,16 +26,6 @@ namespace Azure.Provisioning.Network
         /// <param name="resourceVersion"> The resource API version. </param>
         public VirtualNetworkPeering(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/virtualNetworks/virtualNetworkPeerings", resourceVersion ?? "2025-05-01")
         {
-        }
-
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -422,7 +411,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualNetworkPeeringPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);

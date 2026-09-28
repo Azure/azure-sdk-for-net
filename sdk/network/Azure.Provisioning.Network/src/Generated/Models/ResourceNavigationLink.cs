@@ -15,7 +15,6 @@ namespace Azure.Provisioning.Network
     public partial class ResourceNavigationLink : NetworkSubResource
     {
         private ResourceNavigationLinkFormat _properties;
-        private BicepValue<string> _name;
         private BicepValue<string> _id;
         private BicepValue<ETag> _eTag;
         private BicepValue<string> _type;
@@ -32,16 +31,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _properties;
-            }
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
             }
         }
 
@@ -107,7 +96,6 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ResourceNavigationLinkFormat>(nameof(Properties), new string[] { "properties" });
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);

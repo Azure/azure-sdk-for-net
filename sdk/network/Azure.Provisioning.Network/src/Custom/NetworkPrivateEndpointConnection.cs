@@ -5,11 +5,28 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Provisioning.Network;
 
 public partial class NetworkPrivateEndpointConnection
 {
+    // Preserve the released writable ID for input/reference usages. The generator
+    // incorrectly treats every resource ID as output-only.
+    // https://github.com/Azure/azure-sdk-for-net/issues/63430
+    /// <summary> Resource ID. </summary>
+    public BicepValue<ResourceIdentifier> Id
+    {
+        get { Initialize(); return _id; }
+        set { Initialize(); _id.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier> _id;
+
+    partial void DefineAdditionalProperties()
+    {
+        _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+    }
+
     // Preserve the pre-TypeSpec property name because it maps to the same Bicep property as the generated member.
     /// <inheritdoc cref="PrivateLinkServiceConnectionState"/>
     [EditorBrowsable(EditorBrowsableState.Never)]

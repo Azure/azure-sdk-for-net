@@ -3,6 +3,11 @@
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// Preserve the released TLS 1.3 spelling at the same ordinal as its canonical name.
+// Pin both names because reserving the alias alone would shift Tls1_3 to 4.
+[assembly: CodeGenEnumValue("ApplicationGatewaySslProtocol", "Tls1_3", 3)]
+[assembly: CodeGenEnumValue("ApplicationGatewaySslProtocol", "TLSv13", 3, WireName = "TLSv1_3", EditorBrowsableNever = true)]
+
 // Reserve the missing leading values from 1.1.0; the remaining generated members
 // then receive their original ordinals without individual overrides.
 [assembly: CodeGenEnumValue("ApplicationGatewayCustomErrorStatusCode", "HttpStatus499", 0, WireName = "HttpStatus499", EditorBrowsableNever = true)]

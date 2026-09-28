@@ -36,6 +36,7 @@ namespace Azure.Provisioning.Network
         [DataMember(Name = "PFS14")]
         Pfs14 = 7,
         /// <summary> PFSMM. </summary>
-        PFSMM = 8
+        [DataMember(Name = "PFSMM")]
+        Pfs = 8
     }
 }

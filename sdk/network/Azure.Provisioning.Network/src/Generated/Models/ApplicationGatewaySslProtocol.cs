@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Network
@@ -14,14 +15,18 @@ namespace Azure.Provisioning.Network
     {
         /// <summary> TLSv1_0. </summary>
         [DataMember(Name = "TLSv1_0")]
-        TLSv10 = 0,
+        Tls1_0 = 0,
         /// <summary> TLSv1_1. </summary>
         [DataMember(Name = "TLSv1_1")]
-        TLSv11 = 1,
+        Tls1_1 = 1,
         /// <summary> TLSv1_2. </summary>
         [DataMember(Name = "TLSv1_2")]
-        TLSv12 = 2,
+        Tls1_2 = 2,
         /// <summary> TLSv1_3. </summary>
+        [DataMember(Name = "TLSv1_3")]
+        Tls1_3 = 3,
+        /// <summary> TLSv13. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [DataMember(Name = "TLSv1_3")]
         TLSv13 = 3
     }
