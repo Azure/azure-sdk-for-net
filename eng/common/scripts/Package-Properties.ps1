@@ -467,7 +467,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                         $soleCIYml = $directoryIndex[$directory]
                     }
                     else {
-                        $soleCIYml = (Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
+                        $soleCIYml = @(Get-ChildItem -Path $directory -Filter "ci*.yml" -File).Count -eq 1
                         $directoryIndex[$directory] = $soleCIYml
                     }
 
