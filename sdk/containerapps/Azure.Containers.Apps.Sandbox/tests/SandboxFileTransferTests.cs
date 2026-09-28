@@ -18,7 +18,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
     {
         [TestCase(false)]
         [TestCase(true)]
-        public async Task DownloadSandboxFileStreamingDoesNotBufferResponse(bool async)
+        public async Task DownloadSandboxFileDoesNotBufferResponse(bool async)
         {
             byte[] expected = Encoding.UTF8.GetBytes("sandbox-file-content");
             MemoryStream responseStream = new MemoryStream(expected);
@@ -33,8 +33,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 .GetSandboxGroupSandboxFilesClient();
 
             Response<Stream> response = async
-                ? await client.DownloadSandboxFileStreamingAsync("workspace/example.txt", "worker")
-                : client.DownloadSandboxFileStreaming("workspace/example.txt", "worker");
+                ? await client.DownloadSandboxFileAsync("workspace/example.txt", "worker")
+                : client.DownloadSandboxFile("workspace/example.txt", "worker");
 
             Assert.That(response.Value, Is.SameAs(responseStream));
             using StreamReader reader = new StreamReader(response.Value);
@@ -44,7 +44,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
 
         [TestCase(false)]
         [TestCase(true)]
-        public async Task DownloadVolumeFileStreamingDoesNotBufferResponse(bool async)
+        public async Task DownloadVolumeFileDoesNotBufferResponse(bool async)
         {
             byte[] expected = Encoding.UTF8.GetBytes("volume-file-content");
             MemoryStream responseStream = new MemoryStream(expected);
@@ -58,8 +58,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 .GetSandboxGroupVolumesClient();
 
             Response<Stream> response = async
-                ? await client.DownloadVolumeFileStreamingAsync("volume", "workspace/example.txt")
-                : client.DownloadVolumeFileStreaming("volume", "workspace/example.txt");
+                ? await client.DownloadVolumeFileAsync("volume", "workspace/example.txt")
+                : client.DownloadVolumeFile("volume", "workspace/example.txt");
 
             Assert.That(response.Value, Is.SameAs(responseStream));
             using StreamReader reader = new StreamReader(response.Value);
@@ -83,7 +83,6 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 : client.UploadSandboxFile("workspace/example.txt", content, createDirs: true);
 
             Assert.That(response.Value.Success, Is.True);
-            Assert.That(SandboxClientTestHelpers.ReadContent(transport.SingleRequest), Is.EqualTo("payload"));
             Assert.That(SandboxClientTestHelpers.ReadContent(transport.SingleRequest), Is.EqualTo("payload"));
             Assert.That(content.CanRead, Is.True);
             Assert.That(transport.SingleRequest.Uri.Query, Does.Contain("createDirs=true"));

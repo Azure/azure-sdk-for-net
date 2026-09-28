@@ -106,7 +106,7 @@ await files.UploadSandboxFileAsync(
     upload,
     createDirs: true);
 
-var response = await files.DownloadSandboxFileStreamingAsync("/tmp/example.txt");
+var response = await files.DownloadSandboxFileAsync("/tmp/example.txt");
 using Stream download = response.Value;
 using FileStream destination = File.Create("downloaded-example.txt");
 await download.CopyToAsync(destination);

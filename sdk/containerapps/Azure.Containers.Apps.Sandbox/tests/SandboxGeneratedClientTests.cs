@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -181,11 +183,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             {
                 IfMatch = new ETag("\"etag\"")
             };
+            using MemoryStream content = new MemoryStream(Encoding.UTF8.GetBytes("content"));
 
             Response<VolumePathItem> response = client.UploadVolumeFile(
                 "volume",
                 "workspace/example.txt",
-                BinaryData.FromString("content"),
+                content,
                 overwrite: true,
                 matchConditions: conditions);
 
@@ -204,11 +207,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             SandboxGroupVolumes client = SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
                 .GetSandboxGroupVolumesClient();
+            using MemoryStream content = new MemoryStream(Encoding.UTF8.GetBytes("content"));
 
             Response<VolumePathItem> response = client.UploadVolumeFile(
                 "volume",
                 "workspace/example.txt",
-                BinaryData.FromString("content"),
+                content,
                 overwrite: false);
 
             Assert.That(response.Value.Path, Is.EqualTo("workspace/example.txt"));

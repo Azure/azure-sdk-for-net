@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
@@ -32,20 +33,23 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 {
                     CreateParents = true
                 });
+            using Stream upload = BinaryData.FromString("Hello from the .NET SDK").ToStream();
             Response<WriteFileResult> writeResponse = await files.UploadSandboxFileAsync(
                 path,
-                BinaryData.FromString("Hello from the .NET SDK"),
+                upload,
                 createDirs: true);
             Response<Azure.Containers.Apps.Sandbox.FileInfo> metadataResponse =
                 await files.GetSandboxFileMetadataAsync(path);
             Response<DirListingResult> listResponse = await files.GetSandboxFilesMetadataAsync(directory);
-            Response<BinaryData> readResponse = await files.DownloadSandboxFileAsync(path);
+            Response<Stream> readResponse = await files.DownloadSandboxFileAsync(path);
+            using StreamReader reader = new StreamReader(readResponse.Value);
+            string downloadedContent = await reader.ReadToEndAsync();
 
             Assert.That(directoryResponse.Value, Is.Not.Null);
             Assert.That(writeResponse.Value, Is.Not.Null);
             Assert.That(metadataResponse.Value.Path, Is.EqualTo(path));
             Assert.That(listResponse.Value, Is.Not.Null);
-            Assert.That(readResponse.Value.ToString(), Is.EqualTo("Hello from the .NET SDK"));
+            Assert.That(downloadedContent, Is.EqualTo("Hello from the .NET SDK"));
 
             await files.DeleteSandboxFileAsync(path);
             await files.DeleteSandboxFileAsync(directory, recursive: true);

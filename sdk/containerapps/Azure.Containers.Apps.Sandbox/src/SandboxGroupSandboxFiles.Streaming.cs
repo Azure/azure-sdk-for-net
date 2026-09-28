@@ -7,9 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Containers.Apps.Sandbox
 {
+    [CodeGenSuppress("DownloadSandboxFile", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DownloadSandboxFileAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("UploadSandboxFile", typeof(string), typeof(BinaryData), typeof(bool?), typeof(int?), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("UploadSandboxFileAsync", typeof(string), typeof(BinaryData), typeof(bool?), typeof(int?), typeof(string), typeof(CancellationToken))]
     public partial class SandboxGroupSandboxFiles
     {
         /// <summary>
@@ -24,12 +29,12 @@ namespace Azure.Containers.Apps.Sandbox
         /// <exception cref="ArgumentNullException"><paramref name="path"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="path"/> is empty.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        public virtual Response<Stream> DownloadSandboxFileStreaming(
+        public virtual Response<Stream> DownloadSandboxFile(
             string path,
             string containerName = default,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.DownloadSandboxFileStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.DownloadSandboxFile");
             scope.Start();
             try
             {
@@ -61,12 +66,12 @@ namespace Azure.Containers.Apps.Sandbox
         /// <exception cref="ArgumentNullException"><paramref name="path"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="path"/> is empty.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        public virtual async Task<Response<Stream>> DownloadSandboxFileStreamingAsync(
+        public virtual async Task<Response<Stream>> DownloadSandboxFileAsync(
             string path,
             string containerName = default,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.DownloadSandboxFileStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.DownloadSandboxFile");
             scope.Start();
             try
             {

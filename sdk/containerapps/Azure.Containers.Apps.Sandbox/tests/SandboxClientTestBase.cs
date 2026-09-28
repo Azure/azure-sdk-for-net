@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
@@ -167,8 +168,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         protected async Task<ContentPackage> CreateContentPackageAsync(SandboxGroup sandboxGroup)
         {
             SandboxGroupContentPackages client = sandboxGroup.GetSandboxGroupContentPackagesClient();
+            using Stream content = BinaryData.FromString("sandbox test package").ToStream();
             Response<ContentPackage> response = await client.UploadContentPackageAsync(
-                BinaryData.FromString("sandbox test package"),
+                content,
                 "application/octet-stream",
                 $"test-id={Recording.GenerateId("package-", 30)}").ConfigureAwait(false);
             RegisterCleanup(() => DeleteContentPackageIfExistsAsync(sandboxGroup, response.Value.Id));

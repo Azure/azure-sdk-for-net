@@ -222,36 +222,6 @@ namespace Azure.Containers.Apps.Sandbox
             }
         }
 
-        /// <summary> Reads a file from a running sandbox. The file is streamed directly to the response body. </summary>
-        /// <param name="path"> The file path to download. </param>
-        /// <param name="containerName"> The target container name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> DownloadSandboxFile(string path, string containerName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
-            Response result = DownloadSandboxFile(path, containerName, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Reads a file from a running sandbox. The file is streamed directly to the response body. </summary>
-        /// <param name="path"> The file path to download. </param>
-        /// <param name="containerName"> The target container name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> DownloadSandboxFileAsync(string path, string containerName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
-            Response result = await DownloadSandboxFileAsync(path, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Lists the contents of a directory in a running sandbox. The response includes file and directory names, sizes, and metadata.
         /// <list type="bullet">
@@ -608,44 +578,6 @@ namespace Azure.Containers.Apps.Sandbox
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Writes a file to a running sandbox. The file is streamed directly from the request body. </summary>
-        /// <param name="path"> The destination file path. </param>
-        /// <param name="content"> The file content to upload. </param>
-        /// <param name="createDirs"> Whether to create missing parent directories. </param>
-        /// <param name="mode"> The Unix mode for the uploaded file. </param>
-        /// <param name="containerName"> The target container name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WriteFileResult> UploadSandboxFile(string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-            Argument.AssertNotNull(content, nameof(content));
-
-            Response result = UploadSandboxFile(path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((WriteFileResult)result, result);
-        }
-
-        /// <summary> Writes a file to a running sandbox. The file is streamed directly from the request body. </summary>
-        /// <param name="path"> The destination file path. </param>
-        /// <param name="content"> The file content to upload. </param>
-        /// <param name="createDirs"> Whether to create missing parent directories. </param>
-        /// <param name="mode"> The Unix mode for the uploaded file. </param>
-        /// <param name="containerName"> The target container name. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WriteFileResult>> UploadSandboxFileAsync(string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-            Argument.AssertNotNull(content, nameof(content));
-
-            Response result = await UploadSandboxFileAsync(path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((WriteFileResult)result, result);
         }
     }
 }

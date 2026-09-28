@@ -7,9 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Containers.Apps.Sandbox
 {
+    [CodeGenSuppress("DownloadVolumeFile", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("DownloadVolumeFileAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("UploadVolumeFile", typeof(string), typeof(string), typeof(BinaryData), typeof(bool?), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppress("UploadVolumeFileAsync", typeof(string), typeof(string), typeof(BinaryData), typeof(bool?), typeof(MatchConditions), typeof(CancellationToken))]
     public partial class SandboxGroupVolumes
     {
         /// <summary>
@@ -24,12 +29,12 @@ namespace Azure.Containers.Apps.Sandbox
         /// <exception cref="ArgumentNullException"><paramref name="volumeName"/> or <paramref name="path"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="volumeName"/> or <paramref name="path"/> is empty.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        public virtual Response<Stream> DownloadVolumeFileStreaming(
+        public virtual Response<Stream> DownloadVolumeFile(
             string volumeName,
             string path,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.DownloadVolumeFileStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.DownloadVolumeFile");
             scope.Start();
             try
             {
@@ -62,12 +67,12 @@ namespace Azure.Containers.Apps.Sandbox
         /// <exception cref="ArgumentNullException"><paramref name="volumeName"/> or <paramref name="path"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="volumeName"/> or <paramref name="path"/> is empty.</exception>
         /// <exception cref="RequestFailedException">The service returned a non-success status code.</exception>
-        public virtual async Task<Response<Stream>> DownloadVolumeFileStreamingAsync(
+        public virtual async Task<Response<Stream>> DownloadVolumeFileAsync(
             string volumeName,
             string path,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.DownloadVolumeFileStreaming");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.DownloadVolumeFile");
             scope.Start();
             try
             {

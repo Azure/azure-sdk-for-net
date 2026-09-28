@@ -6,9 +6,12 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Containers.Apps.Sandbox
 {
+    [CodeGenSuppress("UploadContentPackage", typeof(BinaryData), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("UploadContentPackageAsync", typeof(BinaryData), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class SandboxGroupContentPackages
     {
         /// <summary>
