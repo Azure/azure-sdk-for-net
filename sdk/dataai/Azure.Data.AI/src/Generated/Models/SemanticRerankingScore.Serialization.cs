@@ -186,7 +186,7 @@ namespace Azure.Data.AI
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SemanticRerankingScore(index, document, score, sentenceScores ?? new ChangeTrackingList<SentenceScore>(), additionalBinaryDataProperties);
