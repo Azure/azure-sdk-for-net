@@ -31,7 +31,6 @@ Infrastructure infra = new();
 
 FabricCapacity capacity = new(nameof(capacity), FabricCapacity.ResourceVersions.V2026_09_01_PREVIEW)
 {
-    Name = "existingCapacity",
     Location = new AzureLocation("westus"),
     Sku = new()
     {
