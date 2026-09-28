@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `IDisposable` to `KeyClient`, `CryptographyClient`, and `KeyResolver` to release internally owned HTTP pipelines and transports. Cryptography clients returned by a key client or resolver borrow its pipeline and do not dispose it; keep the parent alive until all use of those clients has completed. Caller-provided transports are not disposed.
 - Added a narrowly scoped bearer-token fallback for attested managed-identity tenant eligibility denials, with the decision remembered by the Key Vault client for subsequent token acquisitions.
 - Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 

@@ -16,6 +16,7 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
 
 ## Table of Contents
 
+* [Client lifetime and disposal](#client-lifetime-and-disposal)
 * [Troubleshooting Authentication Issues](#troubleshooting-authentication-issues)
   * [Attested token eligibility fallback](#attested-token-eligibility-fallback)
   * [HTTP 401 Errors](#http-401-errors)
@@ -31,6 +32,14 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
 * [Other Service Errors](#other-service-errors)
   * [HTTP 429: Too Many Request](#http-429-too-many-requests)
 * [Support](#support)
+
+## Client lifetime and disposal
+
+Reuse Key Vault clients and resolvers for the lifetime of the workload rather than constructing a new instance for each request. Clients that create their own update-capable HTTP transport implement `IDisposable`; call `Dispose` when the client is no longer needed. Repeated calls to `Dispose` are safe. This releases client-owned pipeline resources without deleting certificates or clearing tenant eligibility in Azure.
+
+Finish all requests, long-running operation polling, pageable enumeration, and use of response or cryptographic streams before disposing the client. Do not start new operations or dispose the client concurrently with operations. `CryptographyClient` instances returned by a `KeyClient` or `KeyResolver` borrow that parent's pipeline: disposing a child does not release the shared pipeline, and the parent must remain alive until all use of its children has completed.
+
+Clients do not dispose caller-supplied transports, HTTP clients, credentials, or key material. The application remains responsible for those resources. Disposal provides a cleanup path but does not replace the recommendation to reuse client instances.
 
 ## Troubleshooting Authentication Issues
 

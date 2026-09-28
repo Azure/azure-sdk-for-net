@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `IDisposable` to `KeyVaultAccessControlClient`, `KeyVaultBackupClient`, `KeyVaultEkmClient`, and `KeyVaultSettingsClient` to release internally owned HTTP pipelines and transports. Reuse clients and dispose them after all operations and polling have completed; caller-provided transports are not disposed.
 - Added a narrowly scoped bearer-token fallback for attested managed-identity tenant eligibility denials, with the decision remembered by the Key Vault client for subsequent token acquisitions.
 - Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 

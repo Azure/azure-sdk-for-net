@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -16,8 +17,10 @@ namespace Azure.Security.KeyVault.Administration
     /// The rest client for the KeyVault service.
     /// </summary>
     [CodeGenType("KeyVaultRestClient")]
-    internal partial class KeyVaultRestClient
+    internal partial class KeyVaultRestClient : IDisposable
     {
+        private DisposableHttpPipeline _ownedPipeline;
+
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
@@ -38,12 +41,13 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            Pipeline = HttpPipelineBuilder.Build(
+            _ownedPipeline = HttpPipelineBuilder.Build(
                 options,
                 perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
                 perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
                 transportOptions: new HttpPipelineTransportOptions(),
                 responseClassifier: null);
+            Pipeline = _ownedPipeline;
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();
         }
@@ -63,5 +67,7 @@ namespace Azure.Security.KeyVault.Administration
             _apiVersion = options.GetVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
+
+        public void Dispose() => Interlocked.Exchange(ref _ownedPipeline, null)?.Dispose();
     }
 }
