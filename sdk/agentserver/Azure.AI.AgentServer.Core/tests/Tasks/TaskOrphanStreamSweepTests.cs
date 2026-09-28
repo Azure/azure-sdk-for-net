@@ -171,39 +171,107 @@ public class TaskOrphanStreamSweepTests
         }
     }
 
+    [Test]
+    public async Task EngineSweepClosesStreamOrphanedByCommittedDeleteCrash()
+    {
+        // Delete-to-close crash gap: a hard delete commits (the record is gone) but the process
+        // crashes before the stream close is persisted, leaving an open orphan. Records are created
+        // before their streams, so a missing record + a live stream file means "deleted after
+        // create". On the authoritative local store the cold-start sweep must close that orphan
+        // rather than skip it forever.
+        string root = Path.Combine(Path.GetTempPath(), "agentserver-orphan-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            using TaskTestHost host = TaskTestHost.Create(
+                sharedDir: Path.Combine(root, "tasks"),
+                configureStreams: o => o.UseFileBackedReplay(Path.Combine(root, "streams"), TimeSpan.FromMinutes(10)));
+            var registry = (ITaskEventStreamRegistry)host.Streams;
+
+            // A task with a persisted stream, then a committed hard delete: the stream file survives
+            // (crash before its close) while its record does not.
+            await host.Store.CreateAsync(new TaskCreateRequest
+            {
+                Id = "t",
+                AgentName = host.AgentName,
+                SessionId = host.SessionId,
+                Title = "deleted",
+                Status = TaskWireKeys.StatusInProgress,
+                Payload = new JsonObject
+                {
+                    [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
+                    [TaskWireKeys.PayloadLastInputId] = "orphan",
+                },
+                Source = new JsonObject
+                {
+                    [TaskWireKeys.SourceType] = TaskWireKeys.SourceTypeValue,
+                    [TaskWireKeys.SourceName] = "deleted",
+                    [TaskWireKeys.SourceServerVersion] = "test",
+                },
+            });
+            AgentEventStream stream = await registry.GetOrCreateTaskStreamAsync("t", "orphan");
+            await stream.EmitAsync(new SseItem<string>("first") { EventId = "1" });
+            await host.Store.DeleteAsync("t", force: true);
+
+            // The stream file is still open; its record is gone.
+            string streamFile = Path.Combine(root, "streams", "orphan.jsonl");
+            Assert.That(File.Exists(streamFile), Is.True, "guard: the orphaned stream file must survive the delete.");
+            Assert.That(FileBackedReplayEventStream.IsFileTerminated(streamFile), Is.False,
+                "guard: the orphan is still open before recovery.");
+            Assert.That(await host.Store.GetAsync("t"), Is.Null, "guard: the record was hard-deleted.");
+
+            await host.Engine.ScanAndRecoverAsync();
+
+            // The orphan is now closed: replay reaches EOF and the marker is durable.
+            List<string> replayed = await ReadToEndAsync(stream);
+            Assert.That(replayed, Is.EqualTo(new[] { "first" }));
+            Assert.That(FileBackedReplayEventStream.IsFileTerminated(streamFile), Is.True);
+        }
+        finally
+        {
+            if (Directory.Exists(root))
+            { Directory.Delete(root, recursive: true); }
+        }
+    }
+
     [TestCase(TaskWireKeys.StatusSuspended, "a", ExpectedResult = true, TestName = "Suspended finished input is closed")]
     [TestCase(TaskWireKeys.StatusCompleted, "a", ExpectedResult = true, TestName = "Completed input is closed")]
     public bool TerminalRecord_ClosesTheInput(string status, string inputId)
-        => TaskEngine.ShouldCloseOrphanInput(Record(status, active: "a"), inputId, Agent, Session);
+        => ShouldClose(Record(status, active: "a"), inputId);
 
     [Test]
     public void InProgress_KeepsActiveInputOpen()
-        => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusInProgress, active: "b"), "b", Agent, Session), Is.False);
+        => Assert.That(ShouldClose(
+            Record(TaskWireKeys.StatusInProgress, active: "b"), "b"), Is.False);
 
     [Test]
     public void InProgress_ClosesRetiredPredecessor()
-        => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusInProgress, active: "b"), "a", Agent, Session), Is.True,
+        => Assert.That(ShouldClose(
+            Record(TaskWireKeys.StatusInProgress, active: "b"), "a"), Is.True,
             "A promoted-away predecessor of a running turn is orphaned.");
 
     [Test]
     public void KeepsQueuedInputsOpen_EvenWhenSuspended()
-        => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusSuspended, active: "a", queued: new[] { "q1", "q2" }), "q1", Agent, Session), Is.False,
+        => Assert.That(ShouldClose(
+            Record(TaskWireKeys.StatusSuspended, active: "a", queued: new[] { "q1", "q2" }), "q1"), Is.False,
             "A durably-queued input runs on resume; its stream must stay open.");
 
     [Test]
-    public void LeavesMissingRecordUntouched()
-        => Assert.That(TaskEngine.ShouldCloseOrphanInput(null, "a", Agent, Session), Is.False,
-            "A deleted or foreign-scope task's stream must never be sealed.");
+    public void ClosesDeletedOrphanOnAuthoritativeStore()
+        => Assert.That(ShouldClose(null, "a", authoritative: true), Is.True,
+            "A record deleted after its stream was created is an orphan the authoritative store can close.");
+
+    [Test]
+    public void LeavesMissingRecordUntouchedOnNonAuthoritativeStore()
+        => Assert.That(ShouldClose(null, "a", authoritative: false), Is.False,
+            "A non-authoritative miss (e.g. a hosted 404 under eventual consistency) must never seal a stream.");
 
     [Test]
     public void LeavesForeignSourceTypeUntouched()
     {
         TaskRecord record = Record(TaskWireKeys.StatusSuspended, active: "a");
         record.Source = new Source { Type = "other.framework" };
-        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a", Agent, Session), Is.False);
+        Assert.That(ShouldClose(record, "a"), Is.False);
     }
 
     [Test]
@@ -213,7 +281,7 @@ public class TaskOrphanStreamSweepTests
         // store must not be swept: the direct-by-id lookup can see it, but it is out of scope.
         TaskRecord record = Record(TaskWireKeys.StatusSuspended, active: "a");
         record.AgentName = "other-agent";
-        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a", Agent, Session), Is.False,
+        Assert.That(ShouldClose(record, "a"), Is.False,
             "A record owned by a different agent is outside this engine's recovery scope.");
     }
 
@@ -222,14 +290,19 @@ public class TaskOrphanStreamSweepTests
     {
         TaskRecord record = Record(TaskWireKeys.StatusSuspended, active: "a");
         record.SessionId = "other-session";
-        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a", Agent, Session), Is.False,
+        Assert.That(ShouldClose(record, "a"), Is.False,
             "A record owned by a different session is outside this engine's recovery scope.");
     }
 
     [Test]
     public void LeavesPendingRecordUntouched()
-        => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusPending, active: "a"), "a", Agent, Session), Is.False);
+        => Assert.That(ShouldClose(
+            Record(TaskWireKeys.StatusPending, active: "a"), "a"), Is.False);
+
+    // For a present record the store-authority flag is irrelevant (the absent-record branch is not
+    // taken), so present-record cases default to authoritative: true.
+    private static bool ShouldClose(TaskRecord? record, string inputId, bool authoritative = true)
+        => TaskEngine.ShouldCloseOrphanInput(record, inputId, Agent, Session, authoritative);
 
     private static TaskRecord Record(string status, string active, string[]? queued = null)
     {

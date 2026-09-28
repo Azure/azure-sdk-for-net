@@ -2470,6 +2470,13 @@ internal sealed partial class TaskEngine : IDisposable
         // read is deliberately left uncached so a later pass re-attempts it.
         var records = new Dictionary<string, TaskRecord?>(StringComparer.Ordinal);
 
+        // A definitively-absent record only justifies closing its orphaned stream when the store is
+        // authoritative about absence. LocalTaskStore resolves by a filesystem lookup, so a null is a
+        // durable fact; a hosted store can return a transient 404 under eventual consistency, so an
+        // absent record there is left open (deletion recovery stays deferred, Python parity). Only
+        // local streams are file-backed anyway, and that always pairs with the local store.
+        bool storeIsAuthoritative = _store is LocalTaskStore;
+
         for (int attempt = 0; attempt < TaskEngineConstants.OrphanSweepMaxAttempts; attempt++)
         {
             bool uncertainRead = false;
@@ -2494,7 +2501,7 @@ internal sealed partial class TaskEngine : IDisposable
                         }
                     }
 
-                    return ShouldCloseOrphanInput(record, inputId, _agentName, _sessionId);
+                    return ShouldCloseOrphanInput(record, inputId, _agentName, _sessionId, storeIsAuthoritative);
                 },
                 cancellationToken).ConfigureAwait(false);
 
@@ -2507,19 +2514,31 @@ internal sealed partial class TaskEngine : IDisposable
         }
     }
 
-    // A persisted task stream is closeable only when its owning framework record is present, in THIS
-    // engine's (agent, session) recovery scope, and the input is no longer live: for an in_progress
-    // record the executing input and every queued input stay open; for a terminal (suspended/
-    // completed) record only its queued inputs stay open. A record that is absent (deleted), owned by
-    // a foreign source type, or owned by another agent/session on the shared store is left untouched,
-    // so a live, deleted, or foreign stream is never sealed.
+    // A persisted task stream is closeable when the input is no longer live. With a present record in
+    // THIS engine's (agent, session) scope: for an in_progress record the executing input and every
+    // queued input stay open; for a terminal (suspended/completed) record only its queued inputs stay
+    // open. A record owned by a foreign source type or another agent/session is left untouched. A
+    // DEFINITIVELY ABSENT record means the task was deleted after its stream file was written (records
+    // are created before their streams); its stream is orphaned and closeable — but only when the
+    // store is authoritative, so a non-authoritative miss (e.g. a hosted 404 under eventual
+    // consistency) can never seal a live task's stream. Uncertain reads never reach here (the caller
+    // leaves them open and retries).
     internal static bool ShouldCloseOrphanInput(
         TaskRecord? record,
         string inputId,
         string expectedAgentName,
-        string expectedSessionId)
+        string expectedSessionId,
+        bool storeIsAuthoritative)
     {
-        if (record is null || record.Source?.Type != TaskWireKeys.SourceTypeValue)
+        if (record is null)
+        {
+            // Deleted after the stream was created: repair the delete-to-close crash gap, but only on
+            // an authoritative store where absence is a durable fact (Python parity otherwise: leave
+            // the orphan open rather than risk sealing a stream whose record merely failed to appear).
+            return storeIsAuthoritative;
+        }
+
+        if (record.Source?.Type != TaskWireKeys.SourceTypeValue)
         {
             return false;
         }
