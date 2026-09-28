@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Type representing an agent deployment as a management construct.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesManagedAgentDeployment"/> and <see cref="CognitiveServicesHostedAgentDeployment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesHostedAgentDeployment"/> and <see cref="CognitiveServicesManagedAgentDeployment"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCognitiveServicesAgentDeploymentProperties))]
     public abstract partial class CognitiveServicesAgentDeploymentProperties : CognitiveServicesResourceBase, IJsonModel<CognitiveServicesAgentDeploymentProperties>
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed":
-                        return CognitiveServicesManagedAgentDeployment.DeserializeCognitiveServicesManagedAgentDeployment(element, options);
                     case "Hosted":
                         return CognitiveServicesHostedAgentDeployment.DeserializeCognitiveServicesHostedAgentDeployment(element, options);
+                    case "Managed":
+                        return CognitiveServicesManagedAgentDeployment.DeserializeCognitiveServicesManagedAgentDeployment(element, options);
                 }
             }
             return UnknownCognitiveServicesAgentDeploymentProperties.DeserializeUnknownCognitiveServicesAgentDeploymentProperties(element, options);

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             get
             {
-                return Properties is null ? default : Properties.BillingStartOn;
+                return Properties is null ? default : Properties.BillingStartsOn;
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             get
             {
-                return Properties is null ? default : Properties.BillingEndOn;
+                return Properties is null ? default : Properties.BillingEndsOn;
             }
         }
 

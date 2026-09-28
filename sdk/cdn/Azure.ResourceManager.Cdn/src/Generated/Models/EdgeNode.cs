@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EdgeNode"/>. </summary>
+        public EdgeNode()
+        {
+        }
+
         /// <summary> The JSON object that contains the properties required to create an edgenode. </summary>
         [WirePath("properties")]
         internal EdgeNodeProperties Properties { get; }

@@ -50,17 +50,30 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <returns> The pages of PagingPostActionPagingAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<MonitoredResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            MonitoredResourceListResponse result = MonitoredResourceListResponse.FromResponse(response);
-            yield return Page<MonitoredResource>.FromValues((IReadOnlyList<MonitoredResource>)result.Value, null, response);
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            while (true)
+            {
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                if (response is null)
+                {
+                    yield break;
+                }
+                MonitoredResourceListResponse result = MonitoredResourceListResponse.FromResponse(response);
+                nextPage = result.NextLink;
+                yield return Page<MonitoredResource>.FromValues((IReadOnlyList<MonitoredResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
+                {
+                    yield break;
+                }
+            }
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreatePostActionPagingRequest(_subscriptionId, _resourceGroupName, _monitorName, _content, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextPostActionPagingRequest(nextLink, _subscriptionId, _resourceGroupName, _monitorName, _content, _context) : _client.CreatePostActionPagingRequest(_subscriptionId, _resourceGroupName, _monitorName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceDiscoveryProperties"/>. </summary>
         /// <param name="status"> The discovery status. </param>
-        /// <param name="startOn"> The discovery UTC start time. </param>
-        /// <param name="endOn"> The discovery UTC end time. </param>
+        /// <param name="startsOn"> The discovery UTC start time. </param>
+        /// <param name="endsOn"> The discovery UTC end time. </param>
         /// <param name="errors"> System or infrastructure errors encountered during discovery. </param>
         /// <param name="workspaceId"> The workspace ID this discovery belongs to. </param>
         /// <param name="resourceSnapshotId"> The resource snapshot ID produced by this discovery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceDiscoveryProperties(WorkspaceDiscoveryStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, string resourceSnapshotId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Errors = errors;
             WorkspaceId = workspaceId;
             ResourceSnapshotId = resourceSnapshotId;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Chaos.Models
         public WorkspaceDiscoveryStatus Status { get; }
 
         /// <summary> The discovery UTC start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The discovery UTC end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> System or infrastructure errors encountered during discovery. </summary>
         public IReadOnlyList<ChaosOperationError> Errors { get; }

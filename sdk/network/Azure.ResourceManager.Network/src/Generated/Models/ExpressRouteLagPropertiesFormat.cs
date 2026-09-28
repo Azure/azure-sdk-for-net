@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         public ExpressRouteLagPropertiesFormat()
         {
             Links = new ChangeTrackingList<ExpressRouteLagLink>();
+            Circuits = new ChangeTrackingList<NetworkSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteLagPropertiesFormat"/>. </summary>
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="encapsulation"> Encapsulation method on LAG. </param>
         /// <param name="etherType"> Ether type of the LAG. </param>
         /// <param name="links"> The set of links of the ExpressRouteLag resource. </param>
+        /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRouteLag resource. </param>
         /// <param name="allocationDate"> The date and time when the ExpressRouteLag was allocated. </param>
         /// <param name="provisioningState"> The provisioning state of the express route LAG resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route LAG resource. </param>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="minimumActivePortsRequired"> Minimum number of active ports required for LAG. </param>
         /// <param name="lacpTimer"> LACP timer configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteLagPropertiesFormat(string peeringLocation, int? bandwidthInGbps, double? provisionedBandwidthInGbps, string mtu, ExpressRouteLagEncapsulation? encapsulation, string etherType, IList<ExpressRouteLagLink> links, string allocationDate, NetworkProvisioningState? provisioningState, string resourceGuid, ExpressRouteLagBillingType? billingType, int? numberOfPorts, int? minimumActivePortsRequired, ExpressRouteLagLacpTimer? lacpTimer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteLagPropertiesFormat(string peeringLocation, int? bandwidthInGbps, double? provisionedBandwidthInGbps, string mtu, ExpressRouteLagEncapsulation? encapsulation, string etherType, IList<ExpressRouteLagLink> links, IReadOnlyList<NetworkSubResource> circuits, string allocationDate, NetworkProvisioningState? provisioningState, string resourceGuid, ExpressRouteLagBillingType? billingType, int? numberOfPorts, int? minimumActivePortsRequired, ExpressRouteLagLacpTimer? lacpTimer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringLocation = peeringLocation;
             BandwidthInGbps = bandwidthInGbps;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             Encapsulation = encapsulation;
             EtherType = etherType;
             Links = links;
+            Circuits = circuits;
             AllocationDate = allocationDate;
             ProvisioningState = provisioningState;
             ResourceGuid = resourceGuid;
@@ -85,6 +88,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The set of links of the ExpressRouteLag resource. </summary>
         [WirePath("links")]
         public IList<ExpressRouteLagLink> Links { get; }
+
+        /// <summary> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRouteLag resource. </summary>
+        [WirePath("circuits")]
+        public IReadOnlyList<NetworkSubResource> Circuits { get; }
 
         /// <summary> The date and time when the ExpressRouteLag was allocated. </summary>
         [WirePath("allocationDate")]

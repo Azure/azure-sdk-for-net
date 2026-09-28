@@ -8,10 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core;
-using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -22,13 +20,17 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
 /// US6 / FR-004 request-time resilient-start failure contract: when the Core task subsystem fails
-/// during <see cref="ITaskInvoker.StartAsync{TInput, TOutput}"/> (e.g. a task-store write failure),
-/// the resilient background dispatch in <c>ResponseEndpointHandler.StartResilientTurnAsync</c> tags
-/// the exception as platform-sourced and rethrows. The exception filter must then surface it as a
-/// 500 with <c>x-platform-error-source: platform</c> — never silently downgraded to <c>upstream</c>.
+/// during resilient dispatch (e.g. a task-store write failure), the resilient background dispatch
+/// in <c>ResponseEndpointHandler.StartResilientTurnAsync</c> tags the exception as platform-sourced
+/// and rethrows. The exception filter must then surface it as a 500 with
+/// <c>x-platform-error-source: platform</c> — never silently downgraded to <c>upstream</c>.
 ///
-/// The failure is injected with a fake <see cref="ITaskInvoker"/> whose <c>StartAsync</c> throws a
-/// generic <see cref="InvalidOperationException"/>, standing in for a task-store infra failure.
+/// The failure is injected with a <see cref="SpyTaskStore"/> decorator whose <c>CreateAsync</c>
+/// throws a generic <see cref="InvalidOperationException"/>, standing in for a task-store infra
+/// failure at the exact boundary the Core resilient-task engine writes through when
+/// <see cref="Azure.AI.AgentServer.Core.Tasks.TaskDefinition{TInput,TOutput}.StartAsync"/> is
+/// invoked. Every other <c>ITaskStore</c> operation delegates to a real <see cref="LocalTaskStore"/>,
+/// so the endpoint's platform-tagging catch-all runs the real engine → real store call chain.
 /// </summary>
 public class ResilientStartFailureProtocolTests
 {
@@ -41,7 +43,7 @@ public class ResilientStartFailureProtocolTests
         var root = NewIsolatedRoot(out var tasksDir, out var responsesDir);
         try
         {
-            using var factory = NewFailingStartFactory(tasksDir, responsesDir);
+            using var factory = NewFailingStartFactory(tasksDir, responsesDir, out _);
             using var client = factory.CreateClient();
 
             var response = await client.PostAsync(
@@ -70,7 +72,7 @@ public class ResilientStartFailureProtocolTests
         var root = NewIsolatedRoot(out var tasksDir, out var responsesDir);
         try
         {
-            using var factory = NewFailingStartFactory(tasksDir, responsesDir);
+            using var factory = NewFailingStartFactory(tasksDir, responsesDir, out _);
             using var client = factory.CreateClient();
 
             var response = await client.PostAsync(
@@ -89,10 +91,9 @@ public class ResilientStartFailureProtocolTests
     }
 
     [Test]
-    public async Task HostedBackground_StartFailure_UsesTaskInvokerPath()
+    public async Task HostedBackground_StartFailure_UsesTaskStorePath()
     {
         var root = NewIsolatedRoot(out var tasksDir, out var responsesDir);
-        var invoker = new FailingTaskInvoker();
         try
         {
             Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
@@ -101,7 +102,7 @@ public class ResilientStartFailureProtocolTests
             Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
             FoundryEnvironment.Reload();
 
-            using var factory = NewFailingStartFactory(tasksDir, responsesDir, invoker);
+            using var factory = NewFailingStartFactory(tasksDir, responsesDir, out var spy);
             using var client = factory.CreateClient();
 
             var response = await client.PostAsync(
@@ -111,8 +112,9 @@ public class ResilientStartFailureProtocolTests
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
             AssertPlatformErrorSource(response);
             AssertPlatformErrorDetail(response);
-            Assert.That(invoker.StartCallCount, Is.GreaterThan(0),
-                "Hosted resilient background must route through ITaskInvoker.StartAsync.");
+            Assert.That(spy.CreateCallCount, Is.GreaterThan(0),
+                "Hosted resilient background must route through the Core resilient-task engine, which "
+                + "issues an ITaskStore.CreateAsync as its first persistence call.");
         }
         finally
         {
@@ -125,23 +127,34 @@ public class ResilientStartFailureProtocolTests
         }
     }
 
-    private static TestWebApplicationFactory NewFailingStartFactory(string tasksDir, string responsesDir, FailingTaskInvoker? invoker = null)
-        => new TestWebApplicationFactory(
+    private static TestWebApplicationFactory NewFailingStartFactory(string tasksDir, string responsesDir, out SpyTaskStore spy)
+    {
+        // The spy wraps a real LocalTaskStore, so all non-Create operations delegate transparently
+        // and the fail-loud composition validation is satisfied. The injected InvalidOperationException
+        // stands in for a task-store write failure. The platform-error-detail assertion verifies the
+        // exception type without relying on hand-written exception text.
+        var spyStore = new SpyTaskStore(new LocalTaskStore(tasksDir))
+        {
+            ThrowOnCreate = new InvalidOperationException("Simulated task-store write failure."),
+        };
+        spy = spyStore;
+
+        return new TestWebApplicationFactory(
             configureOptions: o =>
             {
                 // ResilientBackground engages the local Core task subsystem for background responses,
-                // routing through StartResilientTurnAsync where the injected start failure occurs.
+                // routing through StartResilientTurnAsync where the injected create-time failure occurs.
                 o.ResilientBackground = true;
             },
             configureTestServices: services =>
             {
-                // Pre-registration WINS: AddResponsesServer uses TryAdd, so these fakes override the
-                // defaults. A durable FileResponsesProvider + LocalTaskStore satisfy the fail-loud
-                // composition validation; the fake invoker forces the StartAsync failure.
-                services.AddSingleton<ITaskInvoker>(invoker ?? new FailingTaskInvoker());
-                services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
+                // Pre-registration WINS: AddResponsesServer uses TryAdd, so this fake overrides the
+                // default LocalTaskStore. The spy still satisfies the fail-loud composition
+                // validation because it IS an ITaskStore backed by a durable local store.
+                services.AddSingleton<ITaskStore>(spyStore);
                 services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
             });
+    }
 
     private static void AssertPlatformErrorSource(HttpResponseMessage response)
     {
@@ -158,7 +171,6 @@ public class ResilientStartFailureProtocolTests
             $"Expected {PlatformHeaders.ErrorDetail} header to be present.");
         var value = response.Headers.GetValues(PlatformHeaders.ErrorDetail).First();
         Assert.That(value, Does.Contain(nameof(InvalidOperationException)));
-        Assert.That(value, Does.Contain("StartAsync"));
     }
 
     private static string NewIsolatedRoot(out string tasksDir, out string responsesDir)
@@ -184,34 +196,5 @@ public class ResilientStartFailureProtocolTests
         {
             // Best-effort cleanup; leftover temp files are isolated per-test by a fresh GUID root.
         }
-    }
-
-    /// <summary>
-    /// A fake <see cref="ITaskInvoker"/> whose <c>StartAsync</c> always throws a generic exception,
-    /// simulating a Core task-store write failure at resilient-start time.
-    /// </summary>
-    private sealed class FailingTaskInvoker : ITaskInvoker
-    {
-        public int StartCallCount { get; private set; }
-
-        public Task<TaskRun<TOutput>> StartAsync<TInput, TOutput>(
-            string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
-        {
-            StartCallCount++;
-            return Task.FromException<TaskRun<TOutput>>(
-                new InvalidOperationException("Simulated task-store write failure during StartAsync."));
-        }
-
-        public Task<TOutput> RunAsync<TInput, TOutput>(
-            string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
-            => throw new NotSupportedException();
-
-        public Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
-            string name, string taskId, CancellationToken cancellationToken = default)
-            => Task.FromResult<TaskRun<TOutput>?>(null);
-
-        public Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
-            string name, string taskId, string inputId, CancellationToken cancellationToken = default)
-            => Task.FromResult<TaskRun<TOutput>?>(null);
     }
 }

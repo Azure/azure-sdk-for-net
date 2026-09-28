@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the hardware settings for the virtual machine scale set. </summary>
-    internal partial class VirtualMachineScaleSetHardwareProfile
+    public partial class VirtualMachineScaleSetHardwareProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetHardwareProfile"/>. </summary>
         /// <param name="vmSizeProperties"> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </param>
+        /// <param name="processorMode"> Specifies the processor mode for the virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VMSS without deallocation or reboot. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetHardwareProfile(VirtualMachineSizeProperties vmSizeProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetHardwareProfile(VirtualMachineSizeProperties vmSizeProperties, ProcessorMode? processorMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizeProperties = vmSizeProperties;
+            ProcessorMode = processorMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the properties for customizing the size of the virtual machine. Minimum api-version: 2021-11-01. Please follow the instructions in [VM Customization](https://aka.ms/vmcustomization) for more details. </summary>
         public VirtualMachineSizeProperties VmSizeProperties { get; set; }
+
+        /// <summary> Specifies the processor mode for the virtual machine scale set. Optional; if omitted, the platform default applies (currently Deterministic). This property can be updated on a running VMSS without deallocation or reboot. Minimum api-version: 2026-04-01. </summary>
+        public ProcessorMode? ProcessorMode { get; set; }
     }
 }

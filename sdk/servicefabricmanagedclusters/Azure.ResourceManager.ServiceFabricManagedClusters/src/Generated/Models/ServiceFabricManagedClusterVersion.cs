@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties is null ? default : Properties.VersionSupportExpireOn;
+                return Properties is null ? default : Properties.VersionSupportExpiresOn;
             }
         }
 

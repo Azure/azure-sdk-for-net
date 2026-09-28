@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Core.Streaming;
 
@@ -41,10 +42,15 @@ public static class AgentEventStreamServiceCollectionExtensions
                 "per process. Remove the duplicate registration or its configuration.");
         }
 
-        var options = new AgentEventStreamOptions();
-        configure?.Invoke(options);
+        services.AddOptions<AgentEventStreamOptions>();
+        if (configure is not null)
+        {
+            services.Configure(configure);
+        }
 
-        services.TryAddSingleton<AgentEventStreamRegistry>(_ => new InMemoryEventStreamRegistry(options));
+        services.TryAddSingleton<AgentEventStreamRegistry>(serviceProvider =>
+            new InMemoryEventStreamRegistry(
+                serviceProvider.GetRequiredService<IOptions<AgentEventStreamOptions>>().Value));
         return services;
     }
 }

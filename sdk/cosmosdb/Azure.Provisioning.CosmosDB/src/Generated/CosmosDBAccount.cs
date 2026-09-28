@@ -147,6 +147,52 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
+        /// <summary> The offer type for the Cosmos DB database account. Default value: Standard. </summary>
+        [CodeGenMember("DatabaseAccountOfferType")]
+        public BicepValue<CosmosDBAccountOfferType> DatabaseAccountOfferType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseAccountOfferType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DatabaseAccountOfferType = value;
+            }
+        }
+
+        /// <summary> An array that contains all of the locations enabled for the Cosmos DB account. </summary>
+        [CodeGenMember("Locations")]
+        public BicepList<CosmosDBAccountLocation> Locations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Locations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.Locations = value;
+            }
+        }
+
+        /// <summary> List of Private Endpoint Connections configured for the Cosmos DB account. </summary>
+        [CodeGenMember("PrivateEndpointConnections")]
+        public BicepList<CosmosDBPrivateEndpointConnection> PrivateEndpointConnectionResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointConnectionResources;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<string> ProvisioningState
         {
@@ -805,52 +851,6 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DatabaseAccountOfferType. </summary>
-        [CodeGenMember("DatabaseAccountOfferType")]
-        public BicepValue<CosmosDBAccountOfferType> DatabaseAccountOfferType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DatabaseAccountOfferType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.DatabaseAccountOfferType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Locations. </summary>
-        [CodeGenMember("Locations")]
-        public BicepList<CosmosDBAccountLocation> Locations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Locations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.Locations = value;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnectionResources. </summary>
-        [CodeGenMember("PrivateEndpointConnections")]
-        public BicepList<CosmosDBPrivateEndpointConnection> PrivateEndpointConnectionResources
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpointConnectionResources;
             }
         }
 

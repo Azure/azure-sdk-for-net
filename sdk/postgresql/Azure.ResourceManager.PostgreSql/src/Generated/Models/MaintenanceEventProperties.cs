@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="maintenanceType"> The maintenance type (e.g., 'PlannedMaintenance'). </param>
         /// <param name="description"> The human-readable description of the maintenance event. </param>
         /// <param name="status"> The customer-facing status of the maintenance event. </param>
-        /// <param name="startOn"> The scheduled start time of the maintenance event (UTC). </param>
-        /// <param name="endOn"> The scheduled end time of the maintenance event (UTC). </param>
+        /// <param name="startsOn"> The scheduled start time of the maintenance event (UTC). </param>
+        /// <param name="endsOn"> The scheduled end time of the maintenance event (UTC). </param>
         /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string (e.g., 'PT60S' = 60 seconds). </param>
         /// <param name="isDeferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
         /// <param name="deferralDeadlineOn"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
         /// <param name="rescheduledFromOn"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
-        /// <param name="originalStartOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
+        /// <param name="originalStartsOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventProperties(string maintenanceEventId, PostgreSqlFlexibleServerMaintenanceType maintenanceType, string description, MaintenanceEventStatus status, DateTimeOffset startOn, DateTimeOffset endOn, string estimatedDowntime, bool isDeferrable, DateTimeOffset? deferralDeadlineOn, DateTimeOffset? rescheduledFromOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset originalStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventProperties(string maintenanceEventId, PostgreSqlFlexibleServerMaintenanceType maintenanceType, string description, MaintenanceEventStatus status, DateTimeOffset startsOn, DateTimeOffset endsOn, string estimatedDowntime, bool isDeferrable, DateTimeOffset? deferralDeadlineOn, DateTimeOffset? rescheduledFromOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset originalStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceEventId = maintenanceEventId;
             MaintenanceType = maintenanceType;
             Description = description;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             EstimatedDowntime = estimatedDowntime;
             IsDeferrable = isDeferrable;
             DeferralDeadlineOn = deferralDeadlineOn;
             RescheduledFromOn = rescheduledFromOn;
             LastUpdatedOn = lastUpdatedOn;
-            OriginalStartOn = originalStartOn;
+            OriginalStartsOn = originalStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The scheduled start time of the maintenance event (UTC). </summary>
         [WirePath("startTime")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The scheduled end time of the maintenance event (UTC). </summary>
         [WirePath("endTime")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> The estimated downtime as an ISO 8601 duration string (e.g., 'PT60S' = 60 seconds). </summary>
         [WirePath("estimatedDowntime")]
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </summary>
         [WirePath("originalStartTime")]
-        public DateTimeOffset OriginalStartOn { get; }
+        public DateTimeOffset OriginalStartsOn { get; }
     }
 }

@@ -2190,7 +2190,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The DataConnection.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.LogAnalyticsDataConnection"/> and <see cref="Easm.AzureDataExplorerDataConnection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.AzureDataExplorerDataConnection"/> and <see cref="Easm.LogAnalyticsDataConnection"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
@@ -2317,7 +2317,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary>
         /// The DataConnectionPayload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.LogAnalyticsDataConnectionPayload"/> and <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> and <see cref="Easm.LogAnalyticsDataConnectionPayload"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DataConnectionData. </param>
         /// <param name="name"> The name of data connection. </param>

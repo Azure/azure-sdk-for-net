@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// Deployment change under the profile
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnDeploymentVersionRouteChange"/>, <see cref="CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="CdnDeploymentVersionRuleSetChange"/>, <see cref="CdnDeploymentVersionRuleChange"/>, and <see cref="CdnDeploymentVersionSecurityPolicyChange"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="CdnDeploymentVersionRouteChange"/>, <see cref="CdnDeploymentVersionRuleChange"/>, <see cref="CdnDeploymentVersionRuleSetChange"/>, and <see cref="CdnDeploymentVersionSecurityPolicyChange"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCdnDeploymentVersionChange))]
     public abstract partial class CdnDeploymentVersionChange : IJsonModel<CdnDeploymentVersionChange>
@@ -140,16 +140,16 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Cdn/profiles/afdEndpoints/routes":
-                        return CdnDeploymentVersionRouteChange.DeserializeCdnDeploymentVersionRouteChange(element, options);
-                    case "Microsoft.Cdn/profiles/originGroups":
-                        return CdnDeploymentVersionFrontDoorOriginGroupChange.DeserializeCdnDeploymentVersionFrontDoorOriginGroupChange(element, options);
                     case "Microsoft.Cdn/profiles/originGroups/origins":
                         return CdnDeploymentVersionFrontDoorOriginChange.DeserializeCdnDeploymentVersionFrontDoorOriginChange(element, options);
-                    case "Microsoft.Cdn/profiles/ruleSets":
-                        return CdnDeploymentVersionRuleSetChange.DeserializeCdnDeploymentVersionRuleSetChange(element, options);
+                    case "Microsoft.Cdn/profiles/originGroups":
+                        return CdnDeploymentVersionFrontDoorOriginGroupChange.DeserializeCdnDeploymentVersionFrontDoorOriginGroupChange(element, options);
+                    case "Microsoft.Cdn/profiles/afdEndpoints/routes":
+                        return CdnDeploymentVersionRouteChange.DeserializeCdnDeploymentVersionRouteChange(element, options);
                     case "Microsoft.Cdn/profiles/ruleSets/rules":
                         return CdnDeploymentVersionRuleChange.DeserializeCdnDeploymentVersionRuleChange(element, options);
+                    case "Microsoft.Cdn/profiles/ruleSets":
+                        return CdnDeploymentVersionRuleSetChange.DeserializeCdnDeploymentVersionRuleSetChange(element, options);
                     case "Microsoft.Cdn/profiles/securityPolicies":
                         return CdnDeploymentVersionSecurityPolicyChange.DeserializeCdnDeploymentVersionSecurityPolicyChange(element, options);
                 }

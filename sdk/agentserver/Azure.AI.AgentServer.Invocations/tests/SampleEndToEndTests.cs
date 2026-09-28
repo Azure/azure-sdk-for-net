@@ -1418,6 +1418,115 @@ public class SampleEndToEndTests
     }
 
     [Test]
+    public async Task ResilientResearch_CancelActiveInvocation_UsesDocumentedHttpPath()
+    {
+        var started = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var cancellationObserved = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        await using var env = await CreateControlledResilientResearchServerAsync(
+            async (context, cancellationToken) =>
+            {
+                started.TrySetResult();
+                try
+                {
+                    await Task.Delay(Timeout.InfiniteTimeSpan, context.Cancellation);
+                }
+                catch (OperationCanceledException) when (context.CancelRequested)
+                {
+                    cancellationObserved.TrySetResult();
+                    throw;
+                }
+
+                return new("completed", Array.Empty<string>());
+            });
+
+        string sessionId = "research-cancel-" + Guid.NewGuid().ToString("N")[..8];
+        string invocationId = "research-active-" + Guid.NewGuid().ToString("N");
+        using HttpResponseMessage start = await PostResearchAsync(
+            env.Client, sessionId, invocationId, "active cancellation");
+        Assert.That(start.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        await started.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+        using HttpResponseMessage cancel = await env.Client.PostAsync(
+            $"/invocations/{invocationId}/cancel?agent_session_id={sessionId}",
+            content: null);
+
+        Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        await cancellationObserved.Task.WaitAsync(TimeSpan.FromSeconds(5));
+    }
+
+    [Test]
+    public async Task ResilientResearch_CancelQueuedInvocation_ReturnsNotFoundWithoutCancellingTurns()
+    {
+        var activeStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseActive = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var steeredStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var releaseSteered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        int steeredExecutions = 0;
+        TaskContext<Snippets.SampleResilientResearchSnippets.ResearchRequest>? activeContext = null;
+
+        await using var env = await CreateControlledResilientResearchServerAsync(
+            async (context, cancellationToken) =>
+            {
+                if (!context.IsSteeredTurn)
+                {
+                    activeContext = context;
+                    activeStarted.TrySetResult();
+                    await releaseActive.Task;
+                    return new("active-completed", Array.Empty<string>());
+                }
+
+                Interlocked.Increment(ref steeredExecutions);
+                steeredStarted.TrySetResult();
+                await releaseSteered.Task;
+                return new("steered-completed", Array.Empty<string>());
+            });
+
+        string sessionId = "research-queued-cancel-" + Guid.NewGuid().ToString("N")[..8];
+        string activeInvocationId = "research-active-" + Guid.NewGuid().ToString("N");
+        string queuedInvocationId = "research-queued-" + Guid.NewGuid().ToString("N");
+        string taskId = $"research-{sessionId}";
+
+        try
+        {
+            using HttpResponseMessage active = await PostResearchAsync(
+                env.Client, sessionId, activeInvocationId, "active turn");
+            Assert.That(active.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+            await activeStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+
+            using HttpResponseMessage queued = await PostResearchAsync(
+                env.Client, sessionId, queuedInvocationId, "queued turn");
+            Assert.That(queued.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+
+            using HttpResponseMessage cancel = await env.Client.PostAsync(
+                $"/invocations/{queuedInvocationId}/cancel?agent_session_id={sessionId}",
+                content: null);
+            Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
+                "This sample layer supports cancellation of the active invocation, not queued inputs.");
+            Assert.That(activeContext!.CancelRequested, Is.False);
+            Assert.That(Volatile.Read(ref steeredExecutions), Is.Zero);
+
+            releaseActive.TrySetResult();
+            await steeredStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.That(Volatile.Read(ref steeredExecutions), Is.EqualTo(1),
+                "Rejecting a queued cancellation must not remove that queued input.");
+            releaseSteered.TrySetResult();
+            TaskDefinition<
+                Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                Snippets.SampleResilientResearchSnippets.ResearchResult> research =
+                env.Services.GetResilientTask<
+                    Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                    Snippets.SampleResilientResearchSnippets.ResearchResult>("research");
+            await WaitForResearchChainToSettleAsync(
+                research, taskId, activeInvocationId, queuedInvocationId);
+        }
+        finally
+        {
+            releaseActive.TrySetResult();
+            releaseSteered.TrySetResult();
+        }
+    }
+
+    [Test]
     public async Task ResilientResearch_Get_ResumesFromCursor()
     {
         // RESUME is GET /invocations/{id} — it re-attaches to the EXISTING durable stream
@@ -1729,7 +1838,7 @@ public class SampleEndToEndTests
     {
         var model = CreateMockResponsesClient();
 
-        ResilientTaskBuilder? tasks = null;
+        AgentEventStreamRegistry? streamsRef = null;
 
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
@@ -1738,27 +1847,96 @@ public class SampleEndToEndTests
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
-                tasks = services.AddResilientTasks();
-            },
-            configurePostBuild: app =>
-            {
-                // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry
-                // from the built container and capture it in the plain delegate (the registry is read
-                // lazily at invocation time, so registering post-build is fine).
-                AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
-                tasks!.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                // AddResilientMultiTurnTask self-initializes the resilient-tasks services and
+                // registers the returned TaskDefinition as a keyed singleton (keyed by task name),
+                // so the handler resolves it via GetResilientTask. The stream registry is a
+                // singleton resolved from the built provider below and read lazily when a turn
+                // actually runs, so capturing it via streamsRef is safe.
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
                         (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streams, model, "test-model", ctx,
+                            streamsRef!, model, "test-model", ctx,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,
                             ct: ct),
                         steerable: true);
+            },
+            configurePostBuild: app =>
+            {
+                // Resolve the singleton AgentEventStreamRegistry from the built container so the
+                // captured delegate can reach it (the registry is read lazily at invocation time).
+                streamsRef = app.Services.GetRequiredService<AgentEventStreamRegistry>();
             });
 
         return env;
+    }
+
+    private static Task<TestEnv> CreateControlledResilientResearchServerAsync(
+        Func<
+            TaskContext<Snippets.SampleResilientResearchSnippets.ResearchRequest>,
+            CancellationToken,
+            Task<Snippets.SampleResilientResearchSnippets.ResearchResult>> handler)
+    {
+        return CreateTestServerAsync<
+            Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
+            services =>
+            {
+                services.AddAgentEventStreams(o => o.UseInMemoryReplay(
+                    ttl: TimeSpan.FromMinutes(5)));
+                services.AddResilientMultiTurnTask<
+                    Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                    Snippets.SampleResilientResearchSnippets.ResearchResult>(
+                    "research",
+                    handler,
+                    steerable: true);
+            });
+    }
+
+    private static async Task<HttpResponseMessage> PostResearchAsync(
+        HttpClient client,
+        string sessionId,
+        string invocationId,
+        string topic)
+    {
+        var request = new HttpRequestMessage(
+            HttpMethod.Post,
+            $"/invocations?agent_session_id={sessionId}")
+        {
+            Content = new StringContent(
+                JsonSerializer.Serialize(new { Topic = topic }),
+                Encoding.UTF8,
+                "application/json"),
+        };
+        request.Headers.Add("x-agent-invocation-id", invocationId);
+        return await client.SendAsync(request);
+    }
+
+    private static async Task WaitForResearchChainToSettleAsync(
+        TaskDefinition<
+            Snippets.SampleResilientResearchSnippets.ResearchRequest,
+            Snippets.SampleResilientResearchSnippets.ResearchResult> research,
+        string taskId,
+        string activeInvocationId,
+        string queuedInvocationId)
+    {
+        var timeout = System.Diagnostics.Stopwatch.StartNew();
+        while (timeout.Elapsed < TimeSpan.FromSeconds(5))
+        {
+            TaskRun<Snippets.SampleResilientResearchSnippets.ResearchResult>? active =
+                await research.GetActiveRunAsync(taskId, activeInvocationId);
+            TaskRun<Snippets.SampleResilientResearchSnippets.ResearchResult>? queued =
+                await research.GetActiveRunAsync(taskId, queuedInvocationId);
+            if (active is null && queued is null)
+            {
+                return;
+            }
+
+            await Task.Delay(20);
+        }
+
+        throw new TimeoutException($"Research task '{taskId}' did not settle.");
     }
 
     /// <summary>
@@ -1847,8 +2025,7 @@ public class SampleEndToEndTests
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
             {
-                services.AddResilientTasks()
-                    .AddMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",
                         (ctx, ct) => Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(
@@ -1914,6 +2091,8 @@ public class SampleEndToEndTests
         }
 
         public HttpClient Client { get; }
+
+        public IServiceProvider Services => _app.Services;
 
         public TestServer Server => _app.GetTestServer();
 

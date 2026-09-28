@@ -1,7 +1,13 @@
 # Provisioning generator feature fixture
 
 This TypeSpec project exercises provisioning-specific generator behavior. The
-tests compile the generated APIs into Bicep and compare the complete output.
+same TypeSpec service is generated twice:
+
+- `Provisioning-TypeSpec` selects the latest stable API version.
+- `Provisioning-TypeSpec-Preview` selects the preview API version.
+
+The stable project's tests compile the generated APIs into Bicep and compare the
+complete output.
 
 | Fixture | Generator feature | Bicep coverage |
 | --- | --- | --- |
@@ -15,6 +21,19 @@ tests compile the generated APIs into Bicep and compare the complete output.
 | `main.tsp` | Per-resource API versions, known collection types, and RBAC role helpers | Generated API plus `ResourceTests.RoleAssignment` |
 | `readOnlyResource.tsp` | Read-only resources | Generated API shape |
 | `resourceModelAsProperty.tsp` | Resource models used as model properties | Generated API shape |
+| `versioning.tsp` | Resources and properties introduced, retained, or removed across stable and preview API versions | Generated API shape in both projections |
+
+## Versioning cases
+
+The shared service defines stable, preview, and stable API versions in that
+order. `VersioningTests` verifies both generated projections:
+
+| Case | Preview projection | Stable projection |
+| --- | --- | --- |
+| API available from the initial stable version | Present | Present |
+| API added in preview and removed in the following stable version | Present | Absent |
+| API added in preview and retained in the following stable version | Present | Present |
+| API added in the latest stable version | Absent | Present |
 
 The read-only cases are covered by generated API compilation rather than Bicep
 input because they cannot be assigned when defining infrastructure.
