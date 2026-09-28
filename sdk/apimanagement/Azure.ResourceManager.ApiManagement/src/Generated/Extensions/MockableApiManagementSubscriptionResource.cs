@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -768,5 +769,65 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
                 throw;
             }
         }
+
+        /// <summary>
+        /// List all API Management gateways within a subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gatewaysOperation IdApiGateway_ListDefault Api Version2024-05-01Resource<see cref="ApiGatewayResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(CancellationToken cancellationToken)
+        {
+            return GetApiGatewaysAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// List all API Management gateways within a subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gatewaysOperation IdApiGateway_ListDefault Api Version2024-05-01Resource<see cref="ApiGatewayResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<ApiGatewayResource> GetApiGateways(CancellationToken cancellationToken)
+        {
+            return GetApiGateways(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists all API Management services within an Azure subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/serviceOperation IdApiManagementService_ListDefault Api Version2024-05-01Resource<see cref="ApiManagementServiceResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken cancellationToken)
+        {
+            return GetApiManagementServicesAsync(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists all API Management services within an Azure subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/serviceOperation IdApiManagementService_ListDefault Api Version2024-05-01Resource<see cref="ApiManagementServiceResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken cancellationToken)
+        {
+            return GetApiManagementServices(top: default, skipToken: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
