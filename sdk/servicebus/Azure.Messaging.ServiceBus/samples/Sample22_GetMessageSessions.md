@@ -8,12 +8,14 @@ Without a filter, listing returns sessions with active messages or stored sessio
 ```C# Snippet:ServiceBusGetMessageSessionsFromQueue
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
+var credential = new DefaultAzureCredential();
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
-await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-
+var sessionIds = new List<string>();
 await foreach (string sessionId in client.GetMessageSessionsAsync(queueName))
 {
     Console.WriteLine(sessionId);
+    sessionIds.Add(sessionId);
 }
 ```
 
@@ -23,12 +25,14 @@ await foreach (string sessionId in client.GetMessageSessionsAsync(queueName))
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string topicName = "<topic_name>";
 string subscriptionName = "<subscription_name>";
+var credential = new DefaultAzureCredential();
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
-await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-
+var sessionIds = new List<string>();
 await foreach (string sessionId in client.GetMessageSessionsAsync(topicName, subscriptionName))
 {
     Console.WriteLine(sessionId);
+    sessionIds.Add(sessionId);
 }
 ```
 
@@ -39,13 +43,15 @@ Pass a real cutoff to list only sessions whose stored session state was set or u
 ```C# Snippet:ServiceBusGetMessageSessionsUpdatedAfter
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
-
-await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+var credential = new DefaultAzureCredential();
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 DateTimeOffset stateUpdatedAfter = DateTimeOffset.UtcNow.AddDays(-7);
 
+var sessionIds = new List<string>();
 await foreach (string sessionId in client.GetMessageSessionsAsync(queueName, stateUpdatedAfter))
 {
     Console.WriteLine(sessionId);
+    sessionIds.Add(sessionId);
 }
 ```

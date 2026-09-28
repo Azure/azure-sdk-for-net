@@ -35,6 +35,7 @@ description: Samples for the Azure.Messaging.ServiceBus client library
 - [Auto-forwarding into a session-enabled queue](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample21_AutoForwardIntoSession.md)
 - [List message sessions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample22_GetMessageSessions.md)
 - [Advanced processor mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample23_AdvancedProcessorMocking.md)
+- [Taking over a non-exclusive session](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample24_NonExclusiveSessions.md)
 
 ## Application samples
 

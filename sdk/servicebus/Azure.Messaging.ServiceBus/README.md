@@ -409,6 +409,7 @@ await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAz
 
 - [Sending and receiving session messages](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md)
 - [Using the session processor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample05_SessionProcessor.md)
+- [Taking over a non-exclusive session (Premium)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample24_NonExclusiveSessions.md)
 
 ### Registering with ASP.NET Core dependency injection
 
