@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -217,7 +219,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void MixedHistoricalConstructorNullabilityRequiresCustomization(
+        public void MixedHistoricalConstructorNullabilityPreservesAvailableSignatures(
             [Values] bool safeFlatten, [Values] bool wrapperRequired, [Values] bool nullableFirst,
             [Values("none", "custom", "partial-custom", "baseline", "baseline-nullable")] string resolution)
         {
@@ -281,13 +283,9 @@ namespace Azure.Generator.Mgmt.Tests
                     && c.Signature.Parameters.Count == 2).ToArray();
             Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long?)))), Is.EqualTo(resolution is not ("partial-custom" or "baseline-nullable")));
             Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is "custom" or "partial-custom" or "baseline-nullable"));
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(resolution is "none" or "partial-custom"));
-            if (resolution is "none" or "partial-custom")
-            {
-                Assert.That(messages, Does.Contain(resolution == "none" ? "CapacityModel(string, long)" : "CapacityModel(string, long?)"));
-                Assert.That(messages, Does.Contain("custom constructor"));
-            }
+            // A second T/T? signature may still be missing; this is tracked separately from
+            // restoring the signature that can be represented by the flattened property.
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
         [Test]
@@ -309,7 +307,194 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void IncompatibleLeafTypeRequiresMappingUnlessCustomized([Values] bool safeFlatten, [Values] bool customized)
+        public void FlattenedEnumWithSamePublicTypeDoesNotRequireMapping()
+        {
+            var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var inner = InputFactory.Model("StoreProperties", properties: [InputFactory.Property("provisioningState", status)]);
+            var wrapper = InputFactory.Property("properties", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("StoreData", properties: [wrapper]);
+            const string propertyName = "ProvisioningState";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                inputEnums: () => [status],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct ProvisioningState { }
+                        public partial class StoreData
+                        {
+                            public ProvisioningState? {{propertyName}} { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+
+            var previousType = model.LastContractView!.Properties.Single(p => p.Name == propertyName).Type;
+            var currentType = model.Properties.Single(p => p.Name == propertyName).Type;
+            Assert.That(currentType.ToString(), Is.EqualTo(previousType.ToString()));
+            Assert.That(currentType.Equals(previousType), Is.False,
+                "The regression requires distinct generator type metadata for the same public C# type.");
+            _ = plugin.Object.GetWriter(model).Write();
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("Cannot preserve flattened property"));
+            Assert.That(Compile(plugin.Object).GetType("Samples.Models.StoreData"), Is.Not.Null);
+        }
+
+        [Test]
+        public void FlattenedGenericLeafNullabilityDistinguishesValueTypesButNotReferences(
+            [Values] bool valueType, [Values] bool nested)
+        {
+            var leaf = valueType ? (InputType)InputPrimitiveType.Int32 : InputPrimitiveType.String;
+            var items = nested ? InputFactory.Array(InputFactory.Array(leaf)) : InputFactory.Array(leaf);
+            var inner = InputFactory.Model("ListProperties", properties: [InputFactory.Property("items", items)]);
+            var wrapper = InputFactory.Property("properties", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ListData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var innerModel = plugin.Object.TypeFactory.CreateModel(inner)!;
+            var oldType = ChangeLeafNullability(innerModel.Properties.Single(p => p.Name == "Items").Type).WithNullable(true);
+            var previous = new ContractView(model.Name);
+            previous.ContractProperties =
+            [
+                new PropertyProvider(null, MethodSignatureModifiers.Public, oldType, "Items", new AutoPropertyBody(true), previous)
+            ];
+            ModelTestHelper.SetLastContractView(model, previous);
+
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+            var currentType = model.Properties.Single(p => p.Name == "Items").Type;
+            Assert.That(oldType.FullyQualifiedName, Is.EqualTo(currentType.FullyQualifiedName));
+            Assert.That(oldType.HasSamePublicType(currentType), Is.EqualTo(!valueType),
+                "Nullable reference annotations do not change generic type identity, but Nullable<T> does.");
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+        }
+
+        private static CSharpType ChangeLeafNullability(CSharpType type)
+            => type.Arguments.Count == 0
+                ? type.WithNullable(!type.IsNullable)
+                : new CSharpType(type.FrameworkType, type.IsNullable, type.Arguments.Select(ChangeLeafNullability).ToArray());
+
+        [Test]
+        public void HistoricalConstructorComparesNestedReferenceAnnotationsButKeepsValueNullability(
+            [Values] bool nullableReference, [Values] bool nullableValue)
+        {
+            var (plugin, model, _) = CreateCapacityModel(safeFlatten: false, wrapperRequired: false);
+            Visit(model);
+            var flattened = model.Properties.OfType<FlattenedPropertyProvider>().Single(p => p.Name == "Size");
+            var previous = new ContractView(model.Name);
+            var currentKeyType = new CSharpType(typeof(KeyValuePair<,>), typeof(string), typeof(int));
+            var previousKeyType = new CSharpType(typeof(KeyValuePair<,>),
+                new CSharpType(typeof(string), isNullable: nullableReference),
+                new CSharpType(typeof(int), isNullable: nullableValue));
+            var leaf = flattened.AsParameter;
+            var currentParameters = new[] { leaf, new ParameterProvider("key", $"", currentKeyType, Default) };
+            var previousParameters = new[] { leaf, new ParameterProvider("key", $"", previousKeyType, Default) };
+            model.Update(constructors:
+            [
+                new ConstructorProvider(new ConstructorSignature(model.Type, null, MethodSignatureModifiers.Public, currentParameters),
+                    MethodBodyStatement.Empty, model)
+            ]);
+            previous.ContractConstructors =
+            [
+                new ConstructorProvider(new ConstructorSignature(previous.Type, null, MethodSignatureModifiers.Public, previousParameters),
+                    MethodBodyStatement.Empty, previous)
+            ];
+            ModelTestHelper.SetLastContractView(model, previous);
+
+            Assert.That(currentKeyType.HasSamePublicType(previousKeyType), Is.EqualTo(!nullableValue),
+                "Only nullable value-type arguments change a constructed generic type's CLR signature.");
+        }
+
+        [Test]
+        public void RestoredFlattenedEnumConstructorDoesNotRequireMapping()
+        {
+            var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var inner = InputFactory.Model("StoreProperties", properties:
+                [InputFactory.Property("provisioningState", status, isRequired: true)]);
+            var wrapper = InputFactory.Property("properties", inner, isRequired: true);
+            Flatten(wrapper);
+            var input = InputFactory.Model("StoreData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                inputEnums: () => [status],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct ProvisioningState { }
+                        public partial class StoreData
+                        {
+                            public StoreData(ProvisioningState provisioningState) { }
+                            public ProvisioningState ProvisioningState { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+            _ = plugin.Object.GetWriter(model).Write();
+
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("Cannot preserve historical constructor"));
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && c.Signature.Parameters.Count == 1
+                && c.Signature.Parameters[0].Type.ToString() == "global::Samples.Models.ProvisioningState"), Is.True);
+            var assembly = Compile(plugin.Object);
+            var storeType = assembly.GetType("Samples.Models.StoreData")!;
+            var statusType = assembly.GetType("Samples.Models.ProvisioningState")!;
+            Assert.That(storeType.GetConstructor([statusType]), Is.Not.Null);
+        }
+
+        [Test]
+        public void FlattenedTypeChangedFromEnumToStructIsNotConsideredSamePublicType()
+        {
+            var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var inner = InputFactory.Model("StoreProperties", properties: [InputFactory.Property("provisioningState", status)]);
+            var wrapper = InputFactory.Property("properties", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("StoreData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                inputEnums: () => [status],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public enum ProvisioningState { Ready }
+                        public partial class StoreData
+                        {
+                            public ProvisioningState? ProvisioningState { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+
+            var previousType = model.LastContractView!.Properties.Single(p => p.Name == "ProvisioningState").Type;
+            var currentType = model.Properties.Single(p => p.Name == "ProvisioningState").Type;
+            Assert.That(previousType.ToString(), Is.EqualTo(currentType.ToString()));
+            Assert.That(previousType.IsStruct, Is.False);
+            Assert.That(currentType.IsStruct, Is.True);
+            Assert.That(previousType.HasSamePublicType(currentType), Is.False);
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+        }
+
+        [Test]
+        public void IncompatibleLeafTypeDoesNotBlockGeneration([Values] bool safeFlatten, [Values] bool customized)
         {
             var (plugin, model, _) = CreateCapacityModel(safeFlatten, wrapperRequired: false);
             var previous = new ContractView(model.Name);
@@ -330,17 +515,15 @@ namespace Azure.Generator.Mgmt.Tests
             }
             using var diagnostics = CaptureDiagnostics(plugin);
             Visit(model);
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(!customized));
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
             if (!customized)
             {
-                Assert.That(messages, Does.Contain(name));
-                Assert.That(messages, Does.Contain("explicit mapping"));
+                Assert.That(model.Properties.Single(p => p.Name == name).Type, Is.Not.EqualTo(new CSharpType(typeof(Uri))));
             }
         }
 
         [Test]
-        public void LostSafeFlattenedLeafRequiresCustomization([Values(false, true)] bool customProperty, [Values(false, true)] bool acceptedRemoval)
+        public void LostSafeFlattenedLeafDoesNotBlockGeneration([Values(false, true)] bool customProperty, [Values(false, true)] bool acceptedRemoval)
         {
             var entries = InputFactory.Model("ManagedByResources", properties:
             [
@@ -375,20 +558,14 @@ namespace Azure.Generator.Mgmt.Tests
             Visit(model);
             _ = plugin.Object.GetWriter(model).Write();
 
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            if (customProperty || acceptedRemoval)
-            {
-                Assert.That(messages, Does.Not.Contain("\"severity\":\"error\""));
-                return;
-            }
-            Assert.That(messages, Does.Contain("ManagedByResourceId"));
-            Assert.That(messages, Does.Contain("customization"));
-            Assert.That(messages, Does.Contain("\"severity\":\"error\""));
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+            Assert.That(model.Properties.Any(p => p.Name == "ManagedByResourceId"), Is.False,
+                "The generator cannot invent a mapping when the wire shape changes.");
         }
 
         [TestCase(false)]
         [TestCase(true)]
-        public void FactoryPreservesNestedValuesOrReportsUnmappedArgument(bool changedToArray)
+        public void FactoryPreservesNestedValuesWithoutGuessingChangedShapes(bool changedToArray)
         {
             var managed = InputFactory.Model("ManagedByInfo", properties: changedToArray
                 ? [InputFactory.Property("clientId", InputPrimitiveType.String), InputFactory.Property("resourceIds", InputFactory.Array(InputPrimitiveType.String))]
@@ -422,10 +599,12 @@ namespace Azure.Generator.Mgmt.Tests
             var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
             if (changedToArray)
             {
-                Assert.That(messages, Does.Contain("managedByResourceId"));
-                Assert.That(messages, Does.Not.Contain("parameter 'sizeGiB'"));
-                Assert.That(messages, Does.Contain("custom factory overload"));
-                Assert.That(messages, Does.Contain("\"severity\":\"error\""));
+                var compatibility = factory.Methods.Single(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod);
+                var body = compatibility.BodyStatements!.ToDisplayString();
+                Assert.That(body, Does.Contain("sizeGiB"));
+                Assert.That(body, Does.Not.Contain("managedByResourceId"),
+                    "A scalar resource ID cannot be mapped to a list of managed resources.");
+                Assert.That(messages, Does.Not.Contain("\"severity\":\"error\""));
             }
             else
             {
@@ -451,7 +630,290 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void FactoryDiagnosticHonorsCustomOverloadsAndBaseline([Values] bool customMethod, [Values] bool acceptedRemoval)
+        public void FactoryRetainsNonNullableValueTypeOverloadWhenFlattenedWrapperIsOptional()
+        {
+            // ProviderHub's shipped ResourceTypeEndpointBase factory takes FeaturesPolicy, while
+            // flattening an optional properties wrapper now emits FeaturesPolicy?. Both CLR
+            // signatures must remain available; the old overload must still forward its value.
+            var policy = InputFactory.StringEnum("FeaturesPolicy", [("Required", "Required")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var properties = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("requiredFeaturesPolicy", policy, isRequired: true)]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ResourceTypeEndpointBase", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties], inputEnums: () => [policy],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct FeaturesPolicy { }
+                        public partial class ResourceTypeEndpointBase { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.ResourceTypeEndpointBase ResourceTypeEndpointBase(
+                                Samples.Models.FeaturesPolicy requiredFeaturesPolicy = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(factory.LastContractView, Is.Not.Null);
+            Assert.That(factory.LastContractView!.Methods.Single().Signature.Parameters.Single().Type.IsNullable,
+                Is.False);
+            Assert.That(factory.Methods.Where(m => m.Signature.Name == "ResourceTypeEndpointBase")
+                    .Select(m => m.Signature.Parameters.Single().Type.IsNullable),
+                Is.EquivalentTo(new[] { true }), "The primary factory should reflect the lifted leaf.");
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            _ = plugin.Object.GetWriter(factory).Write();
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "ResourceTypeEndpointBase").ToArray();
+            Assert.That(overloads.Any(m => !m.Signature.Parameters.Single().Type.IsNullable), Is.True,
+                "A nullable value-type factory parameter must not replace a shipped non-nullable overload.");
+            var oldOverload = overloads.Single(m => !m.Signature.Parameters.Single().Type.IsNullable);
+            Assert.That(oldOverload.BodyStatements!.ToDisplayString(), Does.Contain("requiredFeaturesPolicy"));
+        }
+
+        [Test]
+        public void LiftedFactoryDoesNotProduceAmbiguousOptionalOverloads()
+        {
+            // With optional parameters, both F(T = default) and F(T? = default)
+            // match a call to F(). Replacing the primary method retains the GA
+            // signature without introducing a source-level ambiguity.
+            var policy = InputFactory.StringEnum("FeaturesPolicy", [("Required", "Required")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var properties = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("requiredFeaturesPolicy", policy, isRequired: true)]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ResourceTypeEndpointBase", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties], inputEnums: () => [policy],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct FeaturesPolicy { }
+                        public partial class ResourceTypeEndpointBase { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.ResourceTypeEndpointBase ResourceTypeEndpointBase(
+                                Samples.Models.FeaturesPolicy requiredFeaturesPolicy = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "ResourceTypeEndpointBase").ToArray();
+            Assert.That(overloads, Has.Length.EqualTo(1));
+            Assert.That(overloads[0].Signature.Parameters.Single().Type.IsNullable, Is.False);
+            Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(overloads[0]), Is.False,
+                "The shipped factory remains visible rather than becoming a hidden compatibility overload.");
+        }
+
+        [Test]
+        public void FactoryRestorationDoesNotDuplicateExistingCSharpSignature()
+        {
+            // An extensible enum and a previous enum have different generator metadata,
+            // but both factories would be emitted with the same C# parameter type name.
+            var frequency = InputFactory.StringEnum("TumblingWindowFrequency", [("Hour", "Hour")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var timestamp = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            var properties = InputFactory.Model("TumblingWindowTriggerTypeProperties", properties:
+            [
+                InputFactory.Property("frequency", frequency, isRequired: true),
+                InputFactory.Property("interval", InputPrimitiveType.Int32, isRequired: true),
+                InputFactory.Property("startsOn", timestamp, isRequired: true),
+                InputFactory.Property("endsOn", timestamp)
+            ]);
+            var wrapper = InputFactory.Property("typeProperties", properties, isRequired: true);
+            Flatten(wrapper);
+            var dependency = InputFactory.Model("DependencyReference", properties: [InputFactory.Property("name", InputPrimitiveType.String)]);
+            var input = InputFactory.Model("TumblingWindowTrigger", properties:
+            [
+                InputFactory.Property("annotations", InputFactory.Array(InputPrimitiveType.String)),
+                InputFactory.Property("dependsOn", InputFactory.Array(dependency)),
+                wrapper
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties, dependency], inputEnums: () => [frequency],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    using System;
+                    namespace Samples.Models
+                    {
+                        public enum TumblingWindowFrequency { Hour }
+                        public partial class DependencyReference { }
+                        public partial class TumblingWindowTrigger { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.TumblingWindowTrigger TumblingWindowTrigger(
+                                System.Collections.Generic.IEnumerable<string> annotations = default,
+                                System.Collections.Generic.IEnumerable<Samples.Models.DependencyReference> dependsOn = default,
+                                Samples.Models.TumblingWindowFrequency frequency = default,
+                                int interval = default, DateTimeOffset startsOn = default,
+                                DateTimeOffset? endsOn = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "TumblingWindowTrigger").ToArray();
+            Assert.That(overloads.Select(m => m.Signature.Parameters.Select(p => p.Type.ToString()).ToArray()).DistinctBy(types => string.Join(",", types)).Count(),
+                Is.EqualTo(1), "Both methods have the same emitted C# parameter types.");
+            Assert.That(overloads, Has.Length.EqualTo(1),
+                "Restoring an already generated C# signature produces CS0111.");
+        }
+
+        [Test]
+        public void FrameworkBackedFactoryParameterMatchesContractTypeWithSameCSharpName()
+        {
+            // In DataFactory, delay is emitted as DataFactoryElement<string> on both sides,
+            // but only the current type has IsFrameworkType=true. Use a model and a CLR
+            // type with the same C# name to isolate the signature-matching rule.
+            var input = InputFactory.Model(nameof(Samples.Models.FactoryFrameworkElement));
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
+            var contractType = plugin.Object.TypeFactory.CreateModel(input)!.Type;
+            var frameworkType = new CSharpType(typeof(Samples.Models.FactoryFrameworkElement));
+            Assert.That(frameworkType.FullyQualifiedName, Is.EqualTo(contractType.FullyQualifiedName));
+            Assert.That(frameworkType.IsFrameworkType, Is.True);
+            Assert.That(contractType.IsFrameworkType, Is.False);
+
+            MethodSignature Signature(CSharpType type) => new("Create", null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, type, null,
+                [new ParameterProvider("delay", $"", type, Default)]);
+            var matches = typeof(ModelFactoryVisitor).GetMethod("HasSameCSharpSignature",
+                BindingFlags.NonPublic | BindingFlags.Static)!;
+            Assert.That(matches.Invoke(null, [Signature(frameworkType), Signature(contractType)]), Is.True,
+                "The framework classification cannot create a distinct C# factory overload.");
+        }
+
+        [Test]
+        public void FactoryPreservesRenamedUriWithSameWireName()
+        {
+            // KustoClusterPatch's historical factory accepts `uri`, while the current flattened
+            // model exposes the same wire property (`properties.uri`) as `ClusterUri`.
+            var properties = InputFactory.Model("ClusterProperties", properties:
+            [
+                InputFactory.Property("clusterUri", InputPrimitiveType.Url, wireName: "uri")
+            ]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ClusterPatch", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                configurationJson: """{"package-name":"Samples"}""");
+            using var diagnostics = CaptureDiagnostics(plugin);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Single(p => p.Name == "ClusterUri").Type.FrameworkType, Is.EqualTo(typeof(Uri)));
+            var leaf = plugin.Object.TypeFactory.CreateModel(properties)!.FullConstructor.Signature.Parameters
+                .Single(p => p.Name == "clusterUri");
+            Assert.That(leaf.Property?.WireInfo?.SerializedName, Is.EqualTo("uri"));
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previous = new ContractView(factory.Name);
+            var signature = new MethodSignature("ClusterPatch", null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, model.Type, null,
+                [new ParameterProvider("uri", $"", typeof(Uri), Default)]);
+            previous.ContractMethods = [new MethodProvider(signature, MethodBodyStatement.Empty, previous)];
+            ModelTestHelper.SetLastContractView(factory, previous);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            _ = plugin.Object.GetWriter(factory).Write();
+            var compatibility = factory.Methods.Single(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod);
+            var body = compatibility.BodyStatements!.ToDisplayString();
+
+            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
+            Assert.That(body, Does.Contain("uri"), messages);
+            Assert.That(messages, Does.Not.Contain("Cannot preserve parameter 'uri' of compatibility factory"));
+
+            var assembly = Compile(plugin.Object, includeFactory: true);
+            var uri = new Uri("https://example.com/cluster");
+            var method = assembly.GetType(factory.Type.FullyQualifiedName)!.GetMethod("ClusterPatch", [typeof(Uri)])!;
+            var result = method.Invoke(null, [uri])!;
+            Assert.That(result.GetType().GetProperty("ClusterUri")!.GetValue(result), Is.EqualTo(uri));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(result, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("uri").GetString(),
+                Is.EqualTo(uri.ToString()));
+        }
+
+        [Test]
+        public void FactoryDoesNotGuessBetweenDuplicateSerializedNames()
+        {
+            var primary = InputFactory.Model("PrimaryProperties", properties:
+            [
+                InputFactory.Property("clusterUri", InputPrimitiveType.Url, wireName: "uri")
+            ]);
+            var secondary = InputFactory.Model("SecondaryProperties", properties:
+            [
+                InputFactory.Property("backupUri", InputPrimitiveType.Url, wireName: "uri")
+            ]);
+            var primaryWrapper = InputFactory.Property("primary", primary);
+            var secondaryWrapper = InputFactory.Property("secondary", secondary);
+            Flatten(primaryWrapper);
+            Flatten(secondaryWrapper);
+            var input = InputFactory.Model("ClusterPatch", properties: [primaryWrapper, secondaryWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, primary, secondary],
+                configurationJson: """{"package-name":"Samples"}""");
+            using var diagnostics = CaptureDiagnostics(plugin);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previous = new ContractView(factory.Name);
+            var signature = new MethodSignature("ClusterPatch", null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, model.Type, null,
+                [new ParameterProvider("uri", $"", typeof(Uri), Default)]);
+            previous.ContractMethods = [new MethodProvider(signature, MethodBodyStatement.Empty, previous)];
+            ModelTestHelper.SetLastContractView(factory, previous);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            _ = plugin.Object.GetWriter(factory).Write();
+
+            // Ambiguous wire names must not silently route the old value to either branch.
+            var compatibility = factory.Methods.Single(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod);
+            Assert.That(compatibility.BodyStatements!.ToDisplayString(), Does.Not.Contain("uri"));
+        }
+
+        [Test]
+        public void UnmappedFactoryParameterDoesNotBlockGeneration([Values] bool customMethod, [Values] bool acceptedRemoval)
         {
             var input = InputFactory.Model("VolumePatch", properties: [InputFactory.Property("sizeGiB", InputPrimitiveType.Int64)]);
             var baseline = acceptedRemoval ? ApiCompatBaseline.Parse(
@@ -472,13 +934,13 @@ namespace Azure.Generator.Mgmt.Tests
                 ManagementMockHelpers.SetCustomCodeView(factory, custom);
             }
             using var diagnostics = CaptureDiagnostics(plugin);
-            ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(factory);
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(!customMethod && !acceptedRemoval), factory.Type.FullyQualifiedName);
+            _ = plugin.Object.GetWriter(factory).Write();
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Not.Contain("managedByResourceId"));
         }
 
         [Test]
-        public void FactoryGuardAndNamedDefaultDoNotCountAsPreservedValues()
+        public void FactoryGuardAndNamedDefaultDoNotPreserveTheValue()
         {
             var input = InputFactory.Model("VolumePatch", properties: [InputFactory.Property("sizeGiB", InputPrimitiveType.Int64)]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
@@ -497,12 +959,15 @@ namespace Azure.Generator.Mgmt.Tests
                 }, factory);
             factory.Update(methods: [method]);
             using var diagnostics = CaptureDiagnostics(plugin);
-            ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(factory);
-            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Contain("managedByResourceId"));
+            _ = plugin.Object.GetWriter(factory).Write();
+            var body = method.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain("managedByResourceId"));
+            Assert.That(body, Does.Contain("default"));
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
         [Test]
-        public void FactoryValidationRecognizesNestedRenamedAndConvertedValues()
+        public void FactoryPreservesNestedRenamedAndConvertedValues()
         {
             var timestamp = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
             var properties = InputFactory.Model("PolicyProperties", properties:
@@ -575,7 +1040,7 @@ namespace Azure.Generator.Mgmt.Tests
 
         private static Assembly Compile(ManagementClientGenerator plugin, bool includeFactory = false)
         {
-            var types = plugin.OutputLibrary.TypeProviders.Where(t => t is ModelProvider
+            var types = plugin.OutputLibrary.TypeProviders.Where(t => t is ModelProvider or EnumProvider
                 || (includeFactory && t is ModelFactoryProvider)
                 || t.Name is "Argument" or "Optional" or "ChangeTrackingList" or "ChangeTrackingDictionary"
                     or "ModelSerializationExtensions" or "TypeFormatters" or "SerializationFormat" or "SamplesContext").ToArray();
@@ -605,10 +1070,12 @@ namespace Azure.Generator.Mgmt.Tests
         {
             public PropertyProvider[] ContractProperties { get; set; } = [];
             public MethodProvider[] ContractMethods { get; set; } = [];
+            public ConstructorProvider[] ContractConstructors { get; set; } = [];
             protected override string BuildName() => name;
             protected override string BuildRelativeFilePath() => $"{Name}.cs";
             protected override PropertyProvider[] BuildProperties() => ContractProperties;
             protected override MethodProvider[] BuildMethods() => ContractMethods;
+            protected override ConstructorProvider[] BuildConstructors() => ContractConstructors;
         }
     }
 }
