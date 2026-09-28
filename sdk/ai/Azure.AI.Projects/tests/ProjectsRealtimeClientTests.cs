@@ -8,18 +8,20 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
 #pragma warning disable AAIP002
+#pragma warning disable AAIP001
 #pragma warning disable OPENAI002
 
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
 /// Unit tests for the Voice Agents realtime session connection handshake
-/// (<see cref="ProjectsRealtimeClient.StartSessionAsync"/> and
-/// <see cref="ProjectsRealtimeSessionClient"/>). These use a real loopback HttpListener/WebSocket
+/// (<see cref="ProjectsRealtimeClient.StartSessionAsync(string, string, RealtimeSessionClientOptions, CancellationToken)"/>
+/// and <see cref="ProjectsRealtimeSessionClient"/>). These use a real loopback HttpListener/WebSocket
 /// handshake (not a live Foundry resource) so the request the client actually sends on the wire can
 /// be observed.
 /// </summary>
@@ -142,6 +144,234 @@ public class ProjectsRealtimeClientTests
         listener.Stop();
 
         Assert.That(query, Does.Contain("store=true"));
+    }
+
+    // -----------------------------------------------------------------------
+    // Verifies that ProjectsRealtimeClient.StartSessionAsync's options.QueryString "transport=webrtc"
+    // is reflected as a "transport" query parameter on the realtime WebSocket handshake, selecting
+    // an optional WebRTC transport for the session instead of the default WebSocket-only media path
+    // (ported from azure-sdk-for-js PR #40102 / azure-ai-projects' Python realtime client). This is
+    // the raw options.QueryString form of the option; see
+    // ConnectWithTransportPropertyIncludesTransportQueryParameter below for the strongly-typed
+    // ProjectsRealtimeSessionClientOptions.Transport property built on top of it.
+    // -----------------------------------------------------------------------
+    [Test]
+    public async Task ConnectWithTransportOptionIncludesTransportQueryParameter()
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+
+        Task<string> serverTask = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            string query = context.Request.Url.Query;
+            if (context.Request.IsWebSocketRequest)
+            {
+                await context.AcceptWebSocketAsync(subProtocol: "realtime");
+            }
+            else
+            {
+                context.Response.StatusCode = 400;
+                context.Response.Close();
+            }
+            return query;
+        });
+
+        AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
+
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        try
+        {
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
+                "cs-e2e-connectivity-test-agent",
+                intent: null,
+                options: new RealtimeSessionClientOptions { QueryString = "transport=webrtc" },
+                cancellationToken: timeout.Token);
+        }
+        catch
+        {
+            // See comment above: only the request the server observed matters for this test.
+        }
+
+        string query = await AwaitServerRequestAsync(serverTask);
+        listener.Stop();
+
+        Assert.That(query, Does.Contain("transport=webrtc"));
+    }
+
+    // -----------------------------------------------------------------------
+    // Verifies the strongly-typed ProjectsRealtimeSessionClientOptions.Transport property, set to
+    // VoiceAgentTransport.Webrtc, produces the same "transport=webrtc" query parameter on the wire
+    // as the raw options.QueryString form above, and that it merges correctly with a caller-supplied
+    // QueryString value (here "store=true") on the same options instance -- exercising the single
+    // StartSessionAsync signature with both a strongly-typed and a raw option set together. See
+    // ConnectWithTransportPropertySetToWebsocketIncludesWebsocketQueryParameter below for the other
+    // VoiceAgentTransport value, and ConnectWithProjectsOptionsAndUnsetTransportOmitsTransportQueryParameter
+    // for confirming Transport left unset (the default) adds no "transport" parameter at all.
+    // -----------------------------------------------------------------------
+    [Test]
+    public async Task ConnectWithTransportPropertySetToWebrtcIncludesWebrtcQueryParameter()
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+
+        Task<string> serverTask = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            string query = context.Request.Url.Query;
+            if (context.Request.IsWebSocketRequest)
+            {
+                await context.AcceptWebSocketAsync(subProtocol: "realtime");
+            }
+            else
+            {
+                context.Response.StatusCode = 400;
+                context.Response.Close();
+            }
+            return query;
+        });
+
+        AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
+
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        try
+        {
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
+                "cs-e2e-connectivity-test-agent",
+                intent: null,
+                options: new ProjectsRealtimeSessionClientOptions { Transport = VoiceAgentTransport.Webrtc, QueryString = "store=true" },
+                cancellationToken: timeout.Token);
+        }
+        catch
+        {
+            // See comment above: only the request the server observed matters for this test.
+        }
+
+        string query = await AwaitServerRequestAsync(serverTask);
+        listener.Stop();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(query, Does.Contain("transport=webrtc"));
+            Assert.That(query, Does.Contain("store=true"));
+        });
+    }
+
+    // -----------------------------------------------------------------------
+    // Same as ConnectWithTransportPropertySetToWebrtcIncludesWebrtcQueryParameter above, but for the
+    // other VoiceAgentTransport value: verifies VoiceAgentTransport.Websocket is converted to
+    // "transport=websocket" on the wire (not e.g. left as "transport=Websocket" mis-cased, or
+    // incorrectly hardcoded to "webrtc" regardless of which value was actually set).
+    // -----------------------------------------------------------------------
+    [Test]
+    public async Task ConnectWithTransportPropertySetToWebsocketIncludesWebsocketQueryParameter()
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+
+        Task<string> serverTask = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            string query = context.Request.Url.Query;
+            if (context.Request.IsWebSocketRequest)
+            {
+                await context.AcceptWebSocketAsync(subProtocol: "realtime");
+            }
+            else
+            {
+                context.Response.StatusCode = 400;
+                context.Response.Close();
+            }
+            return query;
+        });
+
+        AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
+
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        try
+        {
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
+                "cs-e2e-connectivity-test-agent",
+                intent: null,
+                options: new ProjectsRealtimeSessionClientOptions { Transport = VoiceAgentTransport.Websocket },
+                cancellationToken: timeout.Token);
+        }
+        catch
+        {
+            // See comment above: only the request the server observed matters for this test.
+        }
+
+        string query = await AwaitServerRequestAsync(serverTask);
+        listener.Stop();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(query, Does.Contain("transport=websocket"));
+            Assert.That(query, Does.Not.Contain("webrtc"));
+        });
+    }
+
+    // -----------------------------------------------------------------------
+    // Verifies that passing a ProjectsRealtimeSessionClientOptions instance with Transport left
+    // unset (null, the default) behaves identically to passing a plain RealtimeSessionClientOptions:
+    // no "transport" query parameter is added at all, and other QueryString content (here
+    // "store=true") still passes through untouched -- this is exactly the pattern
+    // Sample_VoiceAgent_ReadConversation.cs relies on when it only needs "store", not "transport".
+    // -----------------------------------------------------------------------
+    [Test]
+    public async Task ConnectWithProjectsOptionsAndUnsetTransportOmitsTransportQueryParameter()
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+
+        Task<string> serverTask = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            string query = context.Request.Url.Query;
+            if (context.Request.IsWebSocketRequest)
+            {
+                await context.AcceptWebSocketAsync(subProtocol: "realtime");
+            }
+            else
+            {
+                context.Response.StatusCode = 400;
+                context.Response.Close();
+            }
+            return query;
+        });
+
+        AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
+
+        using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+        try
+        {
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
+                "cs-e2e-connectivity-test-agent",
+                intent: null,
+                options: new ProjectsRealtimeSessionClientOptions { QueryString = "store=true" },
+                cancellationToken: timeout.Token);
+        }
+        catch
+        {
+            // See comment above: only the request the server observed matters for this test.
+        }
+
+        string query = await AwaitServerRequestAsync(serverTask);
+        listener.Stop();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(query, Does.Contain("store=true"));
+            Assert.That(query, Does.Not.Contain("transport"));
+        });
     }
 
     // The client-side call above is bounded by its own 10-second cancellation token, but that

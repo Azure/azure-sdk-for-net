@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `VoiceAgentTransport`, an enum of the transport used for a voice-agent realtime connection (`Websocket`, the default, or `Webrtc`). Reachable from `Azure.AI.Projects`'s `ProjectsRealtimeSessionClientOptions.Transport` property (see that package's changelog); not otherwise directly usable from this package alone, since the WebSocket operation it's a parameter of (`connectVoiceAgent`) isn't generated for C#.
+
 ### Breaking Changes
 
 - `OpenAI.RealtimeClientEventType` has been removed. The affected property now uses the existing `OpenAI.Realtime.RealtimeClientCommandKind` type instead.

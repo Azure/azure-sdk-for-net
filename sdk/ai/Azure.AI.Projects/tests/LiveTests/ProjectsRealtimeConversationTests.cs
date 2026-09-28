@@ -161,7 +161,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             CONVERSATION_AGENT_NAME,
             intent: null,
-            options: new RealtimeSessionClientOptions { QueryString = "store=true" },
+            options: new ProjectsRealtimeSessionClientOptions { QueryString = "store=true" },
             cancellationToken: timeout.Token))
         {
             await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);

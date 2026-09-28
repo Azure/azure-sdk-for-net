@@ -4645,6 +4645,24 @@ namespace Azure.AI.Projects.Agents
         public override string ToString() { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VoiceAgentTransport : System.IEquatable<Azure.AI.Projects.Agents.VoiceAgentTransport>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VoiceAgentTransport(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.VoiceAgentTransport Webrtc { get { throw null; } }
+        public static Azure.AI.Projects.Agents.VoiceAgentTransport Websocket { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.Agents.VoiceAgentTransport other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.Agents.VoiceAgentTransport left, Azure.AI.Projects.Agents.VoiceAgentTransport right) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentTransport (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.Agents.VoiceAgentTransport? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.Agents.VoiceAgentTransport left, Azure.AI.Projects.Agents.VoiceAgentTransport right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public abstract partial class VoiceAgentTurnDetectionConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig>
     {
         internal VoiceAgentTurnDetectionConfig() { }

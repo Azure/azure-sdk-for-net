@@ -58,13 +58,17 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
             #region Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
             // Passing store: true (via options.QueryString) persists this session's conversation so
             // it can be read back afterward through BetaVoiceAgentsConversations; the response.done
-            // event reports the resulting conversation ID.
+            // event reports the resulting conversation ID. ProjectsRealtimeSessionClientOptions
+            // extends OpenAI's RealtimeSessionClientOptions with a strongly-typed Transport property
+            // (for selecting WebRTC instead of the default WebSocket-only media path); pass it here
+            // instead of a plain RealtimeSessionClientOptions even though this sample only needs
+            // QueryString, so it stays the recommended options type to reach for.
             string conversationId;
             using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
                 await projectClient.ProjectsRealtimeClient.StartSessionAsync(
                     agentName,
                     intent: null,
-                    options: new RealtimeSessionClientOptions { QueryString = "store=true" }))
+                    options: new ProjectsRealtimeSessionClientOptions { QueryString = "store=true" }))
             {
                 await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."));
                 await session.StartResponseAsync();

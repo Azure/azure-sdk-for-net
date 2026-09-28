@@ -3,6 +3,9 @@
 ## 3.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added an optional "transport" connection option for voice agent realtime sessions, to negotiate a WebRTC peer connection instead of the default WebSocket-only media path, where only SDP signaling travels over the WebSocket connection while media flows peer-to-peer. Completing the SDP offer/answer exchange (using the `rtc.call.sdp.create`/`rtc.call.sdp.created` events) remains the caller's responsibility. Defaults to the existing WebSocket-only behavior when omitted. Two ways to set it on `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync`, which keeps its existing single signature:
+  - A new `ProjectsRealtimeSessionClientOptions` type (extending `options`'s existing `RealtimeSessionClientOptions` type) with a strongly-typed `Transport` property (`Azure.AI.Projects.Agents.VoiceAgentTransport.Webrtc` or `.Websocket`).
+  - The existing `options.QueryString`, as a raw `transport=webrtc` value (matching how `store` is already exposed).
 
 ### Breaking Changes
 
