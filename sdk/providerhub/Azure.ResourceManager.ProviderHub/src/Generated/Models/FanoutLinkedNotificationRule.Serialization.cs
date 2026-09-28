@@ -104,11 +104,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DstsConfiguration))
-            {
-                writer.WritePropertyName("dstsConfiguration"u8);
-                writer.WriteObjectValue(DstsConfiguration, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -154,7 +149,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TokenAuthConfiguration tokenAuthConfiguration = default;
             IList<string> actions = default;
             IList<ResourceProviderEndpoint> endpoints = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,21 +196,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     endpoints = array;
                     continue;
                 }
-                if (prop.NameEquals("dstsConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FanoutLinkedNotificationRule(tokenAuthConfiguration, actions ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), dstsConfiguration, additionalBinaryDataProperties);
+            return new FanoutLinkedNotificationRule(tokenAuthConfiguration, actions ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), additionalBinaryDataProperties);
         }
     }
 }

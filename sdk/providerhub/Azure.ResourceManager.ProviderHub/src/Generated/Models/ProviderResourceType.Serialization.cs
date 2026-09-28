@@ -231,16 +231,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
-            {
-                writer.WritePropertyName("serviceTreeInfos"u8);
-                writer.WriteStartArray();
-                foreach (ServiceTreeInfo item in ServiceTreeInfos)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
@@ -295,6 +285,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ResourceDeletionPolicies))
+            {
+                writer.WritePropertyName("resourceDeletionPolicies"u8);
+                writer.WriteStartArray();
+                foreach (ResourceDeletionPolicyAndProperties item in ResourceDeletionPolicies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(QuotaRule))
             {
@@ -373,31 +373,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
             AdditionalOptionResourceType? additionalOptions = default;
             CrossTenantTokenValidation? crossTenantTokenValidation = default;
             ResourceValidation? resourceValidation = default;
-            IReadOnlyList<string> allowedUnauthorizedActions = default;
-            IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = default;
-            IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings = default;
-            IReadOnlyList<LinkedAccessCheck> linkedAccessChecks = default;
+            IList<string> allowedUnauthorizedActions = default;
+            IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = default;
+            IList<AuthorizationActionMapping> authorizationActionMappings = default;
+            IList<LinkedAccessCheck> linkedAccessChecks = default;
             string defaultApiVersion = default;
-            IReadOnlyList<LoggingRule> loggingRules = default;
-            IReadOnlyList<ThrottlingRule> throttlingRules = default;
-            IReadOnlyList<ResourceProviderEndpoint> endpoints = default;
+            IList<LoggingRule> loggingRules = default;
+            IList<ThrottlingRule> throttlingRules = default;
+            IList<ResourceProviderEndpoint> endpoints = default;
             MarketplaceType? marketplaceType = default;
             IdentityManagement identityManagement = default;
             BinaryData metadata = default;
-            IReadOnlyList<string> requiredFeatures = default;
+            IList<string> requiredFeatures = default;
             ProviderFeaturesRule featuresRule = default;
-            IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
-            IReadOnlyList<ServiceTreeInfo> serviceTreeInfos = default;
+            IList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             ProviderRequestHeaderOptions requestHeaderOptions = default;
             string skuLink = default;
-            IReadOnlyList<string> disallowedActionVerbs = default;
+            IList<string> disallowedActionVerbs = default;
             TemplateDeploymentPolicy templateDeploymentPolicy = default;
-            IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
-            IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
-            ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
+            IList<LinkedOperationRule> linkedOperationRules = default;
+            ResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ProviderQuotaRule quotaRule = default;
-            IReadOnlyList<ProviderNotification> notifications = default;
-            IReadOnlyList<LinkedNotificationRule> linkedNotificationRules = default;
+            IList<ProviderNotification> notifications = default;
+            IList<LinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -624,20 +624,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     subscriptionStateRules = array;
                     continue;
                 }
-                if (prop.NameEquals("serviceTreeInfos"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
-                    }
-                    serviceTreeInfos = array;
-                    continue;
-                }
                 if (prop.NameEquals("requestHeaderOptions"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -716,7 +702,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new ManifestResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new ResourceDeletionPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resourceDeletionPolicies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceDeletionPolicyAndProperties> array = new List<ResourceDeletionPolicyAndProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceDeletionPolicyAndProperties.DeserializeResourceDeletionPolicyAndProperties(item, options));
+                    }
+                    resourceDeletionPolicies = array;
                     continue;
                 }
                 if (prop.NameEquals("quotaRule"u8))
@@ -790,7 +790,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 requiredFeatures ?? new ChangeTrackingList<string>(),
                 featuresRule,
                 subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
-                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 requestHeaderOptions,
                 skuLink,
                 disallowedActionVerbs ?? new ChangeTrackingList<string>(),
@@ -798,6 +797,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
                 resourceDeletionPolicy,
+                resourceDeletionPolicies ?? new ChangeTrackingList<ResourceDeletionPolicyAndProperties>(),
                 quotaRule,
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),

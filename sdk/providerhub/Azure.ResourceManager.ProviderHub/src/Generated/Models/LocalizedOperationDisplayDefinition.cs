@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="sv"> Display information of the operation for sv locale. </param>
         /// <param name="zhHans"> Display information of the operation for zh-Hans locale. </param>
         /// <param name="zhHant"> Display information of the operation for zh-Hant locale. </param>
+        /// <param name="qpsPloc"> Display information of the operation for qps-Ploc pseudo locale. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocalizedOperationDisplayDefinition(OperationsDisplayDefinition @default, OperationsDisplayDefinition en, OperationsDisplayDefinition cs, OperationsDisplayDefinition de, OperationsDisplayDefinition es, OperationsDisplayDefinition fr, OperationsDisplayDefinition hu, OperationsDisplayDefinition it, OperationsDisplayDefinition ja, OperationsDisplayDefinition ko, OperationsDisplayDefinition nl, OperationsDisplayDefinition pl, OperationsDisplayDefinition ptBR, OperationsDisplayDefinition ptPT, OperationsDisplayDefinition ru, OperationsDisplayDefinition sv, OperationsDisplayDefinition zhHans, OperationsDisplayDefinition zhHant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LocalizedOperationDisplayDefinition(OperationsDisplayDefinition @default, OperationsDisplayDefinition en, OperationsDisplayDefinition cs, OperationsDisplayDefinition de, OperationsDisplayDefinition es, OperationsDisplayDefinition fr, OperationsDisplayDefinition hu, OperationsDisplayDefinition it, OperationsDisplayDefinition ja, OperationsDisplayDefinition ko, OperationsDisplayDefinition nl, OperationsDisplayDefinition pl, OperationsDisplayDefinition ptBR, OperationsDisplayDefinition ptPT, OperationsDisplayDefinition ru, OperationsDisplayDefinition sv, OperationsDisplayDefinition zhHans, OperationsDisplayDefinition zhHant, LocalizedOperationDisplayDefinitionQpsPloc qpsPloc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Default = @default;
             En = en;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Sv = sv;
             ZhHans = zhHans;
             ZhHant = zhHant;
+            QpsPloc = qpsPloc;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -123,5 +125,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Display information of the operation for zh-Hant locale. </summary>
         public OperationsDisplayDefinition ZhHant { get; set; }
+
+        /// <summary> Display information of the operation for qps-Ploc pseudo locale. </summary>
+        public LocalizedOperationDisplayDefinitionQpsPloc QpsPloc { get; set; }
     }
 }

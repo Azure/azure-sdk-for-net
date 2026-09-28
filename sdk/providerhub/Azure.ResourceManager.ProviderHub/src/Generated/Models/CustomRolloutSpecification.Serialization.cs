@@ -124,6 +124,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RolloutId))
+            {
+                writer.WritePropertyName("rolloutId"u8);
+                writer.WriteStringValue(RolloutId);
+            }
+            if (Optional.IsDefined(ManifestCheckinSpecification))
+            {
+                writer.WritePropertyName("manifestCheckinSpecification"u8);
+                writer.WriteObjectValue(ManifestCheckinSpecification, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -173,6 +183,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             bool? skipReleaseScopeValidation = default;
             ProviderRegistrationData providerRegistration = default;
             IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
+            string rolloutId = default;
+            ManifestCheckinSpecification manifestCheckinSpecification = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -256,6 +268,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceTypeRegistrations = array;
                     continue;
                 }
+                if (prop.NameEquals("rolloutId"u8))
+                {
+                    rolloutId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("manifestCheckinSpecification"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manifestCheckinSpecification = ManifestCheckinSpecification.DeserializeManifestCheckinSpecification(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -269,6 +295,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 skipReleaseScopeValidation,
                 providerRegistration,
                 resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                rolloutId,
+                manifestCheckinSpecification,
                 additionalBinaryDataProperties);
         }
     }

@@ -100,6 +100,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("tokenAuthConfiguration"u8);
                 writer.WriteObjectValue(TokenAuthConfiguration, options);
             }
+            if (Optional.IsDefined(OboSubscriptionId))
+            {
+                writer.WritePropertyName("oboSubscriptionId"u8);
+                writer.WriteStringValue(OboSubscriptionId);
+            }
+            if (Optional.IsDefined(EnablePresetResourceTypes))
+            {
+                writer.WritePropertyName("enablePresetResourceTypes"u8);
+                writer.WriteBooleanValue(EnablePresetResourceTypes.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -147,7 +157,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<ProviderNotification> notifications = default;
             IList<FanoutLinkedNotificationRule> linkedNotificationRules = default;
             ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
             ProviderNotificationOption? notificationOptions = default;
             IList<ResourceHydrationAccount> resourceHydrationAccounts = default;
             ResourceProviderManifestNotificationSettings notificationSettings = default;
@@ -164,6 +173,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = default;
             PrivateResourceProviderConfiguration privateResourceProviderConfiguration = default;
             TokenAuthConfiguration tokenAuthConfiguration = default;
+            string oboSubscriptionId = default;
+            bool? enablePresetResourceTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("providerAuthentication"u8))
@@ -377,15 +388,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("dstsConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("notificationOptions"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -547,6 +549,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("oboSubscriptionId"u8))
+                {
+                    oboSubscriptionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("enablePresetResourceTypes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enablePresetResourceTypes = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -573,7 +589,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<FanoutLinkedNotificationRule>(),
                 resourceProviderAuthorizationRules,
-                dstsConfiguration,
                 notificationOptions,
                 resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>(),
                 notificationSettings,
@@ -589,7 +604,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 provisioningState,
                 subscriptionLifecycleNotificationSpecifications,
                 privateResourceProviderConfiguration,
-                tokenAuthConfiguration);
+                tokenAuthConfiguration,
+                oboSubscriptionId,
+                enablePresetResourceTypes);
         }
     }
 }
