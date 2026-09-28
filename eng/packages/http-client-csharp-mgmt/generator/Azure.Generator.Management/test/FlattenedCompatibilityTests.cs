@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -218,7 +219,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void MixedHistoricalConstructorNullabilityRequiresCustomization(
+        public void MixedHistoricalConstructorNullabilityPreservesAvailableSignatures(
             [Values] bool safeFlatten, [Values] bool wrapperRequired, [Values] bool nullableFirst,
             [Values("none", "custom", "partial-custom", "baseline", "baseline-nullable")] string resolution)
         {
@@ -282,13 +283,9 @@ namespace Azure.Generator.Mgmt.Tests
                     && c.Signature.Parameters.Count == 2).ToArray();
             Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long?)))), Is.EqualTo(resolution is not ("partial-custom" or "baseline-nullable")));
             Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is "custom" or "partial-custom" or "baseline-nullable"));
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(resolution is "none" or "partial-custom"));
-            if (resolution is "none" or "partial-custom")
-            {
-                Assert.That(messages, Does.Contain(resolution == "none" ? "CapacityModel(string, long)" : "CapacityModel(string, long?)"));
-                Assert.That(messages, Does.Contain("custom constructor"));
-            }
+            // A second T/T? signature may still be missing; this is tracked separately from
+            // restoring the signature that can be represented by the flattened property.
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
         [Test]
@@ -374,9 +371,9 @@ namespace Azure.Generator.Mgmt.Tests
             Visit(model);
             var currentType = model.Properties.Single(p => p.Name == "Items").Type;
             Assert.That(oldType.FullyQualifiedName, Is.EqualTo(currentType.FullyQualifiedName));
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("Cannot preserve flattened property"), Is.EqualTo(valueType),
+            Assert.That(oldType.HasSamePublicType(currentType), Is.EqualTo(!valueType),
                 "Nullable reference annotations do not change generic type identity, but Nullable<T> does.");
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
         private static CSharpType ChangeLeafNullability(CSharpType type)
@@ -411,10 +408,7 @@ namespace Azure.Generator.Mgmt.Tests
             ];
             ModelTestHelper.SetLastContractView(model, previous);
 
-            using var diagnostics = CaptureDiagnostics(plugin);
-            ModelCompatibilityValidator.ValidateFlattenedConstructors(model);
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("Cannot preserve historical constructor"), Is.EqualTo(nullableValue),
+            Assert.That(currentKeyType.HasSamePublicType(previousKeyType), Is.EqualTo(!nullableValue),
                 "Only nullable value-type arguments change a constructed generic type's CLR signature.");
         }
 
@@ -462,7 +456,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void FlattenedTypeChangedFromEnumToStructRequiresMapping()
+        public void FlattenedTypeChangedFromEnumToStructIsNotConsideredSamePublicType()
         {
             var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
                 isExtensible: true, clientNamespace: "Samples.Models");
@@ -495,11 +489,12 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(previousType.ToString(), Is.EqualTo(currentType.ToString()));
             Assert.That(previousType.IsStruct, Is.False);
             Assert.That(currentType.IsStruct, Is.True);
-            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Contain("Cannot preserve flattened property"));
+            Assert.That(previousType.HasSamePublicType(currentType), Is.False);
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
         [Test]
-        public void IncompatibleLeafTypeRequiresMappingUnlessCustomized([Values] bool safeFlatten, [Values] bool customized)
+        public void IncompatibleLeafTypeDoesNotBlockGeneration([Values] bool safeFlatten, [Values] bool customized)
         {
             var (plugin, model, _) = CreateCapacityModel(safeFlatten, wrapperRequired: false);
             var previous = new ContractView(model.Name);
@@ -520,17 +515,15 @@ namespace Azure.Generator.Mgmt.Tests
             }
             using var diagnostics = CaptureDiagnostics(plugin);
             Visit(model);
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(!customized));
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
             if (!customized)
             {
-                Assert.That(messages, Does.Contain(name));
-                Assert.That(messages, Does.Contain("explicit mapping"));
+                Assert.That(model.Properties.Single(p => p.Name == name).Type, Is.Not.EqualTo(new CSharpType(typeof(Uri))));
             }
         }
 
         [Test]
-        public void LostSafeFlattenedLeafRequiresCustomization([Values(false, true)] bool customProperty, [Values(false, true)] bool acceptedRemoval)
+        public void LostSafeFlattenedLeafDoesNotBlockGeneration([Values(false, true)] bool customProperty, [Values(false, true)] bool acceptedRemoval)
         {
             var entries = InputFactory.Model("ManagedByResources", properties:
             [
@@ -565,20 +558,14 @@ namespace Azure.Generator.Mgmt.Tests
             Visit(model);
             _ = plugin.Object.GetWriter(model).Write();
 
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            if (customProperty || acceptedRemoval)
-            {
-                Assert.That(messages, Does.Not.Contain("\"severity\":\"error\""));
-                return;
-            }
-            Assert.That(messages, Does.Contain("ManagedByResourceId"));
-            Assert.That(messages, Does.Contain("customization"));
-            Assert.That(messages, Does.Contain("\"severity\":\"error\""));
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+            Assert.That(model.Properties.Any(p => p.Name == "ManagedByResourceId"), Is.False,
+                "The generator cannot invent a mapping when the wire shape changes.");
         }
 
         [TestCase(false)]
         [TestCase(true)]
-        public void FactoryPreservesNestedValuesOrReportsUnmappedArgument(bool changedToArray)
+        public void FactoryPreservesNestedValuesWithoutGuessingChangedShapes(bool changedToArray)
         {
             var managed = InputFactory.Model("ManagedByInfo", properties: changedToArray
                 ? [InputFactory.Property("clientId", InputPrimitiveType.String), InputFactory.Property("resourceIds", InputFactory.Array(InputPrimitiveType.String))]
@@ -612,10 +599,12 @@ namespace Azure.Generator.Mgmt.Tests
             var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
             if (changedToArray)
             {
-                Assert.That(messages, Does.Contain("managedByResourceId"));
-                Assert.That(messages, Does.Not.Contain("parameter 'sizeGiB'"));
-                Assert.That(messages, Does.Contain("custom factory overload"));
-                Assert.That(messages, Does.Contain("\"severity\":\"error\""));
+                var compatibility = factory.Methods.Single(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod);
+                var body = compatibility.BodyStatements!.ToDisplayString();
+                Assert.That(body, Does.Contain("sizeGiB"));
+                Assert.That(body, Does.Not.Contain("managedByResourceId"),
+                    "A scalar resource ID cannot be mapped to a list of managed resources.");
+                Assert.That(messages, Does.Not.Contain("\"severity\":\"error\""));
             }
             else
             {
@@ -641,7 +630,90 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void FactoryDiagnosticHonorsCustomOverloadsAndBaseline([Values] bool customMethod, [Values] bool acceptedRemoval)
+        public void FactoryPreservesRenamedUriWithSameWireName()
+        {
+            // KustoClusterPatch's historical factory accepts `uri`, while the current flattened
+            // model exposes the same wire property (`properties.uri`) as `ClusterUri`.
+            var properties = InputFactory.Model("ClusterProperties", properties:
+            [
+                InputFactory.Property("clusterUri", InputPrimitiveType.Url, wireName: "uri")
+            ]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ClusterPatch", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, properties],
+                configurationJson: """{"package-name":"Samples"}""");
+            using var diagnostics = CaptureDiagnostics(plugin);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(model.Properties.Single(p => p.Name == "ClusterUri").Type.FrameworkType, Is.EqualTo(typeof(Uri)));
+            var leaf = plugin.Object.TypeFactory.CreateModel(properties)!.FullConstructor.Signature.Parameters
+                .Single(p => p.Name == "clusterUri");
+            Assert.That(leaf.Property?.WireInfo?.SerializedName, Is.EqualTo("uri"));
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previous = new ContractView(factory.Name);
+            var signature = new MethodSignature("ClusterPatch", null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, model.Type, null,
+                [new ParameterProvider("uri", $"", typeof(Uri), Default)]);
+            previous.ContractMethods = [new MethodProvider(signature, MethodBodyStatement.Empty, previous)];
+            ModelTestHelper.SetLastContractView(factory, previous);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            _ = plugin.Object.GetWriter(factory).Write();
+            var compatibility = factory.Methods.Single(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod);
+            var body = compatibility.BodyStatements!.ToDisplayString();
+
+            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
+            Assert.That(body, Does.Contain("uri"), messages);
+            Assert.That(messages, Does.Not.Contain("Cannot preserve parameter 'uri' of compatibility factory"));
+
+            var assembly = Compile(plugin.Object, includeFactory: true);
+            var uri = new Uri("https://example.com/cluster");
+            var method = assembly.GetType(factory.Type.FullyQualifiedName)!.GetMethod("ClusterPatch", [typeof(Uri)])!;
+            var result = method.Invoke(null, [uri])!;
+            Assert.That(result.GetType().GetProperty("ClusterUri")!.GetValue(result), Is.EqualTo(uri));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(result, new ModelReaderWriterOptions("J")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("uri").GetString(),
+                Is.EqualTo(uri.ToString()));
+        }
+
+        [Test]
+        public void FactoryDoesNotGuessBetweenDuplicateSerializedNames()
+        {
+            var primary = InputFactory.Model("PrimaryProperties", properties:
+            [
+                InputFactory.Property("clusterUri", InputPrimitiveType.Url, wireName: "uri")
+            ]);
+            var secondary = InputFactory.Model("SecondaryProperties", properties:
+            [
+                InputFactory.Property("backupUri", InputPrimitiveType.Url, wireName: "uri")
+            ]);
+            var primaryWrapper = InputFactory.Property("primary", primary);
+            var secondaryWrapper = InputFactory.Property("secondary", secondary);
+            Flatten(primaryWrapper);
+            Flatten(secondaryWrapper);
+            var input = InputFactory.Model("ClusterPatch", properties: [primaryWrapper, secondaryWrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, primary, secondary],
+                configurationJson: """{"package-name":"Samples"}""");
+            using var diagnostics = CaptureDiagnostics(plugin);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previous = new ContractView(factory.Name);
+            var signature = new MethodSignature("ClusterPatch", null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, model.Type, null,
+                [new ParameterProvider("uri", $"", typeof(Uri), Default)]);
+            previous.ContractMethods = [new MethodProvider(signature, MethodBodyStatement.Empty, previous)];
+            ModelTestHelper.SetLastContractView(factory, previous);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            _ = plugin.Object.GetWriter(factory).Write();
+
+            // Ambiguous wire names must not silently route the old value to either branch.
+            var compatibility = factory.Methods.Single(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod);
+            Assert.That(compatibility.BodyStatements!.ToDisplayString(), Does.Not.Contain("uri"));
+        }
+
+        [Test]
+        public void UnmappedFactoryParameterDoesNotBlockGeneration([Values] bool customMethod, [Values] bool acceptedRemoval)
         {
             var input = InputFactory.Model("VolumePatch", properties: [InputFactory.Property("sizeGiB", InputPrimitiveType.Int64)]);
             var baseline = acceptedRemoval ? ApiCompatBaseline.Parse(
@@ -662,13 +734,13 @@ namespace Azure.Generator.Mgmt.Tests
                 ManagementMockHelpers.SetCustomCodeView(factory, custom);
             }
             using var diagnostics = CaptureDiagnostics(plugin);
-            ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(factory);
-            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
-            Assert.That(messages.Contains("\"severity\":\"error\""), Is.EqualTo(!customMethod && !acceptedRemoval), factory.Type.FullyQualifiedName);
+            _ = plugin.Object.GetWriter(factory).Write();
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Not.Contain("managedByResourceId"));
         }
 
         [Test]
-        public void FactoryGuardAndNamedDefaultDoNotCountAsPreservedValues()
+        public void FactoryGuardAndNamedDefaultDoNotPreserveTheValue()
         {
             var input = InputFactory.Model("VolumePatch", properties: [InputFactory.Property("sizeGiB", InputPrimitiveType.Int64)]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
@@ -687,12 +759,15 @@ namespace Azure.Generator.Mgmt.Tests
                 }, factory);
             factory.Update(methods: [method]);
             using var diagnostics = CaptureDiagnostics(plugin);
-            ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(factory);
-            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Contain("managedByResourceId"));
+            _ = plugin.Object.GetWriter(factory).Write();
+            var body = method.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain("managedByResourceId"));
+            Assert.That(body, Does.Contain("default"));
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
         }
 
         [Test]
-        public void FactoryValidationRecognizesNestedRenamedAndConvertedValues()
+        public void FactoryPreservesNestedRenamedAndConvertedValues()
         {
             var timestamp = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
             var properties = InputFactory.Model("PolicyProperties", properties:

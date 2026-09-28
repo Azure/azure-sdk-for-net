@@ -4,7 +4,6 @@
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
-using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -789,10 +788,6 @@ namespace Azure.Generator.Management.Visitors
                 return currentType.IsValueType ? previous.Type : currentType;
             }
 
-            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-error",
-                $"Cannot preserve flattened property '{model.Name}.{name}' of type '{previous.Type}' using '{currentType}'. "
-                + "Provide a customization with an explicit mapping to the current wire model.",
-                severity: EmitterDiagnosticSeverity.Error);
             return currentType;
         }
 
@@ -800,8 +795,8 @@ namespace Azure.Generator.Management.Visitors
         {
             // Constructor restoration clones AsParameter, not the historical parameter. Keep
             // its exact value-type nullability independently of the property's wrapper lifting.
-            // Mixed T/T? overloads cannot share one type; ValidateFlattenedConstructors reports
-            // any signatures still missing after restoration and custom-code filtering.
+            // Mixed T/T? overloads cannot share one type; keep the representable
+            // signature without inventing a mapping for the other overload.
             var parameter = flattenedProperty.AsParameter;
             var previousTypes = model.LastContractView?.Constructors
                 .Where(c => IsPublicApi(c.Signature.Modifiers)
