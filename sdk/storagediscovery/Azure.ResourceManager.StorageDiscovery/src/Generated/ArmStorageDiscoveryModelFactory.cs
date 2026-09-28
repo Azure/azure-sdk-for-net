@@ -67,21 +67,21 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="capacityDetailsStatus"> The enablement status of the capacity details capability. </param>
         /// <param name="prefixConfigurations"> The prefix configurations that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
         /// <returns> A new <see cref="Models.AzureBlobStorageCapability"/> instance for mocking. </returns>
-        public static AzureBlobStorageCapability AzureBlobStorageCapability(CapabilityStatus capacityDetailsStatus = default, IEnumerable<PrefixConfiguration> prefixConfigurations = default)
+        public static AzureBlobStorageCapability AzureBlobStorageCapability(StorageDiscoveryCapabilityStatus capacityDetailsStatus = default, IEnumerable<AzureBlobStoragePrefixConfiguration> prefixConfigurations = default)
         {
-            prefixConfigurations ??= new ChangeTrackingList<PrefixConfiguration>();
+            prefixConfigurations ??= new ChangeTrackingList<AzureBlobStoragePrefixConfiguration>();
 
-            return new AzureBlobStorageCapability(new CapacityDetails(capacityDetailsStatus, default), (prefixConfigurations ?? new ChangeTrackingList<PrefixConfiguration>()).ToList(), default);
+            return new AzureBlobStorageCapability(new CapacityDetails(capacityDetailsStatus, default), (prefixConfigurations ?? new ChangeTrackingList<AzureBlobStoragePrefixConfiguration>()).ToList(), default);
         }
 
         /// <summary> A prefix configuration that scopes capacity details to a specific storage account, container, and prefix. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="containerName"> The name of the blob container within the storage account. </param>
         /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
-        /// <returns> A new <see cref="Models.PrefixConfiguration"/> instance for mocking. </returns>
-        public static PrefixConfiguration PrefixConfiguration(string storageAccountName = default, string containerName = default, string prefix = default)
+        /// <returns> A new <see cref="Models.AzureBlobStoragePrefixConfiguration"/> instance for mocking. </returns>
+        public static AzureBlobStoragePrefixConfiguration AzureBlobStoragePrefixConfiguration(string storageAccountName = default, string containerName = default, string prefix = default)
         {
-            return new PrefixConfiguration(storageAccountName, containerName, prefix, default);
+            return new AzureBlobStoragePrefixConfiguration(storageAccountName, containerName, prefix, default);
         }
 
         /// <summary> Storage Discovery Scope. This had added validations. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="capacityDetailsStatus"> The enablement status to update for the capacity details capability. </param>
         /// <param name="prefixConfigurations"> The prefix configurations to update for Azure Blob Storage. </param>
         /// <returns> A new <see cref="Models.AzureBlobStorageCapabilityPatch"/> instance for mocking. </returns>
-        public static AzureBlobStorageCapabilityPatch AzureBlobStorageCapabilityPatch(CapabilityStatus? capacityDetailsStatus = default, IEnumerable<AzureBlobStoragePrefixConfigurationPatch> prefixConfigurations = default)
+        public static AzureBlobStorageCapabilityPatch AzureBlobStorageCapabilityPatch(StorageDiscoveryCapabilityStatus? capacityDetailsStatus = default, IEnumerable<AzureBlobStoragePrefixConfigurationPatch> prefixConfigurations = default)
         {
             prefixConfigurations ??= new ChangeTrackingList<AzureBlobStoragePrefixConfigurationPatch>();
 

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             {
                 return null;
             }
-            CapabilityStatus? status = default;
+            StorageDiscoveryCapabilityStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     {
                         continue;
                     }
-                    status = new CapabilityStatus(prop.Value.GetString());
+                    status = new StorageDiscoveryCapabilityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

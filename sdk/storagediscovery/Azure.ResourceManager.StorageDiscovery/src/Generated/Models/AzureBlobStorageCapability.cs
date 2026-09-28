@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapability"/>. </summary>
         /// <param name="capacityDetailsStatus"> The enablement status of the capacity details capability. </param>
-        public AzureBlobStorageCapability(CapabilityStatus capacityDetailsStatus)
+        public AzureBlobStorageCapability(StorageDiscoveryCapabilityStatus capacityDetailsStatus)
         {
 
             CapacityDetails = new CapacityDetails(capacityDetailsStatus);
-            PrefixConfigurations = new ChangeTrackingList<PrefixConfiguration>();
+            PrefixConfigurations = new ChangeTrackingList<AzureBlobStoragePrefixConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapability"/>. </summary>
         /// <param name="capacityDetails"> The capacity details configuration for Azure Blob Storage. </param>
         /// <param name="prefixConfigurations"> The prefix configurations that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobStorageCapability(CapacityDetails capacityDetails, IList<PrefixConfiguration> prefixConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStorageCapability(CapacityDetails capacityDetails, IList<AzureBlobStoragePrefixConfiguration> prefixConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityDetails = capacityDetails;
             PrefixConfigurations = prefixConfigurations;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         internal CapacityDetails CapacityDetails { get; set; }
 
         /// <summary> The prefix configurations that scope the capacity details to specific storage accounts, containers, and prefixes. </summary>
-        public IList<PrefixConfiguration> PrefixConfigurations { get; }
+        public IList<AzureBlobStoragePrefixConfiguration> PrefixConfigurations { get; }
 
         /// <summary> The enablement status of the capacity details capability. </summary>
-        public CapabilityStatus CapacityDetailsStatus
+        public StorageDiscoveryCapabilityStatus CapacityDetailsStatus
         {
             get
             {

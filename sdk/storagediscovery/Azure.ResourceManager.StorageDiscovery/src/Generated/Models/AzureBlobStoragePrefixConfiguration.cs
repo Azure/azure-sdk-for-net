@@ -12,16 +12,16 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> A prefix configuration that scopes capacity details to a specific storage account, container, and prefix. </summary>
-    public partial class PrefixConfiguration
+    public partial class AzureBlobStoragePrefixConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrefixConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStoragePrefixConfiguration"/>. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="containerName"> The name of the blob container within the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
-        public PrefixConfiguration(string storageAccountName, string containerName)
+        public AzureBlobStoragePrefixConfiguration(string storageAccountName, string containerName)
         {
             Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
             Argument.AssertNotNull(containerName, nameof(containerName));
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             ContainerName = containerName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrefixConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStoragePrefixConfiguration"/>. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="containerName"> The name of the blob container within the storage account. </param>
         /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrefixConfiguration(string storageAccountName, string containerName, string prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStoragePrefixConfiguration(string storageAccountName, string containerName, string prefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountName = storageAccountName;
             ContainerName = containerName;
