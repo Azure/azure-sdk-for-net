@@ -129,14 +129,14 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            EntityCategory entityType = default;
+            PiiCategoriesExclude entityType = default;
             IList<EntitySynonym> synonyms = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("entityType"u8))
                 {
-                    entityType = new EntityCategory(prop.Value.GetString());
+                    entityType = new PiiCategoriesExclude(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("synonyms"u8))
