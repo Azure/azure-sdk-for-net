@@ -630,6 +630,64 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void FactoryRetainsNonNullableValueTypeOverloadWhenFlattenedWrapperIsOptional()
+        {
+            // ProviderHub's shipped ResourceTypeEndpointBase factory takes FeaturesPolicy, while
+            // flattening an optional properties wrapper now emits FeaturesPolicy?. Both CLR
+            // signatures must remain available; the old overload must still forward its value.
+            var policy = InputFactory.StringEnum("FeaturesPolicy", [("Required", "Required")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var properties = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("requiredFeaturesPolicy", policy, isRequired: true)]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ResourceTypeEndpointBase", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties], inputEnums: () => [policy],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct FeaturesPolicy { }
+                        public partial class ResourceTypeEndpointBase { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.ResourceTypeEndpointBase ResourceTypeEndpointBase(
+                                Samples.Models.FeaturesPolicy requiredFeaturesPolicy = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(factory.LastContractView, Is.Not.Null);
+            Assert.That(factory.LastContractView!.Methods.Single().Signature.Parameters.Single().Type.IsNullable,
+                Is.False);
+            Assert.That(factory.Methods.Where(m => m.Signature.Name == "ResourceTypeEndpointBase")
+                    .Select(m => m.Signature.Parameters.Single().Type.IsNullable),
+                Is.EquivalentTo(new[] { true }), "The primary factory should reflect the lifted leaf.");
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            _ = plugin.Object.GetWriter(factory).Write();
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "ResourceTypeEndpointBase").ToArray();
+            Assert.That(overloads.Any(m => !m.Signature.Parameters.Single().Type.IsNullable), Is.True,
+                "A nullable value-type factory parameter must not replace a shipped non-nullable overload.");
+            var oldOverload = overloads.Single(m => !m.Signature.Parameters.Single().Type.IsNullable);
+            Assert.That(oldOverload.BodyStatements!.ToDisplayString(), Does.Contain("requiredFeaturesPolicy"));
+        }
+
+        [Test]
         public void FactoryPreservesRenamedUriWithSameWireName()
         {
             // KustoClusterPatch's historical factory accepts `uri`, while the current flattened
