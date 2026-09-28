@@ -48,9 +48,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The start time of the current synchronization. </summary>
-        public DateTimeOffset StartTime { get; set; }
-
         /// <summary> The number of item updates successfully processed in the current synchronization. </summary>
         public int ItemsUpdatesProcessed { get; set; }
 
