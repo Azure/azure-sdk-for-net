@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 await containers.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "Invalid_Container_Name",
-                    new ContextCacheContainerData(new ContextCacheContainerProperties("gpt-4", AiProvider.OpenAI))));
+                    new ContextCacheContainerData(new ContextCacheContainerProperties("gpt-4", AIProvider.OpenAI))));
             Assert.AreEqual(400, invalidNameException.Status);
 
             RequestFailedException invalidTimeToLiveException = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Storage.Tests
                     WaitUntil.Completed,
                     Recording.GenerateAssetName("invalid-ttl"),
                     new ContextCacheContainerData(
-                        new ContextCacheContainerProperties("gpt-4", AiProvider.OpenAI)
+                        new ContextCacheContainerProperties("gpt-4", AIProvider.OpenAI)
                         {
-                            TimeToLive = 31
+                            TimeToLiveInDays = 31
                         })));
             Assert.AreEqual(400, invalidTimeToLiveException.Status);
 
             var containerData = new ContextCacheContainerData(
-                new ContextCacheContainerProperties("gpt-4", AiProvider.OpenAI)
+                new ContextCacheContainerProperties("gpt-4", AIProvider.OpenAI)
                 {
                     Description = "Container for GPT-4 prompt caching",
-                    TimeToLive = 7
+                    TimeToLiveInDays = 7
                 });
 
             ContextCacheContainerResource container = (await containers.CreateOrUpdateAsync(
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.Storage.Tests
 
             Assert.AreEqual(containerName, container.Data.Name);
             Assert.AreEqual("gpt-4", container.Data.Properties.ModelName);
-            Assert.AreEqual(AiProvider.OpenAI, container.Data.Properties.Provider);
-            Assert.AreEqual(7, container.Data.Properties.TimeToLive);
+            Assert.AreEqual(AIProvider.OpenAI, container.Data.Properties.Provider);
+            Assert.AreEqual(7, container.Data.Properties.TimeToLiveInDays);
             Assert.AreEqual(ContextCacheProvisioningState.Succeeded, container.Data.Properties.ProvisioningState);
 
             Assert.IsTrue((await containers.ExistsAsync(containerName)).Value);
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.Storage.Tests
                 Properties = new ContextCacheContainerPropertiesPatch
                 {
                     Description = "Updated container for GPT-4 prompt caching",
-                    TimeToLive = 14
+                    TimeToLiveInDays = 14
                 }
             };
             container = (await container.UpdateAsync(WaitUntil.Completed, containerPatch)).Value;
             Assert.AreEqual("Updated container for GPT-4 prompt caching", container.Data.Properties.Description);
-            Assert.AreEqual(14, container.Data.Properties.TimeToLive);
+            Assert.AreEqual(14, container.Data.Properties.TimeToLiveInDays);
 
             await container.DeleteAsync(WaitUntil.Completed);
             Assert.IsFalse((await containers.ExistsAsync(containerName)).Value);

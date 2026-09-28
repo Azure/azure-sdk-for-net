@@ -590,7 +590,7 @@ namespace Azure.Identity
 
         internal bool IsAzureProxyEnabled { get; set; }
 
-        internal bool EnableMtlsProofOfPossession { get; set; }
+        internal bool EnableMtlsProofOfPossession { get; set; } = true;
 
         /// <summary>
         /// Specifies the client ID of the application the credential will authenticate.

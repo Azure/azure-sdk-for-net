@@ -8,12 +8,25 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A single Amazon Simple Storage Service (S3) object or a set of S3 objects. </summary>
     public partial class AmazonS3Dataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
+        public AmazonS3Dataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> bucketName) : base("AmazonS3Object", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(bucketName, nameof(bucketName));
+
+            TypeProperties = new AmazonS3DatasetTypeProperties(bucketName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
