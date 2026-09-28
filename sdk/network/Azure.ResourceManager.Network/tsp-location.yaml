@@ -1,5 +1,5 @@
 directory: specification/network/resource-manager/Microsoft.Network/Network
-commit: fcc3feb29d0bb5aa12829e8649deda5f8087fae9
+commit: d57b66fb9bc43ec786ded75fe563542839d86bbd
 repo: ArcturusZhang/azure-rest-api-specs
 additionalDirectories: 
 

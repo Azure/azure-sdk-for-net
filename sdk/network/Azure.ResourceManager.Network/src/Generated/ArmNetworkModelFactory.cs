@@ -11780,96 +11780,6 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="source"> Describes the source of connection monitor. </param>
-        /// <param name="destination"> Describes the destination of connection monitor. </param>
-        /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
-        /// <param name="monitoringIntervalInSeconds"> Monitoring interval in seconds. </param>
-        /// <param name="endpoints"> List of connection monitor endpoints. </param>
-        /// <param name="testConfigurations"> List of connection monitor test configurations. </param>
-        /// <param name="testGroups"> List of connection monitor test groups. </param>
-        /// <param name="outputs"> List of connection monitor outputs. </param>
-        /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
-        /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
-        /// <param name="startOn"> The date and time when the connection monitor was started. </param>
-        /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
-        /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"> Connection monitor location. </param>
-        /// <param name="tags"> Connection monitor tags. </param>
-        /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
-        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorEndpointType? connectionMonitorType, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConnectionMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
-                    source,
-                    destination,
-                    autoStart,
-                    monitoringIntervalInSeconds,
-                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                    notes,
-                    default,
-                    provisioningState,
-                    startOn,
-                    monitoringStatus,
-                    connectionMonitorType),
-                eTag,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary> Describes the properties of a connection monitor. </summary>
-        /// <param name="source"> Describes the source of connection monitor. </param>
-        /// <param name="destination"> Describes the destination of connection monitor. </param>
-        /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
-        /// <param name="monitoringIntervalInSeconds"> Monitoring interval in seconds. </param>
-        /// <param name="endpoints"> List of connection monitor endpoints. </param>
-        /// <param name="testConfigurations"> List of connection monitor test configurations. </param>
-        /// <param name="testGroups"> List of connection monitor test groups. </param>
-        /// <param name="outputs"> List of connection monitor outputs. </param>
-        /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
-        /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
-        /// <param name="startOn"> The date and time when the connection monitor was started. </param>
-        /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
-        /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        /// <returns> A new <see cref="Models.ConnectionMonitorResultProperties"/> instance for mocking. </returns>
-        public static ConnectionMonitorResultProperties ConnectionMonitorResultProperties(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorEndpointType? connectionMonitorType = default)
-        {
-            endpoints ??= new ChangeTrackingList<ConnectionMonitorEndpoint>();
-            testConfigurations ??= new ChangeTrackingList<ConnectionMonitorTestConfiguration>();
-            testGroups ??= new ChangeTrackingList<ConnectionMonitorTestGroup>();
-            outputs ??= new ChangeTrackingList<ConnectionMonitorOutput>();
-
-            return new ConnectionMonitorResultProperties(
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                notes,
-                default,
-                provisioningState,
-                startOn,
-                monitoringStatus,
-                connectionMonitorType);
-        }
-
         /// <summary> Parameters that define the operation to create a connection monitor. </summary>
         /// <param name="source"> Describes the source of connection monitor. </param>
         /// <param name="destination"> Describes the destination of connection monitor. </param>
@@ -11921,7 +11831,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="name"> The name of the connection monitor endpoint. </param>
-        /// <param name="type"> The endpoint type. </param>
+        /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="resourceId"> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </param>
         /// <param name="address"> Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine, MMAWorkspaceMachine endpoint type. </param>
         /// <param name="filter"> Filter field is getting deprecated and should not be used. Instead use Include/Exclude scope fields for it. </param>
@@ -11930,11 +11840,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="locationDetailsRegion"> Region for connection monitor endpoint. </param>
         /// <param name="subscriptionId"> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </param>
         /// <returns> A new <see cref="Models.ConnectionMonitorEndpoint"/> instance for mocking. </returns>
-        public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name = default, EndpointType? @type = default, ResourceIdentifier resourceId = default, string address = default, ConnectionMonitorEndpointFilter filter = default, ConnectionMonitorEndpointScope scope = default, CoverageLevel? coverageLevel = default, string locationDetailsRegion = default, Guid? subscriptionId = default)
+        public static ConnectionMonitorEndpoint ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, string locationDetailsRegion, Guid? subscriptionId)
         {
             return new ConnectionMonitorEndpoint(
                 name,
-                @type,
+                endpointType,
                 resourceId,
                 address,
                 filter,
@@ -14717,53 +14627,6 @@ namespace Azure.ResourceManager.Network.Models
                     captureSettings,
                     default,
                     provisioningState),
-                default);
-        }
-
-        /// <summary> Information about the connection monitor. </summary>
-        /// <param name="source"> Describes the source of connection monitor. </param>
-        /// <param name="destination"> Describes the destination of connection monitor. </param>
-        /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
-        /// <param name="monitoringIntervalInSeconds"> Monitoring interval in seconds. </param>
-        /// <param name="endpoints"> List of connection monitor endpoints. </param>
-        /// <param name="testConfigurations"> List of connection monitor test configurations. </param>
-        /// <param name="testGroups"> List of connection monitor test groups. </param>
-        /// <param name="outputs"> List of connection monitor outputs. </param>
-        /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
-        /// <param name="location"> Connection monitor location. </param>
-        /// <param name="tags"> Connection monitor tags. </param>
-        /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
-        /// <param name="startOn"> The date and time when the connection monitor was started. </param>
-        /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
-        /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectionMonitorData ConnectionMonitorData(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorEndpointType? connectionMonitorType = default, string name = default)
-        {
-            return new ConnectionMonitorData(
-                default,
-                name,
-                default,
-                default,
-                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
-                    source,
-                    destination,
-                    autoStart,
-                    monitoringIntervalInSeconds,
-                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                    notes,
-                    default,
-                    provisioningState,
-                    startOn,
-                    monitoringStatus,
-                    connectionMonitorType),
-                default,
-                location,
-                new ChangeTrackingDictionary<string, string>(tags ?? new ChangeTrackingDictionary<string, string>()),
                 default);
         }
 
@@ -20206,57 +20069,6 @@ namespace Azure.ResourceManager.Network.Models
                 (issues ?? new ChangeTrackingList<ConnectivityIssueInfo>()).ToList(),
                 context ?? new ChangeTrackingDictionary<string, string>(),
                 resourceId,
-                default);
-        }
-
-        /// <summary> Information about the connection monitor. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="location"> Connection monitor location. </param>
-        /// <param name="tags"> Connection monitor tags. </param>
-        /// <param name="source"> Describes the source of connection monitor. </param>
-        /// <param name="destination"> Describes the destination of connection monitor. </param>
-        /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
-        /// <param name="monitoringIntervalInSeconds"> Monitoring interval in seconds. </param>
-        /// <param name="endpoints"> List of connection monitor endpoints. </param>
-        /// <param name="testConfigurations"> List of connection monitor test configurations. </param>
-        /// <param name="testGroups"> List of connection monitor test groups. </param>
-        /// <param name="outputs"> List of connection monitor outputs. </param>
-        /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
-        /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
-        /// <param name="startOn"> The date and time when the connection monitor was started. </param>
-        /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
-        /// <param name="connectionMonitorType"></param>
-        /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorType? connectionMonitorType = default)
-        {
-            return new ConnectionMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null ? default : new ConnectionMonitorResultProperties(
-                    source,
-                    destination,
-                    autoStart,
-                    monitoringIntervalInSeconds,
-                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                    notes,
-                    default,
-                    provisioningState,
-                    startOn,
-                    monitoringStatus,
-                    default),
-                etag,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 

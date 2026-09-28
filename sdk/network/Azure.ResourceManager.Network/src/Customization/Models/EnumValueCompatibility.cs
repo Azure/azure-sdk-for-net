@@ -85,29 +85,6 @@ namespace Azure.ResourceManager.Network.Models
     {
     }
 
-    /// <summary> Compatibility declaration for the ConnectionMonitorEndpointType type. </summary>
-    public readonly partial struct ConnectionMonitorEndpointType
-    {
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType AzureArcNetwork { get; } = new ConnectionMonitorEndpointType("AzureArcNetwork");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType AzureArcVm { get; } = new ConnectionMonitorEndpointType("AzureArcVM");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType AzureSubnet { get; } = new ConnectionMonitorEndpointType("AzureSubnet");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType AzureVNet { get; } = new ConnectionMonitorEndpointType("AzureVNet");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType AzureVm { get; } = new ConnectionMonitorEndpointType("AzureVM");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType AzureVmss { get; } = new ConnectionMonitorEndpointType("AzureVMSS");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType ExternalAddress { get; } = new ConnectionMonitorEndpointType("ExternalAddress");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType MMAWorkspaceMachine { get; } = new ConnectionMonitorEndpointType("MMAWorkspaceMachine");
-        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
-        public static ConnectionMonitorEndpointType MMAWorkspaceNetwork { get; } = new ConnectionMonitorEndpointType("MMAWorkspaceNetwork");
-    }
-
     /// <summary> Compatibility declaration for the ConnectionMonitorSourceStatus type. </summary>
     public readonly partial struct ConnectionMonitorSourceStatus
     {
