@@ -14,56 +14,56 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> A prefix configuration that scopes capacity details to a specific storage account, container, and prefix. </summary>
-    public partial class PrefixConfiguration : IJsonModel<PrefixConfiguration>
+    public partial class AzureBlobStoragePrefixConfiguration : IJsonModel<AzureBlobStoragePrefixConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="PrefixConfiguration"/> for deserialization. </summary>
-        internal PrefixConfiguration()
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStoragePrefixConfiguration"/> for deserialization. </summary>
+        internal AzureBlobStoragePrefixConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrefixConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AzureBlobStoragePrefixConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobStoragePrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrefixConfiguration(document.RootElement, options);
+                        return DeserializeAzureBlobStoragePrefixConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrefixConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobStoragePrefixConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobStoragePrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrefixConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobStoragePrefixConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrefixConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AzureBlobStoragePrefixConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrefixConfiguration IPersistableModel<PrefixConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureBlobStoragePrefixConfiguration IPersistableModel<AzureBlobStoragePrefixConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrefixConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureBlobStoragePrefixConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrefixConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureBlobStoragePrefixConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobStoragePrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrefixConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobStoragePrefixConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrefixConfiguration IJsonModel<PrefixConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureBlobStoragePrefixConfiguration IJsonModel<AzureBlobStoragePrefixConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrefixConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AzureBlobStoragePrefixConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureBlobStoragePrefixConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrefixConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobStoragePrefixConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrefixConfiguration(document.RootElement, options);
+            return DeserializeAzureBlobStoragePrefixConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrefixConfiguration DeserializePrefixConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureBlobStoragePrefixConfiguration DeserializeAzureBlobStoragePrefixConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrefixConfiguration(storageAccountName, containerName, prefix, additionalBinaryDataProperties);
+            return new AzureBlobStoragePrefixConfiguration(storageAccountName, containerName, prefix, additionalBinaryDataProperties);
         }
     }
 }

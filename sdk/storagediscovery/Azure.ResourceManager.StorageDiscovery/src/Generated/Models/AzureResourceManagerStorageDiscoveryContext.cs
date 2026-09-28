@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.StorageDiscovery
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AzureBlobStorageCapability))]
     [ModelReaderWriterBuildable(typeof(AzureBlobStorageCapabilityPatch))]
+    [ModelReaderWriterBuildable(typeof(AzureBlobStoragePrefixConfiguration))]
     [ModelReaderWriterBuildable(typeof(AzureBlobStoragePrefixConfigurationPatch))]
     [ModelReaderWriterBuildable(typeof(CapacityDetails))]
     [ModelReaderWriterBuildable(typeof(CapacityDetailsUpdate))]
-    [ModelReaderWriterBuildable(typeof(PrefixConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryCapabilities))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryCapabilitiesUpdate))]

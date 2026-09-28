@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             {
                 writer.WritePropertyName("prefixConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (PrefixConfiguration item in PrefixConfigurations)
+                foreach (AzureBlobStoragePrefixConfiguration item in PrefixConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 return null;
             }
             CapacityDetails capacityDetails = default;
-            IList<PrefixConfiguration> prefixConfigurations = default;
+            IList<AzureBlobStoragePrefixConfiguration> prefixConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     {
                         continue;
                     }
-                    List<PrefixConfiguration> array = new List<PrefixConfiguration>();
+                    List<AzureBlobStoragePrefixConfiguration> array = new List<AzureBlobStoragePrefixConfiguration>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrefixConfiguration.DeserializePrefixConfiguration(item, options));
+                        array.Add(AzureBlobStoragePrefixConfiguration.DeserializeAzureBlobStoragePrefixConfiguration(item, options));
                     }
                     prefixConfigurations = array;
                     continue;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureBlobStorageCapability(capacityDetails, prefixConfigurations ?? new ChangeTrackingList<PrefixConfiguration>(), additionalBinaryDataProperties);
+            return new AzureBlobStorageCapability(capacityDetails, prefixConfigurations ?? new ChangeTrackingList<AzureBlobStoragePrefixConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

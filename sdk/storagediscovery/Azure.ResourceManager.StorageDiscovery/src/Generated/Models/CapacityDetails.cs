@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> Initializes a new instance of <see cref="CapacityDetails"/>. </summary>
         /// <param name="status"> The enablement status of the capacity details capability. </param>
-        public CapacityDetails(CapabilityStatus status)
+        public CapacityDetails(StorageDiscoveryCapabilityStatus status)
         {
             Status = status;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <summary> Initializes a new instance of <see cref="CapacityDetails"/>. </summary>
         /// <param name="status"> The enablement status of the capacity details capability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityDetails(CapabilityStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityDetails(StorageDiscoveryCapabilityStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The enablement status of the capacity details capability. </summary>
-        public CapabilityStatus Status { get; set; }
+        public StorageDiscoveryCapabilityStatus Status { get; set; }
     }
 }

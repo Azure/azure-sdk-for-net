@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public IList<AzureBlobStoragePrefixConfigurationPatch> PrefixConfigurations { get; }
 
         /// <summary> The enablement status to update for the capacity details capability. </summary>
-        public CapabilityStatus? CapacityDetailsStatus
+        public StorageDiscoveryCapabilityStatus? CapacityDetailsStatus
         {
             get
             {
