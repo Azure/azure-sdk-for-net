@@ -688,6 +688,57 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void LiftedFactoryDoesNotProduceAmbiguousOptionalOverloads()
+        {
+            // With optional parameters, both F(T = default) and F(T? = default)
+            // match a call to F(). Replacing the primary method retains the GA
+            // signature without introducing a source-level ambiguity.
+            var policy = InputFactory.StringEnum("FeaturesPolicy", [("Required", "Required")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var properties = InputFactory.Model("EndpointProperties", properties:
+                [InputFactory.Property("requiredFeaturesPolicy", policy, isRequired: true)]);
+            var wrapper = InputFactory.Property("properties", properties);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ResourceTypeEndpointBase", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties], inputEnums: () => [policy],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct FeaturesPolicy { }
+                        public partial class ResourceTypeEndpointBase { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.ResourceTypeEndpointBase ResourceTypeEndpointBase(
+                                Samples.Models.FeaturesPolicy requiredFeaturesPolicy = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "ResourceTypeEndpointBase").ToArray();
+            Assert.That(overloads, Has.Length.EqualTo(1));
+            Assert.That(overloads[0].Signature.Parameters.Single().Type.IsNullable, Is.False);
+            Assert.That(ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(overloads[0]), Is.False,
+                "The shipped factory remains visible rather than becoming a hidden compatibility overload.");
+        }
+
+        [Test]
         public void FactoryPreservesRenamedUriWithSameWireName()
         {
             // KustoClusterPatch's historical factory accepts `uri`, while the current flattened

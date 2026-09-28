@@ -81,8 +81,34 @@ namespace Azure.Generator.Management.Visitors
                     continue;
                 }
 
-                updatedMethods.Add(restoredMethod);
+                // If the only change to the factory signature is a lifted value-type leaf,
+                // retain the historical signature as the primary method. Adding both
+                // optional overloads would make calls that omit the leaf ambiguous.
+                var replacementIndex = updatedMethods.FindIndex(current =>
+                    HasOnlyLiftedValueTypeDifferences(current.Signature, previousMethod.Signature));
+                if (replacementIndex >= 0 && !previousMethods.Any(previous =>
+                    HasSameCSharpSignature(previous.Signature, updatedMethods[replacementIndex].Signature)))
+                {
+                    // This is the primary factory, not a hidden compatibility overload.
+                    // Preserve the historical method's visibility attributes.
+                    restoredMethod.Signature.Update(attributes: previousMethod.Signature.Attributes);
+                    updatedMethods[replacementIndex] = restoredMethod;
+                }
+                else
+                {
+                    updatedMethods.Add(restoredMethod);
+                }
             }
+        }
+
+        private static bool HasOnlyLiftedValueTypeDifferences(MethodSignature current, MethodSignature previous)
+        {
+            return current.Name == previous.Name
+                && current.Parameters.Count == previous.Parameters.Count
+                && current.Parameters.Zip(previous.Parameters).All(pair =>
+                    pair.First.Type.HasSamePublicType(pair.Second.Type, ignoreNullable: true))
+                && current.Parameters.Zip(previous.Parameters).Any(pair =>
+                    pair.First.Type.IsValueType && pair.First.Type.IsNullable && !pair.Second.Type.IsNullable);
         }
 
         /// <summary>
