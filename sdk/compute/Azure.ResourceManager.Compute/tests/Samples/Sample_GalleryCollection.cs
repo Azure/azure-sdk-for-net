@@ -136,7 +136,10 @@ namespace Azure.ResourceManager.Compute.Samples
             GalleryData data = new GalleryData(new AzureLocation("West US"))
             {
                 Description = "This is the gallery description.",
-                IsSoftDeleteEnabled = true,
+                SoftDeletePolicy = new SoftDeletePolicy
+                {
+                    IsSoftDeleteEnabled = true,
+                },
             };
             ArmOperation<GalleryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryName, data);
             GalleryResource result = lro.Value;
