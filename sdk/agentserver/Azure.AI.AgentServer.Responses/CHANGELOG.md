@@ -1,5 +1,21 @@
 # Release History
 
+## 1.0.0-beta.9 (Unreleased)
+
+### Bugs Fixed
+- Scope local in-memory and file-backed response envelopes, items, history, and conversation
+  indexes to `PlatformContext.UserIdKey`. Anonymous requests use a separate local partition.
+- Require an existing response in the caller's partition for updates, and retain deletion
+  semantics without allowing updates to recreate deleted responses.
+
+### Breaking Changes
+- The local file-backed response provider now uses a new `responses/partitions-v1` namespace.
+  Previously persisted responses and their history are not visible after upgrade, including
+  for anonymous requests and crash recovery. Legacy files remain unchanged; there is no
+  automatic migration or legacy read fallback. Restoring old data requires an explicit,
+  operator-controlled migration with independently verified ownership. Newly persisted
+  partitioned data continues to survive restarts.
+
 ## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added

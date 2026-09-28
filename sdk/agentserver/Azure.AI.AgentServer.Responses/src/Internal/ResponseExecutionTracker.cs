@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
 {
-    private readonly ConcurrentDictionary<string, ResponseExecution> _executions = new();
+    private readonly ConcurrentDictionary<(ResponseStorePartition Partition, string ResponseId), ResponseExecution> _executions = new();
     private readonly ILogger<ResponseExecutionTracker> _logger;
 
     /// <summary>
@@ -30,11 +31,12 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
     /// <summary>
     /// Creates a new <see cref="ResponseExecution"/> and registers it for tracking.
     /// </summary>
-    public ResponseExecution Create(string responseId,
+    public ResponseExecution Create(string responseId, PlatformContext context,
         bool isBackground = false, bool isStreaming = false, bool store = true)
     {
-        var execution = new ResponseExecution(responseId, isBackground, isStreaming, store);
-        if (!_executions.TryAdd(responseId, execution))
+        var partition = ResponseStorePartition.FromContext(context);
+        var execution = new ResponseExecution(responseId, partition, isBackground, isStreaming, store);
+        if (!_executions.TryAdd((partition, responseId), execution))
         {
             execution.Dispose();
             throw new InvalidOperationException($"Response '{responseId}' is already being tracked.");
@@ -43,21 +45,28 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
         return execution;
     }
 
+    public ResponseExecution Create(string responseId,
+        bool isBackground = false, bool isStreaming = false, bool store = true) =>
+        Create(responseId, PlatformContext.Empty, isBackground, isStreaming, store);
+
     /// <summary>
     /// Attempts to look up a tracked execution by response ID.
     /// </summary>
-    public bool TryGet(string responseId, out ResponseExecution? execution)
+    public bool TryGet(string responseId, PlatformContext context, out ResponseExecution? execution)
     {
-        return _executions.TryGetValue(responseId, out execution);
+        return _executions.TryGetValue((ResponseStorePartition.FromContext(context), responseId), out execution);
     }
+
+    public bool TryGet(string responseId, out ResponseExecution? execution) =>
+        TryGet(responseId, PlatformContext.Empty, out execution);
 
     /// <summary>
     /// Removes a tracked execution by response ID.
     /// </summary>
     /// <returns><c>true</c> if the execution was found and removed; otherwise <c>false</c>.</returns>
-    public bool TryRemove(string responseId)
+    public bool TryRemove(string responseId, PlatformContext context)
     {
-        if (_executions.TryRemove(responseId, out var execution))
+        if (_executions.TryRemove((ResponseStorePartition.FromContext(context), responseId), out var execution))
         {
             execution.Dispose();
             return true;
@@ -66,18 +75,31 @@ internal sealed class ResponseExecutionTracker : IHostedService, IDisposable
         return false;
     }
 
+    public bool TryRemove(string responseId) => TryRemove(responseId, PlatformContext.Empty);
+
     /// <summary>
     /// Evicts a completed execution from the tracker so that subsequent API calls
     /// (GET, DELETE, Cancel) fall through to the durable <see cref="ResponsesProvider"/>.
-    /// Unlike <see cref="TryRemove"/>, this does <b>not</b> dispose the execution —
+    /// Unlike <see cref="TryRemove(string, PlatformContext)"/>, this does <b>not</b> dispose the execution —
     /// callers such as <see cref="ResponseOrchestrator.CancelAsync"/> may still hold
     /// a reference and read <see cref="ResponseExecution.Response"/> after the
     /// <see cref="ResponseExecution.FinalizedSignal"/> fires.
     /// </summary>
     /// <returns><c>true</c> if the execution was found and evicted; otherwise <c>false</c>.</returns>
-    public bool TryEvict(string responseId)
+    public bool TryEvict(string responseId, PlatformContext context)
     {
-        return _executions.TryRemove(responseId, out _);
+        return _executions.TryRemove((ResponseStorePartition.FromContext(context), responseId), out _);
+    }
+
+    public bool TryEvict(string responseId) => TryEvict(responseId, PlatformContext.Empty);
+
+    /// <summary>
+    /// Evicts a tracked execution using its immutable user partition and response ID.
+    /// </summary>
+    public bool TryEvict(ResponseExecution execution)
+    {
+        ArgumentNullException.ThrowIfNull(execution);
+        return _executions.TryRemove((execution.Partition, execution.ResponseId), out _);
     }
 
     /// <inheritdoc/>

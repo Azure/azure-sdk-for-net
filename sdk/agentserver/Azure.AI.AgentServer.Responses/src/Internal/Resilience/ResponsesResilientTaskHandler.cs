@@ -145,7 +145,7 @@ internal static class ResponsesResilientTaskHandler
             pendingInputCountProvider: () => ctx.PendingInputCount);
 
         if (!isRecovery
-            && tracker.TryGet(responseId, out ResponseExecution? existing)
+            && tracker.TryGet(responseId, platformContext, out ResponseExecution? existing)
             && existing is not null)
         {
             // The endpoint pre-created this execution to bridge response.created back to the caller.
@@ -166,9 +166,8 @@ internal static class ResponsesResilientTaskHandler
             return ResponseTaskOutput.Completed(responseId, existing.Response?.Status);
         }
 
-        var execution = tracker.Create(responseId, isBackground, isStreaming, store);
+        var execution = tracker.Create(responseId, platformContext, isBackground, isStreaming, store);
         execution.AgentSessionId = payload.AgentSessionId;
-        execution.UserIdKey = payload.UserIdKey;
         if (persisted is not null)
         {
             execution.RecoveredOutputWatermark = persisted.Output?.Count ?? 0;
@@ -190,7 +189,7 @@ internal static class ResponsesResilientTaskHandler
         }
         finally
         {
-            tracker.TryEvict(responseId);
+            tracker.TryEvict(execution);
         }
 
         return ResponseTaskOutput.Completed(responseId, execution.Response?.Status);
@@ -212,7 +211,7 @@ internal static class ResponsesResilientTaskHandler
         });
 
         CancellationToken providerCt =
-            await cancellationProvider.GetResponseCancellationTokenAsync(execution.ResponseId)
+            await cancellationProvider.GetResponseCancellationTokenAsync(execution.LifecycleId)
                 .ConfigureAwait(false);
 
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(

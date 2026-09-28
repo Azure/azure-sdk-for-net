@@ -3,6 +3,7 @@
 
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Core;
 using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Cache;
@@ -19,41 +20,41 @@ public class ResponseExecutionTrackerTests : IDisposable
     [Test]
     public void Create_AddsExecution_TryGetReturnsIt()
     {
-        var execution = _tracker.Create("resp_001");
+        var execution = _tracker.Create("resp_001", PlatformContext.Empty);
 
-        Assert.That(_tracker.TryGet("resp_001", out var found), Is.True);
+        Assert.That(_tracker.TryGet("resp_001", PlatformContext.Empty, out var found), Is.True);
         Assert.That(found, Is.SameAs(execution));
     }
 
     [Test]
     public void TryGet_UnknownId_ReturnsFalse()
     {
-        Assert.That(_tracker.TryGet("resp_missing", out _), Is.False);
+        Assert.That(_tracker.TryGet("resp_missing", PlatformContext.Empty, out _), Is.False);
     }
 
     [Test]
     public void Create_DuplicateId_Throws()
     {
-        _tracker.Create("resp_dup");
+        _tracker.Create("resp_dup", PlatformContext.Empty);
 
         Assert.Throws<InvalidOperationException>(
-            () => _tracker.Create("resp_dup"));
+            () => _tracker.Create("resp_dup", PlatformContext.Empty));
     }
 
     [Test]
     public void TryEvict_RemovesExecution_TryGetReturnsFalse()
     {
-        _tracker.Create("resp_002");
-        var evicted = _tracker.TryEvict("resp_002");
+        _tracker.Create("resp_002", PlatformContext.Empty);
+        var evicted = _tracker.TryEvict("resp_002", PlatformContext.Empty);
 
         Assert.That(evicted, Is.True);
-        Assert.That(_tracker.TryGet("resp_002", out _), Is.False);
+        Assert.That(_tracker.TryGet("resp_002", PlatformContext.Empty, out _), Is.False);
     }
 
     [Test]
     public void TryEvict_UnknownId_ReturnsFalse()
     {
-        Assert.That(_tracker.TryEvict("resp_missing"), Is.False);
+        Assert.That(_tracker.TryEvict("resp_missing", PlatformContext.Empty), Is.False);
     }
 
     [Test]
@@ -61,7 +62,7 @@ public class ResponseExecutionTrackerTests : IDisposable
     {
         await _tracker.StartAsync(CancellationToken.None);
 
-        var execution = _tracker.Create("resp_stop");
+        var execution = _tracker.Create("resp_stop", PlatformContext.Empty);
 
         // Verify token is not cancelled yet
         Assert.That(execution.CancellationTokenSource.Token.IsCancellationRequested, Is.False);
@@ -77,7 +78,7 @@ public class ResponseExecutionTrackerTests : IDisposable
     {
         await _tracker.StartAsync(CancellationToken.None);
 
-        var execution = _tracker.Create("resp_shutdown");
+        var execution = _tracker.Create("resp_shutdown", PlatformContext.Empty);
         var context = new ResponseContext("resp_shutdown");
         execution.Context = context;
 
@@ -88,6 +89,21 @@ public class ResponseExecutionTrackerTests : IDisposable
 
         Assert.That(execution.ShutdownRequested, Is.True);
         Assert.That(context.IsShutdownRequested, Is.True);
+    }
+
+    [Test]
+    public void SameResponseId_IsIndependentAcrossUserPartitions()
+    {
+        var firstContext = new PlatformContext("user-a", null);
+        var secondContext = new PlatformContext("user-b", null);
+
+        var first = _tracker.Create("resp_shared", firstContext);
+        var second = _tracker.Create("resp_shared", secondContext);
+
+        Assert.That(_tracker.TryGet("resp_shared", firstContext, out var foundFirst), Is.True);
+        Assert.That(_tracker.TryGet("resp_shared", secondContext, out var foundSecond), Is.True);
+        Assert.That(foundFirst, Is.SameAs(first));
+        Assert.That(foundSecond, Is.SameAs(second));
     }
 
     public void Dispose()

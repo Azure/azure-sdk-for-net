@@ -29,25 +29,25 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </remarks>
 internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
 {
-    // --- Response envelopes ---
-    private readonly ConcurrentDictionary<string, Models.ResponseObject> _responses = new();
+    private readonly ConcurrentDictionary<ResponseStorePartition, Store> _partitions = new();
 
-    // --- User ID keys (response ID → creation-time user ID key) ---
-    private readonly ConcurrentDictionary<string, string> _userIdKeys = new();
+    private sealed class Store
+    {
+        public Dictionary<string, Models.ResponseObject> Responses { get; } = new();
+        public Dictionary<string, string> UserIdKeys { get; } = new();
+        public Dictionary<string, OutputItem> Items { get; } = new();
+        public Dictionary<string, IReadOnlyList<string>> InputItemIds { get; } = new();
+        public Dictionary<string, IReadOnlyList<string>> OutputItemIds { get; } = new();
+        public Dictionary<string, IReadOnlyList<string>> HistoryItemIds { get; } = new();
+        public Dictionary<string, List<string>> Conversations { get; } = new();
+        public HashSet<string> DeletedResponseIds { get; } = new();
+    }
 
-    // --- Item store (all items by ID) ---
-    private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
-
-    // --- Per-response ordered ID lists ---
-    private readonly ConcurrentDictionary<string, IReadOnlyList<string>> _inputItemIds = new();
-    private readonly ConcurrentDictionary<string, IReadOnlyList<string>> _outputItemIds = new();
-    private readonly ConcurrentDictionary<string, IReadOnlyList<string>> _historyItemIds = new();
-
-    // --- Conversation tracking (conversation ID → ordered response IDs) ---
-    private readonly ConcurrentDictionary<string, List<string>> _conversationResponses = new();
-
-    // --- Deletion tracking ---
-    private readonly HashSet<string> _deletedResponseIds = new();
+    private Store GetStore(PlatformContext context, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return _partitions.GetOrAdd(ResponseStorePartition.FromContext(context), _ => new Store());
+    }
 
     // --- Cancellation ---
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _cancellationTokenSources = new();
@@ -83,124 +83,146 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        var response = request.Response;
-        var inputItems = request.InputItems;
-        var historyItemIds = request.HistoryItemIds;
-
-        if (!_responses.TryAdd(response.Id, response))
+        var store = GetStore(context, cancellationToken);
+        lock (store)
         {
-            throw new InvalidOperationException($"Response '{response.Id}' already exists.");
-        }
+            var response = request.Response;
+            var inputItems = request.InputItems;
+            var historyItemIds = request.HistoryItemIds;
 
-        // Record the creation-time user ID key for enforcement on subsequent operations
-        if (context.UserIdKey is not null)
-        {
-            _userIdKeys[response.Id] = context.UserIdKey;
-        }
-
-        // Store input items in the item store and track their ordered IDs
-        var inputIds = new List<string>();
-        foreach (var item in inputItems)
-        {
-            var id = GetItemId(item);
-            if (id is not null)
+            if (store.DeletedResponseIds.Contains(response.Id) || !store.Responses.TryAdd(response.Id, response))
             {
-                _itemStore[id] = item;
-                inputIds.Add(id);
+                throw new InvalidOperationException($"Response '{response.Id}' already exists.");
             }
+
+            // Record the creation-time user ID key for enforcement on subsequent operations
+            if (context.UserIdKey is not null)
+            {
+                store.UserIdKeys[response.Id] = context.UserIdKey;
+            }
+
+            // Store input items in the item store and track their ordered IDs
+            var inputIds = new List<string>();
+            foreach (var item in inputItems)
+            {
+                var id = GetItemId(item);
+                if (id is not null)
+                {
+                    store.Items[id] = item;
+                    inputIds.Add(id);
+                }
+            }
+
+            store.InputItemIds[response.Id] = inputIds;
+
+            // Track history item IDs (items already exist in _itemStore from prior responses)
+            store.HistoryItemIds[response.Id] = historyItemIds.ToList();
+
+            // Store output items from Response.Output (non-bg mode has them populated at create time)
+            StoreOutputItems(store, response);
+
+            // Track conversation membership
+            AddToConversation(store, response);
+
+            // Track terminal timestamp for event stream GC (non-bg responses are persisted at terminal state)
+            if (response.Status.HasValue && IsTerminal(response.Status.Value))
+            {
+                _lastEventEmittedAt.TryAdd(response.Id, _timeProvider.GetUtcNow());
+            }
+
+            return Task.CompletedTask;
         }
-
-        _inputItemIds[response.Id] = inputIds;
-
-        // Track history item IDs (items already exist in _itemStore from prior responses)
-        _historyItemIds[response.Id] = historyItemIds.ToList();
-
-        // Store output items from Response.Output (non-bg mode has them populated at create time)
-        StoreOutputItems(response);
-
-        // Track conversation membership
-        AddToConversation(response);
-
-        // Track terminal timestamp for event stream GC (non-bg responses are persisted at terminal state)
-        if (response.Status.HasValue && IsTerminal(response.Status.Value))
-        {
-            _lastEventEmittedAt.TryAdd(response.Id, _timeProvider.GetUtcNow());
-        }
-
-        return Task.CompletedTask;
     }
 
     /// <inheritdoc/>
     public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
-        // Deleted response → 404 (spec: post-deletion, response not found)
-        bool isDeleted;
-        lock (_deletedResponseIds)
+        var store = GetStore(context, cancellationToken);
+        lock (store)
         {
-            isDeleted = _deletedResponseIds.Contains(responseId);
+            // Deleted response → 404 (spec: post-deletion, response not found)
+            bool isDeleted;
+            lock (store.DeletedResponseIds)
+            {
+                isDeleted = store.DeletedResponseIds.Contains(responseId);
+            }
+
+            if (isDeleted)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            if (!store.Responses.TryGetValue(responseId, out var response))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            EnforceUserIsolation(store, responseId, context);
+
+            return Task.FromResult(response);
         }
-
-        if (isDeleted)
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        if (!_responses.TryGetValue(responseId, out var response))
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        EnforceUserIsolation(responseId, context);
-
-        return Task.FromResult(response);
     }
 
     /// <inheritdoc/>
     public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
-        _responses[response.Id] = response;
-
-        // Detect new output items and store them
-        StoreOutputItems(response);
-
-        // Track conversation membership for new output items
-        AddOutputToConversation(response);
-
-        if (response.Status.HasValue && IsTerminal(response.Status.Value))
+        var store = GetStore(context, cancellationToken);
+        lock (store)
         {
-            _lastEventEmittedAt.TryAdd(response.Id, _timeProvider.GetUtcNow());
-        }
+            if (!store.Responses.ContainsKey(response.Id) || store.DeletedResponseIds.Contains(response.Id))
+            {
+                throw new ResourceNotFoundException($"Response '{response.Id}' not found.");
+            }
 
-        return Task.CompletedTask;
+            EnforceUserIsolation(store, response.Id, context);
+            store.Responses[response.Id] = response;
+
+            // Detect new output items and store them
+            StoreOutputItems(store, response);
+
+            // Track conversation membership for new output items
+            AddToConversation(store, response);
+
+            if (response.Status.HasValue && IsTerminal(response.Status.Value))
+            {
+                _lastEventEmittedAt.TryAdd(response.Id, _timeProvider.GetUtcNow());
+            }
+
+            return Task.CompletedTask;
+        }
     }
 
     /// <inheritdoc/>
     public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
     {
-        // Check existence first (before user isolation) to maintain consistent 404 for unknown IDs
-        if (!_responses.ContainsKey(responseId))
+        var store = GetStore(context, cancellationToken);
+        lock (store)
         {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            // Check existence first (before user isolation) to maintain consistent 404 for unknown IDs
+            if (!store.Responses.ContainsKey(responseId))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            EnforceUserIsolation(store, responseId, context);
+
+            if (!store.Responses.Remove(responseId))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            // Track deletion so GetInputItemsAsync can distinguish deleted vs never-existed.
+            // Items, history, and conversation membership are intentionally retained.
+            lock (store.DeletedResponseIds)
+            {
+                store.DeletedResponseIds.Add(responseId);
+            }
+
+            // Clean up user ID key tracking
+            store.UserIdKeys.Remove(responseId);
+
+            return Task.CompletedTask;
         }
-
-        EnforceUserIsolation(responseId, context);
-
-        if (!_responses.TryRemove(responseId, out _))
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        // Track deletion so GetInputItemsAsync can distinguish deleted vs never-existed.
-        // Items, history, and conversation membership are intentionally retained.
-        lock (_deletedResponseIds)
-        {
-            _deletedResponseIds.Add(responseId);
-        }
-
-        // Clean up user ID key tracking
-        _userIdKeys.TryRemove(responseId, out _);
-
-        return Task.CompletedTask;
     }
 
     /// <summary>
@@ -209,9 +231,9 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// provide the same key; mismatches are treated as "not found" to prevent
     /// cross-user information leakage.
     /// </summary>
-    private void EnforceUserIsolation(string responseId, PlatformContext context)
+    private static void EnforceUserIsolation(Store store, string responseId, PlatformContext context)
     {
-        if (_userIdKeys.TryGetValue(responseId, out var expectedKey)
+        if (store.UserIdKeys.TryGetValue(responseId, out var expectedKey)
             && !string.Equals(expectedKey, context.UserIdKey, StringComparison.Ordinal))
         {
             throw new ResourceNotFoundException($"Response '{responseId}' not found.");
@@ -232,87 +254,91 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         string? before = null,
         CancellationToken cancellationToken = default)
     {
-        // Deleted response → 404
-        bool isDeleted;
-        lock (_deletedResponseIds)
+        var store = GetStore(context, cancellationToken);
+        lock (store)
         {
-            isDeleted = _deletedResponseIds.Contains(responseId);
-        }
-
-        if (isDeleted)
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        // Never existed → 404
-        if (!_responses.ContainsKey(responseId) && !_inputItemIds.ContainsKey(responseId))
-        {
-            throw new ResourceNotFoundException($"Response '{responseId}' not found.");
-        }
-
-        EnforceUserIsolation(responseId, context);
-
-        // Combine history + current input items by resolving IDs from the item store
-        var allItems = new List<OutputItem>();
-
-        // 1. Resolve history items
-        if (_historyItemIds.TryGetValue(responseId, out var historyIds))
-        {
-            foreach (var id in historyIds)
+            // Deleted response → 404
+            bool isDeleted;
+            lock (store.DeletedResponseIds)
             {
-                if (_itemStore.TryGetValue(id, out var item))
+                isDeleted = store.DeletedResponseIds.Contains(responseId);
+            }
+
+            if (isDeleted)
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            // Never existed → 404
+            if (!store.Responses.ContainsKey(responseId) && !store.InputItemIds.ContainsKey(responseId))
+            {
+                throw new ResourceNotFoundException($"Response '{responseId}' not found.");
+            }
+
+            EnforceUserIsolation(store, responseId, context);
+
+            // Combine history + current input items by resolving IDs from the item store
+            var allItems = new List<OutputItem>();
+
+            // 1. Resolve history items
+            if (store.HistoryItemIds.TryGetValue(responseId, out var historyIds))
+            {
+                foreach (var id in historyIds)
                 {
-                    allItems.Add(item);
+                    if (store.Items.TryGetValue(id, out var item))
+                    {
+                        allItems.Add(item);
+                    }
                 }
             }
-        }
 
-        // 2. Resolve current input items
-        if (_inputItemIds.TryGetValue(responseId, out var inputIds))
-        {
-            foreach (var id in inputIds)
+            // 2. Resolve current input items
+            if (store.InputItemIds.TryGetValue(responseId, out var inputIds))
             {
-                if (_itemStore.TryGetValue(id, out var item))
+                foreach (var id in inputIds)
                 {
-                    allItems.Add(item);
+                    if (store.Items.TryGetValue(id, out var item))
+                    {
+                        allItems.Add(item);
+                    }
                 }
             }
-        }
 
-        // Apply ordering (ascending = history first, then current; descending = reversed)
-        var list = ascending ? allItems.ToList() : Enumerable.Reverse(allItems).ToList();
+            // Apply ordering (ascending = history first, then current; descending = reversed)
+            var list = ascending ? allItems.ToList() : Enumerable.Reverse(allItems).ToList();
 
-        // Apply cursor-based pagination
-        if (after is not null)
-        {
-            var idx = list.FindIndex(i => GetItemId(i) == after);
-            if (idx >= 0)
+            // Apply cursor-based pagination
+            if (after is not null)
             {
-                list = list.Skip(idx + 1).ToList();
+                var idx = list.FindIndex(i => GetItemId(i) == after);
+                if (idx >= 0)
+                {
+                    list = list.Skip(idx + 1).ToList();
+                }
             }
-        }
 
-        if (before is not null)
-        {
-            var idx = list.FindIndex(i => GetItemId(i) == before);
-            if (idx >= 0)
+            if (before is not null)
             {
-                list = list.Take(idx).ToList();
+                var idx = list.FindIndex(i => GetItemId(i) == before);
+                if (idx >= 0)
+                {
+                    list = list.Take(idx).ToList();
+                }
             }
+
+            var hasMore = list.Count > limit;
+            var page = list.Take(limit).ToList();
+
+            var firstId = page.Count > 0 ? GetItemId(page[0]) : null;
+            var lastId = page.Count > 0 ? GetItemId(page[^1]) : null;
+
+            var result = ResponsesModelFactory.AgentsPagedResultOutputItem(
+                data: page,
+                firstId: firstId!,
+                lastId: lastId!,
+                hasMore: hasMore);
+            return Task.FromResult(result);
         }
-
-        var hasMore = list.Count > limit;
-        var page = list.Take(limit).ToList();
-
-        var firstId = page.Count > 0 ? GetItemId(page[0]) : null;
-        var lastId = page.Count > 0 ? GetItemId(page[^1]) : null;
-
-        var result = ResponsesModelFactory.AgentsPagedResultOutputItem(
-            data: page,
-            firstId: firstId!,
-            lastId: lastId!,
-            hasMore: hasMore);
-        return Task.FromResult(result);
     }
 
     /// <inheritdoc/>
@@ -321,8 +347,12 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        var results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null);
-        return Task.FromResult(results);
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            IEnumerable<OutputItem?> results = itemIds.Select(id => store.Items.TryGetValue(id, out var item) ? item : null).ToArray();
+            return Task.FromResult(results);
+        }
     }
 
     /// <inheritdoc/>
@@ -333,53 +363,57 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        // previousResponseId path: return history + input + output of the previous response
-        if (previousResponseId is not null)
+        var store = GetStore(context, cancellationToken);
+        lock (store)
         {
-            var allIds = new List<string>();
-
-            if (_historyItemIds.TryGetValue(previousResponseId, out var historyIds))
+            // previousResponseId path: return history + input + output of the previous response
+            if (previousResponseId is not null)
             {
-                allIds.AddRange(historyIds);
-            }
+                var allIds = new List<string>();
 
-            if (_inputItemIds.TryGetValue(previousResponseId, out var inputIds))
-            {
-                allIds.AddRange(inputIds);
-            }
-
-            if (_outputItemIds.TryGetValue(previousResponseId, out var outputIds))
-            {
-                allIds.AddRange(outputIds);
-            }
-
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
-        }
-
-        // conversationId path: return all item IDs from all responses in the conversation
-        if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
-        {
-            var allIds = new List<string>();
-            lock (responseIds)
-            {
-                foreach (var respId in responseIds)
+                if (store.HistoryItemIds.TryGetValue(previousResponseId, out var historyIds))
                 {
-                    if (_inputItemIds.TryGetValue(respId, out var inputIds))
-                    {
-                        allIds.AddRange(inputIds);
-                    }
+                    allIds.AddRange(historyIds);
+                }
 
-                    if (_outputItemIds.TryGetValue(respId, out var outputIds))
+                if (store.InputItemIds.TryGetValue(previousResponseId, out var inputIds))
+                {
+                    allIds.AddRange(inputIds);
+                }
+
+                if (store.OutputItemIds.TryGetValue(previousResponseId, out var outputIds))
+                {
+                    allIds.AddRange(outputIds);
+                }
+
+                return Task.FromResult(allIds.Take(limit).AsEnumerable());
+            }
+
+            // conversationId path: return all item IDs from all responses in the conversation
+            if (conversationId is not null && store.Conversations.TryGetValue(conversationId, out var responseIds))
+            {
+                var allIds = new List<string>();
+                lock (responseIds)
+                {
+                    foreach (var respId in responseIds)
                     {
-                        allIds.AddRange(outputIds);
+                        if (store.InputItemIds.TryGetValue(respId, out var inputIds))
+                        {
+                            allIds.AddRange(inputIds);
+                        }
+
+                        if (store.OutputItemIds.TryGetValue(respId, out var outputIds))
+                        {
+                            allIds.AddRange(outputIds);
+                        }
                     }
                 }
+
+                return Task.FromResult(allIds.Take(limit).AsEnumerable());
             }
 
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
+            return Task.FromResult(Enumerable.Empty<string>());
         }
-
-        return Task.FromResult(Enumerable.Empty<string>());
     }
 
     private static string? GetItemId(OutputItem item)
@@ -398,7 +432,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// Extracts output items from <see cref="Models.ResponseObject.Output"/>, stores new ones in the item store,
     /// and updates the output item ID list for the response.
     /// </summary>
-    private void StoreOutputItems(Models.ResponseObject response)
+    private static void StoreOutputItems(Store store, Models.ResponseObject response)
     {
         if (response.Output.Count == 0)
         {
@@ -411,14 +445,14 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             var id = GetItemId(item);
             if (id is not null)
             {
-                _itemStore[id] = item;
+                store.Items[id] = item;
                 outputIds.Add(id);
             }
         }
 
         if (outputIds.Count > 0)
         {
-            _outputItemIds[response.Id] = outputIds;
+            store.OutputItemIds[response.Id] = outputIds;
         }
     }
 
@@ -426,7 +460,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     /// Adds input and output item IDs to the conversation if the response has a conversation ID.
     /// Called on <see cref="CreateResponseAsync"/>.
     /// </summary>
-    private void AddToConversation(Models.ResponseObject response)
+    private static void AddToConversation(Store store, Models.ResponseObject response)
     {
         var conversationId = response.Conversation?.Id;
         if (conversationId is null)
@@ -434,7 +468,11 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             return;
         }
 
-        var responseList = _conversationResponses.GetOrAdd(conversationId, _ => new List<string>());
+        if (!store.Conversations.TryGetValue(conversationId, out var responseList))
+        {
+            responseList = new List<string>();
+            store.Conversations.Add(conversationId, responseList);
+        }
         lock (responseList)
         {
             if (!responseList.Contains(response.Id))
@@ -442,23 +480,6 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
                 responseList.Add(response.Id);
             }
         }
-    }
-
-    /// <summary>
-    /// Adds new output items to the conversation on <see cref="UpdateResponseAsync"/>.
-    /// The response should already have been added to the conversation via
-    /// <see cref="AddToConversation"/> during create.
-    /// </summary>
-    private void AddOutputToConversation(Models.ResponseObject response)
-    {
-        var conversationId = response.Conversation?.Id;
-        if (conversationId is null)
-        {
-            return;
-        }
-
-        // Ensure the response is tracked in the conversation
-        AddToConversation(response);
     }
 
     // --- Cancellation ---
@@ -532,17 +553,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         }
         _cancellationTokenSources.Clear();
 
-        _responses.Clear();
+        _partitions.Clear();
         _lastEventEmittedAt.Clear();
-        _itemStore.Clear();
-        _inputItemIds.Clear();
-        _outputItemIds.Clear();
-        _historyItemIds.Clear();
-        _conversationResponses.Clear();
-
-        lock (_deletedResponseIds)
-        {
-            _deletedResponseIds.Clear();
-        }
     }
 }

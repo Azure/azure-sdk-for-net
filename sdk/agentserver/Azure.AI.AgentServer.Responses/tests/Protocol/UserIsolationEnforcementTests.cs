@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 /// When a response is created with a user isolation key, all subsequent
 /// GET / Cancel / DELETE / InputItems calls must send the same key.
 /// Mismatch or missing key → 404 (indistinguishable from "not found").
-/// No enforcement when the response was created without a user isolation key.
+/// Responses created without a user isolation key remain in the anonymous partition.
 /// </summary>
 public class UserIsolationEnforcementTests : ProtocolTestBase
 {
@@ -58,15 +58,15 @@ public class UserIsolationEnforcementTests : ProtocolTestBase
     }
 
     [Test]
-    public async Task GET_WithUserKey_WhenCreatedWithout_Returns200()
+    public async Task GET_WithUserKey_WhenCreatedWithout_Returns404()
     {
         // Create without any isolation key (local dev scenario)
         var responseId = await CreateDefaultResponseAsync();
 
-        // GET with a user key — no enforcement, should succeed
+        // Named users do not share the anonymous local partition.
         var get = await GetWithUserKeyAsync(responseId, UserKeyA);
 
-        Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(get.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     [Test]
