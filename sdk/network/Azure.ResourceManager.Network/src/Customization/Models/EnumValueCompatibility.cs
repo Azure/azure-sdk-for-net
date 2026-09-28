@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Network.Models
     {
     }
 
-    /// <summary> Compatibility declaration for the ApplicationGatewaySslProtocol type. </summary>
-    public readonly partial struct ApplicationGatewaySslProtocol
-    {
-        /// <summary> Gets or sets the Tls1_0 compatibility property. </summary>
-        public static ApplicationGatewaySslProtocol Tls1_0 { get; } = TLSv10;
-        /// <summary> Gets or sets the Tls1_1 compatibility property. </summary>
-        public static ApplicationGatewaySslProtocol Tls1_1 { get; } = TLSv11;
-        /// <summary> Gets or sets the Tls1_2 compatibility property. </summary>
-        public static ApplicationGatewaySslProtocol Tls1_2 { get; } = TLSv12;
-    }
-
     /// <summary> Compatibility declaration for the ApplicationGatewayTierType type. </summary>
     public readonly partial struct ApplicationGatewayTierType
     {
@@ -201,13 +190,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Compatibility declaration for the PcProtocol type. </summary>
     public readonly partial struct PcProtocol
     {
-    }
-
-    /// <summary> Compatibility declaration for the PfsGroup type. </summary>
-    public readonly partial struct PfsGroup
-    {
-        /// <summary> Invokes the PfsGroup compatibility operation. </summary>
-        public static PfsGroup Pfs { get; } = new PfsGroup("PFS");
     }
 
     /// <summary> Compatibility declaration for the RuleMatchActionType type. </summary>

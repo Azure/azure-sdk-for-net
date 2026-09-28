@@ -12304,9 +12304,14 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol Tls1_0 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol Tls1_1 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol Tls1_2 { get { throw null; } }
+        public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol Tls1_3 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Tls1_0 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol TLSv10 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Tls1_1 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol TLSv11 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Tls1_2 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol TLSv12 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Tls1_3 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol TLSv13 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.ApplicationGatewaySslProtocol other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -22632,6 +22637,7 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.PfsGroup Pfs2 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PfsGroup Pfs2048 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.PfsGroup Pfs24 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Pfs instead.")]
         public static Azure.ResourceManager.Network.Models.PfsGroup PFSMM { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Network.Models.PfsGroup other) { throw null; }
         public override bool Equals(object obj) { throw null; }
