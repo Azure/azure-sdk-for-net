@@ -777,14 +777,14 @@ namespace Azure.Generator.Management.Visitors
         {
             var currentType = lifted ? innerProperty.Type.WithNullable(true) : innerProperty.Type;
             var previous = model.LastContractView?.Properties.FirstOrDefault(p => p.Name == name && IsPublicApi(p.Modifiers));
-            if (previous is null || previous.Type.Equals(currentType)
+            if (previous is null || previous.Type.HasSamePublicType(currentType)
                 || model.CustomCodeView?.Properties.Any(p => p.Name == name) == true
                 || ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, previous))
             {
                 return currentType;
             }
 
-            if (previous.Type.WithNullable(false).Equals(currentType.WithNullable(false)))
+            if (previous.Type.HasSamePublicType(currentType, ignoreNullable: true))
             {
                 return currentType.IsValueType ? previous.Type : currentType;
             }
@@ -807,7 +807,7 @@ namespace Azure.Generator.Management.Visitors
                 .Where(c => IsPublicApi(c.Signature.Modifiers)
                     && !ModelCompatibilityValidator.IsConstructorRemovalAccepted(model, c.Signature))
                 .SelectMany(c => c.Signature.Parameters)
-                .Where(p => p.Name == parameter.Name && p.Type.WithNullable(false).Equals(parameter.Type.WithNullable(false)))
+                .Where(p => p.Name == parameter.Name && p.Type.HasSamePublicType(parameter.Type, ignoreNullable: true))
                 .Select(p => p.Type)
                 .Distinct()
                 .ToArray();
@@ -826,7 +826,7 @@ namespace Azure.Generator.Management.Visitors
             return model.LastContractView?.Properties.Any(p =>
                 IsPublicApi(p.Modifiers) &&
                 p.Name == property.Name &&
-                p.Type.WithNullable(false).Equals(property.Type.WithNullable(false))) == true;
+                p.Type.HasSamePublicType(property.Type, ignoreNullable: true)) == true;
         }
 
         private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName)
@@ -849,7 +849,7 @@ namespace Azure.Generator.Management.Visitors
             if (lastContractProperties is null ||
                 lastContractProperties.Any(p =>
                     p.Name == currentName &&
-                    p.Type.WithNullable(false).Equals(innerProperty.Type.WithNullable(false))))
+                    p.Type.HasSamePublicType(innerProperty.Type, ignoreNullable: true)))
             {
                 return currentName;
             }
@@ -863,7 +863,7 @@ namespace Azure.Generator.Management.Visitors
             var historicalName = buildHistoricalFlattenedName(historicalInnerName);
             var previousProperty = lastContractProperties.FirstOrDefault(p =>
                 p.Name == historicalName &&
-                p.Type.WithNullable(false).Equals(innerProperty.Type.WithNullable(false)));
+                p.Type.HasSamePublicType(innerProperty.Type, ignoreNullable: true));
             if (previousProperty is null ||
                 model.Properties.Any(p => p.Name == historicalName) ||
                 model.CustomCodeView?.Properties.Any(p => p.Name == historicalName) == true ||

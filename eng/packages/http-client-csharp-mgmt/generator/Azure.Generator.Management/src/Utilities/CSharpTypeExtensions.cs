@@ -27,6 +27,22 @@ namespace Azure.Generator.Management.Utilities
         };
 
         /// <summary>
+        /// Compares public C# type identities without relying on generator-only metadata. In particular,
+        /// an extensible enum is emitted as a struct, but its generated CSharpType has IsEnum set while
+        /// the same type read from the last C# contract does not.
+        /// </summary>
+        public static bool HasSamePublicType(this CSharpType type, CSharpType other, bool ignoreNullable = false)
+        {
+            return type.FullyQualifiedName == other.FullyQualifiedName
+                && type.IsValueType == other.IsValueType
+                && type.IsStruct == other.IsStruct
+                && type.IsFrameworkType == other.IsFrameworkType
+                && (ignoreNullable || type.IsNullable == other.IsNullable)
+                && type.Arguments.Count == other.Arguments.Count
+                && type.Arguments.Zip(other.Arguments).All(pair => pair.First.HasSamePublicType(pair.Second));
+        }
+
+        /// <summary>
         /// Returns true if the type is a primitive type that can be passed directly to
         /// <c>RequestContent.Create(value)</c> without model serialization.
         /// </summary>

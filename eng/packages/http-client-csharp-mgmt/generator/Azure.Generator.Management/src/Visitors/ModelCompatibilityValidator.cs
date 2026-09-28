@@ -68,8 +68,8 @@ namespace Azure.Generator.Management.Visitors
                         && current.Signature.Parameters.Zip(parameters).All(pair =>
                             pair.First.IsRef == pair.Second.IsRef && pair.First.IsOut == pair.Second.IsOut && pair.First.IsIn == pair.Second.IsIn
                             && (pair.First.Type.IsValueType
-                                ? pair.First.Type.Equals(pair.Second.Type)
-                                : pair.First.Type.WithNullable(false).Equals(pair.Second.Type.WithNullable(false))))))
+                                ? pair.First.Type.HasSamePublicType(pair.Second.Type)
+                                : pair.First.Type.HasSamePublicType(pair.Second.Type, ignoreNullable: true)))))
                 {
                     continue;
                 }

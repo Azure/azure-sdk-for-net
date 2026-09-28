@@ -309,6 +309,126 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void FlattenedEnumWithSamePublicTypeDoesNotRequireMapping()
+        {
+            var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var inner = InputFactory.Model("StoreProperties", properties: [InputFactory.Property("provisioningState", status)]);
+            var wrapper = InputFactory.Property("properties", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("StoreData", properties: [wrapper]);
+            const string propertyName = "ProvisioningState";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                inputEnums: () => [status],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct ProvisioningState { }
+                        public partial class StoreData
+                        {
+                            public ProvisioningState? {{propertyName}} { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+
+            var previousType = model.LastContractView!.Properties.Single(p => p.Name == propertyName).Type;
+            var currentType = model.Properties.Single(p => p.Name == propertyName).Type;
+            Assert.That(currentType.ToString(), Is.EqualTo(previousType.ToString()));
+            Assert.That(currentType.Equals(previousType), Is.False,
+                "The regression requires distinct generator type metadata for the same public C# type.");
+            _ = plugin.Object.GetWriter(model).Write();
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("Cannot preserve flattened property"));
+            Assert.That(Compile(plugin.Object).GetType("Samples.Models.StoreData"), Is.Not.Null);
+        }
+
+        [Test]
+        public void RestoredFlattenedEnumConstructorDoesNotRequireMapping()
+        {
+            var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var inner = InputFactory.Model("StoreProperties", properties:
+                [InputFactory.Property("provisioningState", status, isRequired: true)]);
+            var wrapper = InputFactory.Property("properties", inner, isRequired: true);
+            Flatten(wrapper);
+            var input = InputFactory.Model("StoreData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                inputEnums: () => [status],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public readonly partial struct ProvisioningState { }
+                        public partial class StoreData
+                        {
+                            public StoreData(ProvisioningState provisioningState) { }
+                            public ProvisioningState ProvisioningState { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+            _ = plugin.Object.GetWriter(model).Write();
+
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("Cannot preserve historical constructor"));
+            Assert.That(model.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && c.Signature.Parameters.Count == 1
+                && c.Signature.Parameters[0].Type.ToString() == "global::Samples.Models.ProvisioningState"), Is.True);
+            var assembly = Compile(plugin.Object);
+            var storeType = assembly.GetType("Samples.Models.StoreData")!;
+            var statusType = assembly.GetType("Samples.Models.ProvisioningState")!;
+            Assert.That(storeType.GetConstructor([statusType]), Is.Not.Null);
+        }
+
+        [Test]
+        public void FlattenedTypeChangedFromEnumToStructRequiresMapping()
+        {
+            var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var inner = InputFactory.Model("StoreProperties", properties: [InputFactory.Property("provisioningState", status)]);
+            var wrapper = InputFactory.Property("properties", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("StoreData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                inputEnums: () => [status],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public enum ProvisioningState { Ready }
+                        public partial class StoreData
+                        {
+                            public ProvisioningState? ProvisioningState { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+
+            var previousType = model.LastContractView!.Properties.Single(p => p.Name == "ProvisioningState").Type;
+            var currentType = model.Properties.Single(p => p.Name == "ProvisioningState").Type;
+            Assert.That(previousType.ToString(), Is.EqualTo(currentType.ToString()));
+            Assert.That(previousType.IsStruct, Is.False);
+            Assert.That(currentType.IsStruct, Is.True);
+            Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Contain("Cannot preserve flattened property"));
+        }
+
+        [Test]
         public void IncompatibleLeafTypeRequiresMappingUnlessCustomized([Values] bool safeFlatten, [Values] bool customized)
         {
             var (plugin, model, _) = CreateCapacityModel(safeFlatten, wrapperRequired: false);
@@ -575,7 +695,7 @@ namespace Azure.Generator.Mgmt.Tests
 
         private static Assembly Compile(ManagementClientGenerator plugin, bool includeFactory = false)
         {
-            var types = plugin.OutputLibrary.TypeProviders.Where(t => t is ModelProvider
+            var types = plugin.OutputLibrary.TypeProviders.Where(t => t is ModelProvider or EnumProvider
                 || (includeFactory && t is ModelFactoryProvider)
                 || t.Name is "Argument" or "Optional" or "ChangeTrackingList" or "ChangeTrackingDictionary"
                     or "ModelSerializationExtensions" or "TypeFormatters" or "SerializationFormat" or "SamplesContext").ToArray();
