@@ -1579,6 +1579,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultSecuritySettings() { }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultEncryptionSettings EncryptionSettings { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.ImmutabilitySettings ImmutabilitySettings { get { throw null; } set { } }
+        public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultImmutabilityState? ImmutabilityState { get { throw null; } set { } }
         public Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSoftDeleteSettings SoftDeleteSettings { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupVaultSecuritySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
