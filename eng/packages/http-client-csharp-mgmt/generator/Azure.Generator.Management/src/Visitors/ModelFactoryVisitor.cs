@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -212,7 +213,10 @@ namespace Azure.Generator.Management.Visitors
         {
             return first.Name == second.Name
                 && first.Parameters.Count == second.Parameters.Count
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
+                // Nullable<T> and T are distinct CLR method signatures. Nullable reference
+                // annotations, unlike value-type nullability, do not create an overload.
+                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.HasSamePublicType(
+                    pair.Second.Type, ignoreNullable: !pair.First.Type.IsValueType));
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
