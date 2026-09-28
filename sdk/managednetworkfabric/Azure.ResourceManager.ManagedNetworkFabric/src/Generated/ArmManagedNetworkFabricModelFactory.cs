@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType configurationType, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, DateTimeOffset? lastSyncedOn = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default, string lastOperationDetails = default)
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricAclType? aclType, NetworkFabricDeviceRole? deviceRole, IEnumerable<ResourceIdentifier> networkFabricIds, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                new AccessControlListProperties(
+                annotation is null && configurationType is null && aclsUri is null && defaultAction is null && matchConfigurations is null && dynamicMatchConfigurations is null && lastSyncedOn is null && aclType is null && deviceRole is null && globalAccessControlListActionsEnableCount is null && lastOperationDetails is null && networkFabricIds is null && controlPlaneAclConfiguration is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new AccessControlListProperties(
                     annotation,
-                    configurationType,
+                    configurationType.GetValueOrDefault(),
                     aclsUri,
                     defaultAction,
                     (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
