@@ -1,14 +1,10 @@
 # Release History
 
-## 2.0.0-beta.5 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 2.0.0-beta.5 (2026-09-28)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed retryable transport exceptions being swallowed for writes and reads that are not eligible for failover, including archived-collection history queries. These operations now preserve the original transport exception instead of throwing "Response was not set, make sure SendAsync was called".
 
 ## 2.0.0-beta.4 (2026-09-18)
 
