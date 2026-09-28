@@ -1568,6 +1568,14 @@
       ]
     },
     {
+      "filename": "**/sdk/dataai/**/*",
+      "words": [
+        "apim",
+        "rerank",
+        "reranker"
+      ]
+    },
+    {
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
         "byok"
