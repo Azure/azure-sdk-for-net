@@ -157,9 +157,10 @@ namespace Azure.Generator.Visitors
 
                 if (tokenCredCtor != null)
                 {
+                    // Give the conditional a common type so Roslyn can simplify the policy type names.
                     var policyArg = new TernaryConditionalExpression(
                         stringEqualsCall,
-                        CreateSettingsPolicy(keyCredCtor, newKeyCredential),
+                        CreateSettingsPolicy(keyCredCtor, newKeyCredential).CastTo(HttpPipelinePolicyType),
                         CreateSettingsPolicy(tokenCredCtor, tokenCredentialArg!));
                     var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
                     settingsCtor.Signature.Update(initializer: new ConstructorInitializer(

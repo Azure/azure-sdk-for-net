@@ -6,6 +6,9 @@ using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Simplification;
 using Microsoft.Extensions.Configuration;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -13,8 +16,12 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.Visitors
 {
@@ -65,7 +72,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void DualAuthSettingsConstructorSelectsPolicyAndPreservesParameters(
+        public async Task DualAuthSettingsConstructorSelectsPolicyAndPreservesParameters(
             [Values(null, "SharedAccessKey")] string? prefix,
             [Values(false, true)] bool hoistedParameters)
         {
@@ -96,7 +103,7 @@ namespace Azure.Generator.Tests.Visitors
             var prefixArgument = prefix == null ? "" : ", AuthorizationApiKeyPrefix";
             Assert.AreEqual(
                 "string.Equals(settings?.Credential?.CredentialSource, \"apikeycredential\", global::System.StringComparison.OrdinalIgnoreCase)" +
-                $" ? new global::Azure.Core.AzureKeyCredentialPolicy(new global::Azure.AzureKeyCredential(settings.Credential.Key), AuthorizationHeader{prefixArgument})" +
+                $" ? ((global::Azure.Core.Pipeline.HttpPipelinePolicy)new global::Azure.Core.AzureKeyCredentialPolicy(new global::Azure.AzureKeyCredential(settings.Credential.Key), AuthorizationHeader{prefixArgument}))" +
                 " : new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(settings?.CredentialProvider as global::Azure.Core.TokenCredential, AuthorizationScopes)",
                 arguments[0]);
             Assert.AreEqual("settings?.Endpoint", arguments[1]);
@@ -115,6 +122,66 @@ namespace Azure.Generator.Tests.Visitors
             {
                 Assert.AreEqual($"\"{prefix}\"", provider.Fields.Single(f => f.Name == "AuthorizationApiKeyPrefix").InitializationValue!.ToDisplayString());
             }
+
+            await AssertSettingsInitializerIsSimplifiedAsync(provider, initializer, hoistedParameters);
+        }
+
+        private static async Task AssertSettingsInitializerIsSimplifiedAsync(
+            ClientProvider provider, ConstructorInitializer initializer, bool hoistedParameters)
+        {
+            using var workspace = new AdhocWorkspace();
+            var project = workspace.AddProject("SettingsInitializer", LanguageNames.CSharp)
+                .AddMetadataReferences(
+                    new[] { typeof(object).Assembly, typeof(Uri).Assembly, typeof(TokenCredential).Assembly,
+                        typeof(ClientPipeline).Assembly, Assembly.Load("System.Runtime") }
+                        .Select(assembly => MetadataReference.CreateFromFile(assembly.Location)))
+                .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            var sharedSource = Path.Combine(
+                Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!,
+                "Shared", "Core", "AzureKeyCredentialPolicy.cs");
+            project = project.AddDocument("AzureKeyCredentialPolicy.cs", File.ReadAllText(sharedSource)).Project;
+
+            var policyFields = string.Join("\n", provider.Fields
+                .Where(f => f.Name.StartsWith("Authorization", StringComparison.Ordinal))
+                .Select(f => $"private static readonly {f.Type} {f.Name} = {f.InitializationValue!.ToDisplayString()};"));
+            var source = $$"""
+                #pragma warning disable SCME0002
+                using System;
+                using System.ClientModel;
+                using System.ClientModel.Primitives;
+                using Azure;
+                using Azure.Core;
+                using Azure.Core.Pipeline;
+
+                public class TestClient
+                {
+                    {{policyFields}}
+                    public TestClient(Settings settings) : this({{string.Join(", ", initializer.Arguments.Select(a => a.ToDisplayString()))}}) { }
+                    private TestClient(HttpPipelinePolicy policy, Uri endpoint, {{(hoistedParameters ? "string instanceId, string tenantId, " : "")}}object options) { }
+                }
+
+                public class Settings
+                {
+                    public CredentialSettings Credential { get; set; }
+                    public AuthenticationTokenProvider CredentialProvider { get; set; }
+                    public Uri Endpoint { get; set; }
+                    public string InstanceId { get; set; }
+                    public string TenantId { get; set; }
+                    public object Options { get; set; }
+                }
+                """;
+            var document = project.AddDocument("TestClient.cs", source);
+            var compilation = await document.Project.GetCompilationAsync();
+            Assert.IsEmpty(compilation!.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error));
+
+            var root = await document.GetSyntaxRootAsync();
+            document = await Simplifier.ReduceAsync(document.WithSyntaxRoot(root!.WithAdditionalAnnotations(Simplifier.Annotation)));
+            var simplified = (await document.GetTextAsync()).ToString();
+            StringAssert.DoesNotContain("global::", simplified);
+            StringAssert.Contains("new AzureKeyCredentialPolicy(new AzureKeyCredential(", simplified);
+            StringAssert.Contains("new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential,", simplified);
+            compilation = await document.Project.GetCompilationAsync();
+            Assert.IsEmpty(compilation!.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error));
         }
 
         [Test]
