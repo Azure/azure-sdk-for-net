@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-beta.30 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.30 (2026-09-16)
 
 ### Breaking Changes
 
@@ -11,8 +9,6 @@
   `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
   corresponding model-factory parameters, and `FoundryStateStore.SetItemAsync` /
   `DeleteItemAsync` `ifMatch` parameters.
-
-### Bugs Fixed
 
 ### Other Changes
 
