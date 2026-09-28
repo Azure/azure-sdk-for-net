@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     {
                         continue;
                     }
-                    mainTemplate = BinaryData.FromString(prop.Value.GetRawText());
+                    mainTemplate = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("createUiDefinition"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                     {
                         continue;
                     }
-                    createUiDefinition = BinaryData.FromString(prop.Value.GetRawText());
+                    createUiDefinition = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("notificationPolicy"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationDefinitionProperties(

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Utilities;
+using Microsoft.TypeSpec.Generator.EmitterRpc;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -127,6 +128,41 @@ namespace Azure.Generator.Management.Visitors
                     // changes nothing except forcing MethodProvider.Update to rebuild XmlDocs, discarding the
                     // documentation regenerated when the overload was created.
                     method.Update(bodyStatements: updatedBodyStatements);
+                }
+            }
+        }
+
+        internal static void ValidateBackwardCompatArguments(ModelFactoryProvider factory)
+        {
+            var baseline = ManagementClientGenerator.Instance.SourceInputModel?.ApiCompatBaseline;
+            foreach (var method in factory.Methods)
+            {
+                if (!IsBackwardCompatMethod(method) || method.BodyStatements is null
+                    || baseline?.IsMethodRemovalSuppressed(factory.Type.FullyQualifiedName, method.Signature.Name,
+                        [.. method.Signature.Parameters.Select(p => p.Type)]) == true
+                    || baseline?.ReferencesSuppressedType(method.Signature.ReturnType) == true
+                    || method.Signature.Parameters.Any(p => baseline?.ReferencesSuppressedType(p.Type) == true)
+                    || factory.CustomCodeView?.Methods.Any(custom =>
+                        MethodSignatureBase.SignatureComparer.Equals(custom.Signature, method.Signature)) == true)
+                {
+                    continue;
+                }
+
+                foreach (var parameter in method.Signature.Parameters)
+                {
+                    // A stale null-coalescing assignment or a guard does not preserve the supplied value.
+                    if (method.BodyStatements.Any(statement =>
+                        statement is ExpressionStatement { Expression: KeywordExpression { Keyword: "return", Expression: { } result } }
+                        && ReferencesParameter(result, parameter)))
+                    {
+                        continue;
+                    }
+
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic("general-error",
+                        $"Cannot preserve parameter '{parameter.Name}' of compatibility factory '{factory.Name}.{method.Signature.Name}': "
+                        + "no compatible destination exists in the current model. Provide a custom factory overload with an explicit mapping; "
+                        + "the supplied value would otherwise be discarded.",
+                        severity: EmitterDiagnosticSeverity.Error);
                 }
             }
         }
@@ -570,8 +606,12 @@ namespace Azure.Generator.Management.Visitors
             return expression switch
             {
                 VariableExpression variable => string.Equals(variable.Declaration.RequestedName, parameter.Name, StringComparison.Ordinal),
-                PositionalParameterReferenceExpression positional => string.Equals(positional.ParameterName, parameter.Name, StringComparison.Ordinal)
-                    || ReferencesParameter(positional.ParameterValue, parameter),
+                PositionalParameterReferenceExpression positional => ReferencesParameter(positional.ParameterValue, parameter),
+                MemberExpression { Inner: not null } member => ReferencesParameter(member.Inner, parameter),
+                CastExpression cast => ReferencesParameter(cast.Inner, parameter),
+                NullConditionalExpression conditional => ReferencesParameter(conditional.Inner, parameter),
+                TernaryConditionalExpression ternary => ReferencesParameter(ternary.Consequent, parameter)
+                    || ReferencesParameter(ternary.Alternative, parameter),
                 InvokeMethodExpression invoke => (invoke.InstanceReference is not null && ReferencesParameter(invoke.InstanceReference, parameter))
                     || invoke.Arguments.Any(argument => ReferencesParameter(argument, parameter)),
                 NewInstanceExpression newInstance => newInstance.Parameters.Any(argument => ReferencesParameter(argument, parameter)),
