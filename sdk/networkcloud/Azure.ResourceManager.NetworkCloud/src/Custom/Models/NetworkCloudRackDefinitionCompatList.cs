@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         public NetworkCloudRackDefinition this[int index]
         {
-            get => NetworkCloudPatchCompatibility.ToClassic(_inner[index]);
+            get
+            {
+                NetworkCloudRackDefinition value = NetworkCloudPatchCompatibility.ToClassic(_inner[index]);
+                _inner[index] = NetworkCloudPatchCompatibility.ToPatch(value);
+                return value;
+            }
             set => _inner[index] = NetworkCloudPatchCompatibility.ToPatch(value);
         }
 
@@ -42,23 +47,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             for (int i = 0; i < _inner.Count; i++)
             {
-                array[arrayIndex + i] = NetworkCloudPatchCompatibility.ToClassic(_inner[i]);
+                array[arrayIndex + i] = this[i];
             }
         }
 
         public IEnumerator<NetworkCloudRackDefinition> GetEnumerator()
         {
-            foreach (NetworkCloudRackDefinitionPatch item in _inner)
+            for (int i = 0; i < _inner.Count; i++)
             {
-                yield return NetworkCloudPatchCompatibility.ToClassic(item);
+                yield return this[i];
             }
         }
 
         public int IndexOf(NetworkCloudRackDefinition item)
         {
+            if (item is null)
+            {
+                for (int i = 0; i < _inner.Count; i++)
+                {
+                    if (_inner[i] is null)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+
+            if (item.NetworkRackId is null)
+            {
+                return -1;
+            }
+
             for (int i = 0; i < _inner.Count; i++)
             {
-                if (NetworkCloudPatchCompatibility.ToClassic(_inner[i])?.RackSerialNumber == item?.RackSerialNumber)
+                if (_inner[i]?.NetworkRackId == item.NetworkRackId)
                 {
                     return i;
                 }

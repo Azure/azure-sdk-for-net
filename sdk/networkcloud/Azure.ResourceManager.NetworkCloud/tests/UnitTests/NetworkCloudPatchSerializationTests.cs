@@ -3,7 +3,9 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.NetworkCloud.Models;
 using NUnit.Framework;
 
@@ -79,7 +81,19 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         }
 
         [Test]
-        public void AssigningLegacyConversionMaterializesRequiredDefaults()
+        public void ReadingAbsentLegacyPropertyDoesNotCreateProperties()
+        {
+            var patch = new NetworkCloudClusterPatch();
+
+            ServicePrincipalInformation legacyPrincipal = patch.ClusterServicePrincipal;
+
+            Assert.That(legacyPrincipal, Is.Null);
+            using JsonDocument document = Serialize(patch);
+            Assert.That(document.RootElement.TryGetProperty("properties", out _), Is.False);
+        }
+
+        [Test]
+        public void ReassigningLegacyConversionPreservesOmittedValues()
         {
             var patch = new NetworkCloudClusterPatch
             {
@@ -93,13 +107,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
                 .GetProperty("properties")
                 .GetProperty("computeDeploymentThreshold");
 
-            Assert.That(threshold.GetProperty("grouping").GetString(), Is.EqualTo(default(ValidationThresholdGrouping).ToString()));
-            Assert.That(threshold.GetProperty("type").GetString(), Is.EqualTo(default(ValidationThresholdType).ToString()));
-            Assert.That(threshold.GetProperty("value").GetInt64(), Is.Zero);
+            Assert.That(threshold.EnumerateObject().MoveNext(), Is.False);
         }
 
         [Test]
-        public void LegacyUpdateStrategyConversionMaterializesRequiredDefaults()
+        public void ReassigningLegacyUpdateStrategyPreservesOmittedValues()
         {
             var patch = new NetworkCloudClusterPatch
             {
@@ -111,10 +123,21 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
             Assert.That(legacyStrategy.StrategyType, Is.EqualTo(default(ClusterUpdateStrategyType)));
             Assert.That(legacyStrategy.ThresholdType, Is.EqualTo(default(ValidationThresholdType)));
             Assert.That(legacyStrategy.ThresholdValue, Is.Zero);
+
+            patch.UpdateStrategy = legacyStrategy;
+
+            using JsonDocument document = Serialize(patch);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("updateStrategy")
+                    .EnumerateObject()
+                    .MoveNext(),
+                Is.False);
         }
 
         [Test]
-        public void LegacyRackConversionMaterializesRequiredRackSlots()
+        public void LegacyRackConversionPreservesOmittedRackSlots()
         {
             var rackPatch = new NetworkCloudRackDefinitionPatch();
             rackPatch.BareMetalMachineConfigurationData.Add(new BareMetalMachineConfigurationPatch());
@@ -128,6 +151,174 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
 
             Assert.That(legacyRack.BareMetalMachineConfigurationData[0].RackSlot, Is.Zero);
             Assert.That(legacyRack.StorageApplianceConfigurationData[0].RackSlot, Is.Zero);
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement serializedRack = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition");
+            Assert.That(
+                serializedRack
+                    .GetProperty("bareMetalMachineConfigurationData")[0]
+                    .TryGetProperty("rackSlot", out _),
+                Is.False);
+            Assert.That(
+                serializedRack
+                    .GetProperty("storageApplianceConfigurationData")[0]
+                    .TryGetProperty("rackSlot", out _),
+                Is.False);
+        }
+
+        [Test]
+        public void InPlaceLegacyServicePrincipalEditIsSerialized()
+        {
+            var patch = new NetworkCloudClusterPatch
+            {
+                ClusterServicePrincipalPatch = new ServicePrincipalInformationPatch
+                {
+                    Password = "old-password"
+                }
+            };
+
+            patch.ClusterServicePrincipal.Password = "new-password";
+
+            using JsonDocument document = Serialize(patch);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("clusterServicePrincipal")
+                    .GetProperty("password")
+                    .GetString(),
+                Is.EqualTo("new-password"));
+        }
+
+        [Test]
+        public void InPlaceLegacyVirtualMachineCredentialsEditIsSerialized()
+        {
+            var patch = new NetworkCloudVirtualMachinePatch
+            {
+                VmImageRepositoryCredentialsPatch = new ImageRepositoryCredentialsPatch
+                {
+                    Password = "old-password"
+                }
+            };
+
+            patch.VmImageRepositoryCredentials.Password = "new-password";
+
+            using JsonDocument document = Serialize(patch);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("vmImageRepositoryCredentials")
+                    .GetProperty("password")
+                    .GetString(),
+                Is.EqualTo("new-password"));
+        }
+
+        [Test]
+        public void InPlaceLegacyRackAndNestedCredentialEditsAreSerialized()
+        {
+            var rackPatch = new NetworkCloudRackDefinitionPatch
+            {
+                RackLocation = "old-location"
+            };
+            rackPatch.BareMetalMachineConfigurationData.Add(new BareMetalMachineConfigurationPatch
+            {
+                BmcCredentials = new AdministrativeCredentialsPatch
+                {
+                    Password = "old-password"
+                }
+            });
+            var patch = new NetworkCloudClusterPatch();
+            patch.ComputeRackDefinitionsPatch.Add(rackPatch);
+
+            NetworkCloudRackDefinition legacyRack = patch.ComputeRackDefinitions[0];
+            legacyRack.RackLocation = "new-location";
+            legacyRack.BareMetalMachineConfigurationData[0].BmcCredentials.Password = "new-password";
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement serializedRack = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("computeRackDefinitions")[0];
+            Assert.That(serializedRack.GetProperty("rackLocation").GetString(), Is.EqualTo("new-location"));
+            Assert.That(
+                serializedRack
+                    .GetProperty("bareMetalMachineConfigurationData")[0]
+                    .GetProperty("bmcCredentials")
+                    .GetProperty("password")
+                    .GetString(),
+                Is.EqualTo("new-password"));
+        }
+
+        [Test]
+        public void LegacyRackListUsesNetworkRackIdForIdentity()
+        {
+            var firstId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/first");
+            var secondId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/second");
+            var patch = new NetworkCloudClusterPatch();
+            patch.ComputeRackDefinitionsPatch.Add(new NetworkCloudRackDefinitionPatch
+            {
+                NetworkRackId = firstId,
+                RackSerialNumber = "duplicate"
+            });
+            patch.ComputeRackDefinitionsPatch.Add(new NetworkCloudRackDefinitionPatch
+            {
+                NetworkRackId = secondId,
+                RackSerialNumber = "duplicate"
+            });
+            IList<NetworkCloudRackDefinition> legacyRacks = patch.ComputeRackDefinitions;
+            NetworkCloudRackDefinition secondRack = legacyRacks[1];
+
+            bool removed = legacyRacks.Remove(secondRack);
+
+            Assert.That(removed, Is.True);
+            Assert.That(legacyRacks, Has.Count.EqualTo(1));
+            Assert.That(legacyRacks[0].NetworkRackId, Is.EqualTo(firstId));
+        }
+
+        [Test]
+        public void LegacyRackListHandlesNullEntriesExplicitly()
+        {
+            var patch = new NetworkCloudClusterPatch();
+            patch.ComputeRackDefinitionsPatch.Add(null);
+            IList<NetworkCloudRackDefinition> legacyRacks = patch.ComputeRackDefinitions;
+
+            Assert.That(legacyRacks.Contains(null), Is.True);
+            Assert.That(legacyRacks.Remove(null), Is.True);
+            Assert.That(legacyRacks, Is.Empty);
+        }
+
+        [Test]
+        public void LegacyRoundTripPreservesUnknownProperties()
+        {
+            BinaryData data = BinaryData.FromString(
+                """
+                {
+                  "properties": {
+                    "computeDeploymentThreshold": {
+                      "futureThresholdOption": true
+                    }
+                  }
+                }
+                """);
+            NetworkCloudClusterPatch patch = ModelReaderWriter.Read<NetworkCloudClusterPatch>(
+                data,
+                ModelReaderWriterOptions.Json,
+                AzureResourceManagerNetworkCloudContext.Default);
+
+            patch.ComputeDeploymentThreshold = patch.ComputeDeploymentThreshold;
+
+            BinaryData serialized = ModelReaderWriter.Write(
+                patch,
+                ModelReaderWriterOptions.Json,
+                AzureResourceManagerNetworkCloudContext.Default);
+            using JsonDocument document = JsonDocument.Parse(serialized);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("computeDeploymentThreshold")
+                    .GetProperty("futureThresholdOption")
+                    .GetBoolean(),
+                Is.True);
         }
 
         private static JsonDocument Serialize<T>(T model)

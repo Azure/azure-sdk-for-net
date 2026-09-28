@@ -33,7 +33,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition
         {
-            get => NetworkCloudPatchCompatibility.ToClassic(AggregatorOrSingleRackDefinitionPatch);
+            get
+            {
+                NetworkCloudRackDefinition value = NetworkCloudPatchCompatibility.ToClassic(AggregatorOrSingleRackDefinitionPatch);
+                if (value is not null)
+                {
+                    AggregatorOrSingleRackDefinitionPatch = NetworkCloudPatchCompatibility.ToPatch(value);
+                }
+                return value;
+            }
             set
             {
                 AggregatorOrSingleRackDefinitionPatch = NetworkCloudPatchCompatibility.ToPatch(value);
@@ -44,7 +52,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ServicePrincipalInformation ClusterServicePrincipal
         {
-            get => NetworkCloudPatchCompatibility.ToClassic(ClusterServicePrincipalPatch);
+            get
+            {
+                ServicePrincipalInformation value = NetworkCloudPatchCompatibility.ToClassic(ClusterServicePrincipalPatch);
+                if (value is not null)
+                {
+                    ClusterServicePrincipalPatch = NetworkCloudPatchCompatibility.ToPatch(value);
+                }
+                return value;
+            }
             set
             {
                 ClusterServicePrincipalPatch = NetworkCloudPatchCompatibility.ToPatch(value);
@@ -55,7 +71,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ValidationThreshold ComputeDeploymentThreshold
         {
-            get => NetworkCloudPatchCompatibility.ToClassic(ComputeDeploymentThresholdPatch);
+            get
+            {
+                ValidationThreshold value = NetworkCloudPatchCompatibility.ToClassic(ComputeDeploymentThresholdPatch);
+                if (value is not null)
+                {
+                    ComputeDeploymentThresholdPatch = NetworkCloudPatchCompatibility.ToPatch(value);
+                }
+                return value;
+            }
             set
             {
                 ComputeDeploymentThresholdPatch = NetworkCloudPatchCompatibility.ToPatch(value);
@@ -73,7 +97,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ClusterSecretArchive SecretArchive
         {
-            get => NetworkCloudPatchCompatibility.ToClassic(SecretArchivePatch);
+            get
+            {
+                ClusterSecretArchive value = NetworkCloudPatchCompatibility.ToClassic(SecretArchivePatch);
+                if (value is not null)
+                {
+                    SecretArchivePatch = NetworkCloudPatchCompatibility.ToPatch(value);
+                }
+                return value;
+            }
             set
             {
                 SecretArchivePatch = NetworkCloudPatchCompatibility.ToPatch(value);
@@ -84,7 +116,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ClusterUpdateStrategy UpdateStrategy
         {
-            get => NetworkCloudPatchCompatibility.ToClassic(UpdateStrategyPatch);
+            get
+            {
+                ClusterUpdateStrategy value = NetworkCloudPatchCompatibility.ToClassic(UpdateStrategyPatch);
+                if (value is not null)
+                {
+                    UpdateStrategyPatch = NetworkCloudPatchCompatibility.ToPatch(value);
+                }
+                return value;
+            }
             set
             {
                 UpdateStrategyPatch = NetworkCloudPatchCompatibility.ToPatch(value);
