@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Visitors;
@@ -384,6 +385,40 @@ namespace Azure.Generator.Mgmt.Tests
                 : new CSharpType(type.FrameworkType, type.IsNullable, type.Arguments.Select(ChangeLeafNullability).ToArray());
 
         [Test]
+        public void HistoricalConstructorComparesNestedReferenceAnnotationsButKeepsValueNullability(
+            [Values] bool nullableReference, [Values] bool nullableValue)
+        {
+            var (plugin, model, _) = CreateCapacityModel(safeFlatten: false, wrapperRequired: false);
+            Visit(model);
+            var flattened = model.Properties.OfType<FlattenedPropertyProvider>().Single(p => p.Name == "Size");
+            var previous = new ContractView(model.Name);
+            var currentKeyType = new CSharpType(typeof(KeyValuePair<,>), typeof(string), typeof(int));
+            var previousKeyType = new CSharpType(typeof(KeyValuePair<,>),
+                new CSharpType(typeof(string), isNullable: nullableReference),
+                new CSharpType(typeof(int), isNullable: nullableValue));
+            var leaf = flattened.AsParameter;
+            var currentParameters = new[] { leaf, new ParameterProvider("key", $"", currentKeyType, Default) };
+            var previousParameters = new[] { leaf, new ParameterProvider("key", $"", previousKeyType, Default) };
+            model.Update(constructors:
+            [
+                new ConstructorProvider(new ConstructorSignature(model.Type, null, MethodSignatureModifiers.Public, currentParameters),
+                    MethodBodyStatement.Empty, model)
+            ]);
+            previous.ContractConstructors =
+            [
+                new ConstructorProvider(new ConstructorSignature(previous.Type, null, MethodSignatureModifiers.Public, previousParameters),
+                    MethodBodyStatement.Empty, previous)
+            ];
+            ModelTestHelper.SetLastContractView(model, previous);
+
+            using var diagnostics = CaptureDiagnostics(plugin);
+            ModelCompatibilityValidator.ValidateFlattenedConstructors(model);
+            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
+            Assert.That(messages.Contains("Cannot preserve historical constructor"), Is.EqualTo(nullableValue),
+                "Only nullable value-type arguments change a constructed generic type's CLR signature.");
+        }
+
+        [Test]
         public void RestoredFlattenedEnumConstructorDoesNotRequireMapping()
         {
             var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],
@@ -760,10 +795,12 @@ namespace Azure.Generator.Mgmt.Tests
         {
             public PropertyProvider[] ContractProperties { get; set; } = [];
             public MethodProvider[] ContractMethods { get; set; } = [];
+            public ConstructorProvider[] ContractConstructors { get; set; } = [];
             protected override string BuildName() => name;
             protected override string BuildRelativeFilePath() => $"{Name}.cs";
             protected override PropertyProvider[] BuildProperties() => ContractProperties;
             protected override MethodProvider[] BuildMethods() => ContractMethods;
+            protected override ConstructorProvider[] BuildConstructors() => ContractConstructors;
         }
     }
 }
