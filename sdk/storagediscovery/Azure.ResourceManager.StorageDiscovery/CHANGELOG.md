@@ -3,7 +3,11 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-- Support for 2026-10-01-preview changes.
+- Added support for 2026-10-01-preview Storage Discovery Workspaces resource management, including:
+  - `StorageDiscoveryWorkspaceResource` for managing Storage Discovery workspaces
+  - Create, read, update, and delete operations for workspaces
+  - Subscription and resource group level workspace operations
+  - Tag management operations
 
 ## 1.0.1 (2026-06-30)
 
