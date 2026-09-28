@@ -69,4 +69,4 @@ while (true)
 await nextReceiver.CompleteMessageAsync(message);
 ```
 
-The first receiver is still open when `nextReceiver` accepts the same session using its lock token. The new holder completes the first receiver's message over the management link. After takeover, the first receiver no longer owns the session; subsequent operations on it can fail with `SessionLockLost`. Treat the token as sensitive and never log it or store it unprotected. For the usual exclusive session flow, see [sending and receiving session messages](Sample03_SendReceiveSessions.md).
+The first receiver is still open when `nextReceiver` accepts the same session using its lock token. The new holder completes the first receiver's message over the management link. After takeover, the first receiver no longer owns the session; subsequent operations on it can fail with `SessionLockLost`. Treat the token as sensitive and never log it or store it unprotected. For the usual exclusive session flow, see [sending and receiving session messages](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md).
