@@ -739,6 +739,97 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void FactoryRestorationDoesNotDuplicateExistingCSharpSignature()
+        {
+            // An extensible enum and a previous enum have different generator metadata,
+            // but both factories would be emitted with the same C# parameter type name.
+            var frequency = InputFactory.StringEnum("TumblingWindowFrequency", [("Hour", "Hour")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var timestamp = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            var properties = InputFactory.Model("TumblingWindowTriggerTypeProperties", properties:
+            [
+                InputFactory.Property("frequency", frequency, isRequired: true),
+                InputFactory.Property("interval", InputPrimitiveType.Int32, isRequired: true),
+                InputFactory.Property("startsOn", timestamp, isRequired: true),
+                InputFactory.Property("endsOn", timestamp)
+            ]);
+            var wrapper = InputFactory.Property("typeProperties", properties, isRequired: true);
+            Flatten(wrapper);
+            var dependency = InputFactory.Model("DependencyReference", properties: [InputFactory.Property("name", InputPrimitiveType.String)]);
+            var input = InputFactory.Model("TumblingWindowTrigger", properties:
+            [
+                InputFactory.Property("annotations", InputFactory.Array(InputPrimitiveType.String)),
+                InputFactory.Property("dependsOn", InputFactory.Array(dependency)),
+                wrapper
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, properties, dependency], inputEnums: () => [frequency],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    using System;
+                    namespace Samples.Models
+                    {
+                        public enum TumblingWindowFrequency { Hour }
+                        public partial class DependencyReference { }
+                        public partial class TumblingWindowTrigger { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.TumblingWindowTrigger TumblingWindowTrigger(
+                                System.Collections.Generic.IEnumerable<string> annotations = default,
+                                System.Collections.Generic.IEnumerable<Samples.Models.DependencyReference> dependsOn = default,
+                                Samples.Models.TumblingWindowFrequency frequency = default,
+                                int interval = default, DateTimeOffset startsOn = default,
+                                DateTimeOffset? endsOn = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var visitType = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitType.Invoke(visitor, [factory]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "TumblingWindowTrigger").ToArray();
+            Assert.That(overloads.Select(m => m.Signature.Parameters.Select(p => p.Type.ToString()).ToArray()).DistinctBy(types => string.Join(",", types)).Count(),
+                Is.EqualTo(1), "Both methods have the same emitted C# parameter types.");
+            Assert.That(overloads, Has.Length.EqualTo(1),
+                "Restoring an already generated C# signature produces CS0111.");
+        }
+
+        [Test]
+        public void FrameworkBackedFactoryParameterMatchesContractTypeWithSameCSharpName()
+        {
+            // In DataFactory, delay is emitted as DataFactoryElement<string> on both sides,
+            // but only the current type has IsFrameworkType=true. Use a model and a CLR
+            // type with the same C# name to isolate the signature-matching rule.
+            var input = InputFactory.Model(nameof(Samples.Models.FactoryFrameworkElement));
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input]);
+            var contractType = plugin.Object.TypeFactory.CreateModel(input)!.Type;
+            var frameworkType = new CSharpType(typeof(Samples.Models.FactoryFrameworkElement));
+            Assert.That(frameworkType.FullyQualifiedName, Is.EqualTo(contractType.FullyQualifiedName));
+            Assert.That(frameworkType.IsFrameworkType, Is.True);
+            Assert.That(contractType.IsFrameworkType, Is.False);
+
+            MethodSignature Signature(CSharpType type) => new("Create", null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, type, null,
+                [new ParameterProvider("delay", $"", type, Default)]);
+            var matches = typeof(ModelFactoryVisitor).GetMethod("HasSameCSharpSignature",
+                BindingFlags.NonPublic | BindingFlags.Static)!;
+            Assert.That(matches.Invoke(null, [Signature(frameworkType), Signature(contractType)]), Is.True,
+                "The framework classification cannot create a distinct C# factory overload.");
+        }
+
+        [Test]
         public void FactoryPreservesRenamedUriWithSameWireName()
         {
             // KustoClusterPatch's historical factory accepts `uri`, while the current flattened

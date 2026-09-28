@@ -239,10 +239,21 @@ namespace Azure.Generator.Management.Visitors
         {
             return first.Name == second.Name
                 && first.Parameters.Count == second.Parameters.Count
-                // Nullable<T> and T are distinct CLR method signatures. Nullable reference
-                // annotations, unlike value-type nullability, do not create an overload.
-                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.HasSamePublicType(
-                    pair.Second.Type, ignoreNullable: !pair.First.Type.IsValueType));
+                && first.Parameters.Zip(second.Parameters).All(pair => HasSameEmittedParameterType(
+                    pair.First.Type, pair.Second.Type));
+        }
+
+        private static bool HasSameEmittedParameterType(CSharpType first, CSharpType second)
+        {
+            // Last-contract types can differ from generated types in metadata such as
+            // IsFrameworkType or IsStruct while emitting the same C# type name. Neither
+            // distinction permits a second method with the same parameter signature.
+            // Nullable<T> does create a distinct overload; reference annotations do not.
+            return first.FullyQualifiedName == second.FullyQualifiedName
+                && (first.IsNullable == second.IsNullable || (!first.IsValueType && !second.IsValueType))
+                && first.Arguments.Count == second.Arguments.Count
+                && first.Arguments.Zip(second.Arguments).All(pair => HasSameEmittedParameterType(
+                    pair.First, pair.Second));
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
