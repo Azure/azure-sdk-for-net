@@ -130,24 +130,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>
-        [WirePath("properties.customIpPrefixParent")]
-        public ResourceIdentifier ParentCustomIPPrefixId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ParentCustomIPPrefixId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIPPrefixPropertiesFormat();
-                }
-                Properties.ParentCustomIPPrefixId = value;
-            }
-        }
-
         /// <summary> The commissioned state of the Custom IP Prefix. </summary>
         [WirePath("properties.commissionedState")]
         public CommissionedState? CommissionedState
@@ -255,6 +237,24 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.customIpPrefixParent.id")]
+        public ResourceIdentifier ParentCustomIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ParentCustomIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomIPPrefixPropertiesFormat();
+                }
+                Properties.ParentCustomIPPrefixId = value;
             }
         }
     }

@@ -12,6 +12,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Custom IP prefix properties. </summary>
     internal partial class CustomIPPrefixPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="cidr"> The prefix range in CIDR notation. Should include the start address and the prefix length. </param>
         /// <param name="signedMessage"> Signed message for WAN validation. </param>
         /// <param name="authorizationMessage"> Authorization message for WAN validation. </param>
-        /// <param name="parentCustomIPPrefixId"> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </param>
+        /// <param name="parentCustomIPPrefix"> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </param>
         /// <param name="childCustomIPPrefixes"> The list of all Children for IPv6 /48 CustomIpPrefix. </param>
         /// <param name="commissionedState"> The commissioned state of the Custom IP Prefix. </param>
         /// <param name="expressRouteAdvertise"> Whether to do express route advertise. </param>
@@ -41,13 +42,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIPPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier parentCustomIPPrefixId, IReadOnlyList<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIPPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, NetworkSubResource parentCustomIPPrefix, IReadOnlyList<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             Cidr = cidr;
             SignedMessage = signedMessage;
             AuthorizationMessage = authorizationMessage;
-            ParentCustomIPPrefixId = parentCustomIPPrefixId;
+            ParentCustomIPPrefix = parentCustomIPPrefix;
             ChildCustomIPPrefixes = childCustomIPPrefixes;
             CommissionedState = commissionedState;
             ExpressRouteAdvertise = expressRouteAdvertise;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>
         [WirePath("customIpPrefixParent")]
-        public ResourceIdentifier ParentCustomIPPrefixId { get; set; }
+        internal NetworkSubResource ParentCustomIPPrefix { get; set; }
 
         /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
         [WirePath("childCustomIpPrefixes")]
@@ -120,5 +121,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The provisioning state of the custom IP prefix resource. </summary>
         [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("customIpPrefixParent.id")]
+        public ResourceIdentifier ParentCustomIPPrefixId
+        {
+            get
+            {
+                return ParentCustomIPPrefix is null ? default : ParentCustomIPPrefix.Id;
+            }
+            set
+            {
+                if (ParentCustomIPPrefix is null)
+                {
+                    ParentCustomIPPrefix = new NetworkSubResource();
+                }
+                ParentCustomIPPrefix.Id = value;
+            }
+        }
     }
 }

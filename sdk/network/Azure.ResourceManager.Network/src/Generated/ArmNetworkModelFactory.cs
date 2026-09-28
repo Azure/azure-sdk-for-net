@@ -10944,6 +10944,64 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="asn"> The ASN for CIDR advertising. Should be an integer as string. </param>
+        /// <param name="cidr"> The prefix range in CIDR notation. Should include the start address and the prefix length. </param>
+        /// <param name="signedMessage"> Signed message for WAN validation. </param>
+        /// <param name="authorizationMessage"> Authorization message for WAN validation. </param>
+        /// <param name="childCustomIPPrefixes"> The list of all Children for IPv6 /48 CustomIpPrefix. </param>
+        /// <param name="commissionedState"> The commissioned state of the Custom IP Prefix. </param>
+        /// <param name="expressRouteAdvertise"> Whether to do express route advertise. </param>
+        /// <param name="geo"> The Geo for CIDR advertising. Should be an Geo code. </param>
+        /// <param name="noInternetAdvertise"> Whether to Advertise the range to Internet. </param>
+        /// <param name="prefixType"> Type of custom IP prefix. Should be Singular, Parent, or Child. </param>
+        /// <param name="publicIPPrefixes"> The list of all referenced PublicIpPrefixes. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the custom IP prefix resource. </param>
+        /// <param name="failedReason"> The reason why resource is in failed state. </param>
+        /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
+        /// <param name="parentCustomIPPrefixId"> Resource ID. </param>
+        /// <param name="extendedLocation"> The extended location of the custom IP prefix. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <returns> A new <see cref="Network.CustomIPPrefixData"/> instance for mocking. </returns>
+        public static CustomIPPrefixData CustomIPPrefixData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, string asn, string cidr, string signedMessage, string authorizationMessage, IEnumerable<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IEnumerable<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, ResourceIdentifier parentCustomIPPrefixId, ExtendedLocation extendedLocation, ETag? eTag, IEnumerable<string> zones)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new CustomIPPrefixData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && parentCustomIPPrefixId is null && childCustomIPPrefixes is null && commissionedState is null && expressRouteAdvertise is null && geo is null && noInternetAdvertise is null && prefixType is null && publicIPPrefixes is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIPPrefixPropertiesFormat(
+                    asn,
+                    cidr,
+                    signedMessage,
+                    authorizationMessage,
+                    parentCustomIPPrefixId is null ? default : new NetworkSubResource(parentCustomIPPrefixId, default),
+                    (childCustomIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    commissionedState,
+                    expressRouteAdvertise,
+                    geo,
+                    noInternetAdvertise,
+                    prefixType,
+                    (publicIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    resourceGuid,
+                    failedReason,
+                    provisioningState,
+                    default),
+                extendedLocation,
+                eTag,
+                (zones ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="markings"> List of markings to be used in the configuration. </param>
         /// <param name="sourceIpRanges"> Source IP ranges. </param>
         /// <param name="destinationIpRanges"> Destination IP ranges. </param>
@@ -18430,7 +18488,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="cidr"> The prefix range in CIDR notation. Should include the start address and the prefix length. </param>
         /// <param name="signedMessage"> Signed message for WAN validation. </param>
         /// <param name="authorizationMessage"> Authorization message for WAN validation. </param>
-        /// <param name="parentCustomIPPrefixId"> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </param>
+        /// <param name="parentCustomIPPrefixId"> Resource ID. </param>
         /// <param name="childCustomIPPrefixList"></param>
         /// <param name="commissionedState"> The commissioned state of the Custom IP Prefix. </param>
         /// <param name="expressRouteAdvertise"> Whether to do express route advertise. </param>
@@ -18457,7 +18515,7 @@ namespace Azure.ResourceManager.Network.Models
                     cidr,
                     signedMessage,
                     authorizationMessage,
-                    parentCustomIPPrefixId,
+                    parentCustomIPPrefixId is null ? default : new NetworkSubResource(parentCustomIPPrefixId, default),
                     default,
                     commissionedState,
                     expressRouteAdvertise,

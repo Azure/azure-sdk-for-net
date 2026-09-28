@@ -9,11 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Custom IP prefix properties. </summary>
     internal partial class CustomIPPrefixPropertiesFormat : IJsonModel<CustomIPPrefixPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(ParentCustomIPPrefixId))
+            if (Optional.IsDefined(ParentCustomIPPrefix))
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
-                SerializeParentCustomIPPrefixId(writer, options);
+                writer.WriteObjectValue(ParentCustomIPPrefix, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixes))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
             string cidr = default;
             string signedMessage = default;
             string authorizationMessage = default;
-            ResourceIdentifier parentCustomIPPrefixId = default;
+            NetworkSubResource parentCustomIPPrefix = default;
             IReadOnlyList<NetworkSubResource> childCustomIPPrefixes = default;
             CommissionedState? commissionedState = default;
             bool? expressRouteAdvertise = default;
@@ -241,7 +241,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("customIpPrefixParent"u8))
                 {
-                    DeserializeParentCustomIPPrefixId(prop, ref parentCustomIPPrefixId);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parentCustomIPPrefix = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("childCustomIpPrefixes"u8))
@@ -350,7 +354,7 @@ namespace Azure.ResourceManager.Network.Models
                 cidr,
                 signedMessage,
                 authorizationMessage,
-                parentCustomIPPrefixId,
+                parentCustomIPPrefix,
                 childCustomIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
                 commissionedState,
                 expressRouteAdvertise,
