@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.StorageDiscovery.Tests
         [Test]
         public void SerializeAzureBlobStorageCapability()
         {
-            var capability = new AzureBlobStorageCapability(CapabilityStatus.Enabled);
-            capability.PrefixConfigurations.Add(new PrefixConfiguration("storageaccount", "container") { Prefix = "logs" });
+            var capability = new AzureBlobStorageCapability(StorageDiscoveryCapabilityStatus.Enabled);
+            capability.PrefixConfigurations.Add(new AzureBlobStoragePrefixConfiguration("storageaccount", "container") { Prefix = "logs" });
 
             BinaryData payload = ModelReaderWriter.Write(capability, s_wireOptions);
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Tests
         [Test]
         public void SerializeAzureBlobStorageCapabilityPatch()
         {
-            var capability = new AzureBlobStorageCapabilityPatch { CapacityDetailsStatus = CapabilityStatus.Disabled };
+            var capability = new AzureBlobStorageCapabilityPatch { CapacityDetailsStatus = StorageDiscoveryCapabilityStatus.Disabled };
             capability.PrefixConfigurations.Add(new AzureBlobStoragePrefixConfigurationPatch
             {
                 StorageAccountName = "storageaccount",
