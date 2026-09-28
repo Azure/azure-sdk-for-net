@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Properties of IP configuration. </summary>
     internal partial class IPConfigurationPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<string> _privateIPAddress;

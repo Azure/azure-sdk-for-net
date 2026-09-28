@@ -66,5 +66,15 @@ namespace Azure.ResourceManager.Network.Models
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.container.id")]
+        public ResourceIdentifier ContainerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerId;
+            }
+        }
     }
 }

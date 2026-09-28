@@ -15790,7 +15790,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ContainerNetworkInterface() { }
         protected ContainerNetworkInterface(bool _) { }
-        public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } }
         public Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }

@@ -52,48 +52,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the PrivateIPAddress. </summary>
-        public BicepValue<string> PrivateIPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIPAddress;
-            }
-        }
-
-        /// <summary> Gets the PrivateIPAllocationMethod. </summary>
-        public BicepValue<NetworkIPAllocationMethod> PrivateIPAllocationMethod
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
-            }
-        }
-
-        /// <summary> Gets the Primary. </summary>
-        public BicepValue<bool> Primary
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Primary;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the PrivateIPAddressVersion. </summary>
-        public BicepValue<NetworkIPVersion> PrivateIPAddressVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIPAddressVersion;
             }
         }
 

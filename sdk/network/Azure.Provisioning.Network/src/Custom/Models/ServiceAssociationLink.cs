@@ -9,6 +9,37 @@ namespace Azure.Provisioning.Network;
 
 public partial class ServiceAssociationLink
 {
+    // Subnet.serviceAssociationLinks is output-only, so enclosing-model usage removes
+    // setters from otherwise writable fields. Preserve the 1.1.0 assignment APIs using
+    // the registered properties model, including the existing locations list.
+    /// <summary> Gets or sets whether the resource can be deleted. </summary>
+    public BicepValue<bool> AllowDelete
+    {
+        get { return Properties.AllowDelete; }
+        set { Properties.AllowDelete.Assign(value); }
+    }
+
+    /// <summary> Gets or sets the link to the external resource. </summary>
+    public BicepValue<ResourceIdentifier> Link
+    {
+        get { return Properties.Link; }
+        set { Properties.Link.Assign(value); }
+    }
+
+    /// <summary> Gets or sets the type of the linked resource. </summary>
+    public BicepValue<ResourceType> LinkedResourceType
+    {
+        get { return Properties.LinkedResourceType; }
+        set { Properties.LinkedResourceType.Assign(value); }
+    }
+
+    /// <summary> Gets or sets the locations of the service association link. </summary>
+    public BicepList<AzureLocation> Locations
+    {
+        get { return Properties.Locations; }
+        set { Properties.Locations.Assign(value); }
+    }
+
     // TypeSpec does not mark name as read-only, and management exposes a setter.
     // Preserve the released setter despite provisioning's model-level writable-usage gate.
     /// <summary> The name of the service association link. </summary>

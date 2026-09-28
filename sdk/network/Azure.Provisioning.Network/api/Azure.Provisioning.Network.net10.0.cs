@@ -1823,7 +1823,7 @@ namespace Azure.Provisioning.Network
     public partial class ContainerNetworkInterface : Azure.Provisioning.Network.NetworkSubResource
     {
         public ContainerNetworkInterface() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ContainerId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ContainerId { get { throw null; } set { } }
         public Azure.Provisioning.Network.ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
@@ -4627,12 +4627,12 @@ namespace Azure.Provisioning.Network
         public NetworkIPConfiguration() { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Network.PublicIPAddress PublicIPAddress { get { throw null; } }
+        public Azure.Provisioning.Network.PublicIPAddress PublicIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.Network.SubnetResource Subnet { get { throw null; } }
+        public Azure.Provisioning.Network.SubnetResource Subnet { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class NetworkIPConfigurationBgpPeeringAddress : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -6604,8 +6604,8 @@ namespace Azure.Provisioning.Network
         public ResourceNavigationLink() { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public new Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Link { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> LinkedResourceType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Link { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> LinkedResourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
@@ -7273,11 +7273,11 @@ namespace Azure.Provisioning.Network
     public partial class ServiceAssociationLink : Azure.Provisioning.Network.NetworkSubResource
     {
         public ServiceAssociationLink() { }
-        public Azure.Provisioning.BicepValue<bool> AllowDelete { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> AllowDelete { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Link { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> LinkedResourceType { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Core.AzureLocation> Locations { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Link { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> LinkedResourceType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Core.AzureLocation> Locations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
@@ -8086,10 +8086,10 @@ namespace Azure.Provisioning.Network
         public VirtualNetworkApplianceIPConfiguration() { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PrivateIPAddressVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PrivateIPAddressVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use Type instead.")]
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }

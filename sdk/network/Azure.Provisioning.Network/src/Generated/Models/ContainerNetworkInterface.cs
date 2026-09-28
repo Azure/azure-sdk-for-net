@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure;
-using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -77,15 +76,6 @@ namespace Azure.Provisioning.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> ContainerId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ContainerId;
             }
         }
 

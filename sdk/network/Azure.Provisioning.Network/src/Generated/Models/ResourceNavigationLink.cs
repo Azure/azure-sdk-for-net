@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure;
-using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -61,24 +60,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _type;
-            }
-        }
-
-        /// <summary> Gets the LinkedResourceType. </summary>
-        public BicepValue<ResourceType> LinkedResourceType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinkedResourceType;
-            }
-        }
-
-        /// <summary> Gets the Link. </summary>
-        public BicepValue<ResourceIdentifier> Link
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Link;
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using Azure;
-using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Network
@@ -53,48 +52,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the LinkedResourceType. </summary>
-        public BicepValue<ResourceType> LinkedResourceType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinkedResourceType;
-            }
-        }
-
-        /// <summary> Gets the Link. </summary>
-        public BicepValue<ResourceIdentifier> Link
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Link;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the AllowDelete. </summary>
-        public BicepValue<bool> AllowDelete
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowDelete;
-            }
-        }
-
-        /// <summary> Gets the Locations. </summary>
-        public BicepList<AzureLocation> Locations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Locations;
             }
         }
 
