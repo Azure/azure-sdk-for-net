@@ -35,6 +35,8 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public async Task GetPage_PageSpansSegmentBoundary_FillsFromMultipleSegments()
         {
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
+
             // Segment 1: 2 events.
             SegmentBase<TestEvent> segment1 = BuildSegmentWithEvents(
                 manifestPath: "idx/segments/2024/01/15/0800/meta.json",
@@ -49,7 +51,11 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
             segmentFactory
-                .Setup(f => f.BuildSegment(IsAsync, "idx/segments/2024/01/15/0815/meta.json", null))
+                .Setup(f => f.BuildSegment(
+                    IsAsync,
+                    "idx/segments/2024/01/15/0815/meta.json",
+                    null,
+                    cancellation.Token))
                 .ReturnsAsync(segment2);
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Loose);
@@ -67,7 +73,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 endTime: null,
                 config: CreateTestConfig());
 
-            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 4);
+            Page<TestEvent> page = await changeFeed.GetPage(
+                IsAsync,
+                pageSize: 4,
+                cancellation.Token);
 
             Assert.AreEqual(4, page.Values.Count);
             Assert.AreEqual("evt-A", page.Values[0].Id);
@@ -80,7 +89,11 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             // Verify the segment factory was called exactly once for the second segment.
             segmentFactory.Verify(
-                f => f.BuildSegment(IsAsync, "idx/segments/2024/01/15/0815/meta.json", null),
+                f => f.BuildSegment(
+                    IsAsync,
+                    "idx/segments/2024/01/15/0815/meta.json",
+                    null,
+                    cancellation.Token),
                 Times.Once);
         }
 
@@ -243,7 +256,11 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
             segmentFactory
-                .Setup(f => f.BuildSegment(IsAsync, nextSegmentPath, null))
+                .Setup(f => f.BuildSegment(
+                    IsAsync,
+                    nextSegmentPath,
+                    null,
+                    It.IsAny<CancellationToken>()))
                 .ReturnsAsync(nextSegment);
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
@@ -291,7 +308,11 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Assert.AreEqual("finalized-event", page.Values[0].Id);
             Assert.IsFalse(changeFeed.HasNext());
             segmentFactory.Verify(
-                f => f.BuildSegment(IsAsync, nextSegmentPath, null),
+                f => f.BuildSegment(
+                    IsAsync,
+                    nextSegmentPath,
+                    null,
+                    It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 

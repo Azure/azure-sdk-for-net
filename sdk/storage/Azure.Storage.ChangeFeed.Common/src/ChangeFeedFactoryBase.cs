@@ -245,7 +245,8 @@ endTime = cursor.EndTime;
             SegmentBase<TEvent> currentSegment = await _segmentFactory.BuildSegment(
                 async,
                 segments.Dequeue(),
-                cursor?.CurrentSegmentCursor)
+                cursor?.CurrentSegmentCursor,
+                cancellationToken)
                 .ConfigureAwait(false);
 
             return new ChangeFeedBase<TEvent>(

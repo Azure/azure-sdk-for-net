@@ -209,7 +209,11 @@ if (pageSize > defaultPageSize)
 
             if (_segments.Count > 0)
             {
-                _currentSegment = await _segmentFactory.BuildSegment(async, _segments.Dequeue()).ConfigureAwait(false);
+                _currentSegment = await _segmentFactory.BuildSegment(
+                    async,
+                    _segments.Dequeue(),
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
             }
             else if (_segments.Count == 0 && _years.Count > 0)
             {
@@ -226,7 +230,11 @@ if (pageSize > defaultPageSize)
 
                 if (_segments.Count > 0)
                 {
-                    _currentSegment = await _segmentFactory.BuildSegment(async, _segments.Dequeue()).ConfigureAwait(false);
+                    _currentSegment = await _segmentFactory.BuildSegment(
+                        async,
+                        _segments.Dequeue(),
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 }
             }
         }

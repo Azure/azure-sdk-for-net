@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Files.Shares;
 using NUnit.Framework;
 
@@ -55,6 +57,44 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 await foreach (Page<ShareChangeFeedEvent> page in pageable.AsPages(continuationToken: "some-token"))
                 {
                     // Should not reach here
+                }
+            });
+        }
+
+        [Test]
+        public void GetChangesAsync_PreCanceledEnumerator_Throws()
+        {
+            ShareChangeFeedAsyncPageable pageable = new ShareChangeFeedAsyncPageable(
+                client: null,
+                maxTransferSize: null,
+                includeNonFinalizedEvents: false);
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () =>
+            {
+                await using IAsyncEnumerator<ShareChangeFeedEvent> enumerator =
+                    pageable.GetAsyncEnumerator(cancellation.Token);
+                await enumerator.MoveNextAsync();
+            });
+        }
+
+        [Test]
+        public void AsyncAsPages_PreCanceledEnumerator_Throws()
+        {
+            ShareChangeFeedAsyncPageable pageable = new ShareChangeFeedAsyncPageable(
+                client: null,
+                maxTransferSize: null,
+                includeNonFinalizedEvents: false);
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (Page<ShareChangeFeedEvent> _ in pageable
+                    .AsPages()
+                    .WithCancellation(cancellation.Token))
+                {
                 }
             });
         }

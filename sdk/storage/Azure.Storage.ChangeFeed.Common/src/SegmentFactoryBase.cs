@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -48,12 +49,14 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="async">Whether to use async APIs.</param>
         /// <param name="manifestPath">Blob path of the segment manifest JSON.</param>
         /// <param name="cursor">Optional segment cursor to resume from a previous position.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A new <see cref="SegmentBase{TEvent}"/> ready to produce events.</returns>
 #pragma warning disable CA1822
         public virtual async Task<SegmentBase<TEvent>> BuildSegment(
             bool async,
             string manifestPath,
-            SegmentCursor cursor = default)
+            SegmentCursor cursor = default,
+            CancellationToken cancellationToken = default)
 #pragma warning restore CA1822
         {
             List<ShardBase<TEvent>> shards = new List<ShardBase<TEvent>>();
@@ -64,15 +67,18 @@ namespace Azure.Storage.ChangeFeed.Common
             BlobDownloadStreamingResult blobDownloadStreamingResult;
 
             if (async)
-                blobDownloadStreamingResult = await blobClient.DownloadStreamingAsync().ConfigureAwait(false);
+                blobDownloadStreamingResult = await blobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             else
-                blobDownloadStreamingResult = blobClient.DownloadStreaming();
+                blobDownloadStreamingResult = blobClient.DownloadStreaming(cancellationToken: cancellationToken);
 
             JsonDocument jsonManifest = null;
             try
             {
                 if (async)
-                    jsonManifest = await JsonDocument.ParseAsync(blobDownloadStreamingResult.Content).ConfigureAwait(false);
+                    jsonManifest = await JsonDocument.ParseAsync(
+                        blobDownloadStreamingResult.Content,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
                 else
                     jsonManifest = JsonDocument.Parse(blobDownloadStreamingResult.Content);
 
@@ -90,7 +96,14 @@ namespace Azure.Storage.ChangeFeed.Common
                     ShardCursor shardCursor = cursor?.ShardCursors?.Find(
                         x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.Ordinal));
 
-                    ShardBase<TEvent> shard = await _shardFactory.BuildShard(async, shardPath, shardCursor).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+
+                    ShardBase<TEvent> shard = await _shardFactory.BuildShard(
+                        async,
+                        shardPath,
+                        shardCursor,
+                        cancellationToken)
+                        .ConfigureAwait(false);
                     if (shard.HasNext())
                     {
                         shards.Add(shard);
