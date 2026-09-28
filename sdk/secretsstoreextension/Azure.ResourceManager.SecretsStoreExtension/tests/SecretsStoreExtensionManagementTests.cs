@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         }
 
         [Test, Order(1200)]
+        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task SpcTestTags()
         {
             await _spct.TestTagsAsync();
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Tests
         }
 
         [Test, Order(2200)]
+        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task SsTestTags()
         {
             await _sst.TestTagsAsync();
