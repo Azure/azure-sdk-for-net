@@ -349,6 +349,41 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void FlattenedGenericLeafNullabilityDistinguishesValueTypesButNotReferences(
+            [Values] bool valueType, [Values] bool nested)
+        {
+            var leaf = valueType ? (InputType)InputPrimitiveType.Int32 : InputPrimitiveType.String;
+            var items = nested ? InputFactory.Array(InputFactory.Array(leaf)) : InputFactory.Array(leaf);
+            var inner = InputFactory.Model("ListProperties", properties: [InputFactory.Property("items", items)]);
+            var wrapper = InputFactory.Property("properties", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ListData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            var innerModel = plugin.Object.TypeFactory.CreateModel(inner)!;
+            var oldType = ChangeLeafNullability(innerModel.Properties.Single(p => p.Name == "Items").Type).WithNullable(true);
+            var previous = new ContractView(model.Name);
+            previous.ContractProperties =
+            [
+                new PropertyProvider(null, MethodSignatureModifiers.Public, oldType, "Items", new AutoPropertyBody(true), previous)
+            ];
+            ModelTestHelper.SetLastContractView(model, previous);
+
+            using var diagnostics = CaptureDiagnostics(plugin);
+            Visit(model);
+            var currentType = model.Properties.Single(p => p.Name == "Items").Type;
+            Assert.That(oldType.FullyQualifiedName, Is.EqualTo(currentType.FullyQualifiedName));
+            var messages = Encoding.UTF8.GetString(diagnostics.ToArray());
+            Assert.That(messages.Contains("Cannot preserve flattened property"), Is.EqualTo(valueType),
+                "Nullable reference annotations do not change generic type identity, but Nullable<T> does.");
+        }
+
+        private static CSharpType ChangeLeafNullability(CSharpType type)
+            => type.Arguments.Count == 0
+                ? type.WithNullable(!type.IsNullable)
+                : new CSharpType(type.FrameworkType, type.IsNullable, type.Arguments.Select(ChangeLeafNullability).ToArray());
+
+        [Test]
         public void RestoredFlattenedEnumConstructorDoesNotRequireMapping()
         {
             var status = InputFactory.StringEnum("ProvisioningState", [("Ready", "Ready")],

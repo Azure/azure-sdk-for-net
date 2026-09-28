@@ -39,7 +39,9 @@ namespace Azure.Generator.Management.Utilities
                 && type.IsFrameworkType == other.IsFrameworkType
                 && (ignoreNullable || type.IsNullable == other.IsNullable)
                 && type.Arguments.Count == other.Arguments.Count
-                && type.Arguments.Zip(other.Arguments).All(pair => pair.First.HasSamePublicType(pair.Second));
+                // Nullable reference annotations do not change generic type identity; Nullable<T> does.
+                && type.Arguments.Zip(other.Arguments).All(pair => pair.First.HasSamePublicType(
+                    pair.Second, ignoreNullable: ignoreNullable && !pair.First.IsValueType));
         }
 
         /// <summary>
