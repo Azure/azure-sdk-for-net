@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Export command settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SnowflakeExportCopyCommand"/> and <see cref="AzureDatabricksDeltaLakeExportCommand"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDatabricksDeltaLakeExportCommand"/> and <see cref="SnowflakeExportCopyCommand"/>.
     /// </summary>
     public abstract partial class ExportSettings
     {

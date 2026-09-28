@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// RegistryEndpoint Trust properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointTrustedSigningKeySecret"/> and <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/> and <see cref="RegistryEndpointTrustedSigningKeySecret"/>.
     /// </summary>
     public abstract partial class RegistryEndpointTrustedSigningKey
     {

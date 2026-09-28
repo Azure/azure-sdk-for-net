@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The json object containing security policy parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> and <see cref="SecurityPolicyWebApplicationFirewall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewall"/> and <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/>.
     /// </summary>
     public abstract partial class SecurityPolicyProperties
     {

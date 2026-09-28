@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Dataflow Destination Header Action properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowDestinationRemoveHeaderAction"/>, and <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/>, and <see cref="Models.DataflowDestinationRemoveHeaderAction"/>.
         /// </summary>
         /// <param name="actionType"> The type of header operation to perform. </param>
         /// <returns> A new <see cref="Models.DataflowDestinationHeaderAction"/> instance for mocking. </returns>
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Dataflow OpenTelemetry authentication properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowOpenTelemetryServiceAccountAuthentication"/>, <see cref="Models.DataflowOpenTelemetryX509CertificateAuthentication"/>, and <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="Models.DataflowOpenTelemetryServiceAccountAuthentication"/>, and <see cref="Models.DataflowOpenTelemetryX509CertificateAuthentication"/>.
         /// </summary>
         /// <param name="method"> The authentication method. </param>
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryAuthentication"/> instance for mocking. </returns>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// DataflowGraph node properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphSourceNode"/>, <see cref="Models.DataflowGraphGraphNode"/>, and <see cref="Models.DataflowGraphDestinationNode"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationNode"/>, <see cref="Models.DataflowGraphGraphNode"/>, and <see cref="Models.DataflowGraphSourceNode"/>.
         /// </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
@@ -1513,7 +1513,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// DataflowGraph Destination Header Action.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/>, and <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/>, and <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/>.
         /// </summary>
         /// <param name="actionType"> The type of header operation to perform. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationHeaderAction"/> instance for mocking. </returns>
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// Model for RegistryEndpointAuthentication
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointSystemAssignedIdentityAuthentication"/>, <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/>, <see cref="Models.RegistryEndpointAnonymousAuthentication"/>, and <see cref="Models.RegistryEndpointArtifactPullSecretAuthentication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointAnonymousAuthentication"/>, <see cref="Models.RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="Models.RegistryEndpointSystemAssignedIdentityAuthentication"/>, and <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/>.
         /// </summary>
         /// <param name="method"> The authentication method. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointAuthentication"/> instance for mocking. </returns>
@@ -1676,7 +1676,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// RegistryEndpoint Trust properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/> and <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/> and <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/>.
         /// </summary>
         /// <param name="type"> The trust type for the registry endpoint. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKey"/> instance for mocking. </returns>
@@ -1912,7 +1912,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// AkriConnectorsRegistrySettings properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsRegistryEndpointRef"/> and <see cref="Models.AkriConnectorsContainerRegistry"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsContainerRegistry"/> and <see cref="Models.AkriConnectorsRegistryEndpointRef"/>.
         /// </summary>
         /// <param name="registrySettingsType"></param>
         /// <returns> A new <see cref="Models.AkriConnectorsRegistrySettings"/> instance for mocking. </returns>
@@ -1958,7 +1958,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary>
         /// AkriConnectorsTagDigestSettings properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsTag"/> and <see cref="Models.AkriConnectorsDigest"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsDigest"/> and <see cref="Models.AkriConnectorsTag"/>.
         /// </summary>
         /// <param name="tagDigestType"> The tag or digest type. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsTagDigestSettings"/> instance for mocking. </returns>

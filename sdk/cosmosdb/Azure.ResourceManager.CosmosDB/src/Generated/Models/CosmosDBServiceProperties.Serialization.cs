@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Services response resource.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataTransferServiceProperties"/>, <see cref="SqlDedicatedGatewayServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, and <see cref="MaterializedViewsBuilderServiceProperties"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DataTransferServiceProperties"/>, <see cref="GraphApiComputeServiceProperties"/>, <see cref="MaterializedViewsBuilderServiceProperties"/>, and <see cref="SqlDedicatedGatewayServiceProperties"/>.
     /// </summary>
     public partial class CosmosDBServiceProperties : IJsonModel<CosmosDBServiceProperties>
     {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     case "DataTransfer":
                         return DataTransferServiceProperties.DeserializeDataTransferServiceProperties(element, options);
-                    case "SqlDedicatedGateway":
-                        return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element, options);
                     case "GraphAPICompute":
                         return GraphApiComputeServiceProperties.DeserializeGraphApiComputeServiceProperties(element, options);
                     case "MaterializedViewsBuilder":
                         return MaterializedViewsBuilderServiceProperties.DeserializeMaterializedViewsBuilderServiceProperties(element, options);
+                    case "SqlDedicatedGateway":
+                        return SqlDedicatedGatewayServiceProperties.DeserializeSqlDedicatedGatewayServiceProperties(element, options);
                 }
             }
             return UnknownCosmosDBServiceProperties.DeserializeUnknownCosmosDBServiceProperties(element, options);

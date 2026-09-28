@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// The properties of an addon
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AddonSrmProperties"/>, <see cref="Models.AddonVrProperties"/>, <see cref="Models.AddonHcxProperties"/>, and <see cref="Models.AddonArcProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AddonArcProperties"/>, <see cref="Models.AddonHcxProperties"/>, <see cref="Models.AddonSrmProperties"/>, and <see cref="Models.AddonVrProperties"/>.
         /// </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// Defines operations that can be performed on maintenance
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvsScheduleOperation"/>, <see cref="Models.AvsRescheduleOperation"/>, and <see cref="Models.AvsMaintenanceReadinessRefreshOperation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvsMaintenanceReadinessRefreshOperation"/>, <see cref="Models.AvsRescheduleOperation"/>, and <see cref="Models.AvsScheduleOperation"/>.
         /// </summary>
         /// <param name="kind"> The kind of operation. </param>
         /// <returns> A new <see cref="Models.AvsMaintenanceManagementOperation"/> instance for mocking. </returns>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// Defines constraints for schedule operation on maintenance
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvsSchedulingWindow"/>, <see cref="Models.WeekendSchedulingConstraint"/>, <see cref="Models.AvailableWindowForMaintenanceWhileScheduleOperation"/>, and <see cref="Models.BlockedWhileScheduleOperation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvailableWindowForMaintenanceWhileScheduleOperation"/>, <see cref="Models.AvsSchedulingWindow"/>, <see cref="Models.BlockedWhileScheduleOperation"/>, and <see cref="Models.WeekendSchedulingConstraint"/>.
         /// </summary>
         /// <param name="kind"> The kind of operation. </param>
         /// <returns> A new <see cref="Models.AvsScheduleOperationConstraint"/> instance for mocking. </returns>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// Defines constraints for reschedule operation on maintenance
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ReschedulingWindowConstraint"/>, <see cref="Models.WeekendReschedulingConstraint"/>, <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/>, and <see cref="Models.BlockedWhileRescheduleOperation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/>, <see cref="Models.BlockedWhileRescheduleOperation"/>, <see cref="Models.ReschedulingWindowConstraint"/>, and <see cref="Models.WeekendReschedulingConstraint"/>.
         /// </summary>
         /// <param name="kind"> The kind of operation. </param>
         /// <returns> A new <see cref="Models.AvsRescheduleOperationConstraint"/> instance for mocking. </returns>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// Abstract placement policy properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmPlacementPolicyProperties"/> and <see cref="Models.VmHostPlacementPolicyProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmHostPlacementPolicyProperties"/> and <see cref="Models.VmPlacementPolicyProperties"/>.
         /// </summary>
         /// <param name="type"> Placement Policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
@@ -1430,7 +1430,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// The arguments passed in to the execution
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ScriptSecureStringExecutionParameterDetails"/>, <see cref="Models.ScriptStringExecutionParameterDetails"/>, and <see cref="Models.PSCredentialExecutionParameterDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PSCredentialExecutionParameterDetails"/>, <see cref="Models.ScriptSecureStringExecutionParameterDetails"/>, and <see cref="Models.ScriptStringExecutionParameterDetails"/>.
         /// </summary>
         /// <param name="type"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary>
         /// Base class for WorkloadNetworkDhcpServer and WorkloadNetworkDhcpRelay to
         /// inherit from
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WorkloadNetworkDhcpServer"/> and <see cref="Models.WorkloadNetworkDhcpRelay"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WorkloadNetworkDhcpRelay"/> and <see cref="Models.WorkloadNetworkDhcpServer"/>.
         /// </summary>
         /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
