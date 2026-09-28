@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added External Key Manager (EKM) proxy private endpoint support to `KeyVaultEkmClient`, including `CreateEkmPrivateEndpoint`, `GetEkmPrivateEndpoint`, `GetEkmPrivateEndpoints`, `DeleteEkmPrivateEndpoint`, and `GetEkmPrivateEndpointOperationStatus` operations.
-- Added `EkmConnectivityMode` to `KeyVaultEkmConnection` to route an EKM connection through an EKM proxy private endpoint.
+- Added `KeyVaultEkmConnectivityMode` to `KeyVaultEkmConnection` to route an EKM connection through an EKM proxy private endpoint.
 
 ### Breaking Changes
 

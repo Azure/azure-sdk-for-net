@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The connectivity mode used to reach the EKM proxy. </summary>
-    public readonly partial struct EkmConnectivityMode : IEquatable<EkmConnectivityMode>
+    public readonly partial struct KeyVaultEkmConnectivityMode : IEquatable<KeyVaultEkmConnectivityMode>
     {
         private readonly string _value;
         /// <summary> The EKM proxy is reachable over the public internet; host is a DNS name or IP address. </summary>
@@ -19,10 +19,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> The EKM proxy is reachable through a private endpoint; host is the name of a private endpoint (peName). </summary>
         private const string PrivateEndpointValue = "PrivateEndpoint";
 
-        /// <summary> Initializes a new instance of <see cref="EkmConnectivityMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultEkmConnectivityMode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EkmConnectivityMode(string value)
+        public KeyVaultEkmConnectivityMode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,35 +30,35 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary> The EKM proxy is reachable over the public internet; host is a DNS name or IP address. </summary>
-        public static EkmConnectivityMode Public { get; } = new EkmConnectivityMode(PublicValue);
+        public static KeyVaultEkmConnectivityMode Public { get; } = new KeyVaultEkmConnectivityMode(PublicValue);
 
         /// <summary> The EKM proxy is reachable through a private endpoint; host is the name of a private endpoint (peName). </summary>
-        public static EkmConnectivityMode PrivateEndpoint { get; } = new EkmConnectivityMode(PrivateEndpointValue);
+        public static KeyVaultEkmConnectivityMode PrivateEndpoint { get; } = new KeyVaultEkmConnectivityMode(PrivateEndpointValue);
 
-        /// <summary> Determines if two <see cref="EkmConnectivityMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultEkmConnectivityMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EkmConnectivityMode left, EkmConnectivityMode right) => left.Equals(right);
+        public static bool operator ==(KeyVaultEkmConnectivityMode left, KeyVaultEkmConnectivityMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EkmConnectivityMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="KeyVaultEkmConnectivityMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EkmConnectivityMode left, EkmConnectivityMode right) => !left.Equals(right);
+        public static bool operator !=(KeyVaultEkmConnectivityMode left, KeyVaultEkmConnectivityMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EkmConnectivityMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KeyVaultEkmConnectivityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EkmConnectivityMode(string value) => new EkmConnectivityMode(value);
+        public static implicit operator KeyVaultEkmConnectivityMode(string value) => new KeyVaultEkmConnectivityMode(value);
 
-        /// <summary> Converts a string to a <see cref="EkmConnectivityMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="KeyVaultEkmConnectivityMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EkmConnectivityMode?(string value) => value == null ? null : new EkmConnectivityMode(value);
+        public static implicit operator KeyVaultEkmConnectivityMode?(string value) => value == null ? null : new KeyVaultEkmConnectivityMode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EkmConnectivityMode other && Equals(other);
+        public override bool Equals(object obj) => obj is KeyVaultEkmConnectivityMode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EkmConnectivityMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KeyVaultEkmConnectivityMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Administration
             string pathPrefix = default;
             IList<BinaryData> serverCaCertificates = default;
             string serverSubjectCommonName = default;
-            EkmConnectivityMode? connectivityMode = default;
+            KeyVaultEkmConnectivityMode? connectivityMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -214,7 +214,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    connectivityMode = new EkmConnectivityMode(prop.Value.GetString());
+                    connectivityMode = new KeyVaultEkmConnectivityMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -82,7 +82,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:CreatePrivateEkmConnectionAsync
             // Once the connection is approved, an EKM connection can reach the EKM proxy through the private
             // endpoint. To do so, set the connection's HostName to the private endpoint's name and its
-            // ConnectivityMode to EkmConnectivityMode.PrivateEndpoint. Since the host is now the private endpoint's
+            // ConnectivityMode to KeyVaultEkmConnectivityMode.PrivateEndpoint. Since the host is now the private endpoint's
             // name rather than the proxy's real DNS name, ServerSubjectCommonName must be set so the proxy's
             // certificate can still be validated.
 #if SNIPPET
@@ -96,7 +96,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(_privateEndpointName, new[] { serverCaCertificate })
             {
                 PathPrefix = "/api/v1",
-                ConnectivityMode = EkmConnectivityMode.PrivateEndpoint,
+                ConnectivityMode = KeyVaultEkmConnectivityMode.PrivateEndpoint,
                 ServerSubjectCommonName = serverSubjectCommonName,
             };
 
@@ -105,7 +105,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Console.WriteLine($"EKM connection created with connectivity mode: {createdConnection.Value.ConnectivityMode}");
             #endregion
 
-            Assert.That(createdConnection.Value.ConnectivityMode, Is.EqualTo(EkmConnectivityMode.PrivateEndpoint));
+            Assert.That(createdConnection.Value.ConnectivityMode, Is.EqualTo(KeyVaultEkmConnectivityMode.PrivateEndpoint));
 
             #region Snippet:DeleteEkmPrivateEndpointAsync
             // Deletion is rejected while an EKM connection still references the private endpoint, so we delete the
@@ -189,7 +189,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             #region Snippet:CreatePrivateEkmConnectionSync
             // Once the connection is approved, an EKM connection can reach the EKM proxy through the private
             // endpoint. To do so, set the connection's HostName to the private endpoint's name and its
-            // ConnectivityMode to EkmConnectivityMode.PrivateEndpoint. Since the host is now the private endpoint's
+            // ConnectivityMode to KeyVaultEkmConnectivityMode.PrivateEndpoint. Since the host is now the private endpoint's
             // name rather than the proxy's real DNS name, ServerSubjectCommonName must be set so the proxy's
             // certificate can still be validated.
 #if SNIPPET
@@ -203,7 +203,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             KeyVaultEkmConnection connection = new KeyVaultEkmConnection(_privateEndpointName, new[] { serverCaCertificate })
             {
                 PathPrefix = "/api/v1",
-                ConnectivityMode = EkmConnectivityMode.PrivateEndpoint,
+                ConnectivityMode = KeyVaultEkmConnectivityMode.PrivateEndpoint,
                 ServerSubjectCommonName = serverSubjectCommonName,
             };
 
@@ -212,7 +212,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Console.WriteLine($"EKM connection created with connectivity mode: {createdConnection.Value.ConnectivityMode}");
             #endregion
 
-            Assert.That(createdConnection.Value.ConnectivityMode, Is.EqualTo(EkmConnectivityMode.PrivateEndpoint));
+            Assert.That(createdConnection.Value.ConnectivityMode, Is.EqualTo(KeyVaultEkmConnectivityMode.PrivateEndpoint));
 
             #region Snippet:DeleteEkmPrivateEndpointSync
             // Deletion is rejected while an EKM connection still references the private endpoint, so we delete the

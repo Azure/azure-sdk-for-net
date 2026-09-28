@@ -7,7 +7,7 @@ namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The connectivity mode used to reach the EKM proxy. </summary>
     [CodeGenType("EkmConnectivityMode")]
-    public readonly partial struct EkmConnectivityMode
+    public readonly partial struct KeyVaultEkmConnectivityMode
     {
     }
 }

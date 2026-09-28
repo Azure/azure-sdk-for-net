@@ -68,7 +68,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="serverSubjectCommonName"> The subject common name of the server certificate of EKM Proxy. </param>
         /// <param name="connectivityMode"> The connectivity mode used to reach the EKM proxy. Defaults to "Public". In "PrivateEndpoint" mode, the host field holds the name of a private endpoint (peName) instead of a DNS name or IP address. </param>
         /// <returns> A new <see cref="Administration.KeyVaultEkmConnection"/> instance for mocking. </returns>
-        public static KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = default, string pathPrefix = default, IEnumerable<BinaryData> serverCaCertificates = default, string serverSubjectCommonName = default, EkmConnectivityMode? connectivityMode = default)
+        public static KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = default, string pathPrefix = default, IEnumerable<BinaryData> serverCaCertificates = default, string serverSubjectCommonName = default, KeyVaultEkmConnectivityMode? connectivityMode = default)
         {
             serverCaCertificates ??= new ChangeTrackingList<BinaryData>();
 

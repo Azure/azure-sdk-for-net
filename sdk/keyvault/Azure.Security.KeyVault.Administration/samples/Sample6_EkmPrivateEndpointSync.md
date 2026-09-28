@@ -53,7 +53,7 @@ After the private endpoint is approved, configure the EKM connection to use it. 
 ```C# Snippet:CreatePrivateEkmConnectionSync
 // Once the connection is approved, an EKM connection can reach the EKM proxy through the private
 // endpoint. To do so, set the connection's HostName to the private endpoint's name and its
-// ConnectivityMode to EkmConnectivityMode.PrivateEndpoint. Since the host is now the private endpoint's
+// ConnectivityMode to KeyVaultEkmConnectivityMode.PrivateEndpoint. Since the host is now the private endpoint's
 // name rather than the proxy's real DNS name, ServerSubjectCommonName must be set so the proxy's
 // certificate can still be validated.
 byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
@@ -61,7 +61,7 @@ string serverSubjectCommonName = "ekm.contoso.com";
 KeyVaultEkmConnection connection = new KeyVaultEkmConnection(_privateEndpointName, new[] { serverCaCertificate })
 {
     PathPrefix = "/api/v1",
-    ConnectivityMode = EkmConnectivityMode.PrivateEndpoint,
+    ConnectivityMode = KeyVaultEkmConnectivityMode.PrivateEndpoint,
     ServerSubjectCommonName = serverSubjectCommonName,
 };
 
