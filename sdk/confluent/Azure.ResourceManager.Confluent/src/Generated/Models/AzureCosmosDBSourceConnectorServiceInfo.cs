@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="cosmosMasterKey"> Azure Cosmos Database Master Key. </param>
         /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
         /// <param name="cosmosContainersTopicMapping"> Azure Cosmos Database Containers Topic Mapping. </param>
-        /// <param name="cosmosMessageKeyEnabled"> Azure Cosmos Database Message Key Enabled. </param>
+        /// <param name="isCosmosMessageKeyEnabled"> Azure Cosmos Database Message Key Enabled. </param>
         /// <param name="cosmosMessageKeyField"> Azure Cosmos Database Message Key Field. </param>
         /// <param name="cosmosIncludeAllContainers"> Azure Cosmos Database Include all the containers in the database. </param>
-        internal AzureCosmosDBSourceConnectorServiceInfo(ConnectorServiceType connectorServiceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cosmosDatabaseName, string cosmosMasterKey, string cosmosConnectionEndpoint, string cosmosContainersTopicMapping, bool? cosmosMessageKeyEnabled, string cosmosMessageKeyField, string cosmosIncludeAllContainers) : base(connectorServiceType, additionalBinaryDataProperties)
+        internal AzureCosmosDBSourceConnectorServiceInfo(ConnectorServiceType connectorServiceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cosmosDatabaseName, string cosmosMasterKey, string cosmosConnectionEndpoint, string cosmosContainersTopicMapping, bool? isCosmosMessageKeyEnabled, string cosmosMessageKeyField, string cosmosIncludeAllContainers) : base(connectorServiceType, additionalBinaryDataProperties)
         {
             CosmosDatabaseName = cosmosDatabaseName;
             CosmosMasterKey = cosmosMasterKey;
             CosmosConnectionEndpoint = cosmosConnectionEndpoint;
             CosmosContainersTopicMapping = cosmosContainersTopicMapping;
-            CosmosMessageKeyEnabled = cosmosMessageKeyEnabled;
+            IsCosmosMessageKeyEnabled = isCosmosMessageKeyEnabled;
             CosmosMessageKeyField = cosmosMessageKeyField;
             CosmosIncludeAllContainers = cosmosIncludeAllContainers;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public string CosmosContainersTopicMapping { get; set; }
 
         /// <summary> Azure Cosmos Database Message Key Enabled. </summary>
-        public bool? CosmosMessageKeyEnabled { get; set; }
+        public bool? IsCosmosMessageKeyEnabled { get; set; }
 
         /// <summary> Azure Cosmos Database Message Key Field. </summary>
         public string CosmosMessageKeyField { get; set; }

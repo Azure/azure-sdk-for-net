@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -21,22 +23,43 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorData"/>. </summary>
         internal ConnectionMonitorData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the connection monitor result. </param>
-        /// <param name="name"> The name of the connection monitor. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="location"> Connection monitor location. </param>
+        /// <param name="tags"> Connection monitor tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorData(ConnectionMonitorResultProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorResultProperties properties, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Name = name;
+            ETag = eTag;
+            Location = location;
+            Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the connection monitor result. </summary>
         [WirePath("properties")]
         internal ConnectionMonitorResultProperties Properties { get; }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
+        public ETag? ETag { get; }
+
+        /// <summary> Connection monitor location. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
+
+        /// <summary> Connection monitor tags. </summary>
+        [WirePath("tags")]
+        public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> Describes the source of connection monitor. </summary>
         [WirePath("properties.source")]

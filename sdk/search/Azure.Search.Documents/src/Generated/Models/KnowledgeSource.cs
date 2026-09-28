@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSqlKnowledgeSource"/>, <see cref="FileKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="WorkIQKnowledgeSource"/>, <see cref="McpServerKnowledgeSource"/>, <see cref="FabricDataAgentKnowledgeSource"/>, and <see cref="FabricOntologyKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobKnowledgeSource"/>, <see cref="FabricDataAgentKnowledgeSource"/>, <see cref="FabricOntologyKnowledgeSource"/>, <see cref="FileKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedSqlKnowledgeSource"/>, <see cref="McpServerKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, and <see cref="WorkIQKnowledgeSource"/>.
     /// </summary>
     public abstract partial class KnowledgeSource
     {

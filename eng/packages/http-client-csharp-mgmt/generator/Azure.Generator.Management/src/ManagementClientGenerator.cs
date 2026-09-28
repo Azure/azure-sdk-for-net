@@ -47,6 +47,8 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
 
+        internal MtgDateTimePropertyMatcher DateTimePropertyMatcher { get; } = new();
+
         private ResourceDataCustomizationResolver? _resourceDataCustomizationResolver;
         internal ResourceDataCustomizationResolver ResourceDataCustomizationResolver => _resourceDataCustomizationResolver ??= new();
 
@@ -62,15 +64,21 @@ namespace Azure.Generator.Management
                 // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
                 ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+                ModelFactoryBackwardCompatHelper.ValidateBackwardCompatArguments(modelFactory);
             }
             else
             {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+                if (provider is ModelProvider model)
+                {
+                    ModelCompatibilityValidator.ValidateProperties(model);
+                    ModelCompatibilityValidator.ValidateFlattenedConstructors(model);
+                }
+                SerializationConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }
 
             foreach (var serialization in provider.SerializationProviders)
             {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
+                SerializationConstructorCallHelper.FixConstructorCalls(serialization.Methods);
             }
 
             return base.GetWriter(provider);

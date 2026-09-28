@@ -39,8 +39,9 @@ param(
   [Parameter()]
   [string] $JobType = 'lint',
 
+  # Defaulting to $input accepts a list of files on stdin from both PowerShell and external shells e.g., bash.
   [Parameter(ValueFromPipeline)]
-  [array]$FileList,
+  [array]$FileList = $input,
 
   [Parameter()]
   [string] $CSpellConfigPath = (Resolve-Path "$PSScriptRoot/../../../.vscode/cspell.json"),

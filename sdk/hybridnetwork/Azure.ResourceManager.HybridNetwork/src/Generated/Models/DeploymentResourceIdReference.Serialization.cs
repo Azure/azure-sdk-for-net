@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The azure resource reference which is used for deployment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecretDeploymentResourceReference"/> and <see cref="OpenDeploymentResourceReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDeploymentResourceIdReference))]
     public abstract partial class DeploymentResourceIdReference : IJsonModel<DeploymentResourceIdReference>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Secret":
-                        return SecretDeploymentResourceReference.DeserializeSecretDeploymentResourceReference(element, options);
                     case "Open":
                         return OpenDeploymentResourceReference.DeserializeOpenDeploymentResourceReference(element, options);
+                    case "Secret":
+                        return SecretDeploymentResourceReference.DeserializeSecretDeploymentResourceReference(element, options);
                 }
             }
             return UnknownDeploymentResourceIdReference.DeserializeUnknownDeploymentResourceIdReference(element, options);

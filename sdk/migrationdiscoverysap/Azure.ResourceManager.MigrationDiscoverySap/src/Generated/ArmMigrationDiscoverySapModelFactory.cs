@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return new SapMigrateError(code is null && message is null && recommendation is null && details is null ? default : new SapDiscoveryErrorDetail(code, message, recommendation, (details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>()).ToList(), default), default);
         }
 
+        /// <summary> Error definition. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="recommendation"> Description of the recommendation. </param>
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return new SapDiscoveryErrorDetail(code, message, recommendation, (details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>()).ToList(), default);
         }
 
+        /// <summary> The extended location definition. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         /// <returns> A new <see cref="Models.SapDiscoveryExtendedLocation"/> instance for mocking. </returns>
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return new SapDiscoveryExtendedLocation(extendedLocationType, name, default);
         }
 
+        /// <summary> The type used for updating tags in SAPDiscoverySite resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SapDiscoverySitePatch"/> instance for mocking. </returns>
         public static SapDiscoverySitePatch SapDiscoverySitePatch(IDictionary<string, string> tags = default)
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 default);
         }
 
+        /// <summary> The type used for updating tags in SAPInstance resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SapInstancePatch"/> instance for mocking. </returns>
         public static SapInstancePatch SapInstancePatch(IDictionary<string, string> tags = default)
@@ -138,6 +142,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 default);
         }
 
+        /// <summary> Defines the SAP Instance properties. </summary>
         /// <param name="serverName"> This is the Virtual Machine Name of the SAP system. Add all the virtual machines attached to an SAP system which you wish to migrate to Azure. Keeping this not equal to ID as for single tier all InstanceTypes would be on same server, leading to multiple resources with same servername. </param>
         /// <param name="sapInstanceType"> Defines the type SAP instance on this server instance. </param>
         /// <param name="instanceSid"> This is the Instance SID for ASCS/AP/DB instance.  An SAP system with HANA database for example could have a different SID for database Instance than that of ASCS instance. </param>
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 default);
         }
 
+        /// <summary> The SAP instance specific configuration data. </summary>
         /// <param name="saps"> Provide the SAPS for each server of the SAP system. This should be a non-zero value. For example, 1000. </param>
         /// <param name="cpu"> Provide the CPU value of the server. For example, 16, 32 etc. </param>
         /// <param name="cpuType"> Provide the CPU architecture type of the server. For example, Xeon Platinum 8171M, Xeon E5-2673 v3. </param>
@@ -194,6 +200,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 default);
         }
 
+        /// <summary>
+        /// The SAP instance specific performance data.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExcelPerformanceDetail"/> and <see cref="Models.NativePerformanceDetail"/>.
+        /// </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
         /// <returns> A new <see cref="Models.PerformanceDetail"/> instance for mocking. </returns>
         public static PerformanceDetail PerformanceDetail(string dataSource = default)
@@ -201,6 +211,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return new UnknownPerformanceDetail(default, default);
         }
 
+        /// <summary> The SAP instance specific performance data for Excel import. </summary>
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
         /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
         /// <returns> A new <see cref="Models.ExcelPerformanceDetail"/> instance for mocking. </returns>
@@ -209,12 +220,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return new ExcelPerformanceDetail(default, default, maxCpuLoad, totalSourceDbSizeGB);
         }
 
+        /// <summary> The SAP instance specific performance data for native discovery. </summary>
         /// <returns> A new <see cref="Models.NativePerformanceDetail"/> instance for mocking. </returns>
         public static NativePerformanceDetail NativePerformanceDetail()
         {
             return new NativePerformanceDetail(default, default);
         }
 
+        /// <summary> Defines the request body for updating Server Instances resource. </summary>
         /// <param name="properties"> Server instances properties. </param>
         /// <returns> A new <see cref="Models.SapDiscoveryServerInstancePatch"/> instance for mocking. </returns>
         public static SapDiscoveryServerInstancePatch SapDiscoveryServerInstancePatch(ServerInstanceProperties properties = default)

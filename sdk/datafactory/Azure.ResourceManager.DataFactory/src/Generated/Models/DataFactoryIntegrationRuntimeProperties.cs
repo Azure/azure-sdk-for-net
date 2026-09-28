@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/>. </summary>
+        protected DataFactoryIntegrationRuntimeProperties() : this(default)
+        {
+        }
+
         /// <summary> Type of integration runtime. </summary>
         internal IntegrationRuntimeType IntegrationRuntimeType { get; set; }
 

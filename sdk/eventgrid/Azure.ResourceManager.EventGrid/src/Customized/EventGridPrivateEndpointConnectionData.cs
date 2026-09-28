@@ -6,6 +6,7 @@
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
+using TypeSpecCodeGenMemberAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenMemberAttribute;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class EventGridPrivateEndpointConnectionData
     {
         /// <summary> The Id of the private endpoint. </summary>
-        [CodeGenMember("PrivateEndpointId")]
+        [TypeSpecCodeGenMemberAttribute("PrivateEndpointId")]
         [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
