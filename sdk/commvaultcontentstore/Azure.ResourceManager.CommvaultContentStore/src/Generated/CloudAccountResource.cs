@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ResourceType, out string cloudAccountApiVersion);
             _cloudAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ResourceType.Namespace, Diagnostics);
-            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudAccountApiVersion ?? "2026-07-03-preview");
+            _cloudAccountsRestClient = new CloudAccounts(_cloudAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudAccountApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudAccountResource>> UpdateAsync(WaitUntil waitUntil, CloudAccountPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudAccountResource>> UpdateAsync(WaitUntil waitUntil, CloudAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountPatch.ToRequestContent(patch), context);
+                HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<CloudAccountResource> Update(WaitUntil waitUntil, CloudAccountPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<CloudAccountResource> Update(WaitUntil waitUntil, CloudAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountPatch.ToRequestContent(patch), context);
+                HttpMessage message = _cloudAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CloudAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CommvaultContentStoreArmOperation<CloudAccountResource> operation = new CommvaultContentStoreArmOperation<CloudAccountResource>(
                     new CloudAccountResourceOperationSource(Client),
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 else
                 {
                     CloudAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CloudAccountPatch patch = new CloudAccountPatch();
+                    CloudAccountData patch = new CloudAccountData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 else
                 {
                     CloudAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CloudAccountPatch patch = new CloudAccountPatch();
+                    CloudAccountData patch = new CloudAccountData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 else
                 {
                     CloudAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CloudAccountPatch patch = new CloudAccountPatch();
+                    CloudAccountData patch = new CloudAccountData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CloudAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 else
                 {
                     CloudAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CloudAccountPatch patch = new CloudAccountPatch();
+                    CloudAccountData patch = new CloudAccountData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CloudAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 else
                 {
                     CloudAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CloudAccountPatch patch = new CloudAccountPatch();
+                    CloudAccountData patch = new CloudAccountData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 else
                 {
                     CloudAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CloudAccountPatch patch = new CloudAccountPatch();
+                    CloudAccountData patch = new CloudAccountData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
