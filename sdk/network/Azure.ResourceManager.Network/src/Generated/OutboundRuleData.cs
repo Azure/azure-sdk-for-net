@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -57,6 +58,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new OutboundRulePropertiesFormat();
                 }
                 Properties.AllocatedOutboundPorts = value;
+            }
+        }
+
+        /// <summary> The Frontend IP addresses of the load balancer. </summary>
+        [WirePath("properties.frontendIPConfigurations")]
+        public IList<WritableSubResource> FrontendIPConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OutboundRulePropertiesFormat();
+                }
+                return Properties.FrontendIPConfigurations;
             }
         }
 

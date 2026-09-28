@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// SSIS object metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SsisFolder"/>, <see cref="SsisProject"/>, <see cref="SsisPackage"/>, and <see cref="SsisEnvironment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SsisEnvironment"/>, <see cref="SsisFolder"/>, <see cref="SsisPackage"/>, and <see cref="SsisProject"/>.
     /// </summary>
     public abstract partial class SsisObjectMetadata
     {

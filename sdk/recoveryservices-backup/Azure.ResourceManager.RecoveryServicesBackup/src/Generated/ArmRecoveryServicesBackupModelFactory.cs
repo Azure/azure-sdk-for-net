@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup ProtectionIntent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryServiceVaultProtectionIntent"/>, <see cref="Models.ResourceProtectionIntent"/>, <see cref="Models.WorkloadContainerAutoProtectionIntent"/>, <see cref="Models.WorkloadAutoProtectionIntent"/>, and <see cref="Models.WorkloadSqlAutoProtectionIntent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryServiceVaultProtectionIntent"/>, <see cref="Models.ResourceProtectionIntent"/>, <see cref="Models.WorkloadAutoProtectionIntent"/>, <see cref="Models.WorkloadContainerAutoProtectionIntent"/>, and <see cref="Models.WorkloadSqlAutoProtectionIntent"/>.
         /// </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup items.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/>, <see cref="Models.SqlProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="Models.DpmProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, and <see cref="Models.MabFileFolderProtectedItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DpmProtectedItem"/>, <see cref="Models.FileshareProtectedItem"/>, <see cref="Models.GenericProtectedItem"/>, <see cref="Models.IaasClassicComputeVmProtectedItem"/>, <see cref="Models.IaasComputeVmProtectedItem"/>, <see cref="Models.IaasVmProtectedItem"/>, <see cref="Models.MabFileFolderProtectedItem"/>, <see cref="Models.SqlProtectedItem"/>, <see cref="Models.VmWorkloadProtectedItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectedItem"/>, and <see cref="Models.VmWorkloadSqlDatabaseProtectedItem"/>.
         /// </summary>
         /// <param name="protectedItemType"> backup item type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
@@ -1724,7 +1724,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup request. Workload-specific backup requests are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareBackupContent"/>, <see cref="Models.WorkloadBackupContent"/>, and <see cref="Models.IaasVmBackupContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareBackupContent"/>, <see cref="Models.IaasVmBackupContent"/>, and <see cref="Models.WorkloadBackupContent"/>.
         /// </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <returns> A new <see cref="Models.BackupContent"/> instance for mocking. </returns>
@@ -1837,7 +1837,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRecoveryPoint"/>, <see cref="Models.WorkloadPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaRecoveryPoint"/>, <see cref="Models.WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapAseRecoveryPoint"/>, <see cref="Models.WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSqlRecoveryPoint"/>, <see cref="Models.GenericRecoveryPoint"/>, and <see cref="Models.IaasVmRecoveryPoint"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRecoveryPoint"/>, <see cref="Models.GenericRecoveryPoint"/>, <see cref="Models.IaasVmRecoveryPoint"/>, <see cref="Models.WorkloadPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadRecoveryPoint"/>, <see cref="Models.WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapAseRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="Models.WorkloadSapHanaRecoveryPoint"/>, <see cref="Models.WorkloadSqlPointInTimeRecoveryPoint"/>, and <see cref="Models.WorkloadSqlRecoveryPoint"/>.
         /// </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
@@ -2407,7 +2407,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for container with backup items. Containers with specific workloads are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupServerContainer"/>, <see cref="Models.DpmContainer"/>, <see cref="Models.IaasClassicComputeVmContainer"/>, <see cref="Models.IaasVmContainer"/>, <see cref="Models.IaasComputeVmContainer"/>, <see cref="Models.SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="Models.WorkloadContainer"/>, <see cref="Models.SqlContainer"/>, <see cref="Models.StorageContainer"/>, <see cref="Models.VmAppContainerProtectionContainer"/>, <see cref="Models.GenericContainer"/>, and <see cref="Models.MabContainer"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupServerContainer"/>, <see cref="Models.DpmContainer"/>, <see cref="Models.GenericContainer"/>, <see cref="Models.IaasClassicComputeVmContainer"/>, <see cref="Models.IaasComputeVmContainer"/>, <see cref="Models.IaasVmContainer"/>, <see cref="Models.MabContainer"/>, <see cref="Models.SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="Models.SqlContainer"/>, <see cref="Models.StorageContainer"/>, <see cref="Models.VmAppContainerProtectionContainer"/>, and <see cref="Models.WorkloadContainer"/>.
         /// </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
@@ -3206,7 +3206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for restore request. Workload-specific restore requests are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRestoreContent"/>, <see cref="Models.WorkloadPointInTimeRestoreContent"/>, <see cref="Models.WorkloadRestoreContent"/>, <see cref="Models.WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="Models.WorkloadSapHanaRestoreContent"/>, <see cref="Models.WorkloadSapAsePointInTimeRestoreContent"/>, <see cref="Models.WorkloadSapAseRestoreContent"/>, <see cref="Models.WorkloadSqlPointInTimeRestoreContent"/>, <see cref="Models.WorkloadSqlRestoreContent"/>, <see cref="Models.IaasVmRestoreContent"/>, <see cref="Models.WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="Models.WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="Models.WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="Models.WorkloadSqlRestoreWithRehydrateContent"/>, and <see cref="Models.IaasVmRestoreWithRehydrationContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareRestoreContent"/>, <see cref="Models.IaasVmRestoreContent"/>, <see cref="Models.IaasVmRestoreWithRehydrationContent"/>, <see cref="Models.WorkloadPointInTimeRestoreContent"/>, <see cref="Models.WorkloadRestoreContent"/>, <see cref="Models.WorkloadSapAsePointInTimeRestoreContent"/>, <see cref="Models.WorkloadSapAseRestoreContent"/>, <see cref="Models.WorkloadSapHanaPointInTimeRestoreContent"/>, <see cref="Models.WorkloadSapHanaPointInTimeRestoreWithRehydrateContent"/>, <see cref="Models.WorkloadSapHanaRestoreContent"/>, <see cref="Models.WorkloadSapHanaRestoreWithRehydrateContent"/>, <see cref="Models.WorkloadSqlPointInTimeRestoreContent"/>, <see cref="Models.WorkloadSqlPointInTimeRestoreWithRehydrateContent"/>, <see cref="Models.WorkloadSqlRestoreContent"/>, and <see cref="Models.WorkloadSqlRestoreWithRehydrateContent"/>.
         /// </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
@@ -4191,7 +4191,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmWorkloadProtectionPolicy"/>, <see cref="Models.FileShareProtectionPolicy"/>, <see cref="Models.IaasVmProtectionPolicy"/>, <see cref="Models.SqlProtectionPolicy"/>, <see cref="Models.GenericProtectionPolicy"/>, and <see cref="Models.MabProtectionPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareProtectionPolicy"/>, <see cref="Models.GenericProtectionPolicy"/>, <see cref="Models.IaasVmProtectionPolicy"/>, <see cref="Models.MabProtectionPolicy"/>, <see cref="Models.SqlProtectionPolicy"/>, and <see cref="Models.VmWorkloadProtectionPolicy"/>.
         /// </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
@@ -4680,7 +4680,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Defines workload agnostic properties for a job.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.IaasVmBackupJob"/>, <see cref="Models.IaasVmBackupJobV2"/>, <see cref="Models.StorageBackupJob"/>, <see cref="Models.WorkloadBackupJob"/>, <see cref="Models.DpmBackupJob"/>, <see cref="Models.MabBackupJob"/>, and <see cref="Models.VaultBackupJob"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DpmBackupJob"/>, <see cref="Models.IaasVmBackupJob"/>, <see cref="Models.IaasVmBackupJobV2"/>, <see cref="Models.MabBackupJob"/>, <see cref="Models.StorageBackupJob"/>, <see cref="Models.VaultBackupJob"/>, and <see cref="Models.WorkloadBackupJob"/>.
         /// </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
@@ -5684,7 +5684,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary>
         /// Base class for backup item. Workload-specific backup items are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareProtectableItem"/>, <see cref="Models.IaasClassicComputeVmProtectableItem"/>, <see cref="Models.IaasVmProtectableItem"/>, <see cref="Models.IaasComputeVmProtectableItem"/>, <see cref="Models.VmWorkloadProtectableItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="Models.VmWorkloadSapAseSystemProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstance"/>, <see cref="Models.VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="Models.VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="Models.VmWorkloadSqlInstanceProtectableItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FileShareProtectableItem"/>, <see cref="Models.IaasClassicComputeVmProtectableItem"/>, <see cref="Models.IaasComputeVmProtectableItem"/>, <see cref="Models.IaasVmProtectableItem"/>, <see cref="Models.VmWorkloadProtectableItem"/>, <see cref="Models.VmWorkloadSapAseDatabaseProtectableItem"/>, <see cref="Models.VmWorkloadSapAseSystemProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaDBInstance"/>, <see cref="Models.VmWorkloadSapHanaDatabaseProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaHsrProtectableItem"/>, <see cref="Models.VmWorkloadSapHanaSystemProtectableItem"/>, <see cref="Models.VmWorkloadSqlAvailabilityGroupProtectableItem"/>, <see cref="Models.VmWorkloadSqlDatabaseProtectableItem"/>, and <see cref="Models.VmWorkloadSqlInstanceProtectableItem"/>.
         /// </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>

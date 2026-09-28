@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Dataset location.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobStorageLocation"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AmazonS3Location"/>, <see cref="FileServerLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="AmazonS3CompatibleLocation"/>, <see cref="OracleCloudStorageLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="FtpServerLocation"/>, <see cref="SftpLocation"/>, <see cref="HttpServerLocation"/>, <see cref="HdfsLocation"/>, and <see cref="LakeHouseLocation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/>, and <see cref="SftpLocation"/>.
     /// </summary>
     public abstract partial class DatasetLocation
     {
