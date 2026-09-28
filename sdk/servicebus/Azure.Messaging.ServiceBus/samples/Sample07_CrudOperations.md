@@ -101,6 +101,18 @@ You can retrieve an already created topic by supplying the topic name.
 TopicProperties topic = await client.GetTopicAsync(topicName);
 ```
 
+## Get topic filter counts
+
+Use the administration client to read the total number of SQL and correlation filters across all subscriptions of a topic. Reading topic runtime properties requires **Manage** rights (or the **Azure Service Bus Data Owner** role when using Azure Identity). A subscription's default `$Default` rule is a SQL filter and contributes to the SQL count.
+
+The counts are served with the 2024-05 or later service API in regions where the feature is deployed. The default administration client uses 2024-05. On an earlier API version or in a region that has not deployed the feature, both properties default to `0`; a zero count does not necessarily mean there are no filters. The snippet uses `client` and `topicName` from the preceding example.
+
+```C# Snippet:GetTopicFilterCounts
+TopicRuntimeProperties runtimeProperties = await client.GetTopicRuntimePropertiesAsync(topicName);
+Console.WriteLine($"SQL filters: {runtimeProperties.SqlFilterCount}");
+Console.WriteLine($"Correlation filters: {runtimeProperties.CorrelationFilterCount}");
+```
+
 ## Get a subscription
 
 You can retrieve an already created subscription by supplying the topic and subscription names.
