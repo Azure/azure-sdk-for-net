@@ -13,52 +13,57 @@ using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    /// <summary> Immutability Settings at vault level. </summary>
-    public partial class ImmutabilitySettings : IJsonModel<ImmutabilitySettings>
+    /// <summary> Immutability properties of a recovery point. </summary>
+    public partial class RecoveryPointImmutabilityProperties : IJsonModel<RecoveryPointImmutabilityProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointImmutabilityProperties"/> for deserialization. </summary>
+        internal RecoveryPointImmutabilityProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImmutabilitySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RecoveryPointImmutabilityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointImmutabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeImmutabilitySettings(document.RootElement, options);
+                        return DeserializeRecoveryPointImmutabilityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointImmutabilityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointImmutabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointImmutabilityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ImmutabilitySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RecoveryPointImmutabilityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImmutabilitySettings IPersistableModel<ImmutabilitySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RecoveryPointImmutabilityProperties IPersistableModel<RecoveryPointImmutabilityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ImmutabilitySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RecoveryPointImmutabilityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ImmutabilitySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RecoveryPointImmutabilityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +74,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointImmutabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointImmutabilityProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(State))
+            writer.WritePropertyName("isImmutable"u8);
+            writer.WriteBooleanValue(IsImmutable);
+            if (Optional.IsDefined(ExpiryOn))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(Configuration))
-            {
-                writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration, options);
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpiryOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +105,46 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ImmutabilitySettings IJsonModel<ImmutabilitySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RecoveryPointImmutabilityProperties IJsonModel<RecoveryPointImmutabilityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ImmutabilitySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RecoveryPointImmutabilityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ImmutabilitySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPointImmutabilityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImmutabilitySettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointImmutabilityProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImmutabilitySettings(document.RootElement, options);
+            return DeserializeRecoveryPointImmutabilityProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ImmutabilitySettings DeserializeImmutabilitySettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static RecoveryPointImmutabilityProperties DeserializeRecoveryPointImmutabilityProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BackupVaultImmutabilityState? state = default;
-            ImmutabilityConfiguration configuration = default;
+            bool isImmutable = default;
+            DateTimeOffset? expiryOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("state"u8))
+                if (prop.NameEquals("isImmutable"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new BackupVaultImmutabilityState(prop.Value.GetString());
+                    isImmutable = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("configuration"u8))
+                if (prop.NameEquals("expiryTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configuration = ImmutabilityConfiguration.DeserializeImmutabilityConfiguration(prop.Value, options);
+                    expiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ImmutabilitySettings(state, configuration, additionalBinaryDataProperties);
+            return new RecoveryPointImmutabilityProperties(isImmutable, expiryOn, additionalBinaryDataProperties);
         }
     }
 }

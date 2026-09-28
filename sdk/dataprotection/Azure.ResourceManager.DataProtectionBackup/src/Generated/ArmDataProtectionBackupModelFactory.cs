@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Parameters for Backup Datasource
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.GenericBackupDataSourceSettings"/>, and <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.GenericBackupDataSourceSettings"/>, <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>, and <see cref="Models.PostgreSqlFlexibleServerBackupDataSourceSettings"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.BackupDataSourceSettings"/> instance for mocking. </returns>
@@ -316,6 +316,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static AdlsBlobBackupDatasourceParametersForAutoProtection AdlsBlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
         {
             return new AdlsBlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
+        }
+
+        /// <summary> Parameters to be used during configuration of backup of PostgreSQL Flexible Servers. </summary>
+        /// <param name="backupSolutionType"> Type of backup taken, Logical/Physical. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupDataSourceSettings"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerBackupDataSourceSettings PostgreSqlFlexibleServerBackupDataSourceSettings(BackupSolutionType? backupSolutionType = default)
+        {
+            return new PostgreSqlFlexibleServerBackupDataSourceSettings(default, default, backupSolutionType);
         }
 
         /// <summary> Generic parameters to be used during configuration of backup. </summary>
@@ -499,13 +507,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 default);
         }
 
+        /// <summary> Class containing security settings of vault. </summary>
         /// <param name="softDeleteSettings"> Soft delete related settings. </param>
-        /// <param name="immutabilityState"> Immutability state. </param>
+        /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
         /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
         /// <returns> A new <see cref="Models.BackupVaultSecuritySettings"/> instance for mocking. </returns>
-        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings = default, BackupVaultImmutabilityState? immutabilityState = default, BackupVaultEncryptionSettings encryptionSettings = default)
+        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, ImmutabilitySettings immutabilitySettings, BackupVaultEncryptionSettings encryptionSettings)
         {
-            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default), encryptionSettings, default);
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, encryptionSettings, default);
         }
 
         /// <summary> Soft delete related settings. </summary>
@@ -515,6 +524,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupVaultSoftDeleteSettings BackupVaultSoftDeleteSettings(BackupVaultSoftDeleteState? state = default, double? retentionDurationInDays = default)
         {
             return new BackupVaultSoftDeleteSettings(state, retentionDurationInDays, default);
+        }
+
+        /// <summary> Immutability Settings at vault level. </summary>
+        /// <param name="state"> Immutability state. </param>
+        /// <param name="configuration"> Immutability configuration containing type and duration. </param>
+        /// <returns> A new <see cref="Models.ImmutabilitySettings"/> instance for mocking. </returns>
+        public static ImmutabilitySettings ImmutabilitySettings(BackupVaultImmutabilityState? state = default, ImmutabilityConfiguration configuration = default)
+        {
+            return new ImmutabilitySettings(state, configuration, default);
+        }
+
+        /// <summary> Immutability configuration containing type and duration. </summary>
+        /// <param name="type"> Type of immutability. Supported values: AsPerPolicy or TimeBased. </param>
+        /// <param name="durationInDays">
+        /// Duration in days for time-based immutability.
+        /// Required when type is TimeBased. Must be null when type is AsPerPolicy.
+        /// </param>
+        /// <returns> A new <see cref="Models.ImmutabilityConfiguration"/> instance for mocking. </returns>
+        public static ImmutabilityConfiguration ImmutabilityConfiguration(ImmutabilityType? @type = default, int? durationInDays = default)
+        {
+            return new ImmutabilityConfiguration(@type, durationInDays, default);
         }
 
         /// <param name="state"> Encryption state of the Backup Vault. </param>
@@ -876,8 +906,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Schedule based backup criteria. </summary>
         /// <param name="absoluteCriteria">
-        /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
-        /// and should be part of AbsoluteMarker enum
+        /// It contains absolute marker values such as `AllBackup`, `FirstOfDay`, `FirstOfWeek`, and `FirstOfMonth`.
+        /// These values should be part of the `AbsoluteMarker` enum.
         /// </param>
         /// <param name="daysOfMonth"> This is day of the month from 1 to 28 other wise last of month. </param>
         /// <param name="daysOfWeek"> It should be Sunday/Monday/T..../Saturday. </param>
@@ -1516,8 +1546,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
+        /// <param name="immutabilityProperties"> Immutability properties of the recovery point. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = default, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default, DateTimeOffset recoverOn = default, string policyName = default, string policyVersion = default, string recoveryPointId = default, string recoveryPointType = default, string retentionTagName = default, string retentionTagVersion = default, DateTimeOffset? expireOn = default, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default)
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState, RecoveryPointImmutabilityProperties immutabilityProperties)
         {
             recoveryPointDataStoresDetails ??= new ChangeTrackingList<RecoveryPointDataStoreDetail>();
 
@@ -1534,7 +1565,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 retentionTagName,
                 retentionTagVersion,
                 expireOn,
-                recoveryPointState);
+                recoveryPointState,
+                immutabilityProperties);
         }
 
         /// <summary> RecoveryPoint datastore details. </summary>
@@ -1561,6 +1593,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 rehydrationExpireOn,
                 rehydrationStatus,
                 default);
+        }
+
+        /// <summary> Immutability properties of a recovery point. </summary>
+        /// <param name="isImmutable"> Whether the recovery point is currently within its immutability window. </param>
+        /// <param name="expiryOn">
+        /// UTC time when the recovery point's immutability window expires.
+        /// Null for AsPerPolicy vaults.
+        /// </param>
+        /// <returns> A new <see cref="Models.RecoveryPointImmutabilityProperties"/> instance for mocking. </returns>
+        public static RecoveryPointImmutabilityProperties RecoveryPointImmutabilityProperties(bool isImmutable = default, DateTimeOffset? expiryOn = default)
+        {
+            return new RecoveryPointImmutabilityProperties(isImmutable, expiryOn, default);
         }
 
         /// <summary> AzureBackup Job Resource Class. </summary>
@@ -2054,6 +2098,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static CrossRegionRestoreJobsContent CrossRegionRestoreJobsContent(AzureLocation sourceRegion = default, ResourceIdentifier sourceBackupVaultId = default)
         {
             return new CrossRegionRestoreJobsContent(sourceRegion, sourceBackupVaultId, default);
+        }
+
+        /// <summary> Class containing security settings of vault. </summary>
+        /// <param name="softDeleteSettings"> Soft delete related settings. </param>
+        /// <param name="immutabilityState"> Immutability state. </param>
+        /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
+        /// <returns> A new <see cref="Models.BackupVaultSecuritySettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings = default, BackupVaultImmutabilityState? immutabilityState = default, BackupVaultEncryptionSettings encryptionSettings = default)
+        {
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), encryptionSettings, default);
+        }
+
+        /// <summary> Azure backup discrete RecoveryPoint. </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="recoveryPointDataStoresDetails"></param>
+        /// <param name="recoverOn"></param>
+        /// <param name="policyName"></param>
+        /// <param name="policyVersion"></param>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="recoveryPointType"></param>
+        /// <param name="retentionTagName"></param>
+        /// <param name="retentionTagVersion"></param>
+        /// <param name="expireOn"></param>
+        /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = default, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default, DateTimeOffset recoverOn = default, string policyName = default, string policyVersion = default, string recoveryPointId = default, string recoveryPointType = default, string retentionTagName = default, string retentionTagVersion = default, DateTimeOffset? expireOn = default, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default)
+        {
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(
+                default,
+                default,
+                friendlyName,
+                (recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>()).ToList(),
+                recoverOn,
+                policyName,
+                policyVersion,
+                recoveryPointId,
+                recoveryPointType,
+                retentionTagName,
+                retentionTagVersion,
+                expireOn,
+                recoveryPointState,
+                default);
         }
 
         /// <summary> Backup Vault. </summary>
@@ -2586,6 +2674,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 retentionTagName,
                 retentionTagVersion,
                 expireOn,
+                default,
                 default);
         }
 
