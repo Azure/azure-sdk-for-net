@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -29,6 +31,42 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.ThrowsAsync<ArgumentException>(async () =>
             {
                 await foreach (Page<BlobChangeFeedEvent> _ in pageable.AsPages(continuationToken: "any-token")) { }
+            });
+        }
+
+        [Test]
+        public void GetChangesAsync_PreCanceledEnumerator_Throws()
+        {
+            BlobChangeFeedClient client = new BlobChangeFeedClient(
+                new Uri("https://account.blob.core.windows.net?sv=2024-01-01&ss=b&srt=sco&sig=fakesig"));
+            AsyncPageable<BlobChangeFeedEvent> pageable = client.GetChangesAsync();
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () =>
+            {
+                await using IAsyncEnumerator<BlobChangeFeedEvent> enumerator =
+                    pageable.GetAsyncEnumerator(cancellation.Token);
+                await enumerator.MoveNextAsync();
+            });
+        }
+
+        [Test]
+        public void AsPages_PreCanceledEnumerator_Throws()
+        {
+            BlobChangeFeedClient client = new BlobChangeFeedClient(
+                new Uri("https://account.blob.core.windows.net?sv=2024-01-01&ss=b&srt=sco&sig=fakesig"));
+            AsyncPageable<BlobChangeFeedEvent> pageable = client.GetChangesAsync();
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (Page<BlobChangeFeedEvent> _ in pageable
+                    .AsPages()
+                    .WithCancellation(cancellation.Token))
+                {
+                }
             });
         }
     }

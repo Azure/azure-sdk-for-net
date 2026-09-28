@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 using Azure.Storage.Files.Shares;
@@ -58,6 +60,27 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.AreEqual("evt-51", filtered[0].Id);
             Assert.AreEqual("evt-75", filtered[1].Id);
             Assert.AreEqual("evt-100", filtered[2].Id);
+        }
+
+        [Test]
+        public void AsyncAsPages_PreCanceledEnumerator_Throws()
+        {
+            ShareChangeFeedSnapshotAsyncPageable pageable = new ShareChangeFeedSnapshotAsyncPageable(
+                client: null,
+                maxTransferSize: null,
+                beginSnapshot: "2024-01-15T08:00:00.000Z",
+                endSnapshot: "2024-01-15T12:00:00.000Z");
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
+            cancellation.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () =>
+            {
+                await foreach (Page<ShareChangeFeedEvent> _ in pageable
+                    .AsPages()
+                    .WithCancellation(cancellation.Token))
+                {
+                }
+            });
         }
 
         /// <summary>

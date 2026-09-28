@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 
@@ -49,12 +51,20 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <returns>
         /// <see cref="IAsyncEnumerable{Page}"/>.
         /// </returns>
-        public override async IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPages(
+        public override IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
+            => AsPagesAsync(continuationToken, pageSizeHint, default);
+
+        private async IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPagesAsync(
+            string continuationToken,
+            int? pageSizeHint,
+            [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             if (continuationToken != null)
                 throw new ArgumentException($"{nameof(continuationToken)} not supported. Use BlobChangeFeedClient.GetChangesAsync(string) instead.");
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             (BlobContainerClient containerClient, ChangeFeedConfiguration<BlobChangeFeedEvent> config) = _client.ResolveContainer();
 
@@ -69,15 +79,21 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 _endTime,
                 _continuation,
                 async: true,
-                cancellationToken: default)
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             while (changeFeed.HasNext())
             {
-                yield return await changeFeed.GetPage(
+                cancellationToken.ThrowIfCancellationRequested();
+
+                Page<BlobChangeFeedEvent> page = await changeFeed.GetPage(
                     async: true,
-                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize)
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested();
+                yield return page;
             }
         }
     }

@@ -216,8 +216,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             segmentFactory.Setup(f => f.BuildSegment(
                 It.IsAny<bool>(),
                 It.IsAny<string>(),
-                It.IsAny<SegmentCursor>()))
-                .Returns<bool, string, SegmentCursor>((_, path, _) =>
+                It.IsAny<SegmentCursor>(),
+                It.IsAny<CancellationToken>()))
+                .Returns<bool, string, SegmentCursor, CancellationToken>((_, path, _, __) =>
                     Task.FromResult(new SegmentBase<BlobChangeFeedEvent>(
                         new List<ShardBase<BlobChangeFeedEvent>>(),
                         0,
@@ -428,8 +429,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             factory.Setup(f => f.BuildSegment(
                 It.IsAny<bool>(),
                 It.IsAny<string>(),
-                It.IsAny<SegmentCursor>()))
-                .Returns<bool, string, SegmentCursor>((_, path, _) =>
+                It.IsAny<SegmentCursor>(),
+                It.IsAny<CancellationToken>()))
+                .Returns<bool, string, SegmentCursor, CancellationToken>((_, path, _, __) =>
                     Task.FromResult(new SegmentBase<BlobChangeFeedEvent>(
                         new List<ShardBase<BlobChangeFeedEvent>>(),
                         0,
@@ -549,7 +551,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Times times)
         {
             factory.Verify(
-                f => f.BuildSegment(It.IsAny<bool>(), path, It.IsAny<SegmentCursor>()),
+                f => f.BuildSegment(
+                    It.IsAny<bool>(),
+                    path,
+                    It.IsAny<SegmentCursor>(),
+                    It.IsAny<CancellationToken>()),
                 times);
         }
 

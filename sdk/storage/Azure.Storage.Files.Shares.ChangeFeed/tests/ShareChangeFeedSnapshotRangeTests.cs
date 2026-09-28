@@ -81,8 +81,13 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = new Mock<SegmentFactoryBase<ShareChangeFeedEvent>>();
             segmentFactory
-                .Setup(f => f.BuildSegment(It.IsAny<bool>(), SegmentPath, It.IsAny<SegmentCursor>()))
-                .Returns<bool, string, SegmentCursor>((_, path, _) => Task.FromResult(BuildSegment(path)));
+                .Setup(f => f.BuildSegment(
+                    It.IsAny<bool>(),
+                    SegmentPath,
+                    It.IsAny<SegmentCursor>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<bool, string, SegmentCursor, CancellationToken>(
+                    (_, path, _, __) => Task.FromResult(BuildSegment(path)));
 
             Mock<BlobContainerClient> container = SetupContainer();
 

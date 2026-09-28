@@ -78,14 +78,15 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         public async Task BuildSegment_HappyPath_ParsesManifestAndCreatesShards()
         {
             string manifestJson = @"{""chunkFilePaths"":[""log/00/2024/01/15/0800/"",""log/01/2024/01/15/0800/""]}";
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
 
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
             SetupManifestDownload(containerClient, manifestJson);
 
             Mock<ShardFactoryBase<TestEvent>> shardFactory = new Mock<ShardFactoryBase<TestEvent>>();
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null))
+            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null, cancellation.Token))
                 .ReturnsAsync(BuildNonEmptyShardMock("log/00/2024/01/15/0800/").Object);
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/01/2024/01/15/0800/", null))
+            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/01/2024/01/15/0800/", null, cancellation.Token))
                 .ReturnsAsync(BuildNonEmptyShardMock("log/01/2024/01/15/0800/").Object);
 
             SegmentFactoryBase<TestEvent> factory = new SegmentFactoryBase<TestEvent>(
@@ -93,7 +94,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 shardFactory.Object,
                 CreateTestConfig());
 
-            SegmentBase<TestEvent> segment = await factory.BuildSegment(IsAsync, ManifestPath);
+            SegmentBase<TestEvent> segment = await factory.BuildSegment(
+                IsAsync,
+                ManifestPath,
+                cancellationToken: cancellation.Token);
 
             Assert.IsNotNull(segment);
             Assert.AreEqual(ManifestDateTime, segment.DateTime);
@@ -123,7 +127,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             Mock<ShardFactoryBase<TestEvent>> shardFactory = new Mock<ShardFactoryBase<TestEvent>>();
             // Strict expectation: the call must come in WITHOUT the container prefix.
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null))
+            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(BuildNonEmptyShardMock("log/00/2024/01/15/0800/").Object);
 
             SegmentFactoryBase<TestEvent> factory = new SegmentFactoryBase<TestEvent>(
@@ -134,13 +138,20 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             SegmentBase<TestEvent> segment = await factory.BuildSegment(IsAsync, ManifestPath);
 
             Assert.IsNotNull(segment);
-            shardFactory.Verify(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null), Times.Once);
+            shardFactory.Verify(
+                f => f.BuildShard(
+                    IsAsync,
+                    "log/00/2024/01/15/0800/",
+                    null,
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
             // Negative: the prefixed path must never have been forwarded.
             shardFactory.Verify(
                 f => f.BuildShard(
                     It.IsAny<bool>(),
                     It.Is<string>(p => p.StartsWith("$fileschangefeed", StringComparison.Ordinal)),
-                    It.IsAny<ShardCursor>()),
+                    It.IsAny<ShardCursor>(),
+                    It.IsAny<CancellationToken>()),
                 Times.Never);
         }
 
@@ -162,9 +173,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             emptyShard.Setup(s => s.ShardPath).Returns("log/00/2024/01/15/0800/");
 
             Mock<ShardFactoryBase<TestEvent>> shardFactory = new Mock<ShardFactoryBase<TestEvent>>();
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null))
+            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", null, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(emptyShard.Object);
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/01/2024/01/15/0800/", null))
+            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/01/2024/01/15/0800/", null, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(BuildNonEmptyShardMock("log/01/2024/01/15/0800/").Object);
 
             SegmentFactoryBase<TestEvent> factory = new SegmentFactoryBase<TestEvent>(
@@ -200,7 +211,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             exhaustedShard.Setup(s => s.HasNext()).Returns(false);
 
             Mock<ShardFactoryBase<TestEvent>> shardFactory = new Mock<ShardFactoryBase<TestEvent>>(MockBehavior.Strict);
-            shardFactory.Setup(f => f.BuildShard(IsAsync, shardPath, shardCursor))
+            shardFactory.Setup(f => f.BuildShard(IsAsync, shardPath, shardCursor, It.IsAny<CancellationToken>()))
                 .ReturnsAsync(exhaustedShard.Object);
 
             SegmentFactoryBase<TestEvent> factory = new SegmentFactoryBase<TestEvent>(
@@ -231,9 +242,17 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             SetupManifestDownload(containerClient, manifestJson);
 
             Mock<ShardFactoryBase<TestEvent>> shardFactory = new Mock<ShardFactoryBase<TestEvent>>();
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/00/2024/01/15/0800/", It.IsAny<ShardCursor>()))
+            shardFactory.Setup(f => f.BuildShard(
+                IsAsync,
+                "log/00/2024/01/15/0800/",
+                It.IsAny<ShardCursor>(),
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(BuildNonEmptyShardMock("log/00/2024/01/15/0800/").Object);
-            shardFactory.Setup(f => f.BuildShard(IsAsync, "log/01/2024/01/15/0800/", It.IsAny<ShardCursor>()))
+            shardFactory.Setup(f => f.BuildShard(
+                IsAsync,
+                "log/01/2024/01/15/0800/",
+                It.IsAny<ShardCursor>(),
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(BuildNonEmptyShardMock("log/01/2024/01/15/0800/").Object);
 
             SegmentCursor inputCursor = new SegmentCursor(

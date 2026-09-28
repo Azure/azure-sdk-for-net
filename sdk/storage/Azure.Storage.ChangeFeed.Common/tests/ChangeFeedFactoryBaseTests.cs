@@ -301,6 +301,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         public async Task BuildChangeFeed_HappyPath_ReturnsPopulatedChangeFeed()
         {
             // Arrange
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
             Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
 
@@ -328,7 +329,8 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             segmentFactory.Setup(f => f.BuildSegment(
                 IsAsync,
                 "idx/segments/2024/01/15/0800/meta.json",
-                null))
+                null,
+                cancellation.Token))
                 .ReturnsAsync(segment);
 
             ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
@@ -342,7 +344,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 null,
                 null,
                 IsAsync,
-                CancellationToken.None);
+                cancellation.Token);
 
             // Assert — returned a non-empty ChangeFeedBase
             Assert.IsNotNull(changeFeed);
@@ -542,8 +544,9 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             segmentFactory.Setup(f => f.BuildSegment(
                 IsAsync,
                 segmentPath,
-                It.IsAny<SegmentCursor>()))
-                .Callback<bool, string, SegmentCursor>((_, __, cursor) => capturedCursor = cursor)
+                It.IsAny<SegmentCursor>(),
+                It.IsAny<CancellationToken>()))
+                .Callback<bool, string, SegmentCursor, CancellationToken>((_, __, cursor, ___) => capturedCursor = cursor)
                 .ReturnsAsync(resumedSegment);
 
             // Build a continuation token with a real shard cursor pointing mid-chunk.

@@ -95,6 +95,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         [Test]
         public async Task BuildShard_NoCursor_StartsFromFirstChunkWithZeroOffsets()
         {
+            using CancellationTokenSource cancellation = new CancellationTokenSource();
             Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
             SetupChunkListing(containerClient, new[]
             {
@@ -108,7 +109,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 containerClient.Object,
                 chunkFactory.Object);
 
-            ShardBase<TestEvent> shard = await factory.BuildShard(IsAsync, ShardPath);
+            ShardBase<TestEvent> shard = await factory.BuildShard(
+                IsAsync,
+                ShardPath,
+                cancellationToken: cancellation.Token);
 
             Assert.IsTrue(shard.HasNext());
             chunkFactory.Verify(f => f.BuildChunk(
@@ -116,7 +120,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 "log/00/2024/01/15/0800/00000.avro",
                 0L,
                 0L,
-                It.IsAny<CancellationToken>()), Times.Once);
+                cancellation.Token), Times.Once);
         }
 
         /// <summary>
