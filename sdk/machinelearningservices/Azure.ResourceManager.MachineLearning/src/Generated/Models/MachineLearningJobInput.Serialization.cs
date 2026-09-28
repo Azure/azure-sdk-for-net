@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Command job definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownJobInput))]
     public abstract partial class MachineLearningJobInput : IJsonModel<MachineLearningJobInput>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "mltable":
-                        return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element, options);
                     case "custom_model":
                         return MachineLearningCustomModelJobInput.DeserializeMachineLearningCustomModelJobInput(element, options);
                     case "mlflow_model":
                         return MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(element, options);
                     case "literal":
                         return MachineLearningLiteralJobInput.DeserializeMachineLearningLiteralJobInput(element, options);
+                    case "mltable":
+                        return MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(element, options);
                     case "triton_model":
                         return MachineLearningTritonModelJobInput.DeserializeMachineLearningTritonModelJobInput(element, options);
                     case "uri_file":

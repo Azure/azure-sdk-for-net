@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// The object representing the policy for taking backups on an account.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PeriodicModeBackupPolicy"/> and <see cref="Models.ContinuousModeBackupPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContinuousModeBackupPolicy"/> and <see cref="Models.PeriodicModeBackupPolicy"/>.
         /// </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
@@ -3666,7 +3666,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// Services response resource.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceProperties"/>, <see cref="Models.SqlDedicatedGatewayServiceProperties"/>, <see cref="Models.GraphApiComputeServiceProperties"/>, and <see cref="Models.MaterializedViewsBuilderServiceProperties"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceProperties"/>, <see cref="Models.GraphApiComputeServiceProperties"/>, <see cref="Models.MaterializedViewsBuilderServiceProperties"/>, and <see cref="Models.SqlDedicatedGatewayServiceProperties"/>.
         /// </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
@@ -3848,7 +3848,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// Properties in ServiceResourceCreateUpdateParameters.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="Models.GraphApiComputeServiceResourceCreateUpdateProperties"/>, and <see cref="Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="Models.GraphApiComputeServiceResourceCreateUpdateProperties"/>, <see cref="Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>, and <see cref="Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>.
         /// </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>

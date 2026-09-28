@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicCertData = BinaryData.FromString(prop.Value.GetRawText());
+                    publicCertData = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VpnServerConfigRadiusServerRootCertificate(name, publicCertData, additionalBinaryDataProperties);

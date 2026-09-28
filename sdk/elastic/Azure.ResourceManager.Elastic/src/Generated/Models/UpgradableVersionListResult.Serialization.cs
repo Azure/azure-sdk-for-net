@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UpgradableVersionListResult(currentVersion, upgradableVersions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
