@@ -222,23 +222,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ParentCustomIPPrefixId. </summary>
-        public BicepValue<ResourceIdentifier> ParentCustomIPPrefixId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ParentCustomIPPrefixId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIPPrefixPropertiesFormat();
-                }
-                Properties.ParentCustomIPPrefixId = value;
-            }
-        }
-
         /// <summary> Gets the ChildCustomIPPrefixes. </summary>
         public BicepList<NetworkSubResource> ChildCustomIPPrefixes
         {
@@ -373,6 +356,23 @@ namespace Azure.Provisioning.Network
                     Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ParentCustomIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ParentCustomIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomIPPrefixPropertiesFormat();
+                }
+                Properties.ParentCustomIPPrefixId = value;
             }
         }
 

@@ -276,15 +276,16 @@ namespace Azure.Provisioning.Network
     }
     public enum ApplicationGatewayCustomErrorStatusCode
     {
-        HttpStatus400 = 0,
-        HttpStatus403 = 1,
-        HttpStatus404 = 2,
-        HttpStatus405 = 3,
-        HttpStatus408 = 4,
-        HttpStatus500 = 5,
-        HttpStatus502 = 6,
-        HttpStatus503 = 7,
-        HttpStatus504 = 8,
+        HttpStatus499 = 0,
+        HttpStatus400 = 1,
+        HttpStatus403 = 2,
+        HttpStatus404 = 3,
+        HttpStatus405 = 4,
+        HttpStatus408 = 5,
+        HttpStatus500 = 6,
+        HttpStatus502 = 7,
+        HttpStatus503 = 8,
+        HttpStatus504 = 9,
     }
     public partial class ApplicationGatewayEntraJwtValidationConfig : Azure.Provisioning.Network.NetworkSubResource
     {
@@ -757,13 +758,13 @@ namespace Azure.Provisioning.Network
     public enum ApplicationGatewaySslCipherSuite
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384")]
-        TLSECDHERSAWITHAES256CBCSHA384 = 0,
+        TlsECDiffieHellmanRsaWithAes256CbcSha384 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256")]
-        TLSECDHERSAWITHAES128CBCSHA256 = 1,
+        TlsECDiffieHellmanRsaWithAes128CbcSha256 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA")]
-        TLSECDHERSAWITHAES256CBCSHA = 2,
+        TlsECDiffieHellmanRsaWithAes256CbcSha = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA")]
-        TLSECDHERSAWITHAES128CBCSHA = 3,
+        TlsECDiffieHellmanRsaWithAes128CbcSha = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_DHE_RSA_WITH_AES_256_GCM_SHA384")]
         TlsDHERsaWithAes256GcmSha384 = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_DHE_RSA_WITH_AES_128_GCM_SHA256")]
@@ -785,17 +786,17 @@ namespace Azure.Provisioning.Network
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_RSA_WITH_AES_128_CBC_SHA")]
         TlsRsaWithAes128CbcSha = 13,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384")]
-        TLSECDHEECDSAWITHAES256GCMSHA384 = 14,
+        TlsECDiffieHellmanECDsaWithAes256GcmSha384 = 14,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256")]
-        TLSECDHEECDSAWITHAES128GCMSHA256 = 15,
+        TlsECDiffieHellmanECDsaWithAes128GcmSha256 = 15,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384")]
-        TLSECDHEECDSAWITHAES256CBCSHA384 = 16,
+        TlsECDiffieHellmanECDsaWithAes256CbcSha384 = 16,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256")]
-        TLSECDHEECDSAWITHAES128CBCSHA256 = 17,
+        TlsECDiffieHellmanECDsaWithAes128CbcSha256 = 17,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA")]
-        TLSECDHEECDSAWITHAES256CBCSHA = 18,
+        TlsECDiffieHellmanECDsaWithAes256CbcSha = 18,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA")]
-        TLSECDHEECDSAWITHAES128CBCSHA = 19,
+        TlsECDiffieHellmanECDsaWithAes128CbcSha = 19,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_DHE_DSS_WITH_AES_256_CBC_SHA256")]
         TlsDheDssWithAes256CbcSha256 = 20,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_DHE_DSS_WITH_AES_128_CBC_SHA256")]
@@ -809,9 +810,9 @@ namespace Azure.Provisioning.Network
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA")]
         TlsDheDssWith3DesEdeCbcSha = 25,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256")]
-        TLSECDHERSAWITHAES128GCMSHA256 = 26,
+        TlsECDiffieHellmanRsaWithAes128GcmSha256 = 26,
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384")]
-        TLSECDHERSAWITHAES256GCMSHA384 = 27,
+        TlsECDiffieHellmanRsaWithAes256GcmSha384 = 27,
     }
     public partial class ApplicationGatewaySslPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1618,20 +1619,6 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_05_01;
         }
     }
-    public partial class ConnectionMonitorCreateOrUpdateContent : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ConnectionMonitorCreateOrUpdateContent() { }
-        public Azure.Provisioning.BicepValue<bool> AutoStart { get { throw null; } set { } }
-        public Azure.Provisioning.Network.ConnectionMonitorDestination Destination { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ConnectionMonitorEndpoint> Endpoints { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> MonitoringIntervalInSeconds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Notes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ConnectionMonitorOutput> Outputs { get { throw null; } set { } }
-        public Azure.Provisioning.Network.ConnectionMonitorSource Source { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ConnectionMonitorTestConfiguration> TestConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ConnectionMonitorTestGroup> TestGroups { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class ConnectionMonitorDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ConnectionMonitorDestination() { }
@@ -1645,13 +1632,13 @@ namespace Azure.Provisioning.Network
         public ConnectionMonitorEndpoint() { }
         public Azure.Provisioning.BicepValue<string> Address { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.CoverageLevel> CoverageLevel { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ConnectionMonitorEndpointType> EndpointType { get { throw null; } set { } }
         public Azure.Provisioning.Network.ConnectionMonitorEndpointFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LocationDetailsRegion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         public Azure.Provisioning.Network.ConnectionMonitorEndpointScope Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> SubscriptionId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.EndpointType> Type { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ConnectionMonitorEndpointFilter : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2136,18 +2123,6 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.QosIPRange> SourceIPRanges { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.QosPortRange> SourcePortRanges { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum EndpointType
-    {
-        AzureVM = 0,
-        AzureVNet = 1,
-        AzureSubnet = 2,
-        ExternalAddress = 3,
-        MMAWorkspaceMachine = 4,
-        MMAWorkspaceNetwork = 5,
-        AzureArcVM = 6,
-        AzureVMSS = 7,
-        AzureArcNetwork = 8,
     }
     public partial class ExceptionEntry : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -2855,10 +2830,13 @@ namespace Azure.Provisioning.Network
     }
     public enum FirewallPolicyIntrusionDetectionProfileType
     {
-        Off = 0,
-        Emerging = 1,
-        Core = 2,
-        Extended = 3,
+        Basic = 0,
+        Standard = 1,
+        Advanced = 2,
+        Off = 3,
+        Emerging = 4,
+        Core = 5,
+        Extended = 6,
     }
     public enum FirewallPolicyIntrusionDetectionProtocol
     {
@@ -3008,7 +2986,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.Network.FlowLogProperties Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.Network.InternalNetworkManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
@@ -3095,21 +3073,6 @@ namespace Azure.Provisioning.Network
         public FlowLogProperties() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FlowLogFormatType> FormatType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Version { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class FlowLogPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public FlowLogPropertiesFormat() { }
-        public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnabledFilteringCriteria { get { throw null; } set { } }
-        public Azure.Provisioning.Network.FlowLogProperties Format { get { throw null; } set { } }
-        public Azure.Provisioning.Network.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> RecordTypes { get { throw null; } set { } }
-        public Azure.Provisioning.Network.RetentionPolicyParameters RetentionPolicy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> TargetResourceGuid { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FrontendIPConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
@@ -3533,21 +3496,6 @@ namespace Azure.Provisioning.Network
         AutoExpire = 0,
         Permanent = 1,
     }
-    public partial class InternalNetworkManagedServiceIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public InternalNetworkManagedServiceIdentity() { }
-        public Azure.Provisioning.BicepValue<string> PrincipalId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ResourceIdentityType> Type { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<Azure.Provisioning.Network.ManagedServiceIdentityUserAssignedIdentities> UserAssignedIdentities { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class InternetIngressPublicIpsProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public InternetIngressPublicIpsProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public enum IPAddressDeleteOption
     {
         Delete = 0,
@@ -3665,11 +3613,13 @@ namespace Azure.Provisioning.Network
         Sha1 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="SHA256")]
         Sha256 = 2,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="GCMAES128")]
-        GcmAes128 = 3,
-        GCMAES192 = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="SHA384")]
+        Sha384 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="GCMAES256")]
-        GcmAes256 = 5,
+        GcmAes256 = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="GCMAES128")]
+        GcmAes128 = 5,
+        GCMAES192 = 6,
     }
     public partial class IPsecPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -3819,9 +3769,10 @@ namespace Azure.Provisioning.Network
     }
     public enum LoadBalancerBackendAddressAdminState
     {
-        None = 0,
-        Up = 1,
-        Down = 2,
+        Drain = 0,
+        None = 1,
+        Up = 2,
+        Down = 3,
     }
     public partial class LoadBalancerInboundNatPool : Azure.Provisioning.Network.NetworkSubResource
     {
@@ -4069,9 +4020,10 @@ namespace Azure.Provisioning.Network
     }
     public enum ManagedRuleSensitivityType
     {
-        Low = 0,
-        Medium = 1,
-        High = 2,
+        None = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
     }
     public partial class ManagedRuleSet : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -4086,14 +4038,9 @@ namespace Azure.Provisioning.Network
     {
         public ManagedRuleSetRuleGroup() { }
         public Azure.Provisioning.BicepValue<string> RuleGroupName { get { throw null; } }
-        public Azure.Provisioning.BicepList<int> Rules { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ManagedServiceIdentityUserAssignedIdentities : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ManagedServiceIdentityUserAssignedIdentities() { }
-        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> PrincipalId { get { throw null; } }
+        public Azure.Provisioning.BicepList<int> RuleIds { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use RuleIds instead.")]
+        public Azure.Provisioning.BicepList<string> Rules { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version. Please use NetworkManagerConnection instead.")]
@@ -5777,21 +5724,6 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_05_01;
         }
     }
-    public partial class PacketCaptureCreateOrUpdateContent : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public PacketCaptureCreateOrUpdateContent() { }
-        public Azure.Provisioning.BicepValue<long> BytesToCapturePerPacket { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PacketCaptureSettings CaptureSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.PacketCaptureFilter> Filters { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsContinuousCapture { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PacketCaptureMachineScope Scope { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PacketCaptureStorageLocation StorageLocation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Target { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.PacketCaptureTargetType> TargetType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TimeLimitInSeconds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<long> TotalBytesPerSession { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class PacketCaptureFilter : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PacketCaptureFilter() { }
@@ -6663,20 +6595,6 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> RecordType { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> Ttl { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class ReferencedPublicIPAddress : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ReferencedPublicIPAddress() { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum ResourceIdentityType
-    {
-        SystemAssigned = 0,
-        UserAssigned = 1,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="SystemAssigned, UserAssigned")]
-        SystemAssignedUserAssigned = 2,
-        None = 3,
     }
     public partial class ResourceNavigationLink : Azure.Provisioning.Network.NetworkSubResource
     {
@@ -8140,7 +8058,9 @@ namespace Azure.Provisioning.Network
     public partial class VirtualNetworkAppliance : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public VirtualNetworkAppliance(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<double> BandwidthInGbps { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<double> BandwidthGbps { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use BandwidthGbps instead.")]
+        public Azure.Provisioning.BicepValue<string> BandwidthInGbps { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.VirtualNetworkApplianceIPConfiguration> IPConfigurations { get { throw null; } }
@@ -8745,9 +8665,11 @@ namespace Azure.Provisioning.Network
     }
     public enum VpnAuthenticationType
     {
-        Certificate = 0,
-        Radius = 1,
-        AAD = 2,
+        AAD = 0,
+        Certificate = 1,
+        Radius = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="AAD")]
+        Aad = 3,
     }
     public partial class VpnClientConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

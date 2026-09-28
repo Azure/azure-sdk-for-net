@@ -5,28 +5,33 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Network
 {
     /// <summary> Status code of the application gateway custom error. </summary>
     public enum ApplicationGatewayCustomErrorStatusCode
     {
         /// <summary> HttpStatus400. </summary>
-        HttpStatus400 = 0,
+        HttpStatus400 = 1,
         /// <summary> HttpStatus403. </summary>
-        HttpStatus403 = 1,
+        HttpStatus403 = 2,
         /// <summary> HttpStatus404. </summary>
-        HttpStatus404 = 2,
+        HttpStatus404 = 3,
         /// <summary> HttpStatus405. </summary>
-        HttpStatus405 = 3,
+        HttpStatus405 = 4,
         /// <summary> HttpStatus408. </summary>
-        HttpStatus408 = 4,
+        HttpStatus408 = 5,
         /// <summary> HttpStatus500. </summary>
-        HttpStatus500 = 5,
+        HttpStatus500 = 6,
         /// <summary> HttpStatus502. </summary>
-        HttpStatus502 = 6,
+        HttpStatus502 = 7,
         /// <summary> HttpStatus503. </summary>
-        HttpStatus503 = 7,
+        HttpStatus503 = 8,
         /// <summary> HttpStatus504. </summary>
-        HttpStatus504 = 8
+        HttpStatus504 = 9,
+        /// <summary> HttpStatus499. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        HttpStatus499 = 0
     }
 }

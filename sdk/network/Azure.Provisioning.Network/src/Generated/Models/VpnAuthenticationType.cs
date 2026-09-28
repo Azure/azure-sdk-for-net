@@ -5,16 +5,23 @@
 
 #nullable disable
 
+using System.ComponentModel;
+using System.Runtime.Serialization;
+
 namespace Azure.Provisioning.Network
 {
     /// <summary> VPN authentication types enabled for the virtual network gateway. </summary>
     public enum VpnAuthenticationType
     {
         /// <summary> Certificate. </summary>
-        Certificate = 0,
+        Certificate = 1,
         /// <summary> Radius. </summary>
-        Radius = 1,
+        Radius = 2,
         /// <summary> AAD. </summary>
-        AAD = 2
+        AAD = 0,
+        /// <summary> Aad. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DataMember(Name = "AAD")]
+        Aad = 3
     }
 }

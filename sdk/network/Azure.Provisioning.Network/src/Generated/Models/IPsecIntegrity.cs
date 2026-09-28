@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Network
@@ -22,11 +23,15 @@ namespace Azure.Provisioning.Network
         Sha256 = 2,
         /// <summary> GCMAES128. </summary>
         [DataMember(Name = "GCMAES128")]
-        GcmAes128 = 3,
+        GcmAes128 = 5,
         /// <summary> GCMAES192. </summary>
-        GCMAES192 = 4,
+        GCMAES192 = 6,
         /// <summary> GCMAES256. </summary>
         [DataMember(Name = "GCMAES256")]
-        GcmAes256 = 5
+        GcmAes256 = 4,
+        /// <summary> Sha384. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DataMember(Name = "SHA384")]
+        Sha384 = 3
     }
 }

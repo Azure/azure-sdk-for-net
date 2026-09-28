@@ -11,10 +11,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> VirtualNetworkAppliance properties. </summary>
     internal partial class VirtualNetworkAppliancePropertiesFormat : ProvisionableConstruct
     {
-        private BicepValue<double> _bandwidthInGbps;
+        private BicepValue<double> _bandwidthGbps;
         private BicepList<VirtualNetworkApplianceIPConfiguration> _ipConfigurations;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<Guid> _resourceGuid;
@@ -25,18 +24,18 @@ namespace Azure.Provisioning.Network
         {
         }
 
-        /// <summary> Gets or sets the BandwidthInGbps. </summary>
-        public BicepValue<double> BandwidthInGbps
+        /// <summary> Gets or sets the BandwidthGbps. </summary>
+        public BicepValue<double> BandwidthGbps
         {
             get
             {
                 Initialize();
-                return _bandwidthInGbps;
+                return _bandwidthGbps;
             }
             set
             {
                 Initialize();
-                _bandwidthInGbps.Assign(value);
+                _bandwidthGbps.Assign(value);
             }
         }
 
@@ -89,7 +88,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _bandwidthInGbps = DefineProperty<double>(nameof(BandwidthInGbps), new string[] { "bandwidthInGbps" });
+            _bandwidthGbps = DefineProperty<double>(nameof(BandwidthGbps), new string[] { "bandwidthInGbps" });
             _ipConfigurations = DefineListProperty<VirtualNetworkApplianceIPConfiguration>(nameof(IPConfigurations), new string[] { "ipConfigurations" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);

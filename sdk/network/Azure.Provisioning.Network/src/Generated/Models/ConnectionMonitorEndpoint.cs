@@ -16,7 +16,7 @@ namespace Azure.Provisioning.Network
     public partial class ConnectionMonitorEndpoint : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<EndpointType> _type;
+        private BicepValue<ConnectionMonitorEndpointType> _endpointType;
         private BicepValue<ResourceIdentifier> _resourceId;
         private BicepValue<string> _address;
         private ConnectionMonitorEndpointFilter _filter;
@@ -45,18 +45,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<EndpointType> Type
+        /// <summary> Gets or sets the EndpointType. </summary>
+        public BicepValue<ConnectionMonitorEndpointType> EndpointType
         {
             get
             {
                 Initialize();
-                return _type;
+                return _endpointType;
             }
             set
             {
                 Initialize();
-                _type.Assign(value);
+                _endpointType.Assign(value);
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _type = DefineProperty<EndpointType>(nameof(Type), new string[] { "type" });
+            _endpointType = DefineProperty<ConnectionMonitorEndpointType>(nameof(EndpointType), new string[] { "type" });
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _address = DefineProperty<string>(nameof(Address), new string[] { "address" });
             _filter = DefineModelProperty<ConnectionMonitorEndpointFilter>(nameof(Filter), new string[] { "filter" });

@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the configuration of flow log. </summary>
-    public partial class FlowLogPropertiesFormat : ProvisionableConstruct
+    internal partial class FlowLogPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _targetResourceId;
         private BicepValue<Guid> _targetResourceGuid;

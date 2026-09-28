@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the create packet capture operation. </summary>
-    public partial class PacketCaptureCreateOrUpdateContent : ProvisionableConstruct
+    internal partial class PacketCaptureCreateOrUpdateContent : ProvisionableConstruct
     {
         private BicepValue<string> _target;
         private PacketCaptureMachineScope _scope;

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Network
 {
     /// <summary>
@@ -15,12 +17,21 @@ namespace Azure.Provisioning.Network
     public enum FirewallPolicyIntrusionDetectionProfileType
     {
         /// <summary> Off. </summary>
-        Off = 0,
+        Off = 3,
         /// <summary> Emerging. </summary>
-        Emerging = 1,
+        Emerging = 4,
         /// <summary> Core. </summary>
-        Core = 2,
+        Core = 5,
         /// <summary> Extended. </summary>
-        Extended = 3
+        Extended = 6,
+        /// <summary> Basic. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Basic = 0,
+        /// <summary> Standard. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Standard = 1,
+        /// <summary> Advanced. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Advanced = 2
     }
 }

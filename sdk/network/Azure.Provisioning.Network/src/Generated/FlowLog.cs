@@ -10,6 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepDictionary<string> _tags;
         private FlowLogPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
-        private InternalNetworkManagedServiceIdentity _identity;
+        private ManagedServiceIdentity _identity;
         private ResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new FlowLog. </summary>
@@ -113,7 +114,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Identity. </summary>
-        public InternalNetworkManagedServiceIdentity Identity
+        public ManagedServiceIdentity Identity
         {
             get
             {
@@ -314,7 +315,7 @@ namespace Azure.Provisioning.Network
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<FlowLogPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _identity = DefineModelProperty<InternalNetworkManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
+            _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

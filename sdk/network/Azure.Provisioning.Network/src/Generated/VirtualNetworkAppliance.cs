@@ -111,12 +111,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the BandwidthInGbps. </summary>
-        public BicepValue<double> BandwidthInGbps
+        /// <summary> Gets or sets the BandwidthGbps. </summary>
+        public BicepValue<double> BandwidthGbps
         {
             get
             {
-                return Properties is null ? default : Properties.BandwidthInGbps;
+                return Properties is null ? default : Properties.BandwidthGbps;
             }
             set
             {
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new VirtualNetworkAppliancePropertiesFormat();
                 }
-                Properties.BandwidthInGbps = value;
+                Properties.BandwidthGbps = value;
             }
         }
 

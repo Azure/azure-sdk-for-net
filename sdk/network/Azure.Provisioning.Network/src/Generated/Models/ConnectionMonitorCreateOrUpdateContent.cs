@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the operation to create a connection monitor. </summary>
-    public partial class ConnectionMonitorCreateOrUpdateContent : ProvisionableConstruct
+    internal partial class ConnectionMonitorCreateOrUpdateContent : ProvisionableConstruct
     {
         private ConnectionMonitorSource _source;
         private ConnectionMonitorDestination _destination;

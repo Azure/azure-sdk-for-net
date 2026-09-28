@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     public partial class ManagedRuleSetRuleGroup : ProvisionableConstruct
     {
         private BicepValue<string> _ruleGroupName;
-        private BicepList<int> _rules;
+        private BicepList<int> _ruleIds;
 
         /// <summary> Creates a new ManagedRuleSetRuleGroup. </summary>
         public ManagedRuleSetRuleGroup()
@@ -31,13 +31,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the Rules. </summary>
-        public BicepList<int> Rules
+        /// <summary> Gets the RuleIds. </summary>
+        public BicepList<int> RuleIds
         {
             get
             {
                 Initialize();
-                return _rules;
+                return _ruleIds;
             }
         }
 
@@ -46,7 +46,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _ruleGroupName = DefineProperty<string>(nameof(RuleGroupName), new string[] { "ruleGroupName" });
-            _rules = DefineListProperty<int>(nameof(Rules), new string[] { "rules" });
+            _ruleIds = DefineListProperty<int>(nameof(RuleIds), new string[] { "rules" });
             DefineAdditionalProperties();
         }
 

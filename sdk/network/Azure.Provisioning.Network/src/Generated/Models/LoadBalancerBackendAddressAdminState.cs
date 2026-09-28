@@ -5,16 +5,21 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Network
 {
     /// <summary> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </summary>
     public enum LoadBalancerBackendAddressAdminState
     {
         /// <summary> None. </summary>
-        None = 0,
+        None = 1,
         /// <summary> Up. </summary>
-        Up = 1,
+        Up = 2,
         /// <summary> Down. </summary>
-        Down = 2
+        Down = 3,
+        /// <summary> Drain. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Drain = 0
     }
 }

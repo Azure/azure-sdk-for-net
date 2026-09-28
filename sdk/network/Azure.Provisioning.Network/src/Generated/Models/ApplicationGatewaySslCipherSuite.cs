@@ -14,16 +14,16 @@ namespace Azure.Provisioning.Network
     {
         /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384. </summary>
         [DataMember(Name = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384")]
-        TLSECDHERSAWITHAES256CBCSHA384 = 0,
+        TlsECDiffieHellmanRsaWithAes256CbcSha384 = 0,
         /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256. </summary>
         [DataMember(Name = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256")]
-        TLSECDHERSAWITHAES128CBCSHA256 = 1,
+        TlsECDiffieHellmanRsaWithAes128CbcSha256 = 1,
         /// <summary> TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA. </summary>
         [DataMember(Name = "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA")]
-        TLSECDHERSAWITHAES256CBCSHA = 2,
+        TlsECDiffieHellmanRsaWithAes256CbcSha = 2,
         /// <summary> TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA. </summary>
         [DataMember(Name = "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA")]
-        TLSECDHERSAWITHAES128CBCSHA = 3,
+        TlsECDiffieHellmanRsaWithAes128CbcSha = 3,
         /// <summary> TLS_DHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
         [DataMember(Name = "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384")]
         TlsDHERsaWithAes256GcmSha384 = 4,
@@ -56,22 +56,22 @@ namespace Azure.Provisioning.Network
         TlsRsaWithAes128CbcSha = 13,
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384. </summary>
         [DataMember(Name = "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384")]
-        TLSECDHEECDSAWITHAES256GCMSHA384 = 14,
+        TlsECDiffieHellmanECDsaWithAes256GcmSha384 = 14,
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256. </summary>
         [DataMember(Name = "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256")]
-        TLSECDHEECDSAWITHAES128GCMSHA256 = 15,
+        TlsECDiffieHellmanECDsaWithAes128GcmSha256 = 15,
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384. </summary>
         [DataMember(Name = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384")]
-        TLSECDHEECDSAWITHAES256CBCSHA384 = 16,
+        TlsECDiffieHellmanECDsaWithAes256CbcSha384 = 16,
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256. </summary>
         [DataMember(Name = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256")]
-        TLSECDHEECDSAWITHAES128CBCSHA256 = 17,
+        TlsECDiffieHellmanECDsaWithAes128CbcSha256 = 17,
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA. </summary>
         [DataMember(Name = "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA")]
-        TLSECDHEECDSAWITHAES256CBCSHA = 18,
+        TlsECDiffieHellmanECDsaWithAes256CbcSha = 18,
         /// <summary> TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA. </summary>
         [DataMember(Name = "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA")]
-        TLSECDHEECDSAWITHAES128CBCSHA = 19,
+        TlsECDiffieHellmanECDsaWithAes128CbcSha = 19,
         /// <summary> TLS_DHE_DSS_WITH_AES_256_CBC_SHA256. </summary>
         [DataMember(Name = "TLS_DHE_DSS_WITH_AES_256_CBC_SHA256")]
         TlsDheDssWithAes256CbcSha256 = 20,
@@ -92,9 +92,9 @@ namespace Azure.Provisioning.Network
         TlsDheDssWith3DesEdeCbcSha = 25,
         /// <summary> TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256. </summary>
         [DataMember(Name = "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256")]
-        TLSECDHERSAWITHAES128GCMSHA256 = 26,
+        TlsECDiffieHellmanRsaWithAes128GcmSha256 = 26,
         /// <summary> TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384. </summary>
         [DataMember(Name = "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384")]
-        TLSECDHERSAWITHAES256GCMSHA384 = 27
+        TlsECDiffieHellmanRsaWithAes256GcmSha384 = 27
     }
 }

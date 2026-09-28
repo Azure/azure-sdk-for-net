@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _cidr;
         private BicepValue<string> _signedMessage;
         private BicepValue<string> _authorizationMessage;
-        private BicepValue<ResourceIdentifier> _parentCustomIPPrefixId;
+        private NetworkSubResource _parentCustomIPPrefix;
         private BicepList<NetworkSubResource> _childCustomIPPrefixes;
         private BicepValue<CommissionedState> _commissionedState;
         private BicepValue<bool> _expressRouteAdvertise;
@@ -94,18 +94,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ParentCustomIPPrefixId. </summary>
-        public BicepValue<ResourceIdentifier> ParentCustomIPPrefixId
+        /// <summary> Gets or sets the ParentCustomIPPrefix. </summary>
+        internal NetworkSubResource ParentCustomIPPrefix
         {
             get
             {
                 Initialize();
-                return _parentCustomIPPrefixId;
+                return _parentCustomIPPrefix;
             }
             set
             {
                 Initialize();
-                _parentCustomIPPrefixId.Assign(value);
+                AssignOrReplace(ref _parentCustomIPPrefix, value);
             }
         }
 
@@ -224,6 +224,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ParentCustomIPPrefixId
+        {
+            get
+            {
+                return ParentCustomIPPrefix is null ? default : ParentCustomIPPrefix.Id;
+            }
+            set
+            {
+                if (ParentCustomIPPrefix is null)
+                {
+                    ParentCustomIPPrefix = new NetworkSubResource();
+                }
+                ParentCustomIPPrefix.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CustomIPPrefixPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -232,7 +249,7 @@ namespace Azure.Provisioning.Network
             _cidr = DefineProperty<string>(nameof(Cidr), new string[] { "cidr" });
             _signedMessage = DefineProperty<string>(nameof(SignedMessage), new string[] { "signedMessage" });
             _authorizationMessage = DefineProperty<string>(nameof(AuthorizationMessage), new string[] { "authorizationMessage" });
-            _parentCustomIPPrefixId = DefineProperty<ResourceIdentifier>(nameof(ParentCustomIPPrefixId), new string[] { "customIpPrefixParent" });
+            _parentCustomIPPrefix = DefineModelProperty<NetworkSubResource>(nameof(ParentCustomIPPrefix), new string[] { "customIpPrefixParent" });
             _childCustomIPPrefixes = DefineListProperty<NetworkSubResource>(nameof(ChildCustomIPPrefixes), new string[] { "childCustomIpPrefixes" }, isOutput: true);
             _commissionedState = DefineProperty<CommissionedState>(nameof(CommissionedState), new string[] { "commissionedState" });
             _expressRouteAdvertise = DefineProperty<bool>(nameof(ExpressRouteAdvertise), new string[] { "expressRouteAdvertise" });

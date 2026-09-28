@@ -5,16 +5,21 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Network
 {
     /// <summary> Defines the sensitivity for the rule. </summary>
     public enum ManagedRuleSensitivityType
     {
         /// <summary> Low. </summary>
-        Low = 0,
+        Low = 1,
         /// <summary> Medium. </summary>
-        Medium = 1,
+        Medium = 2,
         /// <summary> High. </summary>
-        High = 2
+        High = 3,
+        /// <summary> None. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        None = 0
     }
 }
