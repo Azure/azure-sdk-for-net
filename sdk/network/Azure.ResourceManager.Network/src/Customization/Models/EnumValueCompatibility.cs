@@ -23,35 +23,6 @@ namespace Azure.ResourceManager.Network.Models
     {
     }
 
-    /// <summary> Compatibility declaration for the ApplicationGatewaySslCipherSuite type. </summary>
-    public readonly partial struct ApplicationGatewaySslCipherSuite
-    {
-        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes128CbcSha compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha { get; } = TLSECDHEECDSAWITHAES128CBCSHA;
-        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes128CbcSha256 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha256 { get; } = TLSECDHEECDSAWITHAES128CBCSHA256;
-        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes128GcmSha256 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128GcmSha256 { get; } = TLSECDHEECDSAWITHAES128GCMSHA256;
-        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes256CbcSha compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256CbcSha { get; } = TLSECDHEECDSAWITHAES256CBCSHA;
-        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes256CbcSha384 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256CbcSha384 { get; } = TLSECDHEECDSAWITHAES256CBCSHA384;
-        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes256GcmSha384 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256GcmSha384 { get; } = TLSECDHEECDSAWITHAES256GCMSHA384;
-        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes128CbcSha compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha { get; } = TLSECDHERSAWITHAES128CBCSHA;
-        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes128CbcSha256 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha256 { get; } = TLSECDHERSAWITHAES128CBCSHA256;
-        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes128GcmSha256 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128GcmSha256 { get; } = TLSECDHERSAWITHAES128GCMSHA256;
-        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes256CbcSha compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha { get; } = TLSECDHERSAWITHAES256CBCSHA;
-        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes256CbcSha384 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha384 { get; } = TLSECDHERSAWITHAES256CBCSHA384;
-        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes256GcmSha384 compatibility property. </summary>
-        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256GcmSha384 { get; } = TLSECDHERSAWITHAES256GCMSHA384;
-    }
-
     /// <summary> Compatibility declaration for the ApplicationGatewaySslProtocol type. </summary>
     public readonly partial struct ApplicationGatewaySslProtocol
     {

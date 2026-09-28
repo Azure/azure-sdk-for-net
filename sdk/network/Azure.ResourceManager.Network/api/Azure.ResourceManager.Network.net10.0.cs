@@ -12150,17 +12150,29 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes128GcmSha256 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes256CbcSha { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsDHERsaWithAes256GcmSha384 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanECDsaWithAes128CbcSha instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanECDsaWithAes128CbcSha256 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128CBCSHA256 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanECDsaWithAes128GcmSha256 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES128GCMSHA256 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanECDsaWithAes256CbcSha instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanECDsaWithAes256CbcSha384 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256CBCSHA384 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanECDsaWithAes256GcmSha384 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHEECDSAWITHAES256GCMSHA384 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanRsaWithAes128CbcSha instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanRsaWithAes128CbcSha256 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128CBCSHA256 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanRsaWithAes128GcmSha256 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES128GCMSHA256 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanRsaWithAes256CbcSha instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanRsaWithAes256CbcSha384 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256CBCSHA384 { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use TlsECDiffieHellmanRsaWithAes256GcmSha384 instead.")]
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TLSECDHERSAWITHAES256GCMSHA384 { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha { get { throw null; } }
         public static Azure.ResourceManager.Network.Models.ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha256 { get { throw null; } }
