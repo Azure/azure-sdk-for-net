@@ -766,6 +766,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(symlinkItem.Properties);
             Assert.AreEqual(owner, symlinkItem.Properties.Owner);
             Assert.AreEqual(group, symlinkItem.Properties.Group);
+            Assert.IsNotNull(symlinkItem.Properties.FileMode);
         }
 
         [RecordedTest]
@@ -809,7 +810,11 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(dir.IsDirectory);
             Assert.AreEqual("subdir", dir.Name);
             Assert.AreEqual("12682206919419625485", dir.Id);
+            Assert.AreEqual(FileType.Directory, dir.FileType);
             Assert.AreEqual(2, dir.LinkCount);
+            Assert.IsNull(dir.DeviceMajor);
+            Assert.IsNull(dir.DeviceMinor);
+            Assert.IsNull(dir.LinkText);
             Assert.IsNull(dir.FileSize);
             Assert.AreEqual("1000", dir.Properties.Owner);
             Assert.AreEqual("1000", dir.Properties.Group);
@@ -826,6 +831,10 @@ namespace Azure.Storage.Files.Shares.Tests
             foreach (ShareFileItem file in files)
             {
                 Assert.IsFalse(file.IsDirectory);
+                Assert.AreEqual(FileType.Regular, file.FileType);
+                Assert.IsNull(file.DeviceMajor);
+                Assert.IsNull(file.DeviceMinor);
+                Assert.IsNull(file.LinkText);
                 Assert.AreEqual("1000", file.Properties.Owner);
                 Assert.AreEqual("1000", file.Properties.Group);
                 Assert.AreEqual("0644", file.Properties.FileMode.ToOctalFileMode());
@@ -856,17 +865,24 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(symlink.IsDirectory);
             Assert.AreEqual("symlink.txt", symlink.Name);
             Assert.AreEqual("10376363910205931529", symlink.Id);
+            Assert.AreEqual(FileType.SymLink, symlink.FileType);
             Assert.AreEqual(1, symlink.LinkCount);
+            Assert.IsNull(symlink.DeviceMajor);
+            Assert.IsNull(symlink.DeviceMinor);
             Assert.AreEqual("/mnt/s2/dir2/regular.txt", symlink.LinkText);
+            Assert.AreEqual("1000", symlink.Properties.Owner);
+            Assert.AreEqual("1000", symlink.Properties.Group);
             Assert.AreEqual("0777", symlink.Properties.FileMode.ToOctalFileMode());
 
             // BlockDevice
             ShareFileItem block = items.Single(i => i.FileType == FileType.BlockDevice);
             Assert.AreEqual("block_device", block.Name);
             Assert.AreEqual("10952824662509355033", block.Id);
+            Assert.AreEqual(FileType.BlockDevice, block.FileType);
             Assert.AreEqual(1, block.LinkCount);
             Assert.AreEqual(8, block.DeviceMajor);
             Assert.AreEqual(0, block.DeviceMinor);
+            Assert.IsNull(block.LinkText);
             Assert.AreEqual("0", block.Properties.Owner);
             Assert.AreEqual("0", block.Properties.Group);
             Assert.AreEqual("0640", block.Properties.FileMode.ToOctalFileMode());
@@ -875,9 +891,11 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileItem charDev = items.Single(i => i.FileType == FileType.CharacterDevice);
             Assert.AreEqual("char_device", charDev.Name);
             Assert.AreEqual("16717432185543589911", charDev.Id);
+            Assert.AreEqual(FileType.CharacterDevice, charDev.FileType);
             Assert.AreEqual(1, charDev.LinkCount);
             Assert.AreEqual(1, charDev.DeviceMajor);
             Assert.AreEqual(7, charDev.DeviceMinor);
+            Assert.IsNull(charDev.LinkText);
             Assert.AreEqual("0", charDev.Properties.Owner);
             Assert.AreEqual("0", charDev.Properties.Group);
             Assert.AreEqual("0644", charDev.Properties.FileMode.ToOctalFileMode());
@@ -886,6 +904,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileItem fifo = items.Single(i => i.FileType == FileType.Fifo);
             Assert.AreEqual("fifo_pipe", fifo.Name);
             Assert.AreEqual("14988049928633319435", fifo.Id);
+            Assert.AreEqual(FileType.Fifo, fifo.FileType);
             Assert.AreEqual(1, fifo.LinkCount);
             Assert.IsNull(fifo.DeviceMajor);
             Assert.IsNull(fifo.DeviceMinor);
@@ -898,6 +917,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileItem socket = items.Single(i => i.FileType == FileType.Socket);
             Assert.AreEqual("unix_socket", socket.Name);
             Assert.AreEqual("16429201809391878183", socket.Id);
+            Assert.AreEqual(FileType.Socket, socket.FileType);
             Assert.AreEqual(1, socket.LinkCount);
             Assert.IsNull(socket.DeviceMajor);
             Assert.IsNull(socket.DeviceMinor);
@@ -972,6 +992,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(dirItem.Properties.LastModified);
             Assert.IsNotNull(dirItem.Properties.ETag);
 
+            // NFS-only fields stay null on SMB
             Assert.IsNull(dirItem.LinkCount);
             Assert.IsNull(dirItem.Properties.Owner);
             Assert.IsNull(dirItem.Properties.Group);
