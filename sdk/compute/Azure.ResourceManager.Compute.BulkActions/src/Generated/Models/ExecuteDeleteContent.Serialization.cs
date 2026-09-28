@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteDeleteRequest for delete VM operation. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk delete action. </summary>
     public partial class ExecuteDeleteContent : IJsonModel<ExecuteDeleteContent>
     {
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/> for deserialization. </summary>

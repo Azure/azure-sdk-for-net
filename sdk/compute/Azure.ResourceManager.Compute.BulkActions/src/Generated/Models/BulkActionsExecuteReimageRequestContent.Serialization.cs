@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteReimageRequest request for reimage operations. </summary>
+    /// <summary> The virtual machines and configuration for a bulk reimage action. </summary>
     public partial class BulkActionsExecuteReimageRequestContent : IJsonModel<BulkActionsExecuteReimageRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="BulkActionsExecuteReimageRequestContent"/> for deserialization. </summary>

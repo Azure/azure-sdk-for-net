@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the request to get operation status using operationids. </summary>
+    /// <summary> The operation for which current status should be returned. </summary>
     public partial class GetBulkOperationStatusContent : IJsonModel<GetBulkOperationStatusContent>
     {
         /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusContent"/> for deserialization. </summary>

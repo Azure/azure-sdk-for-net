@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a delete request. </summary>
+    /// <summary> The result of a bulk delete action. </summary>
     public partial class DeleteResourceOperationResult : IJsonModel<DeleteResourceOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteResourceOperationResult"/> for deserialization. </summary>

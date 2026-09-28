@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(AllocationStrategy))
-            {
-                writer.WritePropertyName("allocationStrategy"u8);
-                writer.WriteStringValue(AllocationStrategy.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             PriorityType? @type = default;
             float? maxPricePerVM = default;
             EvictionPolicy? evictionPolicy = default;
-            BulkCreateCustomAllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,21 +164,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     evictionPolicy = new EvictionPolicy(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("allocationStrategy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allocationStrategy = new BulkCreateCustomAllocationStrategy(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkCreateCustomPriorityProfile(@type, maxPricePerVM, evictionPolicy, allocationStrategy, additionalBinaryDataProperties);
+            return new BulkCreateCustomPriorityProfile(@type, maxPricePerVM, evictionPolicy, additionalBinaryDataProperties);
         }
     }
 }
