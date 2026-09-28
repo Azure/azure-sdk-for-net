@@ -26,8 +26,8 @@ namespace Azure.AI.Projects;
 /// implementation, targeting the Foundry voice-agent endpoint
 /// (<c>/agents/{agentName}/endpoint/protocols/voice</c>) this instance was constructed with instead
 /// of OpenAI's generic <c>/realtime</c> endpoint. Use
-/// <see cref="ProjectsRealtimeClient.StartSessionAsync(string, string, RealtimeSessionClientOptions, CancellationToken)"/>
-/// (via <see cref="AIProjectClient.ProjectsRealtimeClient"/>) to obtain an already-connected instance.
+/// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> (via <see cref="AIProjectClient.ProjectsRealtimeClient"/>)
+/// to obtain an already-connected instance.
 /// </remarks>
 [Experimental("AAIP002")]
 public class ProjectsRealtimeSessionClient : RealtimeSessionClient
@@ -94,8 +94,8 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     /// Connects to the Foundry voice-agent endpoint this instance was constructed with. Only the
     /// Foundry-specific query string (api-version, merged with any caller-supplied query string --
     /// see <paramref name="queryString"/> -- such as ProjectsRealtimeClient.StartSessionAsync's
-    /// "store" or "transport" options) and headers (Foundry-Features, bearer Authorization) are
-    /// computed here; the WebSocket handshake itself (subprotocol negotiation, applying the headers, connecting,
+    /// "store" option) and headers (Foundry-Features, bearer Authorization) are computed here; the
+    /// WebSocket handshake itself (subprotocol negotiation, applying the headers, connecting,
     /// assigning <see cref="RealtimeSessionClient.WebSocket"/>) is entirely delegated to
     /// <see cref="RealtimeSessionClient.ConnectAsync"/>.
     /// </summary>
