@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ClusterArmId` to `RelayNamespaceData` and `RelayNamespacePatch`, exposing the cluster ARM ID of a namespace as a `ResourceIdentifier` in create, read, and update operations.
+
 ### Breaking Changes
 
 ### Bugs Fixed
