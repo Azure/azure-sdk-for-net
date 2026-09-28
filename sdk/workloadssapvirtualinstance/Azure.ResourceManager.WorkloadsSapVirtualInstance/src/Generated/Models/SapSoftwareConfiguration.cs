@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// The SAP Software configuration Input.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServiceInitiatedSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>, and <see cref="ExternalInstallationSoftwareConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExternalInstallationSoftwareConfiguration"/>, <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>, and <see cref="ServiceInitiatedSoftwareConfiguration"/>.
     /// </summary>
     public abstract partial class SapSoftwareConfiguration
     {

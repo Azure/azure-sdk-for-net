@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary>
         /// Class representing an data connection.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.KustoEventHubDataConnection"/>, <see cref="Models.KustoIotHubDataConnection"/>, <see cref="Models.KustoEventGridDataConnection"/>, <see cref="Models.KustoCosmosDBDataConnection"/>, <see cref="Models.EventGridDataConnectionWithManagedIdentity"/>, and <see cref="Models.EventHubDataConnectionWithManagedIdentity"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.EventGridDataConnectionWithManagedIdentity"/>, <see cref="Models.EventHubDataConnectionWithManagedIdentity"/>, <see cref="Models.KustoCosmosDBDataConnection"/>, <see cref="Models.KustoEventGridDataConnection"/>, <see cref="Models.KustoEventHubDataConnection"/>, and <see cref="Models.KustoIotHubDataConnection"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary>
         /// Class representing a Kusto database.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.KustoReadWriteDatabase"/> and <see cref="Models.KustoReadOnlyFollowingDatabase"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.KustoReadOnlyFollowingDatabase"/> and <see cref="Models.KustoReadWriteDatabase"/>.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

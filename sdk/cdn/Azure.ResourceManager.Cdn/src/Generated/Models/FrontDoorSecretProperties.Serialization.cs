@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The json object containing secret parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="AzureFirstPartyManagedCertificateProperties"/>, and <see cref="FrontDoorSecretMtlsCertificateChain"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFirstPartyManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, <see cref="FrontDoorSecretMtlsCertificateChain"/>, <see cref="ManagedCertificateProperties"/>, and <see cref="UriSigningKeyProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecretProperties))]
     public abstract partial class FrontDoorSecretProperties : IJsonModel<FrontDoorSecretProperties>
@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "UrlSigningKey":
-                        return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element, options);
-                    case "ManagedCertificate":
-                        return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element, options);
-                    case "CustomerCertificate":
-                        return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element, options);
                     case "AzureFirstPartyManagedCertificate":
                         return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element, options);
+                    case "CustomerCertificate":
+                        return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element, options);
                     case "MtlsCertificateChain":
                         return FrontDoorSecretMtlsCertificateChain.DeserializeFrontDoorSecretMtlsCertificateChain(element, options);
+                    case "ManagedCertificate":
+                        return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element, options);
+                    case "UrlSigningKey":
+                        return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element, options);
                 }
             }
             return UnknownSecretProperties.DeserializeUnknownSecretProperties(element, options);

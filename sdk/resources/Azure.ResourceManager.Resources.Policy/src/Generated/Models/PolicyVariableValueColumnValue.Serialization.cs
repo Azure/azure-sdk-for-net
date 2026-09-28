@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
                 if (prop.NameEquals("columnValue"u8))
                 {
-                    columnValue = BinaryData.FromString(prop.Value.GetRawText());
+                    columnValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PolicyVariableValueColumnValue(columnName, columnValue, additionalBinaryDataProperties);

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Model for RegistryEndpointAuthentication
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>, <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>, <see cref="RegistryEndpointAnonymousAuthentication"/>, and <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointAnonymousAuthentication"/>, <see cref="RegistryEndpointArtifactPullSecretAuthentication"/>, <see cref="RegistryEndpointSystemAssignedIdentityAuthentication"/>, and <see cref="RegistryEndpointUserAssignedIdentityAuthentication"/>.
     /// </summary>
     public abstract partial class RegistryEndpointAuthentication
     {
