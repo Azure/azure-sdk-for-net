@@ -10472,17 +10472,6 @@ namespace Azure.ResourceManager.Network.Models
             return new ManagedRuleOverride(ruleId, state, action, sensitivity, default);
         }
 
-        /// <summary> Defines a managed rule set rule group. </summary>
-        /// <param name="ruleGroupName"> Name of the rule group. </param>
-        /// <param name="rules"> List of rules within the rule group. </param>
-        /// <returns> A new <see cref="Models.ManagedRuleSetRuleGroup"/> instance for mocking. </returns>
-        public static ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = default, IEnumerable<string> rules = default)
-        {
-            rules ??= new ChangeTrackingList<string>();
-
-            return new ManagedRuleSetRuleGroup(ruleGroupName, (rules ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
         /// <summary> Response for the CheckDnsNameAvailability API service call. </summary>
         /// <param name="available"> Domain availability (True/False). </param>
         /// <returns> A new <see cref="Models.DnsNameAvailabilityResult"/> instance for mocking. </returns>

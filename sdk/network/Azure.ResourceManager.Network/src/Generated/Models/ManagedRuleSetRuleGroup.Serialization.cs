@@ -81,18 +81,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("ruleGroupName"u8);
             writer.WriteStringValue(RuleGroupName);
-            if (Optional.IsCollectionDefined(Rules))
+            if (Optional.IsCollectionDefined(RuleIds))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (string item in Rules)
+                foreach (int item in RuleIds)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
+                    writer.WriteNumberValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            IReadOnlyList<string> rules = default;
+            IList<int> ruleIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,19 +149,12 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<int> array = new List<int>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetInt32());
                     }
-                    rules = array;
+                    ruleIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedRuleSetRuleGroup(ruleGroupName, rules ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ManagedRuleSetRuleGroup(ruleGroupName, ruleIds ?? new ChangeTrackingList<int>(), additionalBinaryDataProperties);
         }
     }
 }

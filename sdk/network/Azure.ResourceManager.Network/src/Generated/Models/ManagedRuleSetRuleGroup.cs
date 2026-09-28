@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
         internal ManagedRuleSetRuleGroup(string ruleGroupName)
         {
             RuleGroupName = ruleGroupName;
-            Rules = new ChangeTrackingList<string>();
+            RuleIds = new ChangeTrackingList<int>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> Name of the rule group. </param>
-        /// <param name="rules"> List of rules within the rule group. </param>
+        /// <param name="ruleIds"> List of rules within the rule group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetRuleGroup(string ruleGroupName, IReadOnlyList<string> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleSetRuleGroup(string ruleGroupName, IList<int> ruleIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleGroupName = ruleGroupName;
-            Rules = rules;
+            RuleIds = ruleIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of rules within the rule group. </summary>
         [WirePath("rules")]
-        public IReadOnlyList<string> Rules { get; }
+        public IList<int> RuleIds { get; }
     }
 }

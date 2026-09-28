@@ -15,6 +15,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ArmNetworkModelFactory type. </summary>
+    // The renamed numeric wire property must not consume or discard the legacy string input.
+    // Preserve this overload and store its values only in the independent Rules collection.
+    [CodeGenSuppress("ManagedRuleSetRuleGroup", typeof(string), typeof(IEnumerable<string>))]
     // Preserve the old endpoint factory signature without dropping its renamed type argument.
 #pragma warning disable CS0618 // The compatibility overload must reference the obsolete endpoint type.
     [CodeGenSuppress("ConnectionMonitorEndpoint", typeof(string), typeof(EndpointType?), typeof(ResourceIdentifier), typeof(string), typeof(ConnectionMonitorEndpointFilter), typeof(ConnectionMonitorEndpointScope), typeof(CoverageLevel?), typeof(string), typeof(Guid?))]
@@ -46,6 +49,14 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Defines a managed rule set rule group with legacy string rules. </summary>
+        /// <param name="ruleGroupName"> Name of the rule group. </param>
+        /// <param name="rules"> Legacy string rules retained for compatibility; these values are not serialized. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleSetRuleGroup"/> instance for mocking. </returns>
+        /// <remarks> Populate the returned model's <see cref="Models.ManagedRuleSetRuleGroup.RuleIds"/> collection to mock numeric rule identifiers. </remarks>
+        public static ManagedRuleSetRuleGroup ManagedRuleSetRuleGroup(string ruleGroupName = default, IEnumerable<string> rules = default)
+            => new ManagedRuleSetRuleGroup(ruleGroupName, (rules ?? new ChangeTrackingList<string>()).ToList());
+
         /// <summary> Initializes a new instance of <see cref="Network.ConnectionMonitorData"/>. </summary>
         public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? connectionMonitorType, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
         {

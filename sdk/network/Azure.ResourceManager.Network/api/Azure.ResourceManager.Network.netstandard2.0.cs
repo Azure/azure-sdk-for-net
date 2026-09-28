@@ -20260,6 +20260,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal ManagedRuleSetRuleGroup() { }
         public string RuleGroupName { get { throw null; } }
+        public System.Collections.Generic.IList<int> RuleIds { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use RuleIds instead.")]
         public System.Collections.Generic.IReadOnlyList<string> Rules { get { throw null; } }
         protected virtual Azure.ResourceManager.Network.Models.ManagedRuleSetRuleGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
