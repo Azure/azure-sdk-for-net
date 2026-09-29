@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Improved authentication challenge resource validation, including when reusing cached challenges.
+
 ### Other Changes
 
 ## 4.11.0-beta.4 (2026-09-27)

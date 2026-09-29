@@ -9,6 +9,7 @@
     <Import_RootNamespace>Azure.Security.KeyVault.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ChallengeResourceVerificationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClientDisposalTestsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ContinuousAccessEvaluationTestsBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonStream.cs" />

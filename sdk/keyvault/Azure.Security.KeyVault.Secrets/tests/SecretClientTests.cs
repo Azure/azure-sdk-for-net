@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
+    [NonParallelizable]
     public class SecretClientTests: ClientTestBase
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
@@ -25,6 +26,44 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         public SecretClient Client { get; }
+
+        [SetUp]
+        public void Setup()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [Test]
+        public void ChallengeResourceWithUserInfoIsRejected([Values("resource", "scope")] string parameter)
+        {
+            string value = "https://resource.example@contoso.test";
+            if (parameter == "scope")
+            {
+                value += "/.default";
+            }
+
+            var transport = new MockTransport(new MockResponse(401).WithHeader(
+                "WWW-Authenticate",
+                $"Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", {parameter}=\"{value}\""));
+            int credentialCalls = 0;
+            var credential = new MockCredential
+            {
+                GetTokenCallback = (_, _) => credentialCalls++
+            };
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://test.contoso.test"), credential, new SecretClientOptions { Transport = transport }));
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetSecretAsync("test"));
+            Assert.That(credentialCalls, Is.Zero);
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
+            Assert.That(transport.SingleRequest.Headers.Contains("Authorization"), Is.False);
+        }
 
         [Test]
         public void SetArgumentValidation()
