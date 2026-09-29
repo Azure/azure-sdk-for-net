@@ -13,31 +13,31 @@ namespace Azure.AI.Discovery
 {
     /// <summary>
     /// Response indicating the KnowledgeBase operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseIndexingOperationResponse"/> and <see cref="KnowledgeBaseSearchOperationResponse"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseIndexingOperationResult"/> and <see cref="KnowledgeBaseSearchOperationResult"/>.
     /// </summary>
-    public abstract partial class KnowledgeBaseOperationResponse
+    public abstract partial class KnowledgeBaseOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResult"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="operationType"> The type of operation. </param>
-        private protected KnowledgeBaseOperationResponse(string id, OperationState status, KnowledgeBaseOperationType operationType)
+        private protected KnowledgeBaseOperationResult(string id, OperationState status, KnowledgeBaseOperationType operationType)
         {
             Id = id;
             Status = status;
             OperationType = operationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseOperationResult"/>. </summary>
         /// <param name="id"> The unique ID of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
         /// <param name="operationType"> The type of operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseOperationResponse(string id, OperationState status, ResponseError error, KnowledgeBaseOperationType operationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseOperationResult(string id, OperationState status, ResponseError error, KnowledgeBaseOperationType operationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
