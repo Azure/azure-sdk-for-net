@@ -109,7 +109,7 @@ namespace Azure.Security.Attestation
                 issuedAt,
                 expiration,
                 notBefore,
-                cnf as IDictionary<string, string>,
+                cnf as IDictionary<string, string> ?? new ChangeTrackingDictionary<string, string>(),
                 nonce,
                 version,
                 runtimeClaims,

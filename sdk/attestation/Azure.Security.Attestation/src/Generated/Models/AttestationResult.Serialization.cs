@@ -179,7 +179,7 @@ namespace Azure.Security.Attestation
             }
             if (Optional.IsDefined(Svn))
             {
-                writer.WritePropertyName("svn"u8);
+                writer.WritePropertyName("x-ms-sgx-svn"u8);
                 writer.WriteNumberValue(Svn.Value);
             }
             if (Optional.IsDefined(EnclaveHeldData))
@@ -234,7 +234,7 @@ namespace Azure.Security.Attestation
             }
             if (Optional.IsDefined(DeprecatedSvn))
             {
-                writer.WritePropertyName("deprecatedSvn"u8);
+                writer.WritePropertyName("svn"u8);
                 writer.WriteNumberValue(DeprecatedSvn.Value);
             }
             if (Optional.IsDefined(DeprecatedTee))
@@ -250,7 +250,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(DeprecatedPolicyHash))
             {
                 writer.WritePropertyName("policy_hash"u8);
-                writer.WriteBase64StringValue(DeprecatedPolicyHash, "D");
+                SerializeDeprecatedPolicyHash(writer, options);
             }
             if (Optional.IsDefined(DeprecatedRpData))
             {
@@ -482,7 +482,7 @@ namespace Azure.Security.Attestation
                     mrSigner = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("svn"u8))
+                if (prop.NameEquals("x-ms-sgx-svn"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -569,7 +569,7 @@ namespace Azure.Security.Attestation
                     deprecatedMrSigner = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deprecatedSvn"u8))
+                if (prop.NameEquals("svn"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -594,11 +594,7 @@ namespace Azure.Security.Attestation
                 }
                 if (prop.NameEquals("policy_hash"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deprecatedPolicyHash = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    DeserializeDeprecatedPolicyHash(prop, ref deprecatedPolicyHash);
                     continue;
                 }
                 if (prop.NameEquals("rp_data"u8))

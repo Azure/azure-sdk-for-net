@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -97,6 +98,15 @@ namespace Azure.Security.Attestation.Tests
                 Assert.AreEqual(TestEnvironment.PolicyCertificate0.Thumbprint, attestationResult.DeprecatedPolicySigner.SigningCertificates[0].Thumbprint);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate1.Thumbprint, attestationResult.DeprecatedPolicySigner.SigningCertificates[1].Thumbprint);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, attestationResult.DeprecatedPolicySigner.SigningCertificates[2].Thumbprint);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+                // The signers are serialized as JWKs; a JSON round trip must preserve them.
+                var roundTripped = new AttestationToken(ModelReaderWriter.Write(attestationResult)).GetBody<AttestationResult>();
+                Assert.AreEqual("KeyId4", roundTripped.PolicySigner.CertificateKeyId);
+                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, roundTripped.PolicySigner.SigningCertificates[2].Thumbprint);
+#pragma warning disable CS0618 // Type or member is obsolete
+                Assert.AreEqual("KeyId75", roundTripped.DeprecatedPolicySigner.CertificateKeyId);
+                Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, roundTripped.DeprecatedPolicySigner.SigningCertificates[2].Thumbprint);
 #pragma warning restore CS0618 // Type or member is obsolete
             }
 

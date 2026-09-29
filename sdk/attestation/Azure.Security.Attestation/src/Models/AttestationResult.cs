@@ -2,15 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
     [JsonConverter(typeof(AttestationResultConverter))]
     [CodeGenType("AttestationResult")]
+    // The spec types policy_hash as standard Base64; like 1.0.0 and the other hash claims, it is Base64Url.
+    [CodeGenSerialization(nameof(DeprecatedPolicyHash), SerializationValueHook = nameof(SerializeDeprecatedPolicyHash), DeserializationValueHook = nameof(DeserializeDeprecatedPolicyHash))]
+    // client.tsp renames these claims for C#, and the generator then uses the C# names on the wire.
+    [CodeGenSerialization(nameof(Svn), "x-ms-sgx-svn")]
+    [CodeGenSerialization(nameof(DeprecatedSvn), "svn")]
     public partial class AttestationResult
     {
         internal AttestationResult()
@@ -97,6 +105,17 @@ namespace Azure.Security.Attestation
         [Obsolete("DeprecatedPolicyHash is deprecated, use PolicyHash instead")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData DeprecatedPolicyHash { get; }
+
+        private void SerializeDeprecatedPolicyHash(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => writer.WriteStringValue(Base64Url.Encode(DeprecatedPolicyHash.ToArray()));
+
+        private static void DeserializeDeprecatedPolicyHash(JsonProperty property, ref BinaryData deprecatedPolicyHash)
+        {
+            if (property.Value.ValueKind != JsonValueKind.Null)
+            {
+                deprecatedPolicyHash = BinaryData.FromBytes(Base64Url.Decode(property.Value.GetString()));
+            }
+        }
 
         /// <summary>
         /// DEPRECATED: Private Preview version of nonce.
