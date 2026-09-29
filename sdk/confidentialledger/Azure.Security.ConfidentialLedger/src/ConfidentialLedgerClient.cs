@@ -235,11 +235,7 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
-                if (waitForCommit)
-                {
-                    message.Request.Uri.AppendQuery("waitForCommit", "true", true);
-                }
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, waitForCommit ? true : (bool?)null, context);
                 if (_useLedgerGateway)
                 {
                     // The Ledger Gateway can respond with either 200 (synchronous commit, mirrors
@@ -328,11 +324,7 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, context);
-                if (waitForCommit)
-                {
-                    message.Request.Uri.AppendQuery("waitForCommit", "true", true);
-                }
+                using HttpMessage message = CreateCreateLedgerEntryRequest(content, collectionId, tags, waitForCommit ? true : (bool?)null, context);
                 if (_useLedgerGateway)
                 {
                     // Layer "202 is a success" over the message's existing classifier so any
