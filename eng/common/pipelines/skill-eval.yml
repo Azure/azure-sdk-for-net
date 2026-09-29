@@ -35,5 +35,6 @@ extends:
     evalGlobs:
       - '*/evals/*.eval.yaml'
       - 'azure-typespec-author/evals/eval.yaml'
+      - 'azsdk-common-typespec-naming/evals/eval.yaml'
     # Per-shard job timeout (report-only tier).
     shardTimeoutInMinutes: 20
