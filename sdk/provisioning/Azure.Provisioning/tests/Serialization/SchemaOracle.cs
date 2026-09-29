@@ -21,7 +21,7 @@ internal static class SchemaOracle
         TestContext.CurrentContext.TestDirectory, "Serialization", "SchemaSpec");
 
     private const string SchemaRepo = "Azure/js-provisioning-lib";
-    private const int SchemaPullRequest = 473;
+    private const string SchemaBranch = "main";
 
     private static string? s_staleWarning;
     private static bool s_staleChecked;
@@ -30,7 +30,7 @@ internal static class SchemaOracle
     /// Checks if the local tsp files are up to date with the remote repo.
     /// Issues a test warning if stale. Caches the result so the gh CLI call
     /// only happens once per test run. Safe to call from [SetUp] on every test.
-    /// SOURCE.md must record the pull request head SHA.
+    /// SOURCE.md must record the upstream branch commit SHA.
     /// </summary>
     public static void WarnIfStale()
     {
@@ -62,7 +62,7 @@ internal static class SchemaOracle
 
             var psi = new ProcessStartInfo(
                 "gh",
-                $"pr view {SchemaPullRequest} --repo {SchemaRepo} --json headRefOid --jq .headRefOid")
+                $"api repos/{SchemaRepo}/commits/{SchemaBranch} --jq .sha")
             {
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -85,7 +85,7 @@ internal static class SchemaOracle
             if (!remoteSha.StartsWith(localSha) && !localSha.StartsWith(remoteSha))
             {
                 return $"Local schema spec (SHA {localSha.Substring(0, 12)}) may be out of date. " +
-                    $"Pull request {SchemaRepo}#{SchemaPullRequest} head: {remoteSha.Substring(0, 12)}. " +
+                    $"Branch {SchemaRepo}:{SchemaBranch} head: {remoteSha.Substring(0, 12)}. " +
                     "Re-download its typespec/ directory and update SOURCE.md.";
             }
         }
