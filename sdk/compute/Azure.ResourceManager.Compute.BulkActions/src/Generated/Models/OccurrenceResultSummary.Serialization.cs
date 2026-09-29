@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The summarized provisioning result of an occurrence. </summary>
+    /// <summary> Summary of results for a scheduled action occurrence. </summary>
     public partial class OccurrenceResultSummary : IJsonModel<OccurrenceResultSummary>
     {
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/> for deserialization. </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OccurrenceResultSummary(total, statuses, additionalBinaryDataProperties);

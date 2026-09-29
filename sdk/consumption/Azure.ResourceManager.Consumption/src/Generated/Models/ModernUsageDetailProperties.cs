@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="effectivePrice"> Effective Price that's charged for the usage. </param>
         /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
         /// <param name="billingAccountName"> Name of the Billing Account. </param>
-        /// <param name="billingPeriodStartOn"> Billing Period Start Date as in the invoice. </param>
-        /// <param name="billingPeriodEndOn"> Billing Period End Date as in the invoice. </param>
+        /// <param name="billingPeriodStartsOn"> Billing Period Start Date as in the invoice. </param>
+        /// <param name="billingPeriodEndsOn"> Billing Period End Date as in the invoice. </param>
         /// <param name="billingProfileId"> Identifier for the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
         /// <param name="billingProfileName"> Name of the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
         /// <param name="subscriptionGuid"> Unique Microsoft generated identifier for the Azure Subscription. </param>
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="pricingCurrencyCode"> Pricing Billing Currency. </param>
         /// <param name="productIdentifier"> Identifier for the product that has accrued charges by consumption or purchase . This is the concatenated key of productId and SkuId in partner center. </param>
         /// <param name="resourceLocationNormalized"> Resource Location Normalized. </param>
-        /// <param name="servicePeriodStartOn"> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </param>
-        /// <param name="servicePeriodEndOn"> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </param>
+        /// <param name="servicePeriodStartsOn"> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </param>
+        /// <param name="servicePeriodEndsOn"> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </param>
         /// <param name="customerTenantId"> Identifier of the customer's AAD tenant. </param>
         /// <param name="customerName"> Name of the customer's AAD tenant. </param>
         /// <param name="partnerTenantId"> Identifier for the partner's AAD tenant. </param>
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="provider"> Identifier for Product Category or Line Of Business, Ex - Azure, Microsoft 365, AWS e.t.c. </param>
         /// <param name="costAllocationRuleName"> Name for Cost Allocation Rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModernUsageDetailProperties(string billingAccountId, decimal? effectivePrice, ConsumptionPricingModelType? pricingModel, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string subscriptionGuid, string subscriptionName, DateTimeOffset? @on, string product, Guid? meterId, string meterName, string meterRegion, string meterCategory, string meterSubCategory, string serviceFamily, decimal? quantity, string unitOfMeasure, string instanceName, decimal? costInUSD, decimal? unitPrice, string billingCurrencyCode, string resourceLocation, string consumedService, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSectionId, string invoiceSectionName, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string chargeType, string frequency, decimal? costInBillingCurrency, decimal? costInPricingCurrency, string exchangeRate, DateTimeOffset? exchangeRateOn, string invoiceId, string previousInvoiceId, string pricingCurrencyCode, string productIdentifier, string resourceLocationNormalized, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, string customerTenantId, string customerName, string partnerTenantId, string partnerName, string resellerMpnId, string resellerName, string publisherId, decimal? marketPrice, decimal? exchangeRatePricingToBilling, decimal? paygCostInBillingCurrency, decimal? paygCostInUSD, decimal? partnerEarnedCreditRate, string partnerEarnedCreditApplied, decimal? payGPrice, string benefitId, string benefitName, string provider, string costAllocationRuleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModernUsageDetailProperties(string billingAccountId, decimal? effectivePrice, ConsumptionPricingModelType? pricingModel, string billingAccountName, DateTimeOffset? billingPeriodStartsOn, DateTimeOffset? billingPeriodEndsOn, string billingProfileId, string billingProfileName, string subscriptionGuid, string subscriptionName, DateTimeOffset? @on, string product, Guid? meterId, string meterName, string meterRegion, string meterCategory, string meterSubCategory, string serviceFamily, decimal? quantity, string unitOfMeasure, string instanceName, decimal? costInUSD, decimal? unitPrice, string billingCurrencyCode, string resourceLocation, string consumedService, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSectionId, string invoiceSectionName, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string chargeType, string frequency, decimal? costInBillingCurrency, decimal? costInPricingCurrency, string exchangeRate, DateTimeOffset? exchangeRateOn, string invoiceId, string previousInvoiceId, string pricingCurrencyCode, string productIdentifier, string resourceLocationNormalized, DateTimeOffset? servicePeriodStartsOn, DateTimeOffset? servicePeriodEndsOn, string customerTenantId, string customerName, string partnerTenantId, string partnerName, string resellerMpnId, string resellerName, string publisherId, decimal? marketPrice, decimal? exchangeRatePricingToBilling, decimal? paygCostInBillingCurrency, decimal? paygCostInUSD, decimal? partnerEarnedCreditRate, string partnerEarnedCreditApplied, decimal? payGPrice, string benefitId, string benefitName, string provider, string costAllocationRuleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountId = billingAccountId;
             EffectivePrice = effectivePrice;
             PricingModel = pricingModel;
             BillingAccountName = billingAccountName;
-            BillingPeriodStartOn = billingPeriodStartOn;
-            BillingPeriodEndOn = billingPeriodEndOn;
+            BillingPeriodStartsOn = billingPeriodStartsOn;
+            BillingPeriodEndsOn = billingPeriodEndsOn;
             BillingProfileId = billingProfileId;
             BillingProfileName = billingProfileName;
             SubscriptionGuid = subscriptionGuid;
@@ -149,8 +149,8 @@ namespace Azure.ResourceManager.Consumption.Models
             PricingCurrencyCode = pricingCurrencyCode;
             ProductIdentifier = productIdentifier;
             ResourceLocationNormalized = resourceLocationNormalized;
-            ServicePeriodStartOn = servicePeriodStartOn;
-            ServicePeriodEndOn = servicePeriodEndOn;
+            ServicePeriodStartsOn = servicePeriodStartsOn;
+            ServicePeriodEndsOn = servicePeriodEndsOn;
             CustomerTenantId = customerTenantId;
             CustomerName = customerName;
             PartnerTenantId = partnerTenantId;
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingAccountName { get; }
 
         /// <summary> Billing Period Start Date as in the invoice. </summary>
-        public DateTimeOffset? BillingPeriodStartOn { get; }
+        public DateTimeOffset? BillingPeriodStartsOn { get; }
 
         /// <summary> Billing Period End Date as in the invoice. </summary>
-        public DateTimeOffset? BillingPeriodEndOn { get; }
+        public DateTimeOffset? BillingPeriodEndsOn { get; }
 
         /// <summary> Identifier for the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </summary>
         public string BillingProfileId { get; }
@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public string ResourceLocationNormalized { get; }
 
         /// <summary> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </summary>
-        public DateTimeOffset? ServicePeriodStartOn { get; }
+        public DateTimeOffset? ServicePeriodStartsOn { get; }
 
         /// <summary> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </summary>
-        public DateTimeOffset? ServicePeriodEndOn { get; }
+        public DateTimeOffset? ServicePeriodEndsOn { get; }
 
         /// <summary> Identifier of the customer's AAD tenant. </summary>
         public string CustomerTenantId { get; }

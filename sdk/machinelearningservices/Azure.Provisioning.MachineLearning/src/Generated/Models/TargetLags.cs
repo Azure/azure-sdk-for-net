@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class TargetLags : ProvisionableConstruct
     {
+        private BicepValue<TargetLagsMode> _mode;
+
         /// <summary> Creates a new TargetLags. </summary>
         public TargetLags()
         {
+        }
+
+        /// <summary> [Required] Set target lags mode - Auto/Custom. </summary>
+        internal BicepValue<TargetLagsMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for TargetLags. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<TargetLagsMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

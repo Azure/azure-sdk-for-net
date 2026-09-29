@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ContainerNetworkInterfaceIpConfigurationPropertiesFormat properties = default;
+            ContainerNetworkInterfaceIPConfigurationPropertiesFormat properties = default;
             string name = default;
             string @type = default;
             ETag? eTag = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ContainerNetworkInterfaceIpConfigurationPropertiesFormat.DeserializeContainerNetworkInterfaceIpConfigurationPropertiesFormat(prop.Value, options);
+                    properties = ContainerNetworkInterfaceIPConfigurationPropertiesFormat.DeserializeContainerNetworkInterfaceIPConfigurationPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerNetworkInterfaceIPConfiguration(properties, name, @type, eTag, additionalBinaryDataProperties);

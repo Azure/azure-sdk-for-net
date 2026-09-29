@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// The base source model for evaluator generation jobs. Polymorphic over `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptEvaluatorGenerationJobSource"/>, <see cref="AgentEvaluatorGenerationJobSource"/>, <see cref="TracesEvaluatorGenerationJobSource"/>, and <see cref="DatasetEvaluatorGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentEvaluatorGenerationJobSource"/>, <see cref="DatasetEvaluatorGenerationJobSource"/>, <see cref="PromptEvaluatorGenerationJobSource"/>, and <see cref="TracesEvaluatorGenerationJobSource"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class EvaluatorGenerationJobSource

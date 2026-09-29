@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The scheduled action extension. </summary>
+    /// <summary> A scheduled action occurrence associated with a specific compute resource. </summary>
     public partial class OccurrenceExtension : ResourceData, IJsonModel<OccurrenceExtension>
     {
         /// <param name="data"> The data to parse. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OccurrenceExtension(

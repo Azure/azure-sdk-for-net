@@ -723,6 +723,7 @@
       "$id": "85",
       "kind": "model",
       "name": "StringProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -739,6 +740,7 @@
           "$id": "86",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -766,6 +768,7 @@
           "$id": "88",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -800,6 +803,7 @@
       "$id": "91",
       "kind": "model",
       "name": "BytesProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -816,6 +820,7 @@
           "$id": "92",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -843,6 +848,7 @@
           "$id": "94",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -878,6 +884,7 @@
       "$id": "97",
       "kind": "model",
       "name": "DatetimeProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -894,6 +901,7 @@
           "$id": "98",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -921,6 +929,7 @@
           "$id": "100",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -963,6 +972,7 @@
       "$id": "104",
       "kind": "model",
       "name": "DurationProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -979,6 +989,7 @@
           "$id": "105",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1006,6 +1017,7 @@
           "$id": "107",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1048,6 +1060,7 @@
       "$id": "111",
       "kind": "model",
       "name": "CollectionsByteProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -1064,6 +1077,7 @@
           "$id": "112",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1091,6 +1105,7 @@
           "$id": "114",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1133,6 +1148,7 @@
       "$id": "118",
       "kind": "model",
       "name": "CollectionsModelProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -1149,6 +1165,7 @@
           "$id": "119",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1176,6 +1193,7 @@
           "$id": "121",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {
@@ -1189,6 +1207,7 @@
                 "$id": "124",
                 "kind": "model",
                 "name": "InnerModel",
+                "apiVersions": [],
                 "namespace": "Type.Property.Nullable",
                 "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
                 "usage": "Input,Output,JsonMergePatch,Json",
@@ -1205,6 +1224,7 @@
                     "$id": "125",
                     "kind": "property",
                     "name": "property",
+                    "apiVersions": [],
                     "serializedName": "property",
                     "doc": "Inner model property",
                     "type": {
@@ -1258,6 +1278,7 @@
       "$id": "127",
       "kind": "model",
       "name": "CollectionsStringProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Nullable",
       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
       "usage": "Input,Output,JsonMergePatch,Json",
@@ -1274,6 +1295,7 @@
           "$id": "128",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "Required property",
           "type": {
@@ -1301,6 +1323,7 @@
           "$id": "130",
           "kind": "property",
           "name": "nullableProperty",
+          "apiVersions": [],
           "serializedName": "nullableProperty",
           "doc": "Property",
           "type": {

@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SqlContainer. </summary>
         public SqlContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.AzureSqlContainer);
         }
 
         /// <summary> Define all the provisionable properties for SqlContainer. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "AzureSqlContainer");
             DefineAdditionalProperties();
         }
 

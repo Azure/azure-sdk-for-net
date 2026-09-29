@@ -39,14 +39,24 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="handlerSchema"> The schema defined by publisher, where extension consumers should provide settings in a matching schema. </param>
         /// <param name="virtualMachineScaleSetEnabled"> Whether the extension can be used on xRP VMScaleSets. By default existing extensions are usable on scalesets, but there might be cases where a publisher wants to explicitly indicate the extension is only enabled for CRP VMs but not VMSS. </param>
         /// <param name="supportsMultipleExtensions"> Whether the handler can support multiple extensions. </param>
+        /// <param name="releaseNotes"> Summary of changes or updates in this extension version. </param>
+        /// <param name="releaseCategory"> Categorizes the type of change introduced (e.g., BugFix, SecurityFix, CompatibilityUpdate, NewFeature, Other). </param>
+        /// <param name="urgencyLevel"> Indicates the urgency level for applying this extension update. </param>
+        /// <param name="runProfile"> Specifies when and how the extension should be executed. </param>
+        /// <param name="extensionFeatureMetadata"> Additional metadata about extension features, including compliance and capability tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionImageProperties(string operatingSystem, string computeRole, string handlerSchema, bool? virtualMachineScaleSetEnabled, bool? supportsMultipleExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineExtensionImageProperties(string operatingSystem, string computeRole, string handlerSchema, bool? virtualMachineScaleSetEnabled, bool? supportsMultipleExtensions, string releaseNotes, ReleaseCategory? releaseCategory, UrgencyLevel? urgencyLevel, RunProfile? runProfile, ExtensionFeatureMetadata extensionFeatureMetadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatingSystem = operatingSystem;
             ComputeRole = computeRole;
             HandlerSchema = handlerSchema;
             VirtualMachineScaleSetEnabled = virtualMachineScaleSetEnabled;
             SupportsMultipleExtensions = supportsMultipleExtensions;
+            ReleaseNotes = releaseNotes;
+            ReleaseCategory = releaseCategory;
+            UrgencyLevel = urgencyLevel;
+            RunProfile = runProfile;
+            ExtensionFeatureMetadata = extensionFeatureMetadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +74,29 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Whether the handler can support multiple extensions. </summary>
         public bool? SupportsMultipleExtensions { get; set; }
+
+        /// <summary> Summary of changes or updates in this extension version. </summary>
+        public string ReleaseNotes { get; }
+
+        /// <summary> Categorizes the type of change introduced (e.g., BugFix, SecurityFix, CompatibilityUpdate, NewFeature, Other). </summary>
+        public ReleaseCategory? ReleaseCategory { get; }
+
+        /// <summary> Indicates the urgency level for applying this extension update. </summary>
+        public UrgencyLevel? UrgencyLevel { get; }
+
+        /// <summary> Specifies when and how the extension should be executed. </summary>
+        public RunProfile? RunProfile { get; }
+
+        /// <summary> Additional metadata about extension features, including compliance and capability tags. </summary>
+        internal ExtensionFeatureMetadata ExtensionFeatureMetadata { get; }
+
+        /// <summary> List of additional metadata properties (e.g., compliance flags, supported features). </summary>
+        public IList<ExtensionFeatureTag> ExtensionFeatureTags
+        {
+            get
+            {
+                return ExtensionFeatureMetadata is null ? default : ExtensionFeatureMetadata.ExtensionFeatureTags;
+            }
+        }
     }
 }

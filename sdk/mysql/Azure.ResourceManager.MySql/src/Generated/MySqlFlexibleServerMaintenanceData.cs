@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceStartOn;
+                return Properties is null ? default : Properties.MaintenanceStartsOn;
             }
             set
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new MaintenanceProperties();
                 }
-                Properties.MaintenanceStartOn = value;
+                Properties.MaintenanceStartsOn = value;
             }
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceEndOn;
+                return Properties is null ? default : Properties.MaintenanceEndsOn;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceExecutionStartOn;
+                return Properties is null ? default : Properties.MaintenanceExecutionStartsOn;
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceExecutionEndOn;
+                return Properties is null ? default : Properties.MaintenanceExecutionEndsOn;
             }
         }
 

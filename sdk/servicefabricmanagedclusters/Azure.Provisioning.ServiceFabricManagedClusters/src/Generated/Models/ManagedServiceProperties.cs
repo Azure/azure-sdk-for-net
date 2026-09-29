@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         private BicepValue<string> _provisioningState;
+        private BicepValue<ServiceKind> _serviceKind;
         private BicepValue<string> _serviceTypeName;
         private ManagedServicePartitionScheme _partitionDescription;
         private BicepValue<ManagedServicePackageActivationMode> _servicePackageActivationMode;
@@ -33,6 +34,16 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             {
                 Initialize();
                 return _provisioningState;
+            }
+        }
+
+        /// <summary> The kind of service (Stateless or Stateful). </summary>
+        internal BicepValue<ServiceKind> ServiceKind
+        {
+            get
+            {
+                Initialize();
+                return _serviceKind;
             }
         }
 
@@ -101,6 +112,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _serviceKind = DefineProperty<ServiceKind>(nameof(ServiceKind), new string[] { "serviceKind" }, isRequired: true);
             _serviceTypeName = DefineProperty<string>(nameof(ServiceTypeName), new string[] { "serviceTypeName" }, isRequired: true);
             _partitionDescription = DefineModelProperty<ManagedServicePartitionScheme>(nameof(PartitionDescription), new string[] { "partitionDescription" }, isRequired: true);
             _servicePackageActivationMode = DefineProperty<ManagedServicePackageActivationMode>(nameof(ServicePackageActivationMode), new string[] { "servicePackageActivationMode" });

@@ -158,10 +158,8 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void BuildDefinePropertyArgsOmitsFormatsForCollectionTypes()
+        public void BuildDefinePropertyArgsIncludesFormatsForCollectionTypes()
         {
-            // TODO: Remove this workaround after collection element formats are supported.
-            // https://github.com/Azure/azure-sdk-for-net/issues/61525
             var listArgs = BicepTypeHelpers.BuildDefinePropertyArgs(
                 new CSharpType(typeof(BicepList<>), typeof(string)),
                 "Values",
@@ -179,10 +177,10 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(listArgs, Has.Length.EqualTo(2));
-                Assert.That(dictionaryArgs, Has.Length.EqualTo(2));
-                Assert.That(listArgs.Select(arg => arg.ToDisplayString()), Has.None.Contain("format"));
-                Assert.That(dictionaryArgs.Select(arg => arg.ToDisplayString()), Has.None.Contain("format"));
+                Assert.That(listArgs, Has.Length.EqualTo(3));
+                Assert.That(dictionaryArgs, Has.Length.EqualTo(3));
+                Assert.That(listArgs.Select(arg => arg.ToDisplayString()), Has.Some.Contain("format"));
+                Assert.That(dictionaryArgs.Select(arg => arg.ToDisplayString()), Has.Some.Contain("format"));
             });
         }
 

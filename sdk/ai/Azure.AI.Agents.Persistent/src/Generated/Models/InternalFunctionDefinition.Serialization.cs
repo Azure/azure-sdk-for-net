@@ -153,12 +153,12 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    parameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InternalFunctionDefinition(name, description, parameters, additionalBinaryDataProperties);

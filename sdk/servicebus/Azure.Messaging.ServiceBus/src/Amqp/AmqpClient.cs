@@ -168,6 +168,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="sessionId">The session ID to receive messages for.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
         /// <param name="isProcessor">Whether or not the receiver is being created for a processor.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         ///     open link operation. Only applicable for session receivers.</param>
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
@@ -180,7 +182,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string sessionId,
             bool isSessionReceiver,
             bool isProcessor,
-            CancellationToken cancellationToken)
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
@@ -196,6 +200,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 isSessionReceiver,
                 isProcessor,
                 _messageConverter,
+                isSessionExclusive,
+                sessionLockToken,
                 cancellationToken
             );
         }

@@ -138,16 +138,16 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(ProvisionedBandwidthMiBps.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(NextAllowedQuotaDowngradeTime))
+            if (Optional.IsDefined(NextAllowedQuotaDowngradeOn))
             {
                 writer.WriteStartElement("NextAllowedQuotaDowngradeTime");
-                writer.WriteStringValue(NextAllowedQuotaDowngradeTime.Value, "R");
+                writer.WriteStringValue(NextAllowedQuotaDowngradeOn.Value, "R");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeletedTime))
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WriteStartElement("DeletedTime");
-                writer.WriteStringValue(DeletedTime.Value, "R");
+                writer.WriteStringValue(DeletedOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RemainingRetentionDays))
@@ -162,10 +162,10 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(AccessTier);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(AccessTierChangeTime))
+            if (Optional.IsDefined(AccessTierChangedOn))
             {
                 writer.WriteStartElement("AccessTierChangeTime");
-                writer.WriteStringValue(AccessTierChangeTime.Value, "R");
+                writer.WriteStringValue(AccessTierChangedOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(AccessTierTransitionState))
@@ -240,16 +240,16 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(MaxBurstCreditsForIops.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(NextAllowedProvisionedIopsDowngradeTime))
+            if (Optional.IsDefined(NextAllowedProvisionedIopsDowngradeOn))
             {
                 writer.WriteStartElement("NextAllowedProvisionedIopsDowngradeTime");
-                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeTime.Value, "R");
+                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeOn.Value, "R");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeTime))
+            if (Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeOn))
             {
                 writer.WriteStartElement("NextAllowedProvisionedBandwidthDowngradeTime");
-                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeTime.Value, "R");
+                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(EnableSmbDirectoryLease))
@@ -258,10 +258,10 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(EnableSmbDirectoryLease.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(CreationTime))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WriteStartElement("Creation-Time");
-                writer.WriteStringValue(CreationTime.Value, "R");
+                writer.WriteStringValue(CreatedOn.Value, "R");
                 writer.WriteEndElement();
             }
         }
@@ -282,11 +282,11 @@ namespace Azure.Storage.Files.Shares.Models
             int? provisionedIngressMBps = default;
             int? provisionedEgressMBps = default;
             int? provisionedBandwidthMiBps = default;
-            DateTimeOffset? nextAllowedQuotaDowngradeTime = default;
-            DateTimeOffset? deletedTime = default;
+            DateTimeOffset? nextAllowedQuotaDowngradeOn = default;
+            DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             string accessTier = default;
-            DateTimeOffset? accessTierChangeTime = default;
+            DateTimeOffset? accessTierChangedOn = default;
             string accessTierTransitionState = default;
             ShareLeaseStatus? leaseStatus = default;
             ShareLeaseState? leaseState = default;
@@ -299,10 +299,10 @@ namespace Azure.Storage.Files.Shares.Models
             long? paidBurstingMaxBandwidthMibps = default;
             long? includedBurstIops = default;
             long? maxBurstCreditsForIops = default;
-            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default;
-            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default;
+            DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = default;
+            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default;
             bool? enableSmbDirectoryLease = default;
-            DateTimeOffset? creationTime = default;
+            DateTimeOffset? createdOn = default;
 
             foreach (var child in element.Elements())
             {
@@ -344,12 +344,12 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "NextAllowedQuotaDowngradeTime")
                 {
-                    nextAllowedQuotaDowngradeTime = child.GetDateTimeOffset("R");
+                    nextAllowedQuotaDowngradeOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "DeletedTime")
                 {
-                    deletedTime = child.GetDateTimeOffset("R");
+                    deletedOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "RemainingRetentionDays")
@@ -364,7 +364,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "AccessTierChangeTime")
                 {
-                    accessTierChangeTime = child.GetDateTimeOffset("R");
+                    accessTierChangedOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "AccessTierTransitionState")
@@ -429,12 +429,12 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "NextAllowedProvisionedIopsDowngradeTime")
                 {
-                    nextAllowedProvisionedIopsDowngradeTime = child.GetDateTimeOffset("R");
+                    nextAllowedProvisionedIopsDowngradeOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "NextAllowedProvisionedBandwidthDowngradeTime")
                 {
-                    nextAllowedProvisionedBandwidthDowngradeTime = child.GetDateTimeOffset("R");
+                    nextAllowedProvisionedBandwidthDowngradeOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "EnableSmbDirectoryLease")
@@ -444,7 +444,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "Creation-Time")
                 {
-                    creationTime = child.GetDateTimeOffset("R");
+                    createdOn = child.GetDateTimeOffset("R");
                     continue;
                 }
             }
@@ -456,11 +456,11 @@ namespace Azure.Storage.Files.Shares.Models
                 provisionedIngressMBps,
                 provisionedEgressMBps,
                 provisionedBandwidthMiBps,
-                nextAllowedQuotaDowngradeTime,
-                deletedTime,
+                nextAllowedQuotaDowngradeOn,
+                deletedOn,
                 remainingRetentionDays,
                 accessTier,
-                accessTierChangeTime,
+                accessTierChangedOn,
                 accessTierTransitionState,
                 leaseStatus,
                 leaseState,
@@ -473,10 +473,10 @@ namespace Azure.Storage.Files.Shares.Models
                 paidBurstingMaxBandwidthMibps,
                 includedBurstIops,
                 maxBurstCreditsForIops,
-                nextAllowedProvisionedIopsDowngradeTime,
-                nextAllowedProvisionedBandwidthDowngradeTime,
+                nextAllowedProvisionedIopsDowngradeOn,
+                nextAllowedProvisionedBandwidthDowngradeOn,
                 enableSmbDirectoryLease,
-                creationTime);
+                createdOn);
         }
 
         /// <param name="writer"> The XML writer. </param>

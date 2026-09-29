@@ -110,5 +110,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 return Properties is null ? default : Properties.Status;
             }
         }
+
+        /// <summary> The Mesh Member Properties associated with this Fleet Member. </summary>
+        public ContainerServiceFleetMeshMemberProperties MeshProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MeshProperties;
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> The current status of the pipeline run. </param>
         /// <param name="importedArtifacts"> The artifacts imported in the pipeline run. </param>
         /// <param name="progress"> The current progress of the copy operation. </param>
-        /// <param name="startOn"> The time the pipeline run started. </param>
+        /// <param name="startsOn"> The time the pipeline run started. </param>
         /// <param name="finishOn"> The time the pipeline run finished. </param>
         /// <param name="source"> The source of the pipeline run. </param>
         /// <param name="target"> The target of the pipeline run. </param>
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="trigger"> The trigger that caused the pipeline run. </param>
         /// <param name="pipelineRunErrorMessage"> The detailed error message for the pipeline run in the case of failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPipelineRunResult(string status, IReadOnlyList<string> importedArtifacts, ProgressProperties progress, DateTimeOffset? startOn, DateTimeOffset? finishOn, ContainerRegistryImportPipelineSourceProperties source, ContainerRegistryExportPipelineTargetProperties target, string catalogDigest, PipelineTriggerDescriptor trigger, string pipelineRunErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryPipelineRunResult(string status, IReadOnlyList<string> importedArtifacts, ProgressProperties progress, DateTimeOffset? startsOn, DateTimeOffset? finishOn, ContainerRegistryImportPipelineSourceProperties source, ContainerRegistryExportPipelineTargetProperties target, string catalogDigest, PipelineTriggerDescriptor trigger, string pipelineRunErrorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ImportedArtifacts = importedArtifacts;
             Progress = progress;
-            StartOn = startOn;
+            StartsOn = startsOn;
             FinishOn = finishOn;
             Source = source;
             Target = target;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The time the pipeline run started. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The time the pipeline run finished. </summary>
         [WirePath("finishTime")]

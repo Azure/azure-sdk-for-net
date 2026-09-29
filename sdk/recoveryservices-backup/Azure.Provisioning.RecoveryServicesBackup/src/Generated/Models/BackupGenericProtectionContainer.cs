@@ -20,6 +20,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         private BicepValue<BackupManagementType> _backupManagementType;
         private BicepValue<string> _registrationStatus;
         private BicepValue<string> _healthStatus;
+        private BicepValue<ProtectableContainerType> _containerType;
         private BicepValue<string> _protectableObjectType;
 
         /// <summary> Creates a new BackupGenericProtectionContainer. </summary>
@@ -87,6 +88,21 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             }
         }
 
+        /// <summary>
+        /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
+        /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
+        /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
+        /// Backup is VMAppContainer
+        /// </summary>
+        internal BicepValue<ProtectableContainerType> ContainerType
+        {
+            get
+            {
+                Initialize();
+                return _containerType;
+            }
+        }
+
         /// <summary> Gets or sets the ProtectableObjectType. </summary>
         public BicepValue<string> ProtectableObjectType
         {
@@ -110,6 +126,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _backupManagementType = DefineProperty<BackupManagementType>(nameof(BackupManagementType), new string[] { "backupManagementType" });
             _registrationStatus = DefineProperty<string>(nameof(RegistrationStatus), new string[] { "registrationStatus" });
             _healthStatus = DefineProperty<string>(nameof(HealthStatus), new string[] { "healthStatus" });
+            _containerType = DefineProperty<ProtectableContainerType>(nameof(ContainerType), new string[] { "containerType" }, isRequired: true);
             _protectableObjectType = DefineProperty<string>(nameof(ProtectableObjectType), new string[] { "protectableObjectType" });
             DefineAdditionalProperties();
         }

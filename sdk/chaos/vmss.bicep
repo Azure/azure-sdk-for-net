@@ -349,23 +349,23 @@ resource vmss 'Microsoft.Compute/virtualMachineScaleSets@2020-12-01' = {
 
 // Target/Capability Resources
 
-resource serviceDirectTarget 'Microsoft.Chaos/targets@2021-09-15-preview' = {
+resource serviceDirectTarget 'Microsoft.Chaos/targets@2026-08-01-preview' = {
   name: 'Microsoft-VirtualMachineScaleSet'
   scope: vmss
   properties: {}
 }
 
-resource shutdownCapability 'Microsoft.Chaos/targets/capabilities@2021-09-15-preview' = {
+resource shutdownCapability 'Microsoft.Chaos/targets/capabilities@2026-08-01-preview' = {
   name: '${serviceDirectTarget.name}/Shutdown-1.0'
   scope: vmss
 }
 
-resource shutdownCapabilityV2 'Microsoft.Chaos/targets/capabilities@2022-10-01-preview' = {
+resource shutdownCapabilityV2 'Microsoft.Chaos/targets/capabilities@2026-08-01-preview' = {
   name: '${serviceDirectTarget.name}/Shutdown-2.0'
   scope: vmss
 }
 
-resource experiment 'Microsoft.Chaos/experiments@2022-10-01-preview' = {
+resource experiment 'Microsoft.Chaos/experiments@2026-08-01-preview' = {
   name: 'sdktest-chaos-execution-${vmssId}'
   location: location
   identity: {

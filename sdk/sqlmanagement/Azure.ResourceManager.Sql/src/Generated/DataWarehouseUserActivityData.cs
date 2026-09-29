@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivityData"/>. </summary>
+        public DataWarehouseUserActivityData()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal DataWarehouseUserActivitiesProperties Properties { get; }

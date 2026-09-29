@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary>
     /// This defines the conditions for a given discount type.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DiscountTypeProductFamily"/>, <see cref="DiscountTypeProduct"/>, <see cref="DiscountTypeProductSku"/>, <see cref="DiscountTypeCustomPrice"/>, and <see cref="DiscountTypeCustomPriceMultiCurrency"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DiscountTypeCustomPrice"/>, <see cref="DiscountTypeCustomPriceMultiCurrency"/>, <see cref="DiscountTypeProduct"/>, <see cref="DiscountTypeProductFamily"/>, and <see cref="DiscountTypeProductSku"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDiscountTypeProperties))]
     public abstract partial class DiscountTypeProperties : IJsonModel<DiscountTypeProperties>
@@ -157,16 +157,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ProductFamily":
-                        return DiscountTypeProductFamily.DeserializeDiscountTypeProductFamily(element, options);
-                    case "Product":
-                        return DiscountTypeProduct.DeserializeDiscountTypeProduct(element, options);
-                    case "Sku":
-                        return DiscountTypeProductSku.DeserializeDiscountTypeProductSku(element, options);
                     case "CustomPrice":
                         return DiscountTypeCustomPrice.DeserializeDiscountTypeCustomPrice(element, options);
                     case "CustomPriceMultiCurrency":
                         return DiscountTypeCustomPriceMultiCurrency.DeserializeDiscountTypeCustomPriceMultiCurrency(element, options);
+                    case "Product":
+                        return DiscountTypeProduct.DeserializeDiscountTypeProduct(element, options);
+                    case "ProductFamily":
+                        return DiscountTypeProductFamily.DeserializeDiscountTypeProductFamily(element, options);
+                    case "Sku":
+                        return DiscountTypeProductSku.DeserializeDiscountTypeProductSku(element, options);
                 }
             }
             return UnknownDiscountTypeProperties.DeserializeUnknownDiscountTypeProperties(element, options);

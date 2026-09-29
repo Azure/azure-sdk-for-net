@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
     {
         private readonly ClientDiagnostics _extensionTypeInterfaceClientDiagnostics;
         private readonly ExtensionTypeInterface _extensionTypeInterfaceRestClient;
-        private readonly ExtensionTypeData _data;
+        private readonly KubernetesConfigurationExtensionTypeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/extensionTypes";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <summary> Initializes a new instance of <see cref="ClusterExtensionTypeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ClusterExtensionTypeResource(ArmClient client, ExtensionTypeData data) : this(client, data.Id)
+        internal ClusterExtensionTypeResource(ArmClient client, KubernetesConfigurationExtensionTypeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ExtensionTypeData Data
+        public virtual KubernetesConfigurationExtensionTypeData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.Type, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

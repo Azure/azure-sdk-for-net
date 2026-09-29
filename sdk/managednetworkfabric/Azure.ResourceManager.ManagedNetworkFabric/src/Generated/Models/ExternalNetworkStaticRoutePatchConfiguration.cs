@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ExternalNetworkStaticRoutePatchConfiguration"/>. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExternalNetworkStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration, IList<StaticRoutePatchProperties> iPv4Routes, IList<StaticRoutePatchProperties> iPv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExternalNetworkStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration, IList<StaticRoutePatchProperties> ipv4Routes, IList<StaticRoutePatchProperties> ipv6Routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BfdConfiguration = bfdConfiguration;
-            IPv4Routes = iPv4Routes;
-            IPv6Routes = iPv6Routes;
+            IPv4Routes = ipv4Routes;
+            IPv6Routes = ipv6Routes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>Closed call-ending mode.</summary>
+[Experimental("AAAS001")]
 public enum VoiceEndCallMode
 {
     /// <summary>Play already queued audio before ending the call.</summary>
@@ -14,6 +17,7 @@ public enum VoiceEndCallMode
 }
 
 /// <summary>An explicit negative application-readiness acknowledgement.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceSessionRejectedMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a readiness rejection.</summary>
@@ -41,6 +45,7 @@ public sealed class VoiceSessionRejectedMessage : VoiceOutboundMessage
 }
 
 /// <summary>Opens a reply response or requests proactive admission.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseCreatedMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a response-created message.</summary>
@@ -73,6 +78,7 @@ public sealed class VoiceResponseCreatedMessage : VoiceOutboundMessage
 }
 
 /// <summary>Explicitly declines an ordered pending-input prefix.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseNoneMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a response-none message.</summary>
@@ -95,6 +101,7 @@ public sealed class VoiceResponseNoneMessage : VoiceOutboundMessage
 }
 
 /// <summary>Streams one text increment for an output item.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseOutputTextDeltaMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes an output-text delta.</summary>
@@ -127,6 +134,7 @@ public sealed class VoiceResponseOutputTextDeltaMessage : VoiceOutboundMessage
 }
 
 /// <summary>Completes one streamed or non-streamed output item.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseOutputTextDoneMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a completed output item.</summary>
@@ -159,6 +167,7 @@ public sealed class VoiceResponseOutputTextDoneMessage : VoiceOutboundMessage
 }
 
 /// <summary>Explicitly completes normal response generation.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseDoneMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a response-done message.</summary>
@@ -176,6 +185,7 @@ public sealed class VoiceResponseDoneMessage : VoiceOutboundMessage
 }
 
 /// <summary>Requests cancellation of an open or pending proactive response.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceResponseCancelMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes a response-cancel request.</summary>
@@ -198,6 +208,7 @@ public sealed class VoiceResponseCancelMessage : VoiceOutboundMessage
 }
 
 /// <summary>Asks the Bridge to end the call.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceEndCallMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes an end-call request.</summary>
@@ -220,6 +231,7 @@ public sealed class VoiceEndCallMessage : VoiceOutboundMessage
 }
 
 /// <summary>Reports an explicit response- or session-scoped agent failure.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceErrorMessage : VoiceOutboundMessage
 {
     /// <summary>Initializes an agent error.</summary>

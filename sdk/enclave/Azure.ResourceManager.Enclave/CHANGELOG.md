@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2026-08-27)
+
+### Other Changes
+
+- First stable (GA) release of the Azure Enclave (`Microsoft.Mission`) management library for .NET, targeting API version `2026-04-01`. The API surface is unchanged from `1.0.0-beta.1`; this release promotes the library to a stable, generally available version.
 
 ## 1.0.0-beta.1 (2026-07-22)
 

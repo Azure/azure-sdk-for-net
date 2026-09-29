@@ -11,7 +11,6 @@ namespace Azure.AI.VoiceLive.Samples;
 /// <remarks>
 /// This sample now demonstrates some of the new convenience methods added to the VoiceLive SDK:
 /// - ClearStreamingAudioAsync() - Clears all input audio currently being streamed
-/// - CancelResponseAsync() - Cancels the current response generation (existing method)
 /// - ConfigureSessionAsync() - Configures session options (existing method)
 ///
 /// Additional convenience methods available but not shown in this sample:
@@ -206,16 +205,6 @@ public class BasicVoiceAssistant : IDisposable
                 if (_audioProcessor != null)
                 {
                     await _audioProcessor.StopPlaybackAsync().ConfigureAwait(false);
-                }
-
-                // Cancel any ongoing response
-                try
-                {
-                    await _session!.CancelResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogDebug(ex, "No response to cancel");
                 }
 
                 // Demonstrate the new ClearStreamingAudio convenience method

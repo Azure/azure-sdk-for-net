@@ -102,6 +102,16 @@ namespace Azure.Messaging.ServiceBus.Tests
                     throw new NotImplementedException();
                 });
 
+            return GetMockedReceiverConnection(mockTransportReceiver);
+        }
+
+        /// <summary>
+        ///   Builds a connection whose transport receiver is the supplied mock, so a test can control what the
+        ///   transport reports and assert on the values the public receiver surfaces from it.
+        /// </summary>
+        ///
+        internal static ServiceBusConnection GetMockedReceiverConnection(Mock<TransportReceiver> mockTransportReceiver)
+        {
             var mockConnection = CreateMockConnection();
 
             mockConnection
@@ -114,6 +124,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
             return mockConnection.Object;
