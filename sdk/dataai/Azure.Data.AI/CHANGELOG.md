@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-09-28)
 
 ### Features Added
 
@@ -11,10 +11,6 @@
 - Added result ordering control through `SemanticRerankingInferenceContent.Sort`.
 - Added the `InferenceModelFactory` mocking factory.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed `InferenceClient(InferenceClientSettings)` so that API-key settings authenticate with the `Ocp-Apim-Subscription-Key` header instead of throwing `ArgumentNullException`. This also unblocks API-key authentication through `AddInferenceClient` and `AddKeyedInferenceClient`.
-
-### Other Changes
