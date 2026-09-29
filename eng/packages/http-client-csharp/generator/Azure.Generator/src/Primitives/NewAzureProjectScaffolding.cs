@@ -56,6 +56,7 @@ namespace Azure.Generator.Primitives
                 <Project Sdk="Microsoft.NET.Sdk">
                   <PropertyGroup>
                     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                    <IsTestProject>true</IsTestProject>
 
                     <!-- We don't care about XML doc comments on test types and members -->
                     <NoWarn>$(NoWarn);CS1591</NoWarn>
