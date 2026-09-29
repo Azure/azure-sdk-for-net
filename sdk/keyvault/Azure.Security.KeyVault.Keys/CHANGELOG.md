@@ -14,6 +14,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- The default service version is now `2026-07-01-preview`.
 
 ## 4.11.0-beta.3 (2026-07-16)
 
