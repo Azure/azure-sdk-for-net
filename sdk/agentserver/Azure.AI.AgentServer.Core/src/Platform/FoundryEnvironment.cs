@@ -6,8 +6,8 @@ namespace Azure.AI.AgentServer.Core;
 /// <summary>
 /// Provides strongly-typed access to Foundry platform environment variables
 /// injected by the Azure AI Foundry hosting infrastructure.
-/// All values are read once in the static constructor and cached for the
-/// lifetime of the process.
+/// Values are cached when first accessed and refreshed after the platform
+/// applies snapshot restore environment overrides.
 /// </summary>
 public static class FoundryEnvironment
 {
@@ -41,7 +41,8 @@ public static class FoundryEnvironment
     public static string? ProjectArmId { get; private set; }
 
     /// <summary>
-    /// The session ID. Sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment variable.
+    /// The session ID. Sourced from the <c>FOUNDRY_AGENT_SESSION_ID</c> environment variable
+    /// and refreshed after snapshot restoration.
     /// </summary>
     public static string? SessionId { get; private set; }
 
@@ -137,8 +138,7 @@ public static class FoundryEnvironment
     static FoundryEnvironment() => Reload();
 
     /// <summary>
-    /// Re-reads all environment variables. Intended for test isolation only;
-    /// production code relies on the static constructor which calls this once.
+    /// Re-reads all environment variables after snapshot restoration and for test isolation.
     /// </summary>
     internal static void Reload()
     {
