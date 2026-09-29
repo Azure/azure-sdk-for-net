@@ -882,6 +882,7 @@
         "eaptls",
         "fips",
         "fqdns",
+        "gbps",
         "gcmaes",
         "generatevirtualwanvpnserverconfigurationvpnprofile",
         "idps",
