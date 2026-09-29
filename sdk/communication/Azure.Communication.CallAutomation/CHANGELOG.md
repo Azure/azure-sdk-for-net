@@ -1,5 +1,11 @@
 # Release History
 
+## 1.6.1 (2026-09-29)
+
+### Bugs Fixed
+
+- Fixed ResultInformation property handling in event parsing and deserialization scenarios to ensure correct initialization and serialization of result codes and messages.
+
 ## 1.6.0 (2026-06-18)
 
 ### Features Added
