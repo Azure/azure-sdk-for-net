@@ -22,6 +22,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(DimensionValue))]
     [ModelReaderWriterBuildable(typeof(DimensionValueList))]
     [ModelReaderWriterBuildable(typeof(ErrorDetails))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(FunctionFlexConsumptionResourceConfiguration))]
     [ModelReaderWriterBuildable(typeof(FunctionFlexConsumptionTargetResourceConfigurations))]
     [ModelReaderWriterBuildable(typeof(HourlyRecurrence))]
