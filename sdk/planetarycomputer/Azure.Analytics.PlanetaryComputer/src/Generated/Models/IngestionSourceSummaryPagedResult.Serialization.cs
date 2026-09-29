@@ -14,63 +14,63 @@ using Azure;
 namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary> Generic paged response model. </summary>
-    internal partial class ManagedIdentityMetadataPagedResponse : IJsonModel<ManagedIdentityMetadataPagedResponse>
+    internal partial class IngestionSourceSummaryPagedResult : IJsonModel<IngestionSourceSummaryPagedResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadataPagedResponse"/> for deserialization. </summary>
-        internal ManagedIdentityMetadataPagedResponse()
+        /// <summary> Initializes a new instance of <see cref="IngestionSourceSummaryPagedResult"/> for deserialization. </summary>
+        internal IngestionSourceSummaryPagedResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedIdentityMetadataPagedResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IngestionSourceSummaryPagedResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedIdentityMetadataPagedResponse(document.RootElement, options);
+                        return DeserializeIngestionSourceSummaryPagedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsPlanetaryComputerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedIdentityMetadataPagedResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IngestionSourceSummaryPagedResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedIdentityMetadataPagedResponse IPersistableModel<ManagedIdentityMetadataPagedResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IngestionSourceSummaryPagedResult IPersistableModel<IngestionSourceSummaryPagedResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedIdentityMetadataPagedResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IngestionSourceSummaryPagedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedIdentityMetadataPagedResponse"/> from. </param>
-        public static explicit operator ManagedIdentityMetadataPagedResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IngestionSourceSummaryPagedResult"/> from. </param>
+        public static explicit operator IngestionSourceSummaryPagedResult(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeManagedIdentityMetadataPagedResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIngestionSourceSummaryPagedResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedIdentityMetadataPagedResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IngestionSourceSummaryPagedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,14 +81,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ManagedIdentityMetadata item in Value)
+            foreach (IngestionSourceSummary item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -117,40 +117,40 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedIdentityMetadataPagedResponse IJsonModel<ManagedIdentityMetadataPagedResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IngestionSourceSummaryPagedResult IJsonModel<IngestionSourceSummaryPagedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedIdentityMetadataPagedResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IngestionSourceSummaryPagedResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityMetadataPagedResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IngestionSourceSummaryPagedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIdentityMetadataPagedResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IngestionSourceSummaryPagedResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedIdentityMetadataPagedResponse(document.RootElement, options);
+            return DeserializeIngestionSourceSummaryPagedResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedIdentityMetadataPagedResponse DeserializeManagedIdentityMetadataPagedResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static IngestionSourceSummaryPagedResult DeserializeIngestionSourceSummaryPagedResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<ManagedIdentityMetadata> value = default;
+            IList<IngestionSourceSummary> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ManagedIdentityMetadata> array = new List<ManagedIdentityMetadata>();
+                    List<IngestionSourceSummary> array = new List<IngestionSourceSummary>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedIdentityMetadata.DeserializeManagedIdentityMetadata(item, options));
+                        array.Add(IngestionSourceSummary.DeserializeIngestionSourceSummary(item, options));
                     }
                     value = array;
                     continue;
@@ -169,7 +169,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedIdentityMetadataPagedResponse(value, nextLink, additionalBinaryDataProperties);
+            return new IngestionSourceSummaryPagedResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

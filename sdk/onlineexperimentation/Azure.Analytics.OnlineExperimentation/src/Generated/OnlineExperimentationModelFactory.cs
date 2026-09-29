@@ -132,6 +132,15 @@ namespace Azure.Analytics.OnlineExperimentation
             return new PercentileMetricDefinition(ExperimentMetricType.Percentile, additionalBinaryDataProperties: null, value, percentile);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="OnlineExperimentation.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The result of validating an experiment metric. </summary>
         /// <param name="isValid"> Indicates whether the experiment metric is valid. </param>
         /// <param name="diagnostics"> Diagnostic details from the validation process. </param>
