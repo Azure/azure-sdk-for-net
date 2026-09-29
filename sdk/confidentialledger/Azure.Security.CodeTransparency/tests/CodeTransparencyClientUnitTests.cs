@@ -133,7 +133,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             return (mockTransport, options);
         }
@@ -181,7 +181,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var _ = new CodeTransparencyClient(new Uri("https://foo.bar.com"), null, options);
             Assert.AreEqual(0, mockTransport.Requests.Count);
@@ -198,7 +198,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
@@ -221,7 +221,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
@@ -239,7 +239,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = transport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             configureOptions?.Invoke(options);
             return new CodeTransparencyClient(
@@ -705,7 +705,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             options.Retry.Delay = TimeSpan.Zero; // avoid real backoff during the test
 
@@ -743,7 +743,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             options.Retry.Delay = TimeSpan.Zero; // avoid real backoff during the test
 
@@ -771,7 +771,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
@@ -790,7 +790,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
@@ -814,11 +814,11 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
             };
             byte[] transparentStatementCoseSign1Bytes = new byte[] { 0x01, 0x02, 0x03 /* invalid bytes */ };
 
@@ -835,7 +835,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
             };
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
@@ -871,7 +871,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var statement = createStatementWithEmptyInclusionProof();
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
                 AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
                 UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
             };
@@ -896,13 +896,13 @@ namespace Azure.Security.CodeTransparency.Tests
             var mockTransport = new MockTransport(new MockResponse(503));
             var options = new CodeTransparencyClientOptions
             {
-                IdentityClientEndpoint = "https://some.identity.com",
+                IdentityClientEndpoint = new Uri("https://some.identity.com"),
                 Transport = mockTransport,
             };
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
                 TrustStore = trustStore
             };
 
@@ -928,7 +928,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
                 TrustStore = trustStore
             };
 
@@ -953,13 +953,13 @@ namespace Azure.Security.CodeTransparency.Tests
             var mockTransport = new MockTransport(new MockResponse(503));
             var options = new CodeTransparencyClientOptions
             {
-                IdentityClientEndpoint = "https://some.identity.com",
+                IdentityClientEndpoint = new Uri("https://some.identity.com"),
                 Transport = mockTransport,
             };
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
                 TrustStore = trustStore,
                 KeyResolutionMode = CodeTransparencyKeyResolutionMode.TrustStoreOnly
             };
@@ -982,11 +982,11 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
             };
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
@@ -1007,11 +1007,11 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
+                IdentityClientEndpoint = new Uri("https://some.identity.com")
             };
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
+                AuthorizedDomains = { "foo.bar.com" },
             };
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
@@ -1029,7 +1029,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "wetrustsomethingelse.com" },
+                AuthorizedDomains = { "wetrustsomethingelse.com" },
                 UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
             };
 
@@ -1048,7 +1048,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "wetrustsomethingelse.com" },
+                AuthorizedDomains = { "wetrustsomethingelse.com" },
                 UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
             };
 
@@ -1082,7 +1082,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com", "wetrustsomethingelse.com" },
+                AuthorizedDomains = { "foo.bar.com", "wetrustsomethingelse.com" },
                 AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
                 UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
             };
@@ -1104,7 +1104,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                AuthorizedDomains = new string[] { "foo.bar.com", "doesnotexist.com" },
+                AuthorizedDomains = { "foo.bar.com", "doesnotexist.com" },
                 AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.VerifyAnyMatching,
                 UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
             };
@@ -1142,11 +1142,11 @@ namespace Azure.Security.CodeTransparency.Tests
                         var options = new CodeTransparencyClientOptions
                         {
                             Transport = mockTransport,
-                            IdentityClientEndpoint = "https://foo.bar.com"
+                            IdentityClientEndpoint = new Uri("https://foo.bar.com")
                         };
                         var verificationOptions = new CodeTransparencyVerificationOptions
                         {
-                            AuthorizedDomains = new string[] { "foo.bar.com" },
+                            AuthorizedDomains = { "foo.bar.com" },
                         };
 
                         CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);

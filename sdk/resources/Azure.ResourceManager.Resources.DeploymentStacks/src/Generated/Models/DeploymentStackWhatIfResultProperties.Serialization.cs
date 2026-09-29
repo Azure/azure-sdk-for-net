@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     {
                         continue;
                     }
-                    template = BinaryData.FromString(prop.Value.GetRawText());
+                    template = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("templateLink"u8))
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DeploymentStackWhatIfResultProperties(

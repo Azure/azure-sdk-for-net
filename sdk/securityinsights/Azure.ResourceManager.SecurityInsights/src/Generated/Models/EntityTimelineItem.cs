@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Entity timeline Item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityTimelineItem"/>, <see cref="BookmarkTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, and <see cref="SecurityAlertTimelineItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActivityTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, <see cref="BookmarkTimelineItem"/>, and <see cref="SecurityAlertTimelineItem"/>.
     /// </summary>
     public abstract partial class EntityTimelineItem
     {

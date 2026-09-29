@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Options for managing data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobOptions"/>, <see cref="TracesDataGenerationJobOptions"/>, <see cref="SimulationSeedDataGenerationJobOptions"/>, and <see cref="ToolUseFineTuningDataGenerationJobOptions"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobOptions"/>, <see cref="SimulationSeedDataGenerationJobOptions"/>, <see cref="ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="TracesDataGenerationJobOptions"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobOptions))]
     public abstract partial class DataGenerationJobOptions : IJsonModel<DataGenerationJobOptions>
@@ -80,8 +80,6 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("max_samples"u8);
-            writer.WriteNumberValue(MaxSamples);
             if (Optional.IsDefined(TrainSplit))
             {
                 writer.WritePropertyName("train_split"u8);
@@ -140,12 +138,12 @@ namespace Azure.AI.Projects
                 {
                     case "simple_qna":
                         return SimpleQnADataGenerationJobOptions.DeserializeSimpleQnADataGenerationJobOptions(element, options);
-                    case "traces":
-                        return TracesDataGenerationJobOptions.DeserializeTracesDataGenerationJobOptions(element, options);
                     case "simulation_seed":
                         return SimulationSeedDataGenerationJobOptions.DeserializeSimulationSeedDataGenerationJobOptions(element, options);
                     case "tool_use":
                         return ToolUseFineTuningDataGenerationJobOptions.DeserializeToolUseFineTuningDataGenerationJobOptions(element, options);
+                    case "traces":
+                        return TracesDataGenerationJobOptions.DeserializeTracesDataGenerationJobOptions(element, options);
                 }
             }
             return UnknownDataGenerationJobOptions.DeserializeUnknownDataGenerationJobOptions(element, options);

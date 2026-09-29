@@ -13,7 +13,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// The message content object used to create interactive messages components.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextMessageContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="VideoMessageContent"/>, <see cref="ButtonSetContent"/>, <see cref="LinkContent"/>, and <see cref="ActionGroupContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActionGroupContent"/>, <see cref="ButtonSetContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="LinkContent"/>, <see cref="TextMessageContent"/>, and <see cref="VideoMessageContent"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageContent))]
     public abstract partial class MessageContent : IJsonModel<MessageContent>
@@ -129,20 +129,20 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "text":
-                        return TextMessageContent.DeserializeTextMessageContent(element, options);
+                    case "group":
+                        return ActionGroupContent.DeserializeActionGroupContent(element, options);
+                    case "buttonSet":
+                        return ButtonSetContent.DeserializeButtonSetContent(element, options);
                     case "document":
                         return DocumentMessageContent.DeserializeDocumentMessageContent(element, options);
                     case "image":
                         return ImageMessageContent.DeserializeImageMessageContent(element, options);
-                    case "video":
-                        return VideoMessageContent.DeserializeVideoMessageContent(element, options);
-                    case "buttonSet":
-                        return ButtonSetContent.DeserializeButtonSetContent(element, options);
                     case "url":
                         return LinkContent.DeserializeLinkContent(element, options);
-                    case "group":
-                        return ActionGroupContent.DeserializeActionGroupContent(element, options);
+                    case "text":
+                        return TextMessageContent.DeserializeTextMessageContent(element, options);
+                    case "video":
+                        return VideoMessageContent.DeserializeVideoMessageContent(element, options);
                 }
             }
             return UnknownMessageContent.DeserializeUnknownMessageContent(element, options);

@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a streamed text content part's text annotation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaTextUriCitationAnnotation"/>, <see cref="MessageDeltaTextFileCitationAnnotation"/>, and <see cref="MessageDeltaTextFilePathAnnotation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageDeltaTextFileCitationAnnotation"/>, <see cref="MessageDeltaTextFilePathAnnotation"/>, and <see cref="MessageDeltaTextUriCitationAnnotation"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageDeltaTextAnnotation))]
     public abstract partial class MessageDeltaTextAnnotation : IJsonModel<MessageDeltaTextAnnotation>
@@ -116,12 +116,12 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "url_citation":
-                        return MessageDeltaTextUriCitationAnnotation.DeserializeMessageDeltaTextUriCitationAnnotation(element, options);
                     case "file_citation":
                         return MessageDeltaTextFileCitationAnnotation.DeserializeMessageDeltaTextFileCitationAnnotation(element, options);
                     case "file_path":
                         return MessageDeltaTextFilePathAnnotation.DeserializeMessageDeltaTextFilePathAnnotation(element, options);
+                    case "url_citation":
+                        return MessageDeltaTextUriCitationAnnotation.DeserializeMessageDeltaTextUriCitationAnnotation(element, options);
                 }
             }
             return UnknownMessageDeltaTextAnnotation.DeserializeUnknownMessageDeltaTextAnnotation(element, options);

@@ -9,13 +9,11 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
-/// <summary> Options that describe a memory-store update request. </summary>
+[CodeGenType("UpdateMemoriesRequest")]
 public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
 {
     /// <summary> The conversation items to write into the memory store. </summary>
     public IList<ResponseItem> Items { get; private set; }
-    /// <summary> The scope (for example, user or session identifier) that partitions the memory store. </summary>
-    public string Scope { get; }
     /// <summary> The identifier of the previous update, used to chain or supersede a prior update. </summary>
     public string PreviousUpdateId { get; set; }
     /// <summary> Optional delay, in milliseconds, before the update is applied. </summary>
@@ -29,43 +27,60 @@ public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
         Items = new ChangeTrackingList<ResponseItem>();
     }
 
-    private InternalMemoryUpdateOptions GetInternalCopy()
+    /// <param name="element"> The JSON element to deserialize. </param>
+    /// <param name="options"> The client options for reading and writing models. </param>
+    internal static MemoryUpdateOptions DeserializeMemoryUpdateOptions(JsonElement element, ModelReaderWriterOptions options)
     {
-        return new InternalMemoryUpdateOptions(Scope, ResponseItemHelpers.ConvertItemsTo<InputItem, ResponseItem>(Items), PreviousUpdateId, UpdateDelay, additionalBinaryDataProperties: null);
-    }
-
-    private static MemoryUpdateOptions CreateFromInternalOptions(InternalMemoryUpdateOptions internalOptions)
-    {
-        return new(internalOptions.Scope)
+        if (element.ValueKind == JsonValueKind.Null)
         {
-            PreviousUpdateId = internalOptions.PreviousUpdateId,
-            UpdateDelay = internalOptions.UpdateDelay,
-            Items = ResponseItemHelpers.ConvertItemsTo<ResponseItem, InputItem>(internalOptions.Items),
-        };
-    }
-
-    MemoryUpdateOptions IJsonModel<MemoryUpdateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-    {
-        InternalMemoryUpdateOptions internalOptions = ((IJsonModel<InternalMemoryUpdateOptions>)new InternalMemoryUpdateOptions()).Create(ref reader, options);
-        return CreateFromInternalOptions(internalOptions);
-    }
-
-    MemoryUpdateOptions IPersistableModel<MemoryUpdateOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
-    {
-        InternalMemoryUpdateOptions internalOptions = ((IPersistableModel<InternalMemoryUpdateOptions>)new InternalMemoryUpdateOptions()).Create(data, options);
-        return CreateFromInternalOptions(internalOptions);
-    }
-
-    string IPersistableModel<MemoryUpdateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        => options.Format ?? ModelSerializationExtensions.WireOptions.Format;
-
-    void IJsonModel<MemoryUpdateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-    {
-        ((IJsonModel<InternalMemoryUpdateOptions>)GetInternalCopy()).Write(writer, options);
-    }
-
-    BinaryData IPersistableModel<MemoryUpdateOptions>.Write(ModelReaderWriterOptions options)
-    {
-        return ((IPersistableModel<InternalMemoryUpdateOptions>)GetInternalCopy()).Write(options);
+            return null;
+        }
+        string scope = default;
+        IList<ResponseItem> items = default;
+        string previousUpdateId = default;
+        int? updateDelay = default;
+        IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        foreach (var prop in element.EnumerateObject())
+        {
+            if (prop.NameEquals("scope"u8))
+            {
+                scope = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("items"u8))
+            {
+                if (prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
+                List<ResponseItem> array = new List<ResponseItem>();
+                foreach (var item in prop.Value.EnumerateArray())
+                {
+                    ResponseItem responseItem = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(item.GetRawText()), options, AzureAIProjectsContext.Default);
+                    array.Add(responseItem);
+                }
+                items = array;
+                continue;
+            }
+            if (prop.NameEquals("previous_update_id"u8))
+            {
+                previousUpdateId = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("update_delay"u8))
+            {
+                if (prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
+                updateDelay = prop.Value.GetInt32();
+                continue;
+            }
+            if (options.Format != "W")
+            {
+                additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+        }
+        return new MemoryUpdateOptions(scope, items ?? new ChangeTrackingList<ResponseItem>(), previousUpdateId, updateDelay, additionalBinaryDataProperties);
     }
 }

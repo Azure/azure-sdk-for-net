@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.9 (Unreleased)
 
+### Bugs Fixed
+- Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
+  automatic truncation of conversation history. Positive limits remain supported.
+
 ### Other Changes
 
 - Registered the Responses event-stream backing as a protocol default so an explicit

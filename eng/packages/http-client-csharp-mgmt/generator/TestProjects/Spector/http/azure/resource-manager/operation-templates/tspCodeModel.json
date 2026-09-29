@@ -13445,6 +13445,12 @@
                 "itemPropertySegments": [
                   "value"
                 ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
                 "pageSizeParameterSegments": []
               }
             },

@@ -1,13 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System;
-using Azure.Core.Pipeline;
-using System.Net.Http.Headers;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         // To prevent circular redirects, max redirect is set to 10.
         internal const int MaxRedirect = 10;
 
-        // Bounds the per-endpoint redirect cache in multi-tenant mode.
+        // Bounds the per-endpoint redirect cache in multi-endpoint mode.
         internal const int MaxCachedRedirects = 256;
 
         internal readonly TimeSpan _defaultCacheExpirationDuration = TimeSpan.FromHours(12);
@@ -168,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         /// <summary>
         /// Keyed by the endpoint the redirect was learned for. A single pipeline serves every
-        /// ingestion endpoint in multi-tenant mode, so an unkeyed cache would let one region's
+        /// ingestion endpoint in multi-endpoint mode, so an unkeyed cache would let one region's
         /// redirect rewrite another region's request.
         /// </summary>
         private class Cache<T>

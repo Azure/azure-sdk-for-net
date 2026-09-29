@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 windowSize,
                 overrideQueryTimeRange,
                 (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                new LogAlertRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<LogAlertRuleCondition>()).ToList(), default),
+                criteriaAllOf is null ? default : new LogAlertRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<LogAlertRuleCondition>()).ToList(), default),
                 default), default);
         }
 

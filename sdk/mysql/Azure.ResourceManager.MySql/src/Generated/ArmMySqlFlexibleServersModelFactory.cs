@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     highAvailability,
                     network,
                     (serverPrivateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
-                    new MaintenancePolicy(maintenancePatchStrategy, default),
+                    maintenancePatchStrategy is null ? default : new MaintenancePolicy(maintenancePatchStrategy, default),
                     maintenanceWindow,
                     importSourceProperties,
                     default),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 storage,
                 backup,
                 highAvailability,
-                new MaintenancePolicy(maintenancePatchStrategy, default),
+                maintenancePatchStrategy is null ? default : new MaintenancePolicy(maintenancePatchStrategy, default),
                 maintenanceWindow,
                 replicationRole,
                 dataEncryption,

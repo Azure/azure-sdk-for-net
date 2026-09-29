@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.ContentSafety
 {
@@ -166,6 +167,214 @@ namespace Azure.AI.ContentSafety
         public static DocumentInjectionAnalysisResult DocumentInjectionAnalysisResult(bool attackDetected = default)
         {
             return new DocumentInjectionAnalysisResult(attackDetected, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A request to evaluate and enforce an applicable policy for one workload event. The service uses the first policy it can resolve from policyId and then from the policy binding for targetResourceId, in that order. The request fails if neither selector resolves a policy. </summary>
+        /// <param name="policyId"> The identifier of a policy available to the Content Safety resource. When provided, the service attempts to resolve this policy before using the policy bound to targetResourceId. </param>
+        /// <param name="targetResourceId"> The Azure resource identifier whose policy binding is resolved if no policy is resolved from policyId. The target resource must already have a policy binding available to the Content Safety resource. </param>
+        /// <param name="source"> The workload event source. The source selects the policy intervention point. </param>
+        /// <param name="content"> The content to evaluate. For input and output sources, provide nonempty plain text. For pre_tool_call, provide a string containing a JSON-encoded object with the proposed tool arguments. For post_tool_call, provide a string containing the JSON-encoded tool result. </param>
+        /// <param name="toolName"> The tool name. Required and nonempty for tool-call sources and not allowed for input or output sources. </param>
+        /// <param name="toolCallId"> An optional caller-provided tool-call identifier. The service generates one when omitted for a tool-call source. </param>
+        /// <param name="toolArguments"> A string containing a JSON-encoded object with the original arguments for a completed tool call. This property applies only to post_tool_call. The service uses an empty object when omitted. </param>
+        /// <param name="toolResultIsError"> Whether the completed tool call returned an error. This property applies only to post_tool_call. </param>
+        /// <param name="toolDurationMs"> The non-negative duration of the completed tool call, in milliseconds. This property applies only to post_tool_call. </param>
+        /// <param name="context"> Optional agent, session, and request context supplied to policy evaluation. </param>
+        /// <returns> A new <see cref="ContentSafety.UnifiedModerateConfig"/> instance for mocking. </returns>
+        public static UnifiedModerateConfig UnifiedModerateConfig(string policyId = default, string targetResourceId = default, UnifiedModerateSource source = default, string content = default, string toolName = default, string toolCallId = default, string toolArguments = default, bool? toolResultIsError = default, double? toolDurationMs = default, UnifiedModerateContext context = default)
+        {
+            return new UnifiedModerateConfig(
+                policyId,
+                targetResourceId,
+                source,
+                content,
+                toolName,
+                toolCallId,
+                toolArguments,
+                toolResultIsError,
+                toolDurationMs,
+                context,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Optional agent, session, and request context supplied to policy evaluation. </summary>
+        /// <param name="agentId"> Caller-provided identifier of the agent associated with the event. </param>
+        /// <param name="sessionId"> Caller-provided identifier of the session associated with the event. </param>
+        /// <param name="sequence"> Zero-based event sequence within the session, when available. </param>
+        /// <param name="correlationId"> Caller-provided end-to-end correlation identifier. </param>
+        /// <param name="userId"> Caller-provided workload user identifier. </param>
+        /// <param name="tenantId"> Caller-provided workload tenant identifier. </param>
+        /// <param name="extensions"> A string containing a JSON-encoded object with validated host-specific context extensions. </param>
+        /// <returns> A new <see cref="ContentSafety.UnifiedModerateContext"/> instance for mocking. </returns>
+        public static UnifiedModerateContext UnifiedModerateContext(string agentId = default, string sessionId = default, long? sequence = default, string correlationId = default, string userId = default, string tenantId = default, string extensions = default)
+        {
+            return new UnifiedModerateContext(
+                agentId,
+                sessionId,
+                sequence,
+                correlationId,
+                userId,
+                tenantId,
+                extensions,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The enforced result of unified moderation. </summary>
+        /// <param name="verdict"> The caller-facing enforcement outcome. </param>
+        /// <param name="reason"> An optional machine-readable policy reason. </param>
+        /// <param name="content"> The original or transformed content when allowed, using the same source-specific representation as the request content. Structured content is returned as a string containing the JSON-encoded value. This property is omitted when blocked. </param>
+        /// <param name="acsVerdict"> The complete Agent Control Specification policy verdict. </param>
+        /// <returns> A new <see cref="ContentSafety.UnifiedModerateResult"/> instance for mocking. </returns>
+        public static UnifiedModerateResult UnifiedModerateResult(UnifiedModerateVerdict verdict = default, string reason = default, string content = default, AcsVerdict acsVerdict = default)
+        {
+            return new UnifiedModerateResult(verdict, reason, content, acsVerdict, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The complete Agent Control Specification policy verdict. </summary>
+        /// <param name="decision"> The canonical policy decision. </param>
+        /// <param name="reason"> An optional machine-readable reason for the decision. </param>
+        /// <param name="message"> An optional human-readable message for the decision. </param>
+        /// <param name="warnings"> Optional non-blocking warnings produced by policy evaluation. </param>
+        /// <param name="approval"> Optional approval metadata for a deny decision. Unified Moderate does not invoke an approval workflow, so the content remains blocked. </param>
+        /// <param name="transform"> Canonical transform metadata. Required when the decision is transform. </param>
+        /// <param name="evidence"> Optional policy evidence and verification pointers. </param>
+        /// <param name="harmResults"> Optional moderation results keyed by harm category. Category names come from the policy harm configuration and are not restricted to a predefined set. A policy deny that is unrelated to a configured harm can omit this property. </param>
+        /// <returns> A new <see cref="ContentSafety.AcsVerdict"/> instance for mocking. </returns>
+        public static AcsVerdict AcsVerdict(AcsDecision decision = default, string reason = default, string message = default, IEnumerable<string> warnings = default, AcsApproval approval = default, AcsTransform transform = default, IEnumerable<AcsEvidence> evidence = default, IDictionary<string, AcsHarmResult> harmResults = default)
+        {
+            warnings ??= new ChangeTrackingList<string>();
+            evidence ??= new ChangeTrackingList<AcsEvidence>();
+            harmResults ??= new ChangeTrackingDictionary<string, AcsHarmResult>();
+
+            return new AcsVerdict(
+                decision,
+                reason,
+                message,
+                warnings.ToList(),
+                approval,
+                transform,
+                evidence.ToList(),
+                harmResults,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Approval metadata returned by an ACS deny decision. Unified Moderate does not invoke an approval workflow. </summary>
+        /// <param name="type"> The type of approval required by the policy. </param>
+        /// <returns> A new <see cref="ContentSafety.AcsApproval"/> instance for mocking. </returns>
+        public static AcsApproval AcsApproval(string @type = default)
+        {
+            return new AcsApproval(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A canonical ACS transform applied by Unified Moderate. </summary>
+        /// <param name="path"> The transformation target path. For input and output sources, the allowed path is `$target.content`. For tool sources, `$target` replaces the complete value and a path rooted at `$target` replaces an individual member. </param>
+        /// <param name="value"> A string containing the JSON-encoded replacement value applied at the target path. </param>
+        /// <returns> A new <see cref="ContentSafety.AcsTransform"/> instance for mocking. </returns>
+        public static AcsTransform AcsTransform(string path = default, string value = default)
+        {
+            return new AcsTransform(path, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evidence or a verification pointer returned by policy evaluation. </summary>
+        /// <param name="id"> An optional evidence identifier. </param>
+        /// <param name="type"> An optional evidence type. </param>
+        /// <param name="uri"> An optional location containing or describing the evidence. </param>
+        /// <param name="description"> An optional human-readable evidence description. </param>
+        /// <returns> A new <see cref="ContentSafety.AcsEvidence"/> instance for mocking. </returns>
+        public static AcsEvidence AcsEvidence(string id = default, string @type = default, Uri uri = default, string description = default)
+        {
+            return new AcsEvidence(id, @type, uri, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The moderation and policy-attribution result for one harm category. The category name is the key in the harmResults map and is not restricted to a predefined set. </summary>
+        /// <param name="blocked"> Whether this harm contributed to the overall ACS verdict blocking the content. </param>
+        /// <param name="detected"> Whether this harm was detected, regardless of whether it caused the overall verdict to block. </param>
+        /// <param name="severity"> An optional harm-specific severity value. The value is defined by the moderation model or policy that produced the result. </param>
+        /// <param name="details"> Optional blocklist results. Each item identifies one evaluated blocklist and whether it was detected. </param>
+        /// <param name="url"> An optional internet location associated with detected protected material. </param>
+        /// <param name="license"> An optional license description associated with detected protected material. </param>
+        /// <returns> A new <see cref="ContentSafety.AcsHarmResult"/> instance for mocking. </returns>
+        public static AcsHarmResult AcsHarmResult(bool blocked = default, bool detected = default, string severity = default, IEnumerable<AcsHarmDetail> details = default, Uri url = default, string license = default)
+        {
+            details ??= new ChangeTrackingList<AcsHarmDetail>();
+
+            return new AcsHarmResult(
+                blocked,
+                detected,
+                severity,
+                details.ToList(),
+                url,
+                license,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The detection result for one blocklist evaluated as part of a harm result. </summary>
+        /// <param name="detected"> Whether the blocklist was detected. </param>
+        /// <param name="id"> The identifier of the evaluated blocklist. </param>
+        /// <returns> A new <see cref="ContentSafety.AcsHarmDetail"/> instance for mocking. </returns>
+        public static AcsHarmDetail AcsHarmDetail(bool detected = default, string id = default)
+        {
+            return new AcsHarmDetail(detected, id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input describing the media to inspect using Content Provenance Detection. </summary>
+        /// <param name="content"> Source content to inspect. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectProvenanceOptions"/> instance for mocking. </returns>
+        public static DetectProvenanceOptions DetectProvenanceOptions(ProvenanceContent content = default)
+        {
+            return new DetectProvenanceOptions(content, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Source content descriptor for a Content Provenance Detection operation. </summary>
+        /// <param name="uri"> Blob URI of the media to inspect. Media up to 100 MB is supported. Supported formats: image (JPEG, PNG, GIF, WebP), audio (MP3, WAV), and video (MP4). </param>
+        /// <returns> A new <see cref="ContentSafety.ProvenanceContent"/> instance for mocking. </returns>
+        public static ProvenanceContent ProvenanceContent(Uri uri = default)
+        {
+            return new ProvenanceContent(uri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of a Content Provenance Detection operation. </summary>
+        /// <param name="outcome"> Top-level outcome of the Content Provenance Detection operation. </param>
+        /// <param name="results"> Detected provenance signals. Empty or omitted when `outcome` is `NoProvenanceDetected`. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectProvenanceResult"/> instance for mocking. </returns>
+        public static DetectProvenanceResult DetectProvenanceResult(DetectOutcome outcome = default, IEnumerable<DetectedProvenance> results = default)
+        {
+            results ??= new ChangeTrackingList<DetectedProvenance>();
+
+            return new DetectProvenanceResult(outcome, results.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Microsoft-issued provenance signal indicating the media was created or modified using AI. </summary>
+        /// <param name="type"> Detected provenance record type. </param>
+        /// <param name="provider"> Identifier of the Microsoft provider that generated the content. </param>
+        /// <param name="modelName"> Identifier of the generating AI model when available. </param>
+        /// <param name="timestamp"> Generation timestamp recorded in the provenance signal. </param>
+        /// <returns> A new <see cref="ContentSafety.DetectedProvenance"/> instance for mocking. </returns>
+        public static DetectedProvenance DetectedProvenance(DetectedProvenanceType? @type = default, string provider = default, string modelName = default, DateTimeOffset? timestamp = default)
+        {
+            return new DetectedProvenance(@type, provider, modelName, timestamp, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status and result of an asynchronous Content Provenance Detection operation. </summary>
+        /// <param name="id"> The unique ID of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="error"> Error object that describes the error when status is "Failed". </param>
+        /// <param name="result"> The result of the operation. </param>
+        /// <param name="kind"> Kind of Content Provenance Detection operation. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <returns> A new <see cref="ContentSafety.ProvenanceDetectOperation"/> instance for mocking. </returns>
+        public static ProvenanceDetectOperation ProvenanceDetectOperation(string id = default, OperationState status = default, ResponseError error = default, DetectProvenanceResult result = default, ProvenanceOperationKind kind = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default)
+        {
+            return new ProvenanceDetectOperation(
+                id,
+                status,
+                error,
+                result,
+                kind,
+                createdOn,
+                lastUpdatedOn,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The request to add blocklistItems to a text blocklist. </summary>

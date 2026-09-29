@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    config = BinaryData.FromString(prop.Value.GetRawText());
+                    config = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("files"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FunctionEnvelopeProperties(

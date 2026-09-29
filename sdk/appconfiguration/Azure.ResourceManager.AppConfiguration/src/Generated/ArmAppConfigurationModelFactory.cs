@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="skuName"> The SKU name of the configuration store. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationStoreData"/> instance for mocking. </returns>
-        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppConfigurationProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, string endpoint = default, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = default, AppConfigurationPublicNetworkAccess? publicNetworkAccess = default, bool? disableLocalAuth = default, int? softDeleteRetentionInDays = default, long? defaultKeyValueRevisionRetentionPeriodInSeconds = default, bool? enablePurgeProtection = default, AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default, AppConfigurationCreateMode? createMode = default, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = default, ResourceIdentifier telemetryResourceId = default, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
+        public static AppConfigurationStoreData AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, IEnumerable<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, long? defaultKeyValueRevisionRetentionPeriodInSeconds, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, AppConfigurationKeyVaultProperties encryptionKeyVaultProperties, ResourceIdentifier telemetryResourceId, IEnumerable<AppConfigurationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources, ResourceIdentifier azureFrontDoorResourceId = default, ManagedServiceIdentity identity = default, string skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     provisioningState,
                     createdOn,
                     endpoint,
-                    new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                    encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
                     publicNetworkAccess,
                     disableLocalAuth,
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     enablePurgeProtection,
                     dataPlaneProxy,
                     createMode,
-                    new TelemetryProperties(telemetryResourceId, default),
-                    new AppConfigurationManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>()).ToList(), default),
-                    new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
+                    telemetryResourceId is null ? default : new TelemetryProperties(telemetryResourceId, default),
+                    managedOnBehalfOfMoboBrokerResources is null ? default : new AppConfigurationManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<AppConfigurationMoboBrokerResourceInfo>()).ToList(), default),
+                    azureFrontDoorResourceId is null ? default : new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
                     default),
                 identity,
                 skuName is null ? default : new AppConfigurationSku(skuName, default),
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="privateEndpointId"> The resource Id for private endpoint. </param>
         /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
-        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationPrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default)
+        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, AppConfigurationPrivateLinkServiceConnectionState connectionState, ResourceIdentifier privateEndpointId)
         {
             return new AppConfigurationPrivateEndpointConnectionReference(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AppConfigurationStorePatch(encryptionKeyVaultProperties is null && disableLocalAuth is null && publicNetworkAccess is null && enablePurgeProtection is null && dataPlaneProxy is null && defaultKeyValueRevisionRetentionPeriodInSeconds is null && telemetryResourceId is null && azureFrontDoorResourceId is null ? default : new ConfigurationStorePropertiesUpdateParameters(
-                new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                 disableLocalAuth,
                 publicNetworkAccess,
                 enablePurgeProtection,
                 dataPlaneProxy,
                 defaultKeyValueRevisionRetentionPeriodInSeconds,
-                new TelemetryProperties(telemetryResourceId, default),
-                new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
+                telemetryResourceId is null ? default : new TelemetryProperties(telemetryResourceId, default),
+                azureFrontDoorResourceId is null ? default : new AzureFrontDoorProperties(azureFrontDoorResourceId, default),
                 default), identity, skuName is null ? default : new AppConfigurationSku(skuName, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="privateEndpointId"> The resource Id for private endpoint. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AppConfigurationPrivateEndpointConnectionData AppConfigurationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationPrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default)
+        public static AppConfigurationPrivateEndpointConnectionData AppConfigurationPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, AppConfigurationPrivateLinkServiceConnectionState connectionState, ResourceIdentifier privateEndpointId)
         {
             return new AppConfigurationPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="provisioningState"> The provisioning state of the replica. </param>
         /// <param name="location"> The location of the replica. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationReplicaData"/> instance for mocking. </returns>
-        public static AppConfigurationReplicaData AppConfigurationReplicaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string endpoint = default, AppConfigurationReplicaProvisioningState? provisioningState = default, AzureLocation? location = default)
+        public static AppConfigurationReplicaData AppConfigurationReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpoint, AppConfigurationReplicaProvisioningState? provisioningState, AzureLocation? location)
         {
             return new AppConfigurationReplicaData(
                 id,
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppConfigurationProvisioningState? provisioningState = default, AppConfigurationSnapshotStatus? status = default, IEnumerable<SnapshotKeyValueFilter> filters = default, SnapshotCompositionType? compositionType = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, long? retentionPeriod = default, long? size = default, long? itemsCount = default, IDictionary<string, string> tags = default, ETag? eTag = default)
+        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IEnumerable<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag)
         {
             return new AppConfigurationSnapshotData(
                 id,
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     provisioningState,
                     createdOn,
                     endpoint,
-                    new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                    encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
                     publicNetworkAccess,
                     disableLocalAuth,
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
                 default);
         }
 
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     provisioningState,
                     createdOn,
                     endpoint,
-                    new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
+                    encryptionKeyVaultProperties is null ? default : new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties, default),
                     (privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>()).ToList(),
                     publicNetworkAccess,
                     disableLocalAuth,
