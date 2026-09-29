@@ -6,38 +6,43 @@
 #nullable disable
 
 using System;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
+    /// <summary> Properties of a container. </summary>
     internal partial class ContainerPropertiesInternal
     {
         /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
-        /// <param name="lastModified"> The date-time that the container was last modified. </param>
-        /// <param name="eTag"> The ETag of the container. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag)
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
+            Argument.AssertNotNull(etag, nameof(etag));
+
             LastModified = lastModified;
-            ETag = eTag;
+            Etag = etag;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
-        /// <param name="lastModified"> The date-time that the container was last modified. </param>
-        /// <param name="eTag"> The ETag of the container. </param>
-        /// <param name="leaseStatus"> The lease status of the container. </param>
-        /// <param name="leaseState"> The lease state of the container. </param>
-        /// <param name="leaseDuration"> The lease duration of the container. </param>
-        /// <param name="publicAccess"> The public access type of the container. </param>
-        /// <param name="hasImmutabilityPolicy"> Whether the container has an immutability policy. </param>
-        /// <param name="hasLegalHold"> Whether the container has a legal hold. </param>
-        /// <param name="defaultEncryptionScope"> The default encryption scope of the container. </param>
-        /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
-        /// <param name="deletedTime"> The date-time the container was deleted. </param>
-        /// <param name="remainingRetentionDays"> The remaining retention days of the container. </param>
-        /// <param name="isImmutableStorageWithVersioningEnabled"> Whether immutable storage with versioning is enabled. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
+        /// <param name="leaseStatus"></param>
+        /// <param name="leaseState"></param>
+        /// <param name="leaseDuration"></param>
+        /// <param name="publicAccess"></param>
+        /// <param name="hasImmutabilityPolicy"></param>
+        /// <param name="hasLegalHold"></param>
+        /// <param name="defaultEncryptionScope"></param>
+        /// <param name="preventEncryptionScopeOverride"></param>
+        /// <param name="deletedTime"></param>
+        /// <param name="remainingRetentionDays"></param>
+        /// <param name="isImmutableStorageWithVersioningEnabled"> Indicates if version level worm is enabled on this container. </param>
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
         {
             LastModified = lastModified;
-            ETag = eTag;
+            Etag = etag;
             LeaseStatus = leaseStatus;
             LeaseState = leaseState;
             LeaseDuration = leaseDuration;
@@ -51,43 +56,31 @@ namespace Azure.Storage.Blobs.Models
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
         }
 
-        /// <summary> The date-time that the container was last modified. </summary>
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset LastModified { get; }
-
-        /// <summary> The ETag of the container. </summary>
-        public string ETag { get; }
-
-        /// <summary> The lease status of the container. </summary>
+        /// <summary> Gets the etag. </summary>
+        public string Etag { get; }
+        /// <summary> Gets the lease status. </summary>
         public LeaseStatus? LeaseStatus { get; }
-
-        /// <summary> The lease state of the container. </summary>
+        /// <summary> Gets the lease state. </summary>
         public LeaseState? LeaseState { get; }
-
-        /// <summary> The lease duration of the container. </summary>
+        /// <summary> Gets the lease duration. </summary>
         public LeaseDurationType? LeaseDuration { get; }
-
-        /// <summary> The public access type of the container. </summary>
+        /// <summary> Gets the public access. </summary>
         public PublicAccessType? PublicAccess { get; }
-
-        /// <summary> Whether the container has an immutability policy. </summary>
+        /// <summary> Gets the has immutability policy. </summary>
         public bool? HasImmutabilityPolicy { get; }
-
-        /// <summary> Whether the container has a legal hold. </summary>
+        /// <summary> Gets the has legal hold. </summary>
         public bool? HasLegalHold { get; }
-
-        /// <summary> The default encryption scope of the container. </summary>
+        /// <summary> Gets the default encryption scope. </summary>
         public string DefaultEncryptionScope { get; }
-
-        /// <summary> Whether to prevent encryption scope override. </summary>
+        /// <summary> Gets the prevent encryption scope override. </summary>
         public bool? PreventEncryptionScopeOverride { get; }
-
-        /// <summary> The date-time the container was deleted. </summary>
+        /// <summary> Gets the deleted time. </summary>
         public DateTimeOffset? DeletedTime { get; }
-
-        /// <summary> The remaining retention days of the container. </summary>
+        /// <summary> Gets the remaining retention days. </summary>
         public int? RemainingRetentionDays { get; }
-
-        /// <summary> Whether immutable storage with versioning is enabled. </summary>
+        /// <summary> Indicates if version level worm is enabled on this container. </summary>
         public bool? IsImmutableStorageWithVersioningEnabled { get; }
     }
 }

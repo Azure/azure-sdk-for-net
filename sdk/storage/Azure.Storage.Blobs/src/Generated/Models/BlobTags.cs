@@ -8,15 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> A list of blob tags. </summary>
+    /// <summary> Blob tags. </summary>
     internal partial class BlobTags
     {
         /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
-        /// <param name="blobTagSet"> A list of blob tags. </param>
+        /// <param name="blobTagSet"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
         public BlobTags(IEnumerable<BlobTag> blobTagSet)
         {
@@ -26,13 +26,13 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
-        /// <param name="blobTagSet"> A list of blob tags. </param>
+        /// <param name="blobTagSet"></param>
         internal BlobTags(IList<BlobTag> blobTagSet)
         {
             BlobTagSet = blobTagSet;
         }
 
-        /// <summary> A list of blob tags. </summary>
+        /// <summary> Gets the blob tag set. </summary>
         public IList<BlobTag> BlobTagSet { get; }
     }
 }

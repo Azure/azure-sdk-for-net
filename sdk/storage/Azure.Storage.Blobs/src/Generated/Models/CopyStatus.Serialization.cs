@@ -11,35 +11,21 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class CopyStatusExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CopyStatus value) => value switch
         {
             CopyStatus.Pending => "pending",
             CopyStatus.Success => "success",
-            CopyStatus.Failed => "failed",
             CopyStatus.Aborted => "aborted",
+            CopyStatus.Failed => "failed",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CopyStatus value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static CopyStatus ToCopyStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pending"))
-            {
-                return CopyStatus.Pending;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success"))
-            {
-                return CopyStatus.Success;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
-            {
-                return CopyStatus.Failed;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "aborted"))
-            {
-                return CopyStatus.Aborted;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pending")) return CopyStatus.Pending;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success")) return CopyStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "aborted")) return CopyStatus.Aborted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return CopyStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CopyStatus value.");
         }
     }

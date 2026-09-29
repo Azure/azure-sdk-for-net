@@ -5,23 +5,28 @@
 
 #nullable disable
 
+using System;
+using Azure.Storage.Common;
+
 namespace Azure.Storage.Blobs.Models
 {
+    /// <summary> Key information. </summary>
     internal partial class KeyInfo
     {
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
-        /// <param name="start"> The date-time the key is active. </param>
-        /// <param name="expiry"> The date-time the key expires. </param>
-        public KeyInfo(string start, string expiry)
+        /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
+        public KeyInfo(string expiry)
         {
-            Start = start;
+            Argument.AssertNotNull(expiry, nameof(expiry));
+
             Expiry = expiry;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
-        /// <param name="start"> The date-time the key is active. </param>
-        /// <param name="expiry"> The date-time the key expires. </param>
-        /// <param name="delegatedUserTid"> The delegated user tenant ID in Entra ID. </param>
+        /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
+        /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
+        /// <param name="delegatedUserTid"> The delegated user tenant id in Azure AD. </param>
         internal KeyInfo(string start, string expiry, string delegatedUserTid)
         {
             Start = start;
@@ -29,13 +34,11 @@ namespace Azure.Storage.Blobs.Models
             DelegatedUserTid = delegatedUserTid;
         }
 
-        /// <summary> The date-time the key is active. </summary>
-        public string Start { get; }
-
-        /// <summary> The date-time the key expires. </summary>
+        /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>
+        public string Start { get; set; }
+        /// <summary> The date-time the key expires in ISO 8601 UTC time. </summary>
         public string Expiry { get; }
-
-        /// <summary> The delegated user tenant ID in Entra ID. </summary>
+        /// <summary> The delegated user tenant id in Azure AD. </summary>
         public string DelegatedUserTid { get; set; }
     }
 }

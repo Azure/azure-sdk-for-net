@@ -9,14 +9,13 @@ using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Blobs;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Microsoft.Extensions.Azure
 {
     /// <summary>
     /// Extension methods to add <see cref="BlobServiceClient"/> client to clients builder.
     /// </summary>
-    public static partial class BlobClientBuilderExtensions
+    public static class BlobClientBuilderExtensions
     {
         /// <summary>
         /// Registers a <see cref="BlobServiceClient"/> instance with the provided <paramref name="connectionString"/>

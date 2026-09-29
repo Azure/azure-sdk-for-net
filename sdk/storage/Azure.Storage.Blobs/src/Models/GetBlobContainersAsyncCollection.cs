@@ -67,7 +67,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             return Page<BlobContainerItem>.FromValues(
-                ((IReadOnlyList<ContainerItemInternal>)response.Value.ContainerItems).ToBlobContainerItems(),
+                response.Value.ContainerItems.ToBlobContainerItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

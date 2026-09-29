@@ -14,7 +14,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
-using static Azure.Storage.Blobs.BlobExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs
@@ -557,7 +556,7 @@ namespace Azure.Storage.Blobs
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                endpoint: uri,
+                url: uri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         #endregion ctors
 
@@ -858,11 +857,11 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response<ListContainersSegmentResponse> response;
+                    ResponseWithHeaders<ListContainersSegmentResponse, ServiceListContainersSegmentHeaders> response;
 
                     if (async)
                     {
-                        response = await ServiceRestClient.GetContainersSegmentAsync(
+                        response = await ServiceRestClient.ListContainersSegmentAsync(
                             prefix: prefix,
                             marker: continuationToken,
                             maxresults: pageSizeHint,
@@ -872,7 +871,7 @@ namespace Azure.Storage.Blobs
                     }
                     else
                     {
-                        response = ServiceRestClient.GetContainersSegment(
+                        response = ServiceRestClient.ListContainersSegment(
                             prefix: prefix,
                             marker: continuationToken,
                             maxresults: pageSizeHint,
@@ -1014,7 +1013,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response response;
+                    ResponseWithHeaders<ServiceGetAccountInfoHeaders> response;
 
                     if (async)
                     {
@@ -1029,8 +1028,8 @@ namespace Azure.Storage.Blobs
                     }
 
                     return Response.FromValue(
-                        response.ToAccountInfo(AccountInfoHeaderType.Service),
-                        response);
+                        response.ToAccountInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1147,7 +1146,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response<BlobServiceProperties> response;
+                    ResponseWithHeaders<BlobServiceProperties, ServiceGetPropertiesHeaders> response;
 
                     if (async)
                     {
@@ -1303,24 +1302,23 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Argument.AssertNotNull(properties, nameof(properties));
-                    Response response;
+                    ResponseWithHeaders<ServiceSetPropertiesHeaders> response;
 
                     if (async)
                     {
                         response = await ServiceRestClient.SetPropertiesAsync(
-                            storageServiceProperties: properties,
+                            blobServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            storageServiceProperties: properties,
+                            blobServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
-                    return response;
+                    return response.GetRawResponse();
                 }
                 catch (Exception ex)
                 {
@@ -1443,7 +1441,7 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response<BlobServiceStatistics> response;
+                    ResponseWithHeaders<BlobServiceStatistics, ServiceGetStatisticsHeaders> response;
 
                     if (async)
                     {
@@ -1709,12 +1707,13 @@ namespace Azure.Storage.Blobs
                         throw Errors.InvalidDateTimeUtc(nameof(expiresOn));
                     }
 
-                    KeyInfo keyInfo = new KeyInfo(
-                        startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
-                        expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
-                        delegatedUserTenantId);
+                    KeyInfo keyInfo = new KeyInfo(expiresOn.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture))
+                    {
+                        Start = startsOn?.ToString(Constants.Iso8601Format, CultureInfo.InvariantCulture),
+                        DelegatedUserTid = delegatedUserTenantId
+                    };
 
-                    Response<UserDelegationKey> response;
+                    ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> response;
 
                     if (async)
                     {
@@ -2158,7 +2157,7 @@ namespace Azure.Storage.Blobs
                         containerClient = GetBlobContainerClient(deletedContainerName);
                     }
 
-                    Response response;
+                    ResponseWithHeaders<ContainerRestoreHeaders> response;
 
                     if (async)
                     {
@@ -2338,8 +2337,7 @@ namespace Azure.Storage.Blobs
 
                     BlobContainerClient containerClient = GetBlobContainerClient(destinationContainerName);
 
-                    Response response;
-                    Argument.AssertNotNull(sourceContainerName, nameof(sourceContainerName));
+                    ResponseWithHeaders<ContainerRenameHeaders> response;
 
                     if (async)
                     {
@@ -2465,12 +2463,12 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-                    Response<FilterBlobSegment> response;
+                    ResponseWithHeaders<FilterBlobSegment, ServiceFilterBlobsHeaders> response;
 
                     if (async)
                     {
                         response = await ServiceRestClient.FilterBlobsAsync(
-                            filterExpression: expression,
+                            where: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken)
@@ -2479,7 +2477,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ServiceRestClient.FilterBlobs(
-                            filterExpression: expression,
+                            where: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken);

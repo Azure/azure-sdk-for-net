@@ -7,44 +7,40 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The query format settings. </summary>
+    /// <summary> The QueryFormat. </summary>
     internal partial class QueryFormat
     {
         /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
-        /// <param name="type"> The query type. </param>
-        public QueryFormat(QueryFormatType @type)
+        /// <param name="type"> The quick query format type. </param>
+        public QueryFormat(QueryFormatType type)
         {
-            Type = @type;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
-        /// <param name="type"> The query type. </param>
-        /// <param name="delimitedTextConfiguration"> The delimited text configuration. </param>
-        /// <param name="jsonTextConfiguration"> The JSON text configuration. </param>
-        /// <param name="arrowConfiguration"> The Apache Arrow configuration. </param>
-        /// <param name="parquetTextConfiguration"> The Parquet configuration. </param>
-        internal QueryFormat(QueryFormatType @type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, ParquetConfiguration parquetTextConfiguration)
+        /// <param name="type"> The quick query format type. </param>
+        /// <param name="delimitedTextConfiguration"> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </param>
+        /// <param name="jsonTextConfiguration"> json text configuration. </param>
+        /// <param name="arrowConfiguration"> Groups the settings used for formatting the response if the response should be Arrow formatted. </param>
+        /// <param name="parquetTextConfiguration"> parquet configuration. </param>
+        internal QueryFormat(QueryFormatType type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, object parquetTextConfiguration)
         {
-            Type = @type;
+            Type = type;
             DelimitedTextConfiguration = delimitedTextConfiguration;
             JsonTextConfiguration = jsonTextConfiguration;
             ArrowConfiguration = arrowConfiguration;
             ParquetTextConfiguration = parquetTextConfiguration;
         }
 
-        /// <summary> The query type. </summary>
+        /// <summary> The quick query format type. </summary>
         public QueryFormatType Type { get; }
-
-        /// <summary> The delimited text configuration. </summary>
+        /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
         public DelimitedTextConfigurationInternal DelimitedTextConfiguration { get; set; }
-
-        /// <summary> The JSON text configuration. </summary>
+        /// <summary> json text configuration. </summary>
         public JsonTextConfigurationInternal JsonTextConfiguration { get; set; }
-
-        /// <summary> The Apache Arrow configuration. </summary>
+        /// <summary> Groups the settings used for formatting the response if the response should be Arrow formatted. </summary>
         public ArrowTextConfigurationInternal ArrowConfiguration { get; set; }
-
-        /// <summary> The Parquet configuration. </summary>
-        public ParquetConfiguration ParquetTextConfiguration { get; set; }
+        /// <summary> parquet configuration. </summary>
+        public object ParquetTextConfiguration { get; set; }
     }
 }

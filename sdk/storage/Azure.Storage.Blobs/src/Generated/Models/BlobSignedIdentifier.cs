@@ -5,15 +5,17 @@
 
 #nullable disable
 
+using System;
+using Azure.Storage.Common;
+
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> A signed identifier. </summary>
+    /// <summary> signed identifier. </summary>
     public partial class BlobSignedIdentifier
     {
-        /// <summary> The unique ID for the signed identifier. </summary>
+        /// <summary> a unique id. </summary>
         public string Id { get; set; }
-
-        /// <summary> The access policy for the signed identifier. </summary>
+        /// <summary> An Access policy. </summary>
         public BlobAccessPolicy AccessPolicy { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents a blob name. </summary>
+    /// <summary> The BlobName. </summary>
     internal partial class BlobName
     {
         /// <summary> Initializes a new instance of <see cref="BlobName"/>. </summary>
@@ -16,18 +16,17 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobName"/>. </summary>
-        /// <param name="encoded"> Whether the blob name is encoded. </param>
-        /// <param name="content"> The blob name. </param>
+        /// <param name="encoded"> Indicates if the blob name is encoded. </param>
+        /// <param name="content"> The name of the blob. </param>
         internal BlobName(bool? encoded, string content)
         {
             Encoded = encoded;
             Content = content;
         }
 
-        /// <summary> Whether the blob name is encoded. </summary>
+        /// <summary> Indicates if the blob name is encoded. </summary>
         public bool? Encoded { get; }
-
-        /// <summary> The blob name. </summary>
+        /// <summary> The name of the blob. </summary>
         public string Content { get; }
     }
 }

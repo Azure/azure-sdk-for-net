@@ -5,48 +5,52 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The result of the Find Blobs by Tags API. </summary>
+    /// <summary> The result of a Filter Blobs API call. </summary>
     internal partial class FilterBlobSegment
     {
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
-        /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="where"> The filter expression for the blobs. </param>
-        /// <param name="blobItems"> The list of filtered blobs. </param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobItems)
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="where"></param>
+        /// <param name="blobs"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/> or <paramref name="blobs"/> is null. </exception>
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
         {
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(@where, nameof(@where));
+            Argument.AssertNotNull(blobs, nameof(blobs));
+
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
-            BlobItems = blobItems.ToList();
+            Blobs = blobs.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
-        /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="where"> The filter expression for the blobs. </param>
-        /// <param name="blobItems"> The list of filtered blobs. </param>
-        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
-        internal FilterBlobSegment(string serviceEndpoint, string @where, IList<FilterBlobItem> blobItems, string nextMarker)
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="where"></param>
+        /// <param name="blobs"></param>
+        /// <param name="nextMarker"></param>
+        internal FilterBlobSegment(string serviceEndpoint, string @where, IReadOnlyList<FilterBlobItem> blobs, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
-            BlobItems = blobItems;
+            Blobs = blobs;
             NextMarker = nextMarker;
         }
 
-        /// <summary> The service endpoint. </summary>
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
-
-        /// <summary> The filter expression for the blobs. </summary>
+        /// <summary> Gets the where. </summary>
         public string Where { get; }
-
-        /// <summary> The list of filtered blobs. </summary>
-        public IList<FilterBlobItem> BlobItems { get; }
-
-        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
+        /// <summary> Gets the blobs. </summary>
+        public IReadOnlyList<FilterBlobItem> Blobs { get; }
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

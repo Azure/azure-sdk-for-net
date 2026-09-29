@@ -5,40 +5,44 @@
 
 #nullable disable
 
+using System;
+using Azure.Storage.Common;
+
 namespace Azure.Storage.Blobs.Models
 {
+    /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
         /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
-        /// <param name="type"> The arrow field type. </param>
-        public ArrowFieldInternal(string @type)
+        /// <param name="type"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        public ArrowFieldInternal(string type)
         {
-            Type = @type;
+            Argument.AssertNotNull(type, nameof(type));
+
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
-        /// <param name="type"> The arrow field type. </param>
-        /// <param name="name"> The arrow field name. </param>
-        /// <param name="precision"> The arrow field precision. </param>
-        /// <param name="scale"> The arrow field scale. </param>
-        internal ArrowFieldInternal(string @type, string name, int? precision, int? scale)
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <param name="precision"></param>
+        /// <param name="scale"></param>
+        internal ArrowFieldInternal(string type, string name, int? precision, int? scale)
         {
-            Type = @type;
+            Type = type;
             Name = name;
             Precision = precision;
             Scale = scale;
         }
 
-        /// <summary> The arrow field type. </summary>
+        /// <summary> Gets the type. </summary>
         public string Type { get; }
-
-        /// <summary> The arrow field name. </summary>
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
-
-        /// <summary> The arrow field precision. </summary>
+        /// <summary> Gets or sets the precision. </summary>
         public int? Precision { get; set; }
-
-        /// <summary> The arrow field scale. </summary>
+        /// <summary> Gets or sets the scale. </summary>
         public int? Scale { get; set; }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             return Page<TaggedBlobItem>.FromValues(
-                response.Value.BlobItems.ToBlobTagItems(),
+                response.Value.Blobs.ToBlobTagItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

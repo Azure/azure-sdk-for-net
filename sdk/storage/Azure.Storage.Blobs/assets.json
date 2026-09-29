@@ -2,5 +2,9 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/storage/Azure.Storage.Blobs",
+<<<<<<< HEAD
   "Tag": "net/storage/Azure.Storage.Blobs_d375d3a88b"
+=======
+  "Tag": "net/storage/Azure.Storage.Blobs_611cce7b12"
+>>>>>>> parent of a1c4b294423 (Migrate Azure.Storage.Blobs to New Generator (#56310))
 }

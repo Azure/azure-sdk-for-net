@@ -5,185 +5,59 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The service properties. </summary>
-    public partial class BlobServiceProperties : IPersistableModel<BlobServiceProperties>, IXmlSerializable
+    public partial class BlobServiceProperties : IXmlSerializable
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+            writer.WriteStartElement(nameHint ?? "StorageServiceProperties");
+            if (Common.Optional.IsDefined(Logging))
             {
-                case "X":
-                    using (Stream dataStream = data.ToStream())
-                    {
-                        return DeserializeBlobServiceProperties(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobServiceProperties)} does not support reading '{options.Format}' format.");
+                writer.WriteObjectValue(Logging, "Logging");
             }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+            if (Common.Optional.IsDefined(HourMetrics))
             {
-                case "X":
-                    using (MemoryStream stream = new MemoryStream(256))
-                    {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
-                        {
-                            WriteXml(writer, options, "StorageServiceProperties");
-                        }
-                        if (stream.Position > int.MaxValue)
-                        {
-                            return BinaryData.FromStream(stream);
-                        }
-                        else
-                        {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-                        }
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobServiceProperties)} does not support writing '{options.Format}' format.");
+                writer.WriteObjectValue(HourMetrics, "HourMetrics");
             }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobServiceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BlobServiceProperties IPersistableModel<BlobServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
-
-        /// <param name="blobServiceProperties"> The <see cref="BlobServiceProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BlobServiceProperties blobServiceProperties)
-        {
-            if (blobServiceProperties == null)
+            if (Common.Optional.IsDefined(MinuteMetrics))
             {
-                return null;
+                writer.WriteObjectValue(MinuteMetrics, "MinuteMetrics");
             }
-            XmlWriterContent content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(blobServiceProperties, ModelSerializationExtensions.WireOptions, "StorageServiceProperties");
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BlobServiceProperties"/> from. </param>
-        public static explicit operator BlobServiceProperties(Response response)
-        {
-            using Stream stream = response.ContentStream;
-            if (stream == null)
-            {
-                return default;
-            }
-
-            return DeserializeBlobServiceProperties(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        /// <param name="nameHint"> An optional name hint. </param>
-        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
-        {
-            if (nameHint != null)
-            {
-                writer.WriteStartElement(nameHint);
-            }
-
-            XmlModelWriteCore(writer, options);
-
-            if (nameHint != null)
-            {
-                writer.WriteEndElement();
-            }
-        }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
-            {
-                throw new FormatException($"The model {nameof(BlobServiceProperties)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(Logging))
-            {
-                writer.WriteStartElement("Logging");
-                writer.WriteObjectValue(Logging, options);
-                writer.WriteEndElement();
-            }
-            if (Optional.IsDefined(HourMetrics))
-            {
-                writer.WriteStartElement("HourMetrics");
-                writer.WriteObjectValue(HourMetrics, options);
-                writer.WriteEndElement();
-            }
-            if (Optional.IsDefined(MinuteMetrics))
-            {
-                writer.WriteStartElement("MinuteMetrics");
-                writer.WriteObjectValue(MinuteMetrics, options);
-                writer.WriteEndElement();
-            }
-            if (Optional.IsDefined(DefaultServiceVersion))
+            if (Common.Optional.IsDefined(DefaultServiceVersion))
             {
                 writer.WriteStartElement("DefaultServiceVersion");
                 writer.WriteValue(DefaultServiceVersion);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
+            if (Common.Optional.IsDefined(DeleteRetentionPolicy))
             {
-                writer.WriteStartElement("DeleteRetentionPolicy");
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
-                writer.WriteEndElement();
+                writer.WriteObjectValue(DeleteRetentionPolicy, "DeleteRetentionPolicy");
             }
-            if (Optional.IsDefined(StaticWebsite))
+            if (Common.Optional.IsDefined(StaticWebsite))
             {
-                writer.WriteStartElement("StaticWebsite");
-                writer.WriteObjectValue(StaticWebsite, options);
-                writer.WriteEndElement();
+                writer.WriteObjectValue(StaticWebsite, "StaticWebsite");
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Common.Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
-                foreach (BlobCorsRule item in Cors)
+                foreach (var item in Cors)
                 {
-                    writer.WriteStartElement("CorsRule");
-                    writer.WriteObjectValue(item, options);
-                    writer.WriteEndElement();
+                    writer.WriteObjectValue(item, "CorsRule");
                 }
                 writer.WriteEndElement();
             }
+            writer.WriteEndElement();
         }
 
-        /// <param name="element"> The xml element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element, ModelReaderWriterOptions options)
+        internal static BlobServiceProperties DeserializeBlobServiceProperties(XElement element)
         {
-            if (element == null)
-            {
-                return null;
-            }
-
             BlobAnalyticsLogging logging = default;
             BlobMetrics hourMetrics = default;
             BlobMetrics minuteMetrics = default;
@@ -191,63 +65,47 @@ namespace Azure.Storage.Blobs.Models
             BlobRetentionPolicy deleteRetentionPolicy = default;
             BlobStaticWebsite staticWebsite = default;
             IList<BlobCorsRule> cors = default;
-
-            foreach (var child in element.Elements())
+            if (element.Element("Logging") is XElement loggingElement)
             {
-                string localName = child.Name.LocalName;
-                if (localName == "Logging")
+                logging = BlobAnalyticsLogging.DeserializeBlobAnalyticsLogging(loggingElement);
+            }
+            if (element.Element("HourMetrics") is XElement hourMetricsElement)
+            {
+                hourMetrics = BlobMetrics.DeserializeBlobMetrics(hourMetricsElement);
+            }
+            if (element.Element("MinuteMetrics") is XElement minuteMetricsElement)
+            {
+                minuteMetrics = BlobMetrics.DeserializeBlobMetrics(minuteMetricsElement);
+            }
+            if (element.Element("DefaultServiceVersion") is XElement defaultServiceVersionElement)
+            {
+                defaultServiceVersion = (string)defaultServiceVersionElement;
+            }
+            if (element.Element("DeleteRetentionPolicy") is XElement deleteRetentionPolicyElement)
+            {
+                deleteRetentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(deleteRetentionPolicyElement);
+            }
+            if (element.Element("StaticWebsite") is XElement staticWebsiteElement)
+            {
+                staticWebsite = BlobStaticWebsite.DeserializeBlobStaticWebsite(staticWebsiteElement);
+            }
+            if (element.Element("Cors") is XElement corsElement)
+            {
+                var array = new List<BlobCorsRule>();
+                foreach (var e in corsElement.Elements("CorsRule"))
                 {
-                    logging = BlobAnalyticsLogging.DeserializeBlobAnalyticsLogging(child, options);
-                    continue;
+                    array.Add(BlobCorsRule.DeserializeBlobCorsRule(e));
                 }
-                if (localName == "HourMetrics")
-                {
-                    hourMetrics = BlobMetrics.DeserializeBlobMetrics(child, options);
-                    continue;
-                }
-                if (localName == "MinuteMetrics")
-                {
-                    minuteMetrics = BlobMetrics.DeserializeBlobMetrics(child, options);
-                    continue;
-                }
-                if (localName == "DefaultServiceVersion")
-                {
-                    defaultServiceVersion = (string)child;
-                    continue;
-                }
-                if (localName == "DeleteRetentionPolicy")
-                {
-                    deleteRetentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(child, options);
-                    continue;
-                }
-                if (localName == "StaticWebsite")
-                {
-                    staticWebsite = BlobStaticWebsite.DeserializeBlobStaticWebsite(child, options);
-                    continue;
-                }
-                if (localName == "Cors")
-                {
-                    List<BlobCorsRule> array = new List<BlobCorsRule>();
-                    foreach (var e in child.Elements("CorsRule"))
-                    {
-                        array.Add(BlobCorsRule.DeserializeBlobCorsRule(e, options));
-                    }
-                    cors = array;
-                    continue;
-                }
+                cors = array;
             }
             return new BlobServiceProperties(
                 logging,
                 hourMetrics,
                 minuteMetrics,
+                cors,
                 defaultServiceVersion,
                 deleteRetentionPolicy,
-                staticWebsite,
-                cors ?? new ChangeTrackingList<BlobCorsRule>());
+                staticWebsite);
         }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }
