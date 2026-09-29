@@ -232,16 +232,18 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        var allIds = new List<string>();
+        var uniqueIds = new List<string>();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
 
-        if (previousResponseId is not null && _records.TryGetValue(previousResponseId, out var prev))
+        // previousResponseId takes precedence so responses created after it are never included.
+        if (previousResponseId is not null)
         {
-            allIds.AddRange(prev.HistoryItemIds);
-            allIds.AddRange(prev.InputItemIds);
-            allIds.AddRange(prev.OutputItemIds);
+            if (_records.TryGetValue(previousResponseId, out var prev))
+            {
+                AppendRecordItemIds(prev, uniqueIds, seen);
+            }
         }
-
-        if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
+        else if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
         {
             lock (responseIds)
             {
@@ -249,15 +251,12 @@ internal sealed class FileResponsesProvider : ResponsesProvider
                 {
                     if (_records.TryGetValue(respId, out var r))
                     {
-                        allIds.AddRange(r.HistoryItemIds);
-                        allIds.AddRange(r.InputItemIds);
-                        allIds.AddRange(r.OutputItemIds);
+                        AppendRecordItemIds(r, uniqueIds, seen);
                     }
                 }
             }
         }
 
-        var uniqueIds = allIds.Distinct().ToList();
         IEnumerable<string> result = limit switch
         {
             -1 => uniqueIds,
@@ -265,6 +264,24 @@ internal sealed class FileResponsesProvider : ResponsesProvider
             _ => uniqueIds.TakeLast(limit),
         };
         return Task.FromResult(result);
+    }
+
+    private static void AppendRecordItemIds(ResponseRecord record, List<string> uniqueIds, HashSet<string> seen)
+    {
+        AppendUnique(record.HistoryItemIds, uniqueIds, seen);
+        AppendUnique(record.InputItemIds, uniqueIds, seen);
+        AppendUnique(record.OutputItemIds, uniqueIds, seen);
+    }
+
+    private static void AppendUnique(IEnumerable<string> ids, List<string> uniqueIds, HashSet<string> seen)
+    {
+        foreach (var id in ids)
+        {
+            if (seen.Add(id))
+            {
+                uniqueIds.Add(id);
+            }
+        }
     }
 
     /// <summary>

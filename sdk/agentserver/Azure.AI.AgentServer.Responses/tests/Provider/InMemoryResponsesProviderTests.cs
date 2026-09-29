@@ -118,6 +118,43 @@ public class InMemoryResponsesProviderTests : IDisposable
         Assert.That(conversationOnly, Is.EqualTo(unlimited));
     }
 
+    [Test]
+    public async Task GetHistoryItemIdsAsync_PreviousResponseIdExcludesLaterConversationResponses()
+    {
+        var first = new Models.ResponseObject("resp_first", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            Conversation = new ConversationReference("conv_cutoff"),
+        };
+        first.Output.Add(new OutputItemMessage(
+            "output_first", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        await _provider.CreateResponseAsync(
+            new CreateResponseRequest(
+                first,
+                new[] { new OutputItemMessage("input_first", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+                Array.Empty<string>()),
+            PlatformContext.Empty);
+
+        var second = new Models.ResponseObject("resp_second", "gpt-4o")
+        {
+            Status = ResponseStatus.Completed,
+            Conversation = new ConversationReference("conv_cutoff"),
+        };
+        second.Output.Add(new OutputItemMessage(
+            "output_second", MessageStatus.Completed, MessageRole.Assistant, Array.Empty<MessageContent>()));
+        await _provider.CreateResponseAsync(
+            new CreateResponseRequest(
+                second,
+                new[] { new OutputItemMessage("input_second", MessageStatus.Completed, MessageRole.User, Array.Empty<MessageContent>()) },
+                new[] { "input_first", "output_first" }),
+            PlatformContext.Empty);
+
+        var ids = (await _provider.GetHistoryItemIdsAsync(
+            first.Id, "conv_cutoff", -1, PlatformContext.Empty)).ToList();
+
+        Assert.That(ids, Is.EqualTo(new[] { "input_first", "output_first" }));
+    }
+
     // ---------------------------------------------------------------
     // T018: Cancellation
     // ---------------------------------------------------------------

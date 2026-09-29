@@ -333,53 +333,27 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        var allIds = new List<string>();
+        var uniqueIds = new List<string>();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
 
-        // previousResponseId path: return history + input + output of the previous response
+        // previousResponseId path: return history + input + output of the previous response.
+        // It takes precedence so responses created after it are never included.
         if (previousResponseId is not null)
         {
-            if (_historyItemIds.TryGetValue(previousResponseId, out var historyIds))
-            {
-                allIds.AddRange(historyIds);
-            }
-
-            if (_inputItemIds.TryGetValue(previousResponseId, out var inputIds))
-            {
-                allIds.AddRange(inputIds);
-            }
-
-            if (_outputItemIds.TryGetValue(previousResponseId, out var outputIds))
-            {
-                allIds.AddRange(outputIds);
-            }
+            AppendResponseItemIds(previousResponseId, uniqueIds, seen);
         }
-
         // conversationId path: return all item IDs from all responses in the conversation
-        if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
+        else if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
         {
             lock (responseIds)
             {
                 foreach (var respId in responseIds)
                 {
-                    if (_historyItemIds.TryGetValue(respId, out var historyIds))
-                    {
-                        allIds.AddRange(historyIds);
-                    }
-
-                    if (_inputItemIds.TryGetValue(respId, out var inputIds))
-                    {
-                        allIds.AddRange(inputIds);
-                    }
-
-                    if (_outputItemIds.TryGetValue(respId, out var outputIds))
-                    {
-                        allIds.AddRange(outputIds);
-                    }
+                    AppendResponseItemIds(respId, uniqueIds, seen);
                 }
             }
         }
 
-        var uniqueIds = allIds.Distinct().ToList();
         IEnumerable<string> result = limit switch
         {
             -1 => uniqueIds,
@@ -387,6 +361,35 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             _ => uniqueIds.TakeLast(limit),
         };
         return Task.FromResult(result);
+    }
+
+    private void AppendResponseItemIds(string responseId, List<string> uniqueIds, HashSet<string> seen)
+    {
+        if (_historyItemIds.TryGetValue(responseId, out var historyIds))
+        {
+            AppendUnique(historyIds, uniqueIds, seen);
+        }
+
+        if (_inputItemIds.TryGetValue(responseId, out var inputIds))
+        {
+            AppendUnique(inputIds, uniqueIds, seen);
+        }
+
+        if (_outputItemIds.TryGetValue(responseId, out var outputIds))
+        {
+            AppendUnique(outputIds, uniqueIds, seen);
+        }
+    }
+
+    private static void AppendUnique(IEnumerable<string> ids, List<string> uniqueIds, HashSet<string> seen)
+    {
+        foreach (var id in ids)
+        {
+            if (seen.Add(id))
+            {
+                uniqueIds.Add(id);
+            }
+        }
     }
 
     private static string? GetItemId(OutputItem item)
