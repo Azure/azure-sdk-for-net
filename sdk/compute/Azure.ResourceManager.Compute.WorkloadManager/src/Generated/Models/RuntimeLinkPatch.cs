@@ -39,22 +39,5 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal RuntimeLinkUpdateProperties Properties { get; set; }
-
-        /// <summary> The mutable capacity policy for the runtime composition. </summary>
-        public CapacityProfileUpdate RuntimeLinkUpdateCapacityProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CapacityProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new RuntimeLinkUpdateProperties();
-                }
-                Properties.CapacityProfile = value;
-            }
-        }
     }
 }

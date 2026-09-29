@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     /// <summary> Capacity policy for the runtime composition. </summary>
-    public partial class CapacityProfile
+    public partial class RuntimeLinkCapacityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CapacityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeLinkCapacityProfile"/>. </summary>
         /// <param name="minimumNodes"> The minimum number of execution nodes. </param>
         /// <param name="maximumNodes"> The maximum number of execution nodes. </param>
-        public CapacityProfile(int minimumNodes, int maximumNodes)
+        public RuntimeLinkCapacityProfile(int minimumNodes, int maximumNodes)
         {
             MinimumNodes = minimumNodes;
             MaximumNodes = maximumNodes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuntimeLinkCapacityProfile"/>. </summary>
         /// <param name="minimumNodes"> The minimum number of execution nodes. </param>
         /// <param name="maximumNodes"> The maximum number of execution nodes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityProfile(int minimumNodes, int maximumNodes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeLinkCapacityProfile(int minimumNodes, int maximumNodes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinimumNodes = minimumNodes;
             MaximumNodes = maximumNodes;

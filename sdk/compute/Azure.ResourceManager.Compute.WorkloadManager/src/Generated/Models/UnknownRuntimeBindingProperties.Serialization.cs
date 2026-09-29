@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            WorkloadManagerProvisioningState? provisioningState = default;
             ResourceIdentifier providerResourceId = default;
             RuntimeBindingProvisioningMode provisioningMode = default;
             RuntimeIdentityProfile identityProfile = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkloadManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("providerResourceId"u8))

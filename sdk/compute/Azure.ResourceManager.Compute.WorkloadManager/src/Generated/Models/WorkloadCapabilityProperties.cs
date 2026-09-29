@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     /// <summary> Properties of a capability enabled for a workload space. </summary>
-    public partial class CapabilityProperties
+    public partial class WorkloadCapabilityProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityProperties"/>. </summary>
         /// <param name="versionPolicy"> The version selection policy for the capability. </param>
-        public CapabilityProperties(VersionPolicy versionPolicy)
+        public WorkloadCapabilityProperties(WorkloadCapabilityVersionPolicy versionPolicy)
         {
             VersionPolicy = versionPolicy;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityProperties"/>. </summary>
         /// <param name="versionPolicy"> The version selection policy for the capability. </param>
         /// <param name="effectiveVersion"> The effective capability version selected by the service. </param>
         /// <param name="provisioningState"> The provisioning state of the capability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityProperties(VersionPolicy versionPolicy, string effectiveVersion, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadCapabilityProperties(WorkloadCapabilityVersionPolicy versionPolicy, string effectiveVersion, WorkloadManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VersionPolicy = versionPolicy;
             EffectiveVersion = effectiveVersion;
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         }
 
         /// <summary> The version selection policy for the capability. </summary>
-        public VersionPolicy VersionPolicy { get; set; }
+        public WorkloadCapabilityVersionPolicy VersionPolicy { get; set; }
 
         /// <summary> The effective capability version selected by the service. </summary>
         public string EffectiveVersion { get; }
 
         /// <summary> The provisioning state of the capability. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WorkloadManagerProvisioningState? ProvisioningState { get; }
     }
 }

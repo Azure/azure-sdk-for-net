@@ -12,22 +12,22 @@ using Azure.ResourceManager.Compute.WorkloadManager;
 namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     /// <summary> Mutable properties of a capability. </summary>
-    public partial class CapabilityPatch
+    public partial class WorkloadCapabilityPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityPatch"/>. </summary>
-        public CapabilityPatch()
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityPatch"/>. </summary>
+        public WorkloadCapabilityPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityPatch(IDictionary<string, string> tags, CapabilityUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadCapabilityPatch(IDictionary<string, string> tags, CapabilityUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -39,22 +39,5 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal CapabilityUpdateProperties Properties { get; set; }
-
-        /// <summary> The version selection policy for the capability. </summary>
-        public VersionPolicy? CapabilityUpdateVersionPolicy
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VersionPolicy;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CapabilityUpdateProperties();
-                }
-                Properties.VersionPolicy = value;
-            }
-        }
     }
 }

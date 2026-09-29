@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadSpaceProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the workload space. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadSpaceProperties(ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadSpaceProperties(WorkloadManagerProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the workload space. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WorkloadManagerProvisioningState? ProvisioningState { get; }
     }
 }

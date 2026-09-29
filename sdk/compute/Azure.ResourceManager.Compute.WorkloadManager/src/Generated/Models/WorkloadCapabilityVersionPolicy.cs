@@ -12,16 +12,16 @@ using Azure.ResourceManager.Compute.WorkloadManager;
 namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     /// <summary> The version selection policy for a capability. </summary>
-    public readonly partial struct VersionPolicy : IEquatable<VersionPolicy>
+    public readonly partial struct WorkloadCapabilityVersionPolicy : IEquatable<WorkloadCapabilityVersionPolicy>
     {
         private readonly string _value;
         /// <summary> Workload Manager selects and upgrades the capability version. </summary>
         private const string ServiceManagedValue = "ServiceManaged";
 
-        /// <summary> Initializes a new instance of <see cref="VersionPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityVersionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VersionPolicy(string value)
+        public WorkloadCapabilityVersionPolicy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         }
 
         /// <summary> Workload Manager selects and upgrades the capability version. </summary>
-        public static VersionPolicy ServiceManaged { get; } = new VersionPolicy(ServiceManagedValue);
+        public static WorkloadCapabilityVersionPolicy ServiceManaged { get; } = new WorkloadCapabilityVersionPolicy(ServiceManagedValue);
 
-        /// <summary> Determines if two <see cref="VersionPolicy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="WorkloadCapabilityVersionPolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VersionPolicy left, VersionPolicy right) => left.Equals(right);
+        public static bool operator ==(WorkloadCapabilityVersionPolicy left, WorkloadCapabilityVersionPolicy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VersionPolicy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="WorkloadCapabilityVersionPolicy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VersionPolicy left, VersionPolicy right) => !left.Equals(right);
+        public static bool operator !=(WorkloadCapabilityVersionPolicy left, WorkloadCapabilityVersionPolicy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VersionPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WorkloadCapabilityVersionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VersionPolicy(string value) => new VersionPolicy(value);
+        public static implicit operator WorkloadCapabilityVersionPolicy(string value) => new WorkloadCapabilityVersionPolicy(value);
 
-        /// <summary> Converts a string to a <see cref="VersionPolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WorkloadCapabilityVersionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VersionPolicy?(string value) => value == null ? null : new VersionPolicy(value);
+        public static implicit operator WorkloadCapabilityVersionPolicy?(string value) => value == null ? null : new WorkloadCapabilityVersionPolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VersionPolicy other && Equals(other);
+        public override bool Equals(object obj) => obj is WorkloadCapabilityVersionPolicy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VersionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WorkloadCapabilityVersionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

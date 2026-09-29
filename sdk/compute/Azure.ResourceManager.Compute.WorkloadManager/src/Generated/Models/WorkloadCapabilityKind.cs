@@ -12,16 +12,16 @@ using Azure.ResourceManager.Compute.WorkloadManager;
 namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     /// <summary> The capability enabled for a workload space. </summary>
-    public readonly partial struct CapabilityKind : IEquatable<CapabilityKind>
+    public readonly partial struct WorkloadCapabilityKind : IEquatable<WorkloadCapabilityKind>
     {
         private readonly string _value;
         /// <summary> Enables isolated agent sandbox execution. </summary>
         private const string AgentSandboxValue = "AgentSandbox";
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CapabilityKind(string value)
+        public WorkloadCapabilityKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         }
 
         /// <summary> Enables isolated agent sandbox execution. </summary>
-        public static CapabilityKind AgentSandbox { get; } = new CapabilityKind(AgentSandboxValue);
+        public static WorkloadCapabilityKind AgentSandbox { get; } = new WorkloadCapabilityKind(AgentSandboxValue);
 
-        /// <summary> Determines if two <see cref="CapabilityKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="WorkloadCapabilityKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CapabilityKind left, CapabilityKind right) => left.Equals(right);
+        public static bool operator ==(WorkloadCapabilityKind left, WorkloadCapabilityKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CapabilityKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="WorkloadCapabilityKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CapabilityKind left, CapabilityKind right) => !left.Equals(right);
+        public static bool operator !=(WorkloadCapabilityKind left, WorkloadCapabilityKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CapabilityKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WorkloadCapabilityKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapabilityKind(string value) => new CapabilityKind(value);
+        public static implicit operator WorkloadCapabilityKind(string value) => new WorkloadCapabilityKind(value);
 
-        /// <summary> Converts a string to a <see cref="CapabilityKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WorkloadCapabilityKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CapabilityKind?(string value) => value == null ? null : new CapabilityKind(value);
+        public static implicit operator WorkloadCapabilityKind?(string value) => value == null ? null : new WorkloadCapabilityKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CapabilityKind other && Equals(other);
+        public override bool Equals(object obj) => obj is WorkloadCapabilityKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CapabilityKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WorkloadCapabilityKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
     public partial class CapabilityData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.CapabilityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.CapabilityData>
     {
         public CapabilityData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind? Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind? Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         Azure.ResourceManager.Compute.WorkloadManager.CapabilityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.CapabilityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.CapabilityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.CapabilityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.WorkloadManager.CapabilityResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.WorkloadManager.CapabilityResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.WorkloadManager.CapabilityResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.WorkloadManager.CapabilityResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class ComputeWorkloadManagerExtensions
     {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
     public partial class WorkloadSpaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.WorkloadSpaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.WorkloadSpaceData>
     {
         public WorkloadSpaceData(Azure.Core.AzureLocation location) { }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? WorkloadSpaceProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? WorkloadSpaceProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -282,120 +282,27 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     public static partial class ArmComputeWorkloadManagerModelFactory
     {
-        public static Azure.ResourceManager.Compute.WorkloadManager.CapabilityData CapabilityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties properties = null, Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind? kind = default(Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind?)) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch CapabilityPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy? capabilityUpdateVersionPolicy = default(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy?)) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties CapabilityProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy versionPolicy = default(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy), string effectiveVersion = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile CapacityProfile(int minimumNodes = 0, int maximumNodes = 0) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate CapacityProfileUpdate(int? minimumNodes = default(int?), int? maximumNodes = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.CapabilityData CapabilityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties properties = null, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind? kind = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind?)) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity ExecutionIdentity(string provisioningMode = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope scope = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope)) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeBindingProperties ManagedRuntimeBindingProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity executionIdentity = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile managedProfile = null) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeBindingProperties ManagedRuntimeBindingProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity executionIdentity = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile managedProfile = null) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile ManagedRuntimeProfile(string offering = null, string provider = null) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.ReferencedExecutionIdentity ReferencedExecutionIdentity(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope scope = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope), Azure.Core.ResourceIdentifier userAssignedIdentityResourceId = null) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ReferencedRuntimeBindingProperties ReferencedRuntimeBindingProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity executionIdentity = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ReferencedRuntimeBindingProperties ReferencedRuntimeBindingProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity executionIdentity = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null, Azure.Core.ResourceIdentifier resourceId = null) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.RuntimeBindingData RuntimeBindingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingProperties properties = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingKind? kind = default(Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingKind?)) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingPatch RuntimeBindingPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingUpdateProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingProperties RuntimeBindingProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null, string provisioningMode = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity executionIdentity = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingProperties RuntimeBindingProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null, string provisioningMode = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity executionIdentity = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingUpdateProperties RuntimeBindingUpdateProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope? executionIdentityScope = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope?), Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile networkProfile = null) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile RuntimeLinkCapacityProfile(int minimumNodes = 0, int maximumNodes = 0) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate RuntimeLinkCapacityProfileUpdate(int? minimumNodes = default(int?), int? maximumNodes = default(int?)) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.RuntimeLinkData RuntimeLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkPatch RuntimeLinkPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate runtimeLinkUpdateCapacityProfile = null) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties RuntimeLinkProperties(Azure.Core.ResourceIdentifier orchestratorBindingResourceId = null, Azure.Core.ResourceIdentifier executionBindingResourceId = null, Azure.Core.ResourceIdentifier integrationManagedIdentityResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile capacityProfile = null, Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile RuntimeNetworkProfile(Azure.Core.ResourceIdentifier subnetResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode? egressMode = default(Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode?)) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkPatch RuntimeLinkPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate runtimeLinkUpdateCapacityProfile = null) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties RuntimeLinkProperties(Azure.Core.ResourceIdentifier orchestratorBindingResourceId = null, Azure.Core.ResourceIdentifier executionBindingResourceId = null, Azure.Core.ResourceIdentifier integrationManagedIdentityResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile capacityProfile = null, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState?), Azure.Core.ResourceIdentifier providerResourceId = null) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile RuntimeNetworkProfile(Azure.Core.ResourceIdentifier subnetResourceId = null, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode? egressMode = default(Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode?)) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.ServiceManagedExecutionIdentity ServiceManagedExecutionIdentity(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope scope = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentityScope), Azure.Core.ResourceIdentifier userAssignedIdentityResourceId = null) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.WorkloadSpaceData WorkloadSpaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? workloadSpaceProvisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch WorkloadCapabilityPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy? capabilityUpdateVersionPolicy = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy?)) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties WorkloadCapabilityProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy versionPolicy = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy), string effectiveVersion = null, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? provisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.WorkloadSpaceData WorkloadSpaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? workloadSpaceProvisioningState = default(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadSpacePatch WorkloadSpacePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CapabilityKind : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CapabilityKind(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind AgentSandbox { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind left, Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind left, Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CapabilityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>
-    {
-        public CapabilityPatch() { }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy? CapabilityUpdateVersionPolicy { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CapabilityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>
-    {
-        public CapabilityProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy versionPolicy) { }
-        public string EffectiveVersion { get { throw null; } }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy VersionPolicy { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapabilityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CapacityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>
-    {
-        public CapacityProfile(int minimumNodes, int maximumNodes) { }
-        public int MaximumNodes { get { throw null; } set { } }
-        public int MinimumNodes { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CapacityProfileUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>
-    {
-        public CapacityProfileUpdate() { }
-        public int? MaximumNodes { get { throw null; } set { } }
-        public int? MinimumNodes { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EgressMode : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EgressMode(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode CustomerManaged { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode left, Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode left, Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public abstract partial class ExecutionIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity>
     {
@@ -455,28 +362,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ManagedRuntimeProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState left, Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState left, Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ReferencedExecutionIdentity : Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ReferencedExecutionIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ReferencedExecutionIdentity>
     {
@@ -544,7 +429,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         public Azure.ResourceManager.Compute.WorkloadManager.Models.ExecutionIdentity ExecutionIdentity { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile NetworkProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProviderResourceId { get { throw null; } }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -570,10 +455,56 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeBindingUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeEgressMode : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeEgressMode(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode CustomerManaged { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode left, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode left, Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RuntimeLinkCapacityProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>
+    {
+        public RuntimeLinkCapacityProfile(int minimumNodes, int maximumNodes) { }
+        public int MaximumNodes { get { throw null; } set { } }
+        public int MinimumNodes { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RuntimeLinkCapacityProfileUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>
+    {
+        public RuntimeLinkCapacityProfileUpdate() { }
+        public int? MaximumNodes { get { throw null; } set { } }
+        public int? MinimumNodes { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RuntimeLinkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkPatch>
     {
         public RuntimeLinkPatch() { }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfileUpdate RuntimeLinkUpdateCapacityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfileUpdate CapacityProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -588,12 +519,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
     public partial class RuntimeLinkProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties>
     {
         public RuntimeLinkProperties(Azure.Core.ResourceIdentifier orchestratorBindingResourceId) { }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.CapacityProfile CapacityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkCapacityProfile CapacityProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExecutionBindingResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier IntegrationManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OrchestratorBindingResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProviderResourceId { get { throw null; } }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeLinkProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -607,7 +538,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
     public partial class RuntimeNetworkProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile>
     {
         public RuntimeNetworkProfile() { }
-        public Azure.ResourceManager.Compute.WorkloadManager.Models.EgressMode? EgressMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeEgressMode? EgressMode { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetResourceId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.RuntimeNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -634,19 +565,88 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.ServiceManagedExecutionIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct VersionPolicy : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy>
+    public readonly partial struct WorkloadCapabilityKind : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public VersionPolicy(string value) { throw null; }
-        public static Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy ServiceManaged { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy other) { throw null; }
+        public WorkloadCapabilityKind(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind AgentSandbox { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy left, Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy left, Azure.ResourceManager.Compute.WorkloadManager.Models.VersionPolicy right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind left, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind left, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class WorkloadCapabilityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>
+    {
+        public WorkloadCapabilityPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy? VersionPolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkloadCapabilityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>
+    {
+        public WorkloadCapabilityProperties(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy versionPolicy) { }
+        public string EffectiveVersion { get { throw null; } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy VersionPolicy { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkloadCapabilityVersionPolicy : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkloadCapabilityVersionPolicy(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy ServiceManaged { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy left, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy left, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadCapabilityVersionPolicy right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkloadManagerProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkloadManagerProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState left, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState left, Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadManagerProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class WorkloadSpacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadSpacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.WorkloadManager.Models.WorkloadSpacePatch>

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         internal WorkloadSpaceProperties Properties { get; set; }
 
         /// <summary> The provisioning state of the workload space. </summary>
-        public ProvisioningState? WorkloadSpaceProvisioningState
+        public WorkloadManagerProvisioningState? WorkloadSpaceProvisioningState
         {
             get
             {

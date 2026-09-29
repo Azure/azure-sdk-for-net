@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <summary> Initializes a new instance of <see cref="CapabilityUpdateProperties"/>. </summary>
         /// <param name="versionPolicy"> The version selection policy for the capability. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityUpdateProperties(VersionPolicy? versionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapabilityUpdateProperties(WorkloadCapabilityVersionPolicy? versionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VersionPolicy = versionPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version selection policy for the capability. </summary>
-        public VersionPolicy? VersionPolicy { get; set; }
+        public WorkloadCapabilityVersionPolicy? VersionPolicy { get; set; }
     }
 }

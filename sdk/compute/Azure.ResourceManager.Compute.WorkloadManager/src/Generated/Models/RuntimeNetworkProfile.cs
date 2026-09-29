@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="subnetResourceId"> The customer-provided subnet used by the runtime. </param>
         /// <param name="egressMode"> Indicates who manages runtime egress. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeNetworkProfile(ResourceIdentifier subnetResourceId, EgressMode? egressMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeNetworkProfile(ResourceIdentifier subnetResourceId, RuntimeEgressMode? egressMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetResourceId = subnetResourceId;
             EgressMode = egressMode;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         public ResourceIdentifier SubnetResourceId { get; set; }
 
         /// <summary> Indicates who manages runtime egress. </summary>
-        public EgressMode? EgressMode { get; set; }
+        public RuntimeEgressMode? EgressMode { get; set; }
     }
 }

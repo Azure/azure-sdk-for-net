@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             {
                 return null;
             }
-            CapacityProfileUpdate capacityProfile = default;
+            RuntimeLinkCapacityProfileUpdate capacityProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    capacityProfile = CapacityProfileUpdate.DeserializeCapacityProfileUpdate(prop.Value, options);
+                    capacityProfile = RuntimeLinkCapacityProfileUpdate.DeserializeRuntimeLinkCapacityProfileUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

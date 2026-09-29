@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             {
                 return null;
             }
-            VersionPolicy? versionPolicy = default;
+            WorkloadCapabilityVersionPolicy? versionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    versionPolicy = new VersionPolicy(prop.Value.GetString());
+                    versionPolicy = new WorkloadCapabilityVersionPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

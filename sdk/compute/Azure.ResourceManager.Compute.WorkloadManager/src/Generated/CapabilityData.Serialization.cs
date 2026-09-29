@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            CapabilityProperties properties = default;
-            CapabilityKind? kind = default;
+            WorkloadCapabilityProperties properties = default;
+            WorkloadCapabilityKind? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         continue;
                     }
-                    properties = CapabilityProperties.DeserializeCapabilityProperties(prop.Value, options);
+                    properties = WorkloadCapabilityProperties.DeserializeWorkloadCapabilityProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     {
                         continue;
                     }
-                    kind = new CapabilityKind(prop.Value.GetString());
+                    kind = new WorkloadCapabilityKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

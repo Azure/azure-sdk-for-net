@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            WorkloadManagerProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkloadManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

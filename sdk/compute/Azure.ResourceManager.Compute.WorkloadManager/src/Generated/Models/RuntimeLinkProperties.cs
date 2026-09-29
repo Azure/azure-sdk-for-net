@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="provisioningState"> The provisioning state of the runtime link. </param>
         /// <param name="providerResourceId"> The provider resource that realizes the runtime composition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeLinkProperties(ResourceIdentifier orchestratorBindingResourceId, ResourceIdentifier executionBindingResourceId, RuntimeLinkIntegrationProfile integrationProfile, CapacityProfile capacityProfile, ProvisioningState? provisioningState, ResourceIdentifier providerResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeLinkProperties(ResourceIdentifier orchestratorBindingResourceId, ResourceIdentifier executionBindingResourceId, RuntimeLinkIntegrationProfile integrationProfile, RuntimeLinkCapacityProfile capacityProfile, WorkloadManagerProvisioningState? provisioningState, ResourceIdentifier providerResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrchestratorBindingResourceId = orchestratorBindingResourceId;
             ExecutionBindingResourceId = executionBindingResourceId;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         internal RuntimeLinkIntegrationProfile IntegrationProfile { get; set; }
 
         /// <summary> The mutable capacity policy for the runtime composition. </summary>
-        public CapacityProfile CapacityProfile { get; set; }
+        public RuntimeLinkCapacityProfile CapacityProfile { get; set; }
 
         /// <summary> The provisioning state of the runtime link. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WorkloadManagerProvisioningState? ProvisioningState { get; }
 
         /// <summary> The provider resource that realizes the runtime composition. </summary>
         public ResourceIdentifier ProviderResourceId { get; }

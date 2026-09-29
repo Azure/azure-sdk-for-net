@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             ResourceIdentifier orchestratorBindingResourceId = default;
             ResourceIdentifier executionBindingResourceId = default;
             RuntimeLinkIntegrationProfile integrationProfile = default;
-            CapacityProfile capacityProfile = default;
-            ProvisioningState? provisioningState = default;
+            RuntimeLinkCapacityProfile capacityProfile = default;
+            WorkloadManagerProvisioningState? provisioningState = default;
             ResourceIdentifier providerResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    capacityProfile = CapacityProfile.DeserializeCapacityProfile(prop.Value, options);
+                    capacityProfile = RuntimeLinkCapacityProfile.DeserializeRuntimeLinkCapacityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkloadManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("providerResourceId"u8))

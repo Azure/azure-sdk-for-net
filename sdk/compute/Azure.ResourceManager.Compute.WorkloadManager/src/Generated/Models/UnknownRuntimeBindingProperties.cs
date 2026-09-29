@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="identityProfile"> The runtime identity configuration for a managed runtime. </param>
         /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRuntimeBindingProperties(ProvisioningState? provisioningState, ResourceIdentifier providerResourceId, RuntimeBindingProvisioningMode provisioningMode, RuntimeIdentityProfile identityProfile, RuntimeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, providerResourceId, provisioningMode != default ? provisioningMode : "unknown", identityProfile, networkProfile, additionalBinaryDataProperties)
+        internal UnknownRuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState, ResourceIdentifier providerResourceId, RuntimeBindingProvisioningMode provisioningMode, RuntimeIdentityProfile identityProfile, RuntimeNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, providerResourceId, provisioningMode != default ? provisioningMode : "unknown", identityProfile, networkProfile, additionalBinaryDataProperties)
         {
         }
     }

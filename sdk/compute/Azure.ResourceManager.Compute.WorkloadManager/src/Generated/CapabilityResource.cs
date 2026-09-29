@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<CapabilityResource>> UpdateAsync(WaitUntil waitUntil, CapabilityPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CapabilityResource>> UpdateAsync(WaitUntil waitUntil, WorkloadCapabilityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CapabilityPatch.ToRequestContent(patch), context);
+                HttpMessage message = _capabilitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkloadCapabilityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadManagerArmOperation<CapabilityResource> operation = new WorkloadManagerArmOperation<CapabilityResource>(
                     new CapabilityResourceOperationSource(Client),
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<CapabilityResource> Update(WaitUntil waitUntil, CapabilityPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CapabilityResource> Update(WaitUntil waitUntil, WorkloadCapabilityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _capabilitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CapabilityPatch.ToRequestContent(patch), context);
+                HttpMessage message = _capabilitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkloadCapabilityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadManagerArmOperation<CapabilityResource> operation = new WorkloadManagerArmOperation<CapabilityResource>(
                     new CapabilityResourceOperationSource(Client),
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 else
                 {
                     CapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CapabilityPatch patch = new CapabilityPatch();
+                    WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 else
                 {
                     CapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CapabilityPatch patch = new CapabilityPatch();
+                    WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 else
                 {
                     CapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CapabilityPatch patch = new CapabilityPatch();
+                    WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 else
                 {
                     CapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CapabilityPatch patch = new CapabilityPatch();
+                    WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<CapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 else
                 {
                     CapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    CapabilityPatch patch = new CapabilityPatch();
+                    WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 else
                 {
                     CapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    CapabilityPatch patch = new CapabilityPatch();
+                    WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

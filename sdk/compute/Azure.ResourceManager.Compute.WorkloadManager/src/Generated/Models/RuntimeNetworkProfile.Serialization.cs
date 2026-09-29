@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                 return null;
             }
             ResourceIdentifier subnetResourceId = default;
-            EgressMode? egressMode = default;
+            RuntimeEgressMode? egressMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     {
                         continue;
                     }
-                    egressMode = new EgressMode(prop.Value.GetString());
+                    egressMode = new RuntimeEgressMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
