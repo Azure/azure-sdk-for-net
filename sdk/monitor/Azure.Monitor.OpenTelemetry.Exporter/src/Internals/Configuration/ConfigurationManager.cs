@@ -13,9 +13,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
     {
         // OneSettings state is shared by all Azure Monitor exporters in the process.
         private static readonly ConfigurationManager s_instance = new();
-        private readonly object _lock = new();
+        private readonly object _callbacksLock = new();
         private readonly List<Func<IReadOnlyDictionary<string, string>, Task>> _callbacks = new();
-        private bool _initialized;
+        private int _initialized;
 
         private ConfigurationManager()
         {
@@ -23,36 +23,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
 
         internal static ConfigurationManager Instance => s_instance;
 
-        internal bool IsInitialized
-        {
-            get
-            {
-                lock (_lock)
-                {
-                    return _initialized;
-                }
-            }
-        }
+        internal bool IsInitialized => Volatile.Read(ref _initialized) != 0;
 
         internal void Initialize()
         {
-            lock (_lock)
-            {
-                if (_initialized)
-                {
-                    return;
-                }
-
-                // A later change will start the OneSettings polling worker here.
-                _initialized = true;
-            }
+            // A later change will start the OneSettings polling worker when this transition succeeds.
+            Interlocked.CompareExchange(ref _initialized, 1, 0);
         }
 
         internal IDisposable RegisterCallback(Func<IReadOnlyDictionary<string, string>, Task> callback)
         {
             Argument.AssertNotNull(callback, nameof(callback));
 
-            lock (_lock)
+            lock (_callbacksLock)
             {
                 _callbacks.Add(callback);
             }
@@ -65,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
             Argument.AssertNotNull(settings, nameof(settings));
 
             Func<IReadOnlyDictionary<string, string>, Task>[] callbacks;
-            lock (_lock)
+            lock (_callbacksLock)
             {
                 // Invoke outside the lock so callbacks can safely register or unregister.
                 callbacks = _callbacks.ToArray();
@@ -93,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
 
         private void UnregisterCallback(Func<IReadOnlyDictionary<string, string>, Task> callback)
         {
-            lock (_lock)
+            lock (_callbacksLock)
             {
                 _callbacks.Remove(callback);
             }
