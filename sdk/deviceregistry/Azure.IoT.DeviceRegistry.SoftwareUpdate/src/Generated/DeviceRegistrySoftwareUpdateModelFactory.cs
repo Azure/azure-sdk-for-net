@@ -67,6 +67,15 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
             return new UpdateId(provider, name, version, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="_SoftwareUpdate.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Update metadata. </summary>
         /// <param name="updateId"> Update identity. </param>
         /// <param name="description"> Update description specified by creator. </param>
