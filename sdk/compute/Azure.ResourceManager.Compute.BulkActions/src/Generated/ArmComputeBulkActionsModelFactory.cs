@@ -422,6 +422,30 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new BulkActionsReimageResourceOperationResponseResult(description, resourceTypeName, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
+        /// <summary> The operations for which errors should be acknowledged. </summary>
+        /// <param name="operationIds"> The Bulk Action Operation Ids that identify operations for which errors should be acknowledged. </param>
+        /// <returns> A new <see cref="Models.AcknowledgeBulkOperationErrorsRequestContent"/> instance for mocking. </returns>
+        public static AcknowledgeBulkOperationErrorsRequestContent AcknowledgeBulkOperationErrorsRequestContent(IEnumerable<string> operationIds = default)
+        {
+            operationIds ??= new ChangeTrackingList<string>();
+
+            return new AcknowledgeBulkOperationErrorsRequestContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> The result of acknowledging errors for specified operations. </summary>
+        /// <param name="acknowledged"> The Bulk Action Operation Ids that identify operations with acknowledged errors. </param>
+        /// <param name="notFound"> The Bulk Action Operation Ids that were not found or are no longer available. </param>
+        /// <param name="skipped"> The Bulk Action Operation Ids that identify operations with errors that could not be acknowledged. </param>
+        /// <returns> A new <see cref="Models.AcknowledgeBulkOperationErrorsResponseResult"/> instance for mocking. </returns>
+        public static AcknowledgeBulkOperationErrorsResponseResult AcknowledgeBulkOperationErrorsResponseResult(IEnumerable<string> acknowledged = default, IEnumerable<string> notFound = default, IEnumerable<string> skipped = default)
+        {
+            acknowledged ??= new ChangeTrackingList<string>();
+            notFound ??= new ChangeTrackingList<string>();
+            skipped ??= new ChangeTrackingList<string>();
+
+            return new AcknowledgeBulkOperationErrorsResponseResult((acknowledged ?? new ChangeTrackingList<string>()).ToList(), (notFound ?? new ChangeTrackingList<string>()).ToList(), (skipped ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> Location based BulkCreateCustom resource. The location is part of the resource path. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
