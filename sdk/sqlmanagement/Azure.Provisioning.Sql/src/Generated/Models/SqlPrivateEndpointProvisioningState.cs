@@ -10,14 +10,22 @@ namespace Azure.Provisioning.Sql
     /// <summary> State of the private endpoint connection. </summary>
     public enum SqlPrivateEndpointProvisioningState
     {
+        /// <summary> Provisioning Created. </summary>
+        Created = 5,
+        /// <summary> Provisioning InProgress. </summary>
+        InProgress = 6,
+        /// <summary> Provisioning Succeeded. </summary>
+        Succeeded = 7,
+        /// <summary> Failed. </summary>
+        Failed = 3,
+        /// <summary> Provisioning Canceled. </summary>
+        Canceled = 8,
         /// <summary> Approving. </summary>
         Approving = 0,
         /// <summary> Ready. </summary>
         Ready = 1,
         /// <summary> Dropping. </summary>
         Dropping = 2,
-        /// <summary> Failed. </summary>
-        Failed = 3,
         /// <summary> Rejecting. </summary>
         Rejecting = 4
     }
