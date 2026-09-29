@@ -4888,7 +4888,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary>
         /// Properties of the rule collection.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FirewallPolicyNatRuleCollectionInfo"/> and <see cref="Models.FirewallPolicyFilterRuleCollectionInfo"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="Models.FirewallPolicyNatRuleCollectionInfo"/>.
         /// </summary>
         /// <param name="ruleCollectionType"> The type of the rule collection. </param>
         /// <param name="name"> The name of the rule collection. </param>
@@ -5563,7 +5563,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary>
         /// Network base admin rule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ActiveSecurityAdminRule"/> and <see cref="Models.ActiveDefaultSecurityAdminRule"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ActiveDefaultSecurityAdminRule"/> and <see cref="Models.ActiveSecurityAdminRule"/>.
         /// </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>

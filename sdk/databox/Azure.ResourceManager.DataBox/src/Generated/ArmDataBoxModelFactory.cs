@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary>
         /// Account details of the data to be transferred
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedDiskDetails"/> and <see cref="Models.DataBoxStorageAccountDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxStorageAccountDetails"/> and <see cref="Models.ManagedDiskDetails"/>.
         /// </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
@@ -1538,7 +1538,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary>
         /// Minimum fields that must be present in any type of validation request.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxValidateAddressContent"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="Models.DataTransferDetailsValidationContent"/>, <see cref="Models.PreferencesValidationContent"/>, <see cref="Models.SkuAvailabilityValidationContent"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="Models.DataBoxValidateAddressContent"/>, <see cref="Models.DataTransferDetailsValidationContent"/>, <see cref="Models.PreferencesValidationContent"/>, <see cref="Models.SkuAvailabilityValidationContent"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
         /// <returns> A new <see cref="Models.DataBoxValidationInputContent"/> instance for mocking. </returns>

@@ -261,6 +261,7 @@
               "items"
             ],
             "nextLink": {
+              "verb": "POST",
               "responseSegments": [
                 "nextLink"
               ],

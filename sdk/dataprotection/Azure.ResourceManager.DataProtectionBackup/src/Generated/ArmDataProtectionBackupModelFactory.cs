@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Parameters for Backup Datasource
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, and <see cref="Models.GenericBackupDataSourceSettings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.GenericBackupDataSourceSettings"/>, and <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.BackupDataSourceSettings"/> instance for mocking. </returns>
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Azure backup restore request
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>, <see cref="Models.BackupRestoreWithRehydrationContent"/>, and <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>, <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/>, and <see cref="Models.BackupRestoreWithRehydrationContent"/>.
         /// </summary>
         /// <param name="objectType"></param>
         /// <param name="restoreTargetInfo"> Gets or sets the restore target information. </param>
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Class to contain criteria for item level restore
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.RangeBasedItemLevelRestoreCriteria"/>, <see cref="Models.GenericRestoreDataSourceCriteria"/>, <see cref="Models.KubernetesStorageClassRestoreCriteria"/>, <see cref="Models.KubernetesPVRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, and <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GenericRestoreDataSourceCriteria"/>, <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>, <see cref="Models.KubernetesPVRestoreCriteria"/>, <see cref="Models.KubernetesStorageClassRestoreCriteria"/>, and <see cref="Models.RangeBasedItemLevelRestoreCriteria"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.ItemLevelRestoreCriteria"/> instance for mocking. </returns>

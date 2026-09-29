@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> High level response from an operation on a resource. </summary>
+    /// <summary> The result of a bulk action for one virtual machine. </summary>
     public partial class ComputeBulkOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationResult"/>. </summary>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
-        /// <param name="errorCode"> Resource level error code if it exists. </param>
-        /// <param name="errorDetails"> Resource level error details if they exist. </param>
-        /// <param name="operation"> Details of the operation performed on a resource. </param>
-        /// <param name="virtualMachineInfo"> Information about the virtual machine. </param>
+        /// <param name="resourceId"> The virtual machine Azure resource ID. </param>
+        /// <param name="errorCode"> A code that identifies the error for the virtual machine operation. </param>
+        /// <param name="errorDetails"> A message that describes the error for the virtual machine operation. </param>
+        /// <param name="operation"> The virtual machine operation details. </param>
+        /// <param name="virtualMachineInfo"> Details of the virtual machine on which the operation is performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeBulkOperationResult(ResourceIdentifier resourceId, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Unique identifier for the resource involved in the operation, for example Azure resource ID. </summary>
+        /// <summary> The virtual machine Azure resource ID. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> Resource level error code if it exists. </summary>
+        /// <summary> A code that identifies the error for the virtual machine operation. </summary>
         public string ErrorCode { get; }
 
-        /// <summary> Resource level error details if they exist. </summary>
+        /// <summary> A message that describes the error for the virtual machine operation. </summary>
         public string ErrorDetails { get; }
 
-        /// <summary> Details of the operation performed on a resource. </summary>
+        /// <summary> The virtual machine operation details. </summary>
         public ComputeBulkOperationDetails Operation { get; }
 
-        /// <summary> Information about the virtual machine. </summary>
+        /// <summary> Details of the virtual machine on which the operation is performed. </summary>
         public VirtualMachineInfo VirtualMachineInfo { get; }
     }
 }
