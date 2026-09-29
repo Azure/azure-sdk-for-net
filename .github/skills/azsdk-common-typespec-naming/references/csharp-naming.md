@@ -27,6 +27,7 @@ Name checks depend on semantic types, not substrings alone. A string containing 
 - Two-letter acronyms such as `IP`, `OS`, and `DB` are uppercase where they are acronym components; retain the `Id` and `Vm` exceptions. Do not uppercase every matching pair of letters inside ordinary words.
 - Prefer singular enum type names; plural names are for flags.
 - Numeric version enum members use underscores, e.g. `Tls1_0`. Preserve the wire value. Check the installed TCGC/emitter's exact-name support when ordinary `clientName` normalization cannot preserve the requested spelling; do not assume a new helper exists in an older project.
+- When both support [TCGC `exact`](https://github.com/Azure/typespec-azure/blob/main/packages/typespec-client-generator-core/lib/functions.tsp), propose a scoped override such as `@@clientName(WidgetTlsVersion.tls10, exact("Tls1_0"), "csharp");`. If support is absent or unconfirmed, block the override and report the missing capability/evidence; do not substitute a normalized name, change the wire value, or upgrade dependencies.
 - Expand unclear acronyms only with verified service/domain meaning, not a guessed expansion.
 
 The initial support covers naming decisions only. Type conversions, operation removal, compatibility shims, and other non-naming review checks are not automatic consequences of this profile.

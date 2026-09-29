@@ -262,6 +262,131 @@ stimuli:
         config:
           pattern: '"WidgetId"\s*:\s*"WidgetId"'
 
+  - name: numeric-enum-exact-name-supported
+    tags:
+      case: numeric-enum
+    prompt: |
+      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
+      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
+      The service-owned enum WidgetTlsVersion has tls10: "1.0" and tls12: "1.2";
+      these represent TLS protocol versions. Existing emitted names are Tls10 and Tls12.
+      Ordinary string clientName overrides lose underscores during normalization.
+      Confirmed installed-package evidence: Azure.ClientGenerator.Core exports
+      extern fn exact(name: valueof string): valueof string; its documented use as
+      the clientName name argument disables normalization, and the installed C# emitter
+      honors that marker for enum members. There are no name collisions.
+      client.tsp is loaded by the generation entrypoint; Azure.ClientGenerator.Core and
+      WidgetTlsVersion are in scope. Java/Python overrides must remain unchanged.
+      Use bundled references and these supplied facts only; no network, MCP, compilation,
+      generation or edits. Return JSON with "names" mapping the two member identifiers
+      to proposed C# names, "decorators" (augment decorator strings), and booleans
+      "blocked", "wireNamesChanged", "otherLanguagesChanged", "generatedNamesVerified".
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"tls10"\s*:\s*"Tls1_0"'
+      - type: output-matches
+        config:
+          pattern: '"tls12"\s*:\s*"Tls1_2"'
+      - type: output-matches
+        config:
+          pattern: '@@(?:Azure\.ClientGenerator\.Core\.)?clientName\(WidgetTlsVersion\.tls10,\s*(?:Azure\.ClientGenerator\.Core\.)?exact\(\\"Tls1_0\\"\),\s*\\"csharp\\"\)'
+      - type: output-matches
+        config:
+          pattern: '@@(?:Azure\.ClientGenerator\.Core\.)?clientName\(WidgetTlsVersion\.tls12,\s*(?:Azure\.ClientGenerator\.Core\.)?exact\(\\"Tls1_2\\"\),\s*\\"csharp\\"\)'
+      - type: output-matches
+        config:
+          pattern: '"blocked"\s*:\s*false'
+      - &unchangedWire
+        type: output-matches
+        config:
+          pattern: '"wireNamesChanged"\s*:\s*false'
+      - &unchangedLanguages
+        type: output-matches
+        config:
+          pattern: '"otherLanguagesChanged"\s*:\s*false'
+      - *unverified
+      - &noWireRename
+        type: output-not-matches
+        config:
+          pattern: "@encodedName"
+
+  - name: numeric-enum-exact-name-unsupported
+    tags:
+      case: numeric-enum
+    prompt: |
+      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
+      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
+      WidgetTlsVersion.tls12 has wire value "1.2" for TLS protocol version 1.2 and
+      currently emits Tls12. Ordinary string clientName overrides lose underscores.
+      Confirmed installed-package evidence: this older TCGC does not export exact;
+      its paired C# emitter has no supported way to preserve an exact enum member name.
+      No dependency upgrade, wire change, SDK code edit, or other-language change is
+      authorized. There are no collisions; client.tsp is already loaded and its
+      namespaces are in scope. Use only bundled references and these confirmed facts.
+      No network, MCP, compilation, generation or edits. Do not ask interactively.
+      Return JSON with "suggestedName", "decorators" (only overrides usable with the
+      installed packages), "blocked", "blocker", "wireNamesChanged",
+      "otherLanguagesChanged", and "generatedNamesVerified".
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - &suggestedTlsName
+        type: output-matches
+        config:
+          pattern: '"suggestedName"\s*:\s*"Tls1_2"'
+      - &noEnumOverride
+        type: output-matches
+        config:
+          pattern: '"decorators"\s*:\s*\[\s*\]'
+      - &blockedEnum
+        type: output-matches
+        config:
+          pattern: '"blocked"\s*:\s*true'
+      - type: output-matches
+        config:
+          pattern: '(?is)"blocker"\s*:\s*"[^"]*(unsupported|does not|cannot|unavailable|no support|lacks|not export)'
+      - *unchangedWire
+      - *unchangedLanguages
+      - *unverified
+      - *noWireRename
+
+  - name: numeric-enum-exact-name-unconfirmed
+    tags:
+      case: numeric-enum
+    prompt: |
+      Invoke azsdk-common-typespec-naming in guidance mode for a new, never-shipped
+      C# ARM Widget SDK at specification/widget/resource-manager/Microsoft.Widget.
+      WidgetTlsVersion.tls12 has wire value "1.2" for TLS protocol version 1.2 and
+      currently emits Tls12. Ordinary string clientName overrides lose underscores.
+      No installed TCGC/emitter version or exact-name capability evidence is available.
+      Do not infer installed support from current online documentation. There are no
+      collisions; client.tsp is loaded and its namespaces are in scope. No dependency,
+      wire, SDK code, or other-language changes are authorized.
+      Use only bundled references and these supplied facts; no network, MCP, compilation,
+      generation or edits. Do not ask interactively; record missing evidence instead.
+      Return JSON with "suggestedName", "decorators" (only overrides justified now),
+      "blocked", "blocker", "wireNamesChanged", "otherLanguagesChanged",
+      and "generatedNamesVerified".
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - *suggestedTlsName
+      - *noEnumOverride
+      - *blockedEnum
+      - type: output-matches
+        config:
+          pattern: '(?is)"blocker"\s*:\s*"[^"]*(unconfirmed|unknown|missing|evidence|not (?:available|verified|confirmed))'
+      - *unchangedWire
+      - *unchangedLanguages
+      - *unverified
+      - *noWireRename
+
   - name: sdk-only-rename-isolation
     prompt: |
       Invoke the azsdk-common-typespec-naming skill before planning.
