@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,20 @@ namespace Azure.Search.Documents.Indexes
     public partial class SearchIndexClient
     {
         #region KnowledgeSources Operations
+
+        /// <summary> Lists all knowledge sources available for a search service. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BinaryData> GetKnowledgeSources(RequestContext context) =>
+            GetKnowledgeSources(search: default, pageSize: default, searchType: default, context: context);
+
+        /// <summary> Lists all knowledge sources available for a search service. </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<BinaryData> GetKnowledgeSourcesAsync(RequestContext context) =>
+            GetKnowledgeSourcesAsync(search: default, pageSize: default, searchType: default, context: context);
 
         /// <summary> Creates a new knowledge source. </summary>
         /// <param name="knowledgeSource"> The definition of the knowledge source to create. </param>
@@ -110,7 +125,6 @@ namespace Azure.Search.Documents.Indexes
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = knowledgeSource?.ETag } : null;
             return await DeleteKnowledgeSourceAsync(knowledgeSource?.Name, matchConditions, cancellationToken).ConfigureAwait(false);
         }
-
         #endregion
     }
 }

@@ -527,11 +527,11 @@ function assignRemainingOperations(
       const scope = buildScopeInfoFromPath(operationPath);
       const isCollectionAction = isResourceCollectionAction(sdkMethod);
       const target = isCollectionAction
-        ? findCollectionActionTargetResource(
+        ? (findCollectionActionTargetResource(
             resources,
             operationPath,
             actionTarget
-          ) ?? actionTarget
+          ) ?? actionTarget)
         : actionTarget;
       target.metadata.methods.push({
         methodId,

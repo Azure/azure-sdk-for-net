@@ -28,9 +28,9 @@ namespace Azure.Storage.Blobs.Batch
             uri.AppendPath(containerName, false);
             uri.AppendPath("/", false);
             uri.AppendPath(blob, false);
-            if (_snapshot != null)
+            if (snapshot != null)
             {
-                uri.AppendQuery("snapshot", _snapshot, true);
+                uri.AppendQuery("snapshot", snapshot, true);
             }
             if (versionId != null)
             {
@@ -88,9 +88,9 @@ namespace Azure.Storage.Blobs.Batch
             uri.AppendPath("/", false);
             uri.AppendPath(blob, false);
             uri.AppendQuery("comp", "tier", true);
-            if (_snapshot != null)
+            if (snapshot != null)
             {
-                uri.AppendQuery("snapshot", _snapshot, true);
+                uri.AppendQuery("snapshot", snapshot, true);
             }
             if (versionId != null)
             {

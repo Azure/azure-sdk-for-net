@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
     public static partial class ArmProgramEnrollmentModelFactory
     {
 
+        /// <summary> An education program enrollment that groups Entra domains under a single sovereign/edu program scope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                 default);
         }
 
+        /// <summary> Details of the Program EduEnrollment. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="domains"> The domain groups associated with this enrollment. </param>
         /// <param name="failureReason"> Failure detail when provisioningState is Failed. Omitted otherwise. </param>
@@ -53,6 +55,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
             return new EduEnrollmentProperties(provisioningState, (domains ?? new ChangeTrackingList<ProgramEnrollmentDomainGroup>()).ToList(), failureReason, default);
         }
 
+        /// <summary> A group of edu domains scoped to an Entra tenant. </summary>
         /// <param name="domainNames"> The edu domain names in this group. </param>
         /// <param name="tenantId"> The Entra tenant ID that owns these domains. Defaults to the caller's tenant if omitted. </param>
         /// <param name="state"> The assessment state of this domain group. </param>
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
             return new ProgramEnrollmentDomainGroup((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, failureReason, default);
         }
 
+        /// <summary> The type used for update operations of the EduEnrollment. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.EduEnrollmentPatch"/> instance for mocking. </returns>
         public static EduEnrollmentPatch EduEnrollmentPatch(IDictionary<string, string> tags = default)

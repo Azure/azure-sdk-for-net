@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Text
     public partial class KeyPhraseExtractionOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> The list of Key phrase extraction results. </param>
-        internal KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, KeyPhraseResult results) : base(lastUpdateDateTime, status, AnalyzeTextOperationResultsKind.KeyPhraseExtractionOperationResults)
+        internal KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, KeyPhraseResult results) : base(lastUpdateOn, status, AnalyzeTextOperationResultsKind.KeyPhraseExtractionOperationResults)
         {
             Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyPhraseExtractionOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> The list of Key phrase extraction results. </param>
-        internal KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseResult results) : base(lastUpdateDateTime, status, taskName, kind, additionalBinaryDataProperties)
+        internal KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, KeyPhraseResult results) : base(lastUpdateOn, status, taskName, kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

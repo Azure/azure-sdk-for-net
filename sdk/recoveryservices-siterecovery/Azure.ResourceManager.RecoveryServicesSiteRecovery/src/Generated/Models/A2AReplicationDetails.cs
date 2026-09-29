@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
             ChurnOptionSelected = churnOptionSelected;
             AgentReinstallAttemptToVersion = agentReinstallAttemptToVersion;
-            OsFamilyName = osFamilyName;
+            OSFamilyName = osFamilyName;
             DistroName = distroName;
             DistroNameForWhichAgentIsInstalled = distroNameForWhichAgentIsInstalled;
             IsAgentUpgradeable = isAgentUpgradeable;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string AgentReinstallAttemptToVersion { get; }
 
         /// <summary> The OS family name. </summary>
-        public string OsFamilyName { get; }
+        public string OSFamilyName { get; }
 
         /// <summary> The distro name. </summary>
         public string DistroName { get; }

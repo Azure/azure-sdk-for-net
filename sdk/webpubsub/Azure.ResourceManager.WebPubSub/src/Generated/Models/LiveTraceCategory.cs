@@ -48,13 +48,5 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Indicates whether or the live trace category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </summary>
-        [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (SecurityConfigurationRuleProtocol?)default : Properties.Protocol;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Access;
+                return Properties is null ? (SecurityConfigurationRuleAccess?)default : Properties.Access;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Priority;
+                return Properties is null ? (int?)default : Properties.Priority;
             }
         }
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Direction;
+                return Properties is null ? (SecurityConfigurationRuleDirection?)default : Properties.Direction;
             }
         }
 

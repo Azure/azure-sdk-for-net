@@ -310,7 +310,7 @@ namespace Azure.AI.AgentServer.Core.Storage
             string key,
             IDictionary<string, BinaryData> value,
             IReadOnlyDictionary<string, string>? tags = null,
-            string? ifMatch = null,
+            ETag ifMatch = default,
             bool requireExists = false,
             CancellationToken cancellationToken = default)
             => SetItemAsync(key, value, tags, ifMatch, requireExists, callId: null, cancellationToken);
@@ -328,19 +328,23 @@ namespace Azure.AI.AgentServer.Core.Storage
             string key,
             IDictionary<string, BinaryData> value,
             IReadOnlyDictionary<string, string>? tags,
-            string? ifMatch,
+            ETag ifMatch,
             bool requireExists,
             string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
-            if (ifMatch is not null && requireExists)
+            if (ifMatch != default && requireExists)
             {
                 throw new ArgumentException($"{nameof(ifMatch)} and {nameof(requireExists)} are mutually exclusive.");
             }
 
-            string? header = requireExists ? "*" : ifMatch;
+            string? header = requireExists
+                ? ETag.All.ToString("H")
+                : ifMatch == default
+                    ? null
+                    : ifMatch.ToString("H");
             if (_localBackend is not null)
             {
                 return await _localBackend.SetItemAsync(key, value, tags, header, cancellationToken).ConfigureAwait(false);
@@ -408,7 +412,7 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The deleted-item marker.</returns>
         public virtual Task<DeletedStateStoreItem> DeleteItemAsync(
             string key,
-            string? ifMatch = null,
+            ETag ifMatch = default,
             CancellationToken cancellationToken = default)
             => DeleteItemAsync(key, ifMatch, callId: null, cancellationToken);
 
@@ -420,21 +424,22 @@ namespace Azure.AI.AgentServer.Core.Storage
         /// <returns>The deleted-item marker.</returns>
         public virtual async Task<DeletedStateStoreItem> DeleteItemAsync(
             string key,
-            string? ifMatch,
+            ETag ifMatch,
             string? callId,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(key, nameof(key));
+            string? header = ifMatch == default ? null : ifMatch.ToString("H");
             if (_localBackend is not null)
             {
-                return await _localBackend.DeleteItemAsync(key, ifMatch, cancellationToken).ConfigureAwait(false);
+                return await _localBackend.DeleteItemAsync(key, header, cancellationToken).ConfigureAwait(false);
             }
 
             Request request = BuildRequest(
                 RequestMethod.Delete,
                 ItemPath(key),
                 includeUserId: true,
-                ifMatch: ifMatch,
+                ifMatch: header,
                 callId: callId);
             Response response = await Client.SendAsync(request, cancellationToken).ConfigureAwait(false);
             return Deserialize<DeletedStateStoreItem>(response);

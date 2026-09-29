@@ -34,26 +34,26 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that the attestation is setting the state for. </param>
         /// <param name="policyDefinitionReferenceId"> The policy definition reference ID from a policy set definition that the attestation is setting the state for. If the policy assignment assigns a policy set definition the attestation can choose a definition within the set definition with this property or omit this and set the state for the entire set definition. </param>
         /// <param name="complianceState"> The compliance state that should be set on the resource. </param>
-        /// <param name="expireOn"> The time the compliance state should expire. </param>
+        /// <param name="expiresOn"> The time the compliance state should expire. </param>
         /// <param name="owner"> The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID. </param>
         /// <param name="comments"> Comments describing why this attestation was created. </param>
         /// <param name="evidence"> The evidence supporting the compliance state set in this attestation. </param>
         /// <param name="provisioningState"> The status of the attestation. </param>
-        /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
+        /// <param name="lastComplianceStateChangedOn"> The time the compliance state was last changed in this attestation. </param>
         /// <param name="assessOn"> The time the evidence was assessed. </param>
         /// <param name="metadata"> Additional metadata for this attestation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProperties(ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn, DateTimeOffset? assessOn, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationProperties(ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expiresOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangedOn, DateTimeOffset? assessOn, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
             ComplianceState = complianceState;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             Owner = owner;
             Comments = comments;
             Evidence = evidence;
             ProvisioningState = provisioningState;
-            LastComplianceStateChangeOn = lastComplianceStateChangeOn;
+            LastComplianceStateChangedOn = lastComplianceStateChangedOn;
             AssessOn = assessOn;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public PolicyComplianceState? ComplianceState { get; set; }
 
         /// <summary> The time the compliance state should expire. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID. </summary>
         public string Owner { get; set; }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string ProvisioningState { get; }
 
         /// <summary> The time the compliance state was last changed in this attestation. </summary>
-        public DateTimeOffset? LastComplianceStateChangeOn { get; }
+        public DateTimeOffset? LastComplianceStateChangedOn { get; }
 
         /// <summary> The time the evidence was assessed. </summary>
         public DateTimeOffset? AssessOn { get; set; }

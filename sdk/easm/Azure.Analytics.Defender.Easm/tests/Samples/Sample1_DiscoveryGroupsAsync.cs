@@ -54,7 +54,7 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
                 int index = 0;
                 await foreach (var discoRun in discoRuns)
                 {
-                    Console.WriteLine($" - started: {discoRun.StartedDate}, finished: {discoRun.CompletedDate}, assets found: {discoRun.TotalAssetsFoundCount}");
+                    Console.WriteLine($" - started: {discoRun.StartedOn}, finished: {discoRun.CompletedOn}, assets found: {discoRun.TotalAssetsFoundCount}");
                     if (++index == 5)
                     {
                         break;

@@ -29,5 +29,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Core.Expressions.DataFactory" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 </Project>

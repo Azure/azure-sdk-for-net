@@ -26,6 +26,7 @@
       "$id": "3",
       "kind": "model",
       "name": "BodyRootModel",
+      "apiVersions": [],
       "namespace": "Parameters.BodyRoot",
       "crossLanguageDefinitionId": "Parameters.BodyRoot.BodyRootModel",
       "usage": "Input,Json",
@@ -41,6 +42,7 @@
           "$id": "4",
           "kind": "property",
           "name": "category",
+          "apiVersions": [],
           "serializedName": "category",
           "type": {
             "$id": "5",
@@ -67,6 +69,7 @@
           "$id": "6",
           "kind": "property",
           "name": "linkType",
+          "apiVersions": [],
           "serializedName": "linkType",
           "type": {
             "$id": "7",
@@ -93,6 +96,7 @@
           "$id": "8",
           "kind": "property",
           "name": "wasSuccessful",
+          "apiVersions": [],
           "serializedName": "wasSuccessful",
           "type": {
             "$id": "9",
@@ -121,6 +125,7 @@
       "$id": "10",
       "kind": "model",
       "name": "NestedParameterBody",
+      "apiVersions": [],
       "namespace": "Parameters.BodyRoot",
       "crossLanguageDefinitionId": "Parameters.BodyRoot.nested.Parameter.body.anonymous",
       "usage": "Input",
@@ -132,6 +137,7 @@
           "$id": "11",
           "kind": "property",
           "name": "bodyRootParameters",
+          "apiVersions": [],
           "type": {
             "$ref": "3"
           },

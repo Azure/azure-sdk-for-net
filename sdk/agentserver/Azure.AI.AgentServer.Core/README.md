@@ -144,13 +144,17 @@ string? callId = FoundryAgentRequestContext.Current.CallId;   // per-request cal
 
 OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` distro. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. Azure Monitor export is enabled when `APPLICATIONINSIGHTS_CONNECTION_STRING` is set, and OTLP export is enabled when `OTEL_EXPORTER_OTLP_ENDPOINT` is set.
 
+Azure Monitor uses 100% fixed-percentage trace sampling by default. Set `OTEL_TRACES_SAMPLER` to `microsoft.rate_limited` or `microsoft.fixed_percentage` and provide its value through `OTEL_TRACES_SAMPLER_ARG` to override this default.
+
+Azure SDK and outbound `HttpClient` dependency spans are disabled by default to reduce infrastructure noise. To opt in, use `AgentHostBuilder.ConfigureTracing(...)` and add the `Azure.*` activity source with `AddSource("Azure.*")`, outbound HTTP instrumentation with `AddHttpClientInstrumentation()`, or both.
+
 ### Health endpoint
 
 A `/readiness` endpoint is registered by default, responding to liveness and readiness probes. It reports healthy as soon as the host finishes starting.
 
 ### Resilient tasks and streaming
 
-The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTasks()` and event streams with `AddAgentEventStreams()`, then run work through `ITaskInvoker` and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
+The library provides durable **task** and resumable **streaming** primitives for long-running agents. Register tasks with `AddResilientTask()`/`AddResilientMultiTurnTask()` and event streams with `AddAgentEventStreams()`, then run work through the typed `TaskDefinition<TInput, TOutput>` handle returned at registration and emit progress through `AgentEventStreamRegistry`. Tasks survive process restarts and support multi-turn conversations and steering. Persist application checkpoints and idempotency state explicitly with `FoundryStateStore`. See the [Tasks guide][tasks_guide], [Streaming guide][streaming_guide], and [State Store guide][state_store_guide] for full walkthroughs.
 
 ### Durable state store
 

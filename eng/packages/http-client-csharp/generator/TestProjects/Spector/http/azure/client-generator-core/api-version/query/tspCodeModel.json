@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "ApiVersions",
+      "apiVersions": [
+        "2025-01-01"
+      ],
       "crossLanguageDefinitionId": "Client.AlternateApiVersion.Service.Query.ApiVersions",
       "valueType": {
         "$id": "2",

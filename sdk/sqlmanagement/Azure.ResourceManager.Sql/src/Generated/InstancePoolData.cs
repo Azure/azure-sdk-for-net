@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.VCores;
+                return Properties is null ? (int?)default : Properties.VCores;
             }
             set
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.LicenseType;
+                return Properties is null ? (InstancePoolLicenseType?)default : Properties.LicenseType;
             }
             set
             {

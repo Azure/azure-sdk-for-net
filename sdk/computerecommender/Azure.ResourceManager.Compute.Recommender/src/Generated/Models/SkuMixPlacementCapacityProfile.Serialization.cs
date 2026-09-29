@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("allocationStrategy"u8);
                 writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(ZoneAllocationPolicy))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SkuMixPlacementCapacityProfile(

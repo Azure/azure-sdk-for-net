@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new ManagedComputeIdentity. </summary>
         public ManagedComputeIdentity()
         {
+            ComputeIdentityType.Assign(MonitorComputeIdentityType.ManagedIdentity);
         }
 
         /// <summary> Gets or sets the Identity. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeIdentityType", new string[] { "computeIdentityType" }, defaultValue: "ManagedIdentity");
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }

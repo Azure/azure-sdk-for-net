@@ -706,7 +706,7 @@ namespace Azure.Provisioning.ContainerService
         {
             get
             {
-                return PowerState.Code;
+                return PowerState is null ? default : PowerState.Code;
             }
         }
 

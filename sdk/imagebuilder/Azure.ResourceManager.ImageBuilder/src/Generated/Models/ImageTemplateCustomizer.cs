@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary>
     /// Describes a unit of image customization
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateShellCustomizer"/>, <see cref="ImageTemplateRestartCustomizer"/>, <see cref="ImageTemplateWindowsUpdateCustomizer"/>, <see cref="ImageTemplatePowerShellCustomizer"/>, and <see cref="ImageTemplateFileCustomizer"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateFileCustomizer"/>, <see cref="ImageTemplatePowerShellCustomizer"/>, <see cref="ImageTemplateRestartCustomizer"/>, <see cref="ImageTemplateShellCustomizer"/>, and <see cref="ImageTemplateWindowsUpdateCustomizer"/>.
     /// </summary>
     public abstract partial class ImageTemplateCustomizer
     {

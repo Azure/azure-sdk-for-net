@@ -21,6 +21,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new AverageServiceLoadScalingTrigger. </summary>
         public AverageServiceLoadScalingTrigger()
         {
+            Kind.Assign(ServiceScalingTriggerKind.AverageServiceLoadTrigger);
         }
 
         /// <summary> Gets or sets the MetricName. </summary>
@@ -102,7 +103,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "AverageServiceLoadTrigger");
             _metricName = DefineProperty<string>(nameof(MetricName), new string[] { "metricName" }, isRequired: true);
             _lowerLoadThreshold = DefineProperty<double>(nameof(LowerLoadThreshold), new string[] { "lowerLoadThreshold" }, isRequired: true);
             _upperLoadThreshold = DefineProperty<double>(nameof(UpperLoadThreshold), new string[] { "upperLoadThreshold" }, isRequired: true);

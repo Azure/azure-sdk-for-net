@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadContainerAutoProtectionIntent. </summary>
         public WorkloadContainerAutoProtectionIntent()
         {
+            ProtectionIntentItemType.Assign(RecoveryServicesBackup.ProtectionIntentItemType.AzureWorkloadContainerAutoProtectionIntent);
         }
 
         /// <summary> Define all the provisionable properties for WorkloadContainerAutoProtectionIntent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectionIntentItemType", new string[] { "protectionIntentItemType" }, defaultValue: "AzureWorkloadContainerAutoProtectionIntent");
             DefineAdditionalProperties();
         }
 

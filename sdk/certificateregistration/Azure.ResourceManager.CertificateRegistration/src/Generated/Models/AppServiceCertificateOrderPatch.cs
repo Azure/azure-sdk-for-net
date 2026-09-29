@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             get
             {
-                return Properties is null ? default : Properties.CertificateProductType;
+                return Properties is null ? (CertificateProductType?)default : Properties.CertificateProductType;
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

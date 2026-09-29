@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -94,25 +94,21 @@ namespace Azure.Messaging.ServiceBus
         public virtual string Identifier { get; internal set; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
+        ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> is currently closed or closing.
+        ///   The value may transition from <c>true</c> to <c>false</c> if an in-progress close does not complete.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the receiver is closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the receiver is closed or a close is in progress; otherwise, <c>false</c>.
         /// </value>
-        public virtual bool IsClosed
-        {
-            get => _closed;
-            private set => _closed = value;
-        }
-
-        /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed;
+        // Null-conditional for the mocking constructor, which leaves no transport to ask.
+        public virtual bool IsClosed => InnerReceiver?.IsClosed ?? false;
 
         /// <summary>
         /// Indicates whether or not the user has called CloseAsync or DisposeAsync on the receiver.
         /// </summary>
-        internal bool IsDisposed => _closed;
+        // Reads the transport directly rather than the virtual property, which a derived receiver defines in terms of this one.
+        internal bool IsDisposed => InnerReceiver?.IsClosed ?? false;
 
         /// <summary>
         /// The policy to use for determining retry behavior for when an operation fails.
@@ -256,12 +252,14 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusReceiver" />.
+        ///   When called concurrently, this method may return without waiting for another close operation to complete.
+        ///   A concurrent call returning does not guarantee that the receiver has closed; if the outstanding close does
+        ///   not complete, the receiver remains open and may be closed again.
         /// </summary>
         /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
         /// request to cancel the operation.</param>
         public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
-            _closed = true;
             Type clientType = GetType();
 
             Logger.ClientCloseStart(clientType, Identifier);

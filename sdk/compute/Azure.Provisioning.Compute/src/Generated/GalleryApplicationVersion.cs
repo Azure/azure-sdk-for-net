@@ -191,7 +191,7 @@ namespace Azure.Provisioning.Compute
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GalleryApplicationVersionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<GalleryApplication>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GalleryApplication>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -1145,7 +1145,7 @@ namespace Azure.Storage.Files.Shares
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRangeFromUriRequest(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode, context);
+                using HttpMessage message = CreateUploadRangeFromUrlRequest(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1183,7 +1183,7 @@ namespace Azure.Storage.Files.Shares
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRangeFromUriRequest(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode, context);
+                using HttpMessage message = CreateUploadRangeFromUrlRequest(range, copySource, contentLength, sourceRange, timeout, sourceContentCrc64, sourceIfMatchCrc64, sourceIfNoneMatchCrc64, leaseId, copySourceAuthorization, fileLastWrittenMode, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

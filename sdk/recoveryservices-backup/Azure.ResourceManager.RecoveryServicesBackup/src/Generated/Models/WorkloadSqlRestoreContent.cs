@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        private protected WorkloadSqlRestoreContent(string objectType) : base("AzureWorkloadSQLRestoreRequest")
+        private protected WorkloadSqlRestoreContent(string objectType) : base(objectType)
         {
             AlternateDirectoryPaths = new ChangeTrackingList<SqlDataDirectoryMapping>();
         }

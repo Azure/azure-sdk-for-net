@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

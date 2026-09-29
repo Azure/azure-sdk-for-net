@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string historyDefinitionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string historyDefinitionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/", false);
             uri.AppendPath(historyDefinitionId, true);
             if (_apiVersion != null)
@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateDeleteByIdRequest(string subscriptionId, string historyDefinitionId, RequestContext context)
+        internal HttpMessage CreateDeleteByIdRequest(Guid subscriptionId, string historyDefinitionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/", false);
             uri.AppendPath(historyDefinitionId, true);
             if (_apiVersion != null)

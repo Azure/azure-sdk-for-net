@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppsFunctionResource.ResourceType, out string containerAppsFunctionApiVersion);
             _containerAppsFunctionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppsFunctionResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsFunctionsRestClient = new ContainerAppsFunctions(_containerAppsFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsFunctionApiVersion ?? "2025-10-02-preview");
+            _containerAppsFunctionsRestClient = new ContainerAppsFunctions(_containerAppsFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsFunctionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App from the latest Revision.
+        /// Gets the details of a specific function from the latest Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App from the latest Revision.
+        /// Gets the details of a specific function from the latest Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// List the functions for a given Container App from the latest Revision.
+        /// Lists the functions available in the latest revision of a Container App.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// List the functions for a given Container App from the latest Revision.
+        /// Lists the functions available in the latest revision of a Container App.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -267,7 +267,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             base.DefineProvisionableProperties();
             _loginServer = DefineProperty<string>(nameof(LoginServer), new string[] { "loginServer" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<ContainerRegistryProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _status = DefineModelProperty<ContainerRegistryResourceStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
             _isAdminUserEnabled = DefineProperty<bool>(nameof(IsAdminUserEnabled), new string[] { "adminUserEnabled" });
