@@ -504,27 +504,15 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, Azure.Storage.Files.Shares.Models.NtfsFileAttributes fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
         public static Azure.Storage.Files.Shares.Models.ShareFileProperties StorageFileProperties(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, System.Collections.Generic.IEnumerable<string> contentEncoding, string cacheControl, string contentDisposition, System.Collections.Generic.IEnumerable<string> contentLanguage, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, string copySource, Azure.Storage.Files.Shares.Models.CopyStatus copyStatus, bool isServerEncrypted, string fileAttributes, System.DateTimeOffset fileCreationTime, System.DateTimeOffset fileLastWriteTime, System.DateTimeOffset fileChangeTime, string filePermissionKey, string fileId, string fileParentId) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FileType : System.IEquatable<Azure.Storage.Files.Shares.Models.FileType>
+    public enum FileType
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FileType(string value) { throw null; }
-        public static Azure.Storage.Files.Shares.Models.FileType BlockDevice { get { throw null; } }
-        public static Azure.Storage.Files.Shares.Models.FileType CharacterDevice { get { throw null; } }
-        public static Azure.Storage.Files.Shares.Models.FileType Directory { get { throw null; } }
-        public static Azure.Storage.Files.Shares.Models.FileType Fifo { get { throw null; } }
-        public static Azure.Storage.Files.Shares.Models.FileType Regular { get { throw null; } }
-        public static Azure.Storage.Files.Shares.Models.FileType Socket { get { throw null; } }
-        public static Azure.Storage.Files.Shares.Models.FileType SymLink { get { throw null; } }
-        public bool Equals(Azure.Storage.Files.Shares.Models.FileType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Storage.Files.Shares.Models.FileType left, Azure.Storage.Files.Shares.Models.FileType right) { throw null; }
-        public static implicit operator Azure.Storage.Files.Shares.Models.FileType (string value) { throw null; }
-        public static implicit operator Azure.Storage.Files.Shares.Models.FileType? (string value) { throw null; }
-        public static bool operator !=(Azure.Storage.Files.Shares.Models.FileType left, Azure.Storage.Files.Shares.Models.FileType right) { throw null; }
-        public override string ToString() { throw null; }
+        Regular = 0,
+        Directory = 1,
+        SymLink = 2,
+        BlockDevice = 3,
+        CharacterDevice = 4,
+        Socket = 5,
+        Fifo = 6,
     }
     public enum ModeCopyMode
     {

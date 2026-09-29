@@ -134,12 +134,6 @@ namespace Azure.Storage.Files.Shares.Models
                 writer.WriteValue(LinkCount.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(FileType))
-            {
-                writer.WriteStartElement("FileType");
-                writer.WriteValue(FileType.Value.ToString());
-                writer.WriteEndElement();
-            }
         }
 
         /// <param name="element"> The xml element to deserialize. </param>
@@ -157,7 +151,6 @@ namespace Azure.Storage.Files.Shares.Models
             string attributes = default;
             string permissionKey = default;
             long? linkCount = default;
-            FileType? fileType = default;
 
             foreach (var child in element.Elements())
             {
@@ -192,11 +185,6 @@ namespace Azure.Storage.Files.Shares.Models
                     linkCount = (long?)child;
                     continue;
                 }
-                if (localName == "FileType")
-                {
-                    fileType = new FileType((string)child);
-                    continue;
-                }
             }
             return new FileItem(
                 name,
@@ -204,8 +192,7 @@ namespace Azure.Storage.Files.Shares.Models
                 properties,
                 attributes,
                 permissionKey,
-                linkCount,
-                fileType);
+                linkCount);
         }
 
         /// <param name="writer"> The XML writer. </param>
