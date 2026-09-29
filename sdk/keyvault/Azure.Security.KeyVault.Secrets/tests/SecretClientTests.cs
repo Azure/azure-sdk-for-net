@@ -26,6 +26,18 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         public SecretClient Client { get; }
 
+        [SetUp]
+        public void Setup()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
         [Test]
         public void SetArgumentValidation()
         {
