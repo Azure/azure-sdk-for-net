@@ -14,8 +14,11 @@ namespace Azure.Storage.Files.Shares
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(BlockDeviceItem))]
+    [ModelReaderWriterBuildable(typeof(CharDeviceItem))]
     [ModelReaderWriterBuildable(typeof(ClearRange))]
     [ModelReaderWriterBuildable(typeof(DirectoryItem))]
+    [ModelReaderWriterBuildable(typeof(FifoItem))]
     [ModelReaderWriterBuildable(typeof(FileItem))]
     [ModelReaderWriterBuildable(typeof(FileProperty))]
     [ModelReaderWriterBuildable(typeof(FileRange))]
@@ -44,7 +47,9 @@ namespace Azure.Storage.Files.Shares
     [ModelReaderWriterBuildable(typeof(ShareStatistics))]
     [ModelReaderWriterBuildable(typeof(SignedIdentifiers))]
     [ModelReaderWriterBuildable(typeof(SmbMultichannel))]
+    [ModelReaderWriterBuildable(typeof(SocketItem))]
     [ModelReaderWriterBuildable(typeof(StringEncoded))]
+    [ModelReaderWriterBuildable(typeof(SymLinkItem))]
     [ModelReaderWriterBuildable(typeof(UserDelegationKey))]
     public partial class AzureStorageFilesSharesContext : ModelReaderWriterContext
     {
