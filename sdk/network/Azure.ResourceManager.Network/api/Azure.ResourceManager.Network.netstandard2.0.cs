@@ -2393,6 +2393,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteProviderPortData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.ExpressRouteProviderPortData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.ExpressRouteProviderPortData>
     {
+        public ExpressRouteProviderPortData() { }
         public ExpressRouteProviderPortData(Azure.Core.AzureLocation location) { }
         protected ExpressRouteProviderPortData(bool _) { }
         public Azure.ETag? ETag { get { throw null; } }
@@ -11395,7 +11396,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayFirewallRule(int ruleId) { }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType? Action { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleParanoiaLevel? ParanoiaLevel { get { throw null; } set { } }
         public int RuleId { get { throw null; } set { } }
         public string RuleIdString { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType? Sensitivity { get { throw null; } set { } }
@@ -11431,7 +11432,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ApplicationGatewayFirewallRuleSet() { }
         protected ApplicationGatewayFirewallRuleSet(bool _) { }
-        public string DisplayName { get { throw null; } }
+        public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.ApplicationGatewayFirewallRuleGroup> RuleGroups { get { throw null; } }
         public string RuleSetType { get { throw null; } set { } }
@@ -15775,7 +15776,7 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class Container : Azure.ResourceManager.Network.Models.NetworkSubResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.Container>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.Container>
     {
-        internal Container() { }
+        public Container() { }
         protected override Azure.ResourceManager.Network.Models.NetworkSubResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.Network.Models.NetworkSubResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -15790,7 +15791,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         public ContainerNetworkInterface() { }
         protected ContainerNetworkInterface(bool _) { }
-        public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceConfiguration ContainerNetworkInterfaceConfiguration { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Network.Models.ContainerNetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } }
@@ -25355,6 +25356,7 @@ namespace Azure.ResourceManager.Network.Models
     }
     public partial class VirtualNetworkGatewayConnectionListEntity : Azure.ResourceManager.Network.Models.NetworkTrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionListEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionListEntity>
     {
+        public VirtualNetworkGatewayConnectionListEntity(Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType, Azure.Core.ResourceIdentifier virtualNetworkGateway1Id) { }
         public VirtualNetworkGatewayConnectionListEntity(Azure.ResourceManager.Resources.Models.WritableSubResource localNetworkGateway2, Azure.ResourceManager.Network.Models.VirtualNetworkGatewayConnectionType connectionType) { }
         protected VirtualNetworkGatewayConnectionListEntity(bool _) { }
         public string AuthorizationKey { get { throw null; } set { } }
@@ -25374,7 +25376,7 @@ namespace Azure.ResourceManager.Network.Models
         public Azure.Core.ResourceIdentifier PeerId { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? ResourceGuid { get { throw null; } }
-        public Azure.ResourceManager.Network.Models.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } }
+        public Azure.ResourceManager.Network.Models.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
         public int? RoutingWeight { get { throw null; } set { } }
         public string SharedKey { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Network.Models.TrafficSelectorPolicy> TrafficSelectorPolicies { get { throw null; } }

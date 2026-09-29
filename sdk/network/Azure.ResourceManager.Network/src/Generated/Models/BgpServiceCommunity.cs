@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class BgpServiceCommunity : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
+        public BgpServiceCommunity()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -30,7 +35,25 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the BGP service community. </summary>
         [WirePath("properties")]
-        internal BgpServiceCommunityPropertiesFormat Properties { get; }
+        internal BgpServiceCommunityPropertiesFormat Properties { get; set; }
+
+        /// <summary> The name of the bgp community. e.g. Skype. </summary>
+        [WirePath("properties.serviceName")]
+        public string ServiceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BgpServiceCommunityPropertiesFormat();
+                }
+                Properties.ServiceName = value;
+            }
+        }
 
         /// <summary> A list of bgp communities. </summary>
         [WirePath("properties.bgpCommunities")]
@@ -38,7 +61,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.BgpCommunities;
+                if (Properties is null)
+                {
+                    Properties = new BgpServiceCommunityPropertiesFormat();
+                }
+                return Properties.BgpCommunities;
             }
         }
     }

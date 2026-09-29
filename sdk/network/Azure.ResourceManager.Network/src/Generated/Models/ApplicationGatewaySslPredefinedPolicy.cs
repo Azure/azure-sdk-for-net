@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewaySslPredefinedPolicy : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
+        public ApplicationGatewaySslPredefinedPolicy()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -28,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the application gateway SSL predefined policy. </summary>
         [WirePath("properties")]
-        internal ApplicationGatewaySslPredefinedPolicyPropertiesFormat Properties { get; }
+        internal ApplicationGatewaySslPredefinedPolicyPropertiesFormat Properties { get; set; }
 
         /// <summary> Ssl cipher suites to be enabled in the specified order for application gateway. </summary>
         [WirePath("properties.cipherSuites")]
@@ -36,7 +41,29 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.CipherSuites;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslPredefinedPolicyPropertiesFormat();
+                }
+                return Properties.CipherSuites;
+            }
+        }
+
+        /// <summary> Minimum version of Ssl protocol to be supported on application gateway. </summary>
+        [WirePath("properties.minProtocolVersion")]
+        public ApplicationGatewaySslProtocol? MinProtocolVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinProtocolVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslPredefinedPolicyPropertiesFormat();
+                }
+                Properties.MinProtocolVersion = value;
             }
         }
     }

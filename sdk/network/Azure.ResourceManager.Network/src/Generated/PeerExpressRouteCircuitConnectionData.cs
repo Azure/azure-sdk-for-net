@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network
     public partial class PeerExpressRouteCircuitConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
+        public PeerExpressRouteCircuitConnectionData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -31,11 +36,29 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the peer express route circuit connection. </summary>
         [WirePath("properties")]
-        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; }
+        internal PeerExpressRouteCircuitConnectionPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
+        [WirePath("properties.addressPrefix")]
+        public string AddressPrefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.AddressPrefix = value;
+            }
+        }
 
         /// <summary> Express Route Circuit connection state. </summary>
         [WirePath("properties.circuitConnectionStatus")]
@@ -47,6 +70,42 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The name of the express route circuit connection resource. </summary>
+        [WirePath("properties.connectionName")]
+        public string ConnectionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.ConnectionName = value;
+            }
+        }
+
+        /// <summary> The resource guid of the authorization used for the express route circuit connection. </summary>
+        [WirePath("properties.authResourceGuid")]
+        public Guid? AuthResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthResourceGuid;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.AuthResourceGuid = value;
+            }
+        }
+
         /// <summary> The provisioning state of the peer express route circuit connection resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -54,6 +113,42 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.expressRouteCircuitPeering.id")]
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.ExpressRouteCircuitPeeringId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.peerExpressRouteCircuitPeering.id")]
+        public ResourceIdentifier PeerExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeerExpressRouteCircuitPeeringId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PeerExpressRouteCircuitConnectionPropertiesFormat();
+                }
+                Properties.PeerExpressRouteCircuitPeeringId = value;
             }
         }
     }

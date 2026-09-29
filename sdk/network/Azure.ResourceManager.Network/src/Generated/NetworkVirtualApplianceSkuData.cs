@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
+        public NetworkVirtualApplianceSkuData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -33,7 +38,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> NetworkVirtualApplianceSku properties. </summary>
         [WirePath("properties")]
-        internal NetworkVirtualApplianceSkuPropertiesFormat Properties { get; }
+        internal NetworkVirtualApplianceSkuPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -55,7 +60,11 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.AvailableVersions;
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceSkuPropertiesFormat();
+                }
+                return Properties.AvailableVersions;
             }
         }
 
@@ -65,7 +74,11 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.AvailableScaleUnits;
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceSkuPropertiesFormat();
+                }
+                return Properties.AvailableScaleUnits;
             }
         }
     }

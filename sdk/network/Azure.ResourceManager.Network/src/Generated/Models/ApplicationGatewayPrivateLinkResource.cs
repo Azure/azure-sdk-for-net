@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayPrivateLinkResource : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
+        public ApplicationGatewayPrivateLinkResource()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkResource"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -31,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the application gateway private link resource. </summary>
         [WirePath("properties")]
-        internal ApplicationGatewayPrivateLinkResourceProperties Properties { get; }
+        internal ApplicationGatewayPrivateLinkResourceProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -53,7 +58,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredMembers;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
             }
         }
 
@@ -63,7 +72,11 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RequiredZoneNames;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
             }
         }
     }

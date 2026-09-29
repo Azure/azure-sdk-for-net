@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
+        public ExpressRoutePortsLocationData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -30,7 +35,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> ExpressRoutePort peering location properties. </summary>
         [WirePath("properties")]
-        internal ExpressRoutePortsLocationPropertiesFormat Properties { get; }
+        internal ExpressRoutePortsLocationPropertiesFormat Properties { get; set; }
 
         /// <summary> Address of peering location. </summary>
         [WirePath("properties.address")]
@@ -58,7 +63,11 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.AvailableBandwidths;
+                if (Properties is null)
+                {
+                    Properties = new ExpressRoutePortsLocationPropertiesFormat();
+                }
+                return Properties.AvailableBandwidths;
             }
         }
 

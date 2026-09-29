@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinkFormat"/>. </summary>
-        internal ResourceNavigationLinkFormat()
+        public ResourceNavigationLinkFormat()
         {
         }
 
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type of the linked resource. </summary>
         [WirePath("linkedResourceType")]
-        public ResourceType? LinkedResourceType { get; }
+        public ResourceType? LinkedResourceType { get; set; }
 
         /// <summary> Link to the external resource. </summary>
         [WirePath("link")]
-        public ResourceIdentifier Link { get; }
+        public ResourceIdentifier Link { get; set; }
 
         /// <summary> The provisioning state of the resource navigation link resource. </summary>
         [WirePath("provisioningState")]

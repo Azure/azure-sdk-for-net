@@ -166,37 +166,29 @@ No new unit tests are added.
 
 ### Management disconnected-property follow-up
 
-The corresponding management compatibility declarations were inspected together
-with the generated constructors and serializers. The serializers read/write the
-`Properties` object. The following custom public members use separate storage
-instead, so assigning them does not update the serialized leaf, and deserializing
-the leaf does not populate the custom getter. ApiCompat does not detect this.
-These issues are deferred; do not copy this pattern into provisioning.
+The management audit identified custom public members using storage separate
+from the `Properties` object read/written by generated serializers. ApiCompat
+does not detect that disconnected behavior. The completed generation batch
+replaced the usage-only cases; the explicitly read-only route property remains
+deferred. Do not copy the disconnected-storage pattern into provisioning.
 
 All file paths below are relative to
 `sdk/network/Azure.ResourceManager.Network/src/Customization/`.
 
-| Management type and disconnected members | Customization file | Actual generated storage |
+| Management type and audited members | Removed customization file (unless noted) | Current status |
 |---|---|---|
-| `NetworkIPConfiguration`: `PrivateIPAddress`, `PrivateIPAllocationMethod`, `PublicIPAddress`, `Subnet` | `Models/NetworkIPConfiguration.MissingSetterCompatibility.cs` | Matching fields in `Properties` (`IPConfigurationPropertiesFormat`); custom members are standalone auto-properties. |
-| `ResourceNavigationLink`: `Link`, `LinkedResourceType` | `Models/ResourceNavigationLink.MissingSetterCompatibility.cs` | `Properties.Link` and `Properties.LinkedResourceType`; custom members are standalone auto-properties. |
-| `ServiceAssociationLink`: `AllowDelete`, `Link`, `LinkedResourceType` | `Models/ServiceAssociationLink.MissingSetterCompatibility.cs` | Matching fields in `Properties`; custom members are standalone auto-properties. |
-| `ServiceAssociationLink.Locations` | `ServiceAssociationLink.RemainingMemberCompatibility.cs` | `Properties.Locations`; the custom `IList<AzureLocation>` owns a separate `ChangeTrackingList` and suppresses the generated flattened member. |
-| `VirtualNetworkApplianceIPConfiguration`: `Primary`, `PrivateIPAddress`, `PrivateIPAddressVersion`, `PrivateIPAllocationMethod` | `Models/VirtualNetworkApplianceIPConfiguration.MissingSetterCompatibility.cs` | Matching fields in `Properties`; custom members are standalone auto-properties. |
-| `RouteData.HasBgpOverride` | `RouteData.MissingSetterCompatibility.cs` | `Properties.HasBgpOverride`; the custom auto-property is disconnected. The generated leaf is explicitly read-only and omitted in wire-write mode, so its setter requires a separate semantic decision. |
+| `ResourceNavigationLink`: `Link`, `LinkedResourceType` | `Models/ResourceNavigationLink.MissingSetterCompatibility.cs` | Resolved: generated accessors use `Properties.Link` and `Properties.LinkedResourceType`. |
+| `ServiceAssociationLink`: `AllowDelete`, `Link`, `LinkedResourceType` | `Models/ServiceAssociationLink.MissingSetterCompatibility.cs` | Resolved: generated accessors use matching fields in `Properties`. |
+| `ServiceAssociationLink.Locations` | `ServiceAssociationLink.RemainingMemberCompatibility.cs` | Resolved: generated getter initializes `Properties` and returns its connected `IList<AzureLocation>`. |
+| `VirtualNetworkApplianceIPConfiguration`: `Primary`, `PrivateIPAddress`, `PrivateIPAddressVersion`, `PrivateIPAllocationMethod` | `Models/VirtualNetworkApplianceIPConfiguration.MissingSetterCompatibility.cs` | Resolved: generated accessors use matching fields in `Properties`. |
+| `RouteData.HasBgpOverride` | `RouteData.MissingSetterCompatibility.cs` (retained) | Deferred: the custom auto-property is disconnected. The generated leaf is explicitly read-only and omitted in wire-write mode, so its setter requires a separate semantic decision. |
 
-This is **15 deferred management members** in the corresponding types, not a
-repository-wide customization audit. `ContainerNetworkInterface.ContainerId`
-was a sixteenth disconnected member in
-`Models/ContainerNetworkInterface.MissingSetterCompatibility.cs`; that file is
-removed at the user's earlier request. Regeneration succeeded: the public
-generated getter now forwards through `Properties.ContainerId` with wire path
-`properties.container.id`, instead of independent storage. It has no setter.
-Compilation and API export pass on all three targets, but ApiCompat confirms a
-lost `ContainerNetworkInterface.ContainerId.set` (`CP0002`) per framework against
-1.17.0, with no other diagnostics. The getter is connected now, but removing the
-setter is a breaking API change. This remains an explicit follow-up decision;
-the disconnected member has not been silently restored or the diagnostic suppressed.
+Of these **11 management members**, ten are now generated and connected; only
+`RouteData.HasBgpOverride` remains deferred. Separately,
+`ContainerNetworkInterface.ContainerId` now has a connected generated getter
+and setter at `properties.container.id`. The earlier missing-setter CP0002 is
+resolved without restoring its disconnected customization or suppressing the
+diagnostic. The four `NetworkIPConfiguration` members were resolved as well.
 
 `LoadBalancerInboundNatPool.Properties` and `LoadBalancingRuleData.Properties`
 are **not disconnected**: their custom backing fields are accessed by the same
@@ -204,6 +196,104 @@ are **not disconnected**: their custom backing fields are accessed by the same
 Their provisioning issues are public-wrapper visibility, not the disconnected
 scalar/member pattern above. The separate additional-properties limitation
 remains documented below.
+
+### Generated management IP configuration setter correction
+
+The four disconnected `NetworkIPConfiguration` properties were removed from
+`Models/NetworkIPConfiguration.MissingSetterCompatibility.cs`. The correction
+applies usage to the outer model, not a redundant inner-model override:
+
+```typespec
+@@usage(
+  Common.IPConfiguration,
+  Azure.ClientGenerator.Core.Usage.input | Azure.ClientGenerator.Core.Usage.output,
+  "csharp"
+);
+```
+
+Applying usage only to `IPConfigurationPropertiesFormat` restored inner setters
+but left `NetworkIPConfiguration.Properties` getter-only. The flattening
+generator requires both wrapper and leaf setters, so all four public setters
+were still missing. Moving the override to `Common.IPConfiguration` propagates
+input usage to its properties model and restores both levels.
+
+The initial local regeneration succeeded in 14m22s. All four public properties now
+have generated getters and setters connected to the same `Properties` object
+that serialization uses. Each setter initializes that object when null, so the
+parameterless constructor works without independent backing storage.
+The follow-up batch also removed its custom constructor; public
+`NetworkIPConfiguration()` is now generated. `ProvisioningState` remains
+getter-only, and the four setter signatures are unchanged. Full pinned-source
+validation results are recorded below.
+
+This correction is now published in spec commit
+`fe3bb76076cccb801f23f2cf2c53aba30a13e06d`, pinned by the management package.
+Provisioning was not regenerated and retains its earlier `10cc3507fbf` pin.
+
+### Batched management usage correction (completed)
+
+The follow-up audit covers custom constructors, missing-setter compatibility
+files, and related collection declarations. Confirmed cases were applied
+together, including removal of the custom `NetworkIPConfiguration()` constructor.
+The batch uses C# input/output usage on outer models, allowing usage to propagate
+to their properties and writable child models. No HTTP operation or explicit
+`@visibility(Lifecycle.Read)` is changed.
+
+| Confirmed model graph | Correction included in the batch |
+|---|---|
+| `Common.IPConfiguration`, `Common.ResourceNavigationLink`, `Common.ServiceAssociationLink` | Generate public constructors and connected writable leaves; replace the separate `ServiceAssociationLink.Locations` list with generated storage. |
+| `ContainerNetworkInterface`, `VirtualNetworkApplianceIpConfiguration` | Generate constructors and setters for writable leaves, including `ContainerId`; preserve explicitly read-only state and related-resource collections. |
+| `BgpServiceCommunity` / `BGPCommunity` | Generate constructors and writable service/community fields through parent input usage. |
+| `ExpressRouteServiceProvider` / `ExpressRouteServiceProviderBandwidthsOffered` | Generate constructors and offered-bandwidth fields; preserve read-only provisioning state. |
+| `ApplicationGatewayFirewallRuleSet` / rule groups / rules | Generated writable fields and preserved `RuleSet()`, `RuleGroup(string, IEnumerable<Rule>)`, and `Rule(int)` signatures. The group constructor initializes the required rules collection. |
+| `ApplicationGatewaySslPredefinedPolicy` | Generate constructor and connected `MinProtocolVersion`; retain the separate `ResourceType` compatibility alias. |
+| `PeerExpressRouteCircuitConnection`, `ExpressRouteProviderPort` | Generated writable connection/port leaves. Retained `ExpressRouteProviderPortData(AzureLocation)` alongside the generated parameterless constructor. |
+| `VirtualNetworkGatewayConnectionListEntity` | Generated its fourteen writable leaves. Retained the `WritableSubResource localNetworkGateway2` overload and updated its delegation to the generated all-properties constructor; it differs from the generated required gateway-reference overload. |
+| `ApplicationGatewayPrivateLinkResource`, `AzureFirewallFqdnTag`, `ExpressRoutePortsLocation` / bandwidths, `NetworkVirtualApplianceSku` / instances | Generate matching public constructors without making explicitly read-only service values writable. |
+| `PrivateEndpointIPConfiguration.PrivateIPAddress`, `BackendAddressPoolData.Location` | Removed redundant outer compatibility properties without adding usage overrides; generated accessors now forward to the existing correctly typed writable inner properties. |
+
+These are **not equivalent usage-only cases** and remain outside this batch:
+
+- `RouteData.HasBgpOverride`, the provisioning-state compatibility setters on
+  `IpamPoolProperties`, `StaticCidrProperties`,
+  `ReachabilityAnalysisIntentProperties`, `ReachabilityAnalysisRunProperties`,
+  and `NetworkVerifierWorkspaceProperties`, and
+  `NetworkSecurityPerimeterLinkReferenceData.Status`: the service properties
+  are explicitly read-only. Adding input usage is not a visibility override.
+- Protected parameterless constructors on abstract discriminator models are a
+  different compatibility concern. For example, `FirewallPolicyRule` already
+  has generated input setters, but its generated discriminator constructor is
+  `private protected FirewallPolicyRule(FirewallPolicyRuleType)`.
+- `FlowLogProperties()` preserves an extra parameterless overload; the model
+  already has a generated public constructor requiring `storageId` and
+  `enabled`. Input usage cannot remove those required arguments.
+- Existing renamed-property aliases, replacement types, and public wrapper
+  visibility customizations are not automatically redundant merely because a
+  custom property has a setter. For example, the deprecated
+  `NetworkVirtualApplianceConnectionData.ConnectionRoutingConfiguration`
+  alias requires a separate forwarding/type-compatibility decision.
+
+After the customization MCP timed out, the user authorized direct source edits.
+The batch removed 35 custom files in addition to the earlier IP configuration
+setter file, and added 15 C# usage overrides alongside the existing override.
+Generated files were produced only by `dotnet build /t:GenerateCode`.
+
+The spec changes were committed and pushed as
+`fe3bb76076cccb801f23f2cf2c53aba30a13e06d`; the management pin was updated
+before regenerating from that remote commit without `LocalSpecRepo`.
+Pinned generation completed in 16m14s; all 3,684 generated files matched the
+validated local trial. Release build and ApiCompat against 1.17.0 passed on
+netstandard2.0, net8.0, and net10.0 with zero warnings/errors. API export passed
+on all three targets; normalized listings matched the local trial.
+
+Compared with the previously committed SDK surface, public changes are additive:
+`ExpressRouteProviderPortData()`, `Container()`, the gateway connection
+constructor accepting `(VirtualNetworkGatewayConnectionType, ResourceIdentifier)`,
+and setters for `ContainerId`, firewall-rule `ParanoiaLevel`, rule-set
+`DisplayName`, and gateway-connection `RoutingConfiguration`. There are no
+`IReadOnlyList`/`IList` signature changes. Explicitly read-only leaves remain
+read-only. No new unit tests were added. Provisioning
+generation and its pin remain unchanged.
 
 ## Other outstanding issues and deferred decisions
 

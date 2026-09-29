@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure;
 using Azure.ResourceManager.Network;
 
@@ -87,6 +88,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new PrivateEndpointIPConfigurationProperties();
                 }
                 Properties.MemberName = value;
+            }
+        }
+
+        /// <summary> A private ip address obtained from the private endpoint's subnet. </summary>
+        [WirePath("properties.privateIPAddress")]
+        public IPAddress PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddress = value;
             }
         }
     }

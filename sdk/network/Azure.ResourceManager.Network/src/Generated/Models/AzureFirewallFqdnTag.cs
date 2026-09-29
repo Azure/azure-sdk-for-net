@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AzureFirewallFqdnTag : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
+        public AzureFirewallFqdnTag()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -33,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the azure firewall FQDN tag. </summary>
         [WirePath("properties")]
-        internal AzureFirewallFqdnTagPropertiesFormat Properties { get; }
+        internal AzureFirewallFqdnTagPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

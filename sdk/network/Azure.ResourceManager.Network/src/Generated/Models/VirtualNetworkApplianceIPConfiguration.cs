@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualNetworkApplianceIPConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfiguration"/>. </summary>
+        public VirtualNetworkApplianceIPConfiguration()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -31,11 +36,65 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the virtual network appliance ip configuration. </summary>
         [WirePath("properties")]
-        internal VirtualNetworkApplianceIPConfigurationProperties Properties { get; }
+        internal VirtualNetworkApplianceIPConfigurationProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> The private IP address of the IP configuration. </summary>
+        [WirePath("properties.privateIPAddress")]
+        public string PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkApplianceIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddress = value;
+            }
+        }
+
+        /// <summary> The private IP address allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkApplianceIPConfigurationProperties();
+                }
+                Properties.PrivateIPAllocationMethod = value;
+            }
+        }
+
+        /// <summary> Whether the ip configuration is primary or not. </summary>
+        [WirePath("properties.primary")]
+        public bool? Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkApplianceIPConfigurationProperties();
+                }
+                Properties.Primary = value;
+            }
+        }
 
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]
@@ -44,6 +103,24 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
+        [WirePath("properties.privateIPAddressVersion")]
+        public NetworkIPVersion? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkApplianceIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddressVersion = value;
             }
         }
     }

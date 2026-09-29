@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfigurationProperties"/>. </summary>
-        internal VirtualNetworkApplianceIPConfigurationProperties()
+        public VirtualNetworkApplianceIPConfigurationProperties()
         {
         }
 
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("privateIPAddress")]
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress { get; set; }
 
         /// <summary> The private IP address allocation method. </summary>
         [WirePath("privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
         [WirePath("primary")]
-        public bool? Primary { get; }
+        public bool? Primary { get; set; }
 
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
         [WirePath("provisioningState")]
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
         [WirePath("privateIPAddressVersion")]
-        public NetworkIPVersion? PrivateIPAddressVersion { get; }
+        public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
     }
 }
