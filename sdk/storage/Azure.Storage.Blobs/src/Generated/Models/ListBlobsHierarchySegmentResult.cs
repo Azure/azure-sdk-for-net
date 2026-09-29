@@ -8,20 +8,20 @@
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The result of the List Blobs Hierarchical API. </summary>
-    internal partial class ListBlobsHierarchySegmentResponse
+    internal partial class ListBlobsHierarchySegmentResult
     {
-        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="hierarchicalList"> The list of hierarchical blobs. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyList hierarchicalList)
+        internal ListBlobsHierarchySegmentResult(string serviceEndpoint, string containerName, BlobHierarchyList hierarchicalList)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             HierarchicalList = hierarchicalList;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="delimiter"> The delimiter of the blobs. </param>
@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="maxResults"> The maximum number of blobs to be returned with this operation. </param>
         /// <param name="hierarchicalList"> The list of hierarchical blobs. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyList hierarchicalList, string nextMarker)
+        internal ListBlobsHierarchySegmentResult(string serviceEndpoint, string containerName, string delimiter, string prefix, string marker, int? maxResults, BlobHierarchyList hierarchicalList, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;

@@ -18,34 +18,34 @@ using Azure.Storage.Queues;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The list queues response. </summary>
-    internal partial class ListQueuesResponse : IPersistableModel<ListQueuesResponse>, IXmlSerializable
+    internal partial class ListQueuesResult : IPersistableModel<ListQueuesResult>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="ListQueuesResponse"/> for deserialization. </summary>
-        internal ListQueuesResponse()
+        /// <summary> Initializes a new instance of <see cref="ListQueuesResult"/> for deserialization. </summary>
+        internal ListQueuesResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListQueuesResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListQueuesResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListQueuesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListQueuesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeListQueuesResponse(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeListQueuesResult(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListQueuesResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListQueuesResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListQueuesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListQueuesResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
@@ -65,22 +65,22 @@ namespace Azure.Storage.Queues.Models
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListQueuesResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListQueuesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListQueuesResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListQueuesResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListQueuesResponse IPersistableModel<ListQueuesResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListQueuesResult IPersistableModel<ListQueuesResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListQueuesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ListQueuesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListQueuesResponse"/> from. </param>
-        public static explicit operator ListQueuesResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListQueuesResult"/> from. </param>
+        public static explicit operator ListQueuesResult(Response response)
         {
             using Stream stream = response.ContentStream;
             if (stream == null)
@@ -88,7 +88,7 @@ namespace Azure.Storage.Queues.Models
                 return default;
             }
 
-            return DeserializeListQueuesResponse(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return DeserializeListQueuesResult(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -113,10 +113,10 @@ namespace Azure.Storage.Queues.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListQueuesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListQueuesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(ListQueuesResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListQueuesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartAttribute("ServiceEndpoint");
@@ -152,7 +152,7 @@ namespace Azure.Storage.Queues.Models
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListQueuesResponse DeserializeListQueuesResponse(XElement element, ModelReaderWriterOptions options)
+        internal static ListQueuesResult DeserializeListQueuesResult(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
@@ -210,7 +210,7 @@ namespace Azure.Storage.Queues.Models
                     continue;
                 }
             }
-            return new ListQueuesResponse(
+            return new ListQueuesResult(
                 serviceEndpoint,
                 prefix,
                 marker,
