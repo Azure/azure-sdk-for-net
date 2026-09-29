@@ -3,11 +3,7 @@
 ## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support for 2026-10-01-preview Storage Discovery Workspaces resource management, including:
-  - `StorageDiscoveryWorkspaceResource` for managing Storage Discovery workspaces
-  - Create, read, update, and delete operations for workspaces
-  - Subscription and resource group level workspace operations
-  - Tag management operations
+ - Added support for configuring Azure Blob Storage capabilities on Storage Discovery workspaces with the 2026-10-01-preview API, including capacity-details status and prefix configurations.
 
 ## 1.0.1 (2026-06-30)
 
