@@ -1,5 +1,5 @@
 directory: specification/privatetrafficmanager/resource-manager/Microsoft.Network/PrivateTrafficManager
-commit: b98dacf48388cade75dfa307cdb7fe64dcab0a2f
+commit: 7bfd5c2abf4c7c9b9ed3698bfae75a7e3cefb024
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
