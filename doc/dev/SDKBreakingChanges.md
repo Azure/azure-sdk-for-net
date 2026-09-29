@@ -53,7 +53,10 @@ Automation can call the configured script directly:
 
 Generate and compile current artifacts separately when needed. Matching
 portable or embedded PDBs are required to verify source checksums; build-input
-timestamps supplement that check. The PowerShell host must run on a .NET
+timestamps supplement that check. Source paths are indexed and inferred
+directory mappings are reused, avoiding an all-pairs source/document scan
+while retaining mapping-ambiguity and checksum validation.
+The PowerShell host must run on a .NET
 runtime compatible with the selected SDK's MSBuild diagnostic reader. For the
 current .NET 10 SDK, the detector requires PowerShell 7.6 or newer; installing
 an SDK alone does not upgrade PowerShell. The CI collector, assertion, and
@@ -134,6 +137,11 @@ Invoke-Pester -Path @(
     '.\eng\scripts\compatibility\ci-tests'
 ) -Output Normal
 ```
+
+The native suite includes physical and mapped-path fixtures with 4,278 sources
+and three target frameworks. Each runs the production detector through the CI
+process wrapper's default 300-second timeout, with only registry discovery
+isolated from the network.
 
 ### Supplemental extraction: additions, not a second compatibility checker
 

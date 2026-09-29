@@ -338,6 +338,7 @@ function Assert-SdkChangeCompilationSources {
     $intermediateDirectory = [System.IO.Path]::GetFullPath($Evaluation.Properties.IntermediateOutputPath, $projectDirectory).Replace('\', '/').TrimEnd('/') + '/'
     $repoDirectory = $Evaluation.RepositoryPath.Replace('\', '/').TrimEnd('/') + '/'
     $sources = @{}
+    $relativeSources = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $mappings = @{ $repoDirectory = $repoDirectory }
     $projectPrefix = $projectDirectory.Replace('\', '/').TrimEnd('/') + '/'
     $mappings[$projectPrefix] = $projectPrefix
@@ -346,26 +347,44 @@ function Assert-SdkChangeCompilationSources {
         $sources[$path] = $false
         $relative = [System.IO.Path]::GetRelativePath($Evaluation.RepositoryPath, $source.FullPath).Replace('\', '/')
         if ($relative.StartsWith('../')) { continue }
-        foreach ($document in $documents) {
-            $name = $document.Name.Replace('\', '/')
-            if ($name.EndsWith("/$relative", [System.StringComparison]::OrdinalIgnoreCase)) {
-                $prefix = $name.Substring(0, $name.Length - $relative.Length)
+        [void]$relativeSources.Add($relative)
+    }
+    $documentPaths = @($documents | ForEach-Object { $_.Name.Replace('\', '/') })
+    foreach ($name in $documentPaths) {
+        # Match indexed repository-relative suffixes at path boundaries, not every source against every document.
+        $separator = $name.IndexOf('/')
+        while ($separator -ge 0) {
+            if ($relativeSources.Contains($name.Substring($separator + 1))) {
+                $prefix = $name.Substring(0, $separator + 1)
                 if ($mappings.Contains($prefix) -and $mappings[$prefix] -ne $repoDirectory) {
-                    throw "Ambiguous source path mapping in the current PDB: $($document.Name)"
+                    throw "Ambiguous source path mapping in the current PDB: $name"
                 }
                 $mappings[$prefix] = $repoDirectory
             }
+            $separator = $name.IndexOf('/', $separator + 1)
         }
     }
-    foreach ($document in $documents) {
-        $path = $document.Name.Replace('\', '/')
+    $mappedDirectories = @{}
+    for ($i = 0; $i -lt $documents.Count; $i++) {
+        $document = $documents[$i]
+        $path = $documentPaths[$i]
         if (!$sources.Contains($path)) {
-            foreach ($prefix in ($mappings.Keys | Sort-Object Length -Descending)) {
-                if ($path.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) {
-                    $path = $mappings[$prefix] + $path.Substring($prefix.Length)
-                    break
+            $separator = $path.LastIndexOf('/')
+            $directory = $path.Substring(0, $separator + 1)
+            if (!$mappedDirectories.Contains($directory)) {
+                $mappedDirectory = $directory
+                # Find the longest mapped prefix once per document directory.
+                while ($separator -ge 0) {
+                    $prefix = $path.Substring(0, $separator + 1)
+                    if ($mappings.Contains($prefix)) {
+                        $mappedDirectory = $mappings[$prefix] + $directory.Substring($prefix.Length)
+                        break
+                    }
+                    $separator = if ($separator -gt 0) { $path.LastIndexOf('/', $separator - 1) } else { -1 }
                 }
+                $mappedDirectories[$directory] = $mappedDirectory
             }
+            $path = $mappedDirectories[$directory] + $path.Substring($directory.Length)
         }
         if ($path.StartsWith($intermediateDirectory, [System.StringComparison]::OrdinalIgnoreCase)) { continue }
         if (!$sources.Contains($path)) {

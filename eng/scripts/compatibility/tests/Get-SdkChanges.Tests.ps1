@@ -889,6 +889,86 @@ Describe 'Portable PDB compilation freshness' -Tag 'UnitTest' {
         { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } | Should -Not -Throw
     }
 
+    It 'normalizes each PDB path once instead of scanning all documents for each <Mode> source' -TestCases @(
+        @{ Mode = 'physical' }, @{ Mode = 'mapped' }
+    ) {
+        param($Mode)
+        $script:documentNameReads = 0
+        $evaluation.Items.Compile = @(0..255 | ForEach-Object {
+            @{ FullPath = Join-Path $root 'src' "Client$_.cs" }
+        })
+        $documents = @($evaluation.Items.Compile | ForEach-Object {
+            $name = if ($Mode -eq 'physical') { $_.FullPath } else { "/_/src/$([System.IO.Path]::GetFileName($_.FullPath))" }
+            $document = [pscustomobject]@{ StoredName = $name; Algorithm = 'SHA256'; Hash = 'fixture' }
+            $document | Add-Member -MemberType ScriptProperty -Name Name -Value {
+                $script:documentNameReads++
+                $this.StoredName
+            }
+            $document
+        })
+        Mock Get-FileHash { @{ Hash = 'fixture' } }
+        Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation
+        $script:documentNameReads | Should -Be $documents.Count
+        Should -Invoke Get-FileHash -Times 256 -Exactly
+    }
+
+    It 'preserves ambiguity checks when an inferred prefix conflicts with the known project directory' {
+        $nested = Join-Path $root 'src' 'src' 'Client.cs'
+        $documents[0].Name = $nested
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } |
+            Should -Throw '*Ambiguous source path mapping*'
+    }
+
+    It 'uses the longest inferred prefix with shared filename suffixes' {
+        $nested = Join-Path $root 'nested' 'src' 'Client.cs'
+        [void][System.IO.Directory]::CreateDirectory((Split-Path $nested -Parent))
+        [System.IO.File]::WriteAllText($nested, 'public class Nested {}')
+        $evaluation.Items.Compile += @{ FullPath = $nested }
+        $documents = @(
+            @{ Name = '/_/nested/src/Client.cs'; Algorithm = 'SHA256'; Hash = (Get-FileHash $source).Hash },
+            @{ Name = $nested; Algorithm = 'SHA256'; Hash = (Get-FileHash $nested).Hash }
+        )
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } | Should -Not -Throw
+    }
+
+    It 'infers directory mappings before validating generated documents appearing first' {
+        $documents = @(
+            @{ Name = '/_/obj/net8.0/Generated.cs'; Algorithm = ''; Hash = '' },
+            @{ Name = '/_/src/Client.cs'; Algorithm = $documents[0].Algorithm; Hash = $documents[0].Hash }
+        )
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } | Should -Not -Throw
+    }
+
+    It 'uses independent mappings for documents with different deterministic roots' {
+        $second = Join-Path $root 'src' 'Second.cs'
+        [System.IO.File]::WriteAllText($second, 'public class Second {}')
+        $evaluation.Items.Compile += @{ FullPath = $second }
+        $documents[0].Name = '/first/src/Client.cs'
+        $documents += @{ Name = '/second/src/Second.cs'; Algorithm = 'SHA256'; Hash = (Get-FileHash $second).Hash }
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } | Should -Not -Throw
+    }
+
+    It 'does not read an external checkout when a mapped source checksum differs' {
+        $documents[0].Name = '/other-checkout/src/Client.cs'
+        $documents[0].Hash = 'different'
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } |
+            Should -Throw '*compiled checksum*'
+    }
+
+    It 'keeps exact linked source paths outside the repository verifiable' {
+        $external = Join-Path $TestDrive 'Linked.cs'
+        [System.IO.File]::WriteAllText($external, 'public class Linked {}')
+        $evaluation.Items.Compile += @{ FullPath = $external }
+        $documents += @{ Name = $external; Algorithm = 'SHA256'; Hash = (Get-FileHash $external).Hash }
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } | Should -Not -Throw
+    }
+
+    It 'does not match partial path segments when inferring a mapping' {
+        $documents[0].Name = '/_/other-src/Client.cs'
+        { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } |
+            Should -Throw '*not an evaluated Compile input*'
+    }
+
     It 'ignores compiler-generated documents under the evaluated intermediate path' {
         $documents += @{ Name = Join-Path $evaluation.Properties.IntermediateOutputPath 'Generator' 'Generated.cs'; Algorithm = ''; Hash = '' }
         { Assert-SdkChangeCompilationSources -Assembly 'unused.dll' -Evaluation $evaluation } | Should -Not -Throw
