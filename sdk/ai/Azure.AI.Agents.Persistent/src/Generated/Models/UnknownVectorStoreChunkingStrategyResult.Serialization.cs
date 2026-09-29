@@ -12,10 +12,10 @@ using System.Text.Json;
 
 namespace Azure.AI.Agents.Persistent
 {
-    internal partial class UnknownVectorStoreChunkingStrategyResponse : VectorStoreChunkingStrategyResponse, IJsonModel<VectorStoreChunkingStrategyResponse>
+    internal partial class UnknownVectorStoreChunkingStrategyResult : VectorStoreChunkingStrategyResponse, IJsonModel<VectorStoreChunkingStrategyResponse>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownVectorStoreChunkingStrategyResponse"/> for deserialization. </summary>
-        internal UnknownVectorStoreChunkingStrategyResponse()
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorStoreChunkingStrategyResult"/> for deserialization. </summary>
+        internal UnknownVectorStoreChunkingStrategyResult()
         {
         }
 
@@ -99,7 +99,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownVectorStoreChunkingStrategyResponse DeserializeUnknownVectorStoreChunkingStrategyResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownVectorStoreChunkingStrategyResult DeserializeUnknownVectorStoreChunkingStrategyResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownVectorStoreChunkingStrategyResponse(@type, additionalBinaryDataProperties);
+            return new UnknownVectorStoreChunkingStrategyResult(@type, additionalBinaryDataProperties);
         }
     }
 }
