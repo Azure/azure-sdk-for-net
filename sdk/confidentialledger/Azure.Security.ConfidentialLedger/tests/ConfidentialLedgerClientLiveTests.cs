@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // This identifies the latest API Version under test: 2024-08-22-preview
@@ -260,6 +260,66 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.IsNotEmpty(receiptResponse.Value.ApplicationClaims);
             Assert.That(receiptResponse.Value.ApplicationClaims, Has.Some.Matches<ApplicationClaim>(
                 claim => claim.Kind == ApplicationClaimKind.LedgerEntry && claim.LedgerEntry != null));
+        }
+        #endregion
+
+        #region WaitForCommit
+        private ConfidentialLedgerClient CreateWaitForCommitClient()
+        {
+            return InstrumentClient(
+                new ConfidentialLedgerClient(
+                    TestEnvironment.ConfidentialLedgerUrl,
+                    credential: Credential,
+                    clientCertificate: null,
+                    ledgerOptions: InstrumentClientOptions(
+                        new ConfidentialLedgerClientOptions(ServiceVersion.V2026_07_31_Preview)),
+                    identityServiceCert: serviceCert.Cert));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task PostLedgerEntry_WaitForCommitTrue_CompletesInline()
+        {
+            var client = CreateWaitForCommitClient();
+
+            var operation = await client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Started,
+                content: RequestContent.Create(new { contents = Recording.GenerateAssetName("waitForCommit") }),
+                waitForCommit: true);
+
+            // With waitForCommit=true the service holds the response until the entry is
+            // globally committed, so the returned operation is already completed and no
+            // polling is required.
+            Assert.IsTrue(operation.HasCompleted, "waitForCommit=true should return an already-completed operation.");
+            Assert.IsNotNull(operation.Id);
+            Assert.AreEqual((int)HttpStatusCode.OK, operation.GetRawResponse().Status);
+
+            // The transaction should be immediately readable as Committed.
+            var status = await client.GetTransactionStatusAsync(operation.Id, new RequestContext());
+            var stringResult = new StreamReader(status.ContentStream).ReadToEnd();
+            Assert.AreEqual((int)HttpStatusCode.OK, status.Status);
+            Assert.That(stringResult, Does.Contain(operation.Id));
+            Assert.That(stringResult, Does.Contain("Committed"));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task PostLedgerEntry_WaitForCommitFalse_Polls()
+        {
+            var client = CreateWaitForCommitClient();
+
+            var operation = await client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Completed,
+                content: RequestContent.Create(new { contents = Recording.GenerateAssetName("waitForCommit") }),
+                waitForCommit: false);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsNotNull(operation.Id);
+
+            var status = await client.GetTransactionStatusAsync(operation.Id, new RequestContext());
+            var stringResult = new StreamReader(status.ContentStream).ReadToEnd();
+            Assert.AreEqual((int)HttpStatusCode.OK, status.Status);
+            Assert.That(stringResult, Does.Contain("Committed"));
         }
         #endregion
 
