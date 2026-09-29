@@ -49,6 +49,7 @@ namespace Azure.Generator.Tests.Providers
             Assert.IsTrue(content.Contains("<ProjectReference Include=\"..\\src\\Samples.csproj\" />"));
             Assert.IsTrue(content.Contains("<PackageReference Include=\"Moq\" />"));
             Assert.IsFalse(content.Contains("SessionRecords"));
+            Assert.IsTrue(content.EndsWith("\n"));
         }
 
         [Test]

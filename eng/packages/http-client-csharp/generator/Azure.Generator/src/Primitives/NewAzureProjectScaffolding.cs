@@ -73,7 +73,7 @@ namespace Azure.Generator.Primitives
                     <PackageReference Include="Moq" />
                   </ItemGroup>
                 </Project>
-                """;
+                """ + "\n";
         }
 
         private static readonly IReadOnlyList<string> _operationSharedFiles =
