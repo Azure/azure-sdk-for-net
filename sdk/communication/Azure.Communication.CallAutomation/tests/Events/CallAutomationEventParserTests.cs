@@ -601,7 +601,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 resultInformation: new ResultInformation(
                     code: 200,
                     subCode: 8531,
-                    message: "Action completed, max digits received",null, null));
+                    message: "Action completed, max digits received", null, null));
             string jsonEvent = @event.Serialize();
 
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCompleted");
@@ -871,18 +871,20 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 invitationId: "invitationId",
-                operationContext: "operationContext");
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully", null, null));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.CancelAddParticipantSucceeded");
 
-            if (parsedEvent is CancelAddParticipantSucceeded CancelAddParticipantSucceeded)
+            if (parsedEvent is CancelAddParticipantSucceeded cancelAddParticipantSucceeded)
             {
-                Assert.That(CancelAddParticipantSucceeded.OperationContext, Is.EqualTo("operationContext"));
-                Assert.That(CancelAddParticipantSucceeded.CallConnectionId, Is.EqualTo("callConnectionId"));
-                Assert.That(CancelAddParticipantSucceeded.CorrelationId, Is.EqualTo("correlationId"));
-                Assert.That(CancelAddParticipantSucceeded.ServerCallId, Is.EqualTo("serverCallId"));
-                Assert.That(CancelAddParticipantSucceeded.InvitationId, Is.EqualTo("invitationId"));
+                Assert.That(cancelAddParticipantSucceeded.OperationContext, Is.EqualTo("operationContext"));
+                Assert.That(cancelAddParticipantSucceeded.CallConnectionId, Is.EqualTo("callConnectionId"));
+                Assert.That(cancelAddParticipantSucceeded.CorrelationId, Is.EqualTo("correlationId"));
+                Assert.That(cancelAddParticipantSucceeded.ServerCallId, Is.EqualTo("serverCallId"));
+                Assert.That(cancelAddParticipantSucceeded.InvitationId, Is.EqualTo("invitationId"));
+                Assert.That(cancelAddParticipantSucceeded.ResultInformation?.Code, Is.EqualTo(200));
             }
             else
             {
