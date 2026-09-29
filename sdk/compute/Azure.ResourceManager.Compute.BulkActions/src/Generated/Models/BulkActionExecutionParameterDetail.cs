@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Extra details needed to run the user's request. </summary>
+    /// <summary> The execution settings for a bulk action. </summary>
     public partial class BulkActionExecutionParameterDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,28 +21,59 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="BulkActionExecutionParameterDetail"/>. </summary>
         public BulkActionExecutionParameterDetail()
         {
+            AdditionalCreateParameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkActionExecutionParameterDetail"/>. </summary>
-        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="shouldVerifyVmAgentHealth"> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </param>
+        /// <param name="retryPolicy"> The retry settings for the bulk action. </param>
+        /// <param name="shouldVerifyVmAgentHealth"> If true, Bulk Actions verifies the virtual machine guest agent health after a start operation. Setting this property to true for any other operation causes the request to fail. </param>
         /// <param name="capacityRecommendationParameters"> Capacity recommendation parameters for the request. When provided on an executeStart request, the service computes placement recommendations only if the VM fails to start due to an allocation failure; the recommendations for the desired sizes and locations are then surfaced in the operation's capacityRecommendation response. </param>
+        /// <param name="additionalCreateParameters"> Additional configuration for Create. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy, bool? shouldVerifyVmAgentHealth, BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy, bool? shouldVerifyVmAgentHealth, BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters, IDictionary<string, BinaryData> additionalCreateParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryPolicy = retryPolicy;
             ShouldVerifyVmAgentHealth = shouldVerifyVmAgentHealth;
             CapacityRecommendationParameters = capacityRecommendationParameters;
+            AdditionalCreateParameters = additionalCreateParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Retry policy the user can pass. </summary>
+        /// <summary> The retry settings for the bulk action. </summary>
         public BulkOperationRetryPolicy RetryPolicy { get; set; }
 
-        /// <summary> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </summary>
+        /// <summary> If true, Bulk Actions verifies the virtual machine guest agent health after a start operation. Setting this property to true for any other operation causes the request to fail. </summary>
         public bool? ShouldVerifyVmAgentHealth { get; set; }
 
         /// <summary> Capacity recommendation parameters for the request. When provided on an executeStart request, the service computes placement recommendations only if the VM fails to start due to an allocation failure; the recommendations for the desired sizes and locations are then surfaced in the operation's capacityRecommendation response. </summary>
         public BulkActionsCapacityRecommendationParametersContent CapacityRecommendationParameters { get; set; }
+
+        /// <summary>
+        /// Additional configuration for Create.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> AdditionalCreateParameters { get; }
     }
 }

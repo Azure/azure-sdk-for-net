@@ -1261,19 +1261,19 @@ namespace BasicTypeSpec
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
+        public virtual Response<ReturnsAnonymousModelResult> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
         {
             Response result = ReturnsAnonymousModel(cancellationToken.ToRequestContext());
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            return Response.FromValue((ReturnsAnonymousModelResult)result, result);
         }
 
         /// <summary> return anonymous model. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReturnsAnonymousModelResponse>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReturnsAnonymousModelResult>> ReturnsAnonymousModelAsync(CancellationToken cancellationToken = default)
         {
             Response result = await ReturnsAnonymousModelAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
+            return Response.FromValue((ReturnsAnonymousModelResult)result, result);
         }
 
         /// <summary>

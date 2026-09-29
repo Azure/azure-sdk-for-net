@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Specify the public IP allocation type. </summary>
         public PublicIPAllocationMethod? PublicIPAllocationMethod { get; set; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string PublicIPPrefixId
         {
             get
