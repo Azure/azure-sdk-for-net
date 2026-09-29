@@ -16,7 +16,7 @@ public partial class ParameterStatement : IJsonModel<BicepStatement>
         writer.WriteStartObject();
         writer.WriteString("bicepIdentifier", Name);
         writer.WritePropertyName("valueType");
-        ((IJsonModel<BicepExpression>)Type).Write(writer, ModelReaderWriterOptions.Json);
+        SchemaTypeExpression.WriteTypeNode(writer, Type, ModelReaderWriterOptions.Json);
         if (DefaultValue != null)
         {
             writer.WritePropertyName("defaultValue");
@@ -66,7 +66,7 @@ public partial class ParameterStatement : IJsonModel<BicepStatement>
     internal static ParameterStatement DeserializeParameterStatement(JsonElement element)
     {
         string name = element.GetProperty("bicepIdentifier").GetString()!;
-        BicepExpression type = UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("valueType"));
+        BicepExpression type = SchemaTypeExpression.DeserializeDeclarationType(element.GetProperty("valueType"));
         BicepExpression? defaultValue = null;
         if (element.TryGetProperty("defaultValue", out JsonElement dv))
         {

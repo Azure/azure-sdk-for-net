@@ -16,7 +16,7 @@ public partial class OutputStatement : IJsonModel<BicepStatement>
         writer.WriteStartObject();
         writer.WriteString("bicepIdentifier", Name);
         writer.WritePropertyName("valueType");
-        ((IJsonModel<BicepExpression>)Type).Write(writer, ModelReaderWriterOptions.Json);
+        SchemaTypeExpression.WriteTypeNode(writer, Type, ModelReaderWriterOptions.Json);
         writer.WritePropertyName("value");
         ((IJsonModel<BicepExpression>)Value).Write(writer, ModelReaderWriterOptions.Json);
         DecoratorsNodeSerializer.WriteDecoratorsNode(writer, Decorators);
@@ -59,7 +59,7 @@ public partial class OutputStatement : IJsonModel<BicepStatement>
     internal static OutputStatement DeserializeOutputStatement(JsonElement element)
     {
         string name = element.GetProperty("bicepIdentifier").GetString()!;
-        BicepExpression type = UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("valueType"));
+        BicepExpression type = SchemaTypeExpression.DeserializeDeclarationType(element.GetProperty("valueType"));
         BicepExpression value = UnknownBicepExpression.DeserializeBicepExpression(element.GetProperty("value"));
 
         OutputStatement stmt = new(name, type, value);

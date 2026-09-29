@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Globalization;
+
 namespace Azure.Provisioning.Expressions;
 
 /// <summary>
@@ -13,5 +15,5 @@ public partial class IntLiteralExpression(int value) : LiteralExpression(value)
     /// Gets the integer value.
     /// </summary>
     public new int Value { get => (int)base.Value!; }
-    internal override BicepWriter Write(BicepWriter writer) => writer.Append(Value.ToString());
+    internal override BicepWriter Write(BicepWriter writer) => writer.Append(Value.ToString(CultureInfo.InvariantCulture));
 }

@@ -20,7 +20,7 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
     BicepExpression IJsonModel<BicepExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         using JsonDocument doc = JsonDocument.ParseValue(ref reader);
-        return DeserializeBicepExpression(doc.RootElement);
+        return DeserializeBicepNode(doc.RootElement);
     }
 
     BinaryData IPersistableModel<BicepExpression>.Write(ModelReaderWriterOptions options) =>
@@ -29,10 +29,15 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
     BicepExpression IPersistableModel<BicepExpression>.Create(BinaryData data, ModelReaderWriterOptions options)
     {
         using JsonDocument doc = JsonDocument.Parse(data);
-        return DeserializeBicepExpression(doc.RootElement);
+        return DeserializeBicepNode(doc.RootElement);
     }
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+    internal static BicepExpression DeserializeBicepNode(JsonElement element) =>
+        SchemaTypeExpression.IsTypeKind(element.GetProperty("kind").GetString()!)
+            ? SchemaTypeExpression.Deserialize(element)
+            : DeserializeBicepExpression(element);
 
     internal static BicepExpression DeserializeBicepExpression(JsonElement element)
     {
@@ -51,7 +56,6 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
             "property-access" => DeserializePropertyAccess(element),
             "array-access" => DeserializeArrayAccess(element),
             "contextual-variable" => DeserializeContextualVariable(element),
-            "primitive-type" => TypeExpression.DeserializeTypeExpression(element),
             "binary-operation" => BinaryExpression.DeserializeBinaryExpression(element),
             "unary-operation" => UnaryExpression.DeserializeUnaryExpression(element),
             "ternary-operation" => ConditionalExpression.DeserializeConditionalExpression(element),
@@ -84,7 +88,7 @@ internal partial class UnknownBicepExpression : IJsonModel<BicepExpression>
         bool nullish = element.TryGetProperty("nullish", out JsonElement n) && n.GetBoolean();
         bool fromEnd = element.TryGetProperty("fromEnd", out JsonElement f) && f.GetBoolean();
         return nullish
-            ? new SafeIndexExpression(baseExpr, index)
+            ? new SafeIndexExpression(baseExpr, index) { FromEnd = fromEnd }
             : new IndexExpression(baseExpr, index) { FromEnd = fromEnd };
     }
 

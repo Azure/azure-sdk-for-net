@@ -191,7 +191,10 @@ public class ModelReaderWriterTests
         SerializationTestHelpers.AssertExpressionRoundTrip(negExpr);
 
         var suppressExpr = new UnaryExpression(UnaryBicepOperator.SuppressNull, new IdentifierExpression("x"));
-        SerializationTestHelpers.AssertExpressionRoundTrip(suppressExpr);
+        Assert.Throws<NotSupportedException>(() =>
+            ModelReaderWriter.Write<BicepExpression>(suppressExpr, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default));
+        Assert.AreEqual("x!", ModelReaderWriter.Write<BicepExpression>(
+            suppressExpr, new ModelReaderWriterOptions("bicep"), AzureProvisioningContext.Default).ToString());
     }
 
     [Test]
@@ -251,10 +254,13 @@ public class ModelReaderWriterTests
     }
 
     [Test]
-    public void MRW_BicepExpression_NestedExpression_RoundTrips()
+    public void MRW_BicepExpression_NestedExpression_RejectsJsonButPreservesBicep()
     {
         var expr = new NestedExpression(new IdentifierExpression("kv"), "secret");
-        SerializationTestHelpers.AssertExpressionRoundTrip(expr);
+        Assert.Throws<NotSupportedException>(() =>
+            ModelReaderWriter.Write<BicepExpression>(expr, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default));
+        Assert.AreEqual("kv::secret", ModelReaderWriter.Write<BicepExpression>(
+            expr, new ModelReaderWriterOptions("bicep"), AzureProvisioningContext.Default).ToString());
     }
 
     [Test]

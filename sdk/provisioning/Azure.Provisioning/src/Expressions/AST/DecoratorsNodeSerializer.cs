@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Azure.Provisioning.Expressions;
@@ -14,11 +15,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 internal static class DecoratorsNodeSerializer
 {
-    // These fields were encoded as strings by the previous schema revision.
-    private static readonly HashSet<string> LegacyStringNumericFields = new(StringComparer.Ordinal)
-    {
-        "minValue", "maxValue", "minLength", "maxLength"
-    };
+    private const long MaxSafeInteger = 9007199254740991;
 
     /// <summary>
     /// Writes a structured "decorators" object from a list of DecoratorExpressions.
@@ -31,41 +28,78 @@ internal static class DecoratorsNodeSerializer
 
         writer.WritePropertyName("decorators");
         writer.WriteStartObject();
+        HashSet<string> names = new(StringComparer.Ordinal);
         foreach (DecoratorExpression decorator in decorators)
         {
-            if (decorator.Value is FunctionCallExpression funcCall &&
-                funcCall.Function is IdentifierExpression id)
+            if (decorator.Value is not FunctionCallExpression funcCall ||
+                funcCall.Function is not IdentifierExpression id)
             {
-                string name = id.Name;
-                if (funcCall.Arguments.Length == 0)
-                {
-                    // @secure() → "secure": true
+                throw new NotSupportedException("Only named decorator calls can be serialized as DecoratorsNode.");
+            }
+            string name = id.Name;
+            if (!names.Add(name))
+            {
+                throw new NotSupportedException($"Duplicate decorator '{name}' cannot be represented by DecoratorsNode.");
+            }
+            BicepExpression[] args = funcCall.Arguments;
+            switch (name)
+            {
+                case "secure":
+                case "sealed":
+                case "export":
+                    RequireArguments(name, args, 0);
                     writer.WriteBoolean(name, true);
-                }
-                else if (funcCall.Arguments.Length == 1)
-                {
-                    BicepExpression arg = funcCall.Arguments[0];
-                    if (arg is StringLiteralExpression strLit)
-                        writer.WriteString(name, strLit.Value);
-                    else if (arg is IntLiteralExpression intLit)
-                        writer.WriteNumber(name, intLit.Value);
-                    else if (arg is BoolLiteralExpression boolLit)
-                        writer.WriteBoolean(name, boolLit.Value);
-                    else
+                    break;
+                case "description":
+                case "discriminator":
+                    RequireArguments(name, args, 1);
+                    if (args[0] is not StringLiteralExpression text)
                     {
-                        writer.WritePropertyName(name);
-                        ((IJsonModel<BicepExpression>)arg).Write(writer, ModelReaderWriterOptions.Json);
+                        throw new NotSupportedException($"Decorator '{name}' requires a string literal.");
                     }
-                }
-                else
-                {
-                    // Multiple args — write as array
+                    writer.WriteString(name, text.Value);
+                    break;
+                case "minValue":
+                case "maxValue":
+                case "minLength":
+                case "maxLength":
+                case "batchSize":
+                    RequireArguments(name, args, 1);
+                    long value = args[0] switch
+                    {
+                        IntLiteralExpression integer => integer.Value,
+                        LongLiteralExpression integer => integer.Value,
+                        _ => throw new NotSupportedException($"Decorator '{name}' requires an integer literal.")
+                    };
+                    ValidateSafeInteger(name, value);
+                    writer.WriteNumber(name, value);
+                    break;
+                case "allowed":
+                    RequireArguments(name, args, 1);
+                    if (args[0] is not ArrayExpression array)
+                    {
+                        throw new NotSupportedException("Decorator 'allowed' requires an array expression.");
+                    }
                     writer.WritePropertyName(name);
                     writer.WriteStartArray();
-                    foreach (var arg in funcCall.Arguments)
-                        ((IJsonModel<BicepExpression>)arg).Write(writer, ModelReaderWriterOptions.Json);
+                    foreach (BicepExpression item in array.Values)
+                        ((IJsonModel<BicepExpression>)item).Write(writer, ModelReaderWriterOptions.Json);
                     writer.WriteEndArray();
-                }
+                    break;
+                case "metadata":
+                    RequireArguments(name, args, 1);
+                    if (args[0] is not ObjectExpression metadata)
+                    {
+                        throw new NotSupportedException("Decorator 'metadata' requires an object expression.");
+                    }
+                    writer.WritePropertyName(name);
+                    writer.WriteStartObject();
+                    foreach (PropertyExpression property in metadata.Properties)
+                        ((IJsonModel<BicepExpression>)property).Write(writer, ModelReaderWriterOptions.Json);
+                    writer.WriteEndObject();
+                    break;
+                default:
+                    throw new NotSupportedException($"Decorator '{name}' is not defined by the provisioning JSON schema.");
             }
         }
         writer.WriteEndObject();
@@ -83,55 +117,67 @@ internal static class DecoratorsNodeSerializer
         {
             string name = prop.Name;
             BicepExpression[] args;
-            if (prop.Value.ValueKind == JsonValueKind.True)
+            switch (name)
             {
-                args = []; // e.g. @secure()
-            }
-            else if (prop.Value.ValueKind == JsonValueKind.String)
-            {
-                string strVal = prop.Value.GetString()!;
-                // Continue accepting numeric strings written by the previous schema.
-                if (LegacyStringNumericFields.Contains(name) && long.TryParse(strVal, out long numVal))
-                {
-                    if (numVal < int.MinValue || numVal > int.MaxValue)
+                case "secure":
+                case "sealed":
+                case "export":
+                    if (prop.Value.ValueKind != JsonValueKind.True)
                     {
-                        throw new FormatException(
-                            $"Decorator '{name}' numeric value '{numVal}' is outside the supported Int32 range.");
+                        throw new FormatException($"Decorator '{name}' must be true when present.");
                     }
-                    args = [new IntLiteralExpression((int)numVal)];
-                }
-                else
-                {
-                    args = [new StringLiteralExpression(strVal)];
-                }
-            }
-            else if (prop.Value.ValueKind == JsonValueKind.Number)
-            {
-                long rawValue = prop.Value.GetInt64();
-                if (rawValue < int.MinValue || rawValue > int.MaxValue)
-                {
-                    throw new FormatException(
-                        $"Decorator '{name}' numeric value '{rawValue}' is outside the supported Int32 range.");
-                }
-                args = [new IntLiteralExpression((int)rawValue)];
-            }
-            else if (prop.Value.ValueKind == JsonValueKind.False)
-            {
-                args = [new BoolLiteralExpression(false)];
-            }
-            else if (prop.Value.ValueKind == JsonValueKind.Array)
-            {
-                var list = new List<BicepExpression>();
-                foreach (JsonElement item in prop.Value.EnumerateArray())
-                    list.Add(UnknownBicepExpression.DeserializeBicepExpression(item));
-                args = list.ToArray();
-            }
-            else
-            {
-                args = [UnknownBicepExpression.DeserializeBicepExpression(prop.Value)];
+                    args = [];
+                    break;
+                case "description":
+                case "discriminator":
+                    args = [new StringLiteralExpression(prop.Value.GetString()
+                        ?? throw new FormatException($"Decorator '{name}' must be a string."))];
+                    break;
+                case "minValue":
+                case "maxValue":
+                case "minLength":
+                case "maxLength":
+                case "batchSize":
+                    // Accept the numeric strings used by the previous schema for bounds.
+                    long value = prop.Value.ValueKind == JsonValueKind.String && name != "batchSize"
+                        ? long.Parse(prop.Value.GetString()!, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture)
+                        : prop.Value.GetInt64();
+                    ValidateSafeInteger(name, value);
+                    args = [IntLiteralExpression.Create(value)];
+                    break;
+                case "allowed":
+                    List<BicepExpression> items = new();
+                    foreach (JsonElement item in prop.Value.EnumerateArray())
+                        items.Add(UnknownBicepExpression.DeserializeBicepExpression(item));
+                    args = [new ArrayExpression(items.ToArray())];
+                    break;
+                case "metadata":
+                    List<PropertyExpression> properties = new();
+                    foreach (JsonProperty property in prop.Value.EnumerateObject())
+                        properties.Add(PropertyExpression.DeserializePropertyExpression(property.Name, property.Value));
+                    args = [new ObjectExpression(properties.ToArray())];
+                    break;
+                default:
+                    throw new NotSupportedException($"Decorator '{name}' is not defined by the provisioning JSON schema.");
             }
             decorators.Add(new DecoratorExpression(
                 new FunctionCallExpression(new IdentifierExpression(name), args)));
+        }
+    }
+
+    private static void RequireArguments(string name, BicepExpression[] arguments, int count)
+    {
+        if (arguments.Length != count)
+        {
+            throw new NotSupportedException($"Decorator '{name}' requires {count} argument(s) in the provisioning JSON schema.");
+        }
+    }
+
+    private static void ValidateSafeInteger(string name, long value)
+    {
+        if (value < -MaxSafeInteger || value > MaxSafeInteger)
+        {
+            throw new FormatException($"Decorator '{name}' value '{value}' is outside the TypeSpec safeint range.");
         }
     }
 }

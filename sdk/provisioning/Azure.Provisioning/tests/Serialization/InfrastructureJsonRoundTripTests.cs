@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Text.Json;
 using Azure.Provisioning.Expressions;
@@ -438,8 +439,9 @@ public class InfrastructureJsonRoundTripTests
             $"Expected 'existing' keyword in Bicep output.\n{mainBicep}");
     }
 
-    [Test]
-    public void RoundTrip_ResourceWithMetadata()
+    [TestCase(3U)]
+    [TestCase(uint.MaxValue)]
+    public void RoundTrip_ResourceWithMetadata(uint batchSize)
     {
         Infrastructure infra = new();
         StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
@@ -448,8 +450,7 @@ public class InfrastructureJsonRoundTripTests
             Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
         };
         storage.BicepMetadata.Description = "Production storage account";
-        storage.BicepMetadata.BatchSize = 3;
-        storage.BicepMetadata.OnlyIfNotExists = true;
+        storage.BicepMetadata.BatchSize = batchSize;
         var deployStorage = new ProvisioningParameter("deployStorage", typeof(bool)) { Value = true };
         storage.BicepMetadata.Condition = deployStorage;
         infra.Add(deployStorage);
@@ -465,10 +466,8 @@ public class InfrastructureJsonRoundTripTests
 
         Assert.AreEqual("Production storage account", roundTripped.BicepMetadata.Description,
             "Description should survive round-trip");
-        Assert.AreEqual((uint)3, roundTripped.BicepMetadata.BatchSize,
+        Assert.AreEqual(batchSize, roundTripped.BicepMetadata.BatchSize,
             "BatchSize should survive round-trip");
-        Assert.IsTrue(roundTripped.BicepMetadata.OnlyIfNotExists,
-            "OnlyIfNotExists should survive round-trip");
         Assert.IsFalse(roundTripped.BicepMetadata.Condition.IsEmpty,
             "Condition should survive round-trip");
 
@@ -477,11 +476,25 @@ public class InfrastructureJsonRoundTripTests
         string mainBicep = plan.Compile()["main.bicep"];
         Assert.IsTrue(mainBicep.Contains("@description('Production storage account')"),
             $"Expected @description decorator in Bicep output.\n{mainBicep}");
-        Assert.IsTrue(mainBicep.Contains("@batchSize(3)"),
+        Assert.IsTrue(mainBicep.Contains($"@batchSize({batchSize})"),
             $"Expected @batchSize decorator in Bicep output.\n{mainBicep}");
-        Assert.IsTrue(mainBicep.Contains("@onlyIfNotExists()"),
-            $"Expected @onlyIfNotExists decorator in Bicep output.\n{mainBicep}");
         Assert.IsTrue(mainBicep.Contains("if (deployStorage)"),
             $"Expected condition in Bicep output.\n{mainBicep}");
+    }
+
+    [Test]
+    public void OnlyIfNotExistsRejectsJsonButPreservesBicep()
+    {
+        Infrastructure infra = new();
+        StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2024_01_01)
+        {
+            Kind = StorageKind.StorageV2,
+            Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+        };
+        storage.BicepMetadata.OnlyIfNotExists = true;
+        infra.Add(storage);
+
+        Assert.Throws<NotSupportedException>(() => SerializationTestHelpers.SerializeToJson(infra));
+        Assert.IsTrue(infra.Build().Compile()["main.bicep"].Contains("@onlyIfNotExists()"));
     }
 }

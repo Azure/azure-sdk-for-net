@@ -389,7 +389,10 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
                         // secure is typically on parameters, not resources — but transfer if present
                         break;
                     case "batchSize" when funcCall.Arguments.Length == 1 && funcCall.Arguments[0] is IntLiteralExpression batchSize:
-                        resource.BicepMetadata.BatchSize = (uint)batchSize.Value;
+                        resource.BicepMetadata.BatchSize = checked((uint)batchSize.Value);
+                        break;
+                    case "batchSize" when funcCall.Arguments.Length == 1 && funcCall.Arguments[0] is LongLiteralExpression batchSize:
+                        resource.BicepMetadata.BatchSize = checked((uint)batchSize.Value);
                         break;
                     case "onlyIfNotExists" when funcCall.Arguments.Length == 0:
                         resource.BicepMetadata.OnlyIfNotExists = true;

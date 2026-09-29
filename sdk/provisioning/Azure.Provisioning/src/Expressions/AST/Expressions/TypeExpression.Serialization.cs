@@ -15,7 +15,8 @@ public partial class TypeExpression : IJsonModel<BicepExpression>
         writer.WriteStartObject();
         writer.WriteString("kind", "primitive-type");
         string? typeName = BicepTypeMapping.GetBicepTypeName(Type);
-        writer.WriteString("name", typeName ?? "any");
+        writer.WriteString("name", typeName ?? throw new NotSupportedException(
+            $"Cannot map '{Type.FullName}' to a provisioning JSON primitive type."));
         writer.WriteEndObject();
     }
 
@@ -52,18 +53,5 @@ public partial class TypeExpression : IJsonModel<BicepExpression>
     /// <inheritdoc/>
     public override int GetHashCode() => (typeof(TypeExpression).GetHashCode() * 31 + (Type?.GetHashCode() ?? 0));
 
-    internal static TypeExpression DeserializeTypeExpression(JsonElement element)
-    {
-        string name = element.GetProperty("name").GetString()!;
-        Type type = name switch
-        {
-            "bool" => typeof(bool),
-            "int" => typeof(int),
-            "string" => typeof(string),
-            "object" => typeof(object),
-            "array" => typeof(Array),
-            _ => typeof(object) // "any" and others default to object
-        };
-        return new TypeExpression(type);
-    }
+    internal static BicepExpression DeserializeTypeExpression(JsonElement element) => SchemaTypeExpression.Deserialize(element);
 }

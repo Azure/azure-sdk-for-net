@@ -68,7 +68,7 @@ public partial class SafeIndexExpression : IJsonModel<BicepExpression>
         writer.WritePropertyName("index");
         ((IJsonModel<BicepExpression>)Index).Write(writer, options);
         writer.WriteBoolean("nullish", true);
-        writer.WriteBoolean("fromEnd", false);
+        writer.WriteBoolean("fromEnd", FromEnd);
         writer.WriteEndObject();
     }
 
@@ -101,7 +101,7 @@ public partial class SafeIndexExpression : IJsonModel<BicepExpression>
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
     /// <inheritdoc/>
-    public override bool Equals(BicepExpression? other) => other is SafeIndexExpression idx && Value.Equals(idx.Value) && Index.Equals(idx.Index);
+    public override bool Equals(BicepExpression? other) => other is SafeIndexExpression idx && Value.Equals(idx.Value) && Index.Equals(idx.Index) && FromEnd == idx.FromEnd;
     /// <inheritdoc/>
-    public override int GetHashCode() => typeof(SafeIndexExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Index?.GetHashCode() ?? 0);
+    public override int GetHashCode() => typeof(SafeIndexExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Index?.GetHashCode() ?? 0) ^ FromEnd.GetHashCode();
 }

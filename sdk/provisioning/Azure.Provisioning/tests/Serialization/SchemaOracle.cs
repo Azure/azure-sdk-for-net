@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 
@@ -148,4 +149,96 @@ internal static class SchemaOracle
     /// <summary>Valid primitive type names from types.tsp PrimitiveTypeName union.</summary>
     public static readonly Lazy<HashSet<string>> PrimitiveTypeNames = new(() =>
         LoadUnionKinds("types.tsp", "PrimitiveTypeName"));
+
+    private static readonly Lazy<string> SchemaText = new(() => Regex.Replace(
+        string.Join("\n", Directory.GetFiles(SchemaSpecDir, "*.tsp").Select(File.ReadAllText)),
+        @"/\*.*?\*/|//[^\r\n]*", "", RegexOptions.Singleline));
+
+    /// <summary>
+    /// Validates the model, union, record, array, and scalar syntax used by the pinned schema.
+    /// Unlike kind-only checks, this also checks required fields and nested payload shapes.
+    /// </summary>
+    internal static void AssertMatchesType(JsonElement value, string type)
+    {
+        string? error = ValidateType(value, type, "$");
+        Assert.That(error, Is.Null, error);
+    }
+
+    private static string? ValidateType(JsonElement value, string type, string path)
+    {
+        type = type.Trim();
+        string mismatch = $"{path}: expected {type}, got {value.GetRawText()}";
+        if (type.StartsWith('"'))
+            return value.ValueKind == JsonValueKind.String && value.GetString() == type.Trim('"') ? null : mismatch;
+        if (type.Contains('|'))
+            return type.Split('|').Any(t => ValidateType(value, t, path) == null) ? null : mismatch;
+        switch (type)
+        {
+            case "string":
+                return value.ValueKind == JsonValueKind.String ? null : mismatch;
+            case "boolean":
+                return value.ValueKind is JsonValueKind.True or JsonValueKind.False ? null : mismatch;
+            case "true":
+                return value.ValueKind == JsonValueKind.True ? null : mismatch;
+            case "null":
+                return value.ValueKind == JsonValueKind.Null ? null : mismatch;
+            case "safeint":
+                return value.ValueKind == JsonValueKind.Number && value.TryGetInt64(out long integer) &&
+                    integer >= -9007199254740991 && integer <= 9007199254740991 ? null : mismatch;
+        }
+        if (type.EndsWith("[]"))
+        {
+            if (value.ValueKind != JsonValueKind.Array)
+                return mismatch;
+            int index = 0;
+            foreach (JsonElement item in value.EnumerateArray())
+            {
+                string? error = ValidateType(item, type.Substring(0, type.Length - 2), $"{path}[{index++}]");
+                if (error != null)
+                    return error;
+            }
+            return null;
+        }
+        if (type.StartsWith("Record<") && type.EndsWith('>'))
+        {
+            if (value.ValueKind != JsonValueKind.Object)
+                return mismatch;
+            foreach (JsonProperty property in value.EnumerateObject())
+            {
+                string? error = ValidateType(property.Value, type.Substring(7, type.Length - 8), $"{path}.{property.Name}");
+                if (error != null)
+                    return error;
+            }
+            return null;
+        }
+        Match union = Regex.Match(SchemaText.Value, @$"\bunion\s+{Regex.Escape(type)}\s*\{{([^}}]*)\}}");
+        if (union.Success)
+        {
+            foreach (Match member in Regex.Matches(union.Groups[1].Value, @"""?[\w-]+""?\s*:\s*(""[^""]+""|\w+)"))
+            {
+                if (ValidateType(value, member.Groups[1].Value, path) == null)
+                    return null;
+            }
+            return mismatch;
+        }
+        Match model = Regex.Match(SchemaText.Value, @$"\bmodel\s+{Regex.Escape(type)}\s*\{{([^}}]*)\}}");
+        if (!model.Success)
+            throw new InvalidOperationException($"The schema validator does not recognize TypeSpec type '{type}'.");
+        if (value.ValueKind != JsonValueKind.Object)
+            return mismatch;
+        foreach (Match field in Regex.Matches(model.Groups[1].Value, @"(\w+)(\?)?\s*:\s*([^;]+);"))
+        {
+            string name = field.Groups[1].Value;
+            if (!value.TryGetProperty(name, out JsonElement fieldValue))
+            {
+                if (!field.Groups[2].Success)
+                    return $"{path}: missing required {type}.{name}";
+                continue;
+            }
+            string? error = ValidateType(fieldValue, field.Groups[3].Value, $"{path}.{name}");
+            if (error != null)
+                return error;
+        }
+        return null;
+    }
 }

@@ -23,7 +23,7 @@ public partial class IndexExpression(BicepExpression value, BicepExpression inde
     /// </summary>
     public bool FromEnd { get; set; }
     internal override BicepWriter Write(BicepWriter writer) =>
-        writer.Append(Value).Append('[').Append(Index).Append(']');
+        writer.Append(Value).Append('[').AppendIf(FromEnd, w => w.Append('^')).Append(Index).Append(']');
 }
 
 /// <summary>
@@ -41,6 +41,10 @@ public partial class SafeIndexExpression(BicepExpression value, BicepExpression 
     /// Gets the index expression.
     /// </summary>
     public BicepExpression Index { get; } = index;
+    /// <summary>
+    /// Gets or sets a value indicating whether the index is relative to the end of the array.
+    /// </summary>
+    public bool FromEnd { get; set; }
     internal override BicepWriter Write(BicepWriter writer) =>
-        writer.Append(Value).Append("[?").Append(Index).Append(']');
+        writer.Append(Value).Append("[?").AppendIf(FromEnd, w => w.Append('^')).Append(Index).Append(']');
 }

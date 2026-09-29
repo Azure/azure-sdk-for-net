@@ -12,11 +12,7 @@ public partial class DecoratorExpression : IJsonModel<BicepExpression>
 {
     void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
-        writer.WriteStartObject();
-        writer.WriteString("kind", "decorator");
-        writer.WritePropertyName("value");
-        ((IJsonModel<BicepExpression>)Value).Write(writer, options);
-        writer.WriteEndObject();
+        throw new NotSupportedException("Standalone decorators have no representation in the provisioning JSON schema. Serialize decorators as declaration metadata.");
     }
 
     BicepExpression IJsonModel<BicepExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

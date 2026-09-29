@@ -12,12 +12,7 @@ public partial class NestedExpression : IJsonModel<BicepExpression>
 {
     void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
-        writer.WriteStartObject();
-        writer.WriteString("kind", "nested-access");
-        writer.WritePropertyName("base");
-        ((IJsonModel<BicepExpression>)Value).Write(writer, options);
-        writer.WriteString("member", NestedMember);
-        writer.WriteEndObject();
+        throw new NotSupportedException("Nested resource access has no representation in the provisioning JSON schema.");
     }
 
     BicepExpression IJsonModel<BicepExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

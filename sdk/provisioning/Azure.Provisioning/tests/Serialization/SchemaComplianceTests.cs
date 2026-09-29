@@ -276,15 +276,15 @@ public class SchemaComplianceTests
             new ConditionalExpression(new BoolLiteralExpression(true), new StringLiteralExpression("a"), new StringLiteralExpression("b")),
             new IfConditionExpression(new BoolLiteralExpression(true), new ObjectExpression()),
             new InterpolatedStringExpression([new StringLiteralExpression("prefix"), new IdentifierExpression("value")]),
-            // NOTE: NestedAccessExpression and DecoratorExpression emit kinds not yet in the
-            // TypeSpec ExpressionNode union. They are intentionally
-            // excluded here so this test fails when a *spec-defined* kind drifts.
+            // Standalone decorators and nested access are not schema expressions;
+            // their JSON serialization is explicitly rejected.
         };
 
         foreach (var expr in expressions)
         {
             var json = ModelReaderWriter.Write<BicepExpression>(expr, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default);
             using var doc = JsonDocument.Parse(json);
+            SchemaOracle.AssertMatchesType(doc.RootElement, "ExpressionNode");
             string kind = doc.RootElement.GetProperty("kind").GetString()!;
             Assert.IsTrue(validKinds.Contains(kind),
                 $"Expression kind '{kind}' (from {expr.GetType().Name}) is not in the schema spec ExpressionNode union. Valid: {string.Join(", ", validKinds)}");
@@ -304,6 +304,7 @@ public class SchemaComplianceTests
     internal static void AssertSchemaCompliance(string json)
     {
         using JsonDocument doc = JsonDocument.Parse(json);
+        SchemaOracle.AssertMatchesType(doc.RootElement, "InfraNode");
         AssertBicepFileNode(doc.RootElement);
     }
 

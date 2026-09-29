@@ -52,8 +52,14 @@ public partial class IntLiteralExpression : IJsonModel<BicepExpression>
     /// <inheritdoc/>
     public override int GetHashCode() => typeof(IntLiteralExpression).GetHashCode() ^ Value.GetHashCode();
 
-    internal static IntLiteralExpression DeserializeIntLiteralExpression(JsonElement element)
+    internal static BicepExpression DeserializeIntLiteralExpression(JsonElement element)
     {
-        return new IntLiteralExpression(int.Parse(element.GetProperty("value").GetString()!, CultureInfo.InvariantCulture));
+        long value = long.Parse(element.GetProperty("value").GetString()!, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture);
+        return Create(value);
     }
+
+    internal static BicepExpression Create(long value) =>
+        value >= int.MinValue && value <= int.MaxValue
+            ? new IntLiteralExpression((int)value)
+            : new LongLiteralExpression(value);
 }

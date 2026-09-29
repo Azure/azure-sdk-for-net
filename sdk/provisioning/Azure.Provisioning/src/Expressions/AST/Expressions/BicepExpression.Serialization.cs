@@ -19,7 +19,7 @@ public abstract partial class BicepExpression : IJsonModel<BicepExpression>
     BicepExpression IJsonModel<BicepExpression>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         using JsonDocument doc = JsonDocument.ParseValue(ref reader);
-        return UnknownBicepExpression.DeserializeBicepExpression(doc.RootElement);
+        return UnknownBicepExpression.DeserializeBicepNode(doc.RootElement);
     }
 
     BinaryData IPersistableModel<BicepExpression>.Write(ModelReaderWriterOptions options)
@@ -39,7 +39,7 @@ public abstract partial class BicepExpression : IJsonModel<BicepExpression>
     BicepExpression IPersistableModel<BicepExpression>.Create(BinaryData data, ModelReaderWriterOptions options)
     {
         using JsonDocument doc = JsonDocument.Parse(data);
-        return UnknownBicepExpression.DeserializeBicepExpression(doc.RootElement);
+        return UnknownBicepExpression.DeserializeBicepNode(doc.RootElement);
     }
 
     string IPersistableModel<BicepExpression>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
