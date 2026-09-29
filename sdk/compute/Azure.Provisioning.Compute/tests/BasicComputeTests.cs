@@ -151,7 +151,7 @@ public class BasicComputeTests
                 };
                 infra.Add(vnet);
 
-                NetworkInterface nic = new(nameof(nic));
+                NetworkInterface nic = new(nameof(nic), NetworkInterface.ResourceVersions.V2025_05_01);
                 infra.Add(nic);
 
                 VirtualMachine vm = new(nameof(vm), VirtualMachine.ResourceVersions.V2025_04_01)
@@ -223,7 +223,7 @@ public class BasicComputeTests
             param location string = resourceGroup().location
 
             resource nsg 'Microsoft.Network/networkSecurityGroups@2020-05-01' = {
-              name: take('nsg-${uniqueString(resourceGroup().id)}', 80)
+              name: take('nsg${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 securityRules: [
@@ -245,7 +245,7 @@ public class BasicComputeTests
             }
 
             resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
-              name: take('vnet-${uniqueString(resourceGroup().id)}', 64)
+              name: take('vnet${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 addressSpace: {
@@ -265,7 +265,7 @@ public class BasicComputeTests
             }
 
             resource nic 'Microsoft.Network/networkInterfaces@2025-05-01' = {
-              name: take('nic-${uniqueString(resourceGroup().id)}', 80)
+              name: take('nic${uniqueString(resourceGroup().id)}', 24)
               location: location
             }
 
