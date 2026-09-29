@@ -22,6 +22,7 @@ namespace Azure.Health.Deidentification
     [ModelReaderWriterBuildable(typeof(DeidentificationJobCustomizationOptions))]
     [ModelReaderWriterBuildable(typeof(DeidentificationJobSummary))]
     [ModelReaderWriterBuildable(typeof(DeidentificationResult))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(PagedDeidentificationDocumentDetails))]
     [ModelReaderWriterBuildable(typeof(PagedDeidentificationJob))]
     [ModelReaderWriterBuildable(typeof(PhiEntity))]
