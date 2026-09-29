@@ -31,6 +31,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<PublicIPAddressMigrationPhase> _migrationPhase;
         private PublicIPAddress _linkedPublicIPAddress;
         private BicepValue<IPAddressDeleteOption> _deleteOption;
+        private BicepValue<bool> _isUpgradedToV2;
 
         /// <summary> Creates a new PublicIPAddressPropertiesFormat. </summary>
         public PublicIPAddressPropertiesFormat()
@@ -262,6 +263,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the IsUpgradedToV2. </summary>
+        public BicepValue<bool> IsUpgradedToV2
+        {
+            get
+            {
+                Initialize();
+                return _isUpgradedToV2;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PublicIPPrefixId
         {
@@ -299,6 +310,7 @@ namespace Azure.Provisioning.Network
             _migrationPhase = DefineProperty<PublicIPAddressMigrationPhase>(nameof(MigrationPhase), new string[] { "migrationPhase" });
             _linkedPublicIPAddress = DefineModelProperty(nameof(LinkedPublicIPAddress), new string[] { "linkedPublicIPAddress" }, new PublicIPAddress("linkedPublicIPAddress"));
             _deleteOption = DefineProperty<IPAddressDeleteOption>(nameof(DeleteOption), new string[] { "deleteOption" });
+            _isUpgradedToV2 = DefineProperty<bool>(nameof(IsUpgradedToV2), new string[] { "upgradedToV2" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

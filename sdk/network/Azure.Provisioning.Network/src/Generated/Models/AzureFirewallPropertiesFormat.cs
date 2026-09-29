@@ -28,6 +28,8 @@ namespace Azure.Provisioning.Network
         private AzureFirewallSku _sku;
         private BicepDictionary<string> _additionalProperties;
         private AzureFirewallAutoscaleConfiguration _autoscaleConfiguration;
+        private AfcConfiguration _afcConfiguration;
+        private BicepValue<bool> _isAISecurityAddOnEnabled;
 
         /// <summary> Creates a new AzureFirewallPropertiesFormat. </summary>
         public AzureFirewallPropertiesFormat()
@@ -234,6 +236,31 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the AfcConfiguration. </summary>
+        internal AfcConfiguration AfcConfiguration
+        {
+            get
+            {
+                Initialize();
+                return _afcConfiguration;
+            }
+        }
+
+        /// <summary> Gets or sets the IsAISecurityAddOnEnabled. </summary>
+        public BicepValue<bool> IsAISecurityAddOnEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isAISecurityAddOnEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isAISecurityAddOnEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> VirtualHubId
         {
@@ -268,6 +295,15 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ServiceEndpoint. </summary>
+        public BicepValue<string> AfcServiceEndpoint
+        {
+            get
+            {
+                return AfcConfiguration is null ? default : AfcConfiguration.ServiceEndpoint;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AzureFirewallPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -286,6 +322,8 @@ namespace Azure.Provisioning.Network
             _sku = DefineModelProperty<AzureFirewallSku>(nameof(Sku), new string[] { "sku" });
             _additionalProperties = DefineDictionaryProperty<string>(nameof(AdditionalProperties), new string[] { "additionalProperties" });
             _autoscaleConfiguration = DefineModelProperty<AzureFirewallAutoscaleConfiguration>(nameof(AutoscaleConfiguration), new string[] { "autoscaleConfiguration" });
+            _afcConfiguration = DefineModelProperty<AfcConfiguration>(nameof(AfcConfiguration), new string[] { "afcConfiguration" }, isOutput: true);
+            _isAISecurityAddOnEnabled = DefineProperty<bool>(nameof(IsAISecurityAddOnEnabled), new string[] { "aiSecurityAddOn" });
             DefineAdditionalProperties();
         }
 

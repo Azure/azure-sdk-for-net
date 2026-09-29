@@ -19,14 +19,13 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private LoadBalancingRuleProperties _properties;
         private BicepValue<ETag> _eTag;
         private ResourceReference<LoadBalancer> _parent;
 
         /// <summary> Creates a new LoadBalancingRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public LoadBalancingRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/loadBalancingRules", resourceVersion ?? "2025-05-01")
+        public LoadBalancingRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/loadBalancingRules", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -52,21 +51,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        internal LoadBalancingRuleProperties Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -336,7 +320,6 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _properties = DefineModelProperty<LoadBalancingRuleProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
@@ -358,6 +341,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

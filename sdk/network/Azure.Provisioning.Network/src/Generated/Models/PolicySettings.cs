@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _customBlockResponseBody;
         private PolicySettingsLogScrubbing _logScrubbing;
         private BicepValue<int> _jsChallengeCookieExpirationInMins;
-        private BicepValue<int> _captchaCookieExpirationInMins;
+        private BicepValue<int> _captchaExpirationInMins;
 
         /// <summary> Creates a new PolicySettings. </summary>
         public PolicySettings()
@@ -212,18 +212,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the CaptchaCookieExpirationInMins. </summary>
-        public BicepValue<int> CaptchaCookieExpirationInMins
+        /// <summary> Gets or sets the CaptchaExpirationInMins. </summary>
+        public BicepValue<int> CaptchaExpirationInMins
         {
             get
             {
                 Initialize();
-                return _captchaCookieExpirationInMins;
+                return _captchaExpirationInMins;
             }
             set
             {
                 Initialize();
-                _captchaCookieExpirationInMins.Assign(value);
+                _captchaExpirationInMins.Assign(value);
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.Provisioning.Network
             _customBlockResponseBody = DefineProperty<string>(nameof(CustomBlockResponseBody), new string[] { "customBlockResponseBody" });
             _logScrubbing = DefineModelProperty<PolicySettingsLogScrubbing>(nameof(LogScrubbing), new string[] { "logScrubbing" });
             _jsChallengeCookieExpirationInMins = DefineProperty<int>(nameof(JsChallengeCookieExpirationInMins), new string[] { "jsChallengeCookieExpirationInMins" });
-            _captchaCookieExpirationInMins = DefineProperty<int>(nameof(CaptchaCookieExpirationInMins), new string[] { "captchaCookieExpirationInMins" });
+            _captchaExpirationInMins = DefineProperty<int>(nameof(CaptchaExpirationInMins), new string[] { "captchaExpirationInMins" });
             DefineAdditionalProperties();
         }
 

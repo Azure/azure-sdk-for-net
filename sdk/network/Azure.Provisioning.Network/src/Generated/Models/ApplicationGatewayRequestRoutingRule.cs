@@ -125,6 +125,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AuthConfigs. </summary>
+        public BicepList<ApplicationGatewayAuthConfig> AuthConfigs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthConfigs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.AuthConfigs = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -203,6 +220,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
                 Properties.UrlPathMapId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> AdvancedRoutingMapId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdvancedRoutingMapId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.AdvancedRoutingMapId = value;
             }
         }
 

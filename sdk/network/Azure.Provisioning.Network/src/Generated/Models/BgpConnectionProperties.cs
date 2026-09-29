@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _hubVirtualNetworkConnection;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<HubBgpConnectionStatus> _connectionState;
+        private RoutingConfiguration _routingConfiguration;
 
         /// <summary> Creates a new BgpConnectionProperties. </summary>
         public BgpConnectionProperties()
@@ -90,6 +91,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                Initialize();
+                return _routingConfiguration;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _routingConfiguration, value);
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> HubVirtualNetworkConnectionId
         {
@@ -116,6 +132,7 @@ namespace Azure.Provisioning.Network
             _hubVirtualNetworkConnection = DefineModelProperty<NetworkSubResource>(nameof(HubVirtualNetworkConnection), new string[] { "hubVirtualNetworkConnection" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _connectionState = DefineProperty<HubBgpConnectionStatus>(nameof(ConnectionState), new string[] { "connectionState" }, isOutput: true);
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             DefineAdditionalProperties();
         }
 

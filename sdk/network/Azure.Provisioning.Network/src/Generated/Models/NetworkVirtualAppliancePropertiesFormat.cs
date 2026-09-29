@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
     {
         private VirtualApplianceSkuProperties _nvaSku;
         private BicepValue<string> _addressPrefix;
+        private BicepValue<string> _addressPrefixV6;
         private BicepList<string> _bootStrapConfigurationBlobs;
         private NetworkSubResource _virtualHub;
         private BicepList<string> _cloudInitConfigurationBlobs;
@@ -34,7 +35,10 @@ namespace Azure.Provisioning.Network
         private VirtualApplianceDelegationProperties _delegation;
         private PartnerManagedResourceProperties _partnerManagedResource;
         private BicepList<NvaInterfaceConfigurationsProperties> _nvaInterfaceConfigurations;
+        private BicepList<NetworkIPVersion> _addressFamily;
         private BicepValue<IPAddress> _privateIPAddress;
+        private BicepValue<string> _privateIPAddressV6;
+        private NetworkVirtualApplianceMigrationStatus _migrationStatus;
 
         /// <summary> Creates a new NetworkVirtualAppliancePropertiesFormat. </summary>
         public NetworkVirtualAppliancePropertiesFormat()
@@ -63,6 +67,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _addressPrefix;
+            }
+        }
+
+        /// <summary> Gets the AddressPrefixV6. </summary>
+        public BicepValue<string> AddressPrefixV6
+        {
+            get
+            {
+                Initialize();
+                return _addressPrefixV6;
             }
         }
 
@@ -291,6 +305,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AddressFamily. </summary>
+        public BicepList<NetworkIPVersion> AddressFamily
+        {
+            get
+            {
+                Initialize();
+                return _addressFamily;
+            }
+            set
+            {
+                Initialize();
+                _addressFamily.Assign(value);
+            }
+        }
+
         /// <summary> Gets the PrivateIPAddress. </summary>
         public BicepValue<IPAddress> PrivateIPAddress
         {
@@ -298,6 +327,26 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _privateIPAddress;
+            }
+        }
+
+        /// <summary> Gets the PrivateIPAddressV6. </summary>
+        public BicepValue<string> PrivateIPAddressV6
+        {
+            get
+            {
+                Initialize();
+                return _privateIPAddressV6;
+            }
+        }
+
+        /// <summary> Gets the MigrationStatus. </summary>
+        public NetworkVirtualApplianceMigrationStatus MigrationStatus
+        {
+            get
+            {
+                Initialize();
+                return _migrationStatus;
             }
         }
 
@@ -341,6 +390,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _nvaSku = DefineModelProperty<VirtualApplianceSkuProperties>(nameof(NvaSku), new string[] { "nvaSku" });
             _addressPrefix = DefineProperty<string>(nameof(AddressPrefix), new string[] { "addressPrefix" }, isOutput: true);
+            _addressPrefixV6 = DefineProperty<string>(nameof(AddressPrefixV6), new string[] { "addressPrefixV6" }, isOutput: true);
             _bootStrapConfigurationBlobs = DefineListProperty<string>(nameof(BootStrapConfigurationBlobs), new string[] { "bootStrapConfigurationBlobs" });
             _virtualHub = DefineModelProperty<NetworkSubResource>(nameof(VirtualHub), new string[] { "virtualHub" });
             _cloudInitConfigurationBlobs = DefineListProperty<string>(nameof(CloudInitConfigurationBlobs), new string[] { "cloudInitConfigurationBlobs" });
@@ -358,7 +408,10 @@ namespace Azure.Provisioning.Network
             _delegation = DefineModelProperty<VirtualApplianceDelegationProperties>(nameof(Delegation), new string[] { "delegation" });
             _partnerManagedResource = DefineModelProperty<PartnerManagedResourceProperties>(nameof(PartnerManagedResource), new string[] { "partnerManagedResource" });
             _nvaInterfaceConfigurations = DefineListProperty<NvaInterfaceConfigurationsProperties>(nameof(NvaInterfaceConfigurations), new string[] { "nvaInterfaceConfigurations" });
+            _addressFamily = DefineListProperty<NetworkIPVersion>(nameof(AddressFamily), new string[] { "addressFamily" });
             _privateIPAddress = DefineProperty<IPAddress>(nameof(PrivateIPAddress), new string[] { "privateIpAddress" }, isOutput: true);
+            _privateIPAddressV6 = DefineProperty<string>(nameof(PrivateIPAddressV6), new string[] { "privateIpAddressV6" }, isOutput: true);
+            _migrationStatus = DefineModelProperty<NetworkVirtualApplianceMigrationStatus>(nameof(MigrationStatus), new string[] { "migrationStatus" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

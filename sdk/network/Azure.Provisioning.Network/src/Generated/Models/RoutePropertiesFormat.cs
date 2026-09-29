@@ -10,14 +10,13 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Route resource. </summary>
     internal partial class RoutePropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<string> _addressPrefix;
         private BicepValue<RouteNextHopType> _nextHopType;
         private BicepValue<string> _nextHopIPAddress;
+        private RouteNextHopEcmp _nextHop;
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<bool> _hasBgpOverride;
 
         /// <summary> Creates a new RoutePropertiesFormat. </summary>
         public RoutePropertiesFormat()
@@ -69,6 +68,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the NextHop. </summary>
+        internal RouteNextHopEcmp NextHop
+        {
+            get
+            {
+                Initialize();
+                return _nextHop;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _nextHop, value);
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -79,13 +93,20 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the HasBgpOverride. </summary>
-        public BicepValue<bool> HasBgpOverride
+        /// <summary> Gets or sets the NextHopIPAddresses. </summary>
+        public BicepList<string> NextHopIPAddresses
         {
             get
             {
-                Initialize();
-                return _hasBgpOverride;
+                return NextHop is null ? default : NextHop.NextHopIPAddresses;
+            }
+            set
+            {
+                if (NextHop is null)
+                {
+                    NextHop = new RouteNextHopEcmp();
+                }
+                NextHop.NextHopIPAddresses = value;
             }
         }
 
@@ -96,8 +117,8 @@ namespace Azure.Provisioning.Network
             _addressPrefix = DefineProperty<string>(nameof(AddressPrefix), new string[] { "addressPrefix" });
             _nextHopType = DefineProperty<RouteNextHopType>(nameof(NextHopType), new string[] { "nextHopType" }, isRequired: true);
             _nextHopIPAddress = DefineProperty<string>(nameof(NextHopIPAddress), new string[] { "nextHopIpAddress" });
+            _nextHop = DefineModelProperty<RouteNextHopEcmp>(nameof(NextHop), new string[] { "nextHop" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _hasBgpOverride = DefineProperty<bool>(nameof(HasBgpOverride), new string[] { "hasBgpOverride" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

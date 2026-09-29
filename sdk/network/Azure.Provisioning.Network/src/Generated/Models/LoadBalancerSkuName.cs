@@ -15,6 +15,8 @@ namespace Azure.Provisioning.Network
         /// <summary> Standard. </summary>
         Standard = 1,
         /// <summary> Gateway. </summary>
-        Gateway = 2
+        Gateway = 2,
+        /// <summary> Service load balancer SKU. </summary>
+        Service = 3
     }
 }

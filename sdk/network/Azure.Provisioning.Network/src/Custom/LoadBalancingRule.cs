@@ -7,6 +7,22 @@ namespace Azure.Provisioning.Network;
 
 public partial class LoadBalancingRule
 {
+    // Preserve the public getter shipped in 1.1.0. Generated flattened members
+    // still need an internal setter and writable registration; restoring the old
+    // output-only registration would prevent those members from accepting input.
+    /// <summary> Properties of load balancer load balancing rule. </summary>
+    public LoadBalancingRuleProperties Properties
+    {
+        get { Initialize(); return _properties; }
+        internal set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private LoadBalancingRuleProperties _properties;
+
+    partial void DefineAdditionalProperties()
+    {
+        _properties = DefineModelProperty<LoadBalancingRuleProperties>(nameof(Properties), new string[] { "properties" });
+    }
+
     /// <summary> Supported API versions retained for compatibility. </summary>
     public static partial class ResourceVersions
     {

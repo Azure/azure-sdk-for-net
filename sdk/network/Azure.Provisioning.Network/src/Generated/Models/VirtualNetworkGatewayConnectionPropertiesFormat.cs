@@ -46,6 +46,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _enablePrivateLinkFastPath;
         private BicepValue<ConnectionAuthenticationType> _authenticationType;
         private CertificateAuthentication _certificateAuthentication;
+        private RoutingConfiguration _routingConfiguration;
 
         /// <summary> Creates a new VirtualNetworkGatewayConnectionPropertiesFormat. </summary>
         public VirtualNetworkGatewayConnectionPropertiesFormat()
@@ -472,6 +473,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfiguration RoutingConfiguration
+        {
+            get
+            {
+                Initialize();
+                return _routingConfiguration;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _routingConfiguration, value);
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PeerId
         {
@@ -523,6 +539,7 @@ namespace Azure.Provisioning.Network
             _enablePrivateLinkFastPath = DefineProperty<bool>(nameof(EnablePrivateLinkFastPath), new string[] { "enablePrivateLinkFastPath" });
             _authenticationType = DefineProperty<ConnectionAuthenticationType>(nameof(AuthenticationType), new string[] { "authenticationType" });
             _certificateAuthentication = DefineModelProperty<CertificateAuthentication>(nameof(CertificateAuthentication), new string[] { "certificateAuthentication" });
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             DefineAdditionalProperties();
         }
 

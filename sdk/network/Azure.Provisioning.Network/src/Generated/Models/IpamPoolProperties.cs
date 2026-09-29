@@ -19,6 +19,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _parentPoolName;
         private BicepList<string> _addressPrefixes;
         private BicepValue<NetworkProvisioningState> _provisioningState;
+        private BicepValue<string> _minAllocationSize;
+        private BicepValue<string> _maxAllocationSize;
 
         /// <summary> Creates a new IpamPoolProperties. </summary>
         public IpamPoolProperties()
@@ -105,6 +107,36 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the MinAllocationSize. </summary>
+        public BicepValue<string> MinAllocationSize
+        {
+            get
+            {
+                Initialize();
+                return _minAllocationSize;
+            }
+            set
+            {
+                Initialize();
+                _minAllocationSize.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the MaxAllocationSize. </summary>
+        public BicepValue<string> MaxAllocationSize
+        {
+            get
+            {
+                Initialize();
+                return _maxAllocationSize;
+            }
+            set
+            {
+                Initialize();
+                _maxAllocationSize.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for IpamPoolProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -115,6 +147,8 @@ namespace Azure.Provisioning.Network
             _parentPoolName = DefineProperty<string>(nameof(ParentPoolName), new string[] { "parentPoolName" });
             _addressPrefixes = DefineListProperty<string>(nameof(AddressPrefixes), new string[] { "addressPrefixes" }, isRequired: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _minAllocationSize = DefineProperty<string>(nameof(MinAllocationSize), new string[] { "minAllocationSize" });
+            _maxAllocationSize = DefineProperty<string>(nameof(MaxAllocationSize), new string[] { "maxAllocationSize" });
             DefineAdditionalProperties();
         }
 

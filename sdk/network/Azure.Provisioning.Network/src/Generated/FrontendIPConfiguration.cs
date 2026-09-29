@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new FrontendIPConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public FrontendIPConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/frontendIPConfigurations", resourceVersion ?? "2025-05-01")
+        public FrontendIPConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/frontendIPConfigurations", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -260,6 +260,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the EnableConnectionTracking. </summary>
+        public BicepValue<bool> EnableConnectionTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableConnectionTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.EnableConnectionTracking = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PublicIPPrefixId
         {
@@ -294,6 +311,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> DdosCustomPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DdosCustomPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.DdosCustomPolicyId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FrontendIPConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -323,6 +357,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

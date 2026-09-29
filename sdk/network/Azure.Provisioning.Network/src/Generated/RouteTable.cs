@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new RouteTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public RouteTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/routeTables", resourceVersion ?? "2025-05-01")
+        public RouteTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/routeTables", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -146,6 +146,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DisablePeeringRoute. </summary>
+        public BicepValue<DisablePeeringRoute> DisablePeeringRoute
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisablePeeringRoute;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteTablePropertiesFormat();
+                }
+                Properties.DisablePeeringRoute = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -200,6 +217,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

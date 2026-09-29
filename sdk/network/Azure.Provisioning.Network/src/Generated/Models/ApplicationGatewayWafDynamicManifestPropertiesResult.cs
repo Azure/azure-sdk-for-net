@@ -59,6 +59,15 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                return DefaultRuleSet is null ? default : DefaultRuleSet.DisplayName;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ApplicationGatewayWafDynamicManifestPropertiesResult. </summary>
         protected override void DefineProvisionableProperties()
         {

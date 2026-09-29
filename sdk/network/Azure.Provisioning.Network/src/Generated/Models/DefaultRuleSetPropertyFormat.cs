@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _ruleSetType;
         private BicepValue<string> _ruleSetVersion;
+        private BicepValue<string> _displayName;
 
         /// <summary> Creates a new DefaultRuleSetPropertyFormat. </summary>
         public DefaultRuleSetPropertyFormat()
@@ -41,12 +42,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                Initialize();
+                return _displayName;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for DefaultRuleSetPropertyFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _ruleSetType = DefineProperty<string>(nameof(RuleSetType), new string[] { "ruleSetType" });
             _ruleSetVersion = DefineProperty<string>(nameof(RuleSetVersion), new string[] { "ruleSetVersion" });
+            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             DefineAdditionalProperties();
         }
 

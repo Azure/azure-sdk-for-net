@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _ipTagType;
         private BicepValue<string> _tag;
+        private BicepValue<ResourceIdentifier> _firstPartyServiceTagId;
 
         /// <summary> Creates a new IPTag. </summary>
         public IPTag()
@@ -51,12 +53,28 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the FirstPartyServiceTagId. </summary>
+        public BicepValue<ResourceIdentifier> FirstPartyServiceTagId
+        {
+            get
+            {
+                Initialize();
+                return _firstPartyServiceTagId;
+            }
+            set
+            {
+                Initialize();
+                _firstPartyServiceTagId.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for IPTag. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _ipTagType = DefineProperty<string>(nameof(IPTagType), new string[] { "ipTagType" });
             _tag = DefineProperty<string>(nameof(Tag), new string[] { "tag" });
+            _firstPartyServiceTagId = DefineProperty<ResourceIdentifier>(nameof(FirstPartyServiceTagId), new string[] { "firstPartyServiceTagId" });
             DefineAdditionalProperties();
         }
 

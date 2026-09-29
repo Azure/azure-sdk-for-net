@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepList<string> _targetUrls;
         private BicepList<string> _fqdnTags;
         private BicepList<string> _sourceIPGroups;
+        private BicepList<string> _sourceKubeSelectorGroups;
         private BicepValue<bool> _terminateTLS;
         private BicepList<string> _webCategories;
         private BicepList<FirewallPolicyHttpHeaderToInsert> _httpHeadersToInsert;
@@ -134,6 +135,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the SourceKubeSelectorGroups. </summary>
+        public BicepList<string> SourceKubeSelectorGroups
+        {
+            get
+            {
+                Initialize();
+                return _sourceKubeSelectorGroups;
+            }
+            set
+            {
+                Initialize();
+                _sourceKubeSelectorGroups.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the TerminateTLS. </summary>
         public BicepValue<bool> TerminateTLS
         {
@@ -190,6 +206,7 @@ namespace Azure.Provisioning.Network
             _targetUrls = DefineListProperty<string>(nameof(TargetUrls), new string[] { "targetUrls" });
             _fqdnTags = DefineListProperty<string>(nameof(FqdnTags), new string[] { "fqdnTags" });
             _sourceIPGroups = DefineListProperty<string>(nameof(SourceIPGroups), new string[] { "sourceIpGroups" });
+            _sourceKubeSelectorGroups = DefineListProperty<string>(nameof(SourceKubeSelectorGroups), new string[] { "sourceKubeSelectorGroups" });
             _terminateTLS = DefineProperty<bool>(nameof(TerminateTLS), new string[] { "terminateTLS" });
             _webCategories = DefineListProperty<string>(nameof(WebCategories), new string[] { "webCategories" });
             _httpHeadersToInsert = DefineListProperty<FirewallPolicyHttpHeaderToInsert>(nameof(HttpHeadersToInsert), new string[] { "httpHeadersToInsert" });

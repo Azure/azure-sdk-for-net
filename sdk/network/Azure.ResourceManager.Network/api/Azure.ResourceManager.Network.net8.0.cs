@@ -22652,6 +22652,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PolicySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.PolicySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.PolicySettings>
     {
         public PolicySettings() { }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use CaptchaExpirationInMins instead.")]
         public int? CaptchaCookieExpirationInMins { get { throw null; } set { } }
         public int? CaptchaExpirationInMins { get { throw null; } set { } }
         public string CustomBlockResponseBody { get { throw null; } set { } }

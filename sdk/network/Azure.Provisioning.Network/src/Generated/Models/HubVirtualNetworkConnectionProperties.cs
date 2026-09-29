@@ -17,8 +17,10 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _remoteVirtualNetwork;
         private BicepValue<bool> _allowHubToRemoteVnetTransit;
         private BicepValue<bool> _allowRemoteVnetToUseHubVnetGateways;
+        private NetworkSubResource _connectionPolicy;
         private BicepValue<bool> _enableInternetSecurity;
         private RoutingConfiguration _routingConfiguration;
+        private BicepValue<bool> _isOnlyIPv6PeeringEnabled;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new HubVirtualNetworkConnectionProperties. </summary>
@@ -71,6 +73,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ConnectionPolicy. </summary>
+        internal NetworkSubResource ConnectionPolicy
+        {
+            get
+            {
+                Initialize();
+                return _connectionPolicy;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _connectionPolicy, value);
+            }
+        }
+
         /// <summary> Gets or sets the EnableInternetSecurity. </summary>
         public BicepValue<bool> EnableInternetSecurity
         {
@@ -101,6 +118,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the IsOnlyIPv6PeeringEnabled. </summary>
+        public BicepValue<bool> IsOnlyIPv6PeeringEnabled
+        {
+            get
+            {
+                Initialize();
+                return _isOnlyIPv6PeeringEnabled;
+            }
+            set
+            {
+                Initialize();
+                _isOnlyIPv6PeeringEnabled.Assign(value);
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -128,6 +160,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ConnectionPolicyId
+        {
+            get
+            {
+                return ConnectionPolicy is null ? default : ConnectionPolicy.Id;
+            }
+            set
+            {
+                if (ConnectionPolicy is null)
+                {
+                    ConnectionPolicy = new NetworkSubResource();
+                }
+                ConnectionPolicy.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for HubVirtualNetworkConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -135,8 +184,10 @@ namespace Azure.Provisioning.Network
             _remoteVirtualNetwork = DefineModelProperty<NetworkSubResource>(nameof(RemoteVirtualNetwork), new string[] { "remoteVirtualNetwork" });
             _allowHubToRemoteVnetTransit = DefineProperty<bool>(nameof(AllowHubToRemoteVnetTransit), new string[] { "allowHubToRemoteVnetTransit" });
             _allowRemoteVnetToUseHubVnetGateways = DefineProperty<bool>(nameof(AllowRemoteVnetToUseHubVnetGateways), new string[] { "allowRemoteVnetToUseHubVnetGateways" });
+            _connectionPolicy = DefineModelProperty<NetworkSubResource>(nameof(ConnectionPolicy), new string[] { "connectionPolicy" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
             _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _isOnlyIPv6PeeringEnabled = DefineProperty<bool>(nameof(IsOnlyIPv6PeeringEnabled), new string[] { "enableOnlyIPv6Peering" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

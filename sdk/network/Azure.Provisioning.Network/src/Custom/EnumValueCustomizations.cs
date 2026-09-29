@@ -3,6 +3,9 @@
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// Preserve None = 4 from 1.1.0; the new VirtualApplianceEcmp takes the next free ordinal.
+[assembly: CodeGenEnumValue("RouteNextHopType", "None", 4)]
+
 // Preserve the released TLS 1.3 spelling at the same ordinal as its canonical name.
 // Pin both names because reserving the alias alone would shift Tls1_3 to 4.
 [assembly: CodeGenEnumValue("ApplicationGatewaySslProtocol", "Tls1_3", 3)]

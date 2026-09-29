@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new FirewallPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public FirewallPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/firewallPolicies", resourceVersion ?? "2025-05-01")
+        public FirewallPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/firewallPolicies", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -138,6 +138,19 @@ namespace Azure.Provisioning.Network
                     Properties = new FirewallPolicyPropertiesFormat();
                 }
                 return Properties.RuleCollectionGroups;
+            }
+        }
+
+        /// <summary> Gets the KubeSelectorGroups. </summary>
+        public BicepList<NetworkSubResource> KubeSelectorGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.KubeSelectorGroups;
             }
         }
 
@@ -299,6 +312,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the IsAfcManaged. </summary>
+        public BicepValue<bool> IsAfcManaged
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.IsAfcManaged;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> BasePolicyId
         {
@@ -396,6 +422,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

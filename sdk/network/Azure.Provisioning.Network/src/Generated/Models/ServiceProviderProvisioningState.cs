@@ -17,6 +17,8 @@ namespace Azure.Provisioning.Network
         /// <summary> Provisioned. </summary>
         Provisioned = 2,
         /// <summary> Deprovisioning. </summary>
-        Deprovisioning = 3
+        Deprovisioning = 3,
+        /// <summary> DeProvisioned State. </summary>
+        DeProvisioned = 4
     }
 }

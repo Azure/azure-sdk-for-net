@@ -19,6 +19,9 @@ namespace Azure.Provisioning.Network
         private BicepList<string> _sourceIPGroups;
         private BicepList<string> _destinationIPGroups;
         private BicepList<string> _destinationFqdns;
+        private BicepList<string> _sourceKubeSelectorGroups;
+        private BicepList<string> _sourceGeoLocations;
+        private BicepList<string> _destinationGeoLocations;
 
         /// <summary> Creates a new NetworkRule. </summary>
         public NetworkRule()
@@ -131,6 +134,51 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the SourceKubeSelectorGroups. </summary>
+        public BicepList<string> SourceKubeSelectorGroups
+        {
+            get
+            {
+                Initialize();
+                return _sourceKubeSelectorGroups;
+            }
+            set
+            {
+                Initialize();
+                _sourceKubeSelectorGroups.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the SourceGeoLocations. </summary>
+        public BicepList<string> SourceGeoLocations
+        {
+            get
+            {
+                Initialize();
+                return _sourceGeoLocations;
+            }
+            set
+            {
+                Initialize();
+                _sourceGeoLocations.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the DestinationGeoLocations. </summary>
+        public BicepList<string> DestinationGeoLocations
+        {
+            get
+            {
+                Initialize();
+                return _destinationGeoLocations;
+            }
+            set
+            {
+                Initialize();
+                _destinationGeoLocations.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NetworkRule. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -142,6 +190,9 @@ namespace Azure.Provisioning.Network
             _sourceIPGroups = DefineListProperty<string>(nameof(SourceIPGroups), new string[] { "sourceIpGroups" });
             _destinationIPGroups = DefineListProperty<string>(nameof(DestinationIPGroups), new string[] { "destinationIpGroups" });
             _destinationFqdns = DefineListProperty<string>(nameof(DestinationFqdns), new string[] { "destinationFqdns" });
+            _sourceKubeSelectorGroups = DefineListProperty<string>(nameof(SourceKubeSelectorGroups), new string[] { "sourceKubeSelectorGroups" });
+            _sourceGeoLocations = DefineListProperty<string>(nameof(SourceGeoLocations), new string[] { "sourceGeoLocations" });
+            _destinationGeoLocations = DefineListProperty<string>(nameof(DestinationGeoLocations), new string[] { "destinationGeoLocations" });
             DefineAdditionalProperties();
         }
 

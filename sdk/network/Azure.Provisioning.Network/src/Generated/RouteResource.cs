@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new RouteResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public RouteResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/routeTables/routes", resourceVersion ?? "2025-05-01")
+        public RouteResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/routeTables/routes", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -145,16 +145,20 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the HasBgpOverride. </summary>
-        public BicepValue<bool> HasBgpOverride
+        /// <summary> Gets or sets the NextHopIPAddresses. </summary>
+        public BicepList<string> NextHopIPAddresses
         {
             get
+            {
+                return Properties is null ? default : Properties.NextHopIPAddresses;
+            }
+            set
             {
                 if (Properties is null)
                 {
                     Properties = new RoutePropertiesFormat();
                 }
-                return Properties.HasBgpOverride;
+                Properties.NextHopIPAddresses = value;
             }
         }
 
@@ -185,6 +189,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new AzureFirewall. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public AzureFirewall(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/azureFirewalls", resourceVersion ?? "2025-05-01")
+        public AzureFirewall(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/azureFirewalls", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -338,6 +338,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the IsAISecurityAddOnEnabled. </summary>
+        public BicepValue<bool> IsAISecurityAddOnEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAISecurityAddOnEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.IsAISecurityAddOnEnabled = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> VirtualHubId
         {
@@ -372,6 +389,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ServiceEndpoint. </summary>
+        public BicepValue<string> AfcServiceEndpoint
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.AfcServiceEndpoint;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AzureFirewall. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -403,6 +433,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

@@ -138,6 +138,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Hsm. </summary>
+        public ApplicationGatewayManagedHsm Hsm
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hsm;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewaySslCertificatePropertiesFormat();
+                }
+                Properties.Hsm = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new VirtualHub. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualHub(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/virtualHubs", resourceVersion ?? "2025-05-01")
+        public VirtualHub(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/virtualHubs", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -286,6 +286,40 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AddressPrefixV6. </summary>
+        public BicepValue<string> AddressPrefixV6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefixV6;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.AddressPrefixV6 = value;
+            }
+        }
+
+        /// <summary> Gets or sets the VirtualRouterIpsV6. </summary>
+        public BicepList<string> VirtualRouterIpsV6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualRouterIpsV6;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.VirtualRouterIpsV6 = value;
+            }
+        }
+
         /// <summary> Gets or sets the AllowBranchToBranchTraffic. </summary>
         public BicepValue<bool> AllowBranchToBranchTraffic
         {
@@ -503,6 +537,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

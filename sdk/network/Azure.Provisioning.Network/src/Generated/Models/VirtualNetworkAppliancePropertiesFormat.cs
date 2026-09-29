@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<double> _bandwidthGbps;
         private BicepList<VirtualNetworkApplianceIPConfiguration> _ipConfigurations;
+        private BicepValue<VirtualNetworkApplianceIPVersionType> _privateIPAddressVersion;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<Guid> _resourceGuid;
         private SubnetResource _subnet;
@@ -46,6 +47,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _ipConfigurations;
+            }
+        }
+
+        /// <summary> Gets or sets the PrivateIPAddressVersion. </summary>
+        public BicepValue<VirtualNetworkApplianceIPVersionType> PrivateIPAddressVersion
+        {
+            get
+            {
+                Initialize();
+                return _privateIPAddressVersion;
+            }
+            set
+            {
+                Initialize();
+                _privateIPAddressVersion.Assign(value);
             }
         }
 
@@ -90,6 +106,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _bandwidthGbps = DefineProperty<double>(nameof(BandwidthGbps), new string[] { "bandwidthInGbps" });
             _ipConfigurations = DefineListProperty<VirtualNetworkApplianceIPConfiguration>(nameof(IPConfigurations), new string[] { "ipConfigurations" }, isOutput: true);
+            _privateIPAddressVersion = DefineProperty<VirtualNetworkApplianceIPVersionType>(nameof(PrivateIPAddressVersion), new string[] { "privateIPAddressVersion" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _subnet = DefineModelProperty(nameof(Subnet), new string[] { "subnet" }, new SubnetResource("subnet"));

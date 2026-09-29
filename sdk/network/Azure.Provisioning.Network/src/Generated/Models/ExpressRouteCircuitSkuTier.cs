@@ -17,6 +17,8 @@ namespace Azure.Provisioning.Network
         /// <summary> Basic. </summary>
         Basic = 2,
         /// <summary> Local. </summary>
-        Local = 3
+        Local = 3,
+        /// <summary> MultiCloud tier for cross-cloud connectivity. </summary>
+        MultiCloud = 4
     }
 }

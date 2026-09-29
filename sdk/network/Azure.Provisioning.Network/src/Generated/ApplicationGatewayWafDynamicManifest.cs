@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new ApplicationGatewayWafDynamicManifest. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ApplicationGatewayWafDynamicManifest(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/locations/applicationGatewayWafDynamicManifests", resourceVersion ?? "2025-05-01")
+        internal ApplicationGatewayWafDynamicManifest(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/locations/applicationGatewayWafDynamicManifests", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -99,6 +99,15 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ApplicationGatewayWafDynamicManifest. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -126,6 +135,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

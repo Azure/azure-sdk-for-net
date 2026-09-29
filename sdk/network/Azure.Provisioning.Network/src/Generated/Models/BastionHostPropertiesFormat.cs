@@ -28,6 +28,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _enableKerberos;
         private BicepValue<bool> _enableSessionRecording;
         private BicepValue<bool> _enablePrivateOnlyBastion;
+        private BastionSessionRecordingConfiguration _sessionRecordingConfiguration;
 
         /// <summary> Creates a new BastionHostPropertiesFormat. </summary>
         public BastionHostPropertiesFormat()
@@ -239,6 +240,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the SessionRecordingConfiguration. </summary>
+        public BastionSessionRecordingConfiguration SessionRecordingConfiguration
+        {
+            get
+            {
+                Initialize();
+                return _sessionRecordingConfiguration;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _sessionRecordingConfiguration, value);
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> VirtualNetworkId
         {
@@ -291,6 +307,7 @@ namespace Azure.Provisioning.Network
             _enableKerberos = DefineProperty<bool>(nameof(EnableKerberos), new string[] { "enableKerberos" });
             _enableSessionRecording = DefineProperty<bool>(nameof(EnableSessionRecording), new string[] { "enableSessionRecording" });
             _enablePrivateOnlyBastion = DefineProperty<bool>(nameof(EnablePrivateOnlyBastion), new string[] { "enablePrivateOnlyBastion" });
+            _sessionRecordingConfiguration = DefineModelProperty<BastionSessionRecordingConfiguration>(nameof(SessionRecordingConfiguration), new string[] { "sessionRecordingConfiguration" });
             DefineAdditionalProperties();
         }
 

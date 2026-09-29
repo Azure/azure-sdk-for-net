@@ -11,6 +11,24 @@ namespace Azure.Provisioning.Network;
 [CodeGenType("Route")]
 public partial class RouteResource
 {
+    // Preserve the released setter despite TypeSpec's explicit Lifecycle.Read visibility.
+    // Neither route nor route-table PUT uses a writable alternative model, so input
+    // usage cannot restore this API. This is compatibility, not a service guarantee.
+    /// <summary> A value indicating whether this route overrides overlapping BGP routes regardless of LPM. </summary>
+    public BicepValue<bool> HasBgpOverride
+    {
+        get
+        {
+            Properties ??= new RoutePropertiesFormat();
+            return Properties.HasBgpOverride;
+        }
+        set
+        {
+            Properties ??= new RoutePropertiesFormat();
+            Properties.HasBgpOverride = value;
+        }
+    }
+
     // Preserve the released writable ID for input/reference usages. The generator
     // incorrectly treats every resource ID as output-only.
     // https://github.com/Azure/azure-sdk-for-net/issues/63430

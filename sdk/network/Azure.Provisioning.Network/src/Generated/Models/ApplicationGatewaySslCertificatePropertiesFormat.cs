@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _password;
         private BicepValue<BinaryData> _publicCertData;
         private BicepValue<string> _keyVaultSecretId;
+        private ApplicationGatewayManagedHsm _hsm;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ApplicationGatewaySslCertificatePropertiesFormat. </summary>
@@ -80,6 +81,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Hsm. </summary>
+        public ApplicationGatewayManagedHsm Hsm
+        {
+            get
+            {
+                Initialize();
+                return _hsm;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _hsm, value);
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -98,6 +114,7 @@ namespace Azure.Provisioning.Network
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });
             _publicCertData = DefineProperty<BinaryData>(nameof(PublicCertData), new string[] { "publicCertData" }, isOutput: true, format: "base64");
             _keyVaultSecretId = DefineProperty<string>(nameof(KeyVaultSecretId), new string[] { "keyVaultSecretId" });
+            _hsm = DefineModelProperty<ApplicationGatewayManagedHsm>(nameof(Hsm), new string[] { "hsm" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

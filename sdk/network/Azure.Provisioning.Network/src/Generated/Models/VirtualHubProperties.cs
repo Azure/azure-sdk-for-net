@@ -31,6 +31,8 @@ namespace Azure.Provisioning.Network
         private BicepList<WritableSubResource> _routeMaps;
         private BicepValue<long> _virtualRouterAsn;
         private BicepList<string> _virtualRouterIPs;
+        private BicepValue<string> _addressPrefixV6;
+        private BicepList<string> _virtualRouterIpsV6;
         private BicepValue<bool> _allowBranchToBranchTraffic;
         private BicepValue<PreferredRoutingGateway> _preferredRoutingGateway;
         private BicepValue<HubRoutingPreference> _hubRoutingPreference;
@@ -276,6 +278,36 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AddressPrefixV6. </summary>
+        public BicepValue<string> AddressPrefixV6
+        {
+            get
+            {
+                Initialize();
+                return _addressPrefixV6;
+            }
+            set
+            {
+                Initialize();
+                _addressPrefixV6.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the VirtualRouterIpsV6. </summary>
+        public BicepList<string> VirtualRouterIpsV6
+        {
+            get
+            {
+                Initialize();
+                return _virtualRouterIpsV6;
+            }
+            set
+            {
+                Initialize();
+                _virtualRouterIpsV6.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the AllowBranchToBranchTraffic. </summary>
         public BicepValue<bool> AllowBranchToBranchTraffic
         {
@@ -493,6 +525,8 @@ namespace Azure.Provisioning.Network
             _routeMaps = DefineListProperty<WritableSubResource>(nameof(RouteMaps), new string[] { "routeMaps" }, isOutput: true);
             _virtualRouterAsn = DefineProperty<long>(nameof(VirtualRouterAsn), new string[] { "virtualRouterAsn" });
             _virtualRouterIPs = DefineListProperty<string>(nameof(VirtualRouterIPs), new string[] { "virtualRouterIps" });
+            _addressPrefixV6 = DefineProperty<string>(nameof(AddressPrefixV6), new string[] { "addressPrefixV6" });
+            _virtualRouterIpsV6 = DefineListProperty<string>(nameof(VirtualRouterIpsV6), new string[] { "virtualRouterIpsV6" });
             _allowBranchToBranchTraffic = DefineProperty<bool>(nameof(AllowBranchToBranchTraffic), new string[] { "allowBranchToBranchTraffic" });
             _preferredRoutingGateway = DefineProperty<PreferredRoutingGateway>(nameof(PreferredRoutingGateway), new string[] { "preferredRoutingGateway" });
             _hubRoutingPreference = DefineProperty<HubRoutingPreference>(nameof(HubRoutingPreference), new string[] { "hubRoutingPreference" });

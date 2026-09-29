@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _size;
         private BicepList<WritableSubResource> _ruleCollectionGroups;
+        private BicepList<NetworkSubResource> _kubeSelectorGroups;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private NetworkSubResource _basePolicy;
         private BicepList<WritableSubResource> _firewalls;
@@ -31,6 +32,7 @@ namespace Azure.Provisioning.Network
         private FirewallPolicyIntrusionDetection _intrusionDetection;
         private FirewallPolicyTransportSecurity _transportSecurity;
         private FirewallPolicySku _sku;
+        private BicepValue<bool> _isAfcManaged;
 
         /// <summary> Creates a new FirewallPolicyPropertiesFormat. </summary>
         public FirewallPolicyPropertiesFormat()
@@ -54,6 +56,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _ruleCollectionGroups;
+            }
+        }
+
+        /// <summary> Gets the KubeSelectorGroups. </summary>
+        public BicepList<NetworkSubResource> KubeSelectorGroups
+        {
+            get
+            {
+                Initialize();
+                return _kubeSelectorGroups;
             }
         }
 
@@ -252,6 +264,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the IsAfcManaged. </summary>
+        public BicepValue<bool> IsAfcManaged
+        {
+            get
+            {
+                Initialize();
+                return _isAfcManaged;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> BasePolicyId
         {
@@ -326,6 +348,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _size = DefineProperty<string>(nameof(Size), new string[] { "size" }, isOutput: true);
             _ruleCollectionGroups = DefineListProperty<WritableSubResource>(nameof(RuleCollectionGroups), new string[] { "ruleCollectionGroups" }, isOutput: true);
+            _kubeSelectorGroups = DefineListProperty<NetworkSubResource>(nameof(KubeSelectorGroups), new string[] { "kubeSelectorGroups" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _basePolicy = DefineModelProperty<NetworkSubResource>(nameof(BasePolicy), new string[] { "basePolicy" });
             _firewalls = DefineListProperty<WritableSubResource>(nameof(Firewalls), new string[] { "firewalls" }, isOutput: true);
@@ -340,6 +363,7 @@ namespace Azure.Provisioning.Network
             _intrusionDetection = DefineModelProperty<FirewallPolicyIntrusionDetection>(nameof(IntrusionDetection), new string[] { "intrusionDetection" });
             _transportSecurity = DefineModelProperty<FirewallPolicyTransportSecurity>(nameof(TransportSecurity), new string[] { "transportSecurity" });
             _sku = DefineModelProperty<FirewallPolicySku>(nameof(Sku), new string[] { "sku" });
+            _isAfcManaged = DefineProperty<bool>(nameof(IsAfcManaged), new string[] { "afcManaged" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

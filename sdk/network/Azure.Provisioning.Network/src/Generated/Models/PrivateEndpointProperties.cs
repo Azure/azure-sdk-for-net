@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepList<ApplicationSecurityGroup> _applicationSecurityGroups;
         private BicepList<PrivateEndpointIPConfiguration> _ipConfigurations;
         private BicepValue<string> _customNetworkInterfaceName;
+        private BicepValue<PrivateEndpointBillingSku> _billingSku;
 
         /// <summary> Creates a new PrivateEndpointProperties. </summary>
         public PrivateEndpointProperties()
@@ -169,6 +170,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the BillingSku. </summary>
+        public BicepValue<PrivateEndpointBillingSku> BillingSku
+        {
+            get
+            {
+                Initialize();
+                return _billingSku;
+            }
+            set
+            {
+                Initialize();
+                _billingSku.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for PrivateEndpointProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -183,6 +199,7 @@ namespace Azure.Provisioning.Network
             _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>(nameof(ApplicationSecurityGroups), new string[] { "applicationSecurityGroups" });
             _ipConfigurations = DefineListProperty<PrivateEndpointIPConfiguration>(nameof(IPConfigurations), new string[] { "ipConfigurations" });
             _customNetworkInterfaceName = DefineProperty<string>(nameof(CustomNetworkInterfaceName), new string[] { "customNetworkInterfaceName" });
+            _billingSku = DefineProperty<PrivateEndpointBillingSku>(nameof(BillingSku), new string[] { "billingSku" });
             DefineAdditionalProperties();
         }
 

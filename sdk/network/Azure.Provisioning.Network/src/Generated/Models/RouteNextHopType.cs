@@ -18,6 +18,8 @@ namespace Azure.Provisioning.Network
         Internet = 2,
         /// <summary> VirtualAppliance. </summary>
         VirtualAppliance = 3,
+        /// <summary> Routes traffic to virtual appliances using Equal-Cost Multi-Path (ECMP) routing with multiple next hop IP addresses. </summary>
+        VirtualApplianceEcmp = 5,
         /// <summary> No next hop type. </summary>
         None = 4
     }

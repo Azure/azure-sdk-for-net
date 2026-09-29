@@ -8,6 +8,7 @@
 using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepList<DdosDetectionRule> _detectionRules;
+        private BicepList<WritableSubResource> _publicIPAddresses;
 
         /// <summary> Creates a new DdosCustomPolicyPropertiesFormat. </summary>
         public DdosCustomPolicyPropertiesFormat()
@@ -57,6 +59,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the PublicIPAddresses. </summary>
+        public BicepList<WritableSubResource> PublicIPAddresses
+        {
+            get
+            {
+                Initialize();
+                return _publicIPAddresses;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for DdosCustomPolicyPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -64,6 +76,7 @@ namespace Azure.Provisioning.Network
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _detectionRules = DefineListProperty<DdosDetectionRule>(nameof(DetectionRules), new string[] { "detectionRules" });
+            _publicIPAddresses = DefineListProperty<WritableSubResource>(nameof(PublicIPAddresses), new string[] { "publicIPAddresses" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

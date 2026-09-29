@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new ApplicationGateway. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApplicationGateway(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/applicationGateways", resourceVersion ?? "2025-05-01")
+        public ApplicationGateway(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/applicationGateways", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -445,6 +445,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AdvancedRoutingMaps. </summary>
+        public BicepList<ApplicationGatewayAdvancedRoutingMap> AdvancedRoutingMaps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdvancedRoutingMaps;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.AdvancedRoutingMaps = value;
+            }
+        }
+
         /// <summary> Gets or sets the RequestRoutingRules. </summary>
         public BicepList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules
         {
@@ -493,6 +510,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayPropertiesFormat();
                 }
                 Properties.RewriteRuleSets = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AdvancedRoutingConditionSets. </summary>
+        public BicepList<ApplicationGatewayAdvancedRoutingConditionSet> AdvancedRoutingConditionSets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdvancedRoutingConditionSets;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.AdvancedRoutingConditionSets = value;
             }
         }
 
@@ -578,6 +612,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayPropertiesFormat();
                 }
                 Properties.AutoscaleConfiguration = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ReservedCapacity. </summary>
+        public BicepValue<int> ReservedCapacity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservedCapacity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPropertiesFormat();
+                }
+                Properties.ReservedCapacity = value;
             }
         }
 
@@ -783,6 +834,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

@@ -14,11 +14,15 @@
 - Restored flattened gateway and peering address-prefix properties as forwarding accessors to their address-space models.
 - Restored the writable `P2SConnectionConfiguration.ConfigurationPolicyGroups` collection and its serialization; `ConfigurationPolicyGroupAssociations` now provides an obsolete read-only view of the same collection.
 - Restored `P2SConnectionConfiguration.VpnClientAddressPrefixes` as a forwarding accessor to `VpnClientAddressPool.AddressPrefixes`.
+- Restored `PfsGroup.Pfs` to use the `PFSMM` wire value and retained `PFSMM` as an obsolete forwarding alias.
+- Restored the preferred TLS enum names while retaining obsolete aliases with the same wire values.
+- Fixed `PolicySettings.CaptchaCookieExpirationInMins` to forward to `CaptchaExpirationInMins`, so assignments are included in service requests.
 
 ### Other Changes
 
 - Marked the unsupported `NetworkVirtualApplianceConnectionData.ConnectionRoutingConfiguration` compatibility property obsolete and hidden from IntelliSense; use `RoutingConfiguration` instead.
 - Marked the unsupported `P2SConnectionConfiguration.RoutingConfiguration` compatibility property obsolete and hidden from IntelliSense.
+- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins` and hid the legacy property from IntelliSense.
 
 ## 1.18.0-beta.1 (2026-09-20)
 

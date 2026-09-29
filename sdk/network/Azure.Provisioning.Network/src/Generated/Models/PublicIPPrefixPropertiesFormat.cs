@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private NatGateway _natGateway;
+        private BicepValue<bool> _isUpgradedToV2;
 
         /// <summary> Creates a new PublicIPPrefixPropertiesFormat. </summary>
         public PublicIPPrefixPropertiesFormat()
@@ -144,6 +145,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the IsUpgradedToV2. </summary>
+        public BicepValue<bool> IsUpgradedToV2
+        {
+            get
+            {
+                Initialize();
+                return _isUpgradedToV2;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfigurationId
         {
@@ -183,6 +194,7 @@ namespace Azure.Provisioning.Network
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _natGateway = DefineModelProperty(nameof(NatGateway), new string[] { "natGateway" }, new NatGateway("natGateway"));
+            _isUpgradedToV2 = DefineProperty<bool>(nameof(IsUpgradedToV2), new string[] { "upgradedToV2" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

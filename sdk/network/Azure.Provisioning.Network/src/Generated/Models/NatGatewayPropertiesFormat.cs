@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepList<WritableSubResource> _subnets;
         private NetworkSubResource _sourceVirtualNetwork;
         private NetworkSubResource _serviceGateway;
+        private BicepValue<Nat64State> _nat64;
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
@@ -79,6 +80,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _serviceGateway, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Nat64. </summary>
+        public BicepValue<Nat64State> Nat64
+        {
+            get
+            {
+                Initialize();
+                return _nat64;
+            }
+            set
+            {
+                Initialize();
+                _nat64.Assign(value);
             }
         }
 
@@ -144,6 +160,7 @@ namespace Azure.Provisioning.Network
             _subnets = DefineListProperty<WritableSubResource>(nameof(Subnets), new string[] { "subnets" }, isOutput: true);
             _sourceVirtualNetwork = DefineModelProperty<NetworkSubResource>(nameof(SourceVirtualNetwork), new string[] { "sourceVirtualNetwork" });
             _serviceGateway = DefineModelProperty<NetworkSubResource>(nameof(ServiceGateway), new string[] { "serviceGateway" });
+            _nat64 = DefineProperty<Nat64State>(nameof(Nat64), new string[] { "nat64" });
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();

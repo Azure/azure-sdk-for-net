@@ -13,6 +13,8 @@ namespace Azure.Provisioning.Network
         /// <summary> Basic. </summary>
         Basic = 0,
         /// <summary> PathBasedRouting. </summary>
-        PathBasedRouting = 1
+        PathBasedRouting = 1,
+        /// <summary> AdvancedRouting. </summary>
+        AdvancedRouting = 2
     }
 }

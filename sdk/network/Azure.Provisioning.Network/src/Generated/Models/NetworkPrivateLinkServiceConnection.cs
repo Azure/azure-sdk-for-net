@@ -155,6 +155,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the PrivateEndpointId. </summary>
+        public BicepValue<ResourceIdentifier> ApprovalReferencePrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApprovalReferencePrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.ApprovalReferencePrivateEndpointId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NetworkPrivateLinkServiceConnection. </summary>
         protected override void DefineProvisionableProperties()
         {

@@ -14,7 +14,6 @@ namespace Azure.Provisioning.Network
     /// <summary> Inbound NAT pool of the load balancer. </summary>
     public partial class LoadBalancerInboundNatPool : NetworkSubResource
     {
-        private LoadBalancerInboundNatPoolProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepValue<string> _type;
@@ -22,21 +21,6 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new LoadBalancerInboundNatPool. </summary>
         public LoadBalancerInboundNatPool()
         {
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        internal LoadBalancerInboundNatPoolProperties Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -227,7 +211,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<LoadBalancerInboundNatPoolProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);

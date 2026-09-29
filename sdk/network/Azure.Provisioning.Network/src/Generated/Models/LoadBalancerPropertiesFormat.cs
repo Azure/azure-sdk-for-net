@@ -24,6 +24,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<LoadBalancerScope> _scope;
+        private BicepValue<LoadBalancerMode> _mode;
 
         /// <summary> Creates a new LoadBalancerPropertiesFormat. </summary>
         public LoadBalancerPropertiesFormat()
@@ -170,6 +171,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Mode. </summary>
+        public BicepValue<LoadBalancerMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
+            set
+            {
+                Initialize();
+                _mode.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for LoadBalancerPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -184,6 +200,7 @@ namespace Azure.Provisioning.Network
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _scope = DefineProperty<LoadBalancerScope>(nameof(Scope), new string[] { "scope" });
+            _mode = DefineProperty<LoadBalancerMode>(nameof(Mode), new string[] { "mode" });
             DefineAdditionalProperties();
         }
 

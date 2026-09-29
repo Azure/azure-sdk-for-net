@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<ApplicationGatewayWafRuleStateType> _state;
         private BicepValue<ApplicationGatewayWafRuleActionType> _action;
         private BicepValue<ApplicationGatewayWafRuleSensitivityType> _sensitivity;
+        private BicepValue<ApplicationGatewayWafRuleParanoiaLevel> _paranoiaLevel;
         private BicepValue<string> _description;
 
         /// <summary> Creates a new ApplicationGatewayFirewallRule. </summary>
@@ -75,6 +76,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ParanoiaLevel. </summary>
+        public BicepValue<ApplicationGatewayWafRuleParanoiaLevel> ParanoiaLevel
+        {
+            get
+            {
+                Initialize();
+                return _paranoiaLevel;
+            }
+        }
+
         /// <summary> Gets the Description. </summary>
         public BicepValue<string> Description
         {
@@ -94,6 +105,7 @@ namespace Azure.Provisioning.Network
             _state = DefineProperty<ApplicationGatewayWafRuleStateType>(nameof(State), new string[] { "state" });
             _action = DefineProperty<ApplicationGatewayWafRuleActionType>(nameof(Action), new string[] { "action" });
             _sensitivity = DefineProperty<ApplicationGatewayWafRuleSensitivityType>(nameof(Sensitivity), new string[] { "sensitivity" });
+            _paranoiaLevel = DefineProperty<ApplicationGatewayWafRuleParanoiaLevel>(nameof(ParanoiaLevel), new string[] { "paranoiaLevel" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             DefineAdditionalProperties();
         }

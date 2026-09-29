@@ -9,6 +9,7 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -23,11 +24,12 @@ namespace Azure.Provisioning.Network
         private BicepList<string> _zones;
         private BicepValue<ETag> _eTag;
         private NetworkSku _sku;
+        private ManagedServiceIdentity _identity;
 
         /// <summary> Creates a new BastionHost. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public BastionHost(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/bastionHosts", resourceVersion ?? "2025-05-01")
+        public BastionHost(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/bastionHosts", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -138,6 +140,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _sku, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Identity. </summary>
+        public ManagedServiceIdentity Identity
+        {
+            get
+            {
+                Initialize();
+                return _identity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _identity, value);
             }
         }
 
@@ -341,6 +358,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the SessionRecordingConfiguration. </summary>
+        public BastionSessionRecordingConfiguration SessionRecordingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionRecordingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.SessionRecordingConfiguration = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> VirtualNetworkId
         {
@@ -404,6 +438,7 @@ namespace Azure.Provisioning.Network
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _sku = DefineModelProperty<NetworkSku>(nameof(Sku), new string[] { "sku" });
+            _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }
 
@@ -423,6 +458,12 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
+            /// <summary> API version "2025-09-01". </summary>
+            public static readonly string V2025_09_01 = "2025-09-01";
+            /// <summary> API version "2025-07-01". </summary>
+            public static readonly string V2025_07_01 = "2025-07-01";
             /// <summary> API version "2025-05-01". </summary>
             public static readonly string V2025_05_01 = "2025-05-01";
         }

@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _ruleSetType;
         private BicepValue<string> _ruleSetVersion;
         private BicepValue<ApplicationGatewayRuleSetStatusOption> _status;
+        private BicepValue<string> _displayName;
         private BicepList<ApplicationGatewayTierType> _tiers;
         private BicepList<ApplicationGatewayFirewallRuleGroup> _ruleGroups;
 
@@ -54,6 +55,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the DisplayName. </summary>
+        public BicepValue<string> DisplayName
+        {
+            get
+            {
+                Initialize();
+                return _displayName;
+            }
+        }
+
         /// <summary> Gets the Tiers. </summary>
         public BicepList<ApplicationGatewayTierType> Tiers
         {
@@ -81,6 +92,7 @@ namespace Azure.Provisioning.Network
             _ruleSetType = DefineProperty<string>(nameof(RuleSetType), new string[] { "ruleSetType" });
             _ruleSetVersion = DefineProperty<string>(nameof(RuleSetVersion), new string[] { "ruleSetVersion" });
             _status = DefineProperty<ApplicationGatewayRuleSetStatusOption>(nameof(Status), new string[] { "status" });
+            _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             _tiers = DefineListProperty<ApplicationGatewayTierType>(nameof(Tiers), new string[] { "tiers" });
             _ruleGroups = DefineListProperty<ApplicationGatewayFirewallRuleGroup>(nameof(RuleGroups), new string[] { "ruleGroups" });
             DefineAdditionalProperties();

@@ -20,10 +20,12 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _backendHttpSettings;
         private NetworkSubResource _httpListener;
         private NetworkSubResource _urlPathMap;
+        private NetworkSubResource _advancedRoutingMap;
         private NetworkSubResource _rewriteRuleSet;
         private NetworkSubResource _redirectConfiguration;
         private NetworkSubResource _loadDistributionPolicy;
         private BicepValue<ResourceIdentifier> _entraJwtValidationConfigId;
+        private BicepList<ApplicationGatewayAuthConfig> _authConfigs;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ApplicationGatewayRequestRoutingRulePropertiesFormat. </summary>
@@ -121,6 +123,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AdvancedRoutingMap. </summary>
+        internal NetworkSubResource AdvancedRoutingMap
+        {
+            get
+            {
+                Initialize();
+                return _advancedRoutingMap;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _advancedRoutingMap, value);
+            }
+        }
+
         /// <summary> Gets or sets the RewriteRuleSet. </summary>
         internal NetworkSubResource RewriteRuleSet
         {
@@ -178,6 +195,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _entraJwtValidationConfigId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the AuthConfigs. </summary>
+        public BicepList<ApplicationGatewayAuthConfig> AuthConfigs
+        {
+            get
+            {
+                Initialize();
+                return _authConfigs;
+            }
+            set
+            {
+                Initialize();
+                _authConfigs.Assign(value);
             }
         }
 
@@ -260,6 +292,23 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> AdvancedRoutingMapId
+        {
+            get
+            {
+                return AdvancedRoutingMap is null ? default : AdvancedRoutingMap.Id;
+            }
+            set
+            {
+                if (AdvancedRoutingMap is null)
+                {
+                    AdvancedRoutingMap = new NetworkSubResource();
+                }
+                AdvancedRoutingMap.Id = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> RewriteRuleSetId
         {
             get
@@ -320,10 +369,12 @@ namespace Azure.Provisioning.Network
             _backendHttpSettings = DefineModelProperty<NetworkSubResource>(nameof(BackendHttpSettings), new string[] { "backendHttpSettings" });
             _httpListener = DefineModelProperty<NetworkSubResource>(nameof(HttpListener), new string[] { "httpListener" });
             _urlPathMap = DefineModelProperty<NetworkSubResource>(nameof(UrlPathMap), new string[] { "urlPathMap" });
+            _advancedRoutingMap = DefineModelProperty<NetworkSubResource>(nameof(AdvancedRoutingMap), new string[] { "advancedRoutingMap" });
             _rewriteRuleSet = DefineModelProperty<NetworkSubResource>(nameof(RewriteRuleSet), new string[] { "rewriteRuleSet" });
             _redirectConfiguration = DefineModelProperty<NetworkSubResource>(nameof(RedirectConfiguration), new string[] { "redirectConfiguration" });
             _loadDistributionPolicy = DefineModelProperty<NetworkSubResource>(nameof(LoadDistributionPolicy), new string[] { "loadDistributionPolicy" });
             _entraJwtValidationConfigId = DefineProperty<ResourceIdentifier>(nameof(EntraJwtValidationConfigId), new string[] { "entraJWTValidationConfig" });
+            _authConfigs = DefineListProperty<ApplicationGatewayAuthConfig>(nameof(AuthConfigs), new string[] { "authConfigs" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

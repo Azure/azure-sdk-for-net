@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepList<string> _groupIds;
         private BicepValue<string> _requestMessage;
         private NetworkPrivateLinkServiceConnectionState _privateLinkServiceConnectionState;
+        private ApprovalReference _approvalReference;
 
         /// <summary> Creates a new PrivateLinkServiceConnectionProperties. </summary>
         public PrivateLinkServiceConnectionProperties()
@@ -95,6 +96,38 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ApprovalReference. </summary>
+        internal ApprovalReference ApprovalReference
+        {
+            get
+            {
+                Initialize();
+                return _approvalReference;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _approvalReference, value);
+            }
+        }
+
+        /// <summary> Gets or sets the PrivateEndpointId. </summary>
+        public BicepValue<ResourceIdentifier> ApprovalReferencePrivateEndpointId
+        {
+            get
+            {
+                return ApprovalReference is null ? default : ApprovalReference.PrivateEndpointId;
+            }
+            set
+            {
+                if (ApprovalReference is null)
+                {
+                    ApprovalReference = new ApprovalReference();
+                }
+                ApprovalReference.PrivateEndpointId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for PrivateLinkServiceConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -104,6 +137,7 @@ namespace Azure.Provisioning.Network
             _groupIds = DefineListProperty<string>(nameof(GroupIds), new string[] { "groupIds" });
             _requestMessage = DefineProperty<string>(nameof(RequestMessage), new string[] { "requestMessage" });
             _privateLinkServiceConnectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>(nameof(PrivateLinkServiceConnectionState), new string[] { "privateLinkServiceConnectionState" });
+            _approvalReference = DefineModelProperty<ApprovalReference>(nameof(ApprovalReference), new string[] { "approvalReference" });
             DefineAdditionalProperties();
         }
 

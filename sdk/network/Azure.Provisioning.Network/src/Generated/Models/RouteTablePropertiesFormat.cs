@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepList<RouteResource> _routes;
         private BicepList<SubnetResource> _subnets;
         private BicepValue<bool> _disableBgpRoutePropagation;
+        private BicepValue<DisablePeeringRoute> _disablePeeringRoute;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<Guid> _resourceGuid;
 
@@ -65,6 +66,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DisablePeeringRoute. </summary>
+        public BicepValue<DisablePeeringRoute> DisablePeeringRoute
+        {
+            get
+            {
+                Initialize();
+                return _disablePeeringRoute;
+            }
+            set
+            {
+                Initialize();
+                _disablePeeringRoute.Assign(value);
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -92,6 +108,7 @@ namespace Azure.Provisioning.Network
             _routes = DefineListProperty<RouteResource>(nameof(Routes), new string[] { "routes" });
             _subnets = DefineListProperty<SubnetResource>(nameof(Subnets), new string[] { "subnets" }, isOutput: true);
             _disableBgpRoutePropagation = DefineProperty<bool>(nameof(DisableBgpRoutePropagation), new string[] { "disableBgpRoutePropagation" });
+            _disablePeeringRoute = DefineProperty<DisablePeeringRoute>(nameof(DisablePeeringRoute), new string[] { "disablePeeringRoute" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             DefineAdditionalProperties();

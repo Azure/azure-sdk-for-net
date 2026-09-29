@@ -33,15 +33,18 @@ namespace Azure.Provisioning.Network
         private BicepList<ApplicationGatewayListener> _listeners;
         private BicepList<ApplicationGatewaySslProfile> _sslProfiles;
         private BicepList<ApplicationGatewayUrlPathMap> _urlPathMaps;
+        private BicepList<ApplicationGatewayAdvancedRoutingMap> _advancedRoutingMaps;
         private BicepList<ApplicationGatewayRequestRoutingRule> _requestRoutingRules;
         private BicepList<ApplicationGatewayRoutingRule> _routingRules;
         private BicepList<ApplicationGatewayRewriteRuleSet> _rewriteRuleSets;
+        private BicepList<ApplicationGatewayAdvancedRoutingConditionSet> _advancedRoutingConditionSets;
         private BicepList<ApplicationGatewayRedirectConfiguration> _redirectConfigurations;
         private ApplicationGatewayWebApplicationFirewallConfiguration _webApplicationFirewallConfiguration;
         private NetworkSubResource _firewallPolicy;
         private BicepValue<bool> _enableHttp2;
         private BicepValue<bool> _enableFips;
         private ApplicationGatewayAutoscaleConfiguration _autoscaleConfiguration;
+        private BicepValue<int> _reservedCapacity;
         private BicepList<ApplicationGatewayPrivateLinkConfiguration> _privateLinkConfigurations;
         private BicepList<ApplicationGatewayPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<Guid> _resourceGuid;
@@ -323,6 +326,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the AdvancedRoutingMaps. </summary>
+        public BicepList<ApplicationGatewayAdvancedRoutingMap> AdvancedRoutingMaps
+        {
+            get
+            {
+                Initialize();
+                return _advancedRoutingMaps;
+            }
+            set
+            {
+                Initialize();
+                _advancedRoutingMaps.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the RequestRoutingRules. </summary>
         public BicepList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules
         {
@@ -365,6 +383,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _rewriteRuleSets.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the AdvancedRoutingConditionSets. </summary>
+        public BicepList<ApplicationGatewayAdvancedRoutingConditionSet> AdvancedRoutingConditionSets
+        {
+            get
+            {
+                Initialize();
+                return _advancedRoutingConditionSets;
+            }
+            set
+            {
+                Initialize();
+                _advancedRoutingConditionSets.Assign(value);
             }
         }
 
@@ -455,6 +488,21 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _autoscaleConfiguration, value);
+            }
+        }
+
+        /// <summary> Gets or sets the ReservedCapacity. </summary>
+        public BicepValue<int> ReservedCapacity
+        {
+            get
+            {
+                Initialize();
+                return _reservedCapacity;
+            }
+            set
+            {
+                Initialize();
+                _reservedCapacity.Assign(value);
             }
         }
 
@@ -627,15 +675,18 @@ namespace Azure.Provisioning.Network
             _listeners = DefineListProperty<ApplicationGatewayListener>(nameof(Listeners), new string[] { "listeners" });
             _sslProfiles = DefineListProperty<ApplicationGatewaySslProfile>(nameof(SslProfiles), new string[] { "sslProfiles" });
             _urlPathMaps = DefineListProperty<ApplicationGatewayUrlPathMap>(nameof(UrlPathMaps), new string[] { "urlPathMaps" });
+            _advancedRoutingMaps = DefineListProperty<ApplicationGatewayAdvancedRoutingMap>(nameof(AdvancedRoutingMaps), new string[] { "advancedRoutingMaps" });
             _requestRoutingRules = DefineListProperty<ApplicationGatewayRequestRoutingRule>(nameof(RequestRoutingRules), new string[] { "requestRoutingRules" });
             _routingRules = DefineListProperty<ApplicationGatewayRoutingRule>(nameof(RoutingRules), new string[] { "routingRules" });
             _rewriteRuleSets = DefineListProperty<ApplicationGatewayRewriteRuleSet>(nameof(RewriteRuleSets), new string[] { "rewriteRuleSets" });
+            _advancedRoutingConditionSets = DefineListProperty<ApplicationGatewayAdvancedRoutingConditionSet>(nameof(AdvancedRoutingConditionSets), new string[] { "advancedRoutingConditionSets" });
             _redirectConfigurations = DefineListProperty<ApplicationGatewayRedirectConfiguration>(nameof(RedirectConfigurations), new string[] { "redirectConfigurations" });
             _webApplicationFirewallConfiguration = DefineModelProperty<ApplicationGatewayWebApplicationFirewallConfiguration>(nameof(WebApplicationFirewallConfiguration), new string[] { "webApplicationFirewallConfiguration" });
             _firewallPolicy = DefineModelProperty<NetworkSubResource>(nameof(FirewallPolicy), new string[] { "firewallPolicy" });
             _enableHttp2 = DefineProperty<bool>(nameof(EnableHttp2), new string[] { "enableHttp2" });
             _enableFips = DefineProperty<bool>(nameof(EnableFips), new string[] { "enableFips" });
             _autoscaleConfiguration = DefineModelProperty<ApplicationGatewayAutoscaleConfiguration>(nameof(AutoscaleConfiguration), new string[] { "autoscaleConfiguration" });
+            _reservedCapacity = DefineProperty<int>(nameof(ReservedCapacity), new string[] { "reservedCapacity" });
             _privateLinkConfigurations = DefineListProperty<ApplicationGatewayPrivateLinkConfiguration>(nameof(PrivateLinkConfigurations), new string[] { "privateLinkConfigurations" });
             _privateEndpointConnections = DefineListProperty<ApplicationGatewayPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);

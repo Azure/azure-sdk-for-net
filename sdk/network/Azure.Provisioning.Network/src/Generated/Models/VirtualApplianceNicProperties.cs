@@ -17,6 +17,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BicepValue<string> _publicIPAddress;
         private BicepValue<string> _privateIPAddress;
+        private BicepValue<string> _publicIPAddressV6;
+        private BicepValue<string> _privateIPAddressV6;
         private BicepValue<string> _instanceName;
 
         /// <summary> Creates a new VirtualApplianceNicProperties. </summary>
@@ -64,6 +66,26 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the PublicIPAddressV6. </summary>
+        public BicepValue<string> PublicIPAddressV6
+        {
+            get
+            {
+                Initialize();
+                return _publicIPAddressV6;
+            }
+        }
+
+        /// <summary> Gets the PrivateIPAddressV6. </summary>
+        public BicepValue<string> PrivateIPAddressV6
+        {
+            get
+            {
+                Initialize();
+                return _privateIPAddressV6;
+            }
+        }
+
         /// <summary> Gets the InstanceName. </summary>
         public BicepValue<string> InstanceName
         {
@@ -82,6 +104,8 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _publicIPAddress = DefineProperty<string>(nameof(PublicIPAddress), new string[] { "publicIpAddress" }, isOutput: true);
             _privateIPAddress = DefineProperty<string>(nameof(PrivateIPAddress), new string[] { "privateIpAddress" }, isOutput: true);
+            _publicIPAddressV6 = DefineProperty<string>(nameof(PublicIPAddressV6), new string[] { "publicIpAddressV6" }, isOutput: true);
+            _privateIPAddressV6 = DefineProperty<string>(nameof(PrivateIPAddressV6), new string[] { "privateIpAddressV6" }, isOutput: true);
             _instanceName = DefineProperty<string>(nameof(InstanceName), new string[] { "instanceName" }, isOutput: true);
             DefineAdditionalProperties();
         }

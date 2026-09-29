@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class DdosSettings : ProvisionableConstruct
     {
         private BicepValue<DdosSettingsProtectionMode> _protectionMode;
+        private NetworkSubResource _ddosCustomPolicy;
         private NetworkSubResource _ddosProtectionPlan;
 
         /// <summary> Creates a new DdosSettings. </summary>
@@ -37,6 +38,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DdosCustomPolicy. </summary>
+        internal NetworkSubResource DdosCustomPolicy
+        {
+            get
+            {
+                Initialize();
+                return _ddosCustomPolicy;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _ddosCustomPolicy, value);
+            }
+        }
+
         /// <summary> Gets or sets the DdosProtectionPlan. </summary>
         internal NetworkSubResource DdosProtectionPlan
         {
@@ -49,6 +65,23 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 AssignOrReplace(ref _ddosProtectionPlan, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> DdosCustomPolicyId
+        {
+            get
+            {
+                return DdosCustomPolicy is null ? default : DdosCustomPolicy.Id;
+            }
+            set
+            {
+                if (DdosCustomPolicy is null)
+                {
+                    DdosCustomPolicy = new NetworkSubResource();
+                }
+                DdosCustomPolicy.Id = value;
             }
         }
 
@@ -74,6 +107,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _protectionMode = DefineProperty<DdosSettingsProtectionMode>(nameof(ProtectionMode), new string[] { "protectionMode" });
+            _ddosCustomPolicy = DefineModelProperty<NetworkSubResource>(nameof(DdosCustomPolicy), new string[] { "ddosCustomPolicy" });
             _ddosProtectionPlan = DefineModelProperty<NetworkSubResource>(nameof(DdosProtectionPlan), new string[] { "ddosProtectionPlan" });
             DefineAdditionalProperties();
         }

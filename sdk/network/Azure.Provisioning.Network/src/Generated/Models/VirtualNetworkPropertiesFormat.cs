@@ -29,6 +29,7 @@ namespace Azure.Provisioning.Network
         private BicepList<FlowLog> _flowLogs;
         private BicepValue<PrivateEndpointVnetPolicy> _privateEndpointVnetPolicy;
         private NetworkSubResource _defaultPublicNatGateway;
+        private VirtualNetworkAddressSpace _summarizedGatewayPrefixes;
 
         /// <summary> Creates a new VirtualNetworkPropertiesFormat. </summary>
         public VirtualNetworkPropertiesFormat()
@@ -240,6 +241,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the SummarizedGatewayPrefixes. </summary>
+        public VirtualNetworkAddressSpace SummarizedGatewayPrefixes
+        {
+            get
+            {
+                Initialize();
+                return _summarizedGatewayPrefixes;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _summarizedGatewayPrefixes, value);
+            }
+        }
+
         /// <summary> Gets or sets the DnsServers. </summary>
         public BicepList<string> DhcpOptionsDnsServers
         {
@@ -302,6 +318,7 @@ namespace Azure.Provisioning.Network
             _flowLogs = DefineListProperty<FlowLog>(nameof(FlowLogs), new string[] { "flowLogs" }, isOutput: true);
             _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>(nameof(PrivateEndpointVnetPolicy), new string[] { "privateEndpointVNetPolicies" });
             _defaultPublicNatGateway = DefineModelProperty<NetworkSubResource>(nameof(DefaultPublicNatGateway), new string[] { "defaultPublicNatGateway" }, isOutput: true);
+            _summarizedGatewayPrefixes = DefineModelProperty<VirtualNetworkAddressSpace>(nameof(SummarizedGatewayPrefixes), new string[] { "summarizedGatewayPrefixes" });
             DefineAdditionalProperties();
         }
 

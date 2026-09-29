@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<bool> _enableRequestBuffering;
         private BicepValue<bool> _enableResponseBuffering;
+        private BicepValue<bool> _disableDefaultServerHeaderInResponse;
 
         /// <summary> Creates a new ApplicationGatewayGlobalConfiguration. </summary>
         public ApplicationGatewayGlobalConfiguration()
@@ -51,12 +52,28 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DisableDefaultServerHeaderInResponse. </summary>
+        public BicepValue<bool> DisableDefaultServerHeaderInResponse
+        {
+            get
+            {
+                Initialize();
+                return _disableDefaultServerHeaderInResponse;
+            }
+            set
+            {
+                Initialize();
+                _disableDefaultServerHeaderInResponse.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ApplicationGatewayGlobalConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _enableRequestBuffering = DefineProperty<bool>(nameof(EnableRequestBuffering), new string[] { "enableRequestBuffering" });
             _enableResponseBuffering = DefineProperty<bool>(nameof(EnableResponseBuffering), new string[] { "enableResponseBuffering" });
+            _disableDefaultServerHeaderInResponse = DefineProperty<bool>(nameof(DisableDefaultServerHeaderInResponse), new string[] { "disableDefaultServerHeaderInResponse" });
             DefineAdditionalProperties();
         }
 

@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Network
         private ManagedRulesDefinition _managedRules;
         private BicepList<WritableSubResource> _httpListeners;
         private BicepList<WritableSubResource> _pathBasedRules;
+        private BicepValue<WebApplicationFirewallPolicyTier> _tier;
 
         /// <summary> Creates a new WebApplicationFirewallPolicyPropertiesFormat. </summary>
         public WebApplicationFirewallPolicyPropertiesFormat()
@@ -122,6 +123,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Tier. </summary>
+        public BicepValue<WebApplicationFirewallPolicyTier> Tier
+        {
+            get
+            {
+                Initialize();
+                return _tier;
+            }
+            set
+            {
+                Initialize();
+                _tier.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for WebApplicationFirewallPolicyPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -134,6 +150,7 @@ namespace Azure.Provisioning.Network
             _managedRules = DefineModelProperty<ManagedRulesDefinition>(nameof(ManagedRules), new string[] { "managedRules" }, isRequired: true);
             _httpListeners = DefineListProperty<WritableSubResource>(nameof(HttpListeners), new string[] { "httpListeners" }, isOutput: true);
             _pathBasedRules = DefineListProperty<WritableSubResource>(nameof(PathBasedRules), new string[] { "pathBasedRules" }, isOutput: true);
+            _tier = DefineProperty<WebApplicationFirewallPolicyTier>(nameof(Tier), new string[] { "tier" });
             DefineAdditionalProperties();
         }
 

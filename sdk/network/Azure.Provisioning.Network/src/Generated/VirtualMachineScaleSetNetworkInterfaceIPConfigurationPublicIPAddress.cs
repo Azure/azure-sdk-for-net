@@ -414,6 +414,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the IsUpgradedToV2. </summary>
+        public BicepValue<bool> IsUpgradedToV2
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PublicIPAddressPropertiesFormat();
+                }
+                return Properties.IsUpgradedToV2;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PublicIPPrefixId
         {

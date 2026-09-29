@@ -23,6 +23,12 @@ namespace Azure.Provisioning.Network
         [DataMember(Name = "WAF_v2")]
         WAFV2 = 3,
         /// <summary> Basic. </summary>
-        Basic = 4
+        Basic = 4,
+        /// <summary> Basic tier Application Gateway. </summary>
+        [DataMember(Name = "Basic_v2")]
+        BasicV2 = 5,
+        /// <summary> Basic tier Application Gateway with WAF enabled. </summary>
+        [DataMember(Name = "Basic_WAF_v2")]
+        BasicWAFV2 = 6
     }
 }

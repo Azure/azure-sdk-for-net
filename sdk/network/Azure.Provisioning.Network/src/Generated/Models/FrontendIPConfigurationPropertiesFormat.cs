@@ -27,6 +27,8 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _publicIPPrefix;
         private NetworkSubResource _gatewayLoadBalancer;
         private BicepValue<NetworkProvisioningState> _provisioningState;
+        private DdosFrontendIPConfigurationSettings _ddosSettings;
+        private BicepValue<bool> _enableConnectionTracking;
 
         /// <summary> Creates a new FrontendIPConfigurationPropertiesFormat. </summary>
         public FrontendIPConfigurationPropertiesFormat()
@@ -188,6 +190,36 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DdosSettings. </summary>
+        internal DdosFrontendIPConfigurationSettings DdosSettings
+        {
+            get
+            {
+                Initialize();
+                return _ddosSettings;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _ddosSettings, value);
+            }
+        }
+
+        /// <summary> Gets or sets the EnableConnectionTracking. </summary>
+        public BicepValue<bool> EnableConnectionTracking
+        {
+            get
+            {
+                Initialize();
+                return _enableConnectionTracking;
+            }
+            set
+            {
+                Initialize();
+                _enableConnectionTracking.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> PublicIPPrefixId
         {
@@ -222,6 +254,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> DdosCustomPolicyId
+        {
+            get
+            {
+                return DdosSettings is null ? default : DdosSettings.DdosCustomPolicyId;
+            }
+            set
+            {
+                if (DdosSettings is null)
+                {
+                    DdosSettings = new DdosFrontendIPConfigurationSettings();
+                }
+                DdosSettings.DdosCustomPolicyId = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FrontendIPConfigurationPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -238,6 +287,8 @@ namespace Azure.Provisioning.Network
             _publicIPPrefix = DefineModelProperty<NetworkSubResource>(nameof(PublicIPPrefix), new string[] { "publicIPPrefix" });
             _gatewayLoadBalancer = DefineModelProperty<NetworkSubResource>(nameof(GatewayLoadBalancer), new string[] { "gatewayLoadBalancer" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _ddosSettings = DefineModelProperty<DdosFrontendIPConfigurationSettings>(nameof(DdosSettings), new string[] { "ddosSettings" });
+            _enableConnectionTracking = DefineProperty<bool>(nameof(EnableConnectionTracking), new string[] { "enableConnectionTracking" });
             DefineAdditionalProperties();
         }
 

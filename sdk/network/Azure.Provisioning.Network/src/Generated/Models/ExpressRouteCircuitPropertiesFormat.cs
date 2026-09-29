@@ -23,8 +23,12 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _serviceProviderNotes;
         private ExpressRouteCircuitServiceProviderProperties _serviceProviderProperties;
         private NetworkSubResource _expressRoutePort;
+        private NetworkSubResource _expressRouteLag;
         private BicepValue<float> _bandwidthInGbps;
         private BicepValue<int> _sTag;
+        private BicepValue<ExpressRouteCircuitResiliencyLevel> _resiliencyLevel;
+        private BicepValue<string> _partnerAccountId;
+        private BicepValue<string> _activationKey;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<string> _gatewayManagerETag;
         private BicepValue<bool> _globalReachEnabled;
@@ -172,6 +176,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ExpressRouteLag. </summary>
+        internal NetworkSubResource ExpressRouteLag
+        {
+            get
+            {
+                Initialize();
+                return _expressRouteLag;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _expressRouteLag, value);
+            }
+        }
+
         /// <summary> Gets or sets the BandwidthInGbps. </summary>
         public BicepValue<float> BandwidthInGbps
         {
@@ -194,6 +213,46 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _sTag;
+            }
+        }
+
+        /// <summary> Gets the ResiliencyLevel. </summary>
+        public BicepValue<ExpressRouteCircuitResiliencyLevel> ResiliencyLevel
+        {
+            get
+            {
+                Initialize();
+                return _resiliencyLevel;
+            }
+        }
+
+        /// <summary> Gets or sets the PartnerAccountId. </summary>
+        public BicepValue<string> PartnerAccountId
+        {
+            get
+            {
+                Initialize();
+                return _partnerAccountId;
+            }
+            set
+            {
+                Initialize();
+                _partnerAccountId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ActivationKey. </summary>
+        public BicepValue<string> ActivationKey
+        {
+            get
+            {
+                Initialize();
+                return _activationKey;
+            }
+            set
+            {
+                Initialize();
+                _activationKey.Assign(value);
             }
         }
 
@@ -294,6 +353,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteLagId
+        {
+            get
+            {
+                return ExpressRouteLag is null ? default : ExpressRouteLag.Id;
+            }
+            set
+            {
+                if (ExpressRouteLag is null)
+                {
+                    ExpressRouteLag = new NetworkSubResource();
+                }
+                ExpressRouteLag.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ExpressRouteCircuitPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -307,8 +383,12 @@ namespace Azure.Provisioning.Network
             _serviceProviderNotes = DefineProperty<string>(nameof(ServiceProviderNotes), new string[] { "serviceProviderNotes" });
             _serviceProviderProperties = DefineModelProperty<ExpressRouteCircuitServiceProviderProperties>(nameof(ServiceProviderProperties), new string[] { "serviceProviderProperties" });
             _expressRoutePort = DefineModelProperty<NetworkSubResource>(nameof(ExpressRoutePort), new string[] { "expressRoutePort" });
+            _expressRouteLag = DefineModelProperty<NetworkSubResource>(nameof(ExpressRouteLag), new string[] { "expressRouteLag" });
             _bandwidthInGbps = DefineProperty<float>(nameof(BandwidthInGbps), new string[] { "bandwidthInGbps" });
             _sTag = DefineProperty<int>(nameof(STag), new string[] { "stag" }, isOutput: true);
+            _resiliencyLevel = DefineProperty<ExpressRouteCircuitResiliencyLevel>(nameof(ResiliencyLevel), new string[] { "resiliencyLevel" }, isOutput: true);
+            _partnerAccountId = DefineProperty<string>(nameof(PartnerAccountId), new string[] { "partnerAccountId" });
+            _activationKey = DefineProperty<string>(nameof(ActivationKey), new string[] { "activationKey" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _gatewayManagerETag = DefineProperty<string>(nameof(GatewayManagerETag), new string[] { "gatewayManagerEtag" });
             _globalReachEnabled = DefineProperty<bool>(nameof(GlobalReachEnabled), new string[] { "globalReachEnabled" });
