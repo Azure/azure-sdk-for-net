@@ -7,44 +7,45 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure;
 using Azure.Core;
-using Azure.Storage.Files.DataLake;
+using Azure.Storage.Blobs;
 
-namespace Azure.Storage.Files.DataLake.Models
+namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of blobs. </summary>
-    internal partial class ListBlobsHierarchySegmentResponse : IPersistableModel<ListBlobsHierarchySegmentResponse>, IXmlSerializable
+    /// <summary> The result of the List Containers API. </summary>
+    internal partial class ListContainersSegmentResult : IPersistableModel<ListContainersSegmentResult>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/> for deserialization. </summary>
-        internal ListBlobsHierarchySegmentResponse()
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResult"/> for deserialization. </summary>
+        internal ListContainersSegmentResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListBlobsHierarchySegmentResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ListContainersSegmentResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListContainersSegmentResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeListBlobsHierarchySegmentResponse(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return DeserializeListContainersSegmentResult(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListBlobsHierarchySegmentResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListContainersSegmentResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListContainersSegmentResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
@@ -64,22 +65,22 @@ namespace Azure.Storage.Files.DataLake.Models
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListBlobsHierarchySegmentResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListContainersSegmentResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListBlobsHierarchySegmentResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ListContainersSegmentResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListBlobsHierarchySegmentResponse IPersistableModel<ListBlobsHierarchySegmentResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ListContainersSegmentResult IPersistableModel<ListContainersSegmentResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListBlobsHierarchySegmentResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<ListContainersSegmentResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListBlobsHierarchySegmentResponse"/> from. </param>
-        public static explicit operator ListBlobsHierarchySegmentResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ListContainersSegmentResult"/> from. </param>
+        public static explicit operator ListContainersSegmentResult(Response response)
         {
             using Stream stream = response.ContentStream;
             if (stream == null)
@@ -87,7 +88,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 return default;
             }
 
-            return DeserializeListBlobsHierarchySegmentResponse(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
+            return DeserializeListContainersSegmentResult(XElement.Load(stream, LoadOptions.PreserveWhitespace), ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The XML writer. </param>
@@ -112,17 +113,14 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ListBlobsHierarchySegmentResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ListContainersSegmentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "X")
             {
-                throw new FormatException($"The model {nameof(ListBlobsHierarchySegmentResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListContainersSegmentResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartAttribute("ServiceEndpoint");
             writer.WriteValue(ServiceEndpoint);
-            writer.WriteEndAttribute();
-            writer.WriteStartAttribute("ContainerName");
-            writer.WriteValue(ContainerName);
             writer.WriteEndAttribute();
             if (Optional.IsDefined(Prefix))
             {
@@ -142,14 +140,13 @@ namespace Azure.Storage.Files.DataLake.Models
                 writer.WriteValue(MaxResults.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Delimiter))
+            writer.WriteStartElement("Containers");
+            foreach (ContainerItemInternal item in ContainerItems)
             {
-                writer.WriteStartElement("Delimiter");
-                writer.WriteValue(Delimiter);
+                writer.WriteStartElement("Container");
+                writer.WriteObjectValue(item, options);
                 writer.WriteEndElement();
             }
-            writer.WriteStartElement("Blobs");
-            writer.WriteObjectValue(Segment, options);
             writer.WriteEndElement();
             if (Optional.IsDefined(NextMarker))
             {
@@ -161,7 +158,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         /// <param name="element"> The xml element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ListBlobsHierarchySegmentResponse DeserializeListBlobsHierarchySegmentResponse(XElement element, ModelReaderWriterOptions options)
+        internal static ListContainersSegmentResult DeserializeListContainersSegmentResult(XElement element, ModelReaderWriterOptions options)
         {
             if (element == null)
             {
@@ -169,12 +166,10 @@ namespace Azure.Storage.Files.DataLake.Models
             }
 
             string serviceEndpoint = default;
-            string containerName = default;
             string prefix = default;
             string marker = default;
             int? maxResults = default;
-            string delimiter = default;
-            BlobHierarchyListSegment segment = default;
+            IList<ContainerItemInternal> containerItems = default;
             string nextMarker = default;
 
             foreach (var attr in element.Attributes())
@@ -183,11 +178,6 @@ namespace Azure.Storage.Files.DataLake.Models
                 if (localName == "ServiceEndpoint")
                 {
                     serviceEndpoint = (string)attr;
-                    continue;
-                }
-                if (localName == "ContainerName")
-                {
-                    containerName = (string)attr;
                     continue;
                 }
             }
@@ -210,14 +200,14 @@ namespace Azure.Storage.Files.DataLake.Models
                     maxResults = (int?)child;
                     continue;
                 }
-                if (localName == "Delimiter")
+                if (localName == "Containers")
                 {
-                    delimiter = (string)child;
-                    continue;
-                }
-                if (localName == "Blobs")
-                {
-                    segment = BlobHierarchyListSegment.DeserializeBlobHierarchyListSegment(child, options);
+                    List<ContainerItemInternal> array = new List<ContainerItemInternal>();
+                    foreach (var e in child.Elements("Container"))
+                    {
+                        array.Add(ContainerItemInternal.DeserializeContainerItemInternal(e, options));
+                    }
+                    containerItems = array;
                     continue;
                 }
                 if (localName == "NextMarker")
@@ -226,14 +216,12 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new ListBlobsHierarchySegmentResponse(
+            return new ListContainersSegmentResult(
                 serviceEndpoint,
-                containerName,
                 prefix,
                 marker,
                 maxResults,
-                delimiter,
-                segment,
+                containerItems,
                 nextMarker);
         }
 

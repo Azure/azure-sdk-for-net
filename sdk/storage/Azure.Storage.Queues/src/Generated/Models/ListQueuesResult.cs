@@ -11,14 +11,14 @@ using Azure.Storage.Queues;
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The list queues response. </summary>
-    internal partial class ListQueuesResponse
+    internal partial class ListQueuesResult
     {
-        /// <summary> Initializes a new instance of <see cref="ListQueuesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="prefix"> The prefix of the queues. </param>
         /// <param name="maxResults"> The max results. </param>
         /// <param name="nextMarker"> Identifies the portion of the list of queues to be returned with the next listing operation. </param>
-        internal ListQueuesResponse(string serviceEndpoint, string prefix, int maxResults, string nextMarker)
+        internal ListQueuesResult(string serviceEndpoint, string prefix, int maxResults, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -27,14 +27,14 @@ namespace Azure.Storage.Queues.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListQueuesResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="prefix"> The prefix of the queues. </param>
         /// <param name="marker"> Identifies the current position in the list queues operation. </param>
         /// <param name="maxResults"> The max results. </param>
         /// <param name="queueItems"> The list of queues. </param>
         /// <param name="nextMarker"> Identifies the portion of the list of queues to be returned with the next listing operation. </param>
-        internal ListQueuesResponse(string serviceEndpoint, string prefix, string marker, int maxResults, IList<QueueItem> queueItems, string nextMarker)
+        internal ListQueuesResult(string serviceEndpoint, string prefix, string marker, int maxResults, IList<QueueItem> queueItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
