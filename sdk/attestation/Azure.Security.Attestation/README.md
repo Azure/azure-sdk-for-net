@@ -118,6 +118,8 @@ the certificate issued by the server can be verified using the [oe_verify_attest
 
 The [`AttestationResponse`][attestation_response] object contains two main properties: [`Token`][attestation_response_token] and [`Value`][attestation_response_value]. The `Token` property contains the complete token returned by the attestation service, the `Value` property contains the body of the JSON Web Token response.
 
+By default, the clients validate every token the service returns, including that it was issued by the client's endpoint. When you validate a token yourself, for example in a relying party, with `AttestationToken.ValidateToken`, set `AttestationTokenValidationOptions.ExpectedIssuer` to the base URI of the attestation provider the token must come from.
+
 ### Policy Management
 
 Each attestation service instance has a policy applied to it which defines additional criteria which the customer has defined.

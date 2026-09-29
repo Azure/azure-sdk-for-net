@@ -512,9 +512,11 @@ namespace Azure.Security.Attestation
         /// <exception cref="Exception">Thrown if the attestation token is not value.</exception>
         private bool ValidateCommonProperties(AttestationTokenValidationOptions options)
         {
-            if ((options?.ValidateIssuer).GetValueOrDefault())
+            if (options.ValidateIssuer && options.ExpectedIssuer == null)
             {
-                Argument.AssertNotNull(options?.ExpectedIssuer, nameof(options.ExpectedIssuer));
+                throw new ArgumentNullException(
+                    $"{nameof(options)}.{nameof(options.ExpectedIssuer)}",
+                    "Issuer validation requires ExpectedIssuer to be set to the base URI of the attestation provider the token must come from. To skip issuer validation, set ValidateIssuer to false.");
             }
             DateTimeOffset timeNow = DateTimeOffset.Now;
             if (Payload.ExpirationTime.HasValue && (options?.ValidateExpirationTime ?? true))
@@ -555,15 +557,17 @@ namespace Azure.Security.Attestation
                 }
             }
 
-            if (Payload.Issuer != null && (options?.ValidateIssuer ?? true) && options?.ExpectedIssuer != null)
+            string issuer = Payload.Issuer;
+            if (options.ValidateIssuer && !IsExpectedIssuer(options.ExpectedIssuer, issuer))
             {
-                if (options?.ExpectedIssuer != Payload.Issuer)
-                {
-                    throw new Exception($"Unknown Issuer for attestation token. Expected {options.ExpectedIssuer}, found {Payload.Issuer}");
-                }
+                throw new Exception($"Unknown Issuer for attestation token. Expected {options.ExpectedIssuer}, found {issuer ?? "no issuer"}");
             }
             return true;
         }
+
+        // Issuers are provider base URIs, whose scheme and host are case-insensitive.
+        private static bool IsExpectedIssuer(string expectedIssuer, string issuer)
+            => issuer != null && string.Equals(expectedIssuer.TrimEnd('/'), issuer.TrimEnd('/'), StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// Retrieves the body of the AttestationToken as the specified type.

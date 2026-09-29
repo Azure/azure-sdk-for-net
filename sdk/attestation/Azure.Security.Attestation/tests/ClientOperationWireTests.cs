@@ -211,7 +211,7 @@ namespace Azure.Security.Attestation.Tests
         [Test]
         public async System.Threading.Tasks.Task DraftPolicyAttestationReturnsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm")] string type, [Values] bool async)
         {
-            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"nonce\":\"d1\"}}");
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             AttestationResponse<AttestationResult> response = await Attest(client, type, request, async);
@@ -223,7 +223,7 @@ namespace Azure.Security.Attestation.Tests
         [Test]
         public void AttestationWithoutDraftPolicyRejectsUnsignedToken([Values("SgxEnclave", "OpenEnclave", "SevSnpVm", "TdxVm")] string type, [Values] bool async)
         {
-            AttestationClient client = ValidatingClient("{\"nonce\":\"d1\"}");
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"nonce\":\"d1\"}}");
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}") };
 
             Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, type, request, async));
@@ -233,7 +233,7 @@ namespace Azure.Security.Attestation.Tests
         public void DraftPolicyAttestationStillChecksExpiration([Values] bool async)
         {
             long expired = DateTimeOffset.UtcNow.AddHours(-1).ToUnixTimeSeconds();
-            AttestationClient client = ValidatingClient($"{{\"exp\":{expired}}}");
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\",\"exp\":{expired}}}");
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             Exception ex = Assert.CatchAsync(() => Attest(client, "SevSnpVm", request, async));
@@ -262,6 +262,16 @@ namespace Azure.Security.Attestation.Tests
         }
 
         [Test]
+        public void DraftPolicyAttestationStillChecksIssuer([Values] bool async)
+        {
+            AttestationClient client = ValidatingClient("{\"iss\":\"https://fabrikam.attest.azure.net\"}");
+            var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
+
+            Exception ex = Assert.CatchAsync(() => Attest(client, "SgxEnclave", request, async));
+            StringAssert.StartsWith("Unknown Issuer for attestation token.", ex.Message);
+        }
+
+        [Test]
         public void DraftPolicyAttestationStillRaisesTokenValidated([Values] bool async)
         {
             var tokenOptions = new AttestationTokenValidationOptions();
@@ -270,7 +280,7 @@ namespace Azure.Security.Attestation.Tests
                 args.IsValid = false;
                 return System.Threading.Tasks.Task.CompletedTask;
             };
-            AttestationClient client = ValidatingClient("{}", tokenOptions);
+            AttestationClient client = ValidatingClient($"{{\"iss\":\"{Endpoint}\"}}", tokenOptions);
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 
             Assert.ThrowsAsync<AttestationTokenValidationFailedException>(() => Attest(client, "SgxEnclave", request, async));
@@ -280,7 +290,7 @@ namespace Azure.Security.Attestation.Tests
         public async System.Threading.Tasks.Task AsyncOperationsFetchSigningCertificatesAsynchronously()
         {
             var transport = new AsyncOnlyTransport(request => new MockResponse(200).SetContent(
-                request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse("{\"nonce\":\"d1\"}")));
+                request.Uri.Path == "/certs" ? "{\"keys\":[]}" : TokenResponse($"{{\"iss\":\"{Endpoint}\",\"nonce\":\"d1\"}}")));
             var client = new AttestationClient(new Uri(Endpoint), new MockCredential(), new AttestationClientOptions { Transport = transport });
             var request = new AttestationRequest { Evidence = BinaryData.FromString("{}"), DraftPolicyForAttestation = Policy };
 

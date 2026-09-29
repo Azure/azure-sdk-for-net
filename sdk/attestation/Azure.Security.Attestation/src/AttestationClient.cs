@@ -158,7 +158,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -240,7 +240,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
+                    if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: request.DraftPolicyForAttestation != null).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                     }
@@ -424,7 +424,7 @@ namespace Azure.Security.Attestation
             if (_options.TokenOptions.ValidateToken)
             {
                 var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken, allowUnsecured: isDraftPolicy).ConfigureAwait(false))
+                if (!await attestationToken.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken, allowUnsecured: isDraftPolicy).ConfigureAwait(false))
                 {
                     AttestationTokenValidationFailedException.ThrowFailure(signers, attestationToken);
                 }

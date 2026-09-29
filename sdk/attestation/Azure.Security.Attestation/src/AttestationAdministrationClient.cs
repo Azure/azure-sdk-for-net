@@ -156,7 +156,7 @@ namespace Azure.Security.Attestation
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
 
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -247,7 +247,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateToken(_options.TokenOptions, signers, cancellationToken))
+                    if (!token.ValidateToken(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -333,7 +333,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -378,7 +378,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted())
+                    if (!token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, false, cancellationToken).EnsureCompleted())
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -422,7 +422,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -483,7 +483,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(async, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, async, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, async, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -557,7 +557,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted())
+                    if (!token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, false, cancellationToken).EnsureCompleted())
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -599,7 +599,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenInternal(_options.TokenOptions, signers, true, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, true, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -642,7 +642,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
-                    if (!token.ValidateTokenInternal(_options.TokenOptions, signers, false, cancellationToken).EnsureCompleted())
+                    if (!token.ValidateTokenInternal(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, false, cancellationToken).EnsureCompleted())
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
@@ -685,7 +685,7 @@ namespace Azure.Security.Attestation
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
-                    if (!await token.ValidateTokenAsync(_options.TokenOptions, signers, cancellationToken).ConfigureAwait(false))
+                    if (!await token.ValidateTokenAsync(_options.TokenOptions.WithDefaultIssuer(Endpoint), signers, cancellationToken).ConfigureAwait(false))
                     {
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
