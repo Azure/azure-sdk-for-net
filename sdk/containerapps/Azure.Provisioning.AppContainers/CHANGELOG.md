@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2026-09-24)
+
+### Bugs Fixed
+
+- Corrected default names for Container Apps managed environments to use 2–60 lowercase letters, numbers, or hyphens.
+  Expect automatically generated managed environment names to change when upgrading if explicit names are not set.
 
 ## 1.3.0-beta.1 (2026-09-15)
 

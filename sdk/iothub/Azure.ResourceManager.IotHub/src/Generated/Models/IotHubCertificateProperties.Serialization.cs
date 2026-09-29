@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    certificate = BinaryData.FromString(prop.Value.GetRawText());
+                    certificate = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("policyResourceId"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IotHubCertificateProperties(

@@ -31,11 +31,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 TypeProperties.UserToken = value;
             }
         }
-
-        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
-        public QuickbaseLinkedService(DataFactoryElement<string> uri, DataFactorySecret userToken) : base("Quickbase")
-        {
-            TypeProperties = new QuickbaseLinkedServiceTypeProperties(uri, userToken);
-        }
     }
 }

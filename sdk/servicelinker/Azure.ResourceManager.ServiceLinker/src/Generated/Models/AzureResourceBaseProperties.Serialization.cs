@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary>
     /// The azure resource properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureKeyVaultProperties"/> and <see cref="AzureAppConfigProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAppConfigProperties"/> and <see cref="AzureKeyVaultProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureResourcePropertiesBase))]
     public abstract partial class AzureResourceBaseProperties : IJsonModel<AzureResourceBaseProperties>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "KeyVault":
-                        return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element, options);
                     case "AppConfig":
                         return AzureAppConfigProperties.DeserializeAzureAppConfigProperties(element, options);
+                    case "KeyVault":
+                        return AzureKeyVaultProperties.DeserializeAzureKeyVaultProperties(element, options);
                 }
             }
             return UnknownAzureResourcePropertiesBase.DeserializeUnknownAzureResourcePropertiesBase(element, options);

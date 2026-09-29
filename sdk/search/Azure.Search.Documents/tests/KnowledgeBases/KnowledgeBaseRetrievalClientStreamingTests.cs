@@ -103,9 +103,11 @@ namespace Azure.Search.Documents.Tests
             Assert.Throws<ObjectDisposedException>(() => _ = result.Status);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task RetrieveStreamProtocolObservesCancellationAfterResponse(bool cancelOperation)
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task RetrieveStreamProtocolObservesCancellationAfterResponse(bool cancelOperation, bool cancelBeforeEnumeration)
         {
             PausableSseStream contentStream = new();
             MockResponse response = new(200) { ContentStream = contentStream };
@@ -117,16 +119,50 @@ namespace Azure.Search.Documents.Tests
             await using AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(
                 requestContent,
                 context: new RequestContext { CancellationToken = operation.Token });
+            CancellationTokenSource cancellationSource = cancelOperation ? operation : enumeration;
+            if (cancelBeforeEnumeration)
+            {
+                cancellationSource.Cancel();
+            }
+
             await using IAsyncEnumerator<SseItem<BinaryData>> enumerator =
                 ((IAsyncEnumerable<SseItem<BinaryData>>)result).GetAsyncEnumerator(enumeration.Token);
 
             Task<bool> moveNext = enumerator.MoveNextAsync().AsTask();
-            await contentStream.WaitForBlockedReadAsync();
-            (cancelOperation ? operation : enumeration).Cancel();
+            if (!cancelBeforeEnumeration)
+            {
+                await contentStream.WaitForBlockedReadAsync();
+                cancellationSource.Cancel();
+            }
 
             Assert.That(await Task.WhenAny(moveNext, Task.Delay(TimeSpan.FromSeconds(5))), Is.SameAs(moveNext));
             Assert.CatchAsync<OperationCanceledException>(async () => await moveNext);
             Assert.Throws<ObjectDisposedException>(() => _ = result.Status);
+        }
+
+        [TestCase("response.completed", """{"statusCode":200,"response":{}}""")]
+        [TestCase("error", """{"error":{"code":"SourceTimeout","message":"Timed out."},"activity":[]}""")]
+        [TestCase("message", "[DONE]")]
+        public async Task RetrieveStreamProtocolPreservesRawTerminalEvents(string eventName, string data)
+        {
+            MemoryStream contentStream = new(Encoding.UTF8.GetBytes(
+                $"event: {eventName}\ndata: {data}\n\nevent: future.event\ndata: {{\"value\":true}}\n\n"));
+            MockResponse response = new(200) { ContentStream = contentStream };
+            response.AddHeader("Content-Type", "text/event-stream");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+            using RequestContent requestContent = RequestContent.Create(BinaryData.FromString("{}"));
+
+            await using AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(requestContent);
+            List<SseItem<BinaryData>> items = new();
+            await foreach (SseItem<BinaryData> item in result)
+            {
+                items.Add(item);
+            }
+
+            Assert.That(items.Select(item => item.EventType), Is.EqualTo(new[] { eventName, "future.event" }));
+            Assert.That(items[0].Data.ToString(), Is.EqualTo(data));
+            Assert.That(items[1].Data.ToString(), Is.EqualTo("""{"value":true}"""));
+            Assert.That(contentStream.CanRead, Is.False);
         }
 
         [Test]
@@ -359,6 +395,27 @@ namespace Azure.Search.Documents.Tests
             Assert.That(error.IsTerminal, Is.True);
             Assert.That(error.Value.Error.Code, Is.EqualTo("SourceTimeout"));
             Assert.That(error.Value.Error.Message, Is.EqualTo("A knowledge source timed out."));
+            Assert.That(response.IsDisposed, Is.True);
+        }
+
+        [Test]
+        public async Task RetrieveStreamAsyncStopsAtDoneSentinel()
+        {
+            MockResponse response = new(200);
+            response.SetContent("event: future.event\ndata: {\"value\":true}\n\ndata: [DONE]\n\ndata: invalid JSON\n\n");
+            response.AddHeader("Content-Type", "text/event-stream");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+
+            List<SseItem<KnowledgeBaseRetrievalStreamEvent>> items = new();
+            await foreach (SseItem<KnowledgeBaseRetrievalStreamEvent> item in
+                client.RetrieveStreamAsync(new KnowledgeBaseRetrievalRequest()))
+            {
+                items.Add(item);
+            }
+
+            Assert.That(items, Has.Count.EqualTo(1));
+            Assert.That(items[0].Data, Is.TypeOf<UnknownKnowledgeBaseRetrievalStreamEvent>());
+            Assert.That(items[0].EventType, Is.EqualTo("future.event"));
             Assert.That(response.IsDisposed, Is.True);
         }
 
