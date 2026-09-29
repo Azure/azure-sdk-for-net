@@ -1,6 +1,0 @@
-{
-  "apiVersions": {
-    "Microsoft.Network": "2026-01-01",
-    "Microsoft.Compute": "2018-10-01"
-  }
-}
