@@ -38,6 +38,20 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
+        public void GetTestProjectFileContentUsesAzureTemplate()
+        {
+            var scaffolding = new TestableNewAzureProjectScaffolding();
+            string content = scaffolding.TestGetTestProjectFileContent();
+
+            Assert.IsTrue(content.Contains("<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>"));
+            Assert.IsTrue(content.Contains("<NoWarn>$(NoWarn);CS1591</NoWarn>"));
+            Assert.IsTrue(content.Contains("<ProjectReference Include=\"$(AzureCoreTestFramework)\" />"));
+            Assert.IsTrue(content.Contains("<ProjectReference Include=\"..\\src\\Samples.csproj\" />"));
+            Assert.IsTrue(content.Contains("<PackageReference Include=\"Moq\" />"));
+            Assert.IsFalse(content.Contains("SessionRecords"));
+        }
+
+        [Test]
         public void GetChangelogContentContainsReleaseHistory()
         {
             var scaffolding = new TestableNewAzureProjectScaffolding();
@@ -97,6 +111,7 @@ namespace Azure.Generator.Tests.Providers
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
             public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
+            public string TestGetTestProjectFileContent() => GetTestProjectFileContent();
             public Task TestWriteAdditionalFiles() => WriteAdditionalFiles();
         }
     }

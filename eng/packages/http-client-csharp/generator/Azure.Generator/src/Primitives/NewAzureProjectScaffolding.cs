@@ -47,6 +47,35 @@ namespace Azure.Generator.Primitives
             return builder.Write();
         }
 
+        /// <inheritdoc/>
+        protected override string GetTestProjectFileContent()
+        {
+            string packageName = AzureClientGenerator.Instance.Configuration.PackageName;
+
+            return $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <PropertyGroup>
+                    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+                    <!-- We don't care about XML doc comments on test types and members -->
+                    <NoWarn>$(NoWarn);CS1591</NoWarn>
+                  </PropertyGroup>
+
+                  <ItemGroup>
+                    <ProjectReference Include="$(AzureCoreTestFramework)" />
+                    <ProjectReference Include="..\src\{packageName}.csproj" />
+                  </ItemGroup>
+
+                  <ItemGroup>
+                    <PackageReference Include="NUnit" />
+                    <PackageReference Include="NUnit3TestAdapter" />
+                    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+                    <PackageReference Include="Moq" />
+                  </ItemGroup>
+                </Project>
+                """;
+        }
+
         private static readonly IReadOnlyList<string> _operationSharedFiles =
         [
             "RawRequestUriBuilder.cs",
