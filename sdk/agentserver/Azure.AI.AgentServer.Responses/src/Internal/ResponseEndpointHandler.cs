@@ -729,11 +729,13 @@ internal sealed class ResponseEndpointHandler
     {
         var payload = BuildRecoveryPayload(
             responseId, request, platformContext, clientHeaders, queryParameters);
-        var invoker = httpContext.RequestServices.GetRequiredService<ITaskInvoker>();
 
         var taskName = pickMultiTurn
             ? ResponsesResilientTaskHandler.MultiTurnTaskName
             : ResponsesResilientTaskHandler.OneShotTaskName;
+
+        var definition = httpContext.RequestServices
+            .GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(taskName);
 
         // Multi-turn: the chain id is the task id and the response id is the per-turn input id; a
         // previous_response_id becomes the ifLastInputId fork precondition (Core rejects a turn that
@@ -751,8 +753,7 @@ internal sealed class ResponseEndpointHandler
 
         try
         {
-            return await invoker.StartAsync<ResponseTaskInput, ResponseTaskOutput>(
-                taskName,
+            return await definition.StartAsync(
                 new ResponseTaskInput(payload),
                 runOptions,
                 CancellationToken.None).ConfigureAwait(false);

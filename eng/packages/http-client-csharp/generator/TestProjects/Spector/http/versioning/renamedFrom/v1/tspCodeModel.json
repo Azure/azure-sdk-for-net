@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "OldEnum",
+      "apiVersions": [
+        "v1"
+      ],
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldEnum",
       "valueType": {
         "$id": "2",
@@ -43,6 +46,9 @@
       "$id": "4",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1"
+      ],
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.Versions",
       "valueType": {
         "$id": "5",
@@ -152,6 +158,9 @@
       "$id": "15",
       "kind": "model",
       "name": "OldModel",
+      "apiVersions": [
+        "v1"
+      ],
       "namespace": "Versioning.RenamedFrom",
       "crossLanguageDefinitionId": "Versioning.RenamedFrom.OldModel",
       "usage": "Input,Output,Json",
@@ -167,6 +176,9 @@
           "$id": "16",
           "kind": "property",
           "name": "oldProp",
+          "apiVersions": [
+            "v1"
+          ],
           "serializedName": "oldProp",
           "type": {
             "$id": "17",
@@ -193,6 +205,9 @@
           "$id": "18",
           "kind": "property",
           "name": "enumProp",
+          "apiVersions": [
+            "v1"
+          ],
           "serializedName": "enumProp",
           "type": {
             "$ref": "1"
@@ -215,6 +230,9 @@
           "$id": "19",
           "kind": "property",
           "name": "unionProp",
+          "apiVersions": [
+            "v1"
+          ],
           "serializedName": "unionProp",
           "type": {
             "$id": "20",

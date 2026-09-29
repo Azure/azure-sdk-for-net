@@ -64,7 +64,7 @@ IsDisabled = true,
 }
             })
                 {
-                    EndOn = DateTimeOffset.Parse("2025-04-17T00:23:55.286Z"),
+                    EndsOn = DateTimeOffset.Parse("2025-04-17T00:23:55.286Z"),
                     Disabled = true,
                 },
                 Tags =

@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> Date and time when the free services become active. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new FreeServicesProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> Expiration date and time of the free services. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new FreeServicesProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

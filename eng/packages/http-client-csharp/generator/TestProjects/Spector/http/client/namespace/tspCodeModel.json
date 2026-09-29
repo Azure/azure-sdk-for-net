@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "SecondClientEnumType",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientEnumType",
       "valueType": {
         "$id": "2",
@@ -79,6 +80,7 @@
       "$id": "8",
       "kind": "model",
       "name": "FirstClientResult",
+      "apiVersions": [],
       "namespace": "client.clientnamespace.first",
       "crossLanguageDefinitionId": "Client.ClientNamespace.FirstModel.FirstClientResult",
       "usage": "Output,Json",
@@ -94,6 +96,7 @@
           "$id": "9",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "10",
@@ -122,6 +125,7 @@
       "$id": "11",
       "kind": "model",
       "name": "SecondClientResult",
+      "apiVersions": [],
       "namespace": "client.clientnamespace.second",
       "crossLanguageDefinitionId": "Client.ClientNamespace.Second.Model.SecondClientResult",
       "usage": "Output,Json",
@@ -137,6 +141,7 @@
           "$id": "12",
           "kind": "property",
           "name": "type",
+          "apiVersions": [],
           "serializedName": "type",
           "type": {
             "$ref": "1"

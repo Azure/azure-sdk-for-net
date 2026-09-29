@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
     public static partial class ArmContainerServicePreparedImgSpecModelFactory
     {
 
+        /// <summary> The Prepared Image Specification resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                 default);
         }
 
+        /// <summary> The properties of the Prepared Image Specification resource. </summary>
         /// <param name="containerImages"> The list of container images to cache on nodes. See https://kubernetes.io/docs/concepts/containers/images/#image-names. </param>
         /// <param name="identityProfile">
         /// The identity used to execute prepared image specification tasks during image build time and provisioning time. 
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                 default);
         }
 
+        /// <summary> The managed identity profile used by the prepared image specification. </summary>
         /// <param name="resourceId"> The resource ID of the user-assigned managed identity. </param>
         /// <param name="objectId"> The object ID of the managed identity. </param>
         /// <param name="clientId"> The client ID of the managed identity. </param>
@@ -77,6 +80,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
             return new PreparedImageSpecificationManagedIdentityProfile(resourceId, objectId, clientId, default);
         }
 
+        /// <summary> Prepared image specification script. </summary>
         /// <param name="name">
         /// The name for the customization script. 
         /// Must be unique within the prepared image specification resource.
@@ -101,6 +105,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
                 default);
         }
 
+        /// <summary> Prepared image specification patch resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.PreparedImageSpecificationPatch"/> instance for mocking. </returns>
         public static PreparedImageSpecificationPatch PreparedImageSpecificationPatch(IDictionary<string, string> tags = default)
@@ -110,6 +115,7 @@ namespace Azure.ResourceManager.ContainerServicePreparedImgSpec.Models
             return new PreparedImageSpecificationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> A version of the Prepared Image Specification resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

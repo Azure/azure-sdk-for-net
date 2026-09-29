@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of <see cref="AccessReviewRecurrenceRange"/>. </summary>
         /// <param name="type"> The recurrence range type. The possible values are: endDate, noEnd, numbered. </param>
         /// <param name="numberOfOccurrences"> The number of times to repeat the access review. Required and must be positive if type is numbered. </param>
-        /// <param name="startOn"> The DateTime when the review is scheduled to be start. This could be a date in the future. Required on create. </param>
-        /// <param name="endOn"> The DateTime when the review is scheduled to end. Required if type is endDate. </param>
+        /// <param name="startsOn"> The DateTime when the review is scheduled to be start. This could be a date in the future. Required on create. </param>
+        /// <param name="endsOn"> The DateTime when the review is scheduled to end. Required if type is endDate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessReviewRecurrenceRange(AccessReviewRecurrenceRangeType? @type, int? numberOfOccurrences, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccessReviewRecurrenceRange(AccessReviewRecurrenceRangeType? @type, int? numberOfOccurrences, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             NumberOfOccurrences = numberOfOccurrences;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The DateTime when the review is scheduled to be start. This could be a date in the future. Required on create. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The DateTime when the review is scheduled to end. Required if type is endDate. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
     }
 }

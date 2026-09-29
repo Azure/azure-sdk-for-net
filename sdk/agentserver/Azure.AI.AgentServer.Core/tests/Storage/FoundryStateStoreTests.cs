@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Storage;
 using Azure.Core;
@@ -36,6 +37,55 @@ public class FoundryStateStoreTests
     public void TearDown()
     {
         Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", _previousHostingEnvironment);
+    }
+
+    [Test]
+    public void PublicEtagSurfaceUsesAzureEtag()
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                typeof(StateStoreItem).GetProperty(nameof(StateStoreItem.Etag))!.PropertyType,
+                Is.EqualTo(typeof(ETag)));
+            Assert.That(
+                typeof(StateStoreItemRef).GetProperty(nameof(StateStoreItemRef.Etag))!.PropertyType,
+                Is.EqualTo(typeof(ETag)));
+            Assert.That(
+                typeof(StateStoreItemKey).GetProperty(nameof(StateStoreItemKey.Etag))!.PropertyType,
+                Is.EqualTo(typeof(ETag)));
+            Assert.That(
+                typeof(FoundryStoragePreconditionException)
+                    .GetProperty(nameof(FoundryStoragePreconditionException.CurrentETag))!
+                    .PropertyType,
+                Is.EqualTo(typeof(ETag)));
+            Assert.That(
+                typeof(FoundryStateStore)
+                    .GetMethod(
+                        nameof(FoundryStateStore.DeleteItemAsync),
+                        [typeof(string), typeof(ETag), typeof(CancellationToken)])!
+                    .GetParameters()[1]
+                    .ParameterType,
+                Is.EqualTo(typeof(ETag)));
+            Assert.That(
+                typeof(FoundryStateStore)
+                    .GetMethods()
+                    .Where(method =>
+                        method.Name is nameof(FoundryStateStore.SetItemAsync)
+                            or nameof(FoundryStateStore.DeleteItemAsync))
+                    .SelectMany(method => method.GetParameters())
+                    .Where(parameter => parameter.Name == "ifMatch")
+                    .Select(parameter => parameter.ParameterType),
+                Is.All.EqualTo(typeof(ETag)));
+            Assert.That(
+                typeof(AzureAIAgentServerCoreStorageModelFactory)
+                    .GetMethods()
+                    .Where(method =>
+                        method.Name is nameof(AzureAIAgentServerCoreStorageModelFactory.StateStoreItem)
+                            or nameof(AzureAIAgentServerCoreStorageModelFactory.StateStoreItemRef)
+                            or nameof(AzureAIAgentServerCoreStorageModelFactory.StateStoreItemKey))
+                    .Select(method => method.GetParameters().Single(parameter => parameter.Name == "etag").ParameterType),
+                Is.All.EqualTo(typeof(ETag)));
+        });
     }
 
     private static string Enc(string value)
@@ -288,7 +338,9 @@ public class FoundryStateStoreTests
             200, """{"id":"it_1","object":"state_store.item","key":"step/1","deleted":true}"""));
         FoundryStateStore store = MakeStore(transport, name: "checkpoints", userId: "user-42");
 
-        DeletedStateStoreItem result = await store.DeleteItemAsync("step/1", ifMatch: "\"0x8DD\"");
+        DeletedStateStoreItem result = await store.DeleteItemAsync(
+            "step/1",
+            ifMatch: new ETag("\"0x8DD\""));
 
         MockRequest request = transport.SingleRequest;
         Assert.That(request.Method, Is.EqualTo(RequestMethod.Delete));
@@ -334,7 +386,7 @@ public class FoundryStateStoreTests
         Assert.That(body.GetProperty("key").GetString(), Is.EqualTo("step/1"));
         Assert.That(body.GetProperty("value").GetProperty("done").GetBoolean(), Is.False);
         Assert.That(body.GetProperty("tags").GetProperty("kind").GetString(), Is.EqualTo("checkpoint"));
-        Assert.That(result.Etag, Is.EqualTo("\"0x8DC\""));
+        Assert.That(result.Etag, Is.EqualTo(new ETag("\"0x8DC\"")));
     }
 
     [Test]
@@ -350,7 +402,7 @@ public class FoundryStateStoreTests
             "step/1",
             new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
             new Dictionary<string, string> { ["kind"] = "checkpoint" },
-            ifMatch: "\"0x8DC\"");
+            ifMatch: new ETag("\"0x8DC\""));
 
         MockRequest request = transport.SingleRequest;
         Assert.That(request.Method, Is.EqualTo(RequestMethod.Put));
@@ -362,7 +414,29 @@ public class FoundryStateStoreTests
         JsonElement body = BodyJson(request);
         Assert.That(body.GetProperty("value").GetProperty("done").GetBoolean(), Is.True);
         Assert.That(body.GetProperty("tags").GetProperty("kind").GetString(), Is.EqualTo("checkpoint"));
-        Assert.That(result.Etag, Is.EqualTo("\"0x8DD\""));
+        Assert.That(result.Etag, Is.EqualTo(new ETag("\"0x8DD\"")));
+    }
+
+    [Test]
+    public void SetItem_PreconditionExceptionCarriesAzureEtag()
+    {
+        var transport = new MockTransport(Json(
+            412,
+            """{"error":{"code":"etag_mismatch","message":"changed"}}""",
+            ("ETag", "\"0x8DE\"")));
+        FoundryStateStore store = MakeStore(transport, name: "checkpoints");
+
+        FoundryStoragePreconditionException exception =
+            Assert.ThrowsAsync<FoundryStoragePreconditionException>(
+                async () => await store.SetItemAsync(
+                    "step/1",
+                    new Dictionary<string, BinaryData>
+                    {
+                        ["done"] = BinaryData.FromObjectAsJson(true),
+                    },
+                    ifMatch: new ETag("\"0x8DD\"")))!;
+
+        Assert.That(exception.CurrentETag, Is.EqualTo(new ETag("\"0x8DE\"")));
     }
 
     [Test]
@@ -390,7 +464,7 @@ public class FoundryStateStoreTests
             async () => await store.SetItemAsync(
                 "step/1",
                 new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
-                ifMatch: "\"0x8DC\"",
+                ifMatch: new ETag("\"0x8DC\""),
                 requireExists: true),
             Throws.InstanceOf<ArgumentException>());
     }
@@ -530,11 +604,11 @@ public class FoundryStateStoreTests
             "step/1",
             value,
             tags: null,
-            ifMatch: null,
+            ifMatch: default,
             requireExists: false,
             callId: "explicit-call");
         await store.GetItemAsync("step/1", callId: "explicit-call");
-        await store.DeleteItemAsync("step/1", ifMatch: null, callId: "explicit-call");
+        await store.DeleteItemAsync("step/1", ifMatch: default, callId: "explicit-call");
         await store.ListKeysAsync(
             tags: null,
             limit: null,
@@ -629,7 +703,7 @@ public class FoundryStateStoreTests
                 "step/1",
                 new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
                 tags: new Dictionary<string, string> { ["kind"] = "checkpoint" },
-                ifMatch: null,
+                ifMatch: default,
                 requireExists: false,
                 callId: "local-call");
 
@@ -651,7 +725,7 @@ public class FoundryStateStoreTests
             Assert.That(
                 Directory.GetFiles(Path.Combine(stateRoot, "state_stores"), "*.json"),
                 Has.Length.EqualTo(1));
-            await second.DeleteItemAsync("step/1", ifMatch: null, callId: "local-call");
+            await second.DeleteItemAsync("step/1", ifMatch: default, callId: "local-call");
         }
         finally
         {
@@ -725,7 +799,7 @@ public class FoundryStateStoreTests
                 async () => await store.SetItemAsync(
                     "counter",
                     new Dictionary<string, BinaryData> { ["value"] = BinaryData.FromObjectAsJson(2) },
-                    ifMatch: "\"stale\""),
+                    ifMatch: new ETag("\"stale\"")),
                 Throws.InstanceOf<FoundryStoragePreconditionException>());
 
             StateStoreItemRef updated = await store.SetItemAsync(
