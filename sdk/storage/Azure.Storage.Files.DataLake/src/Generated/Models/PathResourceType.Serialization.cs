@@ -11,7 +11,6 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class PathResourceTypeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PathResourceType value) => value switch
         {
             PathResourceType.Directory => "directory",
@@ -19,17 +18,10 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathResourceType value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static PathResourceType ToPathResourceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "directory"))
-            {
-                return PathResourceType.Directory;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "file"))
-            {
-                return PathResourceType.File;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "directory")) return PathResourceType.Directory;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "file")) return PathResourceType.File;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathResourceType value.");
         }
     }

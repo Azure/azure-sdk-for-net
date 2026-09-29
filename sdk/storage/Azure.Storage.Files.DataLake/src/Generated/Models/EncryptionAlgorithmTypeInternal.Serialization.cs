@@ -11,7 +11,6 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class EncryptionAlgorithmTypeInternalExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this EncryptionAlgorithmTypeInternal value) => value switch
         {
             EncryptionAlgorithmTypeInternal.None => "None",
@@ -19,17 +18,10 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncryptionAlgorithmTypeInternal value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static EncryptionAlgorithmTypeInternal ToEncryptionAlgorithmTypeInternal(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
-            {
-                return EncryptionAlgorithmTypeInternal.None;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AES256"))
-            {
-                return EncryptionAlgorithmTypeInternal.AES256;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return EncryptionAlgorithmTypeInternal.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AES256")) return EncryptionAlgorithmTypeInternal.AES256;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncryptionAlgorithmTypeInternal value.");
         }
     }

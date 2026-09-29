@@ -11,7 +11,6 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class PathGetPropertiesActionExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PathGetPropertiesAction value) => value switch
         {
             PathGetPropertiesAction.GetAccessControl => "getAccessControl",
@@ -19,17 +18,10 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathGetPropertiesAction value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static PathGetPropertiesAction ToPathGetPropertiesAction(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "getAccessControl"))
-            {
-                return PathGetPropertiesAction.GetAccessControl;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "getStatus"))
-            {
-                return PathGetPropertiesAction.GetStatus;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "getAccessControl")) return PathGetPropertiesAction.GetAccessControl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "getStatus")) return PathGetPropertiesAction.GetStatus;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathGetPropertiesAction value.");
         }
     }

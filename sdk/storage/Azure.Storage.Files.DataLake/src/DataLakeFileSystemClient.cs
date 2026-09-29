@@ -492,15 +492,15 @@ namespace Azure.Storage.Files.DataLake
             FileSystemRestClient dfsFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                endpoint: dfsUri,
-                resource: FileSystemResourceType.Filesystem,
+                url: dfsUri.AbsoluteUri,
+                resource: "filesystem",
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                endpoint: blobUri,
-                resource: FileSystemResourceType.Filesystem,
+            url: blobUri.AbsoluteUri,
+                resource: "filesystem",
                 version: _clientConfiguration.ClientOptions.Version.ToVersionString());
 
             return (dfsFileSystemRestClient, blobFileSystemRestClient);
@@ -2005,11 +2005,11 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    Response<PathList> response;
+                    ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response;
 
                     if (async)
                     {
-                        response = await FileSystemRestClient.GetPathsAsync(
+                        response = await FileSystemRestClient.ListPathsAsync(
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -2021,7 +2021,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
-                        response = FileSystemRestClient.GetPaths(
+                        response = FileSystemRestClient.ListPaths(
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -3681,14 +3681,14 @@ namespace Azure.Storage.Files.DataLake
                 try
                 {
                     scope.Start();
-                    Response<ListBlobsHierarchySegmentResponse> response;
+                    ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> response;
 
                     /* Note that the query parameter showonly=deleted is hardcoded in the generated code.
                      * Once we migrate to the blob endpoint, we will need to specify showonly=deleted here.
                      */
                     if (async)
                     {
-                        response = await BlobFileSystemRestClient.GetBlobHierarchySegmentAsync(
+                        response = await BlobFileSystemRestClient.ListBlobHierarchySegmentAsync(
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3701,7 +3701,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
-                        response = BlobFileSystemRestClient.GetBlobHierarchySegment(
+                        response = BlobFileSystemRestClient.ListBlobHierarchySegment(
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3817,7 +3817,7 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     DataLakePathClient pathClient = GetPathClient(deletedPath);
                     string undeleteSource = $"?{Constants.DataLake.DeletionId}={deletionId}";
-                    Response response;
+                    ResponseWithHeaders<PathUndeleteHeaders> response;
 
                     if (async)
                     {
@@ -3836,20 +3836,19 @@ namespace Azure.Storage.Files.DataLake
                     }
 
                     DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(pathClient.Uri);
-                    if (response.Headers.TryGetValue(DataLakeExtensions.ResourceTypeHeader, out string resourceType)
-                        && resourceType == Constants.DataLake.DirectoryResourceType)
+                    if (response.Headers.ResourceType == Constants.DataLake.DirectoryResourceType)
                     {
                         DataLakeDirectoryClient directoryClient = GetDirectoryClient(uriBuilder.DirectoryOrFilePath);
                         return Response.FromValue(
                             (DataLakePathClient)directoryClient,
-                            response);
+                            response.GetRawResponse());
                     }
                     else
                     {
                         DataLakeFileClient fileClient = GetFileClient(uriBuilder.DirectoryOrFilePath);
                         return Response.FromValue(
                             (DataLakePathClient)fileClient,
-                            response);
+                            response.GetRawResponse());
                     }
                 }
                 catch (Exception ex)

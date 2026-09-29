@@ -10,26 +10,24 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Storage.Files.DataLake
+namespace Azure.Storage.Common
 {
-    internal static partial class BinaryContentHelper
+    internal static class RequestContentHelper
     {
-        /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
-            where T : notnull
+        where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
 
             return content;
         }
 
-        /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable(IEnumerable<BinaryData> enumerable)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -43,9 +41,9 @@ namespace Azure.Storage.Files.DataLake
                 else
                 {
 #if NET6_0_OR_GREATER
-                    content.JsonWriter.WriteRawValue(item);
+				content.JsonWriter.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = JsonDocument.Parse(item, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -57,39 +55,35 @@ namespace Azure.Storage.Files.DataLake
             return content;
         }
 
-        /// <param name="span"></param>
         public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
-            where T : notnull
+        where T : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
-            int i = 0;
-            for (; i < span.Length; i++)
+            for (int i = 0; i < span.Length; i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(span[i]);
             }
             content.JsonWriter.WriteEndArray();
 
             return content;
         }
 
-        /// <param name="dictionary"></param>
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
-            where TValue : notnull
+        where TValue : notnull
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(item.Value);
             }
             content.JsonWriter.WriteEndObject();
 
             return content;
         }
 
-        /// <param name="dictionary"></param>
         public static RequestContent FromDictionary(IDictionary<string, BinaryData> dictionary)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
@@ -104,9 +98,9 @@ namespace Azure.Storage.Files.DataLake
                 else
                 {
 #if NET6_0_OR_GREATER
-                    content.JsonWriter.WriteRawValue(item.Value);
+				content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
@@ -118,42 +112,24 @@ namespace Azure.Storage.Files.DataLake
             return content;
         }
 
-        /// <param name="value"></param>
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<object>(value);
             return content;
         }
 
-        /// <param name="value"></param>
         public static RequestContent FromObject(BinaryData value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
 #if NET6_0_OR_GREATER
-            content.JsonWriter.WriteRawValue(value);
+				content.JsonWriter.WriteRawValue(value);
 #else
-            using (JsonDocument document = JsonDocument.Parse(value))
+            using (JsonDocument document = JsonDocument.Parse(value, ModelSerializationExtensions.JsonDocumentOptions))
             {
                 JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
 #endif
-            return content;
-        }
-
-        /// <param name="enumerable"></param>
-        /// <param name="rootNameHint"></param>
-        /// <param name="childNameHint"></param>
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable, string rootNameHint, string childNameHint)
-            where T : notnull
-        {
-            XmlWriterContent content = new XmlWriterContent();
-            content.XmlWriter.WriteStartElement(rootNameHint);
-            foreach (var item in enumerable)
-            {
-                content.XmlWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions, childNameHint);
-            }
-            content.XmlWriter.WriteEndElement();
             return content;
         }
     }

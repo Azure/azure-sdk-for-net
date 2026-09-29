@@ -6,273 +6,119 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Storage.Files.DataLake;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal partial class Path : IJsonModel<Path>
+    internal partial class Path
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Path PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Path>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializePath(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(Path)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Path>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureStorageFilesDataLakeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(Path)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Path>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Path IPersistableModel<Path>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Path>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Path>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Path>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(Path)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(IsDirectory))
-            {
-                writer.WritePropertyName("isDirectory"u8);
-                writer.WriteStringValue(IsDirectory);
-            }
-            if (Optional.IsDefined(LastModified))
-            {
-                writer.WritePropertyName("lastModified"u8);
-                writer.WriteStringValue(LastModified.Value, "O");
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
-            }
-            if (Optional.IsDefined(ContentLength))
-            {
-                writer.WritePropertyName("contentLength"u8);
-                writer.WriteStringValue(ContentLength);
-            }
-            if (Optional.IsDefined(Owner))
-            {
-                writer.WritePropertyName("owner"u8);
-                writer.WriteStringValue(Owner);
-            }
-            if (Optional.IsDefined(Group))
-            {
-                writer.WritePropertyName("group"u8);
-                writer.WriteStringValue(Group);
-            }
-            if (Optional.IsDefined(Permissions))
-            {
-                writer.WritePropertyName("permissions"u8);
-                writer.WriteStringValue(Permissions);
-            }
-            if (Optional.IsDefined(EncryptionScope))
-            {
-                writer.WritePropertyName("EncryptionScope"u8);
-                writer.WriteStringValue(EncryptionScope);
-            }
-            if (Optional.IsDefined(CreationTime))
-            {
-                writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime);
-            }
-            if (Optional.IsDefined(ExpiryTime))
-            {
-                writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiryTime);
-            }
-            if (Optional.IsDefined(EncryptionContext))
-            {
-                writer.WritePropertyName("EncryptionContext"u8);
-                writer.WriteStringValue(EncryptionContext);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        Path IJsonModel<Path>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Path JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<Path>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(Path)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePath(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Path DeserializePath(JsonElement element, ModelReaderWriterOptions options)
+        internal static Path DeserializePath(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string isDirectory = default;
             DateTimeOffset? lastModified = default;
-            string eTag = default;
-            string contentLength = default;
             string owner = default;
-            string @group = default;
+            string group = default;
             string permissions = default;
             string encryptionScope = default;
             string creationTime = default;
             string expiryTime = default;
             string encryptionContext = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            string contentLength = default;
+            string isDirectory = default;
+            string etag = default;
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    name = prop.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isDirectory"u8))
+                if (property.NameEquals("lastModified"u8))
                 {
-                    isDirectory = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("lastModified"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModified = prop.Value.GetDateTimeOffset("O");
+                    lastModified = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
-                if (prop.NameEquals("eTag"u8))
+                if (property.NameEquals("owner"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    owner = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("contentLength"u8))
+                if (property.NameEquals("group"u8))
                 {
-                    contentLength = prop.Value.GetString();
+                    group = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("owner"u8))
+                if (property.NameEquals("permissions"u8))
                 {
-                    owner = prop.Value.GetString();
+                    permissions = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("group"u8))
+                if (property.NameEquals("EncryptionScope"u8))
                 {
-                    @group = prop.Value.GetString();
+                    encryptionScope = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("permissions"u8))
+                if (property.NameEquals("creationTime"u8))
                 {
-                    permissions = prop.Value.GetString();
+                    creationTime = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("EncryptionScope"u8))
+                if (property.NameEquals("expiryTime"u8))
                 {
-                    encryptionScope = prop.Value.GetString();
+                    expiryTime = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("creationTime"u8))
+                if (property.NameEquals("EncryptionContext"u8))
                 {
-                    creationTime = prop.Value.GetString();
+                    encryptionContext = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("expiryTime"u8))
+                if (property.NameEquals("contentLength"u8))
                 {
-                    expiryTime = prop.Value.GetString();
+                    contentLength = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("EncryptionContext"u8))
+                if (property.NameEquals("isDirectory"u8))
                 {
-                    encryptionContext = prop.Value.GetString();
+                    isDirectory = property.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if (property.NameEquals("etag"u8))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    etag = property.Value.GetString();
+                    continue;
                 }
             }
             return new Path(
                 name,
-                isDirectory,
                 lastModified,
-                eTag,
-                contentLength,
                 owner,
-                @group,
+                group,
                 permissions,
                 encryptionScope,
                 creationTime,
                 expiryTime,
                 encryptionContext,
-                additionalBinaryDataProperties);
+                contentLength,
+                isDirectory,
+                etag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Path FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePath(document.RootElement);
         }
     }
 }
