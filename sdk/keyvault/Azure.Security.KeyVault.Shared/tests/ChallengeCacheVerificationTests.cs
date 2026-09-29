@@ -170,6 +170,56 @@ namespace Azure.Security.KeyVault.Tests
         }
 
         [Test]
+        public async Task FailedLenientAcquisitionDoesNotAuthorizeStrictConsumer()
+        {
+            InvalidOperationException acquisitionFailure = new("Simulated token acquisition failure.");
+            MockCredential seedCredential = new() { GetTokenCallback = (_, _) => throw acquisitionFailure };
+            MockTransport seedTransport = CreateMockTransport(Challenge(ForeignScope), new MockResponse(200));
+
+            InvalidOperationException actual = Assert.ThrowsAsync<InvalidOperationException>(() => SendGetRequest(
+                seedTransport, new ChallengeBasedAuthenticationPolicy(seedCredential, true), uri: s_vaultUri));
+            Assert.That(actual, Is.SameAs(acquisitionFailure));
+            Assert.That(seedTransport.Requests.Count, Is.EqualTo(1));
+            Assert.That(seedTransport.SingleRequest.Headers.Contains("Authorization"), Is.False);
+
+            int tokenRequests = 0;
+            MockCredential credential = new() { GetTokenCallback = (_, _) => tokenRequests++ };
+            MockTransport transport = CreateMockTransport(new MockResponse(200));
+            Assert.ThrowsAsync<InvalidOperationException>(() => SendGetRequest(
+                transport, new ChallengeBasedAuthenticationPolicy(credential, false), uri: s_vaultUri));
+            Assert.That(tokenRequests, Is.Zero);
+            Assert.That(transport.Requests, Is.Empty);
+        }
+
+        [Test]
+        public async Task StrictConsumerRecoversAfterForeignCacheEntryIsReplaced()
+        {
+            await SeedChallengeAsync(s_vaultUri, ForeignScope);
+            int tokenRequests = 0;
+            MockCredential credential = new()
+            {
+                GetTokenCallback = (context, _) =>
+                {
+                    tokenRequests++;
+                    CollectionAssert.AreEqual(new[] { ValidScope }, context.Scopes);
+                }
+            };
+            ChallengeBasedAuthenticationPolicy policy = new(credential, false);
+            MockTransport rejected = CreateMockTransport(new MockResponse(200));
+            Assert.ThrowsAsync<InvalidOperationException>(() => SendGetRequest(rejected, policy, uri: s_vaultUri));
+            Assert.That(tokenRequests, Is.Zero);
+            Assert.That(rejected.Requests, Is.Empty);
+
+            await SeedChallengeAsync(s_vaultUri, ValidScope);
+            MockTransport recovered = CreateMockTransport(new MockResponse(200));
+            Response response = await SendGetRequest(recovered, policy, uri: s_vaultUri);
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(tokenRequests, Is.EqualTo(1));
+            Assert.That(recovered.SingleRequest.Headers.TryGetValue("Authorization", out string authorization), Is.True);
+            Assert.That(authorization, Is.EqualTo($"Bearer TEST TOKEN {ValidScope}"));
+        }
+
+        [Test]
         public async Task InFlightAcquisitionUsesValidatedSnapshotDuringCacheReplacement()
         {
             await SeedChallengeAsync(s_vaultUri, ValidScope);
