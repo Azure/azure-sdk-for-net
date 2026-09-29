@@ -544,10 +544,16 @@ namespace Azure.ResourceManager.OperationalInsights
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsActive { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use SummaryLogsProvisioningState instead.", false)]
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule RuleDefinition { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use SummaryLogsRuleType instead.", false)]
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? RuleType { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Use SummaryLogsStatusCode instead.", false)]
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? StatusCode { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState? SummaryLogsProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType? SummaryLogsRuleType { get { throw null; } set { } }
+        public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode? SummaryLogsStatusCode { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -944,7 +950,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema OperationalInsightsSchema(string name = null, string displayName = null, string description = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn> columns = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsColumn> standardColumns = null, System.Collections.Generic.IEnumerable<string> categories = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator? source = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableCreator?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType? tableType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableType?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType? tableSubType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSubType?), System.Collections.Generic.IEnumerable<string> solutions = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSearchSchemaValue OperationalInsightsSearchSchemaValue(string name = null, string displayName = null, string searchSchemaValueType = null, bool indexed = false, bool stored = false, bool facet = false, System.Collections.Generic.IEnumerable<string> ownerType = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount OperationalInsightsStorageAccount(Azure.Core.ResourceIdentifier id = null, string key = null) { throw null; }
-        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType?), string displayName = null, string description = null, bool? isActive = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule ruleDefinition = null) { throw null; }
+        [System.ObsoleteAttribute("This overload is obsolete and will be removed in a future release.", false)]
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType, string displayName, string description, bool? isActive, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule ruleDefinition) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType?), string displayName = null, string description = null, bool? isActive = default(bool?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule ruleDefinition = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin OperationalInsightsSummaryLogsRetryBin(System.DateTimeOffset? retryBinStartOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule OperationalInsightsSummaryRule(string query = null, int? binSize = default(int?), int? binDelay = default(int?), System.DateTimeOffset? binStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector? timeSelector = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryTimeSelector?), string destinationTable = null) { throw null; }
         public static Azure.ResourceManager.OperationalInsights.OperationalInsightsTableData OperationalInsightsTableData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? retentionInDays = default(int?), int? totalRetentionInDays = default(int?), int? archiveRetentionInDays = default(int?), Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableSearchResults searchResults = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableRestoredLogs restoredLogs = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableResultStatistics resultStatistics = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan? plan = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTablePlan?), string lastPlanModifiedDate = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSchema schema = null, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState? provisioningState = default(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsTableProvisioningState?), Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState? retentionInDaysAsDefault = default(Azure.ResourceManager.OperationalInsights.Models.RetentionInDaysAsDefaultState?), Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault = default(Azure.ResourceManager.OperationalInsights.Models.TotalRetentionInDaysAsDefaultState?)) { throw null; }
@@ -1659,6 +1667,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Use OperationalInsightsSummaryLogsProvisioningState instead.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsNetworkSecurityPerimeterProvisioningState : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState>
     {
@@ -1674,6 +1683,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState (Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState (Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState value) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterProvisioningState right) { throw null; }
@@ -1712,6 +1723,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Use OperationalInsightsSummaryLogsRuleType instead.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsNetworkSecurityPerimeterRuleType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType>
     {
@@ -1723,6 +1735,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType (Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType (Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType value) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterRuleType right) { throw null; }
@@ -1745,6 +1759,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterSeverity right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Use OperationalInsightsSummaryLogsStatusCode instead.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationalInsightsNetworkSecurityPerimeterStatusCode : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode>
     {
@@ -1757,6 +1772,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode (Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode (Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode value) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsNetworkSecurityPerimeterStatusCode right) { throw null; }
@@ -1913,6 +1930,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsStorageAccount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsSummaryLogsProvisioningState : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsSummaryLogsProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OperationalInsightsSummaryLogsRetryBin : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>
     {
         public OperationalInsightsSummaryLogsRetryBin() { }
@@ -1926,6 +1963,39 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRetryBin>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsSummaryLogsRuleType : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsSummaryLogsRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsRuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OperationalInsightsSummaryLogsStatusCode : System.IEquatable<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OperationalInsightsSummaryLogsStatusCode(string value) { throw null; }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode DataPlaneError { get { throw null; } }
+        public static Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode UserAction { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode left, Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryLogsStatusCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class OperationalInsightsSummaryRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsSummaryRule>
     {

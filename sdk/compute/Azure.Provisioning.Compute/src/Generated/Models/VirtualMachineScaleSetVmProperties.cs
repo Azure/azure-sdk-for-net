@@ -395,7 +395,7 @@ namespace Azure.Provisioning.Compute
             _modelDefinitionApplied = DefineProperty<string>(nameof(ModelDefinitionApplied), new string[] { "modelDefinitionApplied" }, isOutput: true);
             _protectionPolicy = DefineModelProperty<VirtualMachineScaleSetVmProtectionPolicy>(nameof(ProtectionPolicy), new string[] { "protectionPolicy" });
             _userData = DefineProperty<string>(nameof(UserData), new string[] { "userData" });
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             _virtualMachineResourceId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineResourceId), new string[] { "virtualMachineResourceId" }, isOutput: true);
             _interconnectBlockProfile = DefineModelProperty<InterconnectBlockProfile>(nameof(InterconnectBlockProfile), new string[] { "interconnectBlockProfile" });
             DefineAdditionalProperties();

@@ -92,7 +92,7 @@ namespace Azure.Security.KeyVault.Administration
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteBase64StringValue(item.ToArray(), "D");
+                    writer.WriteBase64StringValue(item, "D");
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EkmProxyClientCertificateInfo(caCertificates, subjectCommonName, additionalBinaryDataProperties);

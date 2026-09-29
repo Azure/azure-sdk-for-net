@@ -57,7 +57,7 @@ namespace Azure.AI.AnomalyDetector
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Models)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAIAnomalyDetectorContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureAIAnomalyDetectorContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

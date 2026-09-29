@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
         }
 
         protected static ExecuteStartContent BuildStartContent(IList<ResourceIdentifier> ids) =>
-            new ExecuteStartContent(BuildExecutionParameters(), new UserRequestResources(ids));
+            new ExecuteStartContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids) };
 
         protected static ExecuteDeallocateContent BuildDeallocateContent(IList<ResourceIdentifier> ids) =>
-            new ExecuteDeallocateContent(BuildExecutionParameters(), new UserRequestResources(ids));
+            new ExecuteDeallocateContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids) };
 
         protected static ExecuteHibernateContent BuildHibernateContent(IList<ResourceIdentifier> ids) =>
-            new ExecuteHibernateContent(BuildExecutionParameters(), new UserRequestResources(ids));
+            new ExecuteHibernateContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids) };
 
         protected static ExecuteDeleteContent BuildDeleteContent(IList<ResourceIdentifier> ids, bool forceDelete = false) =>
-            new ExecuteDeleteContent(BuildExecutionParameters(), new UserRequestResources(ids)) { IsForceDeletion = forceDelete };
+            new ExecuteDeleteContent(BuildExecutionParameters()) { Resources = new UserRequestResources(ids), IsForceDeletion = forceDelete };
 
         // Builds execution parameters with a representative retry policy so recordings exercise a
         // realistic request shape.

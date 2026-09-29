@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<int> _pendingPatchCount;
         private BicepValue<int> _installedPatchCount;
         private BicepValue<int> _failedPatchCount;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<DateTimeOffset> _lastModifiedOn;
         private ComputeApiError _error;
 
@@ -111,13 +111,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -153,8 +153,8 @@ namespace Azure.Provisioning.Compute
             _pendingPatchCount = DefineProperty<int>(nameof(PendingPatchCount), new string[] { "pendingPatchCount" }, isOutput: true);
             _installedPatchCount = DefineProperty<int>(nameof(InstalledPatchCount), new string[] { "installedPatchCount" }, isOutput: true);
             _failedPatchCount = DefineProperty<int>(nameof(FailedPatchCount), new string[] { "failedPatchCount" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true);
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true, format: "O");
             _error = DefineModelProperty<ComputeApiError>(nameof(Error), new string[] { "error" }, isOutput: true);
             DefineAdditionalProperties();
         }

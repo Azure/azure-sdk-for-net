@@ -38,14 +38,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="claimValidationRules"> The rules that are applied to validate token claims to authenticate users. All the expressions must evaluate to true for validation to succeed. </param>
         /// <param name="claimMappings"> The mappings that define how user attributes are extracted from the token claims. </param>
         /// <param name="userValidationRules"> The rules that are applied to the mapped user before completing authentication. All the expressions must evaluate to true for validation to succeed. </param>
+        /// <param name="certificateAuthorityBundle">
+        /// PEM-encoded CA certificate bundle used to validate the connection when fetching discovery information. Use this for issuer endpoints that use private certificate authorities
+        /// or environments where TLS inspection is performed.
+        /// The bundle must contain only CERTIFICATE PEM blocks, up to 10 CA certificates, and must be no larger than 20 KB in total. Include all CA certificates needed to validate
+        /// the issuer endpoint's TLS certificate. Certificate revocation checking is not supported.
+        /// If provided, only these CAs are trusted instead of the well-known root CAs.
+        /// If not provided and the managed cluster's properties.securityProfile.customCATrustCertificates is set, those certificates will be used instead. Otherwise, only the well-known
+        /// root CAs are trusted.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterJwtAuthenticatorProperties(ManagedClusterJwtAuthenticatorProvisioningState? provisioningState, ManagedClusterJwtAuthenticatorIssuer issuer, IList<ManagedClusterJwtAuthenticatorValidationRule> claimValidationRules, ManagedClusterJwtAuthenticatorClaimMappings claimMappings, IList<ManagedClusterJwtAuthenticatorValidationRule> userValidationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterJwtAuthenticatorProperties(ManagedClusterJwtAuthenticatorProvisioningState? provisioningState, ManagedClusterJwtAuthenticatorIssuer issuer, IList<ManagedClusterJwtAuthenticatorValidationRule> claimValidationRules, ManagedClusterJwtAuthenticatorClaimMappings claimMappings, IList<ManagedClusterJwtAuthenticatorValidationRule> userValidationRules, string certificateAuthorityBundle, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Issuer = issuer;
             ClaimValidationRules = claimValidationRules;
             ClaimMappings = claimMappings;
             UserValidationRules = userValidationRules;
+            CertificateAuthorityBundle = certificateAuthorityBundle;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -68,5 +78,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The rules that are applied to the mapped user before completing authentication. All the expressions must evaluate to true for validation to succeed. </summary>
         [WirePath("userValidationRules")]
         public IList<ManagedClusterJwtAuthenticatorValidationRule> UserValidationRules { get; }
+
+        /// <summary>
+        /// PEM-encoded CA certificate bundle used to validate the connection when fetching discovery information. Use this for issuer endpoints that use private certificate authorities
+        /// or environments where TLS inspection is performed.
+        /// The bundle must contain only CERTIFICATE PEM blocks, up to 10 CA certificates, and must be no larger than 20 KB in total. Include all CA certificates needed to validate
+        /// the issuer endpoint's TLS certificate. Certificate revocation checking is not supported.
+        /// If provided, only these CAs are trusted instead of the well-known root CAs.
+        /// If not provided and the managed cluster's properties.securityProfile.customCATrustCertificates is set, those certificates will be used instead. Otherwise, only the well-known
+        /// root CAs are trusted.
+        /// </summary>
+        [WirePath("certificateAuthorityBundle")]
+        public string CertificateAuthorityBundle { get; set; }
     }
 }

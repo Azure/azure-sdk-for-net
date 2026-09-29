@@ -12,7 +12,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for similarity algorithms. Similarity algorithms are used to calculate scores that tie queries to documents. The higher the score, the more relevant the document is to that specific query. Those scores are used to rank the search results. </summary>
+    /// <summary>
+    /// Base type for similarity algorithms. Similarity algorithms are used to calculate scores that tie queries to documents. The higher the score, the more relevant the document is to that specific query. Those scores are used to rank the search results.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BM25Similarity"/> and <see cref="ClassicSimilarity"/>.
+    /// </summary>
     public partial class SimilarityAlgorithm : IJsonModel<SimilarityAlgorithm>
     {
         /// <summary> Initializes a new instance of <see cref="SimilarityAlgorithm"/> for deserialization. </summary>
@@ -126,10 +129,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Azure.Search.ClassicSimilarity":
-                        return ClassicSimilarity.DeserializeClassicSimilarity(element, options);
                     case "#Microsoft.Azure.Search.BM25Similarity":
                         return BM25Similarity.DeserializeBM25Similarity(element, options);
+                    case "#Microsoft.Azure.Search.ClassicSimilarity":
+                        return ClassicSimilarity.DeserializeClassicSimilarity(element, options);
                 }
             }
             return UnknownSimilarityAlgorithm.DeserializeUnknownSimilarityAlgorithm(element, options);

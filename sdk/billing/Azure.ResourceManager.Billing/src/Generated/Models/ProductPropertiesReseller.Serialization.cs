@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Reseller for this product. The fields is not available for Microsoft Partner Agreement products. </summary>
-    public partial class ProductPropertiesReseller : CreatedSubscriptionReseller, IJsonModel<ProductPropertiesReseller>
+    internal partial class ProductPropertiesReseller : CreatedSubscriptionReseller, IJsonModel<ProductPropertiesReseller>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ProductPropertiesReseller(resellerId, description, additionalBinaryDataProperties);

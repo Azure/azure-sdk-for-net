@@ -293,48 +293,6 @@ namespace Azure.AI.VoiceLive
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzurePersonalVoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzurePersonalVoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureRealtimeNativeVoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>
-    {
-        public AzureRealtimeNativeVoice(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName name) { }
-        public string Kind { get { throw null; } }
-        public Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Name { get { throw null; } set { } }
-        protected virtual Azure.AI.VoiceLive.AzureRealtimeNativeVoice JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.VoiceLive.AzureRealtimeNativeVoice PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.VoiceLive.AzureRealtimeNativeVoice System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.VoiceLive.AzureRealtimeNativeVoice System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureRealtimeNativeVoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AzureRealtimeNativeVoiceName : System.IEquatable<Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AzureRealtimeNativeVoiceName(string value) { throw null; }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Aarti { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Andrew { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Ava { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Denise { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Diya { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Elsa { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Florian { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Francisca { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Meera { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Xiaoxiao { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Ximena { get { throw null; } }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName Yunxi { get { throw null; } }
-        public bool Equals(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName left, Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName right) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName (string value) { throw null; }
-        public static implicit operator Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName left, Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AzureSemanticEouDetection : Azure.AI.VoiceLive.EouDetection, System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.AzureSemanticEouDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.AzureSemanticEouDetection>
     {
         public AzureSemanticEouDetection() { }
@@ -2850,7 +2808,6 @@ namespace Azure.AI.VoiceLive
         public static Azure.AI.VoiceLive.AzureCustomVoice AzureCustomVoice(string name = null, string endpointId = null, float? temperature = default(float?), string customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
         public static Azure.AI.VoiceLive.AzurePersonalVoice AzurePersonalVoice(string name, float? temperature, Azure.AI.VoiceLive.PersonalVoiceModels model) { throw null; }
         public static Azure.AI.VoiceLive.AzurePersonalVoice AzurePersonalVoice(string name = null, float? temperature = default(float?), Azure.AI.VoiceLive.PersonalVoiceModels model = default(Azure.AI.VoiceLive.PersonalVoiceModels), System.Uri customLexiconUri = null, System.Uri customTextNormalizationUri = null, System.Collections.Generic.IEnumerable<string> preferLocales = null, string locale = null, string style = null, string pitch = null, string rate = null, string volume = null) { throw null; }
-        public static Azure.AI.VoiceLive.AzureRealtimeNativeVoice AzureRealtimeNativeVoice(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName name = default(Azure.AI.VoiceLive.AzureRealtimeNativeVoiceName)) { throw null; }
         public static Azure.AI.VoiceLive.AzureSemanticEouDetection AzureSemanticEouDetection(Azure.AI.VoiceLive.EouThresholdLevel? thresholdLevel = default(Azure.AI.VoiceLive.EouThresholdLevel?), float? timeoutMs = default(float?)) { throw null; }
         public static Azure.AI.VoiceLive.AzureSemanticEouDetectionEn AzureSemanticEouDetectionEn(Azure.AI.VoiceLive.EouThresholdLevel? thresholdLevel = default(Azure.AI.VoiceLive.EouThresholdLevel?), float? timeoutMs = default(float?)) { throw null; }
         public static Azure.AI.VoiceLive.AzureSemanticEouDetectionMultilingual AzureSemanticEouDetectionMultilingual(Azure.AI.VoiceLive.EouThresholdLevel? thresholdLevel = default(Azure.AI.VoiceLive.EouThresholdLevel?), float? timeoutMs = default(float?)) { throw null; }

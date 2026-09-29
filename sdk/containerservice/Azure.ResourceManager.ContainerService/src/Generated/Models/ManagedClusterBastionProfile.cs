@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// See https://aka.ms/aks/BastionSKUs for more details.
         /// </param>
         /// <param name="scaleUnits"> The scale units of the managed bastion. Default value is 2. </param>
-        /// <param name="publicIpAddressId">
+        /// <param name="publicIPAddressId">
         /// The resource ID of the public IP address associated with the managed bastion.
         /// When provided during creation, the managed bastion will reference this existing public IP address instead of creating a new one.
         /// The referenced public IP address must be in the same subscription and region as the managed cluster.
@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// This field cannot be updated. To change IP address after creation, please disable and re-enable the managed bastion with the new public IP address.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterBastionProfile(bool? enabled, ResourceIdentifier bastionId, ManagedClusterBastionSku? sku, int? scaleUnits, ResourceIdentifier publicIpAddressId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterBastionProfile(bool? enabled, ResourceIdentifier bastionId, ManagedClusterBastionSku? sku, int? scaleUnits, ResourceIdentifier publicIPAddressId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             BastionId = bastionId;
             Sku = sku;
             ScaleUnits = scaleUnits;
-            PublicIpAddressId = publicIpAddressId;
+            PublicIPAddressId = publicIPAddressId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -83,6 +83,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// This field cannot be updated. To change IP address after creation, please disable and re-enable the managed bastion with the new public IP address.
         /// </summary>
         [WirePath("publicIpAddressId")]
-        public ResourceIdentifier PublicIpAddressId { get; set; }
+        public ResourceIdentifier PublicIPAddressId { get; set; }
     }
 }

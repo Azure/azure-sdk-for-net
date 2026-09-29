@@ -55,10 +55,11 @@ public class BasicCostManagementTests
 
             resource export 'Microsoft.CostManagement/exports@2025-03-01' = {
               name: take('export${uniqueString(resourceGroup().id)}', 24)
+              location: location
               properties: {
-                schedule: {
-                  status: 'Active'
-                  recurrence: 'Weekly'
+                definition: {
+                  timeframe: 'MonthToDate'
+                  type: 'ActualCost'
                 }
                 deliveryInfo: {
                   destination: {
@@ -66,12 +67,11 @@ public class BasicCostManagementTests
                     rootFolderPath: 'cost-data'
                   }
                 }
-                definition: {
-                  type: 'ActualCost'
-                  timeframe: 'MonthToDate'
+                schedule: {
+                  recurrence: 'Weekly'
+                  status: 'Active'
                 }
               }
-              location: location
             }
             """);
     }

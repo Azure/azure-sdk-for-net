@@ -59,7 +59,7 @@ internal sealed class ManagementClientProvider : ClientProvider
 
     protected override PropertyProvider[] BuildProperties()
         => _isRootClient
-            ? [_pipelineProperty!, _clientDiagnosticsProperty!]
+            ? [_pipelineProperty!]
             : base.BuildProperties();
 
     protected override ConstructorProvider[] BuildConstructors()

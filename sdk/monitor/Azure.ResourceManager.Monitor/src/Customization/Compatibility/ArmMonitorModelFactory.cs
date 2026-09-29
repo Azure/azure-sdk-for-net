@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.Monitor.Models
         // The current TypeSpec no longer models the old AlertRule resource, so there is no generated factory overload to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.Monitor.AlertRuleData AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string provisioningState, string alertRuleName, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
+        // TODO: Remove these compatibility parameter mappings after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
+        public static Azure.ResourceManager.Monitor.AlertRuleData AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string alertRuleName, string description, string provisioningState, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
         // Current TypeSpec models only the singleton service diagnostic setting, so the old arbitrary-name DiagnosticSettingData shape has no generated factory to delegate to.
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.Monitor.DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, string logAnalyticsDestinationType, IEnumerable<MetricSettings> metrics, IEnumerable<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string eventHubName)
+        public static Azure.ResourceManager.Monitor.DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IEnumerable<MetricSettings> metrics, IEnumerable<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string logAnalyticsDestinationType)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary>

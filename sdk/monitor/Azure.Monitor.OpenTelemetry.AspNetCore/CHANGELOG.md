@@ -1,14 +1,29 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Reduce default HTTP client metric volume on .NET 8+ while retaining request latency, count, and failure dimensions through `http.client.request.duration`. Other `System.Net.Http` metrics are now opt-in through OpenTelemetry `AddView`; dashboards and alerts using them must [explicitly enable collection](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore#http-client-metrics). HTTP dependency tracing and server metrics are unchanged. No new public API is introduced.
+
 ### Bugs Fixed
 
+- `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` now take precedence over resource attributes detected by the Azure App Service, Container Apps, and VM resource detectors. Applications that set these variables will see Cloud Role Name and/or Cloud Role Instance change in Application Insights to the configured values.
+
 ### Other Changes
+
+## 1.6.0 (2026-07-27)
+
+### Bugs Fixed
+
+- Hardened Azure Monitor ingestion and Live Metrics redirect handling to prevent credentials and telemetry from being forwarded to untrusted destinations.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
+### Other Changes
+
+- Updated `Azure.Monitor.OpenTelemetry.Exporter` dependency to `1.8.3`, which brings: customer SDK stats enabled by default (opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`), internal Network SDK statistics signals, GenAI agent attribution processors for spans and logs, and `CategoryName` added to custom event custom dimensions.
 
 ## 1.5.0 (2026-04-30)
 

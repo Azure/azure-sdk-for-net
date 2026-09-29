@@ -111,6 +111,9 @@ namespace Azure.Generator.Management.Providers
 
         internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || _originalResourceDataType.Equals(type);
 
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
+
         internal bool TryGetResourceDataTypeOverride(CSharpType originalType, out CSharpType resourceDataType)
         {
             if (_originalResourceDataType.Equals(originalType) &&
@@ -141,10 +144,11 @@ namespace Azure.Generator.Management.Providers
                     }
                 }
 
-                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCurrentCompilation(
                     customizedDataType.Namespace,
                     customizedDataType.Name,
-                    declaringTypeName: null);
+                    declaringTypeName: null,
+                    includeReferencedAssemblies: true);
                 if (customProvider is not null)
                 {
                     return customProvider;
@@ -416,6 +420,19 @@ namespace Azure.Generator.Management.Providers
 
         protected override CSharpType? BuildBaseType() => typeof(ArmResource);
 
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            if (LastContractView?.Methods == null || LastContractView.Methods.Count == 0)
+            {
+                return [.. originalMethods];
+            }
+
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
@@ -432,8 +449,8 @@ namespace Azure.Generator.Management.Providers
                 // Get the appropriate rest client for this specific method
                 var restClientInfo = _clientInfos[inputClient];
 
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
-                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, false, this);
+                var asyncConvenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(method.Operation, true, this);
 
                 if (method is InputPagingServiceMethod pagingMethod)
                 {
@@ -526,7 +543,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, isAsync, methodName);
             }
 
-        return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
+            return new ResourceOperationMethodProvider(this, _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path)), restClientInfo, method, methodKind, isAsync, methodName, forceLro: isFakeLro);
         }
 
         private static bool CanPopulateTagUpdateMethodArguments(MethodSignature updateSignature, ParameterContextRegistry parameterMappings)

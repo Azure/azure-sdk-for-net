@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// DeployVersionCode
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// DeployVersionCode
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

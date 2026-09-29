@@ -36,7 +36,6 @@
     "cspell.yaml",
     "assets.json",
     "eng/centralpackagemanagement/**",
-    "eng/NoWarnSkipValidation.txt",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -70,6 +69,7 @@
     "apos",
     "azsdk",
     "blazor",
+    "bleu",
     "byok",
     "centralus",
     "clippy",
@@ -144,7 +144,6 @@
     "otel",
     "overridden",
     "parallelization",
-    "personalizer",
     "petabit",
     "picometer",
     "pids",
@@ -166,6 +165,7 @@
     "skus",
     "somaxconn",
     "southcentralus",
+    "sovcloud",
     "structs",
     "sybase",
     "sysctls",
@@ -242,12 +242,6 @@
       "words": [
         "dynatrace",
         "fqdns"
-      ]
-    },
-    {
-      "filename": "**/sdk/astronomer/**/*.cs",
-      "words": [
-        "astro"
       ]
     },
     {
@@ -775,13 +769,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
-      ]
-    },
-    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "ccyymmdd",
@@ -1291,21 +1278,6 @@
       ]
     },
     {
-      "filename": "**/sdk/sqlmanagement/**/*.cs",
-      "words": [
-        "cias",
-        "droppeded",
-        "dtcs",
-        "freemium",
-        "nchar",
-        "ntext",
-        "nvarchar",
-        "stdev",
-        "unrestorable",
-        "vcores"
-      ]
-    },
-    {
       "filename": "**/sdk/sqlvirtualmachine/**/*.cs",
       "words": [
         "ahub",
@@ -1578,6 +1550,14 @@
         "deidentified",
         "deidentify",
         "healthdataaiservices"
+      ]
+    },
+    {
+      "filename": "**/sdk/dataai/**/*",
+      "words": [
+        "apim",
+        "rerank",
+        "reranker"
       ]
     },
     {

@@ -38,10 +38,211 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
 
         private ClientDiagnostics VirtualMachineBulkOperationsClientDiagnostics => _virtualMachineBulkOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineBulkOperations VirtualMachineBulkOperationsRestClient => _virtualMachineBulkOperationsRestClient ??= new VirtualMachineBulkOperations(VirtualMachineBulkOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-06");
+        private VirtualMachineBulkOperations VirtualMachineBulkOperationsRestClient => _virtualMachineBulkOperationsRestClient ??= new VirtualMachineBulkOperations(VirtualMachineBulkOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-10-06-preview");
+
+        /// <summary> Gets a collection of LocationBasedBulkCreateCustoms in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of LocationBasedBulkCreateCustoms and their operations over a LocationBasedBulkCreateCustomResource. </returns>
+        public virtual LocationBasedBulkCreateCustomCollection GetLocationBasedBulkCreateCustoms(AzureLocation location)
+        {
+            return GetCachedClient(client => new LocationBasedBulkCreateCustomCollection(client, Id, location));
+        }
 
         /// <summary>
-        /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Gets an instance of BulkCreateCustoms.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreateCustom_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the BulkCreateCustom. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LocationBasedBulkCreateCustomResource>> GetLocationBasedBulkCreateCustomAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetLocationBasedBulkCreateCustoms(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an instance of BulkCreateCustoms.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreateCustom/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreateCustom_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the BulkCreateCustom. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LocationBasedBulkCreateCustomResource> GetLocationBasedBulkCreateCustom(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetLocationBasedBulkCreateCustoms(location).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LocationBasedBulkCreates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of LocationBasedBulkCreates and their operations over a LocationBasedBulkCreateResource. </returns>
+        public virtual LocationBasedBulkCreateCollection GetLocationBasedBulkCreates(AzureLocation location)
+        {
+            return GetCachedClient(client => new LocationBasedBulkCreateCollection(client, Id, location));
+        }
+
+        /// <summary>
+        /// Gets an instance of BulkCreates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreate/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreate_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the BulkCreate. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<LocationBasedBulkCreateResource>> GetLocationBasedBulkCreateAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetLocationBasedBulkCreates(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an instance of BulkCreates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/bulkCreate/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreate_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="name"> The name of the BulkCreate. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LocationBasedBulkCreateResource> GetLocationBasedBulkCreate(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetLocationBasedBulkCreates(location).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ScheduledActions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ScheduledActions and their operations over a ScheduledActionResource. </returns>
+        public virtual ScheduledActionCollection GetScheduledActions()
+        {
+            return GetCachedClient(client => new ScheduledActionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified scheduled action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(string scheduledActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+
+            return await GetScheduledActions().GetAsync(scheduledActionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified scheduled action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/scheduledActions/{scheduledActionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScheduledActionResource> GetScheduledAction(string scheduledActionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+
+            return GetScheduledActions().Get(scheduledActionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deallocate one or more virtual machines. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -53,12 +254,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to deallocate and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
@@ -90,7 +291,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Deallocate one or more virtual machines. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -102,12 +303,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to deallocate and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DeallocateResourceOperationResult> BulkDeallocateOperation(AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
@@ -139,7 +340,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Hibernate one or more virtual machines that support hibernation. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -151,12 +352,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to hibernate and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<HibernateResourceOperationResult>> BulkHibernateOperationAsync(AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
@@ -188,7 +389,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Hibernate one or more virtual machines that support hibernation. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -200,12 +401,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to hibernate and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<HibernateResourceOperationResult> BulkHibernateOperation(AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
@@ -237,7 +438,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Start one or more virtual machines. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -249,12 +450,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to start and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<StartResourceOperationResult>> BulkStartOperationAsync(AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
@@ -286,7 +487,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Start one or more virtual machines. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -298,12 +499,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to start and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<StartResourceOperationResult> BulkStartOperation(AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
@@ -335,7 +536,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Delete one or more virtual machines. This operation is destructive. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -347,12 +548,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to delete and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DeleteResourceOperationResult>> BulkDeleteOperationAsync(AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
@@ -384,7 +585,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// Delete one or more virtual machines. This operation is destructive. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -396,12 +597,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The virtual machines to delete and the execution settings for the bulk action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DeleteResourceOperationResult> BulkDeleteOperation(AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
@@ -433,7 +634,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines
+        /// Get the current status of one or more operations identified by their Bulk Action Operation Ids.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -445,12 +646,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify the operations for which current status should be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
@@ -482,7 +683,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines
+        /// Get the current status of one or more operations identified by their Bulk Action Operation Ids.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -494,12 +695,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify the operations for which current status should be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
@@ -531,7 +732,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
+        /// Cancel one or more Bulk Actions operations by Bulk Action Operation Ids. Cancellation is best effort and work that has already completed is not reversed.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -543,12 +744,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify the operations to cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
@@ -580,7 +781,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
+        /// Cancel one or more Bulk Actions operations by Bulk Action Operation Ids. Cancellation is best effort and work that has already completed is not reversed.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -592,12 +793,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-06. </description>
+        /// <description> 2026-10-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location name. </param>
-        /// <param name="content"> The request body. </param>
+        /// <param name="content"> The Bulk Action Operation Ids that identify the operations to cancel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CancelBulkOperationsResult> BulkCancelOperations(AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
@@ -626,6 +827,180 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// This feature is currently in preview.
+        /// Reimage one or more virtual machines. Reimaging is destructive and can replace operating system disk contents. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkReimage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineBulkOperations_BulkReimage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The virtual machines to reimage and the execution settings for the bulk action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BulkActionsReimageResourceOperationResponseResult>> BulkReimageOperationAsync(AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkReimageOperation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkReimageOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, BulkActionsExecuteReimageRequestContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BulkActionsReimageResourceOperationResponseResult> response = Response.FromValue(BulkActionsReimageResourceOperationResponseResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This feature is currently in preview.
+        /// Reimage one or more virtual machines. Reimaging is destructive and can replace operating system disk contents. Bulk Actions begins processing the request immediately and returns a Bulk Action Operation Id for each virtual machine. Use the returned IDs to get operation status updates.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/virtualMachinesBulkReimage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineBulkOperations_BulkReimage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The virtual machines to reimage and the execution settings for the bulk action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BulkActionsReimageResourceOperationResponseResult> BulkReimageOperation(AzureLocation location, BulkActionsExecuteReimageRequestContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkReimageOperation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VirtualMachineBulkOperationsRestClient.CreateBulkReimageOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, BulkActionsExecuteReimageRequestContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BulkActionsReimageResourceOperationResponseResult> response = Response.FromValue(BulkActionsReimageResourceOperationResponseResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List recent errors for operations in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/listBulkOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineBulkOperations_BulkListOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="lookbackInMinutes"> The number of minutes before the current time to include when listing bulk action errors. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ComputeBulkOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeBulkOperationResult> BulkListOperationErrorsAsync(AzureLocation location, int? lookbackInMinutes = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineBulkOperationsBulkListOperationErrorsAsyncCollectionResultOfT(
+                VirtualMachineBulkOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                lookbackInMinutes,
+                context,
+                "MockableComputeBulkActionsResourceGroupResource.BulkListOperationErrors");
+        }
+
+        /// <summary>
+        /// List recent errors for operations in a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/locations/{location}/listBulkOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineBulkOperations_BulkListOperationErrors. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="lookbackInMinutes"> The number of minutes before the current time to include when listing bulk action errors. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ComputeBulkOperationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeBulkOperationResult> BulkListOperationErrors(AzureLocation location, int? lookbackInMinutes = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineBulkOperationsBulkListOperationErrorsCollectionResultOfT(
+                VirtualMachineBulkOperationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                location,
+                lookbackInMinutes,
+                context,
+                "MockableComputeBulkActionsResourceGroupResource.BulkListOperationErrors");
         }
     }
 }

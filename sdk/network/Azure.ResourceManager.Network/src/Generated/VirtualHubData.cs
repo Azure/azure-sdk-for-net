@@ -142,6 +142,38 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> IPv6 Address-prefix for this VirtualHub. </summary>
+        [WirePath("properties.addressPrefixV6")]
+        public string AddressPrefixV6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressPrefixV6;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                Properties.AddressPrefixV6 = value;
+            }
+        }
+
+        /// <summary> VirtualRouter IPv6 IPs. </summary>
+        [WirePath("properties.virtualRouterIpsV6")]
+        public IList<string> VirtualRouterIpsV6
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualHubProperties();
+                }
+                return Properties.VirtualRouterIpsV6;
+            }
+        }
+
         /// <summary> Flag to control transit for VirtualRouter hub. </summary>
         [WirePath("properties.allowBranchToBranchTraffic")]
         public bool? AllowBranchToBranchTraffic

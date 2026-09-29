@@ -5,17 +5,14 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Contains encryption settings for a data disk image. </summary>
-    public partial class DataDiskImageEncryption : ProvisionableConstruct
+    public partial class DataDiskImageEncryption : DiskImageEncryption
     {
         private BicepValue<int> _lun;
-        private BicepValue<ResourceIdentifier> _diskEncryptionSetId;
 
         /// <summary> Creates a new DataDiskImageEncryption. </summary>
         public DataDiskImageEncryption()
@@ -37,27 +34,11 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the DiskEncryptionSetId. </summary>
-        public BicepValue<ResourceIdentifier> DiskEncryptionSetId
-        {
-            get
-            {
-                Initialize();
-                return _diskEncryptionSetId;
-            }
-            set
-            {
-                Initialize();
-                _diskEncryptionSetId.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for DataDiskImageEncryption. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _lun = DefineProperty<int>(nameof(Lun), new string[] { "lun" }, isRequired: true);
-            _diskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(DiskEncryptionSetId), new string[] { "diskEncryptionSetId" });
             DefineAdditionalProperties();
         }
 

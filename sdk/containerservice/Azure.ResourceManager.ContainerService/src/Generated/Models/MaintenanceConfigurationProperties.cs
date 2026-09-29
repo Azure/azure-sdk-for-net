@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -27,12 +28,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationProperties"/>. </summary>
         /// <param name="timesInWeek"> Time slots during the week when planned maintenance is allowed to proceed. If two array entries specify the same day of the week, the applied configuration is the union of times in both entries. </param>
         /// <param name="notAllowedTimes"> Time slots on which upgrade is not allowed. </param>
+        /// <param name="maintenanceWindowId"> The fully qualified resource ID of the maintenance window that this maintenance configuration is linked to. When set, the schedule is derived read-only from the linked maintenance window — maintenanceWindow becomes a computed field. When absent (the default), the schedule is defined inline via the maintenanceWindow property. The caller must have read access to the target maintenance window. </param>
         /// <param name="maintenanceWindow"> Maintenance window for the maintenance configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfigurationProperties(IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ContainerServiceMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceConfigurationProperties(IList<ContainerServiceTimeInWeek> timesInWeek, IList<ContainerServiceTimeSpan> notAllowedTimes, ResourceIdentifier maintenanceWindowId, ContainerServiceMaintenanceWindow maintenanceWindow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimesInWeek = timesInWeek;
             NotAllowedTimes = notAllowedTimes;
+            MaintenanceWindowId = maintenanceWindowId;
             MaintenanceWindow = maintenanceWindow;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,6 +47,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Time slots on which upgrade is not allowed. </summary>
         [WirePath("notAllowedTime")]
         public IList<ContainerServiceTimeSpan> NotAllowedTimes { get; } = new ChangeTrackingList<ContainerServiceTimeSpan>();
+
+        /// <summary> The fully qualified resource ID of the maintenance window that this maintenance configuration is linked to. When set, the schedule is derived read-only from the linked maintenance window — maintenanceWindow becomes a computed field. When absent (the default), the schedule is defined inline via the maintenanceWindow property. The caller must have read access to the target maintenance window. </summary>
+        [WirePath("maintenanceWindowId")]
+        public ResourceIdentifier MaintenanceWindowId { get; set; }
 
         /// <summary> Maintenance window for the maintenance configuration. </summary>
         [WirePath("maintenanceWindow")]

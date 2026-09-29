@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.WebSockets;
 using System.Text;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -421,6 +422,41 @@ public class WebSocketEndpointTests
         }
     }
 
+    [Test]
+    public async Task ReportedOutcomePreservesCodeAndAllExceptionDiagnostics()
+    {
+        var captured = new CapturingLoggerProvider("invocations_ws connection closed");
+        var handler = new OutcomeReportingInvocationHandler();
+        var app = BuildApp(handler, captured);
+        await app.StartAsync();
+        try
+        {
+            var server = app.GetTestServer();
+            var wsClient = server.CreateWebSocketClient();
+            using var ws = await wsClient.ConnectAsync(
+                new Uri(server.BaseAddress, "invocations_ws"),
+                CancellationToken.None);
+
+            var buffer = new byte[64];
+            var close = await ws.ReceiveAsync(buffer, CancellationToken.None).WaitAsync(TimeSpan.FromSeconds(5));
+            var closeEvent = await captured.WaitForMatchAsync(TimeSpan.FromSeconds(5));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That((int?)close.CloseStatus, Is.EqualTo(1002));
+                Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanCloseCode), Is.EqualTo(1002));
+                Assert.That(closeEvent.GetValue(InvocationsWebSocketConstants.AttrSpanErrorCode), Is.EqualTo("protocol_error"));
+                Assert.That(captured.Entries.Count(entry => ReferenceEquals(entry.Exception, handler.PrimaryException)), Is.EqualTo(1));
+                Assert.That(captured.Entries.Count(entry => ReferenceEquals(entry.Exception, handler.CleanupException)), Is.EqualTo(1));
+                Assert.That(captured.Entries.Count(entry => ReferenceEquals(entry.Exception, handler.CloseException)), Is.EqualTo(1));
+            });
+        }
+        finally
+        {
+            await app.StopAsync();
+        }
+    }
+
     private static WebApplication BuildApp(InvocationHandler handler, ILoggerProvider? extraLoggerProvider = null)
     {
         var builder = WebApplication.CreateBuilder();
@@ -469,6 +505,8 @@ public class WebSocketEndpointTests
         public Task<CapturedLogEntry> WaitForMatchAsync(TimeSpan timeout) =>
             _matchSignal.Task.WaitAsync(timeout);
 
+        public IReadOnlyList<CapturedLogEntry> Entries => _entries.ToArray();
+
         public void Dispose() { }
     }
 
@@ -498,7 +536,7 @@ public class WebSocketEndpointTests
                     stateDict[pair.Key] = pair.Value;
                 }
             }
-            _provider.Record(new CapturedLogEntry(_category, logLevel, eventId, rendered, stateDict));
+            _provider.Record(new CapturedLogEntry(_category, logLevel, eventId, rendered, exception, stateDict));
         }
     }
 
@@ -507,6 +545,7 @@ public class WebSocketEndpointTests
         LogLevel Level,
         EventId EventId,
         string? RenderedMessage,
+        Exception? Exception,
         IReadOnlyDictionary<string, object?> State)
     {
         public IReadOnlyCollection<string> StateKeys => (IReadOnlyCollection<string>)State.Keys;
@@ -593,6 +632,39 @@ public class WebSocketEndpointTests
         public override Task HandleWebSocketAsync(
             WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
             => throw new InvalidOperationException("boom");
+    }
+
+    private sealed class OutcomeReportingInvocationHandler : InvocationWebSocketHandler
+    {
+        public InvalidOperationException PrimaryException { get; } = new("primary");
+
+        public InvalidOperationException CleanupException { get; } = new("cleanup");
+
+        public WebSocketException CloseException { get; } = new("close");
+
+        public override Task HandleWebSocketAsync(
+            WebSocket webSocket,
+            InvocationContext context,
+            CancellationToken cancellationToken) =>
+            throw new InvalidOperationException("The endpoint must use the outcome-aware dispatch path.");
+
+        internal override async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
+            WebSocket webSocket,
+            InvocationContext context,
+            CancellationToken cancellationToken)
+        {
+            await webSocket.CloseOutputAsync(
+                (WebSocketCloseStatus)1002,
+                "protocol error",
+                cancellationToken);
+            return new InvocationsWebSocketCloseResult(
+                (WebSocketCloseStatus)1002,
+                "protocol error",
+                "protocol_error",
+                PrimaryException,
+                CleanupException,
+                CloseException);
+        }
     }
 
     private sealed class HandlerInitiatedCloseInvocationHandler : InvocationWebSocketHandler

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The rule criteria that defines the conditions of the alert rule. </summary>
+    /// <summary>
+    /// The rule criteria that defines the conditions of the alert rule.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, and <see cref="WebtestLocationAvailabilityCriteria"/>.
+    /// </summary>
     public partial class MetricAlertCriteria
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

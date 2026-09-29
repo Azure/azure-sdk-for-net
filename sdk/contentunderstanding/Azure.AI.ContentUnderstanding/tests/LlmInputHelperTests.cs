@@ -4,7 +4,11 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using Azure;
 using Azure.AI.ContentUnderstanding;
 using NUnit.Framework;
@@ -61,12 +65,49 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("contentType: document"));
+            Assert.That(output, Does.Contain("mimeType: application/pdf"));
+            Assert.That(output, Does.Not.Contain("contentType:"));
             Assert.That(output, Does.Contain("VendorName: CONTOSO LTD."));
             Assert.That(output, Does.Contain("InvoiceDate: '2019-11-15'"));
             Assert.That(output, Does.Contain("pages: 1"));
             Assert.That(output, Does.Contain("CONTOSO LTD."));
             Assert.That(output, Does.Contain("# INVOICE"));
+        }
+
+        [Test]
+        public void ToLlmInput_ImageUsesDetectedMimeType()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "image/jpeg",
+                markdown: "![image](pages/1)",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("mimeType: image/jpeg"));
+            Assert.That(output, Does.Not.Contain("contentType:"));
+        }
+
+        [Test]
+        public void ToLlmInput_MissingMimeTypeUsesUnknown()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: null,
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("mimeType: unknown"));
+            Assert.That(output, Does.Not.Contain("contentType:"));
         }
 
         [Test]
@@ -122,7 +163,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         // ---------------------------------------------------------------
 
         [Test]
-        public void ToLlmInput_WithMetadata_IncludesAfterContentType()
+        public void ToLlmInput_WithCustomMetadata_NestsUnderCustomMetadataBlock()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -133,29 +174,157 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            var metadata = new Dictionary<string, object>
+            var customMetadata = new Dictionary<string, object>
             {
                 ["source"] = "invoice.pdf",
                 ["department"] = "finance"
             };
 
-            string output = result.ToLlmInput(metadata);
+            string output = result.ToLlmInput(customMetadata);
 
+            Assert.That(output, Does.Contain("customMetadata:"));
             Assert.That(output, Does.Contain("source: invoice.pdf"));
             Assert.That(output, Does.Contain("department: finance"));
-            // metadata should appear after contentType
-            int ctIdx = output.IndexOf("contentType:");
-            int srcIdx = output.IndexOf("source:");
-            Assert.That(srcIdx, Is.GreaterThan(ctIdx));
+            int mimeIdx = output.IndexOf("mimeType:", StringComparison.Ordinal);
+            int customIdx = output.IndexOf("customMetadata:", StringComparison.Ordinal);
+            int srcIdx = output.IndexOf("source:", StringComparison.Ordinal);
+            Assert.That(customIdx, Is.GreaterThan(mimeIdx));
+            Assert.That(srcIdx, Is.GreaterThan(customIdx));
         }
 
-        [TestCase("contentType")]
-        [TestCase("timeRange")]
-        [TestCase("category")]
-        [TestCase("pages")]
+        [Test]
+        public void ToLlmInput_WithAnalysisContentMetadata_IncludesMetadataBlock()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                metadata: new Dictionary<string, string>
+                {
+                    ["author"] = "Contoso Metadata Team",
+                    ["title"] = "Contoso Metadata Extraction Sample",
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("metadata:"));
+            Assert.That(output, Does.Contain("author: Contoso Metadata Team"));
+            Assert.That(output, Does.Contain("title: Contoso Metadata Extraction Sample"));
+            Assert.That(output.IndexOf("metadata:", StringComparison.Ordinal),
+                Is.GreaterThan(output.IndexOf("mimeType:", StringComparison.Ordinal)));
+            Assert.That(output.IndexOf("pages:", StringComparison.Ordinal),
+                Is.GreaterThan(output.IndexOf("metadata:", StringComparison.Ordinal)));
+        }
+
+        [Test]
+        public void ToLlmInput_AnalysisMetadataWithDelimiterLine_IndentsContinuationLines()
+        {
+            // Expected YAML (continuation lines stay indented inside the quoted scalar):
+            // metadata:
+            //   description: 'Q3 notes
+            //     ---
+            //     reviewer: bob'
+            //   author: Jane
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Document body",
+                metadata: new Dictionary<string, string>
+                {
+                    ["description"] = "Q3 notes\n---\nreviewer: bob",
+                    ["author"] = "Jane",
+                },
+                startPageNumber: 1,
+                endPageNumber: 3);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("  description: 'Q3 notes\n    ---\n    reviewer: bob'"));
+            Assert.That(Regex.Matches(output, @"(?m)^---$").Count, Is.EqualTo(2));
+            Assert.That(output, Does.Contain("  author: Jane\npages: 1-3\n---\n"));
+            Assert.That(output, Does.Contain("Document body"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataWithDelimiterLine_IndentsContinuationLines()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Document body",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["comments"] = "First section\n---\nSecond section",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("  comments: 'First section\n    ---\n    Second section'"));
+            Assert.That(Regex.Matches(output, @"(?m)^---$").Count, Is.EqualTo(2));
+        }
+
+        [Test]
+        public void ToLlmInput_WithAnalysisContentMetadataJsonString_RemainsOpaque()
+        {
+            const string jsonValue =
+                "{\"document\":{\"createdAt\":\"2026-07-16T19:00:00Z\",\"tags\":[\"finance\",\"invoice\"],\"properties\":{\"pageCount\":1}}}";
+
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                metadata: new Dictionary<string, string>
+                {
+                    ["xmp"] = jsonValue,
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            // String metadata values are not auto-parsed as JSON; they stay a single scalar.
+            Assert.That(output, Does.Contain("metadata:"));
+            Assert.That(output, Does.Contain("xmp:"));
+            Assert.That(output, Does.Contain(jsonValue));
+            Assert.That(output, Does.Not.Contain("\n  document:"));
+            Assert.That(output, Does.Not.Contain("pageCount: 1"));
+        }
+
+        [Test]
+        public void ToLlmInput_EmptyAnalysisContentMetadataOmitsBlock()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                metadata: new Dictionary<string, string>(),
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput();
+
+            // The generated .NET model normalizes both absent and explicitly empty
+            // service metadata to an empty collection, so property presence is unavailable.
+            Assert.That(output, Does.Not.Match(@"(?m)^metadata:"));
+        }
+
+        [TestCase("mimeType")]
+        [TestCase("metadata")]
         [TestCase("fields")]
-        [TestCase("rai_warnings")]
-        public void ToLlmInput_WithReservedMetadataKey_ThrowsArgumentException(string reservedKey)
+        [TestCase("pages")]
+        public void ToLlmInput_WithCustomMetadata_AllowsKeysMatchingHelperOwnedNames(string helperOwnedKey)
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -166,18 +335,244 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var result = ContentUnderstandingModelFactory.AnalysisResult(
                 contents: new[] { content });
 
-            var metadata = new Dictionary<string, object>
+            var customMetadata = new Dictionary<string, object>
             {
-                [reservedKey] = "custom"
+                [helperOwnedKey] = "caller-value"
             };
 
-            ArgumentException? ex = Assert.Throws<ArgumentException>(() => result.ToLlmInput(metadata));
+            string output = result.ToLlmInput(customMetadata);
 
-            Assert.That(ex!.ParamName, Is.EqualTo("metadata"));
-            Assert.That(ex.Message, Does.Contain("reserved front matter key"));
-            Assert.That(ex.Message, Does.Contain(reservedKey));
+            // Nested under customMetadata — does not replace top-level helper keys.
+            Assert.That(output, Does.Contain("customMetadata:"));
+            Assert.That(output, Does.Contain($"{helperOwnedKey}: caller-value"));
+            Assert.That(output, Does.Contain("mimeType: application/pdf"));
+            // Top-level pages from the document still present; caller's "pages" is nested only.
+            if (helperOwnedKey == "pages")
+            {
+                Assert.That(output, Does.Match(@"(?m)^pages: 1$"));
+                Assert.That(output, Does.Match(@"(?m)^  pages: caller-value$"));
+            }
         }
 
+        [Test]
+        public void ToLlmInput_EmptyCustomMetadataDictionaryIsSerialized()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput(new Dictionary<string, object>());
+
+            Assert.That(output, Does.Contain("customMetadata: {}"));
+        }
+
+        [Test]
+        public void ToLlmInput_NullCustomMetadataOmitsBlock()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput(customMetadata: null);
+
+            Assert.That(output, Does.Not.Contain("customMetadata:"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataPreservesNestedEmptyContainers()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["tags"] = new List<object>(),
+                ["extra"] = new Dictionary<string, object>(),
+                ["source"] = "invoice.pdf",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("tags: []"));
+            Assert.That(output, Does.Contain("extra: {}"));
+            Assert.That(output, Does.Contain("source: invoice.pdf"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataPreservesNullProperties()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["missing"] = null!,
+                ["source"] = "invoice.pdf",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("missing: null"));
+            Assert.That(output, Does.Contain("source: invoice.pdf"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataAllNullDictionaryPreservesNullProperty()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["missing"] = null!,
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("customMetadata:"));
+            Assert.That(output, Does.Contain("missing: null"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataJsonElementPreservesNullProperty()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            using JsonDocument metadataDocument = JsonDocument.Parse("{\"missing\":null}");
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["details"] = metadataDocument.RootElement,
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("details:"));
+            Assert.That(output, Does.Contain("missing: null"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataPreservesEmptyStringValuesAndKeys()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["emptyValue"] = string.Empty,
+                [string.Empty] = "empty-key",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("emptyValue: ''"));
+            Assert.That(output, Does.Contain("  '': empty-key"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataSupportsTypedCollections()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["tags"] = new[] { "finance", "invoice" },
+                ["properties"] = new Dictionary<string, string>
+                {
+                    ["department"] = "accounts-payable",
+                },
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("tags:"));
+            Assert.That(output, Does.Contain("- finance"));
+            Assert.That(output, Does.Contain("- invoice"));
+            Assert.That(output, Does.Contain("properties:"));
+            Assert.That(output, Does.Contain("department: accounts-payable"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataPreservesNullListItems()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["values"] = new object?[] { "first", null, "third" },
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("  values:\n  - first\n  - null\n  - third"));
+        }
+
+        [Test]
+        public void ToLlmInput_CustomMetadataQuotesYamlSpecialKeys()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+            var customMetadata = new Dictionary<string, object>
+            {
+                ["with: colon"] = "value1",
+                ["with# hash"] = "value2",
+                ["- dash_start"] = "value3",
+                ["normal_key"] = "value4",
+            };
+
+            string output = result.ToLlmInput(customMetadata);
+
+            Assert.That(output, Does.Contain("'with: colon': value1"));
+            Assert.That(output, Does.Contain("'with# hash': value2"));
+            Assert.That(output, Does.Contain("'- dash_start': value3"));
+            Assert.That(output, Does.Contain("normal_key: value4"));
+        }
         // ---------------------------------------------------------------
         // Multi-page document
         // ---------------------------------------------------------------
@@ -278,8 +673,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         // Audio/Visual content
         // ---------------------------------------------------------------
 
-        [Test]
-        public void ToLlmInput_SingleAudioVisual_NoTimeRange()
+        [TestCase("audio/mpeg")]
+        [TestCase("audio/wav")]
+        public void ToLlmInput_SingleAudioVisual_UsesDetectedMimeTypeAndOmitsTimeRange(string mimeType)
         {
             var fields = new Dictionary<string, ContentField>
             {
@@ -287,7 +683,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             };
 
             var content = ContentUnderstandingModelFactory.AudioVisualContent(
-                mimeType: "audio/wav",
+                mimeType: mimeType,
                 markdown: "Speaker 1: Hello",
                 fields: fields,
                 startTimeMsValue: 0,
@@ -298,7 +694,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("contentType: audioVisual"));
+            Assert.That(output, Does.Contain($"mimeType: {mimeType}"));
+            Assert.That(output, Does.Not.Contain("contentType:"));
             Assert.That(output, Does.Contain("Summary: A short call."));
             // Single segment shouldn't have timeRange
             Assert.That(output, Does.Not.Contain("timeRange"));
@@ -324,6 +721,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
+            Assert.That(CountOccurrences(output, "mimeType: video/mp4"), Is.EqualTo(2));
+            Assert.That(output, Does.Not.Contain("contentType:"));
             Assert.That(output, Does.Contain("timeRange: 00:00 \u2013 00:23"));
             Assert.That(output, Does.Contain("timeRange: 00:24 \u2013 00:43"));
             Assert.That(output, Does.Contain("*****"));
@@ -644,7 +1043,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         // ---------------------------------------------------------------
 
         [Test]
-        public void ToLlmInput_WithWarnings_IncludesRaiWarnings()
+        public void ToLlmInput_WithWarnings_IncludesWarnings()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -663,13 +1062,35 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("warnings:"));
             Assert.That(output, Does.Contain("code: hate"));
             Assert.That(output, Does.Contain("message: Content flagged for harmful language."));
         }
 
         [Test]
-        public void ToLlmInput_WithWarningsAndBothIncludeFlagsFalse_StillIncludesRaiWarnings()
+        public void ToLlmInput_WithWarningTarget_IncludesTarget()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                markdown: "Some text",
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(
+                "{\"code\":\"InvalidField\",\"message\":\"Field is invalid.\",\"target\":\"invoice.total\"}"));
+            ResponseError warning = ((IJsonModel<ResponseError>)new ResponseError()).Create(
+                ref reader,
+                ModelReaderWriterOptions.Json)!;
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content },
+                warnings: new[] { warning });
+
+            string output = result.ToLlmInput();
+
+            Assert.That(output, Does.Contain("target: invoice.total"));
+        }
+
+        [Test]
+        public void ToLlmInput_WithWarningsAndBothIncludeFlagsFalse_StillIncludesWarnings()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -692,14 +1113,14 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false, IncludeMarkdown = false });
 
-            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("warnings:"));
             Assert.That(output, Does.Contain("code: hate"));
             Assert.That(output, Does.Not.Contain("Name: Test"));
             Assert.That(output, Does.Not.Contain("Some text"));
         }
 
         [Test]
-        public void ToLlmInput_LlmStatsWarning_IsFilteredFromRaiWarnings()
+        public void ToLlmInput_LlmStatsWarning_IsFilteredFromWarnings()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -719,13 +1140,13 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("warnings:"));
             Assert.That(output, Does.Not.Contain("LLMStats:"));
             Assert.That(output, Does.Contain("Potentially sensitive content."));
         }
 
         [Test]
-        public void ToLlmInput_LlmStatsWarningOnly_OmitsRaiWarningsBlock()
+        public void ToLlmInput_LlmStatsWarningOnly_OmitsWarningsBlock()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -744,7 +1165,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Not.Contain("rai_warnings:"));
+            Assert.That(output, Does.Not.Contain("warnings:"));
             Assert.That(output, Does.Not.Contain("LLMStats:"));
         }
 
@@ -768,7 +1189,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("rai_warnings:"));
+            Assert.That(output, Does.Contain("warnings:"));
             Assert.That(output, Does.Contain("llmstats: keep as a real warning"));
         }
 
@@ -792,7 +1213,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Not.Contain("rai_warnings:"));
+            Assert.That(output, Does.Not.Contain("warnings:"));
             Assert.That(output, Does.Contain("LLMStats: keep this body text"));
             Assert.That(output, Does.Not.Contain("LLMStats: remove this warning text"));
         }
@@ -817,7 +1238,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Not.Contain("rai_warnings:"));
+            Assert.That(output, Does.Not.Contain("warnings:"));
             Assert.That(output, Does.Not.Contain("LLMStats:"));
         }
 
@@ -826,7 +1247,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         // ---------------------------------------------------------------
 
         [Test]
-        public void ToLlmInput_NoFields_StillHasContentType()
+        public void ToLlmInput_NoFields_StillHasMimeType()
         {
             var content = ContentUnderstandingModelFactory.DocumentContent(
                 mimeType: "application/pdf",
@@ -839,7 +1260,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput();
 
-            Assert.That(output, Does.Contain("contentType: document"));
+            Assert.That(output, Does.Contain("mimeType: application/pdf"));
             Assert.That(output, Does.Not.Contain("fields:"));
         }
 
@@ -888,7 +1309,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
 
             string output = result.ToLlmInput(options: new LlmInputOptions { IncludeFields = false, IncludeMarkdown = false });
 
-            Assert.That(output, Does.Contain("contentType: document"));
+            Assert.That(output, Does.Contain("mimeType: application/pdf"));
             Assert.That(output, Does.Contain("pages: 1"));
             Assert.That(output, Does.Not.Contain("fields:"));
             Assert.That(output, Does.Not.Contain("Name: Test"));
@@ -1075,6 +1496,37 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Should start with --- and end front matter with ---
             Assert.That(output, Does.StartWith("---\n"));
             Assert.That(output, Does.Contain("\n---\n"));
+        }
+
+        [Test]
+        public void ToLlmInput_FrontMatterKeysAreInExpectedOrder()
+        {
+            var content = ContentUnderstandingModelFactory.DocumentContent(
+                mimeType: "application/pdf",
+                category: "Invoice",
+                markdown: "text",
+                fields: new Dictionary<string, ContentField>
+                {
+                    ["X"] = ContentUnderstandingModelFactory.ContentStringField(value: "value"),
+                },
+                startPageNumber: 1,
+                endPageNumber: 1);
+            var result = ContentUnderstandingModelFactory.AnalysisResult(
+                contents: new[] { content });
+
+            string output = result.ToLlmInput(
+                new Dictionary<string, object> { ["source"] = "invoice.pdf" });
+
+            int mimeIndex = output.IndexOf("mimeType:", StringComparison.Ordinal);
+            int customMetadataIndex = output.IndexOf("customMetadata:", StringComparison.Ordinal);
+            int categoryIndex = output.IndexOf("category:", StringComparison.Ordinal);
+            int pagesIndex = output.IndexOf("pages:", StringComparison.Ordinal);
+            int fieldsIndex = output.IndexOf("fields:", StringComparison.Ordinal);
+
+            Assert.That(mimeIndex, Is.LessThan(customMetadataIndex));
+            Assert.That(customMetadataIndex, Is.LessThan(categoryIndex));
+            Assert.That(categoryIndex, Is.LessThan(pagesIndex));
+            Assert.That(pagesIndex, Is.LessThan(fieldsIndex));
         }
 
         // ---------------------------------------------------------------

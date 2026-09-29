@@ -20,25 +20,53 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="LdapConfiguration"/>. </summary>
         /// <param name="domain"> Name of the LDAP configuration domain. </param>
         /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
         /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
         /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
+        /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
+        /// <param name="ldapPort"> Port number for LDAP communication. Default is 389 for LDAP. </param>
+        /// <param name="userDN"> This specifies the user DN (Distinguished Name), which overrides the base DN for user lookups. </param>
+        /// <param name="groupDN"> This specifies the group DN (Distinguished Name), which overrides the base DN for group lookups. </param>
+        /// <param name="netGroupDN"> This specifies the netgroup DN (Distinguished Name), which overrides the base DN for netgroup lookups. </param>
         /// <param name="bindAuthenticationLevel"> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </param>
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, bool? isLdapOverTlsEnabled, string serverCACertificate, string certificateCNHost, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordKeyVaultConfig bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LdapConfiguration(string domain, IList<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IList<IPAddress> dnsServers, int? ldapPort, string userDN, string groupDN, string netGroupDN, BindAuthenticationLevel? bindAuthenticationLevel, string bindDN, BindPasswordKeyVaultConfig bindPasswordAkvConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
             LdapServers = ldapServers;
-            IsLdapOverTlsEnabled = isLdapOverTlsEnabled;
+            SecureLdapType = secureLdapType;
             ServerCACertificate = serverCACertificate;
             CertificateCNHost = certificateCNHost;
+            DnsServers = dnsServers;
+            LdapPort = ldapPort;
+            UserDN = userDN;
+            GroupDN = groupDN;
+            NetGroupDN = netGroupDN;
             BindAuthenticationLevel = bindAuthenticationLevel;
             BindDN = bindDN;
             BindPasswordAkvConfig = bindPasswordAkvConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </summary>
+        public SecureLdapType? SecureLdapType { get; set; }
+
+        /// <summary> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </summary>
+        public IList<IPAddress> DnsServers { get; }
+
+        /// <summary> Port number for LDAP communication. Default is 389 for LDAP. </summary>
+        public int? LdapPort { get; set; }
+
+        /// <summary> This specifies the user DN (Distinguished Name), which overrides the base DN for user lookups. </summary>
+        public string UserDN { get; set; }
+
+        /// <summary> This specifies the group DN (Distinguished Name), which overrides the base DN for group lookups. </summary>
+        public string GroupDN { get; set; }
+
+        /// <summary> This specifies the netgroup DN (Distinguished Name), which overrides the base DN for netgroup lookups. </summary>
+        public string NetGroupDN { get; set; }
 
         /// <summary> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </summary>
         public BindAuthenticationLevel? BindAuthenticationLevel { get; set; }

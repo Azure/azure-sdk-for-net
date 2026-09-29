@@ -32,25 +32,6 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
         return agentDefinition;
     }
     #endregion
-
-    #region Snippet:Sample_SessionHeaderPolicy_HostedAgentSessions
-    private class SessionHeaderPolicy(string agentSessionID) : PipelinePolicy
-    {
-        private static readonly string _SESSION_HEADER = "x-agent-session-id";
-        public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-        {
-            message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-            ProcessNext(message, pipeline, currentIndex);
-        }
-
-        public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-        {
-            message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-            await ProcessNextAsync(message, pipeline, currentIndex);
-        }
-    }
-    #endregion
-
     [Test]
     [AsyncOnly]
     public async Task HostedAgentSessionsCreateAsync()
@@ -116,10 +97,13 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
             await Task.Delay(500);
             session1 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         }
-        ProjectOpenAIClientOptions oaiOptions = new();
-        oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+            SessionId = session1.AgentSessionId
+        };
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_DisableTheAgent_HostedAgentSessions_Async
@@ -147,10 +131,12 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
             await Task.Delay(500);
             session2 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         }
-        oaiOptions = new();
-        oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-        responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-        response = await responseClient.CreateResponseAsync("Hello, tell me another joke.");
+        responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+            SessionId = session2.AgentSessionId
+        };
+        response = await responseClient.CreateResponseAsync(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Async
@@ -221,10 +207,13 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
             Thread.Sleep(500);
             session1 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         }
-        ProjectOpenAIClientOptions oaiOptions = new();
-        oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-        ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+            SessionId = session1.AgentSessionId
+        };
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:Sample_DisableTheAgent_HostedAgentSessions_Sync
@@ -252,10 +241,12 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
             Thread.Sleep(500);
             session2 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
         }
-        oaiOptions = new();
-        oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-        responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-        response = responseClient.CreateResponse("Hello, tell me another joke.");
+        responseOptions = new()
+        {
+            InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+            SessionId = session2.AgentSessionId
+        };
+        response = responseClient.CreateResponse(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Sync

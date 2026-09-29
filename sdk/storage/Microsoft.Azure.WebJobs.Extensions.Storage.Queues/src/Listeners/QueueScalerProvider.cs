@@ -52,7 +52,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
                 serviceProvider.GetService<IQueueProcessorFactory>(),
                 new SharedQueueWatcher());
 
-            QueueServiceClient serviceClient = queueServiceClientProvider.Get(_queueMetadata.Connection, serviceProvider.GetService<INameResolver>());
+            // Scale metrics read the queue raw so that PeekMessages is never filtered by decode
+            // failures; see QueueServiceClientProvider.GetRaw. Message processing is unaffected and
+            // continues to use the configured encoding.
+            QueueServiceClient serviceClient = queueServiceClientProvider.GetRaw(_queueMetadata.Connection, serviceProvider.GetService<INameResolver>());
             _queueClient = serviceClient.GetQueueClient(_queueMetadata.QueueName);
         }
 

@@ -3,9 +3,12 @@ import:
 overrides:
   - filename: '**/sdk/desktopvirtualization/**/*.cs'
     words:
+      - AZPROVISION
+      - Trycep
       - adfs
       - logix
       - msix
       - msix
       - redirector
+      - ssoadfs
       - SSDLRS

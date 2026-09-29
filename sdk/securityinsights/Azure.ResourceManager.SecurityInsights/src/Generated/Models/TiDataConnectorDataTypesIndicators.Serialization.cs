@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for indicators connection. </summary>
-    public partial class TiDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon, IJsonModel<TiDataConnectorDataTypesIndicators>
+    internal partial class TiDataConnectorDataTypesIndicators : DataConnectorDataTypeCommon, IJsonModel<TiDataConnectorDataTypesIndicators>
     {
         /// <summary> Initializes a new instance of <see cref="TiDataConnectorDataTypesIndicators"/> for deserialization. </summary>
         internal TiDataConnectorDataTypesIndicators()
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TiDataConnectorDataTypesIndicators(state, additionalBinaryDataProperties);

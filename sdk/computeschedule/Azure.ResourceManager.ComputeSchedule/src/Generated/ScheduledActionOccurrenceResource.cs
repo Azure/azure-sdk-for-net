@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Delay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Delay
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

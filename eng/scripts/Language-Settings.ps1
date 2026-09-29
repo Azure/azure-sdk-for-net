@@ -110,6 +110,12 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
     }
   }
 
+  # ForceDirect matrix passes discard indirect packages, so their dependency calculation is unused.
+  if ($env:AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION -eq 'true') {
+    Write-Host "Skipping cross-package dependency calculation; only direct packages are needed for this pass."
+    return $additionalValidationPackages
+  }
+
   # Use all directly changed packages for dependency calculation. This ensures that
   # when any package changes, all cross-service packages that depend on it are included
   # as indirect packages for validation testing.
@@ -554,27 +560,6 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
     # Install autorest locally
     Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
-
-    Write-Host "Running npm ci over legacy-emitter-package.json in a temp folder to prime the npm cache"
-
-    $tempFolder = New-TemporaryFile
-    $tempFolder | Remove-Item -Force
-    New-Item $tempFolder -ItemType Directory -Force | Out-Null
-
-    Push-Location $tempFolder
-    try {
-        Copy-Item "$RepoRoot/eng/legacy-emitter-package.json" "package.json"
-        if(Test-Path "$RepoRoot/eng/legacy-emitter-package-lock.json") {
-            Copy-Item "$RepoRoot/eng/legacy-emitter-package-lock.json" "package-lock.json"
-            Invoke-LoggedCommand "npm ci"
-        } else {
-          Invoke-LoggedCommand "npm install"
-        }
-    }
-    finally {
-      Pop-Location
-      $tempFolder | Remove-Item -Force -Recurse
-    }
 
     # Generate projects
     $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')

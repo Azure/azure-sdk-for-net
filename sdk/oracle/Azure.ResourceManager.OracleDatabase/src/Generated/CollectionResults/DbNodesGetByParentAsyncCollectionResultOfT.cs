@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 {
                     yield break;
                 }
-                DbNodeListResult result = DbNodeListResult.FromResponse(response);
+                DBNodeListResult result = DBNodeListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<CloudVmClusterDBNodeData>.FromValues((IReadOnlyList<CloudVmClusterDBNodeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

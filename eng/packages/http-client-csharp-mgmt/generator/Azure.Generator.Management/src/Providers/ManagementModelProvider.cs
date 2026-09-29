@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using System.IO;
 
 namespace Azure.Generator.Management.Providers
@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Providers
     /// <summary>
     /// ModelProvider used for non-resource management-plane models.
     /// </summary>
-    internal class ManagementModelProvider : ModelProvider
+    internal class ManagementModelProvider : ScmModelProvider
     {
         public ManagementModelProvider(InputModelType inputModel)
             : base(inputModel)

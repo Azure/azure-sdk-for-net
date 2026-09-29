@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Data version base definition. </summary>
+    /// <summary>
+    /// Data version base definition
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/>, and <see cref="MachineLearningUriFolderDataVersion"/>.
+    /// </summary>
     public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase, IJsonModel<MachineLearningDataVersionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionProperties"/> for deserialization. </summary>

@@ -5,7 +5,7 @@
 - Install Visual Studio 2026 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
   - Install the **.NET desktop development** workload in VisualStudio
   - Need at least .NET Framework 4.6.2 and 4.7.1 development tools 
-- Install **.NET 10.0.103 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 10.0.*** band)  
+- Install **.NET 10.0.400 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 10.0.*** band)  
 - Install the latest version of git (https://git-scm.com/downloads)
 - Install [PowerShell](https://learn.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
 - Install [NodeJS](https://nodejs.org/) (22.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
@@ -252,23 +252,28 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 .NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/pull/14328) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
 
 ### How it works
-Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
+Each library needs to provide an `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set use the ApiCompat task included in the .NET SDK and download the specified baseline package as part of restore. ApiCompat runs during build to verify the current APIs are compatible with the last GA'ed version, including public parameter names used by callers with named arguments. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
 
 ### API Compat Baseline Suppressions
 In rare cases, an intentional breaking change may be acceptable (e.g., removing an experimental API, fixing an attribute that was incorrectly applied). When ApiCompat reports errors for such changes, they can be suppressed using baseline files.
 
-**All baseline suppression files are centrally managed** in `eng/apicompatbaselines/` and named after the project (e.g., `eng/apicompatbaselines/Azure.Core.txt`). Local `ApiCompatBaseline.txt` files in package `src/` directories are no longer supported and will produce a build error.
+**All baseline suppression files are centrally managed** in `eng/apicompatbaselines/` and named after the project (e.g., `eng/apicompatbaselines/Azure.Core.xml`). Local `ApiCompatBaseline.txt` files in package `src/` directories are no longer supported and will produce a build error.
 
 To add or modify baseline suppressions:
-1. Create or edit `eng/apicompatbaselines/<ProjectName>.txt` (the project name matches your `.csproj` filename)
+1. Create or edit `eng/apicompatbaselines/<ProjectName>.xml` (the project name matches your `.csproj` filename)
 2. Add suppression entries with a comment explaining why the breaking change is acceptable
 3. Changes to this directory require review from the SDK team (enforced via CODEOWNERS)
 
 Example baseline file format:
-```
-# This constructor was marked as Experimental and was consolidated into the two-parameter overload.
-# It is safe to remove as it was under experimental feature flag SCME0002.
-MembersMustExist : Member 'protected void Azure.Core.ClientOptions..ctor(Microsoft.Extensions.Configuration.IConfigurationSection)' does not exist in the implementation but it does exist in the contract.
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!-- This constructor was experimental and was consolidated into another overload. -->
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Core.ClientOptions.#ctor(Microsoft.Extensions.Configuration.IConfigurationSection)</Target>
+  </Suppression>
+</Suppressions>
 ```
 
 ### Releasing a new version of a GA'ed libary

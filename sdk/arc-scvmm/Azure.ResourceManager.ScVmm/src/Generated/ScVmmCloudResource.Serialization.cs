@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ScVmm
 {
+    /// <summary></summary>
     public partial class ScVmmCloudResource : IJsonModel<ScVmmCloudData>
     {
-        private static ScVmmCloudData s_dataDeserializationInstance;
-        private static ScVmmCloudData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ScVmmCloudData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ScVmmCloudData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ScVmmCloudData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScVmmCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmCloudData>)Data).Write(writer, options);
 
-        ScVmmCloudData IJsonModel<ScVmmCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmCloudData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmCloudData IJsonModel<ScVmmCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmCloudData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ScVmmCloudData IPersistableModel<ScVmmCloudData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmCloudData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmCloudData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScVmmCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

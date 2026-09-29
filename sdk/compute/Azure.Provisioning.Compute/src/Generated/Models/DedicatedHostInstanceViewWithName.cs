@@ -6,17 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The instance view of a dedicated host that includes the name of the dedicated host. It is used for the response to the instance view of a dedicated host group. </summary>
-    public partial class DedicatedHostInstanceViewWithName : ProvisionableConstruct
+    public partial class DedicatedHostInstanceViewWithName : DedicatedHostInstanceView
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _assetId;
-        private DedicatedHostAvailableCapacity _availableCapacity;
-        private BicepList<InstanceViewStatus> _statuses;
 
         /// <summary> Creates a new DedicatedHostInstanceViewWithName. </summary>
         public DedicatedHostInstanceViewWithName()
@@ -33,53 +29,11 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the AssetId. </summary>
-        public BicepValue<string> AssetId
-        {
-            get
-            {
-                Initialize();
-                return _assetId;
-            }
-        }
-
-        /// <summary> Gets the AvailableCapacity. </summary>
-        internal DedicatedHostAvailableCapacity AvailableCapacity
-        {
-            get
-            {
-                Initialize();
-                return _availableCapacity;
-            }
-        }
-
-        /// <summary> Gets the Statuses. </summary>
-        public BicepList<InstanceViewStatus> Statuses
-        {
-            get
-            {
-                Initialize();
-                return _statuses;
-            }
-        }
-
-        /// <summary> Gets the AllocatableVMs. </summary>
-        public BicepList<DedicatedHostAllocatableVm> AvailableCapacityAllocatableVMs
-        {
-            get
-            {
-                return AvailableCapacity.AllocatableVMs;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for DedicatedHostInstanceViewWithName. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
-            _assetId = DefineProperty<string>(nameof(AssetId), new string[] { "assetId" }, isOutput: true);
-            _availableCapacity = DefineModelProperty<DedicatedHostAvailableCapacity>(nameof(AvailableCapacity), new string[] { "availableCapacity" });
-            _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
             DefineAdditionalProperties();
         }
 

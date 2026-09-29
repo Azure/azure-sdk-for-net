@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
-    /// GA-compatibility model-factory overloads for the ProxyResource->flat shimmed types:
+    /// GA-compatibility model-factory overloads for legacy types that are no longer represented by the current TypeSpec model:
     /// AppServiceEnvironmentAddressResult, CsmDeploymentStatus, and
-    /// SiteAuthSettingsV2. These models are recreated in customization as
-    /// `ResourceData`-derived plain models, so their factory entries live here.
+    /// SiteAuthSettingsV2. The generator emits their current resource/data shapes rather than these handwritten compatibility types,
+    /// so their factory entries live here.
     /// </summary>
     public static partial class ArmAppServiceModelFactory
     {
@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             => AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, kind, serviceIPAddress, internalIPAddress, outboundIPAddresses, virtualIPMappings);
 
         /// <summary> Initializes a new instance of CsmDeploymentStatus. </summary>
+        // The current TypeSpec model produces CsmDeploymentStatusData, not this legacy compatibility type.
         public static CsmDeploymentStatus CsmDeploymentStatus(
             ResourceIdentifier id = null,
             string name = null,
@@ -64,8 +65,8 @@ namespace Azure.ResourceManager.AppService.Models
             string kind = null,
             string deploymentId = null,
             DeploymentBuildStatus? status = null,
-            int? numberOfInstancesSuccessful = null,
             int? numberOfInstancesInProgress = null,
+            int? numberOfInstancesSuccessful = null,
             int? numberOfInstancesFailed = null,
             IEnumerable<string> failedInstancesLogs = null,
             IEnumerable<ResponseError> errors = null)
@@ -89,13 +90,13 @@ namespace Azure.ResourceManager.AppService.Models
             SystemData systemData,
             string deploymentId,
             DeploymentBuildStatus? status,
-            int? numberOfInstancesSuccessful,
             int? numberOfInstancesInProgress,
+            int? numberOfInstancesSuccessful,
             int? numberOfInstancesFailed,
             IEnumerable<string> failedInstancesLogs,
             IEnumerable<ResponseError> errors,
             string kind)
-            => CsmDeploymentStatus(id, name, resourceType, systemData, kind, deploymentId, status, numberOfInstancesSuccessful, numberOfInstancesInProgress, numberOfInstancesFailed, failedInstancesLogs, errors);
+            => CsmDeploymentStatus(id, name, resourceType, systemData, kind, deploymentId, status, numberOfInstancesInProgress, numberOfInstancesSuccessful, numberOfInstancesFailed, failedInstancesLogs, errors);
 
         /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
         public static SiteAuthSettingsV2 SiteAuthSettingsV2(

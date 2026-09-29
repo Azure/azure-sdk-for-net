@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
-            DbSystemUpdateProperties properties = default;
+            DBSystemUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -217,12 +217,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    properties = DbSystemUpdateProperties.DeserializeDbSystemUpdateProperties(prop.Value, options);
+                    properties = DBSystemUpdateProperties.DeserializeDBSystemUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OracleDBSystemPatch(zones ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);

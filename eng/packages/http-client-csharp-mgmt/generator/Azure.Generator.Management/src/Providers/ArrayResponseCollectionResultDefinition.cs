@@ -36,6 +36,7 @@ namespace Azure.Generator.Management.Providers
         private readonly CSharpType _itemType;
         private readonly bool _isAsync;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
+        private readonly TypeProvider _backCompatProvider;
         private readonly string _methodName;
         private readonly string _enclosingTypeName;
 
@@ -55,6 +56,7 @@ namespace Azure.Generator.Management.Providers
             CSharpType itemType,
             bool isAsync,
             IReadOnlyList<ParameterProvider> constructorParameters,
+            TypeProvider backCompatProvider,
             string methodName,
             string enclosingTypeName)
         {
@@ -63,6 +65,7 @@ namespace Azure.Generator.Management.Providers
             _itemType = itemType;
             _isAsync = isAsync;
             _constructorParameters = constructorParameters;
+            _backCompatProvider = backCompatProvider;
             _methodName = methodName;
             _enclosingTypeName = enclosingTypeName;
 
@@ -108,6 +111,8 @@ namespace Azure.Generator.Management.Providers
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
+
+        protected override IReadOnlyList<CSharpType> BuildHelperDependencyTypes() => [_restClient.Type];
 
         protected override CSharpType[] BuildImplements()
         {
@@ -226,7 +231,7 @@ namespace Azure.Generator.Management.Providers
             // Since we're generating collection result, we just need to call the Create*Request method on the client
             // The method name is derived from the original convenience method name from the REST client, not the potentially customized _methodName
             // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
-            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync);
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync, _backCompatProvider);
             var originalMethodName = convenienceMethod.Signature.Name;
             var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
             var createRequestMethodName = $"Create{baseName}Request";

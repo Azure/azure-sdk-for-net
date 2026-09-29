@@ -121,11 +121,11 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _failureAction = DefineProperty<ArmUpgradeFailureAction>(nameof(FailureAction), new string[] { "failureAction" });
-            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" });
-            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" });
-            _healthCheckRetryTimeout = DefineProperty<TimeSpan>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" });
-            _upgradeTimeout = DefineProperty<TimeSpan>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" });
-            _upgradeDomainTimeout = DefineProperty<TimeSpan>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" });
+            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, format: "c");
+            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, format: "c");
+            _healthCheckRetryTimeout = DefineProperty<TimeSpan>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" }, format: "c");
+            _upgradeTimeout = DefineProperty<TimeSpan>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" }, format: "c");
+            _upgradeDomainTimeout = DefineProperty<TimeSpan>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" }, format: "c");
             DefineAdditionalProperties();
         }
 

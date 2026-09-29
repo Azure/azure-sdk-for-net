@@ -7,7 +7,6 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </summary>
     internal partial class DelimitedTextConfigurationInternal
     {
         /// <summary> Initializes a new instance of <see cref="DelimitedTextConfigurationInternal"/>. </summary>
@@ -19,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="columnSeparator"> The string used to separate columns. </param>
         /// <param name="fieldQuote"> The string used to quote a specific field. </param>
         /// <param name="recordSeparator"> The string used to separate records. </param>
-        /// <param name="escapeChar"> The string used as an escape character. </param>
+        /// <param name="escapeChar"> The string used to escape a quote character in a field. </param>
         /// <param name="headersPresent"> Represents whether the data has headers. </param>
         internal DelimitedTextConfigurationInternal(string columnSeparator, string fieldQuote, string recordSeparator, string escapeChar, bool? headersPresent)
         {
@@ -32,12 +31,16 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> The string used to separate columns. </summary>
         public string ColumnSeparator { get; set; }
+
         /// <summary> The string used to quote a specific field. </summary>
         public string FieldQuote { get; set; }
+
         /// <summary> The string used to separate records. </summary>
         public string RecordSeparator { get; set; }
-        /// <summary> The string used as an escape character. </summary>
+
+        /// <summary> The string used to escape a quote character in a field. </summary>
         public string EscapeChar { get; set; }
+
         /// <summary> Represents whether the data has headers. </summary>
         public bool? HeadersPresent { get; set; }
     }

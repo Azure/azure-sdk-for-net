@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2026-08-20)
+
+### Bugs Fixed
+
+- Fixed Bicep serialization formats for `BicepList<T>` and `BicepDictionary<T>` elements, including nested collection elements.
+- Fixed Bicep literal serialization for formatted `DateTimeOffset`, `TimeSpan`, and string-encoded integer values. `DateTimeOffset` values using the `"O"` or `"o"` format now emit UTC `Z` literals (for example, `2026-01-01T00:00:00.0000000Z`) instead of `+00:00` offsets.
 
 ## 1.6.0-beta.1 (2026-03-11)
 

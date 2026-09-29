@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for TAXII connector. </summary>
-    public partial class TiTaxiiDataConnectorDataTypesTaxiiClientInfo : DataConnectorDataTypeCommon, IJsonModel<TiTaxiiDataConnectorDataTypesTaxiiClientInfo>
+    internal partial class TiTaxiiDataConnectorDataTypesTaxiiClientInfo : DataConnectorDataTypeCommon, IJsonModel<TiTaxiiDataConnectorDataTypesTaxiiClientInfo>
     {
         /// <summary> Initializes a new instance of <see cref="TiTaxiiDataConnectorDataTypesTaxiiClientInfo"/> for deserialization. </summary>
         internal TiTaxiiDataConnectorDataTypesTaxiiClientInfo()
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TiTaxiiDataConnectorDataTypesTaxiiClientInfo(state, additionalBinaryDataProperties);

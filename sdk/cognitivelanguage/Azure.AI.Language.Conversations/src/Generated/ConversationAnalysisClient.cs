@@ -196,17 +196,17 @@ namespace Azure.AI.Language.Conversations
         /// </list>
         /// </summary>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStatistics, RequestContext context)
+        public virtual Response GetAnalyzeConversationJobStatus(Guid jobId, bool? showStats, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStatistics, context);
+                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStats, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -225,17 +225,17 @@ namespace Azure.AI.Language.Conversations
         /// </list>
         /// </summary>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="showStatistics"> (Optional) if set to true, response will contain request and document level statistics. </param>
+        /// <param name="showStats"> (Optional) if set to true, response will contain request and document level statistics. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStatistics, RequestContext context)
+        public virtual async Task<Response> GetAnalyzeConversationJobStatusAsync(Guid jobId, bool? showStats, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAnalysisClient.GetAnalyzeConversationJobStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStatistics, context);
+                using HttpMessage message = CreateGetAnalyzeConversationJobStatusRequest(jobId, showStats, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

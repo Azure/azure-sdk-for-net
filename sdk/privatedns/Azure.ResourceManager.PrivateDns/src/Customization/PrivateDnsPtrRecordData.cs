@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {

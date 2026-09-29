@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Authorization
 {
+    /// <summary></summary>
     public partial class AuthorizationProviderOperationsMetadataResource : IJsonModel<AuthorizationProviderOperationsMetadataData>
     {
-        private static AuthorizationProviderOperationsMetadataData s_dataDeserializationInstance;
-        private static AuthorizationProviderOperationsMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AuthorizationProviderOperationsMetadataData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AuthorizationProviderOperationsMetadataData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AuthorizationProviderOperationsMetadataData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AuthorizationProviderOperationsMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationProviderOperationsMetadataData>)Data).Write(writer, options);
 
-        AuthorizationProviderOperationsMetadataData IJsonModel<AuthorizationProviderOperationsMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationProviderOperationsMetadataData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthorizationProviderOperationsMetadataData IJsonModel<AuthorizationProviderOperationsMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationProviderOperationsMetadataData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         AuthorizationProviderOperationsMetadataData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationProviderOperationsMetadataData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<AuthorizationProviderOperationsMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationProviderOperationsMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AuthorizationProviderOperationsMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

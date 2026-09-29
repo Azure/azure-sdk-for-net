@@ -38,7 +38,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             StacClient stacClient = client.GetStacClient();
 
             // Get STAC API conformance classes
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
             StacConformanceClasses conformance = response.Value;
 
             Console.WriteLine($"STAC API Conformance Classes ({conformance.ConformsTo.Count}):");
@@ -71,12 +71,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
 
             // Get a collection and validate STAC compliance
-            Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = response.Value;
+            Response<StacCollection> response = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = response.Value;
 
             // Check required STAC Collection properties
             Console.WriteLine($"Collection ID: {collection.Id}");
-            Console.WriteLine($"Type: {collection.Type}"); // Should be "Collection"
+            Console.WriteLine($"Type: {collection.Kind}"); // Should be "Collection"
             Console.WriteLine($"STAC Version: {collection.StacVersion}");
             Console.WriteLine($"Description: {collection.Description}");
             Console.WriteLine($"License: {collection.License}");
@@ -135,11 +135,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             searchParams.Limit = 10;
 
-            Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
-            StacItemCollectionResource results = response.Value;
+            Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
+            StacItemCollection results = response.Value;
 
             Console.WriteLine($"Found {results.Features.Count} items in the specified area");
-            foreach (StacItemResource item in results.Features)
+            foreach (StacItem item in results.Features)
             {
                 Console.WriteLine($"  Item: {item.Id}");
             }
@@ -171,11 +171,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             searchParams.Datetime = "2021-01-01T00:00:00Z/2022-12-31T23:59:59Z";
             searchParams.Limit = 10;
 
-            Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
-            StacItemCollectionResource results = response.Value;
+            Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
+            StacItemCollection results = response.Value;
 
             Console.WriteLine($"Found {results.Features.Count} items in date range");
-            foreach (StacItemResource item in results.Features)
+            foreach (StacItem item in results.Features)
             {
                 Console.WriteLine($"  Item: {item.Id}");
                 if (item.Properties?.Datetime != null)
@@ -211,11 +211,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             searchParams.SortBy.Add(new StacSortExtension("datetime", StacSearchSortingDirection.Desc));
             searchParams.Limit = 5;
 
-            Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
-            StacItemCollectionResource results = response.Value;
+            Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
+            StacItemCollection results = response.Value;
 
             Console.WriteLine("Items sorted by datetime (newest first):");
-            foreach (StacItemResource item in results.Features)
+            foreach (StacItem item in results.Features)
             {
                 Console.WriteLine($"  {item.Id} - {item.Properties?.Datetime:yyyy-MM-dd}");
             }
@@ -243,14 +243,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get items from a specific collection
             string collectionId = "naip";
-            Response<StacItemCollectionResource> response = await stacClient.GetItemCollectionAsync(
-                collectionId,
-                limit: 10);
+            Response<StacItemCollection> response = await stacClient.GetItemCollectionAsync(new GetItemCollectionOptions(collectionId) { Limit = 10 });
 
-            StacItemCollectionResource items = response.Value;
+            StacItemCollection items = response.Value;
 
             Console.WriteLine($"Retrieved {items.Features.Count} items from '{collectionId}' collection");
-            foreach (StacItemResource item in items.Features)
+            foreach (StacItem item in items.Features)
             {
                 Console.WriteLine($"\nItem: {item.Id}");
                 Console.WriteLine($"  Collection: {item.Collection}");
@@ -282,8 +280,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             string collectionId = "naip";
             string itemId = "tx_m_2609719_se_14_060_20201216";
 
-            Response<StacItemResource> response = await stacClient.GetItemAsync(collectionId, itemId);
-            StacItemResource item = response.Value;
+            Response<StacItem> response = await stacClient.GetItemAsync(collectionId, itemId);
+            StacItem item = response.Value;
 
             Console.WriteLine($"Item ID: {item.Id}");
             Console.WriteLine($"Collection: {item.Collection}");
@@ -318,7 +316,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
 
             // Get queryable properties for a collection
             string collectionId = "naip";
-            Response<QueryableDefinitionsResponse> response =
+            Response<QueryableDefinitionsResult> response =
                 await stacClient.GetCollectionQueryablesAsync(collectionId);
 
             IReadOnlyDictionary<string, BinaryData> queryables = response.Value.AdditionalProperties;
@@ -422,8 +420,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             searchParams.SortBy.Add(new StacSortExtension("datetime", StacSearchSortingDirection.Desc));
             searchParams.Limit = 50;
 
-            Response<StacItemCollectionResource> response = await stacClient.SearchAsync(searchParams);
-            StacItemCollectionResource results = response.Value;
+            Response<StacItemCollection> response = await stacClient.SearchAsync(searchParams);
+            StacItemCollection results = response.Value;
 
             Console.WriteLine($"Complex search found {results.Features.Count} items");
             #endregion
@@ -455,18 +453,18 @@ namespace Azure.Analytics.PlanetaryComputer.Tests.Samples
             Console.WriteLine($"Available Collections ({collections.Collections.Count}):");
 
             // Iterate through first 5 collections and show sample items
-            foreach (StacCollectionResource collection in collections.Collections.Take(5))
+            foreach (StacCollection collection in collections.Collections.Take(5))
             {
                 Console.WriteLine($"\nCollection: {collection.Id}");
                 Console.WriteLine($"  Title: {collection.Title}");
                 Console.WriteLine($"  License: {collection.License}");
 
                 // Get a few items from this collection
-                Response<StacItemCollectionResource> itemsResponse =
-                    await stacClient.GetItemCollectionAsync(collection.Id, limit: 3);
+                Response<StacItemCollection> itemsResponse =
+                    await stacClient.GetItemCollectionAsync(new GetItemCollectionOptions(collection.Id) { Limit = 3 });
 
                 Console.WriteLine($"  Sample Items ({itemsResponse.Value.Features.Count}):");
-                foreach (StacItemResource item in itemsResponse.Value.Features)
+                foreach (StacItem item in itemsResponse.Value.Features)
                 {
                     Console.WriteLine($"    - {item.Id}");
                 }

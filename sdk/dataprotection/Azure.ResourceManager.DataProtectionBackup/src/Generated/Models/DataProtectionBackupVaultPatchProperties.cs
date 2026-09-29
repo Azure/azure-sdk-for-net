@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
         /// <param name="securitySettings"> Security Settings. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="costManagementSettings"> Cost Management Settings of the vault. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultPatchProperties(MonitoringSettings monitoringSettings, BackupVaultSecuritySettings securitySettings, BackupVaultFeatureSettings featureSettings, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupVaultPatchProperties(MonitoringSettings monitoringSettings, BackupVaultSecuritySettings securitySettings, BackupVaultFeatureSettings featureSettings, CostManagementSettings costManagementSettings, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
             SecuritySettings = securitySettings;
             FeatureSettings = featureSettings;
+            CostManagementSettings = costManagementSettings;
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Feature Settings. </summary>
         public BackupVaultFeatureSettings FeatureSettings { get; set; }
+
+        /// <summary> Cost Management Settings of the vault. </summary>
+        internal CostManagementSettings CostManagementSettings { get; set; }
 
         /// <summary> ResourceGuardOperationRequests on which LAC check will be performed. </summary>
         public IList<string> ResourceGuardOperationRequests { get; }
@@ -64,6 +69,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     MonitoringSettings = new MonitoringSettings();
                 }
                 MonitoringSettings.AlertSettingsForAllJobFailures = value;
+            }
+        }
+
+        /// <summary> Settings for granularity level. </summary>
+        public GranularityLevel? CostManagementGranularityLevel
+        {
+            get
+            {
+                return CostManagementSettings is null ? default : CostManagementSettings.GranularityLevel;
+            }
+            set
+            {
+                if (CostManagementSettings is null)
+                {
+                    CostManagementSettings = new CostManagementSettings();
+                }
+                CostManagementSettings.GranularityLevel = value;
             }
         }
     }

@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 5.3.9 (2026-09-08)
+
+### Other Changes
+- This release contains bug fixes to improve quality.
+
 ## 5.3.8 (2026-03-19)
 
 ### Bugs Fixed

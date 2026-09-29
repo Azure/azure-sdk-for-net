@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(WebAppBackupInfo content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(info, nameof(info));
 
             using DiagnosticScope scope = _backupItemsClientDiagnostics.CreateScope("SiteBackupResource.GetBackupStatusSecrets");
             scope.Start();
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupItemsRestClient.CreateGetBackupStatusSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebAppBackupInfo.ToRequestContent(content), context);
+                HttpMessage message = _backupItemsRestClient.CreateGetBackupStatusSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<WebAppBackupData> response = Response.FromValue(WebAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SiteBackupResource> GetBackupStatusSecrets(WebAppBackupInfo content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual Response<SiteBackupResource> GetBackupStatusSecrets(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(info, nameof(info));
 
             using DiagnosticScope scope = _backupItemsClientDiagnostics.CreateScope("SiteBackupResource.GetBackupStatusSecrets");
             scope.Start();
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupItemsRestClient.CreateGetBackupStatusSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebAppBackupInfo.ToRequestContent(content), context);
+                HttpMessage message = _backupItemsRestClient.CreateGetBackupStatusSecretsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebAppBackupInfo.ToRequestContent(info), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<WebAppBackupData> response = Response.FromValue(WebAppBackupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -416,12 +416,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Information on restore request . </param>
+        /// <param name="info"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestoreAsync(WaitUntil waitUntil, RestoreRequestInfo content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<ArmOperation> RestoreAsync(WaitUntil waitUntil, RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(info, nameof(info));
 
             using DiagnosticScope scope = _backupItemsClientDiagnostics.CreateScope("SiteBackupResource.Restore");
             scope.Start();
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupItemsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreRequestInfo.ToRequestContent(content), context);
+                HttpMessage message = _backupItemsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_backupItemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -469,12 +469,12 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Information on restore request . </param>
+        /// <param name="info"> Information on restore request . </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Restore(WaitUntil waitUntil, RestoreRequestInfo content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual ArmOperation Restore(WaitUntil waitUntil, RestoreRequestInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(info, nameof(info));
 
             using DiagnosticScope scope = _backupItemsClientDiagnostics.CreateScope("SiteBackupResource.Restore");
             scope.Start();
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _backupItemsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreRequestInfo.ToRequestContent(content), context);
+                HttpMessage message = _backupItemsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreRequestInfo.ToRequestContent(info), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppServiceArmOperation operation = new AppServiceArmOperation(_backupItemsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

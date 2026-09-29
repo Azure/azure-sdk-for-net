@@ -25,7 +25,7 @@
     <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
     <PackageVersion Include="Google.Protobuf" Version="3.33.2" />
     <PackageVersion Include="Grpc.Tools" Version="2.76.0" PrivateAssets="all" />
-    <PackageVersion Include="MessagePack" Version="2.5.192" />
+    <PackageVersion Include="MessagePack" Version="2.5.302" />
     <PackageVersion Include="Microsoft.Azure.SignalR" Version="1.32.0" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Protocols" Version="1.32.0" />
     <PackageVersion Include="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />

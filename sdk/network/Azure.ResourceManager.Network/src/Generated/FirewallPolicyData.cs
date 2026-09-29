@@ -61,6 +61,20 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> List of references to FirewallPolicyKubeSelectorGroups. </summary>
+        [WirePath("properties.kubeSelectorGroups")]
+        public IReadOnlyList<NetworkSubResource> KubeSelectorGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FirewallPolicyPropertiesFormat();
+                }
+                return Properties.KubeSelectorGroups;
+            }
+        }
+
         /// <summary> The provisioning state of the firewall policy resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState
@@ -194,6 +208,16 @@ namespace Azure.ResourceManager.Network
                     Properties = new FirewallPolicyPropertiesFormat();
                 }
                 Properties.IntrusionDetection = value;
+            }
+        }
+
+        /// <summary> Indicates that the Firewall Policy is managed by AFC (Azure Firewall for Containers). When set, the policy is treated as read-only for callers that do not supply the AFC-managed sync marker on write operations. </summary>
+        [WirePath("properties.afcManaged")]
+        public bool? IsAfcManaged
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAfcManaged;
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.Core;
 
 namespace Specs.Azure.Payload.Pageable
 {

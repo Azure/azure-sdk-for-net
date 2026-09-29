@@ -5,23 +5,17 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> The JSON object that contains the properties required to create a frontend endpoint. </summary>
-    internal partial class FrontendEndpointProperties : ProvisionableConstruct
+    internal partial class FrontendEndpointProperties : FrontendEndpointUpdateParameters
     {
         private BicepValue<FrontDoorResourceState> _resourceState;
         private BicepValue<FrontendEndpointCustomHttpsProvisioningState> _customHttpsProvisioningState;
         private BicepValue<FrontendEndpointCustomHttpsProvisioningSubstate> _customHttpsProvisioningSubstate;
         private CustomHttpsConfiguration _customHttpsConfiguration;
-        private BicepValue<string> _hostName;
-        private BicepValue<SessionAffinityEnabledState> _sessionAffinityEnabledState;
-        private BicepValue<int> _sessionAffinityTtlInSeconds;
-        private FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink _webApplicationFirewallPolicyLink;
 
         /// <summary> Creates a new FrontendEndpointProperties. </summary>
         public FrontendEndpointProperties()
@@ -68,83 +62,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the HostName. </summary>
-        public BicepValue<string> HostName
-        {
-            get
-            {
-                Initialize();
-                return _hostName;
-            }
-            set
-            {
-                Initialize();
-                _hostName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the SessionAffinityEnabledState. </summary>
-        public BicepValue<SessionAffinityEnabledState> SessionAffinityEnabledState
-        {
-            get
-            {
-                Initialize();
-                return _sessionAffinityEnabledState;
-            }
-            set
-            {
-                Initialize();
-                _sessionAffinityEnabledState.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the SessionAffinityTtlInSeconds. </summary>
-        public BicepValue<int> SessionAffinityTtlInSeconds
-        {
-            get
-            {
-                Initialize();
-                return _sessionAffinityTtlInSeconds;
-            }
-            set
-            {
-                Initialize();
-                _sessionAffinityTtlInSeconds.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the WebApplicationFirewallPolicyLink. </summary>
-        internal FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink
-        {
-            get
-            {
-                Initialize();
-                return _webApplicationFirewallPolicyLink;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _webApplicationFirewallPolicyLink, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> WebApplicationFirewallPolicyLinkId
-        {
-            get
-            {
-                return WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
-            }
-            set
-            {
-                if (WebApplicationFirewallPolicyLink is null)
-                {
-                    WebApplicationFirewallPolicyLink = new FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink();
-                }
-                WebApplicationFirewallPolicyLink.Id = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FrontendEndpointProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -153,10 +70,6 @@ namespace Azure.Provisioning.FrontDoor
             _customHttpsProvisioningState = DefineProperty<FrontendEndpointCustomHttpsProvisioningState>(nameof(CustomHttpsProvisioningState), new string[] { "customHttpsProvisioningState" }, isOutput: true);
             _customHttpsProvisioningSubstate = DefineProperty<FrontendEndpointCustomHttpsProvisioningSubstate>(nameof(CustomHttpsProvisioningSubstate), new string[] { "customHttpsProvisioningSubstate" }, isOutput: true);
             _customHttpsConfiguration = DefineModelProperty<CustomHttpsConfiguration>(nameof(CustomHttpsConfiguration), new string[] { "customHttpsConfiguration" }, isOutput: true);
-            _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" });
-            _sessionAffinityEnabledState = DefineProperty<SessionAffinityEnabledState>(nameof(SessionAffinityEnabledState), new string[] { "sessionAffinityEnabledState" });
-            _sessionAffinityTtlInSeconds = DefineProperty<int>(nameof(SessionAffinityTtlInSeconds), new string[] { "sessionAffinityTtlSeconds" });
-            _webApplicationFirewallPolicyLink = DefineModelProperty<FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink>(nameof(WebApplicationFirewallPolicyLink), new string[] { "webApplicationFirewallPolicyLink" });
             DefineAdditionalProperties();
         }
 

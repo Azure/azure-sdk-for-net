@@ -13,7 +13,7 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Recurrence model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownLoadTestingRecurrence))]
     public abstract partial class LoadTestingRecurrence : IJsonModel<LoadTestingRecurrence>
@@ -138,10 +138,10 @@ namespace Azure.Developer.LoadTesting
                         return DailyRecurrence.DeserializeDailyRecurrence(element, options);
                     case "Hourly":
                         return HourlyRecurrence.DeserializeHourlyRecurrence(element, options);
-                    case "MonthlyByDays":
-                        return MonthlyRecurrenceByWeekDays.DeserializeMonthlyRecurrenceByWeekDays(element, options);
                     case "MonthlyByDates":
                         return MonthlyRecurrenceByDates.DeserializeMonthlyRecurrenceByDates(element, options);
+                    case "MonthlyByDays":
+                        return MonthlyRecurrenceByWeekDays.DeserializeMonthlyRecurrenceByWeekDays(element, options);
                     case "Cron":
                         return RecurrenceWithCron.DeserializeRecurrenceWithCron(element, options);
                     case "Weekly":

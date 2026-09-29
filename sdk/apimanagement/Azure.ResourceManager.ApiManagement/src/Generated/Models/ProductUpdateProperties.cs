@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameters supplied to the Update Product operation. </summary>
-    public partial class ProductUpdateProperties : ProductEntityBaseProperties
+    internal partial class ProductUpdateProperties : ProductEntityBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ProductUpdateProperties"/>. </summary>
         public ProductUpdateProperties()

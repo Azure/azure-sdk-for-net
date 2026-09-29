@@ -1,0 +1,539 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization.Metadata;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
+using Azure.AI.AgentServer.Core.Tasks.Providers.Hosted;
+using Azure.Core;
+using Azure.Core.Pipeline;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Azure.AI.AgentServer.Core.Tasks;
+
+/// <summary>
+/// Registration entry points for the resilient-tasks feature. There is no global
+/// configuration object: backend selection (local/hosted), lease durations, and
+/// retry/timeout defaults are not developer-configurable (Python parity). The
+/// hosted credential can be supplied to
+/// <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/> or registered
+/// as a <see cref="TokenCredential"/> service; it is ignored by the local file-backed store.
+/// </summary>
+public static class ResilientTaskServiceCollectionExtensions
+{
+    /// <summary>
+    /// Sets up the resilient-tasks services, optionally supplying the hosted-storage credential.
+    /// Calling <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> directly also performs this
+    /// setup on first use, so this method only needs to be called explicitly to supply a hosted
+    /// credential. The credential may be supplied before or after task registrations while composing
+    /// the service collection. A <see cref="TokenCredential"/> registered directly in the service
+    /// collection is also supported; when both forms are used they must resolve to the same instance.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
+    /// <returns>The service collection, for chaining.</returns>
+    public static IServiceCollection AddResilientTasks(
+        this IServiceCollection services,
+        TokenCredential? credential = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        if (credential is not null)
+        {
+            RegisterExplicitCredential(services, credential);
+        }
+
+        EnsureCoreServices(services, credential);
+        return services;
+    }
+
+    /// <summary>
+    /// Registers a replaceable framework-default hosted credential. An explicit credential supplied
+    /// later through <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/> supersedes
+    /// this fallback; consumer credential registrations remain authoritative.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="credentialFactory">Creates the fallback credential from the built provider.</param>
+    /// <returns>The service collection.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static IServiceCollection AddResilientTaskCredentialDefault(
+        this IServiceCollection services,
+        Func<IServiceProvider, TokenCredential> credentialFactory)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(credentialFactory);
+
+        TaskCredentialRegistrationState state = GetOrCreateCredentialState(services);
+        if (!services.Any(descriptor =>
+            descriptor.ServiceType == typeof(TokenCredential) && !descriptor.IsKeyedService))
+        {
+            ServiceDescriptor descriptor =
+                ServiceDescriptor.Singleton<TokenCredential>(credentialFactory);
+            services.Add(descriptor);
+            state.DefaultDescriptor = descriptor;
+        }
+
+        return services;
+    }
+
+    /// <summary>
+    /// Registers a one-shot task (Python <c>@task</c>) and returns a typed
+    /// <see cref="TaskDefinition{TInput, TOutput}"/> handle bound to it. The handle is also
+    /// registered as a keyed singleton service — keyed by <paramref name="name"/> — so it can be
+    /// resolved later with <see cref="ResilientTaskServiceProviderExtensions.GetResilientTask{TInput, TOutput}(IServiceProvider, string)"/>.
+    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method sets up
+    /// the resilient-tasks services if they are not already present.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(
+        this IServiceCollection services,
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, configure);
+        RegisterDefinition(services, name, definition);
+        return definition;
+    }
+
+    /// <summary>
+    /// Registers a one-shot task using a source-generated <see cref="JsonTypeInfo{T}"/> for the
+    /// input type, so the task input is serialized without runtime reflection (Native-AOT /
+    /// trimming-safe). The returned handle is also registered as a keyed singleton service, keyed
+    /// by <paramref name="name"/>.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="inputTypeInfo">The source-generated serialization metadata for <typeparamref name="TInput"/>.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
+    public static TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(
+        this IServiceCollection services,
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, inputTypeInfo, configure);
+        RegisterDefinition(services, name, definition);
+        return definition;
+    }
+
+    /// <summary>
+    /// Registers a multi-turn task (Python <c>@multi_turn_task</c>), optionally steerable, and
+    /// returns a typed <see cref="TaskDefinition{TInput, TOutput}"/> handle bound to it. The handle
+    /// is also registered as a keyed singleton service — keyed by <paramref name="name"/> — so it
+    /// can be resolved later with <see cref="ResilientTaskServiceProviderExtensions.GetResilientTask{TInput, TOutput}(IServiceProvider, string)"/>.
+    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method sets up
+    /// the resilient-tasks services if they are not already present.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="steerable">Whether the task accepts steering input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
+        this IServiceCollection services,
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, steerable, configure);
+        RegisterDefinition(services, name, definition);
+        return definition;
+    }
+
+    /// <summary>
+    /// Registers a multi-turn task whose steerability is resolved when a run starts.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="isSteerable">Resolves whether the task accepts steering.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
+        this IServiceCollection services,
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Func<bool> isSteerable,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(isSteerable);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition =
+            registrar.AddMultiTurnTask(name, handler, isSteerable, configure);
+        RegisterDefinition(services, name, definition);
+        return definition;
+    }
+
+    /// <summary>
+    /// Registers a multi-turn task (optionally steerable) using a source-generated
+    /// <see cref="JsonTypeInfo{T}"/> for the input type (Native-AOT / trimming-safe). The returned
+    /// handle is also registered as a keyed singleton service, keyed by <paramref name="name"/>.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="handler">The handler delegate.</param>
+    /// <param name="inputTypeInfo">The source-generated serialization metadata for <typeparamref name="TInput"/>.</param>
+    /// <param name="steerable">Whether the task accepts steering input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed <see cref="TaskDefinition{TInput, TOutput}"/> for running the registered task.</returns>
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
+        this IServiceCollection services,
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, inputTypeInfo, steerable, configure);
+        RegisterDefinition(services, name, definition);
+        return definition;
+    }
+
+    private static void ValidateRegistrationArguments<TInput, TOutput>(
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(handler);
+    }
+
+    private static void RegisterDefinition<TInput, TOutput>(
+        IServiceCollection services,
+        string name,
+        TaskDefinition<TInput, TOutput> definition)
+    {
+        services.AddKeyedSingleton<TaskDefinition<TInput, TOutput>>(
+            name,
+            (serviceProvider, _) =>
+            {
+                _ = serviceProvider.GetRequiredService<TaskEngine>();
+                return definition;
+            });
+    }
+
+    /// <summary>
+    /// Idempotently sets up the resilient-tasks services (registry, environment, store, engine,
+    /// recovery scanner, durability hosted service) and returns the registrar over the canonical
+    /// registry/accessor the container holds — the same instances every registration call, whether
+    /// via <see cref="AddResilientTasks"/> or a flat <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c>
+    /// call, must target.
+    /// </summary>
+    private static DefaultResilientTaskBuilder EnsureCoreServices(IServiceCollection services, TokenCredential? credential)
+    {
+        // Resilient-tasks services are set up once per process. Everything below uses
+        // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
+        // would register a duplicate TaskDurabilityService, running the recovery scan twice. Guard
+        // the whole method: on a repeat call, register nothing further and hand back a registrar over
+        // the already-registered registry. A later host integration may still attach the first
+        // non-null credential to the shared environment holder, making registration order independent.
+        if (IsAlreadyRegistered(services))
+        {
+            // The registry and accessor are registered together with the TaskEngine on the first
+            // call, so if the engine is present they must be too. Fail fast rather than fabricating
+            // new instances: a registrar over a fresh registry/accessor would silently orphan every
+            // subsequent registration (the already-registered engine keeps using the originals).
+            TaskRegistry existingRegistry = ResolveRegistered(services)
+                ?? throw new InvalidOperationException(
+                    "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
+                    "but its TaskRegistry is not. Ensure the resilient-tasks services are not registered " +
+                    "piecemeal.");
+            TaskEngineAccessor existingAccessor = ResolveRegisteredAccessor(services)
+                ?? throw new InvalidOperationException(
+                    "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
+                    "but its TaskEngineAccessor is not. Ensure the resilient-tasks services are not " +
+                    "registered piecemeal.");
+            TaskHostEnvironment existingEnvironment = ResolveRegisteredEnvironment(services)
+                ?? throw new InvalidOperationException(
+                    "Resilient-tasks services are in an inconsistent state: a TaskEngine is registered " +
+                    "but its TaskHostEnvironment is not. Ensure the resilient-tasks services are not " +
+                    "registered piecemeal.");
+            if (credential is not null)
+            {
+                existingEnvironment.AttachCredential(credential);
+            }
+
+            return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
+        }
+
+        var registry = new TaskRegistry();
+        services.TryAddSingleton(registry);
+
+        var engineAccessor = new TaskEngineAccessor();
+        services.TryAddSingleton(engineAccessor);
+
+        var environment = new TaskHostEnvironment(credential);
+        services.TryAddSingleton(environment);
+
+        // The store is environment-selected: filesystem-backed locally, hosted in Foundry.
+        services.TryAddSingleton<ITaskStore>(sp =>
+        {
+            return TaskStoreSelector.Create(hostedFactory: () =>
+            {
+                var env = sp.GetRequiredService<TaskHostEnvironment>();
+                TokenCredential? cred =
+                    sp.GetService<TokenCredential>() ?? env.Credential;
+                if (cred is null)
+                {
+                    throw new InvalidOperationException(
+                        "A TokenCredential is required for hosted task storage. Call " +
+                        "AddResilientTasks(credential) or register TokenCredential while composing " +
+                        "services when running in a hosted environment.");
+                }
+
+                // Publish the provider's effective credential onto the shared environment holder.
+                // This detects any explicit Core credential/DI credential mismatch and guarantees
+                // all task-store resolutions use the same identity as cooperating protocol clients.
+                env.AttachCredential(cred);
+
+                var endpoint = FoundryEnvironment.ProjectEndpoint;
+                if (string.IsNullOrWhiteSpace(endpoint))
+                {
+                    throw new InvalidOperationException(
+                        "FoundryEnvironment.ProjectEndpoint (FOUNDRY_PROJECT_ENDPOINT) is required for hosted task storage.");
+                }
+
+                if (!Uri.TryCreate(endpoint, UriKind.Absolute, out var baseUri))
+                {
+                    throw new InvalidOperationException(
+                        "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
+                }
+
+                // Base URL is `{FOUNDRY_PROJECT_ENDPOINT}/tasks` — the project endpoint already
+                // targets the storage surface, so no extra `/storage` segment is added (matches the
+                // Foundry task-storage client that runs against the live backend).
+                var storageBaseUri = new Uri(baseUri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/");
+
+                var options = new HostedTaskStoreClientOptions();
+
+                var registry = sp.GetService<ServerVersionRegistry>();
+                if (registry is not null)
+                {
+                    options.AddPolicy(new ServerVersionPolicy(registry), HttpPipelinePosition.PerCall);
+                }
+
+                var loggerFactory = sp.GetService<ILoggerFactory>();
+                var logger = loggerFactory?.CreateLogger<HostedTaskStoreLoggingPolicy>()
+                    ?? (ILogger)NullLogger.Instance;
+                options.AddPolicy(new HostedTaskStoreLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
+
+                const string FoundryStorageScope = "https://ai.azure.com/.default";
+                var pipeline = HttpPipelineBuilder.Build(
+                    options,
+                    new BearerTokenAuthenticationPolicy(cred, FoundryStorageScope));
+
+                return new HostedTaskStore(pipeline, storageBaseUri);
+            });
+        });
+
+        // Resolve the canonical registry actually held by the container: TryAddSingleton is a
+        // no-op if one was already registered, so the registrar must wrap that instance (not the
+        // freshly-constructed local) or registrations would target an orphaned registry.
+        TaskRegistry canonical = ResolveRegistered(services) ?? registry;
+        TaskEngineAccessor canonicalAccessor = ResolveRegisteredAccessor(services) ?? engineAccessor;
+
+        services.TryAddSingleton<TaskEngine>(sp =>
+        {
+            ITaskStore store = sp.GetRequiredService<ITaskStore>();
+            TaskRegistry reg = sp.GetRequiredService<TaskRegistry>();
+            ILoggerFactory? loggerFactory = sp.GetService<ILoggerFactory>();
+            ILogger logger = loggerFactory?.CreateLogger(TaskTelemetry.Category)
+                ?? NullLogger.Instance;
+            (string agentName, string sessionId) = ResolveScope();
+
+            var engine = new TaskEngine(store, reg, agentName, sessionId, logger);
+
+            // Late-bind the engine so a TaskDefinition (created at registration time, before the
+            // container existed) can resolve it at invocation time. The engine is always resolved
+            // before any task runs, so populating here guarantees the accessor is ready.
+            sp.GetRequiredService<TaskEngineAccessor>().Bind(engine);
+
+            return engine;
+        });
+
+        // FR-022 durability: the recovery scanner + background service must be driven by the host
+        // lifespan. Without this wiring the cold-start recovery scan (SOT §49) and the periodic
+        // reclaim sweep never run, so crashed/interrupted tasks are never auto-recovered.
+        services.TryAddSingleton<RecoveryScanner>(sp =>
+            new RecoveryScanner(sp.GetRequiredService<TaskEngine>()));
+        services.TryAddSingleton<TaskDurabilityService>(sp =>
+        {
+            ILoggerFactory? loggerFactory = sp.GetService<ILoggerFactory>();
+            ILogger logger = loggerFactory?.CreateLogger(TaskTelemetry.Category)
+                ?? NullLogger.Instance;
+            return new TaskDurabilityService(
+                sp.GetRequiredService<RecoveryScanner>(),
+                sp.GetRequiredService<TaskEngine>(),
+                scanInterval: null,
+                shutdownGrace: null,
+                logger);
+        });
+        services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
+
+        return new DefaultResilientTaskBuilder(canonical, canonicalAccessor);
+    }
+
+    private static (string AgentName, string SessionId) ResolveScope()
+    {
+        string agentName = string.IsNullOrEmpty(FoundryEnvironment.AgentName)
+            ? TaskEngineConstants.DefaultAgentName
+            : FoundryEnvironment.AgentName!;
+        string sessionId = string.IsNullOrEmpty(FoundryEnvironment.SessionId)
+            ? TaskEngineConstants.DefaultSessionId
+            : FoundryEnvironment.SessionId!;
+        return (agentName, sessionId);
+    }
+
+    private static bool IsAlreadyRegistered(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            if (services[i].ServiceType == typeof(TaskEngine))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static TaskRegistry? ResolveRegistered(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            ServiceDescriptor descriptor = services[i];
+            if (descriptor.ServiceType == typeof(TaskRegistry) &&
+                descriptor.ImplementationInstance is TaskRegistry existing)
+            {
+                return existing;
+            }
+        }
+
+        return null;
+    }
+
+    private static TaskEngineAccessor? ResolveRegisteredAccessor(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            ServiceDescriptor descriptor = services[i];
+            if (descriptor.ServiceType == typeof(TaskEngineAccessor) &&
+                descriptor.ImplementationInstance is TaskEngineAccessor existing)
+            {
+                return existing;
+            }
+        }
+
+        return null;
+    }
+
+    private static void RegisterExplicitCredential(
+        IServiceCollection services,
+        TokenCredential credential)
+    {
+        TaskCredentialRegistrationState state = GetOrCreateCredentialState(services);
+        ServiceDescriptor? defaultDescriptor = state.DefaultDescriptor;
+        bool hasConsumerCredential = services.Any(descriptor =>
+            descriptor.ServiceType == typeof(TokenCredential)
+            && !descriptor.IsKeyedService
+            && !ReferenceEquals(descriptor, defaultDescriptor));
+
+        if (!hasConsumerCredential)
+        {
+            if (defaultDescriptor is not null)
+            {
+                services.Remove(defaultDescriptor);
+                state.DefaultDescriptor = null;
+            }
+
+            services.TryAddSingleton<TokenCredential>(credential);
+        }
+    }
+
+    private static TaskCredentialRegistrationState GetOrCreateCredentialState(
+        IServiceCollection services)
+    {
+        TaskCredentialRegistrationState? state = services
+            .Where(descriptor =>
+                descriptor.ServiceType == typeof(TaskCredentialRegistrationState))
+            .Select(descriptor => descriptor.ImplementationInstance)
+            .OfType<TaskCredentialRegistrationState>()
+            .FirstOrDefault();
+        if (state is not null)
+        {
+            return state;
+        }
+
+        state = new TaskCredentialRegistrationState();
+        services.TryAddSingleton(state);
+        return state;
+    }
+
+    private static TaskHostEnvironment? ResolveRegisteredEnvironment(IServiceCollection services)
+    {
+        for (int i = 0; i < services.Count; i++)
+        {
+            ServiceDescriptor descriptor = services[i];
+            if (descriptor.ServiceType == typeof(TaskHostEnvironment) &&
+                descriptor.ImplementationInstance is TaskHostEnvironment existing)
+            {
+                return existing;
+            }
+        }
+
+        return null;
+    }
+}

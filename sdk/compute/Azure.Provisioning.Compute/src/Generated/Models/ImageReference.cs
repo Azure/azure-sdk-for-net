@@ -5,14 +5,12 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
-    public partial class ImageReference : ProvisionableConstruct
+    public partial class ImageReference : ComputeWriteableSubResourceData
     {
         private BicepValue<string> _publisher;
         private BicepValue<string> _offer;
@@ -21,7 +19,6 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _exactVersion;
         private BicepValue<string> _sharedGalleryImageUniqueId;
         private BicepValue<string> _communityGalleryImageId;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new ImageReference. </summary>
         public ImageReference()
@@ -128,21 +125,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ImageReference. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -154,7 +136,6 @@ namespace Azure.Provisioning.Compute
             _exactVersion = DefineProperty<string>(nameof(ExactVersion), new string[] { "exactVersion" }, isOutput: true);
             _sharedGalleryImageUniqueId = DefineProperty<string>(nameof(SharedGalleryImageUniqueId), new string[] { "sharedGalleryImageId" });
             _communityGalleryImageId = DefineProperty<string>(nameof(CommunityGalleryImageId), new string[] { "communityGalleryImageId" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 

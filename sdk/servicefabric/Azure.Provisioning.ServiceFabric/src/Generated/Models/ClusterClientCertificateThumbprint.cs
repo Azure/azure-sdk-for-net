@@ -57,7 +57,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _isAdmin = DefineProperty<bool>(nameof(IsAdmin), new string[] { "isAdmin" }, isRequired: true);
-            _certificateThumbprint = DefineProperty<BinaryData>(nameof(CertificateThumbprint), new string[] { "certificateThumbprint" }, isRequired: true);
+            _certificateThumbprint = DefineProperty<BinaryData>(nameof(CertificateThumbprint), new string[] { "certificateThumbprint" }, isRequired: true, format: "base64");
             DefineAdditionalProperties();
         }
 

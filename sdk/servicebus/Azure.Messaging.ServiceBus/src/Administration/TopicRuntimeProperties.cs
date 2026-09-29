@@ -46,6 +46,28 @@ namespace Azure.Messaging.ServiceBus.Administration
         public int SubscriptionCount { get; internal set; }
 
         /// <summary>
+        /// The total number of SQL filters across all subscriptions of the topic.
+        /// </summary>
+        /// <remarks>
+        /// This count is served only by the 2024-05 (or later) service API version and by
+        /// regions that have deployed the topic filter-count feature. When the client targets
+        /// an earlier <see cref="ServiceBusAdministrationClientOptions.ServiceVersion"/>, or the
+        /// region does not yet serve it, this value defaults to 0.
+        /// </remarks>
+        public int SqlFilterCount { get; internal set; }
+
+        /// <summary>
+        /// The total number of correlation filters across all subscriptions of the topic.
+        /// </summary>
+        /// <remarks>
+        /// This count is served only by the 2024-05 (or later) service API version and by
+        /// regions that have deployed the topic filter-count feature. When the client targets
+        /// an earlier <see cref="ServiceBusAdministrationClientOptions.ServiceVersion"/>, or the
+        /// region does not yet serve it, this value defaults to 0.
+        /// </remarks>
+        public int CorrelationFilterCount { get; internal set; }
+
+        /// <summary>
         /// The number of messages that are scheduled to be enqueued.
         /// </summary>
         public long ScheduledMessageCount { get; internal set; }

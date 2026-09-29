@@ -39,7 +39,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private readonly IPlatform _platform;
 
+        internal readonly int _networkExportIntervalMilliseconds;
+
+        internal readonly TimeSpan _attachEmissionInterval;
+
+        private readonly string? _connectionStringOverride;
+
         internal MeterProvider? _statsbeatMeterProvider;
+
+        private volatile bool _isDisposed;
 
         // Wall-clock throttle for the Attach observable gauge so it emits at most once per
         // AttachEmissionInterval even though the shared reader collects every 15 min.
@@ -68,6 +76,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _operatingSystem = platform.GetOSPlatformName();
 
+            _networkExportIntervalMilliseconds = ResolveIntervalMilliseconds(
+                platform,
+                EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL,
+                StatsbeatConstants.NetworkStatsbeatInterval);
+
+            _attachEmissionInterval = ResolveInterval(
+                platform,
+                EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL,
+                StatsbeatConstants.AttachEmissionInterval);
+
+            var connectionStringOverride = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING);
+            _connectionStringOverride = string.IsNullOrWhiteSpace(connectionStringOverride) ? null : connectionStringOverride;
+
             _customer_Ikey = connectionStringVars.InstrumentationKey;
 
             // IEnumerable<Measurement<T>> overload lets the callback yield zero measurements
@@ -88,6 +109,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             var routeToDistroEndpoint =
                 AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
                 && enabled;
+
+            // Explicit destination override (spec: connectionString) wins over both the
+            // distro-routed and region-derived endpoints.
+            if (_connectionStringOverride != null)
+            {
+                _statsbeat_ConnectionString = _connectionStringOverride;
+                BuildMeterProvider(_statsbeat_ConnectionString);
+                ScheduleInitialAttachFlush();
+                return;
+            }
 
             if (routeToDistroEndpoint)
             {
@@ -130,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 switch (result.Status)
                 {
                     case SdkStatsConfigStatus.UseUrl:
-                        connectionString = BuildConnectionStringFromHost(result.Url!);
+                        connectionString = BuildConnectionStringFromHost(result.Url!, GetSdkStatsInstrumentationKey(ingestionEndpoint));
                         break;
                     case SdkStatsConfigStatus.Disabled:
                         // Explicit remote kill switch. Honor it: do not build the
@@ -160,20 +191,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             }
         }
 
-        private static string BuildConnectionStringFromHost(string host)
+        internal static string BuildConnectionStringFromHost(string host, string instrumentationKey)
         {
             // Build a Breeze-compatible connection string from the config-supplied host.
-            // The transmitter appends the standard /v2.1/track path; the placeholder iKey
-            // is required by ConnectionStringParser but is ignored server-side by the
-            // distro endpoint family.
+            // The transmitter appends the standard /v2.1/track path. The distro changes only
+            // where SDK statistics are sent, not whose they are, so the envelope keeps the
+            // same SDK statistics instrumentation key the legacy endpoint receives.
             var trimmed = host.TrimEnd('/');
             if (!trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
                 && !trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
             {
                 trimmed = "https://" + trimmed;
             }
-            return "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=" + trimmed + "/";
+            return "InstrumentationKey=" + instrumentationKey + ";IngestionEndpoint=" + trimmed + "/";
         }
+
+        /// <summary>
+        /// Returns the SDK statistics instrumentation key for the customer's region. Selected
+        /// with the same rule as <see cref="GetSdkStatsConfigUrl"/>, so an EU customer's
+        /// statistics carry the EU key to the EU host; unknown regions default to non-EU.
+        /// </summary>
+        internal static string GetSdkStatsInstrumentationKey(string ingestionEndpoint)
+            => IsEuRegion(ingestionEndpoint)
+                ? StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                : StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU;
 
         /// <summary>
         /// Returns the legacy AI internal Statsbeat connection string for the customer's
@@ -194,6 +235,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // long-interval instruments on their native 24 hr cadence. EnableStatsbeat=false
             // avoids a recursive Statsbeat construction inside the transmitter we're about to
             // attach.
+            var exporterOptions = CreateExporterOptions(connectionString);
+
+            var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
+                .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
+                .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
+                .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
+                .AddMeter(StatsbeatConstants.DistroNetworkSdkStatsMeterName)
+                .AddReader(new PeriodicExportingMetricReader(AzureMonitorMetricExporter.CreateForInternalTelemetry(exporterOptions), _networkExportIntervalMilliseconds)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
+
+            // A full fence, so the disposed flag below cannot be read before this is visible.
+            Interlocked.Exchange(ref _statsbeatMeterProvider, meterProvider);
+
+            if (!_isDisposed)
+            {
+                return;
+            }
+
+            // The distro path builds this from a background config fetch, which can land after a
+            // short-lived process has already disposed us. Whichever side takes the provider here
+            // owns it, so it is disposed once and never orphaned.
+            var orphaned = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
+            if (orphaned != null)
+            {
+                DisposeInBackground(orphaned);
+            }
+        }
+
+        internal static AzureMonitorExporterOptions CreateExporterOptions(string connectionString)
+        {
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 DisableOfflineStorage = true,
@@ -201,15 +274,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 EnableStatsbeat = false,
             };
 
-            _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
-                .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
-                .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
-                .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
-                .AddMeter(StatsbeatConstants.DistroNetworkSdkStatsMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.NetworkStatsbeatInterval)
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-                .Build();
+            // Disposing this meter provider exports once more on the process exit path.
+            exporterOptions.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
+
+            return exporterOptions;
+        }
+
+        private static int ResolveIntervalMilliseconds(IPlatform platform, string envVarName, int defaultMilliseconds)
+        {
+            var value = platform.GetEnvironmentVariable(envVarName);
+            // Guard the seconds->milliseconds multiplication against int overflow: a value
+            // above int.MaxValue/1000 would wrap to a negative interval and break the reader.
+            if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var seconds)
+                && seconds > 0
+                && seconds <= int.MaxValue / 1000)
+            {
+                return seconds * 1000;
+            }
+
+            return defaultMilliseconds;
+        }
+
+        private static TimeSpan ResolveInterval(IPlatform platform, string envVarName, TimeSpan defaultInterval)
+        {
+            var value = platform.GetEnvironmentVariable(envVarName);
+            if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var seconds) && seconds > 0)
+            {
+                return TimeSpan.FromSeconds(seconds);
+            }
+
+            return defaultInterval;
         }
 
         private void ScheduleInitialAttachFlush()
@@ -265,14 +359,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             // Distro path: pick the EU or non-EU configuration endpoint based on the
             // customer's ingestion region. Unknown regions default to non-EU.
-            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
-            if (patternMatch.Success
-                && StatsbeatConstants.s_EU_Endpoints.Contains(patternMatch.Groups[1].Value))
-            {
-                return StatsbeatConstants.SdkStatsConfigUrl_EU;
-            }
+            return IsEuRegion(ingestionEndpoint)
+                ? StatsbeatConstants.SdkStatsConfigUrl_EU
+                : StatsbeatConstants.SdkStatsConfigUrl_NonEU;
+        }
 
-            return StatsbeatConstants.SdkStatsConfigUrl_NonEU;
+        private static bool IsEuRegion(string ingestionEndpoint)
+        {
+            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
+            return patternMatch.Success
+                && StatsbeatConstants.s_EU_Endpoints.Contains(patternMatch.Groups[1].Value);
         }
 
         private IEnumerable<Measurement<int>> GetAttachStatsbeat()
@@ -282,7 +378,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             long previousTicks = Volatile.Read(ref _lastAttachEmissionTicks);
             long nowTicks = DateTime.UtcNow.Ticks;
             if (previousTicks != 0
-                && nowTicks - previousTicks < StatsbeatConstants.AttachEmissionInterval.Ticks)
+                && nowTicks - previousTicks < _attachEmissionInterval.Ticks)
             {
                 yield break;
             }
@@ -393,8 +489,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 _resourceProvider = "vm";
                 _resourceProviderId = _resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
 
-                // osType takes precedence.
-                _operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture) ?? "unknown";
+                // osType takes precedence when IMDS reports a concrete value; when it is
+                // null/empty or the literal "Unknown", fall back to the running process OS
+                // (already captured in _operatingSystem via the constructor) per spec.
+                _operatingSystem = ResolveOperatingSystem(vmMetadata.osType, _operatingSystem);
 
                 return;
             }
@@ -403,9 +501,52 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             _resourceProviderId = "unknown";
         }
 
+        /// <summary>
+        /// Determines the effective "os" dimension. Per the SDKStats spec, the IMDS
+        /// <c>azInst_osType</c> takes precedence over the running process OS, except when it
+        /// is null/empty or the literal "Unknown" (case-insensitive), in which case the
+        /// running process OS (<paramref name="processOperatingSystem"/>) is used.
+        /// </summary>
+        internal static string ResolveOperatingSystem(string? vmOsType, string processOperatingSystem)
+        {
+            if (!string.IsNullOrEmpty(vmOsType)
+                && !string.Equals(vmOsType, "unknown", StringComparison.OrdinalIgnoreCase))
+            {
+                return vmOsType!.ToLower(CultureInfo.InvariantCulture);
+            }
+
+            return processOperatingSystem;
+        }
+
         public void Dispose()
         {
-            _statsbeatMeterProvider?.Dispose();
+            _isDisposed = true;
+
+            var meterProvider = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
+            if (meterProvider == null)
+            {
+                return;
+            }
+
+            DisposeInBackground(meterProvider);
+        }
+
+        private static void DisposeInBackground(MeterProvider meterProvider)
+        {
+            // Disposing the meter provider exports one last time, which would put an ingestion round
+            // trip on the process exit path. Statsbeat is internal telemetry with no offline storage
+            // behind it, so losing that final export is preferable to delaying exit for it.
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    meterProvider.Dispose();
+                }
+                catch (Exception)
+                {
+                    // The process is going away; there is nothing useful to report.
+                }
+            });
         }
     }
 }

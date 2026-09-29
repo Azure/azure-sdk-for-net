@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppService;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information properties. </summary>
-    public partial class MSDeployProperties : MSDeployCore
+    internal partial class MSDeployProperties : MSDeployCore
     {
         /// <summary> Initializes a new instance of <see cref="MSDeployProperties"/>. </summary>
         public MSDeployProperties()

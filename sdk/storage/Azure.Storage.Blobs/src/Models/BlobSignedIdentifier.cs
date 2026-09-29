@@ -1,15 +1,19 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// BlobSignedIdentifier.
     /// </summary>
-    [CodeGenModel("SignedIdentifier")]
+    // CUSTOM:
+    // - Suppress generated primary constructor
+    [CodeGenType("SignedIdentifier")]
+    [CodeGenSuppress("BlobSignedIdentifier", typeof(string))]
     public partial class BlobSignedIdentifier
     {
         internal BlobSignedIdentifier(string id, BlobAccessPolicy accessPolicy)

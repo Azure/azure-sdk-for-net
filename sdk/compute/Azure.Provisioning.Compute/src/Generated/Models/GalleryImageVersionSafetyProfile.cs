@@ -6,17 +6,15 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> This is the safety profile of the Gallery Image Version. </summary>
-    public partial class GalleryImageVersionSafetyProfile : ProvisionableConstruct
+    public partial class GalleryImageVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
         private BicepValue<bool> _isReportedForPolicyViolation;
         private BicepList<GalleryImageVersionPolicyViolation> _policyViolations;
         private BicepValue<bool> _isBlockedDeletionBeforeEndOfLife;
-        private BicepValue<bool> _allowDeletionOfReplicatedLocations;
 
         /// <summary> Creates a new GalleryImageVersionSafetyProfile. </summary>
         public GalleryImageVersionSafetyProfile()
@@ -58,21 +56,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the AllowDeletionOfReplicatedLocations. </summary>
-        public BicepValue<bool> AllowDeletionOfReplicatedLocations
-        {
-            get
-            {
-                Initialize();
-                return _allowDeletionOfReplicatedLocations;
-            }
-            set
-            {
-                Initialize();
-                _allowDeletionOfReplicatedLocations.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GalleryImageVersionSafetyProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -80,7 +63,6 @@ namespace Azure.Provisioning.Compute
             _isReportedForPolicyViolation = DefineProperty<bool>(nameof(IsReportedForPolicyViolation), new string[] { "reportedForPolicyViolation" }, isOutput: true);
             _policyViolations = DefineListProperty<GalleryImageVersionPolicyViolation>(nameof(PolicyViolations), new string[] { "policyViolations" }, isOutput: true);
             _isBlockedDeletionBeforeEndOfLife = DefineProperty<bool>(nameof(IsBlockedDeletionBeforeEndOfLife), new string[] { "blockDeletionBeforeEndOfLife" });
-            _allowDeletionOfReplicatedLocations = DefineProperty<bool>(nameof(AllowDeletionOfReplicatedLocations), new string[] { "allowDeletionOfReplicatedLocations" });
             DefineAdditionalProperties();
         }
 

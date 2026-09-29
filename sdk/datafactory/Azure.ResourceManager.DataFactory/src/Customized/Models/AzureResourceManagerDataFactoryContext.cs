@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.DataFactory
     //
     // The [CodeGenSerialization] read hooks in DataFactoryExpressionSerialization also call
     // ModelReaderWriter.Read for the concrete Azure.Core.Expressions.DataFactory types
-    // DataFactoryLinkedServiceReference, DataFactorySecret (abstract, proxied by UnknownSecret) and
-    // DataFactorySecretString. These types live in a referenced assembly, so the source generator
-    // does not emit builders for them into this assembly's context and [ModelReaderWriterBuildable]
-    // is ignored for cross-assembly types. We therefore register them manually as well. Because
-    // IPersistableModel<out T> is covariant, an instance of any concrete subtype satisfies the
-    // framework's IPersistableModel<object> requirement; its Create(BinaryData, options) performs the
-    // (polymorphic, for DataFactorySecret) deserialization.
+    // DataFactoryKeyVaultSecret, DataFactoryLinkedServiceReference, DataFactorySecret (abstract,
+    // proxied by UnknownSecret) and DataFactorySecretString. These types live in a referenced
+    // assembly whose DataFactoryContext does not register them, so this context cannot resolve the
+    // delegated builders even when [ModelReaderWriterBuildable] is present. We therefore register
+    // them manually. Because IPersistableModel<out T> is covariant, an instance of any concrete
+    // subtype satisfies the framework's IPersistableModel<object> requirement; its
+    // Create(BinaryData, options) performs the (polymorphic, for DataFactorySecret) deserialization.
     public partial class AzureResourceManagerDataFactoryContext : ModelReaderWriterContext
     {
         // UnknownSecret is the internal [PersistableModelProxy] concrete type for the abstract
@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.DataFactory
             AddDataFactoryElementBuilder<IList<DatasetSchemaDataElement>>(factories);
             AddDataFactoryElementBuilder<IList<Office365TableOutputColumn>>(factories);
 
+            // TODO: Remove this package-level registration when
+            // https://github.com/Azure/azure-sdk-for-net/issues/62200 is resolved.
+            factories[typeof(DataFactoryKeyVaultSecret)] =
+                () => new PersistableModelBuilder(typeof(DataFactoryKeyVaultSecret), typeof(DataFactoryKeyVaultSecret));
             factories[typeof(DataFactoryLinkedServiceReference)] =
                 () => new PersistableModelBuilder(typeof(DataFactoryLinkedServiceReference), typeof(DataFactoryLinkedServiceReference));
             factories[typeof(DataFactorySecretString)] =

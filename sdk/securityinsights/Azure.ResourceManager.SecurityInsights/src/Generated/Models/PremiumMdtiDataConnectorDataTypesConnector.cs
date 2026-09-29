@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Data type for Microsoft Defender for Threat Intelligence Premium data connector. </summary>
-    public partial class PremiumMdtiDataConnectorDataTypesConnector : DataConnectorDataTypeCommon
+    internal partial class PremiumMdtiDataConnectorDataTypesConnector : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="PremiumMdtiDataConnectorDataTypesConnector"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

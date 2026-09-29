@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupRecoveryPointApiVersion);
             _recoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
+            _recoveryPointsRestClient = new RecoveryPoints(_recoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-08-01");
             _itemLevelRecoveryConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _itemLevelRecoveryConnectionsRestClient = new ItemLevelRecoveryConnections(_itemLevelRecoveryConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
+            _itemLevelRecoveryConnectionsRestClient = new ItemLevelRecoveryConnections(_itemLevelRecoveryConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-08-01");
             _restoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _restoresRestClient = new Restores(_restoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-01-31-preview");
+            _restoresRestClient = new Restores(_restoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, backupRecoveryPointApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,19 +202,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// UpdateRecoveryPoint to update recovery point for given RecoveryPointID.
+        /// Fetches the mount scripts (iSCSI connection details) for an active Instant Item Recovery (ILR) session on the recovery point. Required from API version 2026-08-01 onwards; replaces the scripts previously returned inline in the operationsStatus (ILR provision) response.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}/listInstantItemRecoveryOperationResult. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RecoveryPoints_Update. </description>
+        /// <description> ItemLevelRecoveryConnections_ListInstantItemRecoveryOperationResult. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Request body for operation. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<BackupRecoveryPointResource>> UpdateAsync(BackupRecoveryPointPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<InstantItemRecoveryTarget>> GetInstantItemRecoveryOperationResultAsync(InstantItemRecoveryOperationResultContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointResource.Update");
+            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.GetInstantItemRecoveryOperationResult");
             scope.Start();
             try
             {
@@ -237,14 +237,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupRecoveryPointPatch.ToRequestContent(patch), context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateGetInstantItemRecoveryOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, InstantItemRecoveryOperationResultContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BackupRecoveryPointData> response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
+                Response<InstantItemRecoveryTarget> response = Response.FromValue(InstantItemRecoveryTarget.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -254,19 +254,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary>
-        /// UpdateRecoveryPoint to update recovery point for given RecoveryPointID.
+        /// Fetches the mount scripts (iSCSI connection details) for an active Instant Item Recovery (ILR) session on the recovery point. Required from API version 2026-08-01 onwards; replaces the scripts previously returned inline in the operationsStatus (ILR provision) response.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointId}/listInstantItemRecoveryOperationResult. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RecoveryPoints_Update. </description>
+        /// <description> ItemLevelRecoveryConnections_ListInstantItemRecoveryOperationResult. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -274,14 +274,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Request body for operation. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<BackupRecoveryPointResource> Update(BackupRecoveryPointPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<InstantItemRecoveryTarget> GetInstantItemRecoveryOperationResult(InstantItemRecoveryOperationResultContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _recoveryPointsClientDiagnostics.CreateScope("BackupRecoveryPointResource.Update");
+            using DiagnosticScope scope = _itemLevelRecoveryConnectionsClientDiagnostics.CreateScope("BackupRecoveryPointResource.GetInstantItemRecoveryOperationResult");
             scope.Start();
             try
             {
@@ -289,14 +289,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recoveryPointsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BackupRecoveryPointPatch.ToRequestContent(patch), context);
+                HttpMessage message = _itemLevelRecoveryConnectionsRestClient.CreateGetInstantItemRecoveryOperationResultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, InstantItemRecoveryOperationResultContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BackupRecoveryPointData> response = Response.FromValue(BackupRecoveryPointData.FromResponse(result), result);
+                Response<InstantItemRecoveryTarget> response = Response.FromValue(InstantItemRecoveryTarget.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-31-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

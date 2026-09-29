@@ -5,48 +5,81 @@
 In this example we will build the docker image for hosted Agent based on the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
 
 ## Hosted agent deployment
-`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
-1. Create Azure Container registry in the same resource group and region as Microsoft Foundry project. Find the docker login at Settings>Access keys section at the left panel of created container registry in the Azure portal. Check the box "Admin user" to generate the password for the default user account marked as `<DOCKER_USERNAME>` below.
-2. Assign the `AcrPull` role to the project's Managed Identity for the Azure Container Registry.
-3. Assign the `Azure AI User` role to the project's Managed Identity for resource group (This operation only may be performed by the group owner).
-4. Copy the contents of a [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py) to the file main.py
-5. At the same directory create the file called `requirements.txt` with the next content:
-
-```
-azure-ai-agentserver-core
-azure-ai-agentserver-invocations
-azure-ai-agentserver-responses
-openai
-```
-
-6. Create a file `Dockerfile`, which instructs docker to copy the contents of the current directory, install the requirements and run `main.py`, which will start the service:
-
-```
-FROM python:3.12-slim
-
-WORKDIR /app
-
-COPY . user_agent/
-WORKDIR /app/user_agent
-
-RUN if [ -f requirements.txt ]; then \
-        pip install -r requirements.txt; \
-    else \
-        echo "No requirements.txt found"; \
-    fi
-
-EXPOSE 8088
-
-CMD ["python", "main.py"]
-```
-
-7. Build the docker image and push it to the Azure Container registry you have created.
+`Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, while the hosted Agent represents the running container, which exposes the OpenAI-compatible API. In this example we will use a simple Agent, which replies with the prompt prefixed by "Echo". Please see this and other Hosted Agent samples [here](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples)
+1. Create a project and add `Azure.AI.AgentServer.Responses` package as a dependency.
 
 ```bash
-docker build -t <DOCKER_USERNAME>/workflow-agent .
-docker image tag <DOCKER_USERNAME>/workflow-agent:latest <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
-docker login <DOCKER_USERNAME>.azurecr.io
-docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
+dotnet new console --name EchoBot --output EchoBot
+dotnet add package Azure.AI.AgentServer.Responses --prerelease
+```
+
+2. Populate the code in Program.cs
+
+```C#
+using Azure.AI.AgentServer.Responses;
+using Azure.AI.AgentServer.Responses.Models;
+
+ResponsesServer.Run<EchoHandler>();
+
+public class EchoHandler : ResponseHandler
+{
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var input = await context.GetInputTextAsync(cancellationToken: ct);
+                return $"Echo: {input}";
+            });
+    }
+}
+```
+
+3. Compile the application.
+
+```bash
+dotnet publish
+```
+
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+
+4. Create folder `image`, copy published library there and create the docker file with the next contents. Please note that the `dll` name at the `ENTRYPOINT` must be the same as the name of an application built above.
+
+```
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
+WORKDIR /app
+COPY publish/ .
+ENV ASPNETCORE_URLS=http://+:8088
+EXPOSE 8088
+ENTRYPOINT ["dotnet", "EchoBot.dll"]
+```
+
+5. Build the docker image and push it to the Azure Container registry you have created.
+
+Set docker username variable for convenience:
+- bash
+```bash
+export DOCKER_USERNAME="your_docker_username"
+```
+
+- PowerShell
+```powershell
+$DOCKER_USERNAME="your_docker_username"
+```
+
+- CMD
+```
+set DOCKER_USERNAME=your_docker_username
+```
+
+```bash
+docker build -t "$DOCKER_USERNAME/echo-bot-agent" .
+docker image tag "$DOCKER_USERNAME/echo-bot-agent:latest" "$DOCKER_USERNAME.azurecr.io/$DOCKER_USERNAME/echo-bot-agent:latest"
+docker login "$DOCKER_USERNAME.azurecr.io"
+docker push "$DOCKER_USERNAME.azurecr.io/$DOCKER_USERNAME/echo-bot-agent:latest"
 ```
 
 ## Run the sample.
@@ -173,27 +206,7 @@ ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClien
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. To get the response within a specific session, we need to provide `x-agent-session-id` header with the agent session ID. Define the policy to add the header.
-
-```C# Snippet:Sample_SessionHeaderPolicy_HostedAgentSessions
-private class SessionHeaderPolicy(string agentSessionID) : PipelinePolicy
-{
-    private static readonly string _SESSION_HEADER = "x-agent-session-id";
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_SESSION_HEADER, agentSessionID);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-7. Create the session and response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method, we also set the `x-agent-session-id` using `SessionHeaderPolicy` defined above.
+6. Create the session and response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgentSessions_Sync
@@ -203,10 +216,13 @@ while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentS
     Thread.Sleep(500);
     session1 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
 }
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+    SessionId = session1.AgentSessionId
+};
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -218,14 +234,17 @@ while (session1.Status != AgentSessionStatus.Failed && session1.Status != AgentS
     await Task.Delay(500);
     session1 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
 }
-ProjectOpenAIClientOptions oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session1.AgentSessionId), PipelinePosition.PerCall);
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+CreateResponseOptions responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
+    SessionId = session1.AgentSessionId
+};
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
-8. Disable Agent and try to create a new session; this operation should fail.
+7. Disable Agent and try to create a new session; this operation should fail.
 
 Synchronous sample:
 ```C# Snippet:Sample_DisableTheAgent_HostedAgentSessions_Sync
@@ -265,7 +284,7 @@ catch (ClientResultException ex)
 }
 ```
 
-9. Enable the Agent Again. Now we can create another session and use it to get the response.
+8. Enable the Agent Again. Now we can create another session and use it to get the response.
 
 Synchronous sample:
 ```C# Snippet:Sample_EnableTheAgent_HostedAgentSessions_Sync
@@ -276,10 +295,12 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
     Thread.Sleep(500);
     session2 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 }
-oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-response = responseClient.CreateResponse("Hello, tell me another joke.");
+responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+    SessionId = session2.AgentSessionId
+};
+response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -292,14 +313,16 @@ while (session2.Status != AgentSessionStatus.Failed && session2.Status != AgentS
     await Task.Delay(500);
     session2 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session2.AgentSessionId);
 }
-oaiOptions = new();
-oaiOptions.AddPolicy(new SessionHeaderPolicy(session2.AgentSessionId), PipelinePosition.PerCall);
-responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: oaiOptions);
-response = await responseClient.CreateResponseAsync("Hello, tell me another joke.");
+responseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me another joke in new session {session2.AgentSessionId}.") },
+    SessionId = session2.AgentSessionId
+};
+response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
-10. Delete the Agent we have created.
+9. Delete the Agent we have created.
 
 Synchronous sample:
 ```C# Snippet:DeleteHostedAgentSessions_HostedAgentSessions_Sync

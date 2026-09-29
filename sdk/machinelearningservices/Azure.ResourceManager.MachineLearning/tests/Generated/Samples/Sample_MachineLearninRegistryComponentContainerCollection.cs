@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
-            // get the collection of this MachineLearninRegistryComponentContainerResource
-            MachineLearninRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearninRegistryComponentContainers();
+            // get the collection of this MachineLearningRegistryComponentContainerResource
+            MachineLearningRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearningRegistryComponentContainers();
 
             // invoke the operation
             string componentName = "string";
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 ["string"] = "string"
 },
             });
-            ArmOperation<MachineLearninRegistryComponentContainerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, componentName, data);
-            MachineLearninRegistryComponentContainerResource result = lro.Value;
+            ArmOperation<MachineLearningRegistryComponentContainerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, componentName, data);
+            MachineLearningRegistryComponentContainerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
-            // get the collection of this MachineLearninRegistryComponentContainerResource
-            MachineLearninRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearninRegistryComponentContainers();
+            // get the collection of this MachineLearningRegistryComponentContainerResource
+            MachineLearningRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearningRegistryComponentContainers();
 
             // invoke the operation
             string componentName = "string";
-            MachineLearninRegistryComponentContainerResource result = await collection.GetAsync(componentName);
+            MachineLearningRegistryComponentContainerResource result = await collection.GetAsync(componentName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -117,11 +117,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
-            // get the collection of this MachineLearninRegistryComponentContainerResource
-            MachineLearninRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearninRegistryComponentContainers();
+            // get the collection of this MachineLearningRegistryComponentContainerResource
+            MachineLearningRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearningRegistryComponentContainers();
 
             // invoke the operation and iterate over the result
-            await foreach (MachineLearninRegistryComponentContainerResource item in collection.GetAllAsync())
+            await foreach (MachineLearningRegistryComponentContainerResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
-            // get the collection of this MachineLearninRegistryComponentContainerResource
-            MachineLearninRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearninRegistryComponentContainers();
+            // get the collection of this MachineLearningRegistryComponentContainerResource
+            MachineLearningRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearningRegistryComponentContainers();
 
             // invoke the operation
             string componentName = "string";
@@ -183,13 +183,13 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             ResourceIdentifier machineLearningRegistryResourceId = MachineLearningRegistryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName);
             MachineLearningRegistryResource machineLearningRegistry = client.GetMachineLearningRegistryResource(machineLearningRegistryResourceId);
 
-            // get the collection of this MachineLearninRegistryComponentContainerResource
-            MachineLearninRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearninRegistryComponentContainers();
+            // get the collection of this MachineLearningRegistryComponentContainerResource
+            MachineLearningRegistryComponentContainerCollection collection = machineLearningRegistry.GetMachineLearningRegistryComponentContainers();
 
             // invoke the operation
             string componentName = "string";
-            NullableResponse<MachineLearninRegistryComponentContainerResource> response = await collection.GetIfExistsAsync(componentName);
-            MachineLearninRegistryComponentContainerResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MachineLearningRegistryComponentContainerResource> response = await collection.GetIfExistsAsync(componentName);
+            MachineLearningRegistryComponentContainerResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {

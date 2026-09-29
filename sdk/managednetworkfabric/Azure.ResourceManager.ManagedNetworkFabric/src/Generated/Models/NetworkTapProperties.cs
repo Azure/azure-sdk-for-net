@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network Tap Properties defines the properties of the resource. </summary>
-    public partial class NetworkTapProperties : AnnotationResourceProperties
+    internal partial class NetworkTapProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetworkTapProperties"/>. </summary>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>

@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// Defines the parameters for delivery rule match conditions
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="UriPathMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="ClientPortMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="HostNameMatchCondition"/>, and <see cref="DeliveryRuleSslProtocolMatchCondition"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="RemoteAddressMatchCondition"/>, <see cref="RequestMethodMatchCondition"/>, <see cref="QueryStringMatchCondition"/>, <see cref="PostArgsMatchCondition"/>, <see cref="RequestUriMatchCondition"/>, <see cref="RequestHeaderMatchCondition"/>, <see cref="RequestBodyMatchCondition"/>, <see cref="RequestSchemeMatchCondition"/>, <see cref="UriPathMatchCondition"/>, <see cref="UriFileExtensionMatchCondition"/>, <see cref="UriFileNameMatchCondition"/>, <see cref="HttpVersionMatchCondition"/>, <see cref="CookiesMatchCondition"/>, <see cref="IsDeviceMatchCondition"/>, <see cref="SocketAddressMatchCondition"/>, <see cref="ClientPortMatchCondition"/>, <see cref="ServerPortMatchCondition"/>, <see cref="HostNameMatchCondition"/>, and <see cref="DeliveryRuleSslProtocolMatchCondition"/>.
     /// </summary>
     public partial class DeliveryRuleConditionProperties : ProvisionableConstruct
     {
+        private BicepValue<DeliveryRuleConditionParametersType> _typeName;
+
         /// <summary> Creates a new DeliveryRuleConditionProperties. </summary>
         public DeliveryRuleConditionProperties()
         {
+        }
+
+        /// <summary> Gets the TypeName. </summary>
+        internal BicepValue<DeliveryRuleConditionParametersType> TypeName
+        {
+            get
+            {
+                Initialize();
+                return _typeName;
+            }
         }
 
         /// <summary> Define all the provisionable properties for DeliveryRuleConditionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _typeName = DefineProperty<DeliveryRuleConditionParametersType>(nameof(TypeName), new string[] { "typeName" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

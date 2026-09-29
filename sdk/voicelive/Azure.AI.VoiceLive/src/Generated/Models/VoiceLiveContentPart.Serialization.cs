@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any content part; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestImageContentPart"/>, <see cref="RequestTextContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="ResponseTextContentPart"/>, and <see cref="ResponseAudioContentPart"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestAudioContentPart"/>, <see cref="RequestImageContentPart"/>, <see cref="RequestTextContentPart"/>, <see cref="ResponseAudioContentPart"/>, and <see cref="ResponseTextContentPart"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceLiveContentPart))]
     public abstract partial class VoiceLiveContentPart : IJsonModel<VoiceLiveContentPart>
@@ -129,16 +129,16 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
+                    case "input_audio":
+                        return RequestAudioContentPart.DeserializeRequestAudioContentPart(element, options);
                     case "input_image":
                         return RequestImageContentPart.DeserializeRequestImageContentPart(element, options);
                     case "input_text":
                         return RequestTextContentPart.DeserializeRequestTextContentPart(element, options);
-                    case "input_audio":
-                        return RequestAudioContentPart.DeserializeRequestAudioContentPart(element, options);
-                    case "text":
-                        return ResponseTextContentPart.DeserializeResponseTextContentPart(element, options);
                     case "audio":
                         return ResponseAudioContentPart.DeserializeResponseAudioContentPart(element, options);
+                    case "text":
+                        return ResponseTextContentPart.DeserializeResponseTextContentPart(element, options);
                 }
             }
             return UnknownVoiceLiveContentPart.DeserializeUnknownVoiceLiveContentPart(element, options);

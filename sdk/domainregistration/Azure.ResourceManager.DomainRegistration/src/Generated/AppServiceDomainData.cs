@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.DomainRegistration
         }
 
         /// <summary> Domain expiration timestamp. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DomainRegistration
         }
 
         /// <summary> Azure DNS Zone to use. </summary>
-        public string DnsZoneId
+        public ResourceIdentifier DnsZoneId
         {
             get
             {

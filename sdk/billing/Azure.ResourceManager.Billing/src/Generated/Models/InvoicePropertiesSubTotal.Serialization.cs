@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The pre-tax amount due. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesSubTotal : BillingAmount, IJsonModel<InvoicePropertiesSubTotal>
+    internal partial class InvoicePropertiesSubTotal : BillingAmount, IJsonModel<InvoicePropertiesSubTotal>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InvoicePropertiesSubTotal(currency, value, additionalBinaryDataProperties);

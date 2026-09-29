@@ -16,7 +16,9 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
 
 ## Table of Contents
 
+* [Client lifetime and disposal](#client-lifetime-and-disposal)
 * [Troubleshooting Authentication Issues](#troubleshooting-authentication-issues)
+  * [Attested token eligibility fallback](#attested-token-eligibility-fallback)
   * [HTTP 401 Errors](#http-401-errors)
     * [Frequent HTTP 401 Errors in Logs](#frequent-http-401-errors-in-logs)
     * [AKV10032: Invalid issuer](#akv10032-invalid-issuer)
@@ -31,7 +33,25 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
   * [HTTP 429: Too Many Request](#http-429-too-many-requests)
 * [Support](#support)
 
+## Client lifetime and disposal
+
+Reuse Key Vault clients and resolvers for the lifetime of the workload rather than constructing a new instance for each request. Clients that create their own update-capable HTTP transport implement `IDisposable`; call `Dispose` when the client is no longer needed. Repeated calls to `Dispose` are safe. This releases client-owned pipeline resources without deleting certificates or clearing tenant eligibility in Azure.
+
+Finish all requests, long-running operation polling, pageable enumeration, and use of response or cryptographic streams before disposing the client. Do not start new operations or dispose the client concurrently with operations. `CryptographyClient` instances returned by a `KeyClient` or `KeyResolver` borrow that parent's pipeline: disposing a child does not release the shared pipeline, and the parent must remain alive until all use of its children has completed.
+
+Clients do not dispose caller-supplied transports, HTTP clients, credentials, or key material. The application remains responsible for those resources. Disposal provides a cleanup path but does not replace the recommendation to reuse client instances.
+
 ## Troubleshooting Authentication Issues
+
+### Attested token eligibility fallback
+
+When PoP token acquisition receives the explicit managed-identity tenant eligibility denial `AADSTS3921996`, the Key Vault client requests bearer authentication once through the same configured credential. It preserves scopes, tenant, claims, CAE, correlation, and cancellation while disabling PoP-specific request configuration. Other authentication errors and Key Vault certificate-mismatch responses do not trigger this fallback.
+
+The client recognizes the exact `AADSTS3921996` code in an `AuthenticationFailedException` or `CredentialUnavailableException` message, including its inner-exception messages. This does not require a direct MSAL dependency in Key Vault. If the credential does not preserve the code in the exception-message chain, the error is propagated without fallback. Cancellation and unrelated terminal failures in a credential aggregate are not converted to bearer authentication.
+
+The denial is remembered per Key Vault authentication-policy instance and request tenant context, not globally across credentials or clients. Subsequent operations and renewals use bearer authentication for that context. Recreate the Key Vault client to retry PoP after eligibility changes. Requests already in flight may complete their original acquisition.
+
+Enable Azure SDK logging to observe the transition warning from the package's `-Authentication` event source, for example `Azure-Security-KeyVault-Secrets-Authentication`. The warning does not include tokens or tenant identifiers. Successful bearer fallback does not provide certificate-binding protection, grant additional permissions, or bypass a vault configured to require bound tokens.
 
 ### HTTP 401 Errors
 

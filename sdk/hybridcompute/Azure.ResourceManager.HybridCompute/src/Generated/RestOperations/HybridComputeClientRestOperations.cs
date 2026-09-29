@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateUpgradeExtensionsRequest(string subscriptionId, string resourceGroupName, string machineName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpgradeExtensionsRequest(Guid subscriptionId, string resourceGroupName, string machineName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        internal HttpMessage CreateSetupExtensionsRequest(string subscriptionId, string resourceGroupName, string machineName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateSetupExtensionsRequest(Guid subscriptionId, string resourceGroupName, string machineName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);

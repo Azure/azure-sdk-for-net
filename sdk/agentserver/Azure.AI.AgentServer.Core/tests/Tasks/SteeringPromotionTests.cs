@@ -1,0 +1,193 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Tasks;
+using Azure.AI.AgentServer.Core.Tasks.Serialization;
+using NUnit.Framework;
+
+namespace Azure.AI.AgentServer.Core.Tests.Tasks;
+
+[TestFixture]
+public sealed class SteeringPromotionTests
+{
+    [Test]
+    public async Task RunningHandlerObservesCancellationAndPendingCountOnSteer()
+    {
+        using TaskTestHost host = TaskTestHost.Create();
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var observed = new TaskCompletionSource<(bool Cancelled, int Pending, bool CancelRequested)>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+
+        host.Builder.AddMultiTurnTask<string, string>(
+            "chat",
+            async (ctx, ct) =>
+            {
+                if (ctx.IsSteeredTurn)
+                {
+                    return "S:" + ctx.Input;
+                }
+
+                await release.Task.ConfigureAwait(false);
+                observed.TrySetResult((ctx.Cancellation.IsCancellationRequested, ctx.PendingInputCount, ctx.CancelRequested));
+                return "F:" + ctx.Input;
+            },
+            steerable: true);
+
+        TaskRun<string> run1 = await host.Invoker.StartAsync<string, string>(
+            "chat", "in1", new RunOptions { TaskId = "t1", InputId = "i1" });
+        await host.WaitForStatusAsync("t1", "in_progress", TimeSpan.FromSeconds(5));
+
+        TaskRun<string> run2 = await host.Invoker.StartAsync<string, string>(
+            "chat", "in2", new RunOptions { TaskId = "t1", InputId = "i2" });
+        Assert.That(run2.IsQueued, Is.True);
+
+        // The steering append completed, so the running turn must already see the nudge.
+        release.SetResult();
+
+        (bool cancelled, int pending, bool cancelRequested) = await observed.Task;
+        Assert.That(cancelled, Is.True, "steering should signal the cooperative cancellation token");
+        Assert.That(pending, Is.GreaterThan(0), "pending-input count must be set before the cancel signal");
+        Assert.That(cancelRequested, Is.False, "a steering nudge is not a caller cancel cause");
+
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
+        Assert.That(await run2.Completion, Is.EqualTo("S:in2"));
+    }
+
+    [Test]
+    public async Task NeverSteeredMultiTurnSuspendOmitsSteeringBlock()
+    {
+        // Cross-language parity (suspend `if existing_steering:`): a multi-turn chain that is
+        // never steered must suspend with NO `steering` key at all — an absent block reads back as
+        // drain_in_progress=false / next_input_seq=0, identical to an empty placeholder, so the
+        // engine never mistakes a clean suspend for a mid-drain crash.
+        using TaskTestHost host = TaskTestHost.Create();
+        host.Builder.AddMultiTurnTask<string, string>(
+            "chat",
+            (ctx, ct) => Task.FromResult("F:" + ctx.Input),
+            steerable: true);
+
+        TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
+            "chat", "in1", new RunOptions { TaskId = "t-nosteer", InputId = "i1" });
+        Assert.That(await run.Completion, Is.EqualTo("F:in1"));
+
+        TaskRecord record = await host.WaitForStatusAsync("t-nosteer", "suspended", TimeSpan.FromSeconds(5));
+        Assert.That(record.Payload[TaskWireKeys.PayloadSteering], Is.Null,
+            "A never-steered chain must not write a steering block at suspend.");
+    }
+
+    [Test]
+    public async Task TwoQueuedInputsPromoteInFifoOrderWithMonotonicSeq()
+    {
+        using TaskTestHost host = TaskTestHost.Create();
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        host.Builder.AddMultiTurnTask<string, string>(
+            "chat",
+            async (ctx, ct) =>
+            {
+                if (ctx.IsSteeredTurn)
+                {
+                    return "S:" + ctx.Input;
+                }
+
+                await gate.Task.ConfigureAwait(false);
+                return "F:" + ctx.Input;
+            },
+            steerable: true);
+
+        TaskRun<string> run1 = await host.Invoker.StartAsync<string, string>(
+            "chat", "in1", new RunOptions { TaskId = "t1", InputId = "i1" });
+        await host.WaitForStatusAsync("t1", "in_progress", TimeSpan.FromSeconds(5));
+
+        TaskRun<string> run2 = await host.Invoker.StartAsync<string, string>(
+            "chat", "in2", new RunOptions { TaskId = "t1", InputId = "i2" });
+        TaskRun<string> run3 = await host.Invoker.StartAsync<string, string>(
+            "chat", "in3", new RunOptions { TaskId = "t1", InputId = "i3" });
+        Assert.That(run2.IsQueued && run3.IsQueued, Is.True);
+
+        gate.SetResult();
+
+        Assert.That(await run1.Completion, Is.EqualTo("F:in1"));
+        Assert.That(await run2.Completion, Is.EqualTo("S:in2"));
+        Assert.That(await run3.Completion, Is.EqualTo("S:in3"));
+
+        // The chain parks at suspended. Small steering inputs stay inline in pending_inputs and do
+        // NOT burn an attachment seq, so next_input_seq stays 0 (Python parity: next_input_seq only
+        // advances on the attachment-promotion branch).
+        TaskRecord record = await host.WaitForStatusAsync("t1", "suspended", TimeSpan.FromSeconds(5));
+        var steering = (System.Text.Json.Nodes.JsonObject?)record.Payload[TaskWireKeys.PayloadSteering];
+        Assert.That(steering, Is.Not.Null);
+        Assert.That((int)steering![TaskWireKeys.SteeringNextInputSeq]!, Is.EqualTo(0));
+    }
+
+    [Test]
+    public async Task LargeQueuedInputsPromoteToAttachmentsAtAppendWithMonotonicSeq()
+    {
+        // Parity: oversized (> 20 KiB) steering inputs must be promoted to `steering_input_<seq>`
+        // attachments at APPEND time, leaving only a tiny ref in pending_inputs so the persisted
+        // `_steering` payload stays bounded regardless of how many large inputs are queued. Each
+        // promotion advances next_input_seq (monotonic, never reused). The drained turn still
+        // observes the full raw value, and the consumed attachment is deleted at drain.
+        using TaskTestHost host = TaskTestHost.Create();
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        string big2 = "B2-" + new string('x', 40 * 1024);
+        string big3 = "B3-" + new string('y', 40 * 1024);
+
+        host.Builder.AddMultiTurnTask<string, int>(
+            "chat",
+            async (ctx, ct) =>
+            {
+                if (ctx.IsSteeredTurn)
+                {
+                    return ctx.Input.Length;
+                }
+
+                await gate.Task.ConfigureAwait(false);
+                return ctx.Input.Length;
+            },
+            steerable: true);
+
+        TaskRun<int> run1 = await host.Invoker.StartAsync<string, int>(
+            "chat", "in1", new RunOptions { TaskId = "t1", InputId = "i1" });
+        await host.WaitForStatusAsync("t1", "in_progress", TimeSpan.FromSeconds(5));
+
+        TaskRun<int> run2 = await host.Invoker.StartAsync<string, int>(
+            "chat", big2, new RunOptions { TaskId = "t1", InputId = "i2" });
+        TaskRun<int> run3 = await host.Invoker.StartAsync<string, int>(
+            "chat", big3, new RunOptions { TaskId = "t1", InputId = "i3" });
+        Assert.That(run2.IsQueued && run3.IsQueued, Is.True);
+
+        // While both large inputs are queued, pending_inputs must hold only refs (the payload stays
+        // small); the raw content lives in attachments.
+        TaskRecord queuedRecord = await host.Store.GetAsync("t1", CancellationToken.None);
+        var queuedSteering = (System.Text.Json.Nodes.JsonObject?)queuedRecord!.Payload[TaskWireKeys.PayloadSteering];
+        var pending = (System.Text.Json.Nodes.JsonArray?)queuedSteering![TaskWireKeys.SteeringPendingInputs];
+        Assert.That(pending!.Count, Is.EqualTo(2));
+        foreach (var entry in pending!)
+        {
+            Assert.That(entry is System.Text.Json.Nodes.JsonObject o && o.ContainsKey(TaskWireKeys.AttachmentRefMagic),
+                Is.True, "queued oversized input must be a ref, not inline");
+        }
+
+        Assert.That(queuedRecord.Attachments, Is.Not.Null);
+        Assert.That(queuedRecord.Attachments!.ContainsKey("steering_input_0"), Is.True);
+        Assert.That(queuedRecord.Attachments!.ContainsKey("steering_input_1"), Is.True);
+
+        gate.SetResult();
+
+        Assert.That(await run1.Completion, Is.EqualTo("in1".Length));
+        Assert.That(await run2.Completion, Is.EqualTo(big2.Length), "drained turn sees full raw value");
+        Assert.That(await run3.Completion, Is.EqualTo(big3.Length));
+
+        // Two attachment promotions → next_input_seq == 2; consumed attachments deleted at drain.
+        TaskRecord record = await host.WaitForStatusAsync("t1", "suspended", TimeSpan.FromSeconds(5));
+        var steering = (System.Text.Json.Nodes.JsonObject?)record.Payload[TaskWireKeys.PayloadSteering];
+        Assert.That((int)steering![TaskWireKeys.SteeringNextInputSeq]!, Is.EqualTo(2));
+        Assert.That(record.Attachments is null || !record.Attachments.ContainsKey("steering_input_0"), Is.True);
+        Assert.That(record.Attachments is null || !record.Attachments.ContainsKey("steering_input_1"), Is.True);
+    }
+}

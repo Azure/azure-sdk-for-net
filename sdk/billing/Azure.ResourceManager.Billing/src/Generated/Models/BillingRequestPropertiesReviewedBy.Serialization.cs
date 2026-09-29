@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The principal of the request reviewer. Will only be set if request is approved. </summary>
-    public partial class BillingRequestPropertiesReviewedBy : BillingPrincipal, IJsonModel<BillingRequestPropertiesReviewedBy>
+    internal partial class BillingRequestPropertiesReviewedBy : BillingPrincipal, IJsonModel<BillingRequestPropertiesReviewedBy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new BillingRequestPropertiesReviewedBy(tenantId, objectId, upn, additionalBinaryDataProperties);

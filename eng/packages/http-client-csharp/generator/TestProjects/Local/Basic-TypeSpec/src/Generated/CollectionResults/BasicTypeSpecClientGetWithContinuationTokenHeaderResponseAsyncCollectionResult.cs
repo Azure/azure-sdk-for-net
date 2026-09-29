@@ -49,7 +49,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithContinuationTokenHeaderResponseResponse result = (ListWithContinuationTokenHeaderResponseResponse)response;
+                ListWithContinuationTokenHeaderResponseResult result = (ListWithContinuationTokenHeaderResponseResult)response;
                 if (response.Headers.TryGetValue("next-token", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = value;
@@ -61,7 +61,7 @@ namespace BasicTypeSpec
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
                 if (string.IsNullOrEmpty(nextPage))

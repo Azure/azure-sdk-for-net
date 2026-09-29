@@ -21,5 +21,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             return _queueServiceClient;
         }
+
+        public override QueueServiceClient GetRaw(string name, INameResolver resolver)
+        {
+            return _queueServiceClient;
+        }
     }
 }

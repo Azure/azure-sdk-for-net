@@ -11,45 +11,47 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteDeleteRequest for delete VM operation. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk delete action. </summary>
     public partial class ExecuteDeleteContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
-        public ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources)
+        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> is null. </exception>
+        public ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters)
         {
             Argument.AssertNotNull(executionParameters, nameof(executionParameters));
-            Argument.AssertNotNull(resources, nameof(resources));
 
             ExecutionParameters = executionParameters;
-            Resources = resources;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeleteContent"/>. </summary>
-        /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="resources"> The resources for the request. </param>
-        /// <param name="isForceDeletion"> Forced delete resource item. </param>
+        /// <param name="executionParameters"> The execution settings for the bulk action. </param>
+        /// <param name="resources"> The target virtual machines. </param>
+        /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
+        /// <param name="isForceDeletion"> Indicates whether Bulk Actions uses forced deletion for the target virtual machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, bool? isForceDeletion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext, bool? isForceDeletion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionParameters = executionParameters;
             Resources = resources;
+            ResourcesWithContext = resourcesWithContext;
             IsForceDeletion = isForceDeletion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The execution parameters for the request. </summary>
+        /// <summary> The execution settings for the bulk action. </summary>
         public BulkActionExecutionParameterDetail ExecutionParameters { get; }
 
-        /// <summary> The resources for the request. </summary>
-        public UserRequestResources Resources { get; }
+        /// <summary> The target virtual machines. </summary>
+        public UserRequestResources Resources { get; set; }
 
-        /// <summary> Forced delete resource item. </summary>
+        /// <summary> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </summary>
+        public ResourcesWithContext ResourcesWithContext { get; set; }
+
+        /// <summary> Indicates whether Bulk Actions uses forced deletion for the target virtual machines. </summary>
         public bool? IsForceDeletion { get; set; }
     }
 }

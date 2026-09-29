@@ -19,8 +19,8 @@ namespace Azure.Provisioning.CostManagement
         private BicepList<ScheduledActionDaysOfWeek> _daysOfWeek;
         private BicepList<ScheduledActionWeeksOfMonth> _weeksOfMonth;
         private BicepValue<int> _dayOfMonth;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
 
         /// <summary> Creates a new ScheduleProperties. </summary>
         public ScheduleProperties()
@@ -102,33 +102,33 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
             set
             {
                 Initialize();
-                _startOn.Assign(value);
+                _startsOn.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets or sets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
             set
             {
                 Initialize();
-                _endOn.Assign(value);
+                _endsOn.Assign(value);
             }
         }
 
@@ -141,8 +141,8 @@ namespace Azure.Provisioning.CostManagement
             _daysOfWeek = DefineListProperty<ScheduledActionDaysOfWeek>(nameof(DaysOfWeek), new string[] { "daysOfWeek" });
             _weeksOfMonth = DefineListProperty<ScheduledActionWeeksOfMonth>(nameof(WeeksOfMonth), new string[] { "weeksOfMonth" });
             _dayOfMonth = DefineProperty<int>(nameof(DayOfMonth), new string[] { "dayOfMonth" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true);
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, isRequired: true);
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startDate" }, isRequired: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endDate" }, isRequired: true, format: "O");
             DefineAdditionalProperties();
         }
 

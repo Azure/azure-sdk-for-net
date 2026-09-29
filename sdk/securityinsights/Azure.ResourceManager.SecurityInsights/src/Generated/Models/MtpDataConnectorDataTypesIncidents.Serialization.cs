@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Incidents data type for Microsoft Threat Protection Platforms data connector. </summary>
-    public partial class MtpDataConnectorDataTypesIncidents : DataConnectorDataTypeCommon, IJsonModel<MtpDataConnectorDataTypesIncidents>
+    internal partial class MtpDataConnectorDataTypesIncidents : DataConnectorDataTypeCommon, IJsonModel<MtpDataConnectorDataTypesIncidents>
     {
         /// <summary> Initializes a new instance of <see cref="MtpDataConnectorDataTypesIncidents"/> for deserialization. </summary>
         internal MtpDataConnectorDataTypesIncidents()
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MtpDataConnectorDataTypesIncidents(state, additionalBinaryDataProperties);

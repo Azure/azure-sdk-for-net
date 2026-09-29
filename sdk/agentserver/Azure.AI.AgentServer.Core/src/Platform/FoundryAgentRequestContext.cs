@@ -70,13 +70,6 @@ public sealed class FoundryAgentRequestContext
     public static FoundryAgentRequestContext Empty { get; } = new FoundryAgentRequestContext();
 
     /// <summary>
-    /// Binds <paramref name="context"/> as the current request context. Called by
-    /// the SDK's request-context middleware at the start of request handling.
-    /// </summary>
-    /// <param name="context">The context to bind.</param>
-    internal static void Set(FoundryAgentRequestContext context) => CurrentContext.Value = context;
-
-    /// <summary>
     /// Atomically binds <paramref name="context"/> as the current request context
     /// and returns the previously bound context (or <see langword="null"/>). Used by
     /// the request-context middleware to restore the prior value in a <c>finally</c>

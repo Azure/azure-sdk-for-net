@@ -20,7 +20,7 @@ public class RoutinesTests : ProjectsClientTestBase
 {
     public static readonly string HOSTED_AGENT_PREFIX = "cs-routines-hosted-agent";
     public static readonly string ROUTINE_NAME_PREFIX = "cs-routines";
-    private static readonly  int PAGE_SIZE = 3;
+    private static readonly int PAGE_SIZE = 3;
 
     public enum TriggerType
     {
@@ -96,16 +96,14 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             AgentName = agentVersion.Name
         };
-        CustomRoutineTrigger trigger = new(
-            provider: "sample-provider",
-            parameters: new Dictionary<string, BinaryData>
+        CustomRoutineTrigger trigger = new CustomRoutineTrigger(provider: "teams", parameters: new Dictionary<string, BinaryData>()
             {
-                ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
-            })
-        {
-            EventName = "sample-event"
-        };
-        for (int i=0; i< PAGE_SIZE + 1; i++)
+                { "connection_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CONNECTION_NAME)) },
+                { "thread_type", BinaryData.FromString(JsonSerializer.Serialize("channel")) },
+                { "group_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_GROUP_ID))},
+                { "channel_id", BinaryData.FromString(JsonSerializer.Serialize(TestEnvironment.TEAMS_CHANNEL_ID))},
+            });
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
             ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
             routineOptions.Triggers.Add("manual", trigger);
@@ -115,8 +113,8 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
-        // Blocked by ADO work item 5337919.
-        // Go forward.
+        //// Blocked by ADO work item 5337919.
+        //// Go forward.
         //List<ProjectsRoutine> forward = await projectClient.Routines.GetRoutinesAsync(order: "asc", after: records[0].Name, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         //Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         //Assert.That(forward[0].Name, Is.EqualTo(records[1].Name));
@@ -222,7 +220,7 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
@@ -255,7 +253,7 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        RoutineTrigger trigger= new ScheduleRoutineTrigger(
+        RoutineTrigger trigger = new ScheduleRoutineTrigger(
             cronExpression: "*/5 * * * *",
             timeZone: "UTC"
         );
@@ -276,19 +274,19 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            runs = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name).ToListAsync();
+            runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
             if (runs.Count > PAGE_SIZE)
             {
                 // When we have generated enough run, disable the routine and check pahgination.
                 await projectClient.Routines.DisableAsync(name: created.Name);
                 // Make sure, we have all the runs after the routine was disabled.
-                runs = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name).ToListAsync();
+                runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
                 break;
             }
         }
         Assert.That(runs, Has.Count.GreaterThan(PAGE_SIZE));
         // We cannot know, how many runs we have generated, so we set the new baseline here.
-        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Blocked by the ADO item 5337751
         // Go forward.
@@ -309,7 +307,7 @@ public class RoutinesTests : ProjectsClientTestBase
         //Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[0].Id));
         ////// Two limits.
         //// Pagination via before is not supported.
-        //backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        //backwards = await projectClient.Routines.GetRoutineRunsAsync(name: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         //Assert.That(backwards.Count, Is.EqualTo(2));
         //Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         //Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -347,13 +345,13 @@ public class RoutinesTests : ProjectsClientTestBase
         await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
         {
             // The routine created no earlier than response and not later than one minute after response.
-            if (routine.CreatedAt >= response.CreatedAt && routine.CreatedAt < response.CreatedAt.AddMinutes(1))
+            if (routine.CreatedOn >= response.CreatedAt && routine.CreatedOn < response.CreatedAt.AddMinutes(1))
             {
                 created = routine;
                 break;
             }
             // If the latest routine was created before the response, our routine was not created.
-            else if (routine.CreatedAt < response.CreatedAt)
+            else if (routine.CreatedOn < response.CreatedAt)
             {
                 break;
             }
@@ -365,7 +363,7 @@ public class RoutinesTests : ProjectsClientTestBase
         while (DateTime.UtcNow < deadline)
         {
             await Delay(60000);
-            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||

@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Attestation": "2021-06-01"
+  }
+}

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The total refund for returns and cancellations during the invoice billing period. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesCreditAmount : BillingAmount
+    internal partial class InvoicePropertiesCreditAmount : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesCreditAmount"/>. </summary>
         public InvoicePropertiesCreditAmount()

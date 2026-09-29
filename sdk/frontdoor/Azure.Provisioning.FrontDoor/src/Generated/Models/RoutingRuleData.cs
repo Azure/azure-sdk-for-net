@@ -7,18 +7,16 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> A routing rule represents a specification for traffic to treat and where to send it, along with health probe information. </summary>
-    public partial class RoutingRuleData : ProvisionableConstruct
+    public partial class RoutingRuleData : FrontDoorSubResource
     {
         private RoutingRuleProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<string> _type;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new RoutingRuleData. </summary>
         public RoutingRuleData()
@@ -62,34 +60,6 @@ namespace Azure.Provisioning.FrontDoor
             {
                 Initialize();
                 return _type;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RoutingRuleProperties();
-                }
-                return Properties.ResourceState;
             }
         }
 
@@ -212,6 +182,19 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoutingRuleProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for RoutingRuleData. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -219,7 +202,6 @@ namespace Azure.Provisioning.FrontDoor
             _properties = DefineModelProperty<RoutingRuleProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 

@@ -7,16 +7,14 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Disk Restore Point details. </summary>
-    public partial class DiskRestorePointAttributes : ProvisionableConstruct
+    public partial class DiskRestorePointAttributes : ComputeSubResourceData
     {
         private RestorePointEncryption _encryption;
         private ComputeApiEntityReference _sourceDiskRestorePoint;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new DiskRestorePointAttributes. </summary>
         public DiskRestorePointAttributes()
@@ -53,16 +51,6 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-        }
-
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> SourceDiskRestorePointId
         {
@@ -86,7 +74,6 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _encryption = DefineModelProperty<RestorePointEncryption>(nameof(Encryption), new string[] { "encryption" });
             _sourceDiskRestorePoint = DefineModelProperty<ComputeApiEntityReference>(nameof(SourceDiskRestorePoint), new string[] { "sourceDiskRestorePoint" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

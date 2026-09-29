@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Data connector. </summary>
+    /// <summary>
+    /// Data connector
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AwsS3DataConnector"/>, <see cref="CodelessApiPollingDataConnector"/>, <see cref="CodelessUiDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="MtpDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="PremiumMicrosoftDefenderForThreatIntelligence"/>, <see cref="PurviewAuditDataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="SecurityInsightsAadDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/>, and <see cref="ThreatIntelligenceTaxiiDataConnector"/>.
+    /// </summary>
     public partial class SecurityInsightsDataConnectorData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

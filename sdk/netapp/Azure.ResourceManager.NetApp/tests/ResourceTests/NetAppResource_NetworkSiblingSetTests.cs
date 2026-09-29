@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _volumeCollection = _capacityPool.GetNetAppVolumes();
             var volumeName = Recording.GenerateAssetName("volumeName-");
             await CreateVirtualNetwork(location: DefaultLocation);
-            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId);
+            _volumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId: DefaultSubnetId, networkFeature: NetAppNetworkFeature.Basic);
         }
 
         [TearDown]

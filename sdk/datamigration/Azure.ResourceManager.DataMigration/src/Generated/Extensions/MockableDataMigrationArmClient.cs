@@ -175,34 +175,34 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         /// <summary> Retrieve the Database Migration resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            return GetDatabaseMigrationSqlDBs(scope).Get(targetDbName, migrationOperationId, expand, cancellationToken);
+            return GetDatabaseMigrationSqlDBs(scope).Get(targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Retrieve the Database Migration resource. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            return await GetDatabaseMigrationSqlDBs(scope).GetAsync(targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDatabaseMigrationSqlDBs(scope).GetAsync(targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="DatabaseMigrationSqlMIResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -224,34 +224,34 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         /// <summary> Retrieve the specified database migration for a given SQL Managed Instance. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            return GetDatabaseMigrationSqlMIs(scope).Get(targetDbName, migrationOperationId, expand, cancellationToken);
+            return GetDatabaseMigrationSqlMIs(scope).Get(targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Retrieve the specified database migration for a given SQL Managed Instance. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            return await GetDatabaseMigrationSqlMIs(scope).GetAsync(targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDatabaseMigrationSqlMIs(scope).GetAsync(targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="DatabaseMigrationSqlVmResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -273,34 +273,34 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         /// <summary> Retrieve the specified database migration for a given SQL VM. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            return GetDatabaseMigrationSqlVms(scope).Get(targetDbName, migrationOperationId, expand, cancellationToken);
+            return GetDatabaseMigrationSqlVms(scope).Get(targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Retrieve the specified database migration for a given SQL VM. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            return await GetDatabaseMigrationSqlVms(scope).GetAsync(targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDatabaseMigrationSqlVms(scope).GetAsync(targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="DataMigrationServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

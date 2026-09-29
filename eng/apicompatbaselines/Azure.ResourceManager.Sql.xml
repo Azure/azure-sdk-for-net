@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.AggregationFunction:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.Databases:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.EndTime:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.Interval:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.NumberOfQueries:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.ObservationMetric:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0014</DiagnosticId>
+    <Target>P:Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.StartTime:[T:Azure.ResourceManager.Sql.WirePathAttribute]</Target>
+  </Suppression>
+</Suppressions>

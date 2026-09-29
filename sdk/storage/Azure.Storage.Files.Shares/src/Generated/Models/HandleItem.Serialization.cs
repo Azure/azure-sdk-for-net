@@ -124,18 +124,18 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteValue(SessionId);
             writer.WriteEndElement();
             writer.WriteStartElement("ClientIp");
-            writer.WriteValue(ClientIp);
+            writer.WriteValue(ClientIP);
             writer.WriteEndElement();
             writer.WriteStartElement("ClientName");
             writer.WriteValue(ClientName);
             writer.WriteEndElement();
             writer.WriteStartElement("OpenTime");
-            writer.WriteStringValue(OpenTime, "R");
+            writer.WriteStringValue(OpenOn, "R");
             writer.WriteEndElement();
-            if (Optional.IsDefined(LastReconnectTime))
+            if (Optional.IsDefined(LastReconnectOn))
             {
                 writer.WriteStartElement("LastReconnectTime");
-                writer.WriteStringValue(LastReconnectTime.Value, "R");
+                writer.WriteStringValue(LastReconnectOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsCollectionDefined(AccessRightList))
@@ -165,10 +165,10 @@ namespace Azure.Storage.Files.Shares.Models
             string fileId = default;
             string parentId = default;
             string sessionId = default;
-            string clientIp = default;
+            string clientIP = default;
             string clientName = default;
-            DateTimeOffset openTime = default;
-            DateTimeOffset? lastReconnectTime = default;
+            DateTimeOffset openOn = default;
+            DateTimeOffset? lastReconnectOn = default;
             IList<AccessRight> accessRightList = default;
 
             foreach (var child in element.Elements())
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "ClientIp")
                 {
-                    clientIp = (string)child;
+                    clientIP = (string)child;
                     continue;
                 }
                 if (localName == "ClientName")
@@ -211,12 +211,12 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 if (localName == "OpenTime")
                 {
-                    openTime = child.GetDateTimeOffset("R");
+                    openOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "LastReconnectTime")
                 {
-                    lastReconnectTime = child.GetDateTimeOffset("R");
+                    lastReconnectOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "AccessRightList")
@@ -236,10 +236,10 @@ namespace Azure.Storage.Files.Shares.Models
                 fileId,
                 parentId,
                 sessionId,
-                clientIp,
+                clientIP,
                 clientName,
-                openTime,
-                lastReconnectTime,
+                openOn,
+                lastReconnectOn,
                 accessRightList ?? new ChangeTrackingList<AccessRight>());
         }
 

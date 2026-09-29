@@ -12,7 +12,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for skills. </summary>
+    /// <summary>
+    /// Base type for skills.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureMachineLearningSkill"/>, <see cref="AzureOpenAIEmbeddingSkill"/>, <see cref="ChatCompletionSkill"/>, <see cref="ConditionalSkill"/>, <see cref="ContentUnderstandingSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="DocumentIntelligenceLayoutSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="ImageAnalysisSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="OcrSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="ShaperSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="VisionVectorizeSkill"/>, and <see cref="WebApiSkill"/>.
+    /// </summary>
     public partial class SearchIndexerSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

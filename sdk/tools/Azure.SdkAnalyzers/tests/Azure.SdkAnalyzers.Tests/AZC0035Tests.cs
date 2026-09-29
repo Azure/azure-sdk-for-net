@@ -18,10 +18,15 @@ namespace Azure.SdkAnalyzers.Tests
         [TestCase("Task<Operation<TestModel>>")]
         [TestCase("Pageable<TestModel>")]
         [TestCase("AsyncPageable<TestModel>")]
+        [TestCase("System.ClientModel.AsyncStreamingResult<TestModel>")]
+        [TestCase("Task<System.ClientModel.AsyncStreamingResult<TestModel>>")]
+        [TestCase("System.ClientModel.AsyncStreamingClientResult<TestModel>")]
+        [TestCase("Task<System.ClientModel.AsyncStreamingClientResult<TestModel>>")]
         public async Task AZC0035_ProducedWhenOutputModelMissingFromModelFactory(string returnType)
         {
             string code = $@"
 using Azure;
+using System.ClientModel;
 using System.Threading.Tasks;
 
 namespace Azure.Test
@@ -41,7 +46,19 @@ namespace Azure.Test
     }}
 }}";
 
-            await Verifier.CreateAnalyzer(code).RunAsync();
+            var analyzer = Verifier.CreateAnalyzer(code);
+            analyzer.TestState.Sources.Add(@"
+namespace System.ClientModel
+{
+    public sealed class AsyncStreamingResult<T>
+    {
+    }
+
+    public sealed class AsyncStreamingClientResult<T>
+    {
+    }
+}");
+            await analyzer.RunAsync();
         }
 
         [Test]
@@ -87,6 +104,56 @@ namespace Azure.Test
         }
     }
 }";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0035_UnwrapsSseItemInsideAsyncStreamingResult(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName,
+            [Values(false, true)] bool wrapInTask)
+        {
+            string code = @"
+namespace System.Net.ServerSentEvents
+{
+    public sealed class SseItem<T>
+    {
+    }
+}
+
+namespace System.ClientModel
+{
+    public sealed class AsyncStreamingClientResult<T>
+    {
+    }
+}
+
+namespace Azure.Test
+{
+    public class {|AZC0035:TestModel|}
+    {
+        private TestModel() { }
+        public string Name { get; }
+    }
+
+    public class TestClient
+    {
+        public System.ClientModel.AsyncStreamingClientResult<
+            System.Net.ServerSentEvents.SseItem<TestModel>> GetModels()
+        {
+            return null;
+        }
+    }
+}";
+
+            code = code.Replace("AsyncStreamingClientResult", resultTypeName);
+            if (wrapInTask)
+            {
+                code = code.Replace(
+                    $"public System.ClientModel.{resultTypeName}<",
+                    $"public System.Threading.Tasks.Task<System.ClientModel.{resultTypeName}<")
+                    .Replace("SseItem<TestModel>> GetModels()", "SseItem<TestModel>>> GetModels()");
+            }
 
             await Verifier.CreateAnalyzer(code).RunAsync();
         }
@@ -598,6 +665,55 @@ namespace Azure.Test
             var azc0035 = diagnostics.Where(d => d.Id == "AZC0035").ToList();
             Assert.That(azc0035, Is.Empty,
                 "AZC0035 should not fire for models defined in referenced assemblies. " +
+                "Got: " + string.Join("; ", azc0035.Select(d => d.ToString())));
+        }
+
+        [Test]
+        public async Task AZC0035_NotProducedWhenGenericModelFactoryMethodMatchesConstructedOutputModel()
+        {
+            string source = @"
+using Azure;
+using System.Collections.Generic;
+
+namespace Azure.Test
+{
+    public class PageableList<T>
+    {
+        public IReadOnlyList<T> Data { get; }
+        internal PageableList(IReadOnlyList<T> data) { Data = data; }
+    }
+
+    public class TestModel { }
+
+    public class TestClient
+    {
+        protected TestClient() { }
+
+        public virtual Response<PageableList<TestModel>> GetItems()
+        {
+            return null;
+        }
+    }
+
+    public static class TestModelFactory
+    {
+        public static PageableList<T> PageableList<T>(IReadOnlyList<T> data)
+        {
+            return null;
+        }
+
+        public static TestModel TestModel()
+        {
+            return null;
+        }
+    }
+}";
+
+            var diagnostics = await GetAllAnalyzerDiagnosticsAsync(source);
+
+            var azc0035 = diagnostics.Where(d => d.Id == "AZC0035").ToList();
+            Assert.That(azc0035, Is.Empty,
+                "AZC0035 should not fire when an open generic model factory method covers a constructed output model. " +
                 "Got: " + string.Join("; ", azc0035.Select(d => d.ToString())));
         }
 

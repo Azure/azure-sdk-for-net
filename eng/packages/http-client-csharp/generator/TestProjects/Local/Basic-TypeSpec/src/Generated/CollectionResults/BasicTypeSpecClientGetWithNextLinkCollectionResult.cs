@@ -45,12 +45,12 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithNextLinkResponse result = (ListWithNextLinkResponse)response;
+                ListWithNextLinkResult result = (ListWithNextLinkResult)response;
                 nextPage = result.Next;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, BasicTypeSpecContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

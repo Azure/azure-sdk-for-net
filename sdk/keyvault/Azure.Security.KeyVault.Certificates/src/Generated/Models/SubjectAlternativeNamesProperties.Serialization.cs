@@ -133,11 +133,11 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddresses)
+                foreach (string item in IPAddresses)
                 {
                     if (item == null)
                     {
@@ -305,7 +305,7 @@ namespace Azure.Security.KeyVault.Certificates.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SubjectAlternativeNamesProperties(

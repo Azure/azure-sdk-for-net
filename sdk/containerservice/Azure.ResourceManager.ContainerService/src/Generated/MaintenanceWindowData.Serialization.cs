@@ -17,12 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    /// <summary>
-    /// A maintenance window is a resource-group-scoped resource that defines a reusable
-    /// maintenance schedule which can be linked to maintenance configurations on one
-    /// or more managed clusters.
-    /// For more information, see https://aka.ms/aks/maintenance-windows.
-    /// </summary>
+    /// <summary> A maintenance window is a resource-group-scoped resource that defines a reusable maintenance schedule which can be linked to maintenance configurations on one or more managed clusters. For more information, see https://aka.ms/aks/maintenance-windows. </summary>
     public partial class MaintenanceWindowData : TrackedResourceData, IJsonModel<MaintenanceWindowData>
     {
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowData"/> for deserialization. </summary>
@@ -232,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MaintenanceWindowData(

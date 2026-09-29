@@ -6,27 +6,21 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
     /// <summary>
     /// The service resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
     /// </summary>
-    public partial class ManagedServiceProperties : ProvisionableConstruct
+    public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         private BicepValue<string> _provisioningState;
+        private BicepValue<ServiceKind> _serviceKind;
         private BicepValue<string> _serviceTypeName;
         private ManagedServicePartitionScheme _partitionDescription;
         private BicepValue<ManagedServicePackageActivationMode> _servicePackageActivationMode;
         private BicepValue<string> _serviceDnsName;
-        private BicepValue<string> _placementConstraints;
-        private BicepList<ManagedServiceCorrelation> _correlationScheme;
-        private BicepList<ManagedServiceLoadMetric> _serviceLoadMetrics;
-        private BicepList<ManagedServicePlacementPolicy> _servicePlacementPolicies;
-        private BicepValue<ServiceFabricManagedServiceMoveCost> _defaultMoveCost;
-        private BicepList<ManagedServiceScalingPolicy> _scalingPolicies;
 
         /// <summary> Creates a new ManagedServiceProperties. </summary>
         public ManagedServiceProperties()
@@ -40,6 +34,16 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             {
                 Initialize();
                 return _provisioningState;
+            }
+        }
+
+        /// <summary> The kind of service (Stateless or Stateful). </summary>
+        internal BicepValue<ServiceKind> ServiceKind
+        {
+            get
+            {
+                Initialize();
+                return _serviceKind;
             }
         }
 
@@ -103,111 +107,16 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Gets or sets the PlacementConstraints. </summary>
-        public BicepValue<string> PlacementConstraints
-        {
-            get
-            {
-                Initialize();
-                return _placementConstraints;
-            }
-            set
-            {
-                Initialize();
-                _placementConstraints.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the CorrelationScheme. </summary>
-        public BicepList<ManagedServiceCorrelation> CorrelationScheme
-        {
-            get
-            {
-                Initialize();
-                return _correlationScheme;
-            }
-            set
-            {
-                Initialize();
-                _correlationScheme.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServiceLoadMetrics. </summary>
-        public BicepList<ManagedServiceLoadMetric> ServiceLoadMetrics
-        {
-            get
-            {
-                Initialize();
-                return _serviceLoadMetrics;
-            }
-            set
-            {
-                Initialize();
-                _serviceLoadMetrics.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ServicePlacementPolicies. </summary>
-        public BicepList<ManagedServicePlacementPolicy> ServicePlacementPolicies
-        {
-            get
-            {
-                Initialize();
-                return _servicePlacementPolicies;
-            }
-            set
-            {
-                Initialize();
-                _servicePlacementPolicies.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DefaultMoveCost. </summary>
-        public BicepValue<ServiceFabricManagedServiceMoveCost> DefaultMoveCost
-        {
-            get
-            {
-                Initialize();
-                return _defaultMoveCost;
-            }
-            set
-            {
-                Initialize();
-                _defaultMoveCost.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the ScalingPolicies. </summary>
-        public BicepList<ManagedServiceScalingPolicy> ScalingPolicies
-        {
-            get
-            {
-                Initialize();
-                return _scalingPolicies;
-            }
-            set
-            {
-                Initialize();
-                _scalingPolicies.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ManagedServiceProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _serviceKind = DefineProperty<ServiceKind>(nameof(ServiceKind), new string[] { "serviceKind" }, isRequired: true);
             _serviceTypeName = DefineProperty<string>(nameof(ServiceTypeName), new string[] { "serviceTypeName" }, isRequired: true);
             _partitionDescription = DefineModelProperty<ManagedServicePartitionScheme>(nameof(PartitionDescription), new string[] { "partitionDescription" }, isRequired: true);
             _servicePackageActivationMode = DefineProperty<ManagedServicePackageActivationMode>(nameof(ServicePackageActivationMode), new string[] { "servicePackageActivationMode" });
             _serviceDnsName = DefineProperty<string>(nameof(ServiceDnsName), new string[] { "serviceDnsName" });
-            _placementConstraints = DefineProperty<string>(nameof(PlacementConstraints), new string[] { "placementConstraints" });
-            _correlationScheme = DefineListProperty<ManagedServiceCorrelation>(nameof(CorrelationScheme), new string[] { "correlationScheme" });
-            _serviceLoadMetrics = DefineListProperty<ManagedServiceLoadMetric>(nameof(ServiceLoadMetrics), new string[] { "serviceLoadMetrics" });
-            _servicePlacementPolicies = DefineListProperty<ManagedServicePlacementPolicy>(nameof(ServicePlacementPolicies), new string[] { "servicePlacementPolicies" });
-            _defaultMoveCost = DefineProperty<ServiceFabricManagedServiceMoveCost>(nameof(DefaultMoveCost), new string[] { "defaultMoveCost" });
-            _scalingPolicies = DefineListProperty<ManagedServiceScalingPolicy>(nameof(ScalingPolicies), new string[] { "scalingPolicies" });
             DefineAdditionalProperties();
         }
 

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of free Azure credits applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </summary>
-    public partial class InvoicePropertiesFreeAzureCreditApplied : BillingAmount
+    internal partial class InvoicePropertiesFreeAzureCreditApplied : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesFreeAzureCreditApplied"/>. </summary>
         public InvoicePropertiesFreeAzureCreditApplied()

@@ -683,7 +683,7 @@ namespace Azure.Provisioning.Compute
             _capacityReservation = DefineModelProperty<CapacityReservationProfile>(nameof(CapacityReservation), new string[] { "capacityReservation" });
             _interconnectBlockProfile = DefineModelProperty<InterconnectBlockProfile>(nameof(InterconnectBlockProfile), new string[] { "interconnectBlockProfile" });
             _applicationProfile = DefineModelProperty<ApplicationProfile>(nameof(ApplicationProfile), new string[] { "applicationProfile" });
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             _resiliencyProfile = DefineModelProperty<ResiliencyProfile>(nameof(ResiliencyProfile), new string[] { "resiliencyProfile" });
             DefineAdditionalProperties();
         }

@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Properties for the container service agent pool profile. </summary>
-    internal partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
+    public partial class ManagedClusterAgentPoolProfileProperties : ProvisionableConstruct
     {
         private BicepValue<ETag> _eTag;
         private BicepValue<int> _count;
@@ -42,7 +42,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<string> _provisioningState;
         private ContainerServicePowerState _powerState;
         private BicepList<string> _availabilityZones;
-        private BicepValue<bool> _isNodePublicIpEnabled;
+        private BicepValue<bool> _isNodePublicIPEnabled;
         private BicepValue<ResourceIdentifier> _nodePublicIPPrefixId;
         private BicepValue<ScaleSetPriority> _scaleSetPriority;
         private BicepValue<ScaleSetEvictionPolicy> _scaleSetEvictionPolicy;
@@ -460,18 +460,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the IsNodePublicIpEnabled. </summary>
-        public BicepValue<bool> IsNodePublicIpEnabled
+        /// <summary> Gets or sets the IsNodePublicIPEnabled. </summary>
+        public BicepValue<bool> IsNodePublicIPEnabled
         {
             get
             {
                 Initialize();
-                return _isNodePublicIpEnabled;
+                return _isNodePublicIPEnabled;
             }
             set
             {
                 Initialize();
-                _isNodePublicIpEnabled.Assign(value);
+                _isNodePublicIPEnabled.Assign(value);
             }
         }
 
@@ -1011,7 +1011,7 @@ namespace Azure.Provisioning.ContainerService
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _powerState = DefineModelProperty<ContainerServicePowerState>(nameof(PowerState), new string[] { "powerState" });
             _availabilityZones = DefineListProperty<string>(nameof(AvailabilityZones), new string[] { "availabilityZones" });
-            _isNodePublicIpEnabled = DefineProperty<bool>(nameof(IsNodePublicIpEnabled), new string[] { "enableNodePublicIP" });
+            _isNodePublicIPEnabled = DefineProperty<bool>(nameof(IsNodePublicIPEnabled), new string[] { "enableNodePublicIP" });
             _nodePublicIPPrefixId = DefineProperty<ResourceIdentifier>(nameof(NodePublicIPPrefixId), new string[] { "nodePublicIPPrefixID" });
             _scaleSetPriority = DefineProperty<ScaleSetPriority>(nameof(ScaleSetPriority), new string[] { "scaleSetPriority" });
             _scaleSetEvictionPolicy = DefineProperty<ScaleSetEvictionPolicy>(nameof(ScaleSetEvictionPolicy), new string[] { "scaleSetEvictionPolicy" });

@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class PurviewAuditConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<PurviewAuditConnectorDataTypesLogs>
+    internal partial class PurviewAuditConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<PurviewAuditConnectorDataTypesLogs>
     {
         /// <summary> Initializes a new instance of <see cref="PurviewAuditConnectorDataTypesLogs"/> for deserialization. </summary>
         internal PurviewAuditConnectorDataTypesLogs()
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PurviewAuditConnectorDataTypesLogs(state, additionalBinaryDataProperties);

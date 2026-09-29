@@ -64,5 +64,26 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(fromWire.Kind, Is.EqualTo("azure-realtime-native"));
             Assert.That(fromWire.Name, Is.EqualTo(AzureRealtimeNativeVoiceName.Andrew));
         }
+
+        [Test]
+        public void AzureRealtimeNativeVoice_DeserializesAsVoiceProviderInSessionOptions()
+        {
+            const string json = """
+                {
+                    "voice": {
+                        "type": "azure-realtime-native",
+                        "name": "ava"
+                    }
+                }
+                """;
+
+            var options = TestUtilities.DeserializeViaIJsonModel(json, new VoiceLiveSessionOptions());
+
+            Assert.That(options.Voice, Is.TypeOf<AzureRealtimeNativeVoice>());
+
+            var typedVoice = (AzureRealtimeNativeVoice)options.Voice;
+            Assert.That(typedVoice.Kind, Is.EqualTo("azure-realtime-native"));
+            Assert.That(typedVoice.Name, Is.EqualTo(AzureRealtimeNativeVoiceName.Ava));
+        }
     }
 }

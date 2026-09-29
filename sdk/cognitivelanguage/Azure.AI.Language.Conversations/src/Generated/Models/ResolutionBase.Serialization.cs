@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for entity resolutions.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="VolumeResolution"/>, <see cref="SpeedResolution"/>, <see cref="AreaResolution"/>, <see cref="LengthResolution"/>, <see cref="InformationResolution"/>, <see cref="TemperatureResolution"/>, <see cref="WeightResolution"/>, <see cref="CurrencyResolution"/>, <see cref="BooleanResolution"/>, <see cref="DateTimeResolution"/>, <see cref="NumberResolution"/>, <see cref="OrdinalResolution"/>, <see cref="TemporalSpanResolution"/>, and <see cref="NumericRangeResolution"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeResolution"/>, <see cref="AreaResolution"/>, <see cref="BooleanResolution"/>, <see cref="CurrencyResolution"/>, <see cref="DateTimeResolution"/>, <see cref="InformationResolution"/>, <see cref="LengthResolution"/>, <see cref="NumberResolution"/>, <see cref="NumericRangeResolution"/>, <see cref="OrdinalResolution"/>, <see cref="SpeedResolution"/>, <see cref="TemperatureResolution"/>, <see cref="TemporalSpanResolution"/>, <see cref="VolumeResolution"/>, and <see cref="WeightResolution"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResolutionBase))]
     public abstract partial class ResolutionBase : IJsonModel<ResolutionBase>
@@ -132,34 +132,34 @@ namespace Azure.AI.Language.Conversations.Models
                 {
                     case "AgeResolution":
                         return AgeResolution.DeserializeAgeResolution(element, options);
-                    case "VolumeResolution":
-                        return VolumeResolution.DeserializeVolumeResolution(element, options);
-                    case "SpeedResolution":
-                        return SpeedResolution.DeserializeSpeedResolution(element, options);
                     case "AreaResolution":
                         return AreaResolution.DeserializeAreaResolution(element, options);
-                    case "LengthResolution":
-                        return LengthResolution.DeserializeLengthResolution(element, options);
-                    case "InformationResolution":
-                        return InformationResolution.DeserializeInformationResolution(element, options);
-                    case "TemperatureResolution":
-                        return TemperatureResolution.DeserializeTemperatureResolution(element, options);
-                    case "WeightResolution":
-                        return WeightResolution.DeserializeWeightResolution(element, options);
-                    case "CurrencyResolution":
-                        return CurrencyResolution.DeserializeCurrencyResolution(element, options);
                     case "BooleanResolution":
                         return BooleanResolution.DeserializeBooleanResolution(element, options);
+                    case "CurrencyResolution":
+                        return CurrencyResolution.DeserializeCurrencyResolution(element, options);
                     case "DateTimeResolution":
                         return DateTimeResolution.DeserializeDateTimeResolution(element, options);
+                    case "InformationResolution":
+                        return InformationResolution.DeserializeInformationResolution(element, options);
+                    case "LengthResolution":
+                        return LengthResolution.DeserializeLengthResolution(element, options);
                     case "NumberResolution":
                         return NumberResolution.DeserializeNumberResolution(element, options);
-                    case "OrdinalResolution":
-                        return OrdinalResolution.DeserializeOrdinalResolution(element, options);
-                    case "TemporalSpanResolution":
-                        return TemporalSpanResolution.DeserializeTemporalSpanResolution(element, options);
                     case "NumericRangeResolution":
                         return NumericRangeResolution.DeserializeNumericRangeResolution(element, options);
+                    case "OrdinalResolution":
+                        return OrdinalResolution.DeserializeOrdinalResolution(element, options);
+                    case "SpeedResolution":
+                        return SpeedResolution.DeserializeSpeedResolution(element, options);
+                    case "TemperatureResolution":
+                        return TemperatureResolution.DeserializeTemperatureResolution(element, options);
+                    case "TemporalSpanResolution":
+                        return TemporalSpanResolution.DeserializeTemporalSpanResolution(element, options);
+                    case "VolumeResolution":
+                        return VolumeResolution.DeserializeVolumeResolution(element, options);
+                    case "WeightResolution":
+                        return WeightResolution.DeserializeWeightResolution(element, options);
                 }
             }
             return UnknownResolutionBase.DeserializeUnknownResolutionBase(element, options);

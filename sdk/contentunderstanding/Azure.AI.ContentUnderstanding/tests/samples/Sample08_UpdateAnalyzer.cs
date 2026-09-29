@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task UpdateAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First create an analyzer to update
@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     ShouldReturnDetails = true
                 }
             };
-            initialAnalyzer.Models["completion"] = "gpt-4.1";
+            initialAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
             initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
 
             await client.CreateAnalyzerAsync(
