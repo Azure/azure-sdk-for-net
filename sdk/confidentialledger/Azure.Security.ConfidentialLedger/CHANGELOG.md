@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added support for the `2026-07-31-preview` service API version (now the default `ServiceVersion`).
+- Added a `waitForCommit` parameter to `PostLedgerEntry`/`PostLedgerEntryAsync`. When set to `true`, the service holds the response until the transaction is globally committed and the returned `Operation` is already completed, so no additional status polling is required.
+
 ### Breaking Changes
 
 ### Bugs Fixed
