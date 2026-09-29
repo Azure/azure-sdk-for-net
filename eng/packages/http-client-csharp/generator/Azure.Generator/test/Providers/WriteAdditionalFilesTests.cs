@@ -45,7 +45,7 @@ namespace Azure.Generator.Tests.Providers
 
             Assert.IsTrue(content.Contains("<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>"));
             Assert.IsTrue(content.Contains("<IsTestProject>true</IsTestProject>"));
-            Assert.IsTrue(content.Contains("<NoWarn>$(NoWarn);CS1591</NoWarn>"));
+            Assert.IsFalse(content.Contains("<NoWarn>"));
             Assert.IsTrue(content.Contains("<ProjectReference Include=\"$(AzureCoreTestFramework)\" />"));
             Assert.IsTrue(content.Contains("<ProjectReference Include=\"..\\src\\Samples.csproj\" />"));
             Assert.IsTrue(content.Contains("<PackageReference Include=\"Moq\" />"));
