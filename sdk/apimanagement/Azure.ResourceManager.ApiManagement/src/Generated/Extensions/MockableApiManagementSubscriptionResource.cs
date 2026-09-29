@@ -772,10 +772,23 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         /// <summary>
         /// List all API Management gateways within a subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gatewaysOperation IdApiGateway_ListDefault Api Version2024-05-01Resource<see cref="ApiGatewayResource"/>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -787,7 +800,20 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         /// <summary>
         /// List all API Management gateways within a subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gatewaysOperation IdApiGateway_ListDefault Api Version2024-05-01Resource<see cref="ApiGatewayResource"/>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/gateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementGatewayResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
@@ -802,10 +828,23 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/serviceOperation IdApiManagementService_ListDefault Api Version2024-05-01Resource<see cref="ApiManagementServiceResource"/>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/service. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -817,7 +856,20 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         /// <summary>
         /// Lists all API Management services within an Azure subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/serviceOperation IdApiManagementService_ListDefault Api Version2024-05-01Resource<see cref="ApiManagementServiceResource"/>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/service. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApiManagementServiceResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementServiceResource"/> that may take multiple service requests to iterate over. </returns>
