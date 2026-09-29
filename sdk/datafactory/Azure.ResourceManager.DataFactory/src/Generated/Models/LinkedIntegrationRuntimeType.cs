@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeType"/>. </summary>
+        protected LinkedIntegrationRuntimeType() : this(default)
+        {
+        }
+
         /// <summary> The authorization type for integration runtime sharing. </summary>
         internal string AuthorizationType { get; set; }
     }

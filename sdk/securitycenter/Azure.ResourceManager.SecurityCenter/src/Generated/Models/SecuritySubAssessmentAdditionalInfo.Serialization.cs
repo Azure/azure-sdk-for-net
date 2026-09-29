@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Details of the sub-assessment
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/>, and <see cref="ServerVulnerabilityProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/>, and <see cref="SqlServerVulnerabilityProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecuritySubAssessmentAdditionalInfo))]
     public abstract partial class SecuritySubAssessmentAdditionalInfo : IJsonModel<SecuritySubAssessmentAdditionalInfo>
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SqlServerVulnerability":
-                        return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
                     case "ContainerRegistryVulnerability":
                         return ContainerRegistryVulnerabilityProperties.DeserializeContainerRegistryVulnerabilityProperties(element, options);
                     case "ServerVulnerabilityAssessment":
                         return ServerVulnerabilityProperties.DeserializeServerVulnerabilityProperties(element, options);
+                    case "SqlServerVulnerability":
+                        return SqlServerVulnerabilityProperties.DeserializeSqlServerVulnerabilityProperties(element, options);
                 }
             }
             return UnknownSecuritySubAssessmentAdditionalInfo.DeserializeUnknownSecuritySubAssessmentAdditionalInfo(element, options);

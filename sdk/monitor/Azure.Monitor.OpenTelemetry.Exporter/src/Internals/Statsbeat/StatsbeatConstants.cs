@@ -8,9 +8,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     internal static class StatsbeatConstants
     {
-        internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=c4a29126-a7cb-47e5-b348-11414998b11e;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/";
+        /// <summary>
+        /// Instrumentation key of the non-EU SDK statistics resource. Every non-EU SDK statistics
+        /// envelope carries it, whichever ingestion endpoint it is sent to.
+        /// </summary>
+        internal const string Statsbeat_InstrumentationKey_NonEU = "c4a29126-a7cb-47e5-b348-11414998b11e";
 
-        internal const string Statsbeat_ConnectionString_EU = "InstrumentationKey=7dc56bab-3c0c-4e9f-9ebb-d1acadee8d0f;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/";
+        /// <summary>
+        /// Instrumentation key of the EU SDK statistics resource. Every EU SDK statistics envelope
+        /// carries it, whichever ingestion endpoint it is sent to.
+        /// </summary>
+        internal const string Statsbeat_InstrumentationKey_EU = "7dc56bab-3c0c-4e9f-9ebb-d1acadee8d0f";
+
+        internal const string Statsbeat_ConnectionString_NonEU = "InstrumentationKey=" + Statsbeat_InstrumentationKey_NonEU + ";IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/";
+
+        internal const string Statsbeat_ConnectionString_EU = "InstrumentationKey=" + Statsbeat_InstrumentationKey_EU + ";IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/";
 
         /// <summary>
         /// Configuration endpoint queried at startup when the

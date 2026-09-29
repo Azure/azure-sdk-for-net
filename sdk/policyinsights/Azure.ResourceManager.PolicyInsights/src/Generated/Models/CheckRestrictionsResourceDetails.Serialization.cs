@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (prop.NameEquals("resourceContent"u8))
                 {
-                    resourceContent = BinaryData.FromString(prop.Value.GetRawText());
+                    resourceContent = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("apiVersion"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, additionalBinaryDataProperties);

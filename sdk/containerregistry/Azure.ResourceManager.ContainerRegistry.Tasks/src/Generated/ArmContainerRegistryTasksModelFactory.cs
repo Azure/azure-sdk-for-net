@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary>
         /// The request parameters for scheduling a run.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildContent"/>, <see cref="Models.ContainerRegistryFileTaskRunContent"/>, <see cref="Models.ContainerRegistryTaskRunContent"/>, and <see cref="Models.ContainerRegistryEncodedTaskRunContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildContent"/>, <see cref="Models.ContainerRegistryEncodedTaskRunContent"/>, <see cref="Models.ContainerRegistryFileTaskRunContent"/>, and <see cref="Models.ContainerRegistryTaskRunContent"/>.
         /// </summary>
         /// <param name="type"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary>
         /// Base properties for any task step.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryFileTaskStep"/>, and <see cref="Models.ContainerRegistryEncodedTaskStep"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryEncodedTaskStep"/>, and <see cref="Models.ContainerRegistryFileTaskStep"/>.
         /// </summary>
         /// <param name="type"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary>
         /// Base properties for updating any task step.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="Models.ContainerRegistryFileTaskStepUpdateContent"/>, and <see cref="Models.ContainerRegistryEncodedTaskStepUpdateContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="Models.ContainerRegistryEncodedTaskStepUpdateContent"/>, and <see cref="Models.ContainerRegistryFileTaskStepUpdateContent"/>.
         /// </summary>
         /// <param name="type"> The type of the step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
