@@ -78,6 +78,7 @@ Describe 'Automatic SDK PR YAML integration' -Tag 'UnitTest' {
         $collect.env.TargetFramework | Should -BeNullOrEmpty
         $collect.env.TargetFrameworks | Should -BeNullOrEmpty
         $collect.inputs.arguments | Should -Not -Match 'BuildConfiguration'
+        $enforce.inputs.arguments | Should -Match ([regex]::Escape('-SdkRepoPath "$(Build.SourcesDirectory)"'))
     }
 
     It 'does not add report files to the existing package artifact directory' {

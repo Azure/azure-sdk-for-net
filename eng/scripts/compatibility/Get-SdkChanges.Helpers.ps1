@@ -180,7 +180,7 @@ function Get-SdkChangeEvaluation {
     $properties = @(
         'PackageId', 'MSBuildProjectName', 'MSBuildProjectFullPath', 'MSBuildToolsPath',
         'TargetFramework', 'TargetFrameworks', 'TargetFrameworkMoniker', 'RuntimeIdentifier',
-        'Configuration', 'TargetFileName', 'TargetPath', 'TargetRefPath', 'ProjectAssetsFile',
+        'Configuration', 'IncludeBuildOutput', 'TargetFileName', 'TargetPath', 'TargetRefPath', 'ProjectAssetsFile',
         'IntermediateOutputPath', 'PdbFile', 'DebugType',
         'MSBuildAllProjects', 'AssemblyName', 'NuGetPackageRoot', 'RoslynAssembliesPath',
         'ApiCompatBaselineTargetFramework', 'ApiCompatVersion', 'ApiCompatRespectInternals',
@@ -844,11 +844,18 @@ function ConvertFrom-SdkChangeApiCompat {
 }
 
 function New-SdkChangeReport {
-    param([AllowNull()][string]$BaselineVersion, [object[]]$Changes, [string[]]$Diagnostics, [string[]]$Limitations)
+    param(
+        [AllowNull()][string]$BaselineVersion, [object[]]$Changes, [string[]]$Diagnostics, [string[]]$Limitations,
+        [ValidateSet('no_ga_baseline', 'assembly_free')][string]$NotApplicableReason = 'no_ga_baseline'
+    )
 
     $breaking = @($Changes | Where-Object { $_.isBreaking })
     $added = @($Changes | Where-Object { $_.kind -eq 'added' })
-    if (!$BaselineVersion) {
+    if (!$BaselineVersion -and $NotApplicableReason -eq 'assembly_free') {
+        $text = '### Breaking Changes' + "`n" + 'Not applicable: IncludeBuildOutput=false; the package does not ship its build assembly.' +
+            "`n`n" + '### Features Added' + "`n" + 'Not determined for an assembly-free package.'
+    }
+    elseif (!$BaselineVersion) {
         $text = '### Breaking Changes' + "`n" + 'Not applicable: no GA NuGet baseline exists; no comparison was performed.' +
             "`n`n" + '### Features Added' + "`n" + 'Not determined without a GA baseline.'
     }
@@ -874,10 +881,26 @@ function New-SdkChangeReport {
         hasBreakingChange = $breaking.Count -gt 0
         details = [ordered]@{
             baselineVersion = $(if ($BaselineVersion) { $BaselineVersion } else { $null })
+            notApplicableReason = $(if (!$BaselineVersion) { $NotApplicableReason } else { $null })
             apiChanges = @($Changes)
             diagnostics = @($Diagnostics | Sort-Object -Unique)
             limitations = @($Limitations | Sort-Object -Unique)
         }
+    }
+}
+
+function Write-SdkChangeReport {
+    param([System.Collections.IDictionary]$Report, [string]$OutputJsonFile)
+
+    $json = $Report | ConvertTo-Json -Depth 10
+    [void][System.IO.Directory]::CreateDirectory((Split-Path $OutputJsonFile -Parent))
+    $temporaryOutput = "$OutputJsonFile.$([guid]::NewGuid().ToString('N')).tmp"
+    try {
+        [System.IO.File]::WriteAllText($temporaryOutput, $json, [System.Text.UTF8Encoding]::new($false))
+        [System.IO.File]::Move($temporaryOutput, $OutputJsonFile, $true)
+    }
+    finally {
+        if (Test-Path -LiteralPath $temporaryOutput -PathType Leaf) { Remove-Item -LiteralPath $temporaryOutput -Force }
     }
 }
 
@@ -903,6 +926,15 @@ function Invoke-SdkChangeExtraction {
     try {
         $project = Get-SdkChangeProject -PackagePath $PackagePath -SdkRepoPath $SdkRepoPath
         $outer = Get-SdkChangeEvaluation -Project $project -SdkRepoPath $SdkRepoPath -WorkDirectory $work
+        if ($outer.Properties['IncludeBuildOutput'] -eq 'false') {
+            $report = New-SdkChangeReport -BaselineVersion $null -Changes @() -Diagnostics @() `
+                -NotApplicableReason 'assembly_free' -Limitations @(
+                    'IncludeBuildOutput=false: the package does not ship its build assembly. Assembly compatibility and additions were not evaluated; package dependencies and content require separate validation.'
+                )
+            $report.details.projectName = $outer.Properties.MSBuildProjectName
+            Write-SdkChangeReport -Report $report -OutputJsonFile $OutputJsonFile
+            return
+        }
         $frameworks = @(Get-SdkChangeTargetFrameworks $outer.Properties)
         if ($frameworks.Count -eq 0) { throw "No target frameworks were evaluated for $project." }
         $current = @{}
@@ -989,18 +1021,10 @@ function Invoke-SdkChangeExtraction {
             }
         }
         $report = New-SdkChangeReport -BaselineVersion $version -Changes $changes -Diagnostics $diagnostics -Limitations $limitations
-        $json = $report | ConvertTo-Json -Depth 10
+        $report.details.projectName = $outer.Properties.MSBuildProjectName
     }
     finally {
         Remove-Item -LiteralPath $work -Recurse -Force
     }
-    [void][System.IO.Directory]::CreateDirectory((Split-Path $OutputJsonFile -Parent))
-    $temporaryOutput = "$OutputJsonFile.$([guid]::NewGuid().ToString('N')).tmp"
-    try {
-        [System.IO.File]::WriteAllText($temporaryOutput, $json, [System.Text.UTF8Encoding]::new($false))
-        [System.IO.File]::Move($temporaryOutput, $OutputJsonFile, $true)
-    }
-    finally {
-        if (Test-Path -LiteralPath $temporaryOutput -PathType Leaf) { Remove-Item -LiteralPath $temporaryOutput -Force }
-    }
+    Write-SdkChangeReport -Report $report -OutputJsonFile $OutputJsonFile
 }

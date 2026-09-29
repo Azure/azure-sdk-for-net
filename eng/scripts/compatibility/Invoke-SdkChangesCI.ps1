@@ -29,7 +29,10 @@ $result = Invoke-SdkChangesCICollection -SdkRepoPath $SdkRepoPath -PackageInfoDi
 LogInfo "SDK API reports: $($result.Directory)"
 LogInfo "SDK API result counts: $($result.Summary.counts | ConvertTo-Json -Compress)"
 if (!$ReportOnly) {
-    $verdict = Test-SdkChangesCIReports -ReportDirectory $result.Directory -ProjectNames $ProjectNames
+    $verdict = Test-SdkChangesCIReports -ReportDirectory $result.Directory -ProjectNames $ProjectNames -SdkRepoPath $SdkRepoPath
     foreach ($errorMessage in $verdict.Errors) { LogError $errorMessage }
+    foreach ($project in $verdict.ApprovedOptOuts) {
+        LogWarning "${project}: detected breaking changes remain published; CI enforcement is waived by eng/apicompatbaselines/ApiCompatVersionOptOut.txt."
+    }
     if (!$verdict.Passed) { exit 1 }
 }

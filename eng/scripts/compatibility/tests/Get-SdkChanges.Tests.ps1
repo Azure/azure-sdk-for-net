@@ -527,7 +527,8 @@ Describe 'Common SDK change JSON contract' -Tag 'UnitTest' {
         $result = New-SdkChangeReport -BaselineVersion '1.2.3' -Changes @() -Diagnostics @() -Limitations @()
         $json = $result | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashtable
         @($json.Keys) | Should -Be @('changes', 'hasBreakingChange', 'details')
-        @($json.details.Keys) | Should -Be @('baselineVersion', 'apiChanges', 'diagnostics', 'limitations')
+        @($json.details.Keys) | Should -Be @('baselineVersion', 'notApplicableReason', 'apiChanges', 'diagnostics', 'limitations')
+        $json.details.notApplicableReason | Should -BeNullOrEmpty
         $json.hasBreakingChange | Should -BeOfType [bool]
         $json.hasBreakingChange | Should -BeFalse
         $json.details.baselineVersion | Should -Be '1.2.3'
@@ -559,6 +560,7 @@ Describe 'Common SDK change JSON contract' -Tag 'UnitTest' {
     It 'marks the absence of a GA baseline as not applicable, not a successful clean comparison' {
         $result = New-SdkChangeReport -BaselineVersion $null -Changes @() -Diagnostics @() -Limitations @('No GA baseline exists.')
         $result.details.baselineVersion | Should -BeNullOrEmpty
+        $result.details.notApplicableReason | Should -Be 'no_ga_baseline'
         ($result | ConvertTo-Json -Depth 10) | Should -Match '"baselineVersion": null'
         $result.changes | Should -Match 'no comparison was performed'
     }
@@ -748,14 +750,67 @@ Describe 'Extraction orchestration and failure behavior' -Tag 'UnitTest' {
         Should -Invoke Invoke-SdkChangeApiCompat -Times 0 -Exactly
     }
 
-    It 'records a narrowed framework scope without adding raw contract fields' {
+    It 'reports explicitly assembly-free packages without requiring artifacts or querying a baseline: <Value>' -TestCases @(
+        @{ Value = 'false' }, @{ Value = 'False' }
+    ) {
+        param($Value)
+        $evaluation.Properties.IncludeBuildOutput = $Value
+        $evaluation.Properties.ApiCompatVersion = '5.3.9'
+        $evaluation.Properties.ApiCompatBaselineTargetFramework = ''
+        [System.IO.File]::WriteAllText($output, '{"hasBreakingChange":true}')
+        Invoke-SdkChangeExtraction -PackagePath $TestDrive -SdkRepoPath $TestDrive -OutputJsonFile $output
+        $report = Read-SdkChangeJson $output
+        $report.hasBreakingChange | Should -BeFalse
+        $report.details.baselineVersion | Should -BeNullOrEmpty
+        $report.details.notApplicableReason | Should -Be 'assembly_free'
+        $report.details.projectName | Should -Be $evaluation.Properties.MSBuildProjectName
+        $report.details.apiChanges | Should -HaveCount 0
+        $report.changes | Should -Match 'IncludeBuildOutput=false'
+        $report.changes | Should -Not -Match 'no GA'
+        $report.details.limitations -join ' ' | Should -Match 'dependencies and content require separate validation'
+        Should -Invoke Assert-SdkChangeCurrentAssembly -Times 0 -Exactly
+        Should -Invoke Get-SdkChangeLatestGaVersion -Times 0 -Exactly
+        Should -Invoke Get-SdkChangeBaseline -Times 0 -Exactly
+        Should -Invoke Invoke-SdkChangeApiCompat -Times 0 -Exactly
+    }
+
+    It 'still fails ordinary libraries with a missing baseline assembly: <Value>' -TestCases @(
+        @{ Value = 'true' }, @{ Value = '' }, @{ Value = $null }
+    ) {
+        param($Value)
+        $evaluation.Properties.IncludeBuildOutput = $Value
+        Mock Get-SdkChangeBaseline { throw 'Baseline assembly is missing.' }
+        { Invoke-SdkChangeExtraction -PackagePath $TestDrive -SdkRepoPath $TestDrive -OutputJsonFile $output } |
+            Should -Throw '*Baseline assembly is missing*'
+        Test-Path -LiteralPath $output | Should -BeFalse
+        Should -Invoke Get-SdkChangeBaseline -Times 1 -Exactly
+    }
+
+    It 'does not suppress detection for an approved enforcement opt-out' {
+        $path = Join-Path $TestDrive 'eng' 'apicompatbaselines' 'ApiCompatVersionOptOut.txt'
+        [void][System.IO.Directory]::CreateDirectory((Split-Path $path -Parent))
+        [System.IO.File]::WriteAllText($path, $evaluation.Properties.MSBuildProjectName)
+        Mock Invoke-SdkChangeApiCompat {
+            if ($LeftAssembly -eq 'baseline.dll') { New-TestLog -Diagnostics @((New-TestDiagnostic 'CP0002')) -ExitCode 1 }
+            else { New-TestLog }
+        }
+        Invoke-SdkChangeExtraction -PackagePath $TestDrive -SdkRepoPath $TestDrive -OutputJsonFile $output
+        $report = Read-SdkChangeJson $output
+        $report.hasBreakingChange | Should -BeTrue
+        $report.details.projectName | Should -Be $evaluation.Properties.MSBuildProjectName
+        $report.details.baselineVersion | Should -Be '9.1.0'
+        Should -Invoke Invoke-SdkChangeApiCompat -Times 2 -Exactly
+    }
+
+    It 'records a narrowed framework scope and the evaluated source project identity' {
         $evaluation.Properties.TargetFrameworks = 'net8.0;net10.0'
         Invoke-SdkChangeExtraction -PackagePath $TestDrive -SdkRepoPath $TestDrive -OutputJsonFile $output
         $report = Read-SdkChangeJson $output
         $report.details.diagnostics | Should -Contain 'Current artifact scope: Configuration=Debug; TargetFrameworks=net8.0.'
         $report.details.limitations -join ' ' | Should -Match 'declared frameworks not evaluated: net10.0'
         $report.details.limitations -join ' ' | Should -Match 'not a full multi-target package comparison'
-        @($report.details.Keys) | Should -Be @('baselineVersion', 'apiChanges', 'diagnostics', 'limitations')
+        @($report.details.Keys) | Should -Be @('baselineVersion', 'notApplicableReason', 'apiChanges', 'diagnostics', 'limitations', 'projectName')
+        $report.details.projectName | Should -Be $evaluation.Properties.MSBuildProjectName
     }
 
     It 'removes stale output on a registry failure' {

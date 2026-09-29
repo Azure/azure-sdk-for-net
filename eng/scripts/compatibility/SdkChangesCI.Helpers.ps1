@@ -209,6 +209,10 @@ function Get-SdkChangesCIRawStatus {
         throw [System.IO.InvalidDataException]::new('The detector did not return the common changes/hasBreakingChange/details contract.')
     }
     $details = $Report.details
+    if ($details.Contains('notApplicableReason') -and $null -ne $details.notApplicableReason -and
+        ($details.notApplicableReason -notin @('no_ga_baseline', 'assembly_free') -or $null -ne $details['baselineVersion'])) {
+        throw [System.IO.InvalidDataException]::new('Invalid detector notApplicableReason.')
+    }
     if (!$details.Contains('baselineVersion') -or
         ($null -ne $details.baselineVersion -and ($details.baselineVersion -isnot [string] -or [string]::IsNullOrWhiteSpace($details.baselineVersion)))) {
         throw [System.IO.InvalidDataException]::new('The detector baselineVersion must be a nonempty string or null.')
@@ -228,7 +232,7 @@ function Get-SdkChangesCIRawStatus {
     if ($null -eq $details.baselineVersion) {
         if ($Report.hasBreakingChange -or $details.apiChanges.Count -ne 0 -or
             @($details.limitations | Where-Object { ![string]::IsNullOrWhiteSpace($_) }).Count -eq 0) {
-            throw [System.IO.InvalidDataException]::new('A no-GA report must explain why comparison is not applicable and contain no API verdicts.')
+            throw [System.IO.InvalidDataException]::new('A not-applicable report must explain why comparison is not applicable and contain no API verdicts.')
         }
         return 'not_applicable'
     }
@@ -302,6 +306,7 @@ function Invoke-SdkChangesCICollection {
                 status = 'detector_error'
                 hasBreakingChange = $null
                 baselineVersion = $null
+                notApplicableReason = $null
                 detectorExitCode = $null
                 timedOut = $false
                 reportFile = $null
@@ -335,6 +340,9 @@ function Invoke-SdkChangesCICollection {
                         $result.status = Get-SdkChangesCIRawStatus $raw
                         $result.hasBreakingChange = $raw.hasBreakingChange
                         $result.baselineVersion = $raw.details.baselineVersion
+                        if ($result.status -eq 'not_applicable') {
+                            $result.notApplicableReason = if ($raw.details['notApplicableReason']) { $raw.details.notApplicableReason } else { 'no_ga_baseline' }
+                        }
                         $result.reportFile = [System.IO.Path]::GetRelativePath($directory, $rawPath).Replace('\', '/')
                         $result.reportSha256 = (Get-FileHash -LiteralPath $rawPath -Algorithm SHA256).Hash
                     }
@@ -349,6 +357,7 @@ function Invoke-SdkChangesCICollection {
                 $result.status = 'detector_error'
                 $result.hasBreakingChange = $null
                 $result.baselineVersion = $null
+                $result.notApplicableReason = $null
                 $result.reportFile = $null
                 $result.reportSha256 = $null
                 if (Test-Path -LiteralPath $rawPath -PathType Leaf) {
@@ -370,7 +379,9 @@ function Invoke-SdkChangesCICollection {
             $summary.packages += $result
             LogInfo "SDK API report: $($entry.projectName): $($result.status)"
             if ($result.status -eq 'detector_error') { LogWarning "$($entry.projectName): $($result.error)" }
-            if ($result.status -eq 'not_applicable') { LogWarning "$($entry.projectName): no GA baseline; compatibility was not evaluated." }
+            if ($result.status -eq 'not_applicable') {
+                LogWarning "$($entry.projectName): $($result.notApplicableReason); compatibility was not evaluated."
+            }
         }
     }
     catch [System.IO.InvalidDataException], [System.IO.IOException], [System.UnauthorizedAccessException],
@@ -384,8 +395,20 @@ function Invoke-SdkChangesCICollection {
 }
 
 function Test-SdkChangesCIReports {
-    param([string]$ReportDirectory, [AllowEmptyString()][string]$ProjectNames)
+    param([string]$ReportDirectory, [AllowEmptyString()][string]$ProjectNames, [string]$SdkRepoPath)
 
+    $optOuts = @()
+    if ($SdkRepoPath) {
+        if (![System.IO.Path]::IsPathFullyQualified($SdkRepoPath) -or !(Test-Path -LiteralPath $SdkRepoPath -PathType Container)) {
+            throw [System.IO.DirectoryNotFoundException]::new("SdkRepoPath must identify an existing absolute repository path: $SdkRepoPath")
+        }
+        $optOutFile = Join-Path $SdkRepoPath 'eng' 'apicompatbaselines' 'ApiCompatVersionOptOut.txt'
+        if (Test-Path -LiteralPath $optOutFile) {
+            $optOuts = @(Get-Content -LiteralPath $optOutFile -ErrorAction Stop | ForEach-Object { $_.Trim() } |
+                Where-Object { $_ -and !$_.StartsWith('#') })
+        }
+    }
+    $approvedOptOuts = @()
     $summary = Read-SdkChangesCIJson (Join-Path $ReportDirectory 'summary.json')
     if ($summary['schemaVersion'] -ne 1 -or $summary['configuration'] -ne 'Release' -or
         $summary['packages'] -isnot [array] -or $summary['projectNames'] -isnot [array] -or $summary['errors'] -isnot [array]) {
@@ -424,12 +447,25 @@ function Test-SdkChangesCIReports {
                 $raw.details.baselineVersion -ne $package.baselineVersion) {
                 throw [System.IO.InvalidDataException]::new('The CI summary contradicts the authoritative native SDK report.')
             }
-            if ($status -eq 'breaking_changes') { $errors += "$($package.projectName): native ApiCompat detected breaking changes." }
+            if ($status -eq 'breaking_changes') {
+                if ($raw.details['projectName'] -is [string] -and $raw.details.projectName -in $optOuts) {
+                    $approvedOptOuts += $raw.details.projectName
+                }
+                else {
+                    $errors += "$($package.projectName): native ApiCompat detected breaking changes."
+                }
+            }
         }
         catch [System.IO.InvalidDataException], [System.IO.IOException], [System.UnauthorizedAccessException],
             [System.ArgumentException], [System.Management.Automation.ItemNotFoundException] {
             $errors += "$($package.projectName): $($_.Exception.Message)"
         }
     }
-    return @{ Passed = $errors.Count -eq 0; Errors = $errors; Counts = (Get-SdkChangesCICounts $summary.packages); PreviousJobStatus = $summary.previousJobStatus }
+    return @{
+        Passed = $errors.Count -eq 0
+        Errors = $errors
+        Counts = (Get-SdkChangesCICounts $summary.packages)
+        PreviousJobStatus = $summary.previousJobStatus
+        ApprovedOptOuts = @($approvedOptOuts | Sort-Object -Unique)
+    }
 }

@@ -25,6 +25,7 @@ steps:
           workingDirectory: $(Build.SourcesDirectory)
         env:
           Configuration: Release
+          # Clear inherited matrix overrides so the detector evaluates every declared framework.
           TargetFramework: ''
           TargetFrameworks: ''
     - ${{ if eq(parameters.Mode, 'enforce') }}:
@@ -35,6 +36,7 @@ steps:
           pwsh: true
           filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Assert-SdkChangesCI.ps1
           arguments: >-
+            -SdkRepoPath "$(Build.SourcesDirectory)"
             -ReportDirectory "$(SdkChangesReportDirectory)"
             -ProjectNames "$(ProjectNames)"
           workingDirectory: $(Build.SourcesDirectory)

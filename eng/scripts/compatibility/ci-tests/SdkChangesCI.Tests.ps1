@@ -26,19 +26,29 @@ BeforeAll {
     }
 
     function New-CIRawReport {
-        param([switch]$Breaking, [switch]$NoGa)
+        param([switch]$Breaking, [switch]$NoGa, [switch]$AssemblyFree, [string]$ProjectName = 'Breaking')
         return [ordered]@{
             changes = "### Breaking Changes`nFixture`n### Features Added`nNone."
             hasBreakingChange = [bool]$Breaking
             details = [ordered]@{
-                baselineVersion = $(if ($NoGa) { $null } else { '1.0.0' })
+                baselineVersion = $(if ($NoGa -or $AssemblyFree) { $null } else { '1.0.0' })
+                projectName = $ProjectName
+                notApplicableReason = $(if ($AssemblyFree) { 'assembly_free' } elseif ($NoGa) { 'no_ga_baseline' } else { $null })
                 apiChanges = @($(if ($Breaking) {
                     @{ kind = 'removed'; symbol = 'Example.Removed()'; description = 'Native removal'; isBreaking = $true; diagnosticId = 'CP0002'; targetFramework = 'net8.0' }
                 }))
                 diagnostics = @('Native diagnostic')
-                limitations = @($(if ($NoGa) { 'No GA baseline exists; no comparison was performed.' }))
+                limitations = @($(if ($AssemblyFree) { 'IncludeBuildOutput=false; assembly compatibility was not evaluated.' } elseif ($NoGa) { 'No GA baseline exists; no comparison was performed.' }))
             }
         }
+    }
+
+    function Set-CIOptOuts {
+        param([hashtable]$Repository, [string]$Content)
+        $path = Join-Path $Repository.Root 'eng' 'apicompatbaselines' 'ApiCompatVersionOptOut.txt'
+        [void][System.IO.Directory]::CreateDirectory((Split-Path $path -Parent))
+        [System.IO.File]::WriteAllText($path, $Content)
+        return $path
     }
 
     function Invoke-CICollection {
@@ -248,15 +258,44 @@ Describe 'SDK CI native report semantics' -Tag 'UnitTest' {
 
     It 'rejects a no-GA success-shaped report with a breaking verdict' {
         $raw = New-CIRawReport -NoGa -Breaking
-        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*no-GA report*'
+        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*not-applicable report*'
     }
 
     It 'requires no-GA limitations to explain that comparison was not performed' {
         $raw = New-CIRawReport -NoGa
         $raw.details.limitations = @()
-        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*no-GA report*'
+        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*not-applicable report*'
         $raw.details.limitations = @(' ')
-        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*no-GA report*'
+        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*not-applicable report*'
+    }
+
+    It 'reports assembly-free packages as not applicable rather than compatible or no-GA' {
+        $raw = New-CIRawReport -AssemblyFree
+        Get-SdkChangesCIRawStatus $raw | Should -Be 'not_applicable'
+        $raw.details.notApplicableReason | Should -Be 'assembly_free'
+    }
+
+    It 'rejects assembly-free reports containing a baseline or breaking evidence' -TestCases @(
+        @{ Field = 'baselineVersion'; Value = '5.3.9' },
+        @{ Field = 'apiChanges'; Value = @(@{ kind = 'removed'; symbol = 'X'; description = 'Removal'; isBreaking = $true }) },
+        @{ Field = 'limitations'; Value = @() }
+    ) {
+        param($Field, $Value)
+        $raw = New-CIRawReport -AssemblyFree
+        $raw.details[$Field] = $Value
+        { Get-SdkChangesCIRawStatus $raw } | Should -Throw
+    }
+
+    It 'rejects an unknown not-applicable reason' {
+        $raw = New-CIRawReport -NoGa
+        $raw.details.notApplicableReason = 'skip'
+        { Get-SdkChangesCIRawStatus $raw } | Should -Throw '*notApplicableReason*'
+    }
+
+    It 'retains support for original no-GA reports without an additive reason field' {
+        $raw = New-CIRawReport -NoGa
+        $raw.details.Remove('notApplicableReason')
+        Get-SdkChangesCIRawStatus $raw | Should -Be 'not_applicable'
     }
 
     It 'rejects a false top-level verdict contradicted by native breaking API evidence' {
@@ -292,7 +331,8 @@ Describe 'SDK CI multi-package collection and enforcement' -Tag 'UnitTest' {
                 [System.IO.File]::WriteAllText($OutputJsonFile, '{invalid')
             }
             else {
-                Write-SdkChangesCIJson $OutputJsonFile (New-CIRawReport -Breaking:($name -in @('Breaking', 'Partial')) -NoGa:($name -eq 'NoGa'))
+                Write-SdkChangesCIJson $OutputJsonFile (New-CIRawReport -Breaking:($name -in @('Breaking', 'Partial')) `
+                    -NoGa:($name -eq 'NoGa') -AssemblyFree:($name -eq 'AssemblyFree') -ProjectName $name)
             }
             return @{ ExitCode = $(if ($name -eq 'Partial') { 13 } else { 0 }); TimedOut = $false; StdOut = 'Native output'; StdErr = '' }
         }
@@ -331,6 +371,113 @@ Describe 'SDK CI multi-package collection and enforcement' -Tag 'UnitTest' {
         $verdict.Counts.compatible | Should -Be 0
         $verdict.Counts.notApplicable | Should -Be 1
         Should -Invoke LogWarning -Times 1 -ParameterFilter { "$args" -match 'compatibility was not evaluated' }
+    }
+
+    It 'publishes an assembly-free report with its explicit reason and permits enforcement' {
+        New-CIPackage $repo 'AssemblyFree' | Out-Null
+        $result = Invoke-CICollection $repo 'AssemblyFree'
+        $result.Summary.packages[0].status | Should -Be 'not_applicable'
+        $result.Summary.packages[0].notApplicableReason | Should -Be 'assembly_free'
+        $raw = Read-SdkChangesCIJson (Join-Path $result.Directory 'AssemblyFree' 'sdk-changes.json')
+        $raw.details.notApplicableReason | Should -Be 'assembly_free'
+        $verdict = Test-SdkChangesCIReports $result.Directory 'AssemblyFree' -SdkRepoPath $repo.Root
+        $verdict.Passed | Should -BeTrue
+        $verdict.Counts.compatible | Should -Be 0
+        $verdict.Counts.notApplicable | Should -Be 1
+        Should -Invoke LogWarning -Times 1 -Exactly -ParameterFilter { "$args" -match 'assembly_free' }
+        Should -Invoke LogWarning -Times 0 -Exactly -ParameterFilter { "$args" -match 'no GA' }
+    }
+
+    It 'honors approved opt-outs without changing or omitting collected breaking evidence' {
+        New-CIPackage $repo 'Breaking' | Out-Null
+        Set-CIOptOuts $repo "# Approved projects`r`n`r`n  breaking  `r`n" | Out-Null
+        $result = Invoke-CICollection $repo 'Breaking'
+        $result.Summary.packages[0].status | Should -Be 'breaking_changes'
+        $result.Summary.packages[0].hasBreakingChange | Should -BeTrue
+        $rawPath = Join-Path $result.Directory 'Breaking' 'sdk-changes.json'
+        $hash = (Get-FileHash -LiteralPath $rawPath).Hash
+        $verdict = Test-SdkChangesCIReports $result.Directory 'Breaking' -SdkRepoPath $repo.Root
+        $verdict.Passed | Should -BeTrue
+        $verdict.Counts.breakingChanges | Should -Be 1
+        $verdict.Counts.compatible | Should -Be 0
+        $verdict.ApprovedOptOuts | Should -Be @('Breaking')
+        (Get-FileHash -LiteralPath $rawPath).Hash | Should -Be $hash
+        Should -Invoke Invoke-SdkChangesCIProcess -Times 1 -Exactly
+    }
+
+    It 'does not treat <Entry> as an exact approved opt-out' -TestCases @(
+        @{ Entry = '# Breaking' }, @{ Entry = 'Break' }, @{ Entry = 'Breaking.Other' },
+        @{ Entry = 'Breaking*' }, @{ Entry = '' }
+    ) {
+        param($Entry)
+        New-CIPackage $repo 'Breaking' | Out-Null
+        Set-CIOptOuts $repo $Entry | Out-Null
+        $result = Invoke-CICollection $repo 'Breaking'
+        $verdict = Test-SdkChangesCIReports $result.Directory 'Breaking' -SdkRepoPath $repo.Root
+        $verdict.Passed | Should -BeFalse
+        $verdict.ApprovedOptOuts | Should -HaveCount 0
+    }
+
+    It 'uses the source project name for opt-outs rather than package ID or selection alias' {
+        New-CIPackage $repo 'PackageId' 'Alias' | Out-Null
+        Mock Invoke-SdkChangesCIProcess {
+            param($OutputJsonFile)
+            Write-SdkChangesCIJson $OutputJsonFile (New-CIRawReport -Breaking -ProjectName 'SourceProject')
+            @{ ExitCode = 0; TimedOut = $false; StdOut = ''; StdErr = '' }
+        }
+        $result = Invoke-CICollection $repo 'Alias'
+        Set-CIOptOuts $repo "Alias`nPackageId" | Out-Null
+        (Test-SdkChangesCIReports $result.Directory 'Alias' -SdkRepoPath $repo.Root).Passed | Should -BeFalse
+        Set-CIOptOuts $repo 'SourceProject' | Out-Null
+        $verdict = Test-SdkChangesCIReports $result.Directory 'Alias' -SdkRepoPath $repo.Root
+        $verdict.Passed | Should -BeTrue
+        $verdict.ApprovedOptOuts | Should -Be @('SourceProject')
+    }
+
+    It 'reads the opt-out list at enforcement instead of trusting a collected exemption' {
+        New-CIPackage $repo 'Breaking' | Out-Null
+        $optOutPath = Set-CIOptOuts $repo 'Breaking'
+        $result = Invoke-CICollection $repo 'Breaking'
+        Remove-Item -LiteralPath $optOutPath
+        (Test-SdkChangesCIReports $result.Directory 'Breaking' -SdkRepoPath $repo.Root).Passed | Should -BeFalse
+    }
+
+    It 'still rejects <Package> detector errors for approved opt-outs' -TestCases @(
+        @{ Package = 'Stale' }, @{ Package = 'MissingAssembly' }, @{ Package = 'Partial' },
+        @{ Package = 'Malformed' }, @{ Package = 'Missing' }, @{ Package = 'Timeout' }
+    ) {
+        param($Package)
+        New-CIPackage $repo $Package | Out-Null
+        Set-CIOptOuts $repo $Package | Out-Null
+        $result = Invoke-CICollection $repo $Package
+        (Test-SdkChangesCIReports $result.Directory $Package -SdkRepoPath $repo.Root).Passed | Should -BeFalse
+    }
+
+    It 'still rejects tampered evidence for an approved opt-out' {
+        New-CIPackage $repo 'Breaking' | Out-Null
+        Set-CIOptOuts $repo 'Breaking' | Out-Null
+        $result = Invoke-CICollection $repo 'Breaking'
+        Add-Content -LiteralPath (Join-Path $result.Directory 'Breaking' 'sdk-changes.json') -Value ' '
+        $verdict = Test-SdkChangesCIReports $result.Directory 'Breaking' -SdkRepoPath $repo.Root
+        $verdict.Passed | Should -BeFalse
+        $verdict.Errors -join ' ' | Should -Match 'modified after collection'
+    }
+
+    It 'still enforces non-opted-out breaks alongside an approved exception' {
+        New-CIPackage $repo 'Breaking' | Out-Null
+        New-CIPackage $repo 'Another' | Out-Null
+        Set-CIOptOuts $repo 'Breaking' | Out-Null
+        Mock Invoke-SdkChangesCIProcess {
+            param($OutputJsonFile, $PackagePath)
+            Write-SdkChangesCIJson $OutputJsonFile (New-CIRawReport -Breaking -ProjectName (Split-Path $PackagePath -Leaf))
+            @{ ExitCode = 0; TimedOut = $false; StdOut = ''; StdErr = '' }
+        }
+        $result = Invoke-CICollection $repo 'Breaking,Another'
+        $verdict = Test-SdkChangesCIReports $result.Directory 'Breaking,Another' -SdkRepoPath $repo.Root
+        $verdict.Passed | Should -BeFalse
+        $verdict.ApprovedOptOuts | Should -Be @('Breaking')
+        $verdict.Errors | Should -HaveCount 1
+        $verdict.Errors[0] | Should -Match 'Another'
     }
 
     It 'preserves other failed validation gates independently from API compatibility' {
@@ -606,8 +753,24 @@ Describe 'SDK CI actual child process boundary' -Tag 'IntegrationTest' {
         $LASTEXITCODE | Should -Be 0
         $directory = @(Get-ChildItem -LiteralPath $repo.ReportRoot -Directory)[0].FullName
         (Read-SdkChangesCIJson (Join-Path $directory 'summary.json')).packages[0].status | Should -Be 'breaking_changes'
-        & pwsh -NoProfile -File $assertion -ReportDirectory $directory -ProjectNames Breaking | Out-Null
+        & pwsh -NoProfile -File $assertion -ReportDirectory $directory -ProjectNames Breaking -SdkRepoPath $repo.Root | Out-Null
         $LASTEXITCODE | Should -Be 1
+    }
+
+    It 'honors approved opt-outs in both command-line enforcement paths while publishing breaks' {
+        New-CIPackage $repo 'Breaking' | Out-Null
+        Set-CIOptOuts $repo 'Breaking' | Out-Null
+        $output = & pwsh -NoProfile -File (Join-Path $PSScriptRoot '..' 'Invoke-SdkChangesCI.ps1') `
+            -SdkRepoPath $repo.Root -PackageInfoDirectory $repo.Info -ProjectNames Breaking -ReportRoot $repo.ReportRoot
+        $LASTEXITCODE | Should -Be 0
+        $output -join ' ' | Should -Match 'enforcement is waived'
+        $directory = @(Get-ChildItem -LiteralPath $repo.ReportRoot -Directory)[0].FullName
+        $raw = Read-SdkChangesCIJson (Join-Path $directory 'Breaking' 'sdk-changes.json')
+        $raw.hasBreakingChange | Should -BeTrue
+        $output = & pwsh -NoProfile -File (Join-Path $PSScriptRoot '..' 'Assert-SdkChangesCI.ps1') `
+            -ReportDirectory $directory -ProjectNames Breaking -SdkRepoPath $repo.Root
+        $LASTEXITCODE | Should -Be 0
+        $output -join ' ' | Should -Match 'enforcement is waived'
     }
 
     It 'returns a failing exit code for direct runner use with detector errors' {

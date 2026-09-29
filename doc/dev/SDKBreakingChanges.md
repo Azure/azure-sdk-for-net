@@ -79,8 +79,17 @@ that log them as informational messages instead of warnings.
 If the package has no GA release, the report explicitly identifies the missing
 baseline; that is not a successful compatibility comparison.
 
+An evaluated `IncludeBuildOutput=false` identifies an assembly-free package,
+matching the existing build gate's metapackage exemption. The detector reports
+`notApplicableReason: assembly_free` without requiring a current or baseline
+assembly, querying NuGet, or claiming the package has never shipped. Package
+dependencies and other content still need their existing validation. Missing
+assemblies in ordinary libraries remain detector errors.
+
 The common result preserves `changes` and `hasBreakingChange`. Optional
-`details` retain `baselineVersion`, structured `apiChanges`, native
+`details` retain `baselineVersion`, evaluated source `projectName`,
+`notApplicableReason` (`no_ga_baseline`, `assembly_free`, or null for a comparison),
+structured `apiChanges`, native
 `diagnostics`, and `limitations`. Classified results also retain that original
 evidence, including when AI classification fails.
 
@@ -90,8 +99,18 @@ SDK PR build jobs collect native reports immediately after Release packaging,
 even when that build failed. Collection clears inherited target-framework
 overrides and records each selected package independently. Existing validation
 steps remain in place; the final compatibility assertion fails on detected
-breaks or detector errors, not merely on the extractor's exit code. No-GA
-packages are reported as not applicable, never compatible.
+breaks or detector errors, not merely on the extractor's exit code. No-GA and
+assembly-free packages are reported as not applicable, never compatible.
+
+CI enforcement honors the existing CODEOWNERS-protected
+`eng/apicompatbaselines/ApiCompatVersionOptOut.txt`, matching the evaluated
+`MSBuildProjectName` exactly (case-insensitively), not the NuGet package ID or
+selection alias. The assertion reads the list from its explicit `SdkRepoPath`
+at enforcement time. An approved opt-out waives only a detected breaking
+verdict: the detector still runs, the unchanged changes are published, the
+status remains `breaking_changes`, and CI logs the waiver. Detector errors,
+missing or modified reports, and unrelated build failures are not waived.
+An absent `ApiCompatVersion` is not an opt-out.
 
 The job publishes `sdk-api-changes_<job-name>` artifacts even after failure;
 the existing publisher adds `-FailedAttempt<attempt>` for failed jobs. Each

@@ -101,6 +101,26 @@ BeforeAll {
 }
 
 Describe 'Real offline SDK ApiCompat task' -Tag 'IntegrationTest' {
+    It 'reports an unbuilt IncludeBuildOutput=false metapackage as assembly-free without looking up NuGet' {
+        $root = Join-Path $fixtureRoot 'Metapackage'
+        Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'fixtures') -Destination $root -Recurse
+        [System.IO.File]::WriteAllText((Join-Path $root 'src' 'Fixture.props'),
+            '<Project><PropertyGroup><IncludeBuildOutput>false</IncludeBuildOutput><RunApiCompat>false</RunApiCompat><ApiCompatVersion>5.3.9</ApiCompatVersion></PropertyGroup></Project>')
+        [System.IO.File]::WriteAllText((Join-Path $root 'src' 'do-not-build'), '')
+        Mock Get-SdkChangeLatestGaVersion { throw 'Assembly-free packages do not need NuGet version discovery.' }
+        $output = Join-Path $root 'result.json'
+        Invoke-SdkChangeExtraction -PackagePath $root -SdkRepoPath $fixtureRoot -OutputJsonFile $output
+        $report = Read-SdkChangeJson $output
+        $report.details.notApplicableReason | Should -Be 'assembly_free'
+        $report.details.projectName | Should -Be 'Azure.ResourceManager.CompatibilityFixture'
+        $report.details.baselineVersion | Should -BeNullOrEmpty
+        $report.hasBreakingChange | Should -BeFalse
+        $report.details.apiChanges | Should -HaveCount 0
+        $report.changes | Should -Match 'does not ship its build assembly'
+        Test-Path -LiteralPath (Join-Path $root 'src' 'obj') | Should -BeFalse
+        Should -Invoke Get-SdkChangeLatestGaVersion -Times 0 -Exactly
+    }
+
     It 'captures exact native member/type removal events and keeps additions separate' {
         $result = ConvertFrom-SdkChangeApiCompat -Log $forward -TargetFramework 'net8.0'
         $forward.ExitCode | Should -Be 1

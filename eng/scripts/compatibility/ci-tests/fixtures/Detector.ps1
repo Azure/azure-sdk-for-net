@@ -17,6 +17,7 @@ $report = [ordered]@{
     changes = "### Breaking Changes`nNative fixture`n### Features Added`nNone."
     hasBreakingChange = $breaking
     details = [ordered]@{
+        projectName = $name
         baselineVersion = $(if ($name -eq 'NoGa') { $null } else { '1.0.0' })
         apiChanges = @($(if ($breaking) {
             @{ kind = 'removed'; symbol = 'Fixture.Removed()'; description = 'Removed member'; isBreaking = $true; diagnosticId = 'CP0002'; targetFramework = 'net8.0' }
