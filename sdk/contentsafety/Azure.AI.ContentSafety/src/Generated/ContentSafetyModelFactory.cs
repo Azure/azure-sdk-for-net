@@ -55,6 +55,15 @@ namespace Azure.AI.ContentSafety
             return new ImageCategoriesAnalysis(category, severity, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="ContentSafety.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The text analysis request. </summary>
         /// <param name="text"> The text to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request. </param>
         /// <param name="categories"> The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned. </param>

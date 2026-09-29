@@ -745,6 +745,15 @@ namespace Azure.AI.ContentUnderstanding
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Analyzer that extracts content and fields from multimodal documents. </summary>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="description"> A description of the analyzer. </param>
