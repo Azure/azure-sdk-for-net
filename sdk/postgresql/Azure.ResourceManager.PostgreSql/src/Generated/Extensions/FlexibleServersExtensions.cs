@@ -225,6 +225,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DbAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetDbAgentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DbAgentResource"/> object. </returns>
+        public static DbAgentResource GetDbAgentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetDbAgentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
