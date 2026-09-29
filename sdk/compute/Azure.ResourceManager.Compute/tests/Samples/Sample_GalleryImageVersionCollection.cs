@@ -620,29 +620,26 @@ StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resou
                     IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
-                SecurityProfile = new ImageVersionSecurityProfile
+                SecurityUefiSettings = new GalleryImageVersionUefiSettings
                 {
-                    UefiSettings = new GalleryImageVersionUefiSettings
+                    SignatureTemplateNames = { UefiSignatureTemplateName.MicrosoftUefiCertificateAuthorityTemplate },
+                    AdditionalSignatures = new UefiKeySignatures
                     {
-                        SignatureTemplateNames = { UefiSignatureTemplateName.MicrosoftUefiCertificateAuthorityTemplate },
-                        AdditionalSignatures = new UefiKeySignatures
-                        {
-                            Kek = {new UefiKey
+                        Kek = {new UefiKey
 {
 KeyType = UefiKeyType.Sha256,
 Value = {"<sha256 value>"},
 }},
-                            Db = {new UefiKey
+                        Db = {new UefiKey
 {
 KeyType = UefiKeyType.X509,
 Value = {"<x509 value>"},
 }},
-                            Dbx = {new UefiKey
+                        Dbx = {new UefiKey
 {
 KeyType = UefiKeyType.X509,
 Value = {"<x509 value>"},
 }},
-                        },
                     },
                 },
             };
