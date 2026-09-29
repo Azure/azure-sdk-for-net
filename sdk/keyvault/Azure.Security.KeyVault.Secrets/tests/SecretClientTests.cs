@@ -26,18 +26,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
         public SecretClient Client { get; }
 
-        [SetUp]
-        public void Setup()
-        {
-            ChallengeBasedAuthenticationPolicy.ClearCache();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            ChallengeBasedAuthenticationPolicy.ClearCache();
-        }
-
         [Test]
         public void SetArgumentValidation()
         {
@@ -653,11 +641,12 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [Test]
         public async Task DisableChallengeResourceVerification_True_AllowsMismatchedChallengeResource()
         {
+            Uri vaultUri = new($"https://verification-disabled-{IsAsync}.vault.azure.net");
             var challenge = new MockResponse(401);
             challenge.AddHeader("WWW-Authenticate",
                 "Bearer authorization=\"https://login.microsoftonline.com/common\", resource=\"https://attacker.example\"");
             var success = new MockResponse(200).WithJson(
-                @"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}");
+                $@"{{""value"":""v"",""id"":""{vaultUri}secrets/x/1""}}");
 
             var transport = new MockTransport(challenge, success);
             var opts = new SecretClientOptions
@@ -666,7 +655,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 DisableChallengeResourceVerification = true,
             };
             SecretClient client = InstrumentClient(new SecretClient(
-                new Uri("https://example.vault.azure.net"),
+                vaultUri,
                 new MockCredential(),
                 opts));
 
