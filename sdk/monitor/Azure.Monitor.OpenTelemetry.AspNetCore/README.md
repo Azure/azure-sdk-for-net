@@ -225,9 +225,12 @@ builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.Ad
 To modify the resource, use the following code.
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name")));
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor()
+    .ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name"));
 ```
+
+`OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` override resource attributes detected from the Azure environment. To override these attributes in code, call `ConfigureResource(...)` after `UseAzureMonitor()` as shown above.
 
 It is also possible to configure the `Resource` by using following
 environmental variables:

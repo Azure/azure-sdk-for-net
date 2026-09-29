@@ -133,7 +133,13 @@ A `CryptographyClient` providing both synchronous and asynchronous operations ex
 
 ### Thread safety
 
-We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+Client service methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)), so reuse client instances across threads. Do not call `Dispose` while operations are in progress.
+
+### Client lifetime
+
+`KeyClient`, `CryptographyClient`, and `KeyResolver` implement `IDisposable`. Reuse them rather than creating a client for each request, and dispose them when their intended lifetimes end. Finish all operations, polling, pageable enumeration, and use of returned cryptographic streams before disposal. Caller-provided transports, credentials, and key material remain application-owned.
+
+Cryptography clients returned by `KeyClient.GetCryptographyClient` or `KeyResolver.Resolve`/`ResolveAsync` share their parent's HTTP pipeline. Disposing a returned client does not dispose the shared pipeline. Keep the key client or resolver alive until all use of its returned clients has completed. A directly constructed remote `CryptographyClient` owns its pipeline; a local-only `CryptographyClient` has no HTTP pipeline to dispose.
 
 ### Additional concepts
 <!-- CLIENT COMMON BAR -->

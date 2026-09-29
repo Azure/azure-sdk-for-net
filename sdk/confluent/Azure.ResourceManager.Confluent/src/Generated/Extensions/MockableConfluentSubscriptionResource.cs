@@ -367,7 +367,20 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         /// <summary>
         /// Create Confluent Marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -379,7 +392,20 @@ namespace Azure.ResourceManager.Confluent.Mocking
 
         /// <summary>
         /// Create Confluent Marketplace agreement in the subscription.
-        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MarketplaceAgreementsOperationGroup_Create. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-02-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
