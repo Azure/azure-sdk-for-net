@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.Translation.Document
 {
@@ -20,6 +21,8 @@ namespace Azure.AI.Translation.Document
     [ModelReaderWriterBuildable(typeof(DocumentTranslateContent))]
     [ModelReaderWriterBuildable(typeof(DocumentTranslationFileFormat))]
     [ModelReaderWriterBuildable(typeof(DocumentTranslationInput))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SupportedFileFormats))]
     [ModelReaderWriterBuildable(typeof(TranslationBatch))]
     [ModelReaderWriterBuildable(typeof(TranslationGlossary))]

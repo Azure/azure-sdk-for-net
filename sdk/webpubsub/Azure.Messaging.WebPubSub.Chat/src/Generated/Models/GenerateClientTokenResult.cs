@@ -10,23 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.Messaging.WebPubSub.Chat
 {
-    internal partial class GenerateClientTokenResponse
+    internal partial class GenerateClientTokenResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GenerateClientTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateClientTokenResult"/>. </summary>
         /// <param name="token"> Access token used to connect to Azure Web PubSub. </param>
-        internal GenerateClientTokenResponse(string token)
+        internal GenerateClientTokenResult(string token)
         {
             Token = token;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenerateClientTokenResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerateClientTokenResult"/>. </summary>
         /// <param name="token"> Access token used to connect to Azure Web PubSub. </param>
         /// <param name="contentType"> Response content type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateClientTokenResponse(string token, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenerateClientTokenResult(string token, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             ContentType = contentType;

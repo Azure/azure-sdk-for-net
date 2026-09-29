@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -259,6 +260,15 @@ namespace Azure.AI.Vision.ImageAnalysis
             values ??= new ChangeTrackingList<DetectedTag>();
 
             return new TagsResult(values.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="ImageAnalysis.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
         }
     }
 }

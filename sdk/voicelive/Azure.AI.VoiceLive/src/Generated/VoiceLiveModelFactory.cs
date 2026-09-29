@@ -33,6 +33,14 @@ namespace Azure.AI.VoiceLive
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Standard error response envelope. </summary>
+        /// <param name="error"> Error object returned in case of API failure. </param>
+        /// <returns> A new <see cref="VoiceLive.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(VoiceLiveErrorDetails error = default)
+        {
+            return new ErrorResult(error, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A single log probability entry for a token. </summary>
         /// <param name="token"> The token that was used to generate the log probability. </param>
         /// <param name="logprob"> The log probability of the token. </param>

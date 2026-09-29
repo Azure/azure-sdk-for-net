@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 
 namespace Azure.AI.Translation.Document
 {
@@ -83,6 +84,15 @@ namespace Azure.AI.Translation.Document
         public static BatchOptions BatchOptions(bool? translateTextWithinImage = default)
         {
             return new BatchOptions(translateTextWithinImage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Document.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of supported file formats. </summary>
