@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -311,5 +312,37 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
                 context,
                 "MockableEdgeOrderResourceGroupResource.GetEdgeOrders"), data => new EdgeOrderResource(Client, data));
         }
+
+        /// <summary>
+        /// Lists order at resource group level.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/ordersOperation IdListOrderAtResourceGroupLevelDefault Api Version2021-12-01
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(string skipToken, CancellationToken cancellationToken)
+        {
+            return GetEdgeOrdersAsync(skipToken: skipToken, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists order at resource group level.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/ordersOperation IdListOrderAtResourceGroupLevelDefault Api Version2021-12-01
+        /// </summary>
+        /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<EdgeOrderResource> GetEdgeOrders(string skipToken, CancellationToken cancellationToken)
+        {
+            return GetEdgeOrders(skipToken: skipToken, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -600,5 +601,39 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Lists all the addresses available under the given resource group.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addressesOperation IdListAddressesAtResourceGroupLevelDefault Api Version2021-12-01Resource<see cref="EdgeOrderAddressResource"/>
+        /// </summary>
+        /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<EdgeOrderAddressResource> GetAllAsync(string filter, string skipToken, CancellationToken cancellationToken)
+        {
+            return GetAllAsync(filter: filter, skipToken: skipToken, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists all the addresses available under the given resource group.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/addressesOperation IdListAddressesAtResourceGroupLevelDefault Api Version2021-12-01Resource<see cref="EdgeOrderAddressResource"/>
+        /// </summary>
+        /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EdgeOrderAddressResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<EdgeOrderAddressResource> GetAll(string filter, string skipToken, CancellationToken cancellationToken)
+        {
+            return GetAll(filter: filter, skipToken: skipToken, top: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
