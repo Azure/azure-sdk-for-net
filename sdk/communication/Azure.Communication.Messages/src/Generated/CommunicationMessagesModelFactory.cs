@@ -258,6 +258,15 @@ namespace Azure.Communication.Messages
             return new WhatsAppMessageTemplateBindingsButton(subType, refValue, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A response containing error details. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Messages.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A request to send a read receipt update from Business to User. </summary>
         /// <param name="messageId"> The id of the message this read receipt refers to. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
