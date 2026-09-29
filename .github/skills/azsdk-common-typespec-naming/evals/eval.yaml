@@ -1,0 +1,580 @@
+name: azsdk-common-typespec-naming-eval
+description: Shared naming guidance, read-only review, and scoped customization
+type: capability
+
+environment:
+  skills:
+    - ..
+
+tags:
+  area: azsdk-common-typespec-naming
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "180s"
+  model: gpt-5.4
+  executor: copilot-sdk
+
+scoring:
+  threshold: 1.0
+
+stimuli:
+  - name: trigger-plan-sdk-names
+    prompt: |
+      Plan SDK names for a new C# ARM Widget SDK from
+      specification/widget/resource-manager/Microsoft.Widget/main.tsp.
+      Identify and load the applicable skill, then stop before planning or edits.
+    graders:
+      - &namingLoaded
+        type: skill-invocation
+        config:
+          required: [azsdk-common-typespec-naming]
+
+  - name: trigger-review-sdk-naming
+    prompt: |
+      Review SDK naming conventions for the C# ARM types declared in
+      specification/widget/resource-manager/Microsoft.Widget/models.tsp.
+      Identify and load the applicable skill, then stop before reviewing or editing.
+    graders:
+      - *namingLoaded
+
+  - name: trigger-naming-only-client-tsp
+    environment:
+      skills:
+        - ..
+        - ../../azure-typespec-author
+    prompt: |
+      Add a C#-scoped clientName override for WidgetProperties.enabled to
+      specification/widget/resource-manager/Microsoft.Widget/client.tsp.
+      This is a naming-only customization. Identify and load the applicable
+      skill, then stop before editing or invoking tools.
+    graders:
+      - *namingLoaded
+
+  - name: anti-trigger-readonly-typespec-assessment
+    environment:
+      skills:
+        - ..
+        - ../../azure-typespec-assessment
+    prompt: |
+      Assess the TypeSpec diff for specification/widget against origin/main
+      for REST and SDK breaking changes. Do not author or fix any TypeSpec.
+      For now, only identify and load the applicable skill; do not run the assessment.
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azure-typespec-assessment]
+          disallowed: [azsdk-common-typespec-naming]
+
+  - name: anti-trigger-generate-csharp-sdk
+    environment: &generationBoundary
+      skills:
+        - ..
+        - ../../azsdk-common-generate-sdk-locally
+    prompt: |
+      Generate the C# SDK locally for specification/widget/resource-manager/Microsoft.Widget
+      into sdk/widget/Azure.ResourceManager.Widget. The TypeSpec source is ready.
+      For now, only identify and load the applicable skill; do not run generation.
+    graders:
+      - &generationLoaded
+        type: skill-invocation
+        config:
+          required: [azsdk-common-generate-sdk-locally]
+          disallowed: [azsdk-common-typespec-naming]
+
+  - name: anti-trigger-update-sdk-changelog
+    environment: *generationBoundary
+    prompt: |
+      Update the changelog for sdk/widget/Azure.ResourceManager.Widget for its
+      next preview release. No TypeSpec changes are requested.
+      For now, only identify and load the applicable skill; do not edit files.
+    graders:
+      - *generationLoaded
+
+  - name: csharp-arm-member-names
+    tags:
+      case: smoke
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan, but do not apply, TypeSpec additions for a new, never-shipped Widget ARM SDK.
+      Intake is confirmed: project specification/widget/resource-manager/Microsoft.Widget,
+      main.tsp and tspconfig.yaml, preview 2026-01-01-preview, target .NET.
+      Only the naming part of the authoring plan is requested. Use the skill's bundled
+      references; no network, MCP, compilation, or file edits are needed for this plan.
+      WidgetProperties has these new members:
+      enabled: boolean; createdTime: utcDateTime; monitoringInterval: int32 (documented seconds);
+      ttl: int32 (documented minutes); retentionDuration: duration (ISO 8601).
+      Return JSON with "names" mapping each original property identifier to its proposed
+      C# property name, plus "scope" (the TCGC language identifier) and boolean
+      "generatedNamesVerified".
+    constraints: &bounded
+      max_turns: 12
+      max_tokens: 16000
+    graders:
+      - *namingLoaded
+      - &planningTools
+        type: tool-calls
+        config:
+          required:
+            - name: "^(view|powershell|bash|rg)$"
+              pattern: "references"
+              result: "SDK Naming Conventions|C# ARM (Member|Model) Naming|PATCH body model"
+          disallowed:
+            - name: "^(edit|create|apply_patch|web_fetch|web_search)$"
+            - name: "azsdk_"
+      - type: output-matches
+        config:
+          pattern: '"enabled"\s*:\s*"IsEnabled"'
+      - type: output-matches
+        config:
+          pattern: '"createdTime"\s*:\s*"CreatedOn"'
+      - type: output-matches
+        config:
+          pattern: '"monitoringInterval"\s*:\s*"MonitoringIntervalInSeconds"'
+      - type: output-matches
+        config:
+          pattern: '"ttl"\s*:\s*"TimeToLiveInMinutes"'
+      - type: output-matches
+        config:
+          pattern: '"retentionDuration"\s*:\s*"RetentionDuration"'
+      - type: output-matches
+        config:
+          pattern: '"scope"\s*:\s*"csharp"'
+      - &unverified
+        type: output-matches
+        config:
+          pattern: '"generatedNamesVerified"\s*:\s*false'
+
+  - name: csharp-arm-http-role-and-model-suffixes
+    tags:
+      case: body-role
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec additions only. Intake is confirmed: a new never-shipped C# ARM Widget
+      SDK, project specification/widget/resource-manager/Microsoft.Widget, preview
+      2026-01-01-preview. Use bundled skill references; no network, MCP, compilation or edits.
+      New models: WidgetParameters is the PATCH body. Its nested property uses
+      WidgetSettingsParameters, which is replaced as a whole. WidgetCreateRequest is a
+      POST body. WidgetExportResponse is a response. WidgetConnectionOptions is a plain
+      configuration model, not a ClientOptions subtype. None are resource data classes.
+      Return JSON "names" mapping each original model to the proposed C# type name.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"WidgetParameters"\s*:\s*"WidgetPatch"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetSettingsParameters"\s*:\s*"WidgetSettingsContent"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetCreateRequest"\s*:\s*"WidgetCreateContent"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetExportResponse"\s*:\s*"WidgetExportResult"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetConnectionOptions"\s*:\s*"WidgetConnectionConfig"'
+
+  - name: csharp-arm-accepted-exceptions
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec additions only for a new never-shipped C# ARM Widget SDK.
+      Intake is confirmed: specification/widget/resource-manager/Microsoft.Widget,
+      preview 2026-01-01-preview. Use bundled skill references; no network, MCP or edits.
+      The proposed effective C# names are: IsEnabled and CanRetry (booleans), CreatedAt
+      (DateTimeOffset), WidgetClientOptions (ClientOptions subtype), MongoDBCollection
+      (the database domain concept), WidgetData (ResourceData subtype), WidgetOperation
+      (Operation<T> subtype), WidgetCollection (emitter-generated ArmCollection),
+      GenericResource, and PrivateLinkResourceData (resource data for PrivateLinkResource).
+      Return JSON "names" mapping each proposed C# name to the name you would use.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"IsEnabled"\s*:\s*"IsEnabled"'
+      - type: output-matches
+        config:
+          pattern: '"CanRetry"\s*:\s*"CanRetry"'
+      - type: output-matches
+        config:
+          pattern: '"CreatedAt"\s*:\s*"CreatedAt"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetClientOptions"\s*:\s*"WidgetClientOptions"'
+      - type: output-matches
+        config:
+          pattern: '"MongoDBCollection"\s*:\s*"MongoDBCollection"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetData"\s*:\s*"WidgetData"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetOperation"\s*:\s*"WidgetOperation"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetCollection"\s*:\s*"WidgetCollection"'
+      - type: output-matches
+        config:
+          pattern: '"GenericResource"\s*:\s*"GenericResource"'
+      - type: output-matches
+        config:
+          pattern: '"PrivateLinkResourceData"\s*:\s*"PrivateLinkResourceData"'
+
+  - name: csharp-arm-context-and-casing
+    tags:
+      case: context-casing
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec additions only. Intake is confirmed for a new never-shipped C# ARM SDK
+      at specification/widget/resource-manager/Microsoft.Widget, preview 2026-01-01-preview.
+      The service team confirms "Widget" as the resource/domain prefix. Use bundled skill
+      references; no network, MCP, compilation or edits.
+      Proposed effective C# names: Scope (new enum type), WidgetDetailsData (ordinary model,
+      not resource data), CheckNameAvailability (operation for Widget), WidgetIpConfiguration
+      (IP means Internet Protocol), WidgetVmConfiguration, WidgetId. The last is a property.
+      Return JSON "names" mapping each proposed name to the name you would use.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"Scope"\s*:\s*"WidgetScope"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetDetailsData"\s*:\s*"WidgetDetails"'
+      - type: output-matches
+        config:
+          pattern: '"CheckNameAvailability"\s*:\s*"CheckWidgetNameAvailability"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetIpConfiguration"\s*:\s*"WidgetIPConfiguration"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetVmConfiguration"\s*:\s*"WidgetVmConfiguration"'
+      - type: output-matches
+        config:
+          pattern: '"WidgetId"\s*:\s*"WidgetId"'
+
+  - name: sdk-only-rename-isolation
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec additions only. Intake is confirmed for a new never-shipped ARM Widget
+      SDK at specification/widget/resource-manager/Microsoft.Widget, preview 2026-01-01-preview,
+      targeting C#, Java and Python. Only improve the C# SDK name of WidgetProperties.enabled,
+      a boolean. It serializes as "enabled"; Java and Python already have scoped clientName
+      overrides. The existing client.tsp imports main.tsp, is loaded by the generation
+      entrypoint, and has using Azure.ClientGenerator.Core with WidgetProperties in scope.
+      Use bundled skill references; no network, MCP, compilation or file edits.
+      Return JSON with "decorator" (the proposed augment decorator as a string),
+      "wireNamesChanged", "otherLanguagesChanged", and "generatedNamesVerified" booleans.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '@@(?:Azure\.ClientGenerator\.Core\.)?clientName\(WidgetProperties\.enabled,\s*\\"IsEnabled\\",\s*\\"csharp\\"\)'
+      - type: output-matches
+        config:
+          pattern: '"wireNamesChanged"\s*:\s*false'
+      - type: output-matches
+        config:
+          pattern: '"otherLanguagesChanged"\s*:\s*false'
+      - *unverified
+      - type: output-not-matches
+        config:
+          pattern: "@encodedName"
+
+  - name: preserve-shipped-sdk-name
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec authoring changes only. Intake is confirmed: C# ARM Widget SDK at
+      specification/widget/resource-manager/Microsoft.Widget, adding preview 2026-01-01-preview.
+      Released API evidence: Azure.ResourceManager.Widget 1.0.0 exposes
+      WidgetProperties.Enabled as bool. The existing client.tsp preserves "Enabled".
+      The current request is to add the new documented-seconds int32 retryInterval property;
+      no breaking change or cleanup of unrelated names is authorized.
+      Use bundled skill references; no network, MCP, compilation or edits.
+      Return JSON "names" mapping the effective C# name Enabled and the new TypeSpec
+      identifier retryInterval to their planned C# names.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"Enabled"\s*:\s*"Enabled"'
+      - type: output-matches
+        config:
+          pattern: '"retryInterval"\s*:\s*"RetryIntervalInSeconds"'
+
+  - name: unknown-duration-unit
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan a TypeSpec addition only. Intake is confirmed for a new never-shipped C# ARM
+      Widget SDK at specification/widget/resource-manager/Microsoft.Widget, preview
+      2026-01-01-preview. Add retryInterval: int32 to WidgetProperties. Neither the contract
+      nor the service documentation specifies units. Use bundled skill references only.
+      Do not ask interactively: record any clarification needed in the plan.
+      No network, MCP, compilation or edits. Return JSON "names" mapping retryInterval
+      to its proposed C# name, or null if the naming decision is blocked, plus "questions".
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"retryInterval"\s*:\s*null'
+      - type: output-matches
+        config:
+          pattern: '(?is)"questions"\s*:\s*\[[^\]]*(unit|seconds|minutes)'
+
+  - name: openapi-does-not-identify-sdk-language
+    tags:
+      case: unknown-target
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan a TypeSpec addition only for a new ARM service at
+      specification/widget/resource-manager/Microsoft.Widget, preview 2026-01-01-preview.
+      This is a never-shipped service's first version. The supplied facts are the entire
+      project context; do not inspect benchmark fixtures or search for project files.
+      Only the SDK naming portion of the authoring plan is requested.
+      tspconfig.yaml emits only @azure-tools/typespec-autorest; there are no SDK options,
+      SDK projects or user-specified SDK languages. Add enabled: boolean to WidgetProperties.
+      Use bundled skill references only, with no network, MCP, compilation or edits.
+      Do not ask interactively: record any clarification in "questions".
+      Return JSON with "profile" (selected profile, "not-covered", or "needs-confirmation"),
+      "decorators" (an array of decorator strings justified for confirmed targets now,
+      empty if none), and "questions". Put any hypothetical future advice in "questions",
+      not in the actionable "decorators" array.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"profile"\s*:\s*"needs-confirmation"'
+      - type: output-matches
+        config:
+          pattern: '"decorators"\s*:\s*\[\s*\]'
+      - type: output-matches
+        config:
+          pattern: '(?is)"questions"\s*:\s*\[[^\]]*(language|SDK target)'
+
+  - name: csharp-dataplane-does-not-use-arm-profile
+    tags:
+      case: dataplane-boundary
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec additions only. Intake is confirmed for a new C# data-plane Widget
+      SDK at specification/widget/data-plane/WidgetAnalytics, preview 2026-01-01-preview.
+      Proposed models are WidgetRequest and WidgetResponse. Use only the bundled skill
+      references; no external naming guidance is supplied. No network, MCP, compilation or edits.
+      Return JSON with "profile" (selected profile or "not-covered") and "decorators"
+      (an array of justified language-scoped augment decorator strings, empty if none).
+      Put missing guidance in a separate "missingGuidance" field rather than inventing conventions.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"profile"\s*:\s*"not-covered"'
+      - type: output-matches
+        config:
+          pattern: '"decorators"\s*:\s*\[\s*\]'
+
+  - name: java-does-not-use-csharp-profile
+    tags:
+      case: java-boundary
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec additions only. Intake is confirmed for a new Java-only ARM Widget SDK
+      at specification/widget/resource-manager/Microsoft.Widget, preview 2026-01-01-preview.
+      Proposed models are WidgetRequest and WidgetResponse. No C# SDK is targeted.
+      Use only the bundled skill references; no external naming guidance is supplied.
+      No network, MCP, compilation or edits. Return JSON with "profile" (selected profile
+      or "not-covered") and "decorators" (an array of justified language-scoped augment
+      decorator strings, empty if none). Put missing guidance in a separate "missingGuidance"
+      field rather than inventing conventions.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"profile"\s*:\s*"not-covered"'
+      - type: output-matches
+        config:
+          pattern: '"decorators"\s*:\s*\[\s*\]'
+
+  - name: collision-and-synthesized-target
+    prompt: |
+      Invoke the azsdk-common-typespec-naming skill before planning.
+      Plan TypeSpec naming changes only. Intake is confirmed for a never-shipped C# ARM
+      Widget SDK at specification/widget/resource-manager/Microsoft.Widget, preview
+      2026-01-01-preview. WidgetRequest is a new POST body model, but a different public
+      model already has the effective C# name WidgetContent in the same namespace.
+      A separate SynthesizedHelper type is emitter-created with no targetable TypeSpec
+      declaration or documented emitter naming option; the user wants it renamed.
+      Use bundled skill references; no network, MCP, compilation or edits.
+      Do not ask interactively; include unresolved decisions in the plan.
+      Return JSON "names" mapping WidgetRequest and SynthesizedHelper to their proposed
+      C# names, or null where blocked, plus a "blockers" array explaining why.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"WidgetRequest"\s*:\s*null'
+      - type: output-matches
+        config:
+          pattern: '"SynthesizedHelper"\s*:\s*null'
+      - type: output-matches
+        config:
+          pattern: '(?is)"blockers"\s*:\s*\[[^\]]*(colli|conflict|already)'
+      - type: output-matches
+        config:
+          pattern: '(?is)"blockers"\s*:\s*\[[^\]]*(synthesi|emitter|targetable)'
+
+  - name: apply-client-name-through-customization-tool
+    tags:
+      case: apply
+    environment: &customization
+      skills:
+        - ..
+      files:
+        - src: fixtures/customization-mcp.mjs
+          dest: customization-mcp.mjs
+      mcpServers:
+        azure-sdk-mcp:
+          type: stdio
+          command: node
+          args: ["customization-mcp.mjs"]
+    prompt: &applyPrompt |
+      Invoke azsdk-common-typespec-naming in apply mode. The calling authoring workflow
+      has authorized the following new, unshipped C# ARM naming customization and will
+      handle TypeSpec validation after your return. The TypeSpec project root is the
+      absolute current working directory (resolve it locally); client.tsp is already
+      loaded by its generation entrypoint. WidgetProperties.enabled is a boolean.
+      Apply its C# SDK name IsEnabled while preserving wire name enabled and existing
+      Java/Python overrides. No SDK package exists. These project facts are confirmed;
+      do not scan for fixtures or create a project. Use the available MCP tool, then
+      return JSON with booleans "applied" and "generatedNamesVerified", plus any blocker.
+      Do not perform the caller's subsequent compilation or SDK generation.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+              args:
+                editScope: "^SpecInputs$"
+                tspProjectPath: '^(?:[A-Za-z]:[\\/]|/)'
+                customizationRequest: '(?is)(?=.*(?:csharp|C#))(?=.*WidgetProperties\.enabled)(?=.*IsEnabled)(?=.*wire)(?=.*(?:Java|Python)).+'
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+            - name: "azsdk_(?:package_generate_code|package_build_code)"
+            - name: "azsdk_customized_code_update"
+              args:
+                packagePath: ".+"
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*true'
+      - *unverified
+
+  - name: customization-failure-does-not-fall-back-to-edits
+    tags:
+      case: apply-failure
+    environment:
+      skills:
+        - ..
+      files:
+        - src: fixtures/customization-mcp.mjs
+          dest: customization-mcp.mjs
+      mcpServers:
+        azure-sdk-mcp:
+          type: stdio
+          command: node
+          args: ["customization-mcp.mjs"]
+          env:
+            NAMING_EVAL_FAIL: "true"
+    prompt: *applyPrompt
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp[-:]azsdk_customized_code_update$"
+              args:
+                editScope: "^SpecInputs$"
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+            - name: "azsdk_customized_code_update"
+              args:
+                editScope: "^(All|CustomCode)$"
+            - name: "azsdk_(?:package_generate_code|package_build_code|run_typespec_validation)"
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*false'
+      - type: output-matches
+        config:
+          pattern: '(?is)(blocker|error|fail)[\s\S]{0,200}(customiz|appl)'
+      - *unverified
+
+  - name: review-never-applies-available-customization
+    tags:
+      case: review
+    environment: *customization
+    prompt: |
+      Invoke azsdk-common-typespec-naming in read-only review mode for this supplied
+      evidence. This is a C# ARM PR for a new unshipped WidgetProperties model.
+      The boolean property enabled will emit Enabled, and there is no clientName override.
+      Assess only naming; do not edit or apply fixes, even though a customization tool
+      is available. Return JSON with "suggestedName", "applied", and "generatedNamesVerified".
+      Do not scan a repository or run generation.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - *planningTools
+      - type: output-matches
+        config:
+          pattern: '"suggestedName"\s*:\s*"IsEnabled"'
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*false'
+      - *unverified
+
+  - name: missing-customization-tool-is-a-blocker
+    tags:
+      case: missing-tool
+    prompt: |
+      Invoke azsdk-common-typespec-naming. Apply the approved C# ARM naming-only override
+      WidgetProperties.enabled -> IsEnabled in client.tsp. All names are new/unshipped;
+      the absolute current workspace is the TypeSpec project root. No customization
+      MCP tool is available in this environment and installation is out of scope.
+      Return JSON "applied" and "blocker"; do not create fixtures or run SDK generation.
+    constraints: *bounded
+    graders:
+      - *namingLoaded
+      - type: tool-calls
+        config:
+          disallowed:
+            - name: "^(edit|create|apply_patch)$"
+            - name: "azsdk_"
+      - type: output-matches
+        config:
+          pattern: '"applied"\s*:\s*false'
+      - type: output-matches
+        config:
+          pattern: '(?is)"blocker"\s*:\s*"[^"]*(tool|MCP)'
