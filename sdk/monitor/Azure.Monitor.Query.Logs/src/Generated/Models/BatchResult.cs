@@ -12,27 +12,27 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Response to a batch query. </summary>
-    internal partial class BatchResponse
+    internal partial class BatchResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchResponse"/>. </summary>
-        internal BatchResponse()
+        /// <summary> Initializes a new instance of <see cref="BatchResult"/>. </summary>
+        internal BatchResult()
         {
-            Responses = new ChangeTrackingList<BatchQueryResponse>();
+            Responses = new ChangeTrackingList<BatchQueryResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchResult"/>. </summary>
         /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchResponse(IList<BatchQueryResponse> responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchResult(IList<BatchQueryResult> responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Responses = responses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of responses corresponding to each individual request in a batch. </summary>
-        public IList<BatchQueryResponse> Responses { get; }
+        public IList<BatchQueryResult> Responses { get; }
     }
 }
