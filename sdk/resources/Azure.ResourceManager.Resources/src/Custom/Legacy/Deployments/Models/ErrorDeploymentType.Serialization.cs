@@ -1,0 +1,31 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
+namespace Azure.ResourceManager.Resources.Models
+{
+    [Obsolete("Use Azure.ResourceManager.Resources.Deployments instead.", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal static partial class ErrorDeploymentTypeExtensions
+    {
+        public static string ToSerialString(this ErrorDeploymentType value) => value switch
+        {
+            ErrorDeploymentType.LastSuccessful => "LastSuccessful",
+            ErrorDeploymentType.SpecificDeployment => "SpecificDeployment",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorDeploymentType value.")
+        };
+
+        public static ErrorDeploymentType ToErrorDeploymentType(this string value)
+        {
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LastSuccessful"))
+                return ErrorDeploymentType.LastSuccessful;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SpecificDeployment"))
+                return ErrorDeploymentType.SpecificDeployment;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ErrorDeploymentType value.");
+        }
+    }
+}

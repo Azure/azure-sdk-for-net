@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Enum",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Enum",
       "valueType": {
         "$id": "2",
@@ -43,6 +46,9 @@
       "$id": "4",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Versions",
       "valueType": {
         "$id": "5",
@@ -116,6 +122,9 @@
       "$id": "11",
       "kind": "model",
       "name": "ActionRequest",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionRequest",
       "usage": "Input,Json",
@@ -131,6 +140,9 @@
           "$id": "12",
           "kind": "property",
           "name": "stringProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "stringProperty",
           "type": {
             "$id": "13",
@@ -157,11 +169,17 @@
           "$id": "14",
           "kind": "property",
           "name": "modelProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "modelProperty",
           "type": {
             "$id": "15",
             "kind": "model",
             "name": "Model",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
             "namespace": "_Specs_.Azure.Example.Basic",
             "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Model",
             "usage": "Input,Output,Json",
@@ -177,6 +195,9 @@
                 "$id": "16",
                 "kind": "property",
                 "name": "int32Property",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "int32Property",
                 "type": {
                   "$id": "17",
@@ -203,6 +224,9 @@
                 "$id": "18",
                 "kind": "property",
                 "name": "float32Property",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "float32Property",
                 "type": {
                   "$id": "19",
@@ -229,6 +253,9 @@
                 "$id": "20",
                 "kind": "property",
                 "name": "enumProperty",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "enumProperty",
                 "type": {
                   "$ref": "1"
@@ -267,6 +294,9 @@
           "$id": "21",
           "kind": "property",
           "name": "arrayProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "arrayProperty",
           "type": {
             "$id": "22",
@@ -300,6 +330,9 @@
           "$id": "24",
           "kind": "property",
           "name": "recordProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "recordProperty",
           "type": {
             "$id": "25",
@@ -343,6 +376,9 @@
       "$id": "28",
       "kind": "model",
       "name": "ActionResponse",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionResponse",
       "usage": "Output,Json",
@@ -358,6 +394,9 @@
           "$id": "29",
           "kind": "property",
           "name": "stringProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "stringProperty",
           "type": {
             "$id": "30",
@@ -384,6 +423,9 @@
           "$id": "31",
           "kind": "property",
           "name": "modelProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "modelProperty",
           "type": {
             "$ref": "15"
@@ -406,6 +448,9 @@
           "$id": "32",
           "kind": "property",
           "name": "arrayProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "arrayProperty",
           "type": {
             "$ref": "22"
@@ -428,6 +473,9 @@
           "$id": "33",
           "kind": "property",
           "name": "recordProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "recordProperty",
           "type": {
             "$ref": "25"

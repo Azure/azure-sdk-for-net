@@ -12,14 +12,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model perform a resource operation in a list of resources. </summary>
+    /// <summary> Resource-specific settings to update in a scheduled action. </summary>
     public partial class ResourcePatchRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/>. </summary>
-        /// <param name="resources"> The list of resources we watch to patch. </param>
+        /// <param name="resources"> The resources and notification settings to update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
         public ResourcePatchRequestContent(IEnumerable<ScheduledActionResourceInput> resources)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/>. </summary>
-        /// <param name="resources"> The list of resources we watch to patch. </param>
+        /// <param name="resources"> The resources and notification settings to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourcePatchRequestContent(IList<ScheduledActionResourceInput> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of resources we watch to patch. </summary>
+        /// <summary> The resources and notification settings to update. </summary>
         public IList<ScheduledActionResourceInput> Resources { get; }
     }
 }

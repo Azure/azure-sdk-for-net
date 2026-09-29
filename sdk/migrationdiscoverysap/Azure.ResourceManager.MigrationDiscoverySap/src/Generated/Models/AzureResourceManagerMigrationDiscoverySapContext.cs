@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,11 +14,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ConfigurationDetail))]
     [ModelReaderWriterBuildable(typeof(ExcelPerformanceDetail))]
     [ModelReaderWriterBuildable(typeof(NativePerformanceDetail))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PerformanceDetail))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SapDiscoveryErrorDetail))]
@@ -26,18 +28,20 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
     [ModelReaderWriterBuildable(typeof(SapDiscoveryServerInstancePatch))]
     [ModelReaderWriterBuildable(typeof(SapDiscoveryServerInstanceResource))]
     [ModelReaderWriterBuildable(typeof(SapDiscoverySiteData))]
-    [ModelReaderWriterBuildable(typeof(SapDiscoverySiteListResult))]
+    [ModelReaderWriterBuildable(typeof(SAPDiscoverySiteListResult))]
     [ModelReaderWriterBuildable(typeof(SapDiscoverySitePatch))]
+    [ModelReaderWriterBuildable(typeof(SAPDiscoverySiteProperties))]
     [ModelReaderWriterBuildable(typeof(SapDiscoverySiteResource))]
     [ModelReaderWriterBuildable(typeof(SapInstanceData))]
-    [ModelReaderWriterBuildable(typeof(SapInstanceListResult))]
+    [ModelReaderWriterBuildable(typeof(SAPInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(SapInstancePatch))]
+    [ModelReaderWriterBuildable(typeof(SAPInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(SapInstanceResource))]
     [ModelReaderWriterBuildable(typeof(SapMigrateError))]
     [ModelReaderWriterBuildable(typeof(ServerInstanceListResult))]
     [ModelReaderWriterBuildable(typeof(ServerInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownPerformanceData))]
+    [ModelReaderWriterBuildable(typeof(UnknownPerformanceDetail))]
     public partial class AzureResourceManagerMigrationDiscoverySapContext : ModelReaderWriterContext
     {
     }

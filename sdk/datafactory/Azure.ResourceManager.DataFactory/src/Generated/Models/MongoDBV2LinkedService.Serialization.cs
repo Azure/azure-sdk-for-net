@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MongoDbV2LinkedServiceTypeProperties typeProperties = default;
+            MongoDBV2LinkedServiceTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     annotations = array;
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = MongoDbV2LinkedServiceTypeProperties.DeserializeMongoDbV2LinkedServiceTypeProperties(prop.Value, options);
+                    typeProperties = MongoDBV2LinkedServiceTypeProperties.DeserializeMongoDBV2LinkedServiceTypeProperties(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new MongoDBV2LinkedService(
                 linkedServiceType,

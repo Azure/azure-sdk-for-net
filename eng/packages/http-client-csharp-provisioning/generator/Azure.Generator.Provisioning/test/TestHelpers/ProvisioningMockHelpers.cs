@@ -32,7 +32,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             Func<ArmProviderSchema>? armProviderSchema = null,
             string? primaryNamespace = null,
             IEnumerable<string>? customizationSources = null,
-            IReadOnlyDictionary<string, bool>? modelSettableUsage = null)
+            IReadOnlyDictionary<string, bool>? modelSettableUsage = null,
+            IEnumerable<string>? lastContractSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -80,7 +81,17 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                         MetadataReference.CreateFromFile(typeof(BicepValue<>).Assembly.Location)
                     ],
                     new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
-            mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(customizationCompilation, null));
+            var lastContractCompilation = lastContractSources is null
+                ? null
+                : CSharpCompilation.Create(
+                    "LastContract",
+                    lastContractSources.Select(source => CSharpSyntaxTree.ParseText(source)),
+                    [
+                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                        MetadataReference.CreateFromFile(typeof(BicepValue<>).Assembly.Location)
+                    ],
+                    new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+            mockGenerator.Setup(p => p.SourceInputModel).Returns(new SourceInputModel(customizationCompilation, lastContractCompilation));
             var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             codeModelInstance!.SetValue(null, mockGenerator.Object);
 

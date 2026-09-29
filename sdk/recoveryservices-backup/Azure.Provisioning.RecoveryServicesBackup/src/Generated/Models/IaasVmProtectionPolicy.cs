@@ -24,6 +24,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new IaasVmProtectionPolicy. </summary>
         public IaasVmProtectionPolicy()
         {
+            BackupManagementType.Assign("AzureIaasVM");
         }
 
         /// <summary> Gets or sets the InstantRPDetails. </summary>
@@ -150,7 +151,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupManagementType", new string[] { "backupManagementType" }, defaultValue: "AzureIaasVM");
             _instantRPDetails = DefineModelProperty<InstantRPAdditionalDetails>(nameof(InstantRPDetails), new string[] { "instantRPDetails" });
             _schedulePolicy = DefineModelProperty<BackupSchedulePolicy>(nameof(SchedulePolicy), new string[] { "schedulePolicy" });
             _retentionPolicy = DefineModelProperty<BackupRetentionPolicy>(nameof(RetentionPolicy), new string[] { "retentionPolicy" });

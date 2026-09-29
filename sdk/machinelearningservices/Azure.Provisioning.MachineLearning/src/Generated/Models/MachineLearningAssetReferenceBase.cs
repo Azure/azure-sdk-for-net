@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningAssetReferenceBase : ProvisionableConstruct
     {
+        private BicepValue<ReferenceType> _referenceType;
+
         /// <summary> Creates a new MachineLearningAssetReferenceBase. </summary>
         public MachineLearningAssetReferenceBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of asset reference. </summary>
+        internal BicepValue<ReferenceType> ReferenceType
+        {
+            get
+            {
+                Initialize();
+                return _referenceType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningAssetReferenceBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _referenceType = DefineProperty<ReferenceType>(nameof(ReferenceType), new string[] { "referenceType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

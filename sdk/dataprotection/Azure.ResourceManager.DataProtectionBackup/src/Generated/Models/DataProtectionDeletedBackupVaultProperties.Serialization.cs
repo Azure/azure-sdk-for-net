@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings, options);
             }
+            if (Optional.IsDefined(CostManagementSettings))
+            {
+                writer.WritePropertyName("costManagementSettings"u8);
+                writer.WriteObjectValue(CostManagementSettings, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -218,6 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             MonitoringSettings monitoringSettings = default;
+            CostManagementSettings costManagementSettings = default;
             DataProtectionBackupProvisioningState? provisioningState = default;
             BackupVaultResourceMoveState? resourceMoveState = default;
             BackupVaultResourceMoveDetails resourceMoveDetails = default;
@@ -243,6 +249,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         continue;
                     }
                     monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("costManagementSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    costManagementSettings = CostManagementSettings.DeserializeCostManagementSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -388,11 +403,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataProtectionDeletedBackupVaultProperties(
                 monitoringSettings,
+                costManagementSettings,
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,

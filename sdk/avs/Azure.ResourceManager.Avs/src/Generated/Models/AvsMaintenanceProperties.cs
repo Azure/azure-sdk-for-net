@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="AvsMaintenanceProperties"/>. </summary>
         internal AvsMaintenanceProperties()
         {
+            Activities = new ChangeTrackingList<MaintenanceActivity>();
             Operations = new ChangeTrackingList<AvsMaintenanceManagementOperation>();
         }
 
@@ -27,6 +28,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="component"> type of maintenance. </param>
         /// <param name="displayName"> Display name for maintenance. </param>
         /// <param name="clusterId"> Cluster ID for on which maintenance will be applied. Empty if maintenance is at private cloud level. </param>
+        /// <param name="activities"> Activities performed as part of maintenance. </param>
+        /// <param name="group"> Group details if maintenance is part of a group. </param>
+        /// <param name="relationships"> Relationships with other maintenances like dependencies and prerequisites. </param>
         /// <param name="infoLink"> Link to maintenance info. </param>
         /// <param name="impact"> Impact on the resource during maintenance period. </param>
         /// <param name="isScheduledByMicrosoft"> If maintenance is scheduled by Microsoft. </param>
@@ -37,11 +41,14 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="operations"> Operations on  maintenance. </param>
         /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsMaintenanceProperties(AvsMaintenanceType? component, string displayName, int? clusterId, string infoLink, string impact, bool? isScheduledByMicrosoft, AvsMaintenanceState state, DateTimeOffset? scheduledStartOn, long? estimatedDurationInMinutes, AvsMaintenanceProvisioningState? provisioningState, IReadOnlyList<AvsMaintenanceManagementOperation> operations, AvsMaintenanceReadiness maintenanceReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvsMaintenanceProperties(AvsMaintenanceType? component, string displayName, int? clusterId, IReadOnlyList<MaintenanceActivity> activities, MaintenanceGroup @group, MaintenanceRelationships relationships, string infoLink, string impact, bool? isScheduledByMicrosoft, AvsMaintenanceState state, DateTimeOffset? scheduledStartOn, long? estimatedDurationInMinutes, AvsMaintenanceProvisioningState? provisioningState, IReadOnlyList<AvsMaintenanceManagementOperation> operations, AvsMaintenanceReadiness maintenanceReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Component = component;
             DisplayName = displayName;
             ClusterId = clusterId;
+            Activities = activities;
+            Group = @group;
+            Relationships = relationships;
             InfoLink = infoLink;
             Impact = impact;
             IsScheduledByMicrosoft = isScheduledByMicrosoft;
@@ -62,6 +69,15 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Cluster ID for on which maintenance will be applied. Empty if maintenance is at private cloud level. </summary>
         public int? ClusterId { get; }
+
+        /// <summary> Activities performed as part of maintenance. </summary>
+        public IReadOnlyList<MaintenanceActivity> Activities { get; }
+
+        /// <summary> Group details if maintenance is part of a group. </summary>
+        public MaintenanceGroup Group { get; }
+
+        /// <summary> Relationships with other maintenances like dependencies and prerequisites. </summary>
+        public MaintenanceRelationships Relationships { get; }
 
         /// <summary> Link to maintenance info. </summary>
         public string InfoLink { get; }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             get
             {
-                return ProductProfile is null ? default : ProductProfile.BillingStartOn;
+                return ProductProfile is null ? default : ProductProfile.BillingStartsOn;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             get
             {
-                return ProductProfile is null ? default : ProductProfile.BillingEndOn;
+                return ProductProfile is null ? default : ProductProfile.BillingEndsOn;
             }
         }
 

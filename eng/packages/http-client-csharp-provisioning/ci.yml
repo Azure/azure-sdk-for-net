@@ -5,6 +5,7 @@ trigger:
   paths:
     include:
       - eng/packages/http-client-csharp-provisioning
+      - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/scripts/typespec
 pr:
   branches:
@@ -15,6 +16,7 @@ pr:
   paths:
     include:
       - eng/packages/http-client-csharp-provisioning
+      - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/scripts/typespec
 
 parameters:
@@ -44,7 +46,7 @@ variables:
   - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
-  template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
+  template: /eng/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
       - task: UseNode@1

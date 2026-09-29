@@ -18,29 +18,29 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
-        /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
-        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime)
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the model was last updated. </param>
+        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
             ModelId = modelId;
-            CreatedTime = createdTime;
-            LastUpdatedTime = lastUpdatedTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetectionModel"/>. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
-        /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the model was last updated. </param>
         /// <param name="modelInfo">
         /// Training result of a model, including its status, errors, and diagnostics
         /// information.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdTime, DateTimeOffset lastUpdatedTime, ModelInfo modelInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnomalyDetectionModel(Guid modelId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ModelInfo modelInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
-            CreatedTime = createdTime;
-            LastUpdatedTime = lastUpdatedTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             ModelInfo = modelInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,10 +49,10 @@ namespace Azure.AI.AnomalyDetector
         public Guid ModelId { get; }
 
         /// <summary> Date and time (UTC) when the model was created. </summary>
-        public DateTimeOffset CreatedTime { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> Date and time (UTC) when the model was last updated. </summary>
-        public DateTimeOffset LastUpdatedTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
 
         /// <summary>
         /// Training result of a model, including its status, errors, and diagnostics

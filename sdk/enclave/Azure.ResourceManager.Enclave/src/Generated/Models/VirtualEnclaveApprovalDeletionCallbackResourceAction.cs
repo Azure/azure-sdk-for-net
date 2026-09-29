@@ -11,12 +11,15 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The resource action for an approval deletion callback. </summary>
     public readonly partial struct VirtualEnclaveApprovalDeletionCallbackResourceAction : IEquatable<VirtualEnclaveApprovalDeletionCallbackResourceAction>
     {
         private readonly string _value;
+        /// <summary> Create the resource. </summary>
         private const string CreateValue = "Create";
+        /// <summary> Delete the resource. </summary>
         private const string DeleteValue = "Delete";
+        /// <summary> Update the resource. </summary>
         private const string UpdateValue = "Update";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveApprovalDeletionCallbackResourceAction"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the Create. </summary>
+        /// <summary> Create the resource. </summary>
         public static VirtualEnclaveApprovalDeletionCallbackResourceAction Create { get; } = new VirtualEnclaveApprovalDeletionCallbackResourceAction(CreateValue);
 
-        /// <summary> Gets the Delete. </summary>
+        /// <summary> Delete the resource. </summary>
         public static VirtualEnclaveApprovalDeletionCallbackResourceAction Delete { get; } = new VirtualEnclaveApprovalDeletionCallbackResourceAction(DeleteValue);
 
-        /// <summary> Gets the Update. </summary>
+        /// <summary> Update the resource. </summary>
         public static VirtualEnclaveApprovalDeletionCallbackResourceAction Update { get; } = new VirtualEnclaveApprovalDeletionCallbackResourceAction(UpdateValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveApprovalDeletionCallbackResourceAction"/> values are the same. </summary>

@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleHttpVersionCondition. </summary>
         public DeliveryRuleHttpVersionCondition()
         {
+            Name.Assign(DeliveryRuleMatchVariable.HttpVersion);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "HttpVersion");
             _properties = DefineModelProperty<HttpVersionMatchCondition>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

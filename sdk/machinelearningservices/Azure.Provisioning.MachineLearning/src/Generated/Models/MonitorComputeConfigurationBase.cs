@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MonitorComputeConfigurationBase : ProvisionableConstruct
     {
+        private BicepValue<MonitorComputeType> _computeType;
+
         /// <summary> Creates a new MonitorComputeConfigurationBase. </summary>
         public MonitorComputeConfigurationBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        internal BicepValue<MonitorComputeType> ComputeType
+        {
+            get
+            {
+                Initialize();
+                return _computeType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MonitorComputeConfigurationBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _computeType = DefineProperty<MonitorComputeType>(nameof(ComputeType), new string[] { "computeType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

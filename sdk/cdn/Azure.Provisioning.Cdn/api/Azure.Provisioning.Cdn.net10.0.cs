@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Cdn
     public partial class CdnManagedHttpsContent : Azure.Provisioning.Cdn.CustomDomainHttpsContent
     {
         public CdnManagedHttpsContent() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnManagedCertificateType> CertificateType { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnCertificateSource CertificateSourceParameters { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CdnMinimumTlsVersion
@@ -1223,7 +1223,7 @@ namespace Azure.Provisioning.Cdn
     public partial class OriginGroupOverrideAction : Azure.Provisioning.Cdn.DeliveryRuleAction
     {
         public OriginGroupOverrideAction() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OriginGroupId { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.OriginGroupOverrideActionProperties Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class OriginGroupOverrideActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties

@@ -301,7 +301,7 @@ namespace Azure.Provisioning.Compute
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<VirtualMachineScaleSetExtensionProperties>(nameof(Properties), new string[] { "properties" });
             _vmssExtensionName = DefineProperty<string>(nameof(VmssExtensionName), new string[] { "vmssExtensionName" }, isOutput: true, isRequired: true);
-            _parent = DefineResource<VirtualMachineScaleSet>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

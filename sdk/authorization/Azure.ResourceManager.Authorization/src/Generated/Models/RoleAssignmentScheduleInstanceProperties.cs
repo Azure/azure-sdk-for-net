@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="roleAssignmentScheduleId"> Id of the master role assignment schedule. </param>
         /// <param name="originRoleAssignmentId"> Role Assignment Id in external system. </param>
         /// <param name="status"> The status of the role assignment schedule instance. </param>
-        /// <param name="startOn"> The startDateTime of the role assignment schedule instance. </param>
-        /// <param name="endOn"> The endDateTime of the role assignment schedule instance. </param>
+        /// <param name="startsOn"> The startDateTime of the role assignment schedule instance. </param>
+        /// <param name="endsOn"> The endDateTime of the role assignment schedule instance. </param>
         /// <param name="linkedRoleEligibilityScheduleId"> roleEligibilityScheduleId used to activate. </param>
         /// <param name="linkedRoleEligibilityScheduleInstanceId"> roleEligibilityScheduleInstanceId linked to this roleAssignmentScheduleInstance. </param>
         /// <param name="assignmentType"> Assignment type of the role assignment schedule. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentScheduleInstanceProperties(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ResourceIdentifier linkedRoleEligibilityScheduleId, ResourceIdentifier linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentScheduleInstanceProperties(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ResourceIdentifier linkedRoleEligibilityScheduleId, ResourceIdentifier linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleAssignmentScheduleId = roleAssignmentScheduleId;
             OriginRoleAssignmentId = originRoleAssignmentId;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             LinkedRoleEligibilityScheduleId = linkedRoleEligibilityScheduleId;
             LinkedRoleEligibilityScheduleInstanceId = linkedRoleEligibilityScheduleInstanceId;
             AssignmentType = assignmentType;
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> The startDateTime of the role assignment schedule instance. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The endDateTime of the role assignment schedule instance. </summary>
         [WirePath("endDateTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> roleEligibilityScheduleId used to activate. </summary>
         [WirePath("linkedRoleEligibilityScheduleId")]

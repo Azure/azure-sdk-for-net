@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci.Models
                 return null;
             }
             string name = default;
-            string iPv4Address = default;
+            string ipv4Address = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    iPv4Address = prop.Value.GetString();
+                    ipv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeploymentSettingPhysicalNodes(name, iPv4Address, additionalBinaryDataProperties);
+            return new DeploymentSettingPhysicalNodes(name, ipv4Address, additionalBinaryDataProperties);
         }
     }
 }

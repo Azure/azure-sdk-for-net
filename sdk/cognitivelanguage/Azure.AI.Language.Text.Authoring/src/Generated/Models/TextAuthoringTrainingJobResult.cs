@@ -32,15 +32,15 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents model train status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
-        /// <param name="estimatedEndOn"> Represents the estimate end date time for training and evaluation. </param>
+        /// <param name="estimatedEndsOn"> Represents the estimate end date time for training and evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, TextAuthoringSubTrainingState trainingStatus, TextAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, TextAuthoringSubTrainingState trainingStatus, TextAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             TrainingStatus = trainingStatus;
             EvaluationStatus = evaluationStatus;
-            EstimatedEndOn = estimatedEndOn;
+            EstimatedEndsOn = estimatedEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringSubTrainingState EvaluationStatus { get; }
 
         /// <summary> Represents the estimate end date time for training and evaluation. </summary>
-        public DateTimeOffset? EstimatedEndOn { get; }
+        public DateTimeOffset? EstimatedEndsOn { get; }
     }
 }

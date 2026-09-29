@@ -15,7 +15,7 @@ namespace Azure.Developer.LoadTesting
     {
         private readonly string _value;
         /// <summary> URL Test. </summary>
-        private const string UrlValue = "URL";
+        private const string UriValue = "URL";
         /// <summary> JMX Test. </summary>
         private const string JmxValue = "JMX";
         /// <summary> Locust Test. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary> URL Test. </summary>
-        public static LoadTestKind Url { get; } = new LoadTestKind(UrlValue);
+        public static LoadTestKind Uri { get; } = new LoadTestKind(UriValue);
 
         /// <summary> JMX Test. </summary>
         public static LoadTestKind Jmx { get; } = new LoadTestKind(JmxValue);

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> Advanced Ingress routing for path/header based routing for a Container App Environment. </summary>
+    /// <summary> A set of host names and http request routing rules for a Container App Environment. </summary>
     public partial class ContainerAppHttpRouteConfigData : ResourceData, IJsonModel<ContainerAppHttpRouteConfigData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ContainerAppHttpRouteConfigData(

@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningUriFileDataVersion. </summary>
         public MachineLearningUriFileDataVersion()
         {
+            DataType.Assign(MachineLearningDataType.UriFile);
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningUriFileDataVersion. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "uri_file");
             DefineAdditionalProperties();
         }
 
