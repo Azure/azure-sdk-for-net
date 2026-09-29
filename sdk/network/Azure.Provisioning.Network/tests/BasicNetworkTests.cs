@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
@@ -12,6 +13,64 @@ namespace Azure.Provisioning.Network.Tests;
 
 public class BasicNetworkTests
 {
+    [Test]
+    public void ResourceNameRequirementsArePreserved()
+    {
+        (ProvisionableResource Resource, int MinLength, int MaxLength)[] resources =
+        [
+            (new NetworkSecurityGroup("nsg"), 1, 80),
+            (new VirtualNetwork("vnet"), 2, 64),
+            (new NetworkInterface("nic"), 1, 80)
+        ];
+
+        foreach (var (resource, minLength, maxLength) in resources)
+        {
+            ResourceNameRequirements requirements = resource.GetResourceNameRequirements();
+            Assert.That(requirements.MinLength, Is.EqualTo(minLength), resource.GetType().Name);
+            Assert.That(requirements.MaxLength, Is.EqualTo(maxLength), resource.GetType().Name);
+            Assert.That(
+                requirements.ValidCharacters,
+                Is.EqualTo(ResourceNameCharacters.Alphanumeric | ResourceNameCharacters.Hyphen |
+                    ResourceNameCharacters.Underscore | ResourceNameCharacters.Period),
+                resource.GetType().Name);
+        }
+    }
+
+    [Test]
+    public async Task DefaultResourceNamesArePreserved()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                infra.Add(new NetworkSecurityGroup("nsg", NetworkSecurityGroup.ResourceVersions.V2020_05_01));
+                infra.Add(new VirtualNetwork("vnet", VirtualNetwork.ResourceVersions.V2021_08_01));
+                infra.Add(new NetworkInterface("nic", NetworkInterface.ResourceVersions.V2025_05_01));
+                return infra;
+            });
+
+        test.Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource nsg 'Microsoft.Network/networkSecurityGroups@2020-05-01' = {
+              name: take('nsg-${uniqueString(resourceGroup().id)}', 80)
+              location: location
+            }
+
+            resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
+              name: take('vnet-${uniqueString(resourceGroup().id)}', 64)
+              location: location
+            }
+
+            resource nic 'Microsoft.Network/networkInterfaces@2025-05-01' = {
+              name: take('nic-${uniqueString(resourceGroup().id)}', 80)
+              location: location
+            }
+            """);
+    }
+
     internal static Trycep CreateVNetTwoSubnetsTest()
     {
         return new Trycep().Define(

@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _rewriteRuleSet;
         private NetworkSubResource _redirectConfiguration;
         private NetworkSubResource _loadDistributionPolicy;
-        private BicepValue<ResourceIdentifier> _entraJwtValidationConfigId;
+        private NetworkSubResource _entraJwtValidationConfig;
         private BicepList<ApplicationGatewayAuthConfig> _authConfigs;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
@@ -183,18 +183,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EntraJwtValidationConfigId. </summary>
-        public BicepValue<ResourceIdentifier> EntraJwtValidationConfigId
+        /// <summary> Gets or sets the EntraJwtValidationConfig. </summary>
+        internal NetworkSubResource EntraJwtValidationConfig
         {
             get
             {
                 Initialize();
-                return _entraJwtValidationConfigId;
+                return _entraJwtValidationConfig;
             }
             set
             {
                 Initialize();
-                _entraJwtValidationConfigId.Assign(value);
+                AssignOrReplace(ref _entraJwtValidationConfig, value);
             }
         }
 
@@ -359,6 +359,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> EntraJwtValidationConfigId
+        {
+            get
+            {
+                return EntraJwtValidationConfig is null ? default : EntraJwtValidationConfig.Id;
+            }
+            set
+            {
+                if (EntraJwtValidationConfig is null)
+                {
+                    EntraJwtValidationConfig = new NetworkSubResource();
+                }
+                EntraJwtValidationConfig.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ApplicationGatewayRequestRoutingRulePropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -373,7 +390,7 @@ namespace Azure.Provisioning.Network
             _rewriteRuleSet = DefineModelProperty<NetworkSubResource>(nameof(RewriteRuleSet), new string[] { "rewriteRuleSet" });
             _redirectConfiguration = DefineModelProperty<NetworkSubResource>(nameof(RedirectConfiguration), new string[] { "redirectConfiguration" });
             _loadDistributionPolicy = DefineModelProperty<NetworkSubResource>(nameof(LoadDistributionPolicy), new string[] { "loadDistributionPolicy" });
-            _entraJwtValidationConfigId = DefineProperty<ResourceIdentifier>(nameof(EntraJwtValidationConfigId), new string[] { "entraJWTValidationConfig" });
+            _entraJwtValidationConfig = DefineModelProperty<NetworkSubResource>(nameof(EntraJwtValidationConfig), new string[] { "entraJWTValidationConfig" });
             _authConfigs = DefineListProperty<ApplicationGatewayAuthConfig>(nameof(AuthConfigs), new string[] { "authConfigs" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();

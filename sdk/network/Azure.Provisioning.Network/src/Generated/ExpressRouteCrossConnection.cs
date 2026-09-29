@@ -174,23 +174,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteCircuitId. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuitId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuitId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCrossConnectionProperties();
-                }
-                Properties.ExpressRouteCircuitId = value;
-            }
-        }
-
         /// <summary> Gets or sets the ServiceProviderProvisioningState. </summary>
         public BicepValue<ServiceProviderProvisioningState> ServiceProviderProvisioningState
         {
@@ -252,6 +235,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ExpressRouteCrossConnectionProperties();
                 }
                 Properties.Peerings = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitId = value;
             }
         }
 

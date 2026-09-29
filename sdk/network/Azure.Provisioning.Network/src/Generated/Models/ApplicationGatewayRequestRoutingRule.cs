@@ -108,23 +108,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EntraJwtValidationConfigId. </summary>
-        public BicepValue<ResourceIdentifier> EntraJwtValidationConfigId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
-                }
-                Properties.EntraJwtValidationConfigId = value;
-            }
-        }
-
         /// <summary> Gets or sets the AuthConfigs. </summary>
         public BicepList<ApplicationGatewayAuthConfig> AuthConfigs
         {
@@ -288,6 +271,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
                 Properties.LoadDistributionPolicyId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> EntraJwtValidationConfigId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.EntraJwtValidationConfigId = value;
             }
         }
 

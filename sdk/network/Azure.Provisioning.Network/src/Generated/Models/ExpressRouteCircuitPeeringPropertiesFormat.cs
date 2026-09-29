@@ -30,7 +30,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _lastModifiedBy;
         private NetworkSubResource _routeFilter;
         private IPv6ExpressRouteCircuitPeeringConfig _ipv6PeeringConfig;
-        private BicepValue<ResourceIdentifier> _expressRouteConnectionId;
+        private ExpressRouteConnectionId _expressRouteConnection;
         private BicepList<ExpressRouteCircuitConnection> _connections;
         private BicepList<PeerExpressRouteCircuitConnection> _peeredConnections;
 
@@ -284,18 +284,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteConnectionId. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteConnectionId
+        /// <summary> Gets or sets the ExpressRouteConnection. </summary>
+        internal ExpressRouteConnectionId ExpressRouteConnection
         {
             get
             {
                 Initialize();
-                return _expressRouteConnectionId;
+                return _expressRouteConnection;
             }
             set
             {
                 Initialize();
-                _expressRouteConnectionId.Assign(value);
+                AssignOrReplace(ref _expressRouteConnection, value);
             }
         }
 
@@ -341,6 +341,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteConnectionId
+        {
+            get
+            {
+                if (ExpressRouteConnection is null)
+                {
+                    ExpressRouteConnection = new ExpressRouteConnectionId();
+                }
+                return ExpressRouteConnection.Id;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ExpressRouteCircuitPeeringPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -362,7 +375,7 @@ namespace Azure.Provisioning.Network
             _lastModifiedBy = DefineProperty<string>(nameof(LastModifiedBy), new string[] { "lastModifiedBy" }, isOutput: true);
             _routeFilter = DefineModelProperty<NetworkSubResource>(nameof(RouteFilter), new string[] { "routeFilter" });
             _ipv6PeeringConfig = DefineModelProperty<IPv6ExpressRouteCircuitPeeringConfig>(nameof(IPv6PeeringConfig), new string[] { "ipv6PeeringConfig" });
-            _expressRouteConnectionId = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteConnectionId), new string[] { "expressRouteConnection" });
+            _expressRouteConnection = DefineModelProperty<ExpressRouteConnectionId>(nameof(ExpressRouteConnection), new string[] { "expressRouteConnection" });
             _connections = DefineListProperty<ExpressRouteCircuitConnection>(nameof(Connections), new string[] { "connections" });
             _peeredConnections = DefineListProperty<PeerExpressRouteCircuitConnection>(nameof(PeeredConnections), new string[] { "peeredConnections" }, isOutput: true);
             DefineAdditionalProperties();

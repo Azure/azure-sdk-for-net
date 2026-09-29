@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -416,6 +417,11 @@ namespace Azure.Provisioning.Network
 
         /// <summary> Define additional provisionable properties for VirtualNetwork that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(2, 64, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 
         /// <summary></summary>
         public static partial class ResourceVersions

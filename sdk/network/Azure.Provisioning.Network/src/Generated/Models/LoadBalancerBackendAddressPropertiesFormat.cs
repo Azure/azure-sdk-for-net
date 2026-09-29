@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _subnet;
         private BicepValue<string> _ipAddress;
         private NetworkSubResource _networkInterfaceIPConfiguration;
-        private BicepValue<ResourceIdentifier> _loadBalancerFrontendIPConfigurationId;
+        private NetworkSubResource _loadBalancerFrontendIPConfiguration;
         private BicepList<NatRulePortMapping> _inboundNatRulesPortMapping;
         private BicepValue<LoadBalancerBackendAddressAdminState> _adminState;
 
@@ -82,18 +82,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the LoadBalancerFrontendIPConfigurationId. </summary>
-        public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfigurationId
+        /// <summary> Gets or sets the LoadBalancerFrontendIPConfiguration. </summary>
+        internal NetworkSubResource LoadBalancerFrontendIPConfiguration
         {
             get
             {
                 Initialize();
-                return _loadBalancerFrontendIPConfigurationId;
+                return _loadBalancerFrontendIPConfiguration;
             }
             set
             {
                 Initialize();
-                _loadBalancerFrontendIPConfigurationId.Assign(value);
+                AssignOrReplace(ref _loadBalancerFrontendIPConfiguration, value);
             }
         }
 
@@ -165,6 +165,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfigurationId
+        {
+            get
+            {
+                return LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
+            }
+            set
+            {
+                if (LoadBalancerFrontendIPConfiguration is null)
+                {
+                    LoadBalancerFrontendIPConfiguration = new NetworkSubResource();
+                }
+                LoadBalancerFrontendIPConfiguration.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for LoadBalancerBackendAddressPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -173,7 +190,7 @@ namespace Azure.Provisioning.Network
             _subnet = DefineModelProperty<NetworkSubResource>(nameof(Subnet), new string[] { "subnet" });
             _ipAddress = DefineProperty<string>(nameof(IPAddress), new string[] { "ipAddress" });
             _networkInterfaceIPConfiguration = DefineModelProperty<NetworkSubResource>(nameof(NetworkInterfaceIPConfiguration), new string[] { "networkInterfaceIPConfiguration" }, isOutput: true);
-            _loadBalancerFrontendIPConfigurationId = DefineProperty<ResourceIdentifier>(nameof(LoadBalancerFrontendIPConfigurationId), new string[] { "loadBalancerFrontendIPConfiguration" });
+            _loadBalancerFrontendIPConfiguration = DefineModelProperty<NetworkSubResource>(nameof(LoadBalancerFrontendIPConfiguration), new string[] { "loadBalancerFrontendIPConfiguration" });
             _inboundNatRulesPortMapping = DefineListProperty<NatRulePortMapping>(nameof(InboundNatRulesPortMapping), new string[] { "inboundNatRulesPortMapping" }, isOutput: true);
             _adminState = DefineProperty<LoadBalancerBackendAddressAdminState>(nameof(AdminState), new string[] { "adminState" });
             DefineAdditionalProperties();

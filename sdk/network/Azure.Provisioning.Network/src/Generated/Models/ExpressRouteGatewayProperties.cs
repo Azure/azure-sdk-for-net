@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Network
         private ExpressRouteGatewayPropertiesAutoScaleConfiguration _autoScaleConfiguration;
         private BicepList<ExpressRouteConnection> _expressRouteConnections;
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<ResourceIdentifier> _virtualHubId;
+        private VirtualHubId _virtualHub;
         private BicepValue<bool> _allowNonVirtualWanTraffic;
 
         /// <summary> Creates a new ExpressRouteGatewayProperties. </summary>
@@ -65,18 +65,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the VirtualHubId. </summary>
-        public BicepValue<ResourceIdentifier> VirtualHubId
+        /// <summary> Gets or sets the VirtualHub. </summary>
+        internal VirtualHubId VirtualHub
         {
             get
             {
                 Initialize();
-                return _virtualHubId;
+                return _virtualHub;
             }
             set
             {
                 Initialize();
-                _virtualHubId.Assign(value);
+                AssignOrReplace(ref _virtualHub, value);
             }
         }
 
@@ -112,6 +112,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> VirtualHubId
+        {
+            get
+            {
+                return VirtualHub is null ? default : VirtualHub.Id;
+            }
+            set
+            {
+                if (VirtualHub is null)
+                {
+                    VirtualHub = new VirtualHubId();
+                }
+                VirtualHub.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ExpressRouteGatewayProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -119,7 +136,7 @@ namespace Azure.Provisioning.Network
             _autoScaleConfiguration = DefineModelProperty<ExpressRouteGatewayPropertiesAutoScaleConfiguration>(nameof(AutoScaleConfiguration), new string[] { "autoScaleConfiguration" });
             _expressRouteConnections = DefineListProperty<ExpressRouteConnection>(nameof(ExpressRouteConnections), new string[] { "expressRouteConnections" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _virtualHubId = DefineProperty<ResourceIdentifier>(nameof(VirtualHubId), new string[] { "virtualHub" }, isRequired: true);
+            _virtualHub = DefineModelProperty<VirtualHubId>(nameof(VirtualHub), new string[] { "virtualHub" }, isRequired: true);
             _allowNonVirtualWanTraffic = DefineProperty<bool>(nameof(AllowNonVirtualWanTraffic), new string[] { "allowNonVirtualWanTraffic" });
             DefineAdditionalProperties();
         }

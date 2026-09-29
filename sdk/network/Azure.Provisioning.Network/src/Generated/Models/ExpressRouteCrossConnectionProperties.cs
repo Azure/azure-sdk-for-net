@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<int> _sTag;
         private BicepValue<string> _peeringLocation;
         private BicepValue<int> _bandwidthInMbps;
-        private BicepValue<ResourceIdentifier> _expressRouteCircuitId;
+        private ExpressRouteCircuitReference _expressRouteCircuit;
         private BicepValue<ServiceProviderProvisioningState> _serviceProviderProvisioningState;
         private BicepValue<string> _serviceProviderNotes;
         private BicepValue<NetworkProvisioningState> _provisioningState;
@@ -80,18 +80,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteCircuitId. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuitId
+        /// <summary> Gets or sets the ExpressRouteCircuit. </summary>
+        internal ExpressRouteCircuitReference ExpressRouteCircuit
         {
             get
             {
                 Initialize();
-                return _expressRouteCircuitId;
+                return _expressRouteCircuit;
             }
             set
             {
                 Initialize();
-                _expressRouteCircuitId.Assign(value);
+                AssignOrReplace(ref _expressRouteCircuit, value);
             }
         }
 
@@ -150,6 +150,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuitId
+        {
+            get
+            {
+                return ExpressRouteCircuit is null ? default : ExpressRouteCircuit.Id;
+            }
+            set
+            {
+                if (ExpressRouteCircuit is null)
+                {
+                    ExpressRouteCircuit = new ExpressRouteCircuitReference();
+                }
+                ExpressRouteCircuit.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ExpressRouteCrossConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -159,7 +176,7 @@ namespace Azure.Provisioning.Network
             _sTag = DefineProperty<int>(nameof(STag), new string[] { "sTag" }, isOutput: true);
             _peeringLocation = DefineProperty<string>(nameof(PeeringLocation), new string[] { "peeringLocation" }, isOutput: true);
             _bandwidthInMbps = DefineProperty<int>(nameof(BandwidthInMbps), new string[] { "bandwidthInMbps" }, isOutput: true);
-            _expressRouteCircuitId = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteCircuitId), new string[] { "expressRouteCircuit" });
+            _expressRouteCircuit = DefineModelProperty<ExpressRouteCircuitReference>(nameof(ExpressRouteCircuit), new string[] { "expressRouteCircuit" });
             _serviceProviderProvisioningState = DefineProperty<ServiceProviderProvisioningState>(nameof(ServiceProviderProvisioningState), new string[] { "serviceProviderProvisioningState" });
             _serviceProviderNotes = DefineProperty<string>(nameof(ServiceProviderNotes), new string[] { "serviceProviderNotes" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

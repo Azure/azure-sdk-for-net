@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Network
     internal partial class ExpressRouteConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<ResourceIdentifier> _expressRouteCircuitPeeringId;
+        private ExpressRouteCircuitPeeringId _expressRouteCircuitPeering;
         private BicepValue<string> _authorizationKey;
         private BicepValue<int> _routingWeight;
         private BicepValue<bool> _enableInternetSecurity;
@@ -38,18 +38,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the ExpressRouteCircuitPeeringId. </summary>
-        public BicepValue<ResourceIdentifier> ExpressRouteCircuitPeeringId
+        /// <summary> Gets or sets the ExpressRouteCircuitPeering. </summary>
+        internal ExpressRouteCircuitPeeringId ExpressRouteCircuitPeering
         {
             get
             {
                 Initialize();
-                return _expressRouteCircuitPeeringId;
+                return _expressRouteCircuitPeering;
             }
             set
             {
                 Initialize();
-                _expressRouteCircuitPeeringId.Assign(value);
+                AssignOrReplace(ref _expressRouteCircuitPeering, value);
             }
         }
 
@@ -143,12 +143,29 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
+            }
+            set
+            {
+                if (ExpressRouteCircuitPeering is null)
+                {
+                    ExpressRouteCircuitPeering = new ExpressRouteCircuitPeeringId();
+                }
+                ExpressRouteCircuitPeering.Id = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ExpressRouteConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _expressRouteCircuitPeeringId = DefineProperty<ResourceIdentifier>(nameof(ExpressRouteCircuitPeeringId), new string[] { "expressRouteCircuitPeering" }, isRequired: true);
+            _expressRouteCircuitPeering = DefineModelProperty<ExpressRouteCircuitPeeringId>(nameof(ExpressRouteCircuitPeering), new string[] { "expressRouteCircuitPeering" }, isRequired: true);
             _authorizationKey = DefineProperty<string>(nameof(AuthorizationKey), new string[] { "authorizationKey" });
             _routingWeight = DefineProperty<int>(nameof(RoutingWeight), new string[] { "routingWeight" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
