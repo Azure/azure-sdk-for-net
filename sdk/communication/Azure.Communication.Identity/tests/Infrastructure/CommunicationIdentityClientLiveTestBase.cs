@@ -19,6 +19,7 @@ namespace Azure.Communication.Identity.Tests
     {
         private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
         private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
+        private const string URIApiVersionReplacerRegEx = @"api-version=[^&]+";
 
         public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
         {
@@ -29,6 +30,7 @@ namespace Azure.Communication.Identity.Tests
             SanitizedHeaders.Add("x-ms-content-sha256");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx) { Value = "/identities/Sanitized" });
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx) { Value = "https://sanitized.communication.azure.com" });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIApiVersionReplacerRegEx) { Value = "api-version=Sanitized" });
         }
 
         /// <summary>
