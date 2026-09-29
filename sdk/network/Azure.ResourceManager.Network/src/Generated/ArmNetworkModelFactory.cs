@@ -1633,6 +1633,28 @@ namespace Azure.ResourceManager.Network.Models
             return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, default, default);
         }
 
+        /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
+        /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
+        /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <param name="subnetId"> Resource ID. </param>
+        /// <param name="networkInterfaceIPConfigurationId"> Resource ID. </param>
+        /// <param name="loadBalancerFrontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="name"> Name of the backend address. </param>
+        /// <returns> A new <see cref="Models.LoadBalancerBackendAddress"/> instance for mocking. </returns>
+        public static LoadBalancerBackendAddress LoadBalancerBackendAddress(string ipAddress, IEnumerable<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState, ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier networkInterfaceIPConfigurationId, ResourceIdentifier loadBalancerFrontendIPConfigurationId, string name)
+        {
+            return new LoadBalancerBackendAddress(virtualNetworkId is null && subnetId is null && ipAddress is null && networkInterfaceIPConfigurationId is null && loadBalancerFrontendIPConfigurationId is null && inboundNatRulesPortMapping is null && adminState is null ? default : new LoadBalancerBackendAddressPropertiesFormat(
+                virtualNetworkId is null ? default : new NetworkSubResource(virtualNetworkId, default),
+                subnetId is null ? default : new NetworkSubResource(subnetId, default),
+                ipAddress,
+                networkInterfaceIPConfigurationId is null ? default : new NetworkSubResource(networkInterfaceIPConfigurationId, default),
+                loadBalancerFrontendIPConfigurationId is null ? default : new NetworkSubResource(loadBalancerFrontendIPConfigurationId, default),
+                (inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>()).ToList(),
+                adminState,
+                default), name, default);
+        }
+
         /// <summary> Individual port mappings for inbound NAT rule created for backend pool. </summary>
         /// <param name="inboundNatRuleName"> Name of inbound NAT rule. </param>
         /// <param name="frontendPort"> Frontend port. </param>
@@ -2059,6 +2081,49 @@ namespace Azure.ResourceManager.Network.Models
                 (authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>()).ToList(),
                 provisioningState,
                 default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="ruleType"> Rule type. </param>
+        /// <param name="priority"> Priority of the request routing rule. </param>
+        /// <param name="authConfigs"> Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </param>
+        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="backendHttpSettingsId"> Resource ID. </param>
+        /// <param name="httpListenerId"> Resource ID. </param>
+        /// <param name="urlPathMapId"> Resource ID. </param>
+        /// <param name="advancedRoutingMapId"> Resource ID. </param>
+        /// <param name="rewriteRuleSetId"> Resource ID. </param>
+        /// <param name="redirectConfigurationId"> Resource ID. </param>
+        /// <param name="loadDistributionPolicyId"> Resource ID. </param>
+        /// <param name="entraJwtValidationConfigId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
+        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, string @type, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, IEnumerable<ApplicationGatewayAuthConfig> authConfigs, NetworkProvisioningState? provisioningState, ResourceIdentifier backendAddressPoolId, ResourceIdentifier backendHttpSettingsId, ResourceIdentifier httpListenerId, ResourceIdentifier urlPathMapId, ResourceIdentifier advancedRoutingMapId, ResourceIdentifier rewriteRuleSetId, ResourceIdentifier redirectConfigurationId, ResourceIdentifier loadDistributionPolicyId, ResourceIdentifier entraJwtValidationConfigId, ETag? eTag = default)
+        {
+            return new ApplicationGatewayRequestRoutingRule(
+                id,
+                default,
+                name,
+                @type,
+                ruleType is null && priority is null && backendAddressPoolId is null && backendHttpSettingsId is null && httpListenerId is null && urlPathMapId is null && advancedRoutingMapId is null && rewriteRuleSetId is null && redirectConfigurationId is null && loadDistributionPolicyId is null && entraJwtValidationConfigId is null && authConfigs is null && provisioningState is null ? default : new ApplicationGatewayRequestRoutingRulePropertiesFormat(
+                    ruleType,
+                    priority,
+                    backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                    backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
+                    httpListenerId is null ? default : new NetworkSubResource(httpListenerId, default),
+                    urlPathMapId is null ? default : new NetworkSubResource(urlPathMapId, default),
+                    advancedRoutingMapId is null ? default : new NetworkSubResource(advancedRoutingMapId, default),
+                    rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
+                    redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
+                    loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
+                    entraJwtValidationConfigId is null ? default : new NetworkSubResource(entraJwtValidationConfigId, default),
+                    (authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>()).ToList(),
+                    provisioningState,
+                    default),
+                eTag);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -3621,6 +3686,63 @@ namespace Azure.ResourceManager.Network.Models
                 sku);
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="peeringType"> The peering type. </param>
+        /// <param name="state"> The peering state. </param>
+        /// <param name="azureASN"> The Azure ASN. </param>
+        /// <param name="peerASN"> The peer ASN. </param>
+        /// <param name="primaryPeerAddressPrefix"> The primary address prefix. </param>
+        /// <param name="secondaryPeerAddressPrefix"> The secondary address prefix. </param>
+        /// <param name="primaryAzurePort"> The primary port. </param>
+        /// <param name="secondaryAzurePort"> The secondary port. </param>
+        /// <param name="sharedKey"> The shared key. </param>
+        /// <param name="vlanId"> The VLAN ID. </param>
+        /// <param name="microsoftPeeringConfig"> The Microsoft peering configuration. </param>
+        /// <param name="stats"> The peering stats of express route circuit. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route circuit peering resource. </param>
+        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
+        /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
+        /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
+        /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
+        /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
+        /// <param name="routeFilterId"> Resource ID. </param>
+        /// <param name="expressRouteConnectionId"> The ID of the ExpressRouteConnection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteCircuitPeeringData"/> instance for mocking. </returns>
+        public static ExpressRouteCircuitPeeringData ExpressRouteCircuitPeeringData(ResourceIdentifier id, string name, string @type, ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, ExpressRouteCircuitStats stats, NetworkProvisioningState? provisioningState, string gatewayManagerETag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig, IEnumerable<ExpressRouteCircuitConnectionData> connections, IEnumerable<PeerExpressRouteCircuitConnectionData> peeredConnections, ResourceIdentifier routeFilterId, ResourceIdentifier expressRouteConnectionId, ETag? eTag)
+        {
+            return new ExpressRouteCircuitPeeringData(
+                id,
+                default,
+                name,
+                @type,
+                peeringType is null && state is null && azureASN is null && peerASN is null && primaryPeerAddressPrefix is null && secondaryPeerAddressPrefix is null && primaryAzurePort is null && secondaryAzurePort is null && sharedKey is null && vlanId is null && microsoftPeeringConfig is null && stats is null && provisioningState is null && gatewayManagerETag is null && lastModifiedBy is null && routeFilterId is null && ipv6PeeringConfig is null && expressRouteConnectionId is null && connections is null && peeredConnections is null ? default : new ExpressRouteCircuitPeeringPropertiesFormat(
+                    peeringType,
+                    state,
+                    azureASN,
+                    peerASN,
+                    primaryPeerAddressPrefix,
+                    secondaryPeerAddressPrefix,
+                    primaryAzurePort,
+                    secondaryAzurePort,
+                    sharedKey,
+                    vlanId,
+                    microsoftPeeringConfig,
+                    stats,
+                    provisioningState,
+                    gatewayManagerETag,
+                    lastModifiedBy,
+                    routeFilterId is null ? default : new NetworkSubResource(routeFilterId, default),
+                    ipv6PeeringConfig,
+                    expressRouteConnectionId is null ? default : new ExpressRouteConnectionId(expressRouteConnectionId, default),
+                    (connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>()).ToList(),
+                    (peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>()).ToList(),
+                    default),
+                eTag);
+        }
+
         /// <summary> Specifies the peering configuration. </summary>
         /// <param name="advertisedPublicPrefixes"> The reference to AdvertisedPublicPrefixes. </param>
         /// <param name="advertisedCommunities"> The communities of bgp peering. Specified for microsoft peering. </param>
@@ -3969,6 +4091,49 @@ namespace Azure.ResourceManager.Network.Models
                 upDown,
                 statePfxRcd,
                 default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="primaryAzurePort"> The name of the primary port. </param>
+        /// <param name="secondaryAzurePort"> The name of the secondary port. </param>
+        /// <param name="sTag"> The identifier of the circuit traffic. </param>
+        /// <param name="peeringLocation"> The peering location of the ExpressRoute circuit. </param>
+        /// <param name="bandwidthInMbps"> The circuit bandwidth In Mbps. </param>
+        /// <param name="serviceProviderProvisioningState"> The provisioning state of the circuit in the connectivity provider system. </param>
+        /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
+        /// <param name="peerings"> The list of peerings. </param>
+        /// <param name="expressRouteCircuitId"> Corresponding Express Route Circuit Id. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteCrossConnectionData"/> instance for mocking. </returns>
+        public static ExpressRouteCrossConnectionData ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, string primaryAzurePort, string secondaryAzurePort, int? sTag, string peeringLocation, int? bandwidthInMbps, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IEnumerable<ExpressRouteCrossConnectionPeeringData> peerings, ResourceIdentifier expressRouteCircuitId, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExpressRouteCrossConnectionData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                primaryAzurePort is null && secondaryAzurePort is null && sTag is null && peeringLocation is null && bandwidthInMbps is null && expressRouteCircuitId is null && serviceProviderProvisioningState is null && serviceProviderNotes is null && provisioningState is null && peerings is null ? default : new ExpressRouteCrossConnectionProperties(
+                    primaryAzurePort,
+                    secondaryAzurePort,
+                    sTag,
+                    peeringLocation,
+                    bandwidthInMbps,
+                    expressRouteCircuitId is null ? default : new ExpressRouteCircuitReference(expressRouteCircuitId, default),
+                    serviceProviderProvisioningState,
+                    serviceProviderNotes,
+                    provisioningState,
+                    (peerings ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>()).ToList(),
+                    default),
+                eTag);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -10111,6 +10276,39 @@ namespace Azure.ResourceManager.Network.Models
             return new VpnGatewayPacketCaptureStopContent(sasUri, default);
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
+        /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
+        /// <param name="autoScaleBounds"> Minimum and maximum number of scale units to deploy. </param>
+        /// <param name="virtualHubId"> The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource reside in the same subscription. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteGatewayData"/> instance for mocking. </returns>
+        public static ExpressRouteGatewayData ExpressRouteGatewayData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, bool? allowNonVirtualWanTraffic, ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds autoScaleBounds, ResourceIdentifier virtualHubId, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExpressRouteGatewayData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                autoScaleBounds is null && expressRouteConnections is null && provisioningState is null && virtualHubId is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
+                    autoScaleBounds is null ? default : new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds, default),
+                    (expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(),
+                    provisioningState,
+                    new VirtualHubId(virtualHubId, default),
+                    allowNonVirtualWanTraffic,
+                    default),
+                eTag);
+        }
+
         /// <summary> Minimum and maximum number of scale units to deploy. </summary>
         /// <param name="min"> Minimum number of scale units deployed for ExpressRoute gateway. </param>
         /// <param name="max"> Maximum number of scale units deployed for ExpressRoute gateway. </param>
@@ -10118,6 +10316,32 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(int? min = default, int? max = default)
         {
             return new ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(min, max, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
+        /// <param name="authorizationKey"> Authorization key to establish the connection. </param>
+        /// <param name="routingWeight"> The routing weight associated to the connection. </param>
+        /// <param name="enableInternetSecurity"> Enable internet security. </param>
+        /// <param name="expressRouteGatewayBypass"> Enable FastPath to vWan Firewall hub. </param>
+        /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
+        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="expressRouteCircuitPeeringId"> The ID of the ExpressRoute circuit peering. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteConnectionData"/> instance for mocking. </returns>
+        public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id, string name, string @type, NetworkProvisioningState? provisioningState, string authorizationKey, int? routingWeight, bool? enableInternetSecurity, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath, RoutingConfigurationNfv routingConfiguration, ResourceIdentifier expressRouteCircuitPeeringId)
+        {
+            return new ExpressRouteConnectionData(id, default, name, @type, provisioningState is null && expressRouteCircuitPeeringId is null && authorizationKey is null && routingWeight is null && enableInternetSecurity is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null && routingConfiguration is null ? default : new ExpressRouteConnectionProperties(
+                provisioningState,
+                new ExpressRouteCircuitPeeringId(expressRouteCircuitPeeringId, default),
+                authorizationKey,
+                routingWeight,
+                enableInternetSecurity,
+                expressRouteGatewayBypass,
+                enablePrivateLinkFastPath,
+                routingConfiguration,
+                default));
         }
 
         /// <summary> List of ExpressRoute gateways. </summary>
@@ -12869,7 +13093,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Load balancer backend addresses. </summary>
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
-        /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
+        /// <param name="loadBalancerFrontendIPConfiguration"></param>
         /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
         /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
@@ -12880,12 +13104,12 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LoadBalancerBackendAddress LoadBalancerBackendAddress(string ipAddress = default, ResourceIdentifier loadBalancerFrontendIPConfiguration = default, IEnumerable<NatRulePortMapping> inboundNatRulesPortMapping = default, LoadBalancerBackendAddressAdminState? adminState = default, ResourceIdentifier virtualNetworkId = default, ResourceIdentifier subnetId = default, ResourceIdentifier networkInterfaceIPConfigurationId = default, string name = default)
         {
-            return new LoadBalancerBackendAddress(virtualNetworkId is null && subnetId is null && ipAddress is null && networkInterfaceIPConfigurationId is null && loadBalancerFrontendIPConfiguration is null && inboundNatRulesPortMapping is null && adminState is null ? default : new LoadBalancerBackendAddressPropertiesFormat(
+            return new LoadBalancerBackendAddress(virtualNetworkId is null && subnetId is null && ipAddress is null && networkInterfaceIPConfigurationId is null && inboundNatRulesPortMapping is null && adminState is null ? default : new LoadBalancerBackendAddressPropertiesFormat(
                 virtualNetworkId is null ? default : new NetworkSubResource(virtualNetworkId, default),
                 subnetId is null ? default : new NetworkSubResource(subnetId, default),
                 ipAddress,
                 networkInterfaceIPConfigurationId is null ? default : new NetworkSubResource(networkInterfaceIPConfigurationId, default),
-                loadBalancerFrontendIPConfiguration,
+                default,
                 (inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>()).ToList(),
                 adminState,
                 default), name, default);
@@ -12897,7 +13121,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="ruleType"> Rule type. </param>
         /// <param name="priority"> Priority of the request routing rule. </param>
-        /// <param name="entraJWTValidationConfig"> Entra JWT validation configuration resource of the application gateway. </param>
+        /// <param name="entraJWTValidationConfig"></param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
         /// <param name="backendAddressPoolId"> Resource ID. </param>
         /// <param name="backendHttpSettingsId"> Resource ID. </param>
@@ -12916,7 +13140,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 @type,
-                ruleType is null && priority is null && backendAddressPoolId is null && backendHttpSettingsId is null && httpListenerId is null && urlPathMapId is null && rewriteRuleSetId is null && redirectConfigurationId is null && loadDistributionPolicyId is null && entraJWTValidationConfig is null && provisioningState is null ? default : new ApplicationGatewayRequestRoutingRulePropertiesFormat(
+                ruleType is null && priority is null && backendAddressPoolId is null && backendHttpSettingsId is null && httpListenerId is null && urlPathMapId is null && rewriteRuleSetId is null && redirectConfigurationId is null && loadDistributionPolicyId is null && provisioningState is null ? default : new ApplicationGatewayRequestRoutingRulePropertiesFormat(
                     ruleType,
                     priority,
                     backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
@@ -12927,7 +13151,7 @@ namespace Azure.ResourceManager.Network.Models
                     rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
                     redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
                     loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
-                    entraJWTValidationConfig,
+                    default,
                     default,
                     provisioningState,
                     default),
@@ -13189,7 +13413,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
         /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
-        /// <param name="expressRouteConnection"> The ExpressRoute connection. </param>
+        /// <param name="expressRouteConnection"></param>
         /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="routeFilterId"> Resource ID. </param>
@@ -13203,7 +13427,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 @type,
-                peeringType is null && state is null && azureASN is null && peerASN is null && primaryPeerAddressPrefix is null && secondaryPeerAddressPrefix is null && primaryAzurePort is null && secondaryAzurePort is null && sharedKey is null && vlanId is null && microsoftPeeringConfig is null && stats is null && provisioningState is null && gatewayManagerEtag is null && lastModifiedBy is null && routeFilterId is null && ipv6PeeringConfig is null && expressRouteConnection is null && connections is null && peeredConnections is null ? default : new ExpressRouteCircuitPeeringPropertiesFormat(
+                peeringType is null && state is null && azureASN is null && peerASN is null && primaryPeerAddressPrefix is null && secondaryPeerAddressPrefix is null && primaryAzurePort is null && secondaryAzurePort is null && sharedKey is null && vlanId is null && microsoftPeeringConfig is null && stats is null && provisioningState is null && gatewayManagerEtag is null && lastModifiedBy is null && routeFilterId is null && ipv6PeeringConfig is null && connections is null && peeredConnections is null ? default : new ExpressRouteCircuitPeeringPropertiesFormat(
                     peeringType,
                     state,
                     azureASN,
@@ -13221,7 +13445,7 @@ namespace Azure.ResourceManager.Network.Models
                     lastModifiedBy,
                     routeFilterId is null ? default : new NetworkSubResource(routeFilterId, default),
                     ipv6PeeringConfig,
-                    expressRouteConnection,
+                    default,
                     (connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>()).ToList(),
                     (peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>()).ToList(),
                     default),
@@ -13239,7 +13463,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sTag"> The identifier of the circuit traffic. </param>
         /// <param name="peeringLocation"> The peering location of the ExpressRoute circuit. </param>
         /// <param name="bandwidthInMbps"> The circuit bandwidth In Mbps. </param>
-        /// <param name="expressRouteCircuit"> The ExpressRouteCircuit. </param>
+        /// <param name="expressRouteCircuit"></param>
         /// <param name="serviceProviderProvisioningState"> The provisioning state of the circuit in the connectivity provider system. </param>
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
@@ -13256,13 +13480,13 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                primaryAzurePort is null && secondaryAzurePort is null && sTag is null && peeringLocation is null && bandwidthInMbps is null && expressRouteCircuit is null && serviceProviderProvisioningState is null && serviceProviderNotes is null && provisioningState is null && peerings is null ? default : new ExpressRouteCrossConnectionProperties(
+                primaryAzurePort is null && secondaryAzurePort is null && sTag is null && peeringLocation is null && bandwidthInMbps is null && serviceProviderProvisioningState is null && serviceProviderNotes is null && provisioningState is null && peerings is null ? default : new ExpressRouteCrossConnectionProperties(
                     primaryAzurePort,
                     secondaryAzurePort,
                     sTag,
                     peeringLocation,
                     bandwidthInMbps,
-                    expressRouteCircuit,
+                    default,
                     serviceProviderProvisioningState,
                     serviceProviderNotes,
                     provisioningState,
@@ -14156,7 +14380,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
-        /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
+        /// <param name="virtualHub"></param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <param name="autoScaleBounds"> Minimum and maximum number of scale units to deploy. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -14171,11 +14395,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                autoScaleBounds is null && expressRouteConnections is null && provisioningState is null && virtualHub is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
+                autoScaleBounds is null && expressRouteConnections is null && provisioningState is null && allowNonVirtualWanTraffic is null ? default : new ExpressRouteGatewayProperties(
                     autoScaleBounds is null ? default : new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds, default),
                     (expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(),
                     provisioningState,
-                    virtualHub,
+                    default,
                     allowNonVirtualWanTraffic,
                     default),
                 eTag);
@@ -14186,7 +14410,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
-        /// <param name="expressRouteCircuitPeering"> The ExpressRoute circuit peering. </param>
+        /// <param name="expressRouteCircuitPeering"></param>
         /// <param name="authorizationKey"> Authorization key to establish the connection. </param>
         /// <param name="routingWeight"> The routing weight associated to the connection. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
@@ -14197,9 +14421,9 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier expressRouteCircuitPeering = default, string authorizationKey = default, int? routingWeight = default, bool? enableInternetSecurity = default, bool? expressRouteGatewayBypass = default, bool? enablePrivateLinkFastPath = default, RoutingConfigurationNfv routingConfiguration = default)
         {
-            return new ExpressRouteConnectionData(id, default, name, @type, provisioningState is null && expressRouteCircuitPeering is null && authorizationKey is null && routingWeight is null && enableInternetSecurity is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null && routingConfiguration is null ? default : new ExpressRouteConnectionProperties(
+            return new ExpressRouteConnectionData(id, default, name, @type, provisioningState is null && authorizationKey is null && routingWeight is null && enableInternetSecurity is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null && routingConfiguration is null ? default : new ExpressRouteConnectionProperties(
                 provisioningState,
-                expressRouteCircuitPeering,
+                default,
                 authorizationKey,
                 routingWeight,
                 enableInternetSecurity,
@@ -17538,7 +17762,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnetId"> Resource ID. </param>
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="networkInterfaceIPConfigurationId"> Resource ID. </param>
-        /// <param name="loadBalancerFrontendIPConfigurationId"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
+        /// <param name="loadBalancerFrontendIPConfigurationId"> Resource ID. </param>
         /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
         /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
         /// <returns> A new <see cref="Models.LoadBalancerBackendAddress"/> instance for mocking. </returns>
@@ -17550,7 +17774,7 @@ namespace Azure.ResourceManager.Network.Models
                 subnetId is null ? default : new NetworkSubResource(subnetId, default),
                 ipAddress,
                 networkInterfaceIPConfigurationId is null ? default : new NetworkSubResource(networkInterfaceIPConfigurationId, default),
-                loadBalancerFrontendIPConfigurationId,
+                loadBalancerFrontendIPConfigurationId is null ? default : new NetworkSubResource(loadBalancerFrontendIPConfigurationId, default),
                 (inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>()).ToList(),
                 adminState,
                 default), name, default);
@@ -17863,7 +18087,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="rewriteRuleSetId"> Resource ID. </param>
         /// <param name="redirectConfigurationId"> Resource ID. </param>
         /// <param name="loadDistributionPolicyId"> Resource ID. </param>
-        /// <param name="entraJwtValidationConfigId"> Entra JWT validation configuration resource of the application gateway. </param>
+        /// <param name="entraJwtValidationConfigId"> Resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -17885,7 +18109,7 @@ namespace Azure.ResourceManager.Network.Models
                     rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
                     redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
                     loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
-                    entraJwtValidationConfigId,
+                    entraJwtValidationConfigId is null ? default : new NetworkSubResource(entraJwtValidationConfigId, default),
                     default,
                     provisioningState,
                     default),
@@ -18704,7 +18928,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
         /// <param name="routeFilterId"> Resource ID. </param>
         /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
-        /// <param name="expressRouteConnectionId"> The ExpressRoute connection. </param>
+        /// <param name="expressRouteConnectionId"> The ID of the ExpressRouteConnection. </param>
         /// <param name="connections"> The list of circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <param name="peeredConnections"> The list of peered circuit connections associated with Azure Private Peering for this circuit. </param>
         /// <returns> A new <see cref="Network.ExpressRouteCircuitPeeringData"/> instance for mocking. </returns>
@@ -18734,7 +18958,7 @@ namespace Azure.ResourceManager.Network.Models
                     lastModifiedBy,
                     routeFilterId is null ? default : new NetworkSubResource(routeFilterId, default),
                     ipv6PeeringConfig,
-                    expressRouteConnectionId,
+                    expressRouteConnectionId is null ? default : new ExpressRouteConnectionId(expressRouteConnectionId, default),
                     (connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>()).ToList(),
                     (peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>()).ToList(),
                     default),
@@ -18905,7 +19129,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="stag"> The identifier of the circuit traffic. </param>
         /// <param name="peeringLocation"> The peering location of the ExpressRoute circuit. </param>
         /// <param name="bandwidthInMbps"> The circuit bandwidth In Mbps. </param>
-        /// <param name="expressRouteCircuitId"> The ExpressRouteCircuit. </param>
+        /// <param name="expressRouteCircuitId"> Corresponding Express Route Circuit Id. </param>
         /// <param name="serviceProviderProvisioningState"> The provisioning state of the circuit in the connectivity provider system. </param>
         /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
         /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
@@ -18927,7 +19151,7 @@ namespace Azure.ResourceManager.Network.Models
                     stag,
                     peeringLocation,
                     bandwidthInMbps,
-                    expressRouteCircuitId,
+                    expressRouteCircuitId is null ? default : new ExpressRouteCircuitReference(expressRouteCircuitId, default),
                     serviceProviderProvisioningState,
                     serviceProviderNotes,
                     provisioningState,
@@ -21619,7 +21843,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="autoScaleBounds"> Minimum and maximum number of scale units to deploy. </param>
         /// <param name="expressRouteConnectionList"></param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
-        /// <param name="virtualHubId"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
+        /// <param name="virtualHubId"> The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource reside in the same subscription. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <returns> A new <see cref="Network.ExpressRouteGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -21636,7 +21860,7 @@ namespace Azure.ResourceManager.Network.Models
                     autoScaleBounds is null ? default : new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds, default),
                     default,
                     provisioningState,
-                    virtualHubId,
+                    new VirtualHubId(virtualHubId, default),
                     allowNonVirtualWanTraffic,
                     default),
                 etag);
@@ -21647,7 +21871,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="resourceType"></param>
         /// <param name="provisioningState"> The provisioning state of the express route connection resource. </param>
-        /// <param name="expressRouteCircuitPeeringId"> The ExpressRoute circuit peering. </param>
+        /// <param name="expressRouteCircuitPeeringId"> The ID of the ExpressRoute circuit peering. </param>
         /// <param name="authorizationKey"> Authorization key to establish the connection. </param>
         /// <param name="routingWeight"> The routing weight associated to the connection. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
@@ -21660,7 +21884,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             return new ExpressRouteConnectionData(id, default, name, default, provisioningState is null && expressRouteCircuitPeeringId is null && authorizationKey is null && routingWeight is null && enableInternetSecurity is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new ExpressRouteConnectionProperties(
                 provisioningState,
-                expressRouteCircuitPeeringId,
+                new ExpressRouteCircuitPeeringId(expressRouteCircuitPeeringId, default),
                 authorizationKey,
                 routingWeight,
                 enableInternetSecurity,

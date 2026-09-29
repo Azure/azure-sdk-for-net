@@ -45,24 +45,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The ExpressRoute circuit peering. </summary>
-        [WirePath("properties.expressRouteCircuitPeering")]
-        public ResourceIdentifier ExpressRouteCircuitPeeringId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteConnectionProperties();
-                }
-                Properties.ExpressRouteCircuitPeeringId = value;
-            }
-        }
-
         /// <summary> Authorization key to establish the connection. </summary>
         [WirePath("properties.authorizationKey")]
         public string AuthorizationKey
@@ -150,6 +132,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new ExpressRouteConnectionProperties();
                 }
                 Properties.EnablePrivateLinkFastPath = value;
+            }
+        }
+
+        /// <summary> The ID of the ExpressRoute circuit peering. </summary>
+        [WirePath("properties.expressRouteCircuitPeering.id")]
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitPeeringId = value;
             }
         }
     }

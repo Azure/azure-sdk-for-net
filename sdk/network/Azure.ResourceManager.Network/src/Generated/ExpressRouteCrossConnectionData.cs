@@ -94,24 +94,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> The ExpressRouteCircuit. </summary>
-        [WirePath("properties.expressRouteCircuit")]
-        public ResourceIdentifier ExpressRouteCircuitId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuitId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCrossConnectionProperties();
-                }
-                Properties.ExpressRouteCircuitId = value;
-            }
-        }
-
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
         [WirePath("properties.serviceProviderProvisioningState")]
         public ServiceProviderProvisioningState? ServiceProviderProvisioningState
@@ -169,6 +151,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new ExpressRouteCrossConnectionProperties();
                 }
                 return Properties.Peerings;
+            }
+        }
+
+        /// <summary> Corresponding Express Route Circuit Id. </summary>
+        [WirePath("properties.expressRouteCircuit.id")]
+        public ResourceIdentifier ExpressRouteCircuitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitId = value;
             }
         }
     }

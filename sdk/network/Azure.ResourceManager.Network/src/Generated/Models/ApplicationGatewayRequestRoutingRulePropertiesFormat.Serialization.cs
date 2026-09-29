@@ -9,11 +9,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Properties of request routing rule of the application gateway. </summary>
     internal partial class ApplicationGatewayRequestRoutingRulePropertiesFormat : IJsonModel<ApplicationGatewayRequestRoutingRulePropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("loadDistributionPolicy"u8);
                 writer.WriteObjectValue(LoadDistributionPolicy, options);
             }
-            if (Optional.IsDefined(EntraJwtValidationConfigId))
+            if (Optional.IsDefined(EntraJwtValidationConfig))
             {
                 writer.WritePropertyName("entraJWTValidationConfig"u8);
-                SerializeEntraJwtValidationConfigId(writer, options);
+                writer.WriteObjectValue(EntraJwtValidationConfig, options);
             }
             if (Optional.IsCollectionDefined(AuthConfigs))
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource rewriteRuleSet = default;
             NetworkSubResource redirectConfiguration = default;
             NetworkSubResource loadDistributionPolicy = default;
-            ResourceIdentifier entraJwtValidationConfigId = default;
+            NetworkSubResource entraJwtValidationConfig = default;
             IList<ApplicationGatewayAuthConfig> authConfigs = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -294,7 +294,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("entraJWTValidationConfig"u8))
                 {
-                    DeserializeEntraJwtValidationConfigId(prop, ref entraJwtValidationConfigId);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    entraJwtValidationConfig = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authConfigs"u8))
@@ -336,7 +340,7 @@ namespace Azure.ResourceManager.Network.Models
                 rewriteRuleSet,
                 redirectConfiguration,
                 loadDistributionPolicy,
-                entraJwtValidationConfigId,
+                entraJwtValidationConfig,
                 authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>(),
                 provisioningState,
                 additionalBinaryDataProperties);

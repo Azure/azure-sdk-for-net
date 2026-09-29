@@ -78,24 +78,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>
-        [WirePath("properties.entraJWTValidationConfig")]
-        public ResourceIdentifier EntraJwtValidationConfigId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
-                }
-                Properties.EntraJwtValidationConfigId = value;
-            }
-        }
-
         /// <summary> Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </summary>
         [WirePath("properties.authConfigs")]
         public IList<ApplicationGatewayAuthConfig> AuthConfigs
@@ -261,6 +243,24 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
                 }
                 Properties.LoadDistributionPolicyId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.entraJWTValidationConfig.id")]
+        public ResourceIdentifier EntraJwtValidationConfigId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntraJwtValidationConfigId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayRequestRoutingRulePropertiesFormat();
+                }
+                Properties.EntraJwtValidationConfigId = value;
             }
         }
     }

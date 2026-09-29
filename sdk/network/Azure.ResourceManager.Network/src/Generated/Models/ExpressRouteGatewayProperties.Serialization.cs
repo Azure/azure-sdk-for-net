@@ -9,18 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> ExpressRoute gateway resource properties. </summary>
     internal partial class ExpressRouteGatewayProperties : IJsonModel<ExpressRouteGatewayProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/> for deserialization. </summary>
-        internal ExpressRouteGatewayProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExpressRouteGatewayProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -100,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("virtualHub"u8);
-            SerializeVirtualHubId(writer, options);
+            writer.WriteObjectValue(VirtualHub, options);
             if (Optional.IsDefined(AllowNonVirtualWanTraffic))
             {
                 writer.WritePropertyName("allowNonVirtualWanTraffic"u8);
@@ -151,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
             ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default;
             IList<ExpressRouteConnectionData> expressRouteConnections = default;
             NetworkProvisioningState? provisioningState = default;
-            ResourceIdentifier virtualHubId = default;
+            VirtualHubId virtualHub = default;
             bool? allowNonVirtualWanTraffic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +185,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("virtualHub"u8))
                 {
-                    DeserializeVirtualHubId(prop, ref virtualHubId);
+                    virtualHub = Models.VirtualHubId.DeserializeVirtualHubId(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allowNonVirtualWanTraffic"u8))
@@ -211,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                 autoScaleConfiguration,
                 expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
                 provisioningState,
-                virtualHubId,
+                virtualHub,
                 allowNonVirtualWanTraffic,
                 additionalBinaryDataProperties);
         }

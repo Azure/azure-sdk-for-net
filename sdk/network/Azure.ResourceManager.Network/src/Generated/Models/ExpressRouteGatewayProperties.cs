@@ -12,32 +12,32 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> ExpressRoute gateway resource properties. </summary>
     internal partial class ExpressRouteGatewayProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/>. </summary>
-        /// <param name="virtualHubId"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        public ExpressRouteGatewayProperties(ResourceIdentifier virtualHubId)
+        public ExpressRouteGatewayProperties()
         {
+
             ExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionData>();
-            VirtualHubId = virtualHubId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/>. </summary>
         /// <param name="autoScaleConfiguration"> Configuration for auto scaling. </param>
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
-        /// <param name="virtualHubId"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
+        /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteGatewayProperties(ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, ResourceIdentifier virtualHubId, bool? allowNonVirtualWanTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteGatewayProperties(ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, VirtualHubId virtualHub, bool? allowNonVirtualWanTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleConfiguration = autoScaleConfiguration;
             ExpressRouteConnections = expressRouteConnections;
             ProvisioningState = provisioningState;
-            VirtualHubId = virtualHubId;
+            VirtualHub = virtualHub;
             AllowNonVirtualWanTraffic = allowNonVirtualWanTraffic;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
         [WirePath("virtualHub")]
-        public ResourceIdentifier VirtualHubId { get; set; }
+        internal VirtualHubId VirtualHub { get; set; }
 
         /// <summary> Configures this gateway to accept traffic from non Virtual WAN networks. </summary>
         [WirePath("allowNonVirtualWanTraffic")]
@@ -77,6 +77,24 @@ namespace Azure.ResourceManager.Network.Models
                     AutoScaleConfiguration = new ExpressRouteGatewayPropertiesAutoScaleConfiguration();
                 }
                 AutoScaleConfiguration.Bounds = value;
+            }
+        }
+
+        /// <summary> The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed. The Virtual Hub resource and the ExpressRoute gateway resource reside in the same subscription. </summary>
+        [WirePath("virtualHub.id")]
+        public ResourceIdentifier VirtualHubId
+        {
+            get
+            {
+                return VirtualHub is null ? default : VirtualHub.Id;
+            }
+            set
+            {
+                if (VirtualHub is null)
+                {
+                    VirtualHub = new VirtualHubId();
+                }
+                VirtualHub.Id = value;
             }
         }
     }

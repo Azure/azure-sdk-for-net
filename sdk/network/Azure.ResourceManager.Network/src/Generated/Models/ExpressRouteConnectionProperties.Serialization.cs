@@ -9,18 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Properties of the ExpressRouteConnection subresource. </summary>
     internal partial class ExpressRouteConnectionProperties : IJsonModel<ExpressRouteConnectionProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteConnectionProperties"/> for deserialization. </summary>
-        internal ExpressRouteConnectionProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExpressRouteConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -85,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("expressRouteCircuitPeering"u8);
-            SerializeExpressRouteCircuitPeeringId(writer, options);
+            writer.WriteObjectValue(ExpressRouteCircuitPeering, options);
             if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
@@ -159,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NetworkProvisioningState? provisioningState = default;
-            ResourceIdentifier expressRouteCircuitPeeringId = default;
+            ExpressRouteCircuitPeeringId expressRouteCircuitPeering = default;
             string authorizationKey = default;
             int? routingWeight = default;
             bool? enableInternetSecurity = default;
@@ -180,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("expressRouteCircuitPeering"u8))
                 {
-                    DeserializeExpressRouteCircuitPeeringId(prop, ref expressRouteCircuitPeeringId);
+                    expressRouteCircuitPeering = Models.ExpressRouteCircuitPeeringId.DeserializeExpressRouteCircuitPeeringId(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("authorizationKey"u8))
@@ -240,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ExpressRouteConnectionProperties(
                 provisioningState,
-                expressRouteCircuitPeeringId,
+                expressRouteCircuitPeering,
                 authorizationKey,
                 routingWeight,
                 enableInternetSecurity,
