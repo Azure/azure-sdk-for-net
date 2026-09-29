@@ -234,9 +234,14 @@ namespace Azure.Security.KeyVault
 
         private static void VerifyChallengeResource(Request request, string scope)
         {
-            if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri) || scopeUri.UserInfo.Length > 0)
+            if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
             {
                 throw new InvalidOperationException($"The challenge contains invalid scope '{scope}'.");
+            }
+
+            if (scopeUri.UserInfo.Length > 0)
+            {
+                throw new InvalidOperationException("The challenge scope must not contain user information.");
             }
 
             if (!request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))

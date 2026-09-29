@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Tests
         }
 
         [Test]
-        public void InvalidChallengeIsRejectedBeforeTokenAcquisition(
+        public void ChallengeWithUserInfoIsRejectedBeforeTokenAcquisition(
             [Values(
                 "https://resource.example@contoso.test",
                 "https://user:password@contoso.test",
@@ -39,7 +39,16 @@ namespace Azure.Security.KeyVault.Tests
                 "https://resource.example%2Fpath@contoso.test",
                 "https://resource.example@contoso.test:443",
                 "https://resource.example@contoso.test:8443",
-                "https://resource.example@contoso.test/",
+                "https://resource.example@contoso.test/")] string resource,
+            [Values("resource", "scope")] string parameter,
+            [Values(false, true)] bool includeClaims)
+        {
+            AssertInvalidChallenge(resource, parameter, includeClaims, "The challenge scope must not contain user information.");
+        }
+
+        [Test]
+        public void MalformedChallengeIsRejectedBeforeTokenAcquisition(
+            [Values(
                 "https://resource.example%40contoso.test",
                 "https://contoso.test:invalid",
                 "https://[invalid",
@@ -47,14 +56,17 @@ namespace Azure.Security.KeyVault.Tests
             [Values("resource", "scope")] string parameter,
             [Values(false, true)] bool includeClaims)
         {
+            AssertInvalidChallenge(resource, parameter, includeClaims, $"The challenge contains invalid scope '{resource}/.default'.");
+        }
+
+        private void AssertInvalidChallenge(string resource, string parameter, bool includeClaims, string expectedMessage)
+        {
             int credentialCalls = 0;
             var credential = new MockCredential
             {
                 GetTokenCallback = (_, _) => credentialCalls++
             };
             var policy = new ChallengeBasedAuthenticationPolicy(credential, disableChallengeResourceVerification: false);
-            string scope = resource + "/.default";
-
             // A rejected challenge must not populate the shared cache.
             for (int attempt = 0; attempt < 2; attempt++)
             {
@@ -63,7 +75,7 @@ namespace Azure.Security.KeyVault.Tests
                 InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(
                     async () => await SendGetRequest(transport, policy, uri: s_endpoint));
 
-                Assert.That(exception.Message, Is.EqualTo($"The challenge contains invalid scope '{scope}'."));
+                Assert.That(exception.Message, Is.EqualTo(expectedMessage));
                 Assert.That(credentialCalls, Is.Zero);
                 Assert.That(transport.Requests.Count, Is.EqualTo(1));
                 Assert.That(transport.SingleRequest.Headers.Contains("Authorization"), Is.False);
@@ -105,6 +117,49 @@ namespace Azure.Security.KeyVault.Tests
 
             Assert.That(credentialCalls, Is.Zero);
             Assert.That(transport.Requests, Is.Empty);
+        }
+
+        [Test]
+        public async Task ReplacedCachedChallengeIsVerifiedBeforeCaeTokenAcquisition(
+            [Values("https://resource.example@contoso.test", "https://other.example")] string resource,
+            [Values("resource", "scope")] string parameter)
+        {
+            int credentialCalls = 0;
+            var credential = new MockCredential
+            {
+                GetTokenCallback = (context, _) =>
+                {
+                    credentialCalls++;
+                    Assert.That(context.Scopes, Is.EqualTo(new[] { "https://contoso.test/.default" }));
+                }
+            };
+            var policy = new ChallengeBasedAuthenticationPolicy(credential, disableChallengeResourceVerification: false);
+            MockTransport warmup = CreateMockTransport(
+                CreateChallenge("resource", "https://contoso.test"), new MockResponse(200));
+            Assert.That((await SendGetRequest(warmup, policy, uri: s_endpoint)).Status, Is.EqualTo(200));
+
+            credentialCalls = 0;
+            MockTransport transport = CreateMockTransport();
+            Task<Response> pendingRequest = Task.Run(() => SendGetRequest(transport, policy, uri: s_endpoint));
+            MockRequest request = await transport.RequestGate.WaitForSignal();
+
+            try
+            {
+                Assert.That(request.Headers.Contains("Authorization"), Is.True);
+                var optedOutPolicy = new ChallengeBasedAuthenticationPolicy(
+                    new MockCredential(), disableChallengeResourceVerification: true);
+                MockTransport optedOutTransport = CreateMockTransport(
+                    CreateChallenge(parameter, resource), new MockResponse(200));
+                Assert.That((await SendGetRequest(optedOutTransport, optedOutPolicy, uri: s_endpoint)).Status, Is.EqualTo(200));
+            }
+            finally
+            {
+                transport.RequestGate.Release(CreateChallenge("resource", "https://contoso.test", includeClaims: true));
+            }
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await pendingRequest);
+            Assert.That(credentialCalls, Is.Zero);
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
         }
 
         [Test]
