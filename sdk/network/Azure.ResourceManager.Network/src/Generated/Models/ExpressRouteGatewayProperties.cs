@@ -12,32 +12,36 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> ExpressRoute gateway resource properties. </summary>
     internal partial class ExpressRouteGatewayProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/>. </summary>
-        /// <param name="virtualHubId"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
-        public ExpressRouteGatewayProperties(ResourceIdentifier virtualHubId)
+        /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualHub"/> is null. </exception>
+        public ExpressRouteGatewayProperties(ResourceIdentifier virtualHub)
         {
+            Argument.AssertNotNull(virtualHub, nameof(virtualHub));
+
             ExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionData>();
-            VirtualHubId = virtualHubId;
+            VirtualHub = virtualHub;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/>. </summary>
         /// <param name="autoScaleConfiguration"> Configuration for auto scaling. </param>
         /// <param name="expressRouteConnections"> List of ExpressRoute connections to the ExpressRoute gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the express route gateway resource. </param>
-        /// <param name="virtualHubId"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
+        /// <param name="virtualHub"> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </param>
         /// <param name="allowNonVirtualWanTraffic"> Configures this gateway to accept traffic from non Virtual WAN networks. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteGatewayProperties(ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, ResourceIdentifier virtualHubId, bool? allowNonVirtualWanTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteGatewayProperties(ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration, IList<ExpressRouteConnectionData> expressRouteConnections, NetworkProvisioningState? provisioningState, ResourceIdentifier virtualHub, bool? allowNonVirtualWanTraffic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoScaleConfiguration = autoScaleConfiguration;
             ExpressRouteConnections = expressRouteConnections;
             ProvisioningState = provisioningState;
-            VirtualHubId = virtualHubId;
+            VirtualHub = virtualHub;
             AllowNonVirtualWanTraffic = allowNonVirtualWanTraffic;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -56,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
         [WirePath("virtualHub")]
-        public ResourceIdentifier VirtualHubId { get; set; }
+        public ResourceIdentifier VirtualHub { get; set; }
 
         /// <summary> Configures this gateway to accept traffic from non Virtual WAN networks. </summary>
         [WirePath("allowNonVirtualWanTraffic")]

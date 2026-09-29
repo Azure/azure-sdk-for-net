@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Resources.Models;
 
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (Optional.IsCollectionDefined(TunnelInterfaces))
             {
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AzureLocation? location = default;
+            string location = default;
             IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default;
             IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default;
             IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations = default;
@@ -241,11 +240,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tunnelInterfaces"u8))

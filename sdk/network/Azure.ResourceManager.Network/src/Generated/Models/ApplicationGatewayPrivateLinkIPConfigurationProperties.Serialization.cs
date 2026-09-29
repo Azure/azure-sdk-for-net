@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet, options);
             }
-            if (Optional.IsDefined(IsPrimary))
+            if (Optional.IsDefined(Primary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(IsPrimary.Value);
+                writer.WriteBooleanValue(Primary.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
             string privateIPAddress = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             NetworkSubResource subnet = default;
-            bool? isPrimary = default;
+            bool? primary = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    isPrimary = prop.Value.GetBoolean();
+                    primary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Models
                 privateIPAddress,
                 privateIPAllocationMethod,
                 subnet,
-                isPrimary,
+                primary,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

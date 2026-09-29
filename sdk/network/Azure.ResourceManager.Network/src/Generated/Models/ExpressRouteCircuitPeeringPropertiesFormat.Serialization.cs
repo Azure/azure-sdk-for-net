@@ -14,6 +14,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Properties of the express route circuit peering. </summary>
     internal partial class ExpressRouteCircuitPeeringPropertiesFormat : IJsonModel<ExpressRouteCircuitPeeringPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -159,10 +160,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
                 writer.WriteObjectValue(IPv6PeeringConfig, options);
             }
-            if (Optional.IsDefined(ExpressRouteConnectionId))
+            if (Optional.IsDefined(ExpressRouteConnection))
             {
                 writer.WritePropertyName("expressRouteConnection"u8);
-                SerializeExpressRouteConnectionId(writer, options);
+                writer.WriteStringValue(ExpressRouteConnection);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.Network.Models
             string lastModifiedBy = default;
             NetworkSubResource routeFilter = default;
             IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
-            ResourceIdentifier expressRouteConnectionId = default;
+            ResourceIdentifier expressRouteConnection = default;
             IList<ExpressRouteCircuitConnectionData> connections = default;
             IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -376,7 +377,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("expressRouteConnection"u8))
                 {
-                    DeserializeExpressRouteConnectionId(prop, ref expressRouteConnectionId);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressRouteConnection = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connections"u8))
@@ -430,7 +435,7 @@ namespace Azure.ResourceManager.Network.Models
                 lastModifiedBy,
                 routeFilter,
                 ipv6PeeringConfig,
-                expressRouteConnectionId,
+                expressRouteConnection,
                 connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(),
                 peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>(),
                 additionalBinaryDataProperties);

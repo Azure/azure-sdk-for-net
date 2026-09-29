@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -17,19 +16,6 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/>. </summary>
-        /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
-        /// <param name="rules"> The rules of the web application firewall rule group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleGroupName"/> or <paramref name="rules"/> is null. </exception>
-        public ApplicationGatewayFirewallRuleGroup(string ruleGroupName, IEnumerable<ApplicationGatewayFirewallRule> rules)
-        {
-            Argument.AssertNotNull(ruleGroupName, nameof(ruleGroupName));
-            Argument.AssertNotNull(rules, nameof(rules));
-
-            RuleGroupName = ruleGroupName;
-            Rules = rules.ToList();
-        }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/>. </summary>
         /// <param name="ruleGroupName"> The name of the web application firewall rule group. </param>
@@ -43,14 +29,6 @@ namespace Azure.ResourceManager.Network.Models
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The name of the web application firewall rule group. </summary>
-        [WirePath("ruleGroupName")]
-        public string RuleGroupName { get; set; }
-
-        /// <summary> The description of the web application firewall rule group. </summary>
-        [WirePath("description")]
-        public string Description { get; set; }
 
         /// <summary> The rules of the web application firewall rule group. </summary>
         [WirePath("rules")]

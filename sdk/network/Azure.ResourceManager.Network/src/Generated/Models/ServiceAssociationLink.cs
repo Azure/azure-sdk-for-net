@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ServiceAssociationLink : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
-        public ServiceAssociationLink()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceAssociationLink"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -36,47 +31,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource navigation link properties format. </summary>
         [WirePath("properties")]
-        internal ServiceAssociationLinkPropertiesFormat Properties { get; set; }
+        internal ServiceAssociationLinkPropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> Resource type of the linked resource. </summary>
-        [WirePath("properties.linkedResourceType")]
-        public ResourceType? LinkedResourceType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinkedResourceType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServiceAssociationLinkPropertiesFormat();
-                }
-                Properties.LinkedResourceType = value;
-            }
-        }
-
-        /// <summary> Link to the external resource. </summary>
-        [WirePath("properties.link")]
-        public ResourceIdentifier Link
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Link;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServiceAssociationLinkPropertiesFormat();
-                }
-                Properties.Link = value;
-            }
-        }
 
         /// <summary> The provisioning state of the service association link resource. </summary>
         [WirePath("properties.provisioningState")]
@@ -85,38 +44,6 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> If true, the resource can be deleted. </summary>
-        [WirePath("properties.allowDelete")]
-        public bool? AllowDelete
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowDelete;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServiceAssociationLinkPropertiesFormat();
-                }
-                Properties.AllowDelete = value;
-            }
-        }
-
-        /// <summary> A list of locations. </summary>
-        [WirePath("properties.locations")]
-        public IList<AzureLocation> Locations
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ServiceAssociationLinkPropertiesFormat();
-                }
-                return Properties.Locations;
             }
         }
     }

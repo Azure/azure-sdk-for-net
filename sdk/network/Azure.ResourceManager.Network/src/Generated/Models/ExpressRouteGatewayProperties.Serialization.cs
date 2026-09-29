@@ -14,6 +14,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> ExpressRoute gateway resource properties. </summary>
     internal partial class ExpressRouteGatewayProperties : IJsonModel<ExpressRouteGatewayProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteGatewayProperties"/> for deserialization. </summary>
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("virtualHub"u8);
-            SerializeVirtualHubId(writer, options);
+            writer.WriteStringValue(VirtualHub);
             if (Optional.IsDefined(AllowNonVirtualWanTraffic))
             {
                 writer.WritePropertyName("allowNonVirtualWanTraffic"u8);
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
             ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default;
             IList<ExpressRouteConnectionData> expressRouteConnections = default;
             NetworkProvisioningState? provisioningState = default;
-            ResourceIdentifier virtualHubId = default;
+            ResourceIdentifier virtualHub = default;
             bool? allowNonVirtualWanTraffic = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("virtualHub"u8))
                 {
-                    DeserializeVirtualHubId(prop, ref virtualHubId);
+                    virtualHub = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("allowNonVirtualWanTraffic"u8))
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Network.Models
                 autoScaleConfiguration,
                 expressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionData>(),
                 provisioningState,
-                virtualHubId,
+                virtualHub,
                 allowNonVirtualWanTraffic,
                 additionalBinaryDataProperties);
         }

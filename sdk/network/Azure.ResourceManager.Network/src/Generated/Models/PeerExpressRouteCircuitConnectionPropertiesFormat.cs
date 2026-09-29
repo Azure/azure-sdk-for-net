@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeerExpressRouteCircuitConnectionPropertiesFormat"/>. </summary>
-        public PeerExpressRouteCircuitConnectionPropertiesFormat()
+        internal PeerExpressRouteCircuitConnectionPropertiesFormat()
         {
         }
 
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the circuit. </summary>
         [WirePath("expressRouteCircuitPeering")]
-        internal NetworkSubResource ExpressRouteCircuitPeering { get; set; }
+        internal NetworkSubResource ExpressRouteCircuitPeering { get; }
 
         /// <summary> Reference to Express Route Circuit Private Peering Resource of the peered circuit. </summary>
         [WirePath("peerExpressRouteCircuitPeering")]
-        internal NetworkSubResource PeerExpressRouteCircuitPeering { get; set; }
+        internal NetworkSubResource PeerExpressRouteCircuitPeering { get; }
 
         /// <summary> /29 IP address space to carve out Customer addresses for tunnels. </summary>
         [WirePath("addressPrefix")]
-        public string AddressPrefix { get; set; }
+        public string AddressPrefix { get; }
 
         /// <summary> Express Route Circuit connection state. </summary>
         [WirePath("circuitConnectionStatus")]
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the express route circuit connection resource. </summary>
         [WirePath("connectionName")]
-        public string ConnectionName { get; set; }
+        public string ConnectionName { get; }
 
         /// <summary> The resource guid of the authorization used for the express route circuit connection. </summary>
         [WirePath("authResourceGuid")]
-        public Guid? AuthResourceGuid { get; set; }
+        public Guid? AuthResourceGuid { get; }
 
         /// <summary> The provisioning state of the peer express route circuit connection resource. </summary>
         [WirePath("provisioningState")]
@@ -80,14 +80,6 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
             }
-            set
-            {
-                if (ExpressRouteCircuitPeering is null)
-                {
-                    ExpressRouteCircuitPeering = new NetworkSubResource();
-                }
-                ExpressRouteCircuitPeering.Id = value;
-            }
         }
 
         /// <summary> Resource ID. </summary>
@@ -97,14 +89,6 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
-            }
-            set
-            {
-                if (PeerExpressRouteCircuitPeering is null)
-                {
-                    PeerExpressRouteCircuitPeering = new NetworkSubResource();
-                }
-                PeerExpressRouteCircuitPeering.Id = value;
             }
         }
     }

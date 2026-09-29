@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
-        public ExpressRouteServiceProvider()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -35,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the express route service provider. </summary>
         [WirePath("properties")]
-        internal ExpressRouteServiceProviderPropertiesFormat Properties { get; set; }
+        internal ExpressRouteServiceProviderPropertiesFormat Properties { get; }
 
         /// <summary> A list of peering locations. </summary>
         [WirePath("properties.peeringLocations")]
@@ -43,11 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteServiceProviderPropertiesFormat();
-                }
-                return Properties.PeeringLocations;
+                return Properties is null ? default : Properties.PeeringLocations;
             }
         }
 
@@ -57,11 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteServiceProviderPropertiesFormat();
-                }
-                return Properties.BandwidthsOffered;
+                return Properties is null ? default : Properties.BandwidthsOffered;
             }
         }
 

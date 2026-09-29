@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
 
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string groupId = default;
             string memberName = default;
-            IPAddress privateIPAddress = default;
+            string privateIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,11 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("privateIPAddress"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

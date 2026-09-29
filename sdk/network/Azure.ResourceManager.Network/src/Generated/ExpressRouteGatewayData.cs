@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>
         [WirePath("properties.virtualHub")]
-        public ResourceIdentifier VirtualHubId
+        public ResourceIdentifier VirtualHub
         {
             get
             {
-                return Properties is null ? default : Properties.VirtualHubId;
+                return Properties is null ? default : Properties.VirtualHub;
             }
             set
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteGatewayProperties();
                 }
-                Properties.VirtualHubId = value;
+                Properties.VirtualHub = value;
             }
         }
 

@@ -42,24 +42,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("etag")]
         public ETag? ETag { get; }
 
-        /// <summary> The location of the backend address pool. </summary>
-        [WirePath("properties.location")]
-        public AzureLocation? Location
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Location;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackendAddressPoolPropertiesFormat();
-                }
-                Properties.Location = value;
-            }
-        }
-
         /// <summary> An array of gateway load balancer tunnel interfaces. </summary>
         [WirePath("properties.tunnelInterfaces")]
         public IList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces

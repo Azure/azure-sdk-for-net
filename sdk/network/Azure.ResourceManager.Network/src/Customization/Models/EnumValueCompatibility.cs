@@ -23,6 +23,46 @@ namespace Azure.ResourceManager.Network.Models
     {
     }
 
+    /// <summary> Compatibility declaration for the ApplicationGatewaySslCipherSuite type. </summary>
+    public readonly partial struct ApplicationGatewaySslCipherSuite
+    {
+        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes128CbcSha compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha { get; } = TLSECDHEECDSAWITHAES128CBCSHA;
+        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes128CbcSha256 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128CbcSha256 { get; } = TLSECDHEECDSAWITHAES128CBCSHA256;
+        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes128GcmSha256 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes128GcmSha256 { get; } = TLSECDHEECDSAWITHAES128GCMSHA256;
+        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes256CbcSha compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256CbcSha { get; } = TLSECDHEECDSAWITHAES256CBCSHA;
+        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes256CbcSha384 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256CbcSha384 { get; } = TLSECDHEECDSAWITHAES256CBCSHA384;
+        /// <summary> Gets or sets the TlsECDiffieHellmanECDsaWithAes256GcmSha384 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanECDsaWithAes256GcmSha384 { get; } = TLSECDHEECDSAWITHAES256GCMSHA384;
+        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes128CbcSha compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha { get; } = TLSECDHERSAWITHAES128CBCSHA;
+        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes128CbcSha256 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128CbcSha256 { get; } = TLSECDHERSAWITHAES128CBCSHA256;
+        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes128GcmSha256 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes128GcmSha256 { get; } = TLSECDHERSAWITHAES128GCMSHA256;
+        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes256CbcSha compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha { get; } = TLSECDHERSAWITHAES256CBCSHA;
+        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes256CbcSha384 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256CbcSha384 { get; } = TLSECDHERSAWITHAES256CBCSHA384;
+        /// <summary> Gets or sets the TlsECDiffieHellmanRsaWithAes256GcmSha384 compatibility property. </summary>
+        public static ApplicationGatewaySslCipherSuite TlsECDiffieHellmanRsaWithAes256GcmSha384 { get; } = TLSECDHERSAWITHAES256GCMSHA384;
+    }
+
+    /// <summary> Compatibility declaration for the ApplicationGatewaySslProtocol type. </summary>
+    public readonly partial struct ApplicationGatewaySslProtocol
+    {
+        /// <summary> Gets or sets the Tls1_0 compatibility property. </summary>
+        public static ApplicationGatewaySslProtocol Tls1_0 { get; } = TLSv10;
+        /// <summary> Gets or sets the Tls1_1 compatibility property. </summary>
+        public static ApplicationGatewaySslProtocol Tls1_1 { get; } = TLSv11;
+        /// <summary> Gets or sets the Tls1_2 compatibility property. </summary>
+        public static ApplicationGatewaySslProtocol Tls1_2 { get; } = TLSv12;
+    }
+
     /// <summary> Compatibility declaration for the ApplicationGatewayTierType type. </summary>
     public readonly partial struct ApplicationGatewayTierType
     {
@@ -43,6 +83,29 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Compatibility declaration for the AzureFirewallSkuName type. </summary>
     public readonly partial struct AzureFirewallSkuName
     {
+    }
+
+    /// <summary> Compatibility declaration for the ConnectionMonitorEndpointType type. </summary>
+    public readonly partial struct ConnectionMonitorEndpointType
+    {
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType AzureArcNetwork { get; } = new ConnectionMonitorEndpointType("AzureArcNetwork");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType AzureArcVm { get; } = new ConnectionMonitorEndpointType("AzureArcVM");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType AzureSubnet { get; } = new ConnectionMonitorEndpointType("AzureSubnet");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType AzureVNet { get; } = new ConnectionMonitorEndpointType("AzureVNet");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType AzureVm { get; } = new ConnectionMonitorEndpointType("AzureVM");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType AzureVmss { get; } = new ConnectionMonitorEndpointType("AzureVMSS");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType ExternalAddress { get; } = new ConnectionMonitorEndpointType("ExternalAddress");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType MMAWorkspaceMachine { get; } = new ConnectionMonitorEndpointType("MMAWorkspaceMachine");
+        /// <summary> Invokes the ConnectionMonitorEndpointType compatibility operation. </summary>
+        public static ConnectionMonitorEndpointType MMAWorkspaceNetwork { get; } = new ConnectionMonitorEndpointType("MMAWorkspaceNetwork");
     }
 
     /// <summary> Compatibility declaration for the ConnectionMonitorSourceStatus type. </summary>
@@ -190,6 +253,13 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Compatibility declaration for the PcProtocol type. </summary>
     public readonly partial struct PcProtocol
     {
+    }
+
+    /// <summary> Compatibility declaration for the PfsGroup type. </summary>
+    public readonly partial struct PfsGroup
+    {
+        /// <summary> Invokes the PfsGroup compatibility operation. </summary>
+        public static PfsGroup Pfs { get; } = new PfsGroup("PFS");
     }
 
     /// <summary> Compatibility declaration for the RuleMatchActionType type. </summary>

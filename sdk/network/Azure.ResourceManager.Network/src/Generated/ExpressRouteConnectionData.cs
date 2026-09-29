@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The ExpressRoute circuit peering. </summary>
         [WirePath("properties.expressRouteCircuitPeering")]
-        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        public ResourceIdentifier ExpressRouteCircuitPeering
         {
             get
             {
-                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeering;
             }
             set
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteConnectionProperties();
                 }
-                Properties.ExpressRouteCircuitPeeringId = value;
+                Properties.ExpressRouteCircuitPeering = value;
             }
         }
 

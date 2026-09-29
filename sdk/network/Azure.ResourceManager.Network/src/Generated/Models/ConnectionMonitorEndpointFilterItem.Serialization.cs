@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorEndpointFilterItem)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ItemType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ItemType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(Address))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ConnectionMonitorEndpointFilterItemType? itemType = default;
+            ConnectionMonitorEndpointFilterItemType? @type = default;
             string address = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    itemType = new ConnectionMonitorEndpointFilterItemType(prop.Value.GetString());
+                    @type = new ConnectionMonitorEndpointFilterItemType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("address"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectionMonitorEndpointFilterItem(itemType, address, additionalBinaryDataProperties);
+            return new ConnectionMonitorEndpointFilterItem(@type, address, additionalBinaryDataProperties);
         }
     }
 }

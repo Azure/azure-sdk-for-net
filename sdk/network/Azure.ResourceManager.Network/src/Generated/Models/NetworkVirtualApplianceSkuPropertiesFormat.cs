@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuPropertiesFormat"/>. </summary>
-        public NetworkVirtualApplianceSkuPropertiesFormat()
+        internal NetworkVirtualApplianceSkuPropertiesFormat()
         {
             AvailableVersions = new ChangeTrackingList<string>();
             AvailableScaleUnits = new ChangeTrackingList<NetworkVirtualApplianceSkuInstances>();

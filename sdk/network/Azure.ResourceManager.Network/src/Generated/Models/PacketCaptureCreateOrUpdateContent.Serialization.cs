@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsContinuousCapture))
+            if (Optional.IsDefined(ContinuousCapture))
             {
                 writer.WritePropertyName("continuousCapture"u8);
-                writer.WriteBooleanValue(IsContinuousCapture.Value);
+                writer.WriteBooleanValue(ContinuousCapture.Value);
             }
             if (Optional.IsDefined(CaptureSettings))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
             int? timeLimitInSeconds = default;
             PacketCaptureStorageLocation storageLocation = default;
             IList<PacketCaptureFilter> filters = default;
-            bool? isContinuousCapture = default;
+            bool? continuousCapture = default;
             PacketCaptureSettings captureSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    isContinuousCapture = prop.Value.GetBoolean();
+                    continuousCapture = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("captureSettings"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                 timeLimitInSeconds,
                 storageLocation,
                 filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
-                isContinuousCapture,
+                continuousCapture,
                 captureSettings,
                 additionalBinaryDataProperties);
         }

@@ -22,13 +22,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/>, <paramref name="ruleSetVersion"/> or <paramref name="ruleGroups"/> is null. </exception>
-        public ApplicationGatewayFirewallRuleSetPropertiesFormat(string ruleSetType, string ruleSetVersion, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups)
+        internal ApplicationGatewayFirewallRuleSetPropertiesFormat(string ruleSetType, string ruleSetVersion, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups)
         {
-            Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
-            Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
-            Argument.AssertNotNull(ruleGroups, nameof(ruleGroups));
-
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroups = ruleGroups.ToList();
@@ -60,15 +55,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of the web application firewall rule set. </summary>
         [WirePath("ruleSetType")]
-        public string RuleSetType { get; set; }
+        public string RuleSetType { get; }
 
         /// <summary> The version of the web application firewall rule set type. </summary>
         [WirePath("ruleSetVersion")]
-        public string RuleSetVersion { get; set; }
+        public string RuleSetVersion { get; }
 
         /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; }
 
         /// <summary> The rule groups of the web application firewall rule set. </summary>
         [WirePath("ruleGroups")]

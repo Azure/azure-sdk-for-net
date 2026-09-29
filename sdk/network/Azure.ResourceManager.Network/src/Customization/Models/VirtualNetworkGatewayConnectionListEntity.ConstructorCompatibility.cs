@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of the VirtualNetworkGatewayConnectionListEntity class. </summary>
         public VirtualNetworkGatewayConnectionListEntity(WritableSubResource localNetworkGateway2, VirtualNetworkGatewayConnectionType connectionType)
-            : this(null, null, null, null, null, null, new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
+            : this(new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
                 null,
                 null,
                 null,
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network.Models
                 null,
                 null,
                 null,
-                null), null)
+                null))
         {
         }
     }

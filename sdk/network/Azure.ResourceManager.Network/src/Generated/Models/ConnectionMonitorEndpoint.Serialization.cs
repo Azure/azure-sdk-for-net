@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EndpointType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(EndpointType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(ResourceId))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            ConnectionMonitorEndpointType? endpointType = default;
+            EndpointType? @type = default;
             ResourceIdentifier resourceId = default;
             string address = default;
             ConnectionMonitorEndpointFilter filter = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    endpointType = new ConnectionMonitorEndpointType(prop.Value.GetString());
+                    @type = new EndpointType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new ConnectionMonitorEndpoint(
                 name,
-                endpointType,
+                @type,
                 resourceId,
                 address,
                 filter,

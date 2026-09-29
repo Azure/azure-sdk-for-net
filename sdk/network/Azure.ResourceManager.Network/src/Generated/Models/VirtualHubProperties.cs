@@ -13,6 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Parameters for VirtualHub. </summary>
     internal partial class VirtualHubProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             VirtualHubRouteTableV2S = new ChangeTrackingList<VirtualHubRouteTableV2Data>();
             BgpConnections = new ChangeTrackingList<WritableSubResource>();
-            IPConfigurations = new ChangeTrackingList<WritableSubResource>();
+            IPConfigurations = new ChangeTrackingList<NetworkSubResource>();
             RouteMaps = new ChangeTrackingList<WritableSubResource>();
             VirtualRouterIPs = new ChangeTrackingList<string>();
             VirtualRouterIpsV6 = new ChangeTrackingList<string>();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hubRoutingPreference"> The hubRoutingPreference of this VirtualHub. </param>
         /// <param name="virtualRouterAutoScaleConfiguration"> The VirtualHub Router autoscale configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHubProperties(NetworkSubResource virtualWan, NetworkSubResource vpnGateway, NetworkSubResource p2SVpnGateway, NetworkSubResource expressRouteGateway, NetworkSubResource azureFirewall, NetworkSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, string addressPrefixV6, IList<string> virtualRouterIpsV6, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualHubProperties(NetworkSubResource virtualWan, NetworkSubResource vpnGateway, NetworkSubResource p2SVpnGateway, NetworkSubResource expressRouteGateway, NetworkSubResource azureFirewall, NetworkSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<NetworkSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, string addressPrefixV6, IList<string> virtualRouterIpsV6, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualWan = virtualWan;
             VpnGateway = vpnGateway;
@@ -139,6 +140,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of references to Bgp Connections. </summary>
         [WirePath("bgpConnections")]
         public IReadOnlyList<WritableSubResource> BgpConnections { get; } = new ChangeTrackingList<WritableSubResource>();
+
+        /// <summary> List of references to IpConfigurations. </summary>
+        [WirePath("ipConfigurations")]
+        public IReadOnlyList<NetworkSubResource> IPConfigurations { get; } = new ChangeTrackingList<NetworkSubResource>();
 
         /// <summary> List of references to RouteMaps. </summary>
         [WirePath("routeMaps")]

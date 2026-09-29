@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
         /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
-        /// <param name="monitorType"> Type of connection monitor. </param>
-        internal ConnectionMonitorResultProperties(ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IList<ConnectionMonitorEndpoint> endpoints, IList<ConnectionMonitorTestConfiguration> testConfigurations, IList<ConnectionMonitorTestGroup> testGroups, IList<ConnectionMonitorOutput> outputs, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorType? monitorType) : base(source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, additionalBinaryDataProperties)
+        /// <param name="connectionMonitorType"> Type of connection monitor. </param>
+        internal ConnectionMonitorResultProperties(ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IList<ConnectionMonitorEndpoint> endpoints, IList<ConnectionMonitorTestConfiguration> testConfigurations, IList<ConnectionMonitorTestGroup> testGroups, IList<ConnectionMonitorOutput> outputs, string notes, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorEndpointType? connectionMonitorType) : base(source, destination, autoStart, monitoringIntervalInSeconds, endpoints, testConfigurations, testGroups, outputs, notes, additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             StartOn = startOn;
             MonitoringStatus = monitoringStatus;
-            MonitorType = monitorType;
+            ConnectionMonitorType = connectionMonitorType;
         }
 
         /// <summary> The provisioning state of the connection monitor. </summary>
@@ -53,5 +53,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The monitoring status of the connection monitor. </summary>
         [WirePath("monitoringStatus")]
         public string MonitoringStatus { get; }
+
+        /// <summary> Type of connection monitor. </summary>
+        [WirePath("connectionMonitorType")]
+        public ConnectionMonitorEndpointType? ConnectionMonitorType { get; }
     }
 }

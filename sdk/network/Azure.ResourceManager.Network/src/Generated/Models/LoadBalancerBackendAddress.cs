@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
         [WirePath("properties.loadBalancerFrontendIPConfiguration")]
-        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        public ResourceIdentifier LoadBalancerFrontendIPConfiguration
         {
             get
             {
-                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfigurationId;
+                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfiguration;
             }
             set
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new LoadBalancerBackendAddressPropertiesFormat();
                 }
-                Properties.LoadBalancerFrontendIPConfigurationId = value;
+                Properties.LoadBalancerFrontendIPConfiguration = value;
             }
         }
 

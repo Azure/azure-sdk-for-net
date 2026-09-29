@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The probing interval in seconds. This is the time interval between two consecutive probes. Acceptable values are from 1 second to 86400 seconds. </summary>
         [WirePath("properties.interval")]
-        public int? IntervalInSeconds
+        public int? Interval
         {
             get
             {
-                return Properties is null ? default : Properties.IntervalInSeconds;
+                return Properties is null ? default : Properties.Interval;
             }
             set
             {
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
-                Properties.IntervalInSeconds = value;
+                Properties.Interval = value;
             }
         }
 
         /// <summary> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </summary>
         [WirePath("properties.timeout")]
-        public int? TimeoutInSeconds
+        public int? Timeout
         {
             get
             {
-                return Properties is null ? default : Properties.TimeoutInSeconds;
+                return Properties is null ? default : Properties.Timeout;
             }
             set
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
-                Properties.TimeoutInSeconds = value;
+                Properties.Timeout = value;
             }
         }
 
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
         [WirePath("properties.enableProbeProxyProtocolHeader")]
-        public bool? IsProbeProxyProtocolHeaderEnabled
+        public bool? EnableProbeProxyProtocolHeader
         {
             get
             {
-                return Properties is null ? default : Properties.IsProbeProxyProtocolHeaderEnabled;
+                return Properties is null ? default : Properties.EnableProbeProxyProtocolHeader;
             }
             set
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
-                Properties.IsProbeProxyProtocolHeaderEnabled = value;
+                Properties.EnableProbeProxyProtocolHeader = value;
             }
         }
 

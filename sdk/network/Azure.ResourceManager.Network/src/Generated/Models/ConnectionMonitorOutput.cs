@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorOutput"/>. </summary>
-        /// <param name="outputType"> Connection monitor output destination type. Currently, only "Workspace" is supported. </param>
+        /// <param name="type"> Connection monitor output destination type. Currently, only "Workspace" is supported. </param>
         /// <param name="workspaceSettings"> Describes the settings for producing output into a log analytics workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorOutput(OutputType? outputType, ConnectionMonitorWorkspaceSettings workspaceSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectionMonitorOutput(OutputType? @type, ConnectionMonitorWorkspaceSettings workspaceSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OutputType = outputType;
+            Type = @type;
             WorkspaceSettings = workspaceSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Connection monitor output destination type. Currently, only "Workspace" is supported. </summary>
         [WirePath("type")]
-        public OutputType? OutputType { get; set; }
+        public OutputType? Type { get; set; }
 
         /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
         [WirePath("workspaceSettings")]

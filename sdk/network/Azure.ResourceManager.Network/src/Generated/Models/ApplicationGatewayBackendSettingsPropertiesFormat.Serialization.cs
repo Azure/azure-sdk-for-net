@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
+                writer.WriteNumberValue(Timeout.Value);
             }
             if (Optional.IsDefined(Probe))
             {
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (Optional.IsDefined(IsL4ClientIPPreservationEnabled))
+            if (Optional.IsDefined(EnableL4ClientIPPreservation))
             {
                 writer.WritePropertyName("enableL4ClientIpPreservation"u8);
-                writer.WriteBooleanValue(IsL4ClientIPPreservationEnabled.Value);
+                writer.WriteBooleanValue(EnableL4ClientIPPreservation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Network.Models
             }
             int? port = default;
             ApplicationGatewayProtocol? protocol = default;
-            int? timeoutInSeconds = default;
+            int? timeout = default;
             NetworkSubResource probe = default;
             IList<WritableSubResource> trustedRootCertificates = default;
             string hostName = default;
             bool? pickHostNameFromBackendAddress = default;
-            bool? isL4ClientIPPreservationEnabled = default;
+            bool? enableL4ClientIPPreservation = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    timeoutInSeconds = prop.Value.GetInt32();
+                    timeout = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("probe"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    isL4ClientIPPreservationEnabled = prop.Value.GetBoolean();
+                    enableL4ClientIPPreservation = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayBackendSettingsPropertiesFormat(
                 port,
                 protocol,
-                timeoutInSeconds,
+                timeout,
                 probe,
                 trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
                 hostName,
                 pickHostNameFromBackendAddress,
-                isL4ClientIPPreservationEnabled,
+                enableL4ClientIPPreservation,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

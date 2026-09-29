@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> A web application firewall rule group. </summary>
     public partial class ApplicationGatewayFirewallRuleGroup : IJsonModel<ApplicationGatewayFirewallRuleGroup>
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleGroup"/> for deserialization. </summary>
-        internal ApplicationGatewayFirewallRuleGroup()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ApplicationGatewayFirewallRuleGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

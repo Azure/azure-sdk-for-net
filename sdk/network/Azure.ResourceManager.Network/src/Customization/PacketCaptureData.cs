@@ -3,11 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
@@ -17,14 +14,12 @@ namespace Azure.ResourceManager.Network
     [CodeGenSuppress("Filters")]
     public partial class PacketCaptureData
     {
-        // Preserve the pre-TypeSpec property name because it maps to the same wire property as the generated member.
-        /// <inheritdoc cref="IsContinuousCapture"/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This property is deprecated and it will be removed in a future version. Please use IsContinuousCapture instead.")]
-        public bool? ContinuousCapture => IsContinuousCapture;
+        // Restores the released IsContinuousCapture API as an alias of the canonical ContinuousCapture property.
+        /// <summary> Gets whether continuous packet capture is enabled. </summary>
+        public bool? IsContinuousCapture => ContinuousCapture;
 
         /// <summary> Gets or sets the Filters compatibility property. </summary>
-        public IReadOnlyList<PacketCaptureFilter> Filters
-            => Properties is null ? default : new ReadOnlyCollection<PacketCaptureFilter>(Properties.Filters);
+        public IReadOnlyList<Models.PacketCaptureFilter> Filters
+            => Properties is null ? default : new ReadOnlyCollection<Models.PacketCaptureFilter>(Properties.Filters);
     }
 }

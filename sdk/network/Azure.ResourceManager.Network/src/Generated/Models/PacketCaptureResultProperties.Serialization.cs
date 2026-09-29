@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
             int? timeLimitInSeconds = default;
             PacketCaptureStorageLocation storageLocation = default;
             IList<PacketCaptureFilter> filters = default;
-            bool? isContinuousCapture = default;
+            bool? continuousCapture = default;
             PacketCaptureSettings captureSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkProvisioningState? provisioningState = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    isContinuousCapture = prop.Value.GetBoolean();
+                    continuousCapture = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("captureSettings"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                 timeLimitInSeconds,
                 storageLocation,
                 filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
-                isContinuousCapture,
+                continuousCapture,
                 captureSettings,
                 additionalBinaryDataProperties,
                 provisioningState);

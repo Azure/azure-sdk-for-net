@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure;
 using Azure.ResourceManager.Network;
 
@@ -27,14 +26,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         /// <param name="properties"> Properties of private endpoint IP configurations. </param>
         /// <param name="name"> The name of the resource that is unique within a resource group. </param>
-        /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointIPConfiguration(PrivateEndpointIPConfigurationProperties properties, string name, string privateEndpointIPConfigurationType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpointIPConfiguration(PrivateEndpointIPConfigurationProperties properties, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
-            PrivateEndpointIPConfigurationType = privateEndpointIPConfigurationType;
+            Type = @type;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The resource type. </summary>
         [WirePath("type")]
-        public string PrivateEndpointIPConfigurationType { get; }
+        public string Type { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -88,24 +87,6 @@ namespace Azure.ResourceManager.Network.Models
                     Properties = new PrivateEndpointIPConfigurationProperties();
                 }
                 Properties.MemberName = value;
-            }
-        }
-
-        /// <summary> A private ip address obtained from the private endpoint's subnet. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public IPAddress PrivateIPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PrivateEndpointIPConfigurationProperties();
-                }
-                Properties.PrivateIPAddress = value;
             }
         }
     }

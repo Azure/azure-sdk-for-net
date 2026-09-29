@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateIPAddressV6))
             {
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Network.Models
             PartnerManagedResourceProperties partnerManagedResource = default;
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
             IList<NetworkIPVersion> addressFamily = default;
-            IPAddress privateIPAddress = default;
+            string privateIPAddress = default;
             string privateIPAddressV6 = default;
             NetworkVirtualApplianceMigrationStatus migrationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -612,11 +611,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddressV6"u8))

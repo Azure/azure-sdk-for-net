@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkIPConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
-        public NetworkIPConfiguration()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -36,83 +31,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the IP configuration. </summary>
         [WirePath("properties")]
-        internal IPConfigurationPropertiesFormat Properties { get; set; }
+        internal IPConfigurationPropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> The private IP address of the IP configuration. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new IPConfigurationPropertiesFormat();
-                }
-                Properties.PrivateIPAddress = value;
-            }
-        }
-
-        /// <summary> The private IP address allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new IPConfigurationPropertiesFormat();
-                }
-                Properties.PrivateIPAllocationMethod = value;
-            }
-        }
-
-        /// <summary> The reference to the subnet resource. </summary>
-        [WirePath("properties.subnet")]
-        public SubnetData Subnet
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Subnet;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new IPConfigurationPropertiesFormat();
-                }
-                Properties.Subnet = value;
-            }
-        }
-
-        /// <summary> The reference to the public IP resource. </summary>
-        [WirePath("properties.publicIPAddress")]
-        public PublicIPAddressData PublicIPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublicIPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new IPConfigurationPropertiesFormat();
-                }
-                Properties.PublicIPAddress = value;
-            }
-        }
 
         /// <summary> The provisioning state of the IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]

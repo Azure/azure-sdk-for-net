@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(destinationAddress, nameof(destinationAddress));
 
-            DestinationType = @type;
+            Type = @type;
             DestinationAddress = destinationAddress;
         }
 
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RoutingRuleRouteDestination(RoutingRuleDestinationType @type, string destinationAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DestinationType = @type;
+            Type = @type;
             DestinationAddress = destinationAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Destination type. </summary>
         [WirePath("type")]
-        public RoutingRuleDestinationType DestinationType { get; set; }
+        public RoutingRuleDestinationType Type { get; set; }
 
         /// <summary> Destination address. </summary>
         [WirePath("destinationAddress")]

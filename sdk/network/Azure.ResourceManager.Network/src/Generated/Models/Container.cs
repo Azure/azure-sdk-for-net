@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class Container : NetworkSubResource
     {
         /// <summary> Initializes a new instance of <see cref="Container"/>. </summary>
-        public Container()
+        internal Container()
         {
         }
 

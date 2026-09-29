@@ -209,15 +209,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
-                writer.WriteStringValue(PrivateEndpointNetworkPolicy.Value.ToString());
+                writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
-                writer.WriteStringValue(PrivateLinkServiceNetworkPolicy.Value.ToString());
+                writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
             {
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<ServiceDelegation> delegations = default;
             string purpose = default;
             NetworkProvisioningState? provisioningState = default;
-            VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicy = default;
-            VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicy = default;
+            VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies = default;
+            VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies = default;
             IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations = default;
             SharingScope? sharingScope = default;
             bool? defaultOutboundAccess = default;
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateEndpointNetworkPolicy = new VirtualNetworkPrivateEndpointNetworkPolicy(prop.Value.GetString());
+                    privateEndpointNetworkPolicies = new VirtualNetworkPrivateEndpointNetworkPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateLinkServiceNetworkPolicies"u8))
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateLinkServiceNetworkPolicy = new VirtualNetworkPrivateLinkServiceNetworkPolicy(prop.Value.GetString());
+                    privateLinkServiceNetworkPolicies = new VirtualNetworkPrivateLinkServiceNetworkPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationGatewayIPConfigurations"u8))
@@ -610,8 +610,8 @@ namespace Azure.ResourceManager.Network.Models
                 delegations ?? new ChangeTrackingList<ServiceDelegation>(),
                 purpose,
                 provisioningState,
-                privateEndpointNetworkPolicy,
-                privateLinkServiceNetworkPolicy,
+                privateEndpointNetworkPolicies,
+                privateLinkServiceNetworkPolicies,
                 applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
                 sharingScope,
                 defaultOutboundAccess,

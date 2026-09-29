@@ -15,6 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Parameters for VirtualHub. </summary>
     internal partial class VirtualHubProperties : IJsonModel<VirtualHubProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -164,14 +165,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in IPConfigurations)
+                foreach (NetworkSubResource item in IPConfigurations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -306,7 +302,7 @@ namespace Azure.ResourceManager.Network.Models
             string sku = default;
             RoutingState? routingState = default;
             IReadOnlyList<WritableSubResource> bgpConnections = default;
-            IReadOnlyList<WritableSubResource> ipConfigurations = default;
+            IReadOnlyList<NetworkSubResource> ipConfigurations = default;
             IReadOnlyList<WritableSubResource> routeMaps = default;
             long? virtualRouterAsn = default;
             IList<string> virtualRouterIPs = default;
@@ -456,17 +452,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<NetworkSubResource> array = new List<NetworkSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
-                        }
+                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -604,7 +593,7 @@ namespace Azure.ResourceManager.Network.Models
                 sku,
                 routingState,
                 bgpConnections ?? new ChangeTrackingList<WritableSubResource>(),
-                ipConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                ipConfigurations ?? new ChangeTrackingList<NetworkSubResource>(),
                 routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualRouterAsn,
                 virtualRouterIPs ?? new ChangeTrackingList<string>(),

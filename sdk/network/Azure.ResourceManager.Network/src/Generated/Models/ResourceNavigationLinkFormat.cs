@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNavigationLinkFormat"/>. </summary>
-        public ResourceNavigationLinkFormat()
+        internal ResourceNavigationLinkFormat()
         {
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="link"> Link to the external resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource navigation link resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNavigationLinkFormat(ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceNavigationLinkFormat(string linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkedResourceType = linkedResourceType;
             Link = link;
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type of the linked resource. </summary>
         [WirePath("linkedResourceType")]
-        public ResourceType? LinkedResourceType { get; set; }
+        public string LinkedResourceType { get; }
 
         /// <summary> Link to the external resource. </summary>
         [WirePath("link")]
-        public ResourceIdentifier Link { get; set; }
+        public ResourceIdentifier Link { get; }
 
         /// <summary> The provisioning state of the resource navigation link resource. </summary>
         [WirePath("provisioningState")]

@@ -20,11 +20,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkConnectionGatewayReference"/>. </summary>
         /// <param name="id"> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public VirtualNetworkConnectionGatewayReference(ResourceIdentifier id)
+        internal VirtualNetworkConnectionGatewayReference(ResourceIdentifier id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 
@@ -39,6 +36,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier Id { get; }
     }
 }

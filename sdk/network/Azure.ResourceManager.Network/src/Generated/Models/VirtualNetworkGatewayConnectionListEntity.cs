@@ -17,14 +17,10 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualNetworkGatewayConnectionListEntity : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
-        /// <param name="connectionType"> Gateway connection type. </param>
-        /// <param name="virtualNetworkGateway1Id"> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkGateway1Id"/> is null. </exception>
-        public VirtualNetworkGatewayConnectionListEntity(VirtualNetworkGatewayConnectionType connectionType, ResourceIdentifier virtualNetworkGateway1Id)
+        /// <param name="properties"> Properties of the virtual network gateway connection. </param>
+        internal VirtualNetworkGatewayConnectionListEntity(VirtualNetworkGatewayConnectionListEntityPropertiesFormat properties)
         {
-            Argument.AssertNotNull(virtualNetworkGateway1Id, nameof(virtualNetworkGateway1Id));
-
-            Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(virtualNetworkGateway1Id, connectionType);
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListEntity"/>. </summary>
@@ -44,119 +40,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the virtual network gateway connection. </summary>
         [WirePath("properties")]
-        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat Properties { get; set; }
+        internal VirtualNetworkGatewayConnectionListEntityPropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> The authorizationKey. </summary>
-        [WirePath("properties.authorizationKey")]
-        public string AuthorizationKey
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AuthorizationKey;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.AuthorizationKey = value;
-            }
-        }
-
-        /// <summary> Gateway connection type. </summary>
-        [WirePath("properties.connectionType")]
-        public VirtualNetworkGatewayConnectionType ConnectionType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectionType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.ConnectionType = value;
-            }
-        }
-
-        /// <summary> Connection protocol used for this connection. </summary>
-        [WirePath("properties.connectionProtocol")]
-        public VirtualNetworkGatewayConnectionProtocol? ConnectionProtocol
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectionProtocol;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.ConnectionProtocol = value;
-            }
-        }
-
-        /// <summary> The routing weight. </summary>
-        [WirePath("properties.routingWeight")]
-        public int? RoutingWeight
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RoutingWeight;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.RoutingWeight = value;
-            }
-        }
-
-        /// <summary> The connection mode for this connection. </summary>
-        [WirePath("properties.connectionMode")]
-        public VirtualNetworkGatewayConnectionMode? ConnectionMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectionMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.ConnectionMode = value;
-            }
-        }
-
-        /// <summary> The IPSec shared key. We will no longer return sharedKey in VirtualNetworkGatewayConnection Create/Update/Get/List/UpdateTags APIs response. Please use VirtualNetworkGatewayConnection GetSharedKey API to fetch connection sharedKey. </summary>
-        [WirePath("properties.sharedKey")]
-        public string SharedKey
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SharedKey;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.SharedKey = value;
-            }
-        }
 
         /// <summary> Virtual Network Gateway connection status. </summary>
         [WirePath("properties.connectionStatus")]
@@ -164,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectionStatus;
+                return Properties.ConnectionStatus;
             }
         }
 
@@ -174,11 +62,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                return Properties.TunnelConnectionStatus;
+                return Properties is null ? default : Properties.TunnelConnectionStatus;
             }
         }
 
@@ -188,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EgressBytesTransferred;
+                return Properties.EgressBytesTransferred;
             }
         }
 
@@ -198,25 +82,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IngressBytesTransferred;
-            }
-        }
-
-        /// <summary> EnableBgp flag. </summary>
-        [WirePath("properties.enableBgp")]
-        public bool? EnableBgp
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableBgp;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.EnableBgp = value;
+                return Properties.IngressBytesTransferred;
             }
         }
 
@@ -226,29 +92,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                return Properties.GatewayCustomBgpIPAddresses;
-            }
-        }
-
-        /// <summary> Enable policy-based traffic selectors. </summary>
-        [WirePath("properties.usePolicyBasedTrafficSelectors")]
-        public bool? UsePolicyBasedTrafficSelectors
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UsePolicyBasedTrafficSelectors;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.UsePolicyBasedTrafficSelectors = value;
+                return Properties is null ? default : Properties.GatewayCustomBgpIPAddresses;
             }
         }
 
@@ -258,11 +102,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                return Properties.IPsecPolicies;
+                return Properties is null ? default : Properties.IPsecPolicies;
             }
         }
 
@@ -272,11 +112,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                return Properties.TrafficSelectorPolicies;
+                return Properties is null ? default : Properties.TrafficSelectorPolicies;
             }
         }
 
@@ -286,43 +122,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Bypass ExpressRoute Gateway for data forwarding. </summary>
-        [WirePath("properties.expressRouteGatewayBypass")]
-        public bool? ExpressRouteGatewayBypass
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteGatewayBypass;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.ExpressRouteGatewayBypass = value;
-            }
-        }
-
-        /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
-        [WirePath("properties.enablePrivateLinkFastPath")]
-        public bool? EnablePrivateLinkFastPath
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnablePrivateLinkFastPath;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.EnablePrivateLinkFastPath = value;
+                return Properties.ProvisioningState;
             }
         }
 
@@ -332,87 +132,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RoutingConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.RoutingConfiguration = value;
-            }
-        }
-
-        /// <summary> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </summary>
-        [WirePath("properties.virtualNetworkGateway1.id")]
-        public ResourceIdentifier VirtualNetworkGateway1Id
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VirtualNetworkGateway1Id;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.VirtualNetworkGateway1Id = value;
-            }
-        }
-
-        /// <summary> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </summary>
-        [WirePath("properties.virtualNetworkGateway2.id")]
-        public ResourceIdentifier VirtualNetworkGateway2Id
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VirtualNetworkGateway2Id;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.VirtualNetworkGateway2Id = value;
-            }
-        }
-
-        /// <summary> The ID of VirtualNetworkGateway or LocalNetworkGateway resource. </summary>
-        [WirePath("properties.localNetworkGateway2.id")]
-        public ResourceIdentifier LocalNetworkGateway2Id
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LocalNetworkGateway2Id;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.LocalNetworkGateway2Id = value;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.peer.id")]
-        public ResourceIdentifier PeerId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PeerId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayConnectionListEntityPropertiesFormat();
-                }
-                Properties.PeerId = value;
+                return Properties.RoutingConfiguration;
             }
         }
     }

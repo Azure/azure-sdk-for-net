@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionPropertiesFormat"/>. </summary>
         public ServiceEndpointPolicyDefinitionPropertiesFormat()
         {
-            ServiceResources = new ChangeTrackingList<ResourceIdentifier>();
+            ServiceResources = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionPropertiesFormat"/>. </summary>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serviceResources"> A list of service resources. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy definition resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceEndpointPolicyDefinitionPropertiesFormat(string description, string service, IList<ResourceIdentifier> serviceResources, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceEndpointPolicyDefinitionPropertiesFormat(string description, string service, IList<string> serviceResources, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Service = service;
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of service resources. </summary>
         [WirePath("serviceResources")]
-        public IList<ResourceIdentifier> ServiceResources { get; } = new ChangeTrackingList<ResourceIdentifier>();
+        public IList<string> ServiceResources { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
         [WirePath("provisioningState")]

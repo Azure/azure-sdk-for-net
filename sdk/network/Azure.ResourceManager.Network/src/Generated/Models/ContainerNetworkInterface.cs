@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterface : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
-        public ContainerNetworkInterface()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterface"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -36,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Container network interface properties. </summary>
         [WirePath("properties")]
-        internal ContainerNetworkInterfacePropertiesFormat Properties { get; set; }
+        internal ContainerNetworkInterfacePropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -58,11 +53,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ContainerNetworkInterfacePropertiesFormat();
-                }
-                return Properties.IPConfigurations;
+                return Properties is null ? default : Properties.IPConfigurations;
             }
         }
 
@@ -73,24 +64,6 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.container.id")]
-        public ResourceIdentifier ContainerId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ContainerId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ContainerNetworkInterfacePropertiesFormat();
-                }
-                Properties.ContainerId = value;
             }
         }
     }

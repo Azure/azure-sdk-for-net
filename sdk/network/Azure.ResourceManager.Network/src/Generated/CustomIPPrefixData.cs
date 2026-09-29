@@ -239,23 +239,5 @@ namespace Azure.ResourceManager.Network
                 return Properties is null ? default : Properties.ProvisioningState;
             }
         }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.customIpPrefixParent.id")]
-        public ResourceIdentifier ParentCustomIPPrefixId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ParentCustomIPPrefixId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CustomIPPrefixPropertiesFormat();
-                }
-                Properties.ParentCustomIPPrefixId = value;
-            }
-        }
     }
 }

@@ -10,5 +10,8 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Gets or sets the ResourceType compatibility property. </summary>
         public new Azure.Core.ResourceType ResourceType => Id?.ResourceType ?? Type;
+
+        /// <summary> Gets or sets the MinProtocolVersion compatibility property. </summary>
+        public System.Nullable<ApplicationGatewaySslProtocol> MinProtocolVersion { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("serviceResources"u8);
                 writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ServiceResources)
+                foreach (string item in ServiceResources)
                 {
                     if (item == null)
                     {
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             string service = default;
-            IList<ResourceIdentifier> serviceResources = default;
+            IList<string> serviceResources = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         else
                         {
-                            array.Add(new ResourceIdentifier(item.GetString()));
+                            array.Add(item.GetString());
                         }
                     }
                     serviceResources = array;
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, serviceResources ?? new ChangeTrackingList<ResourceIdentifier>(), provisioningState, additionalBinaryDataProperties);
+            return new ServiceEndpointPolicyDefinitionPropertiesFormat(description, service, serviceResources ?? new ChangeTrackingList<string>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }

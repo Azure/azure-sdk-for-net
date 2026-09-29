@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
         [WirePath("properties.privateEndpointNetworkPolicies")]
-        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy
+        public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicies
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicy;
+                return Properties is null ? default : Properties.PrivateEndpointNetworkPolicies;
             }
             set
             {
@@ -228,17 +228,17 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new SubnetPropertiesFormat();
                 }
-                Properties.PrivateEndpointNetworkPolicy = value;
+                Properties.PrivateEndpointNetworkPolicies = value;
             }
         }
 
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
         [WirePath("properties.privateLinkServiceNetworkPolicies")]
-        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy
+        public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicies
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicy;
+                return Properties is null ? default : Properties.PrivateLinkServiceNetworkPolicies;
             }
             set
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new SubnetPropertiesFormat();
                 }
-                Properties.PrivateLinkServiceNetworkPolicy = value;
+                Properties.PrivateLinkServiceNetworkPolicies = value;
             }
         }
 

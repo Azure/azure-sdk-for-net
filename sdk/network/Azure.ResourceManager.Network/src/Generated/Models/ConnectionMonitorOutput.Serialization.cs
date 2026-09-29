@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(ConnectionMonitorOutput)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OutputType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(OutputType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsDefined(WorkspaceSettings))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            OutputType? outputType = default;
+            OutputType? @type = default;
             ConnectionMonitorWorkspaceSettings workspaceSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    outputType = new OutputType(prop.Value.GetString());
+                    @type = new OutputType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("workspaceSettings"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectionMonitorOutput(outputType, workspaceSettings, additionalBinaryDataProperties);
+            return new ConnectionMonitorOutput(@type, workspaceSettings, additionalBinaryDataProperties);
         }
     }
 }

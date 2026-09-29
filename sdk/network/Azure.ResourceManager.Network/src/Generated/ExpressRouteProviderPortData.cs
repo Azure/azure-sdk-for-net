@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortData"/>. </summary>
-        public ExpressRouteProviderPortData()
+        internal ExpressRouteProviderPortData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Properties of the express route Service Provider Port. </summary>
         [WirePath("properties")]
-        internal ExpressRouteProviderPortProperties Properties { get; set; }
+        internal ExpressRouteProviderPortProperties Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -72,96 +72,6 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.SecondaryAzurePort;
-            }
-        }
-
-        /// <summary> The peering location of the port pair. </summary>
-        [WirePath("properties.peeringLocation")]
-        public string PeeringLocation
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PeeringLocation;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteProviderPortProperties();
-                }
-                Properties.PeeringLocation = value;
-            }
-        }
-
-        /// <summary> Overprovisioning factor for the port pair. </summary>
-        [WirePath("properties.overprovisionFactor")]
-        public int? OverprovisionFactor
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OverprovisionFactor;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteProviderPortProperties();
-                }
-                Properties.OverprovisionFactor = value;
-            }
-        }
-
-        /// <summary> Bandwidth of the port in Mbps. </summary>
-        [WirePath("properties.portBandwidthInMbps")]
-        public int? PortBandwidthInMbps
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PortBandwidthInMbps;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteProviderPortProperties();
-                }
-                Properties.PortBandwidthInMbps = value;
-            }
-        }
-
-        /// <summary> Used Bandwidth of the port in Mbps. </summary>
-        [WirePath("properties.usedBandwidthInMbps")]
-        public int? UsedBandwidthInMbps
-        {
-            get
-            {
-                return Properties is null ? default : Properties.UsedBandwidthInMbps;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteProviderPortProperties();
-                }
-                Properties.UsedBandwidthInMbps = value;
-            }
-        }
-
-        /// <summary> Remaining Bandwidth of the port in Mbps. </summary>
-        [WirePath("properties.remainingBandwidthInMbps")]
-        public int? RemainingBandwidthInMbps
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RemainingBandwidthInMbps;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteProviderPortProperties();
-                }
-                Properties.RemainingBandwidthInMbps = value;
             }
         }
     }

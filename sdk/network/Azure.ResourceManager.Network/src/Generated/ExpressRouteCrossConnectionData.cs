@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The ExpressRouteCircuit. </summary>
         [WirePath("properties.expressRouteCircuit")]
-        public ResourceIdentifier ExpressRouteCircuitId
+        public ResourceIdentifier ExpressRouteCircuit
         {
             get
             {
-                return Properties is null ? default : Properties.ExpressRouteCircuitId;
+                return Properties is null ? default : Properties.ExpressRouteCircuit;
             }
             set
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new ExpressRouteCrossConnectionProperties();
                 }
-                Properties.ExpressRouteCircuitId = value;
+                Properties.ExpressRouteCircuit = value;
             }
         }
 

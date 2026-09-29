@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,11 +15,6 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
-        public ExpressRouteServiceProviderBandwidthsOffered()
-        {
-        }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProviderBandwidthsOffered"/>. </summary>
         /// <param name="offerName"> The OfferName. </param>
@@ -32,13 +26,5 @@ namespace Azure.ResourceManager.Network.Models
             ValueInMbps = valueInMbps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The OfferName. </summary>
-        [WirePath("offerName")]
-        public string OfferName { get; set; }
-
-        /// <summary> The ValueInMbps. </summary>
-        [WirePath("valueInMbps")]
-        public int? ValueInMbps { get; set; }
     }
 }

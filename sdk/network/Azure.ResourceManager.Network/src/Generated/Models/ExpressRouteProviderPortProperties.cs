@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteProviderPortProperties"/>. </summary>
-        public ExpressRouteProviderPortProperties()
+        internal ExpressRouteProviderPortProperties()
         {
         }
 
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The peering location of the port pair. </summary>
         [WirePath("peeringLocation")]
-        public string PeeringLocation { get; set; }
+        public string PeeringLocation { get; }
 
         /// <summary> Overprovisioning factor for the port pair. </summary>
         [WirePath("overprovisionFactor")]
-        public int? OverprovisionFactor { get; set; }
+        public int? OverprovisionFactor { get; }
 
         /// <summary> Bandwidth of the port in Mbps. </summary>
         [WirePath("portBandwidthInMbps")]
-        public int? PortBandwidthInMbps { get; set; }
+        public int? PortBandwidthInMbps { get; }
 
         /// <summary> Used Bandwidth of the port in Mbps. </summary>
         [WirePath("usedBandwidthInMbps")]
-        public int? UsedBandwidthInMbps { get; set; }
+        public int? UsedBandwidthInMbps { get; }
 
         /// <summary> Remaining Bandwidth of the port in Mbps. </summary>
         [WirePath("remainingBandwidthInMbps")]
-        public int? RemainingBandwidthInMbps { get; set; }
+        public int? RemainingBandwidthInMbps { get; }
     }
 }
