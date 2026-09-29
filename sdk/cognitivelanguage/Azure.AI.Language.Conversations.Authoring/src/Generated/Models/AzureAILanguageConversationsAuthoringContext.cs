@@ -72,6 +72,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     [ModelReaderWriterBuildable(typeof(ConversationExportedUtterance))]
     [ModelReaderWriterBuildable(typeof(CopyProjectAuthorizationRequest))]
     [ModelReaderWriterBuildable(typeof(EntitiesEvaluationSummary))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(ExportedConversationOrchestration))]
     [ModelReaderWriterBuildable(typeof(ExportedConversationOrchestrationDetails))]
     [ModelReaderWriterBuildable(typeof(ExportedEntityRegex))]

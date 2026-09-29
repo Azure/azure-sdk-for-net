@@ -1178,6 +1178,15 @@ namespace Azure.AI.Language.Text
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Error response. </summary>
+        /// <param name="error"> The error object. </param>
+        /// <param name="errorCode"> String error code indicating what went wrong. </param>
+        /// <returns> A new <see cref="Text.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(AnalyzeTextError error = default, string errorCode = default)
+        {
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The object containing the analyze job LRO job state. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdOn"> Date and time job created. </param>
