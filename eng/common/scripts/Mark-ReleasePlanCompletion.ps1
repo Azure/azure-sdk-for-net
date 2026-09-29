@@ -3,7 +3,17 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$PackageInfoFilePath,
     [Parameter(Mandatory = $true)]
-    [string]$AzsdkExePath
+    [string]$AzsdkExePath,
+    [ValidateScript({
+        $id = 0
+        if (-not [int]::TryParse($_, [System.Globalization.NumberStyles]::None, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$id))
+        {
+            throw 'Release plan ID must be a nonnegative 32-bit integer, without fractions or whitespace.'
+        }
+        return $true
+    })]
+    [string]$ReleasePlanId = '0',
+    [string]$SdkPullRequest = ''
 )
 
 <#
@@ -11,20 +21,26 @@ param(
     Updates release status only for packages with explicit release-plan correlation metadata.
 
 .DESCRIPTION
-    Reads ReleasePlanId and a single ApiVersion from each package-info artifact and validates them
-    through azsdk before updating a plan. These values must describe this specific package build;
-    they must not be inferred from the latest plan or inherited by unrelated SDK-only releases.
-    Packages without correlation metadata are skipped without affecting package publication.
+    Uses the requester-supplied release-plan ID for manual releases, or the triggering SDK PR
+    for automatic releases. azsdk resolves the existing ADO plan and validates the language/package.
+    No API version or package-name-to-plan mapping is used. Missing correlation skips the update.
 
 .PARAMETER PackageInfoFilePath
     The path to the package information file (required) or path to the directory containing package information files.
 
 .PARAMETER AzsdkExePath
     The path to the azsdk executable used to mark the release completion.
+
+.PARAMETER ReleasePlanId
+    The release-plan ID explicitly supplied for this manual release. Zero means no manual association.
+
+.PARAMETER SdkPullRequest
+    The unambiguous SDK PR that triggered the automatic release. Not a spec PR or a previous package PR.
 #>
 
 Set-StrictMode -Version 4
 $ErrorActionPreference = 'Stop'
+[int]$suppliedPlanId = [int]::Parse($ReleasePlanId, [System.Globalization.CultureInfo]::InvariantCulture)
 . (Join-Path $PSScriptRoot common.ps1)
 
 #Validate azsdk executable path
@@ -57,28 +73,23 @@ function Process-Package([string]$packageInfoPath)
         return
     }
 
-    $planIdValue = $pkgInfo['ReleasePlanId']
-    if ($null -eq $planIdValue -or [string]::IsNullOrWhiteSpace([string]$planIdValue) -or "$planIdValue" -eq '0')
+    if ($suppliedPlanId -eq 0 -and [string]::IsNullOrWhiteSpace($SdkPullRequest))
     {
-        Write-Host "Package '$PackageName' has no release-plan ID. No release plan was updated."
-        return
-    }
-    $releasePlanId = 0
-    if (-not [int]::TryParse([string]$planIdValue, [ref]$releasePlanId) -or $releasePlanId -le 0)
-    {
-        Write-Warning "Package '$PackageName' has an invalid release-plan ID. No release plan was updated."
+        Write-Host "Package '$PackageName' has no supplied release-plan ID or triggering SDK PR. No release plan was updated."
         return
     }
 
-    $apiVersion = $pkgInfo['ApiVersion']
-    if ($apiVersion -isnot [string] -or [string]::IsNullOrWhiteSpace($apiVersion))
+    # Do not inherit plan IDs from package metadata; unrelated bug-fix builds can reuse those files.
+    Write-Host "Correlating release status for package '$PackageName', language '$LanguageDisplayName'."
+    $releaseArgs = @("release-plan", "update-release-status", "--package-name", $PackageName, "--language", $LanguageDisplayName, "--status", "Released")
+    if ($suppliedPlanId -gt 0)
     {
-        Write-Warning "Package '$PackageName' must have one explicit ApiVersion for release plan $releasePlanId. No release plan was updated."
-        return
+        $releaseArgs += @("--release-plan-id", "$suppliedPlanId")
     }
-
-    Write-Host "Validating release plan $releasePlanId for package '$PackageName', language '$LanguageDisplayName', API version '$apiVersion'."
-    $releaseArgs = @("release-plan", "update-release-status", "--package-name", $PackageName, "--language", $LanguageDisplayName, "--status", "Released", "--release-plan-id", "$releasePlanId", "--api-version", $apiVersion)
+    if (-not [string]::IsNullOrWhiteSpace($SdkPullRequest))
+    {
+        $releaseArgs += @("--sdk-pull-request", $SdkPullRequest)
+    }
     $PackageVersion = $pkgInfo['Version']
     if ($null -ne $PackageVersion -and -not [string]::IsNullOrWhiteSpace([string]$PackageVersion))
     {
@@ -100,7 +111,7 @@ function Process-Package([string]$packageInfoPath)
     if ($LASTEXITCODE -ne 0)
     {
         ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
-        Write-Host "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE"
+        Write-Warning "Failed to mark release completion for package '$PackageName' using azsdk. Exit code: $LASTEXITCODE. Investigate the correlation error; do not republish the package."
     }
     Write-Host "Details: $releaseInfo"
     return

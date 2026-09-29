@@ -28,7 +28,8 @@ stages:
   #   condition:  dependencies.AutoReleasePrepare.outputs['ResolveAutoReleasePackages.resolve.<var>']
   #   variables:  stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.<var>']
   # Emitted variables: HasAutoReleaseArtifacts (the single eligibility gate), AutoReleaseArtifactsJson,
-  # and ReleaseArtifact_<safeName> per declared artifact.
+  # ReleaseArtifact_<safeName> per declared artifact, and AutoReleaseSdkPullRequestUrl for the
+  # release stage to pass as SdkPullRequest to mark-release-completion.yml.
   - stage: AutoReleasePrepare
     displayName: Auto-release prepare
     dependsOn: ${{ parameters.DependsOn }}

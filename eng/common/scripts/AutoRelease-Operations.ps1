@@ -10,9 +10,9 @@
 # Applies the shared auto-release selection policy:
 #   1. Look up the pull requests associated with the commit.
 #   2. Keep only pull requests merged into the target branch.
-#   3. Select the most recently merged one.
+#   3. Require exactly one merged PR; ambiguous results are not eligible.
 #   4. Re-fetch that pull request by number to read its authoritative merge state and labels.
-#   5. Require it to be merged into the target branch and to carry the auto-release label.
+#   5. Require its merge commit to match the build commit, its target branch to match, and the auto-release label.
 #
 # Returns a result object:
 #   PullRequest    : the selected PR object, or $null
@@ -53,9 +53,12 @@ function Get-GitHubAutoReleasePullRequestForCommit {
     return $result
   }
 
-  $selectedPullRequest = $mergedToTarget |
-    Sort-Object { [datetime]$_.merged_at } -Descending |
-    Select-Object -First 1
+  if ($mergedToTarget.Count -ne 1) {
+    $result.SkipReason = "Multiple merged pull requests are associated with commit '$CommitSha': $($mergedToTarget.number -join ', '). No pull request was selected."
+    return $result
+  }
+
+  $selectedPullRequest = $mergedToTarget[0]
 
   $result.PullRequestNumber = $selectedPullRequest.number
 
@@ -67,6 +70,11 @@ function Get-GitHubAutoReleasePullRequestForCommit {
 
   if (-not $pullRequest.merged_at -or $pullRequest.base.ref -ne $TargetBranch) {
     $result.SkipReason = "Pull request #$($pullRequest.number) is not merged into '$TargetBranch'."
+    return $result
+  }
+
+  if (-not $pullRequest.merge_commit_sha -or $pullRequest.merge_commit_sha -ne $CommitSha) {
+    $result.SkipReason = "Pull request #$($pullRequest.number) does not match the build's merge commit '$CommitSha'."
     return $result
   }
 
