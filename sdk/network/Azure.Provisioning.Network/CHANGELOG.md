@@ -4,25 +4,15 @@
 
 ### Features Added
 
-- Updated the default Network API version to `2026-01-01`.
-- Added support for address prefix sets, connection analyzers and policies, ExpressRoute LAGs, firewall policy Kubernetes selector groups, first-party service tags, identity integration authentication policies, interconnect groups and subgroups, and network manager configuration commits.
-- Added `PolicySettings.CaptchaExpirationInMins` and `RouteNextHopType.VirtualApplianceEcmp`.
+- Updated the default Network API version to `2026-01-01`, adding support for new resources and properties.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
-- Preserved the resource naming constraints and generated names for network security groups, virtual networks, and network interfaces.
-- Preserved the legacy `ExpressRouteLinkData`, `PeerExpressRouteCircuitConnectionData`, `VpnSiteLinkData`, and `VpnSiteLinkConnectionData` model APIs alongside their new child-resource counterparts.
-- Preserved the legacy `FlowLogProperties` model name and its `FormatType` property for flow log format configuration.
-- Restored the legacy `RoutingConfiguration` and `PropagatedRouteTable` model names and their resource property types.
-- Preserved existing resource and model names, strongly typed properties, writable properties, and enum names and values when migrating code generation.
-- Preserved the public `LoadBalancerInboundNatPool.Properties` and `LoadBalancingRule.Properties` accessors and the `RouteResource.HasBgpOverride` setter.
-
 ### Other Changes
 
 - Migrated code generation to TypeSpec.
-- Deprecated `PolicySettings.CaptchaCookieExpirationInMins` in favor of `CaptchaExpirationInMins`. The legacy property retains its original Bicep path for older resource API versions.
 
 ## 1.1.0 (2026-04-16)
 
