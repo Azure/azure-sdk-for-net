@@ -1,17 +1,27 @@
 # Release History
 
+## 12.31.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 12.30.0 (2026-09-28)
 
 ### Features Added
 - Includes all features from 12.30.0-beta.1 and 12.30.0-beta.2.
 
-## 12.29.2 (2026-08-24)
+## 12.30.0-beta.2 (2026-08-24)
 
 ### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
 - Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
 
-## 12.30.0-beta.2 (2026-08-24)
+## 12.29.2 (2026-08-24)
 
 ### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
