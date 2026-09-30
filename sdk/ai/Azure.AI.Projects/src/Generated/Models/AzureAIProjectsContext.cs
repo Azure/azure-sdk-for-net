@@ -144,7 +144,7 @@ namespace Azure.AI.Projects
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerNetworkPolicyDisabledParam))]
     [ModelReaderWriterBuildable(typeof(ContinuousEvaluationRuleAction))]
-    [ModelReaderWriterBuildable(typeof(CreateAsyncResponse))]
+    [ModelReaderWriterBuildable(typeof(CreateAsyncResult))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.CreateMemoryRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateMemoryRequest))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.CreateMemoryRequest is experimental and may change in future versions.

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
     /// The json object containing security policy parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> and <see cref="SecurityPolicyWebApplicationFirewall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecurityPolicyWebApplicationFirewall"/> and <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityPolicyProperties))]
     public abstract partial class SecurityPolicyProperties : IJsonModel<SecurityPolicyProperties>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "WebApplicationFirewallEmbedded":
-                        return SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy.DeserializeSecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(element, options);
                     case "WebApplicationFirewall":
                         return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element, options);
+                    case "WebApplicationFirewallEmbedded":
+                        return SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy.DeserializeSecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(element, options);
                 }
             }
             return UnknownSecurityPolicyProperties.DeserializeUnknownSecurityPolicyProperties(element, options);

@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryAvailabilitySetCustomDetails"/>. </summary>
+        protected RecoveryAvailabilitySetCustomDetails() : this(default)
+        {
+        }
+
         /// <summary> The class type. </summary>
         internal string ResourceType { get; set; }
     }

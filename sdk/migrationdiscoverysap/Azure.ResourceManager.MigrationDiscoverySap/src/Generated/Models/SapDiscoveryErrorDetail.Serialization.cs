@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SapDiscoveryErrorDetail(code, message, recommendation, details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>(), additionalBinaryDataProperties);
