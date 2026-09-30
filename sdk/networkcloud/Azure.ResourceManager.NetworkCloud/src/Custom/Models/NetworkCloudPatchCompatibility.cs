@@ -142,12 +142,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     value,
                     new NetworkCloudRackDefinitionPatch(
                         value.AvailabilityZone,
-                        Convert(value.BareMetalMachineConfigurationData, ToPatch),
+                        value.CompatibilityBareMetalMachineConfigurationDataPatch,
                         value.NetworkRackId,
                         value.RackLocation,
                         value.RackSerialNumber,
                         value.RackSkuId,
-                        Convert(value.StorageApplianceConfigurationData, ToPatch),
+                        value.CompatibilityStorageApplianceConfigurationDataPatch,
                         value.CompatibilityAdditionalBinaryDataProperties),
                     static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
@@ -302,14 +302,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 : Register(value, new ImageRepositoryCredentialsPatch(value.Password, value.RegistryUriString, value.Username, value.CompatibilityAdditionalBinaryDataProperties), static (legacy, patch) => legacy.CompatibilityPatch = patch);
         }
 
-        private static IList<TPatch> Convert<TLegacy, TPatch>(IList<TLegacy> values, System.Func<TLegacy, TPatch> convert)
+        internal static IList<TPatch> ToPatchList<TLegacy, TPatch>(IList<TLegacy> values, System.Func<TLegacy, TPatch> convert)
         {
+            if (values is null || !Optional.IsCollectionDefined(values))
+            {
+                return new ChangeTrackingList<TPatch>();
+            }
+
             var result = new List<TPatch>(values.Count);
             foreach (TLegacy value in values)
             {
                 result.Add(convert(value));
             }
-            return result;
+            return new ChangeTrackingList<TPatch>((IList<TPatch>)result);
         }
 
         private static TPatch Register<TLegacy, TPatch>(

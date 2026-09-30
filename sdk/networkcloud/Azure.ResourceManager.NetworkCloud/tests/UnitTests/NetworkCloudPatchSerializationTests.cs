@@ -278,6 +278,109 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         }
 
         [Test]
+        public void RetainedLegacyBareMetalMachineCollectionRemainsLiveAfterPatchAttachment()
+        {
+            var rack = new NetworkCloudRackDefinition(
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/rack"),
+                "rack-serial",
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            IList<BareMetalMachineConfiguration> configurations = rack.BareMetalMachineConfigurationData;
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinition = rack
+            };
+
+            configurations.Add(
+                new BareMetalMachineConfiguration(
+                    new AdministrativeCredentials("password", "username"),
+                    "00:11:22:33:44:55",
+                    "00:11:22:33:44:66",
+                    1,
+                    "machine-serial"));
+
+            Assert.That(rack.BareMetalMachineConfigurationData, Is.SameAs(configurations));
+            Assert.That(patch.AggregatorOrSingleRackDefinitionPatch.BareMetalMachineConfigurationData, Has.Count.EqualTo(1));
+            using JsonDocument document = Serialize(patch);
+            JsonElement machines = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition")
+                .GetProperty("bareMetalMachineConfigurationData");
+            Assert.That(machines.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(machines[0].GetProperty("serialNumber").GetString(), Is.EqualTo("machine-serial"));
+        }
+
+        [Test]
+        public void RetainedLegacyStorageApplianceCollectionRemainsLiveAfterPatchAttachment()
+        {
+            var rack = new NetworkCloudRackDefinition(
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/rack"),
+                "rack-serial",
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            IList<StorageApplianceConfiguration> configurations = rack.StorageApplianceConfigurationData;
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinition = rack
+            };
+
+            configurations.Add(
+                new StorageApplianceConfiguration(
+                    new AdministrativeCredentials("password", "username"),
+                    2,
+                    "appliance-serial"));
+
+            Assert.That(rack.StorageApplianceConfigurationData, Is.SameAs(configurations));
+            Assert.That(patch.AggregatorOrSingleRackDefinitionPatch.StorageApplianceConfigurationData, Has.Count.EqualTo(1));
+            using JsonDocument document = Serialize(patch);
+            JsonElement appliances = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition")
+                .GetProperty("storageApplianceConfigurationData");
+            Assert.That(appliances.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(appliances[0].GetProperty("serialNumber").GetString(), Is.EqualTo("appliance-serial"));
+        }
+
+        [Test]
+        public void UntouchedLegacyRackCollectionsRemainOmittedAfterPatchAttachment()
+        {
+            var rack = new NetworkCloudRackDefinition(
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/rack"),
+                "rack-serial",
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinition = rack
+            };
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement serializedRack = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition");
+            Assert.That(serializedRack.TryGetProperty("bareMetalMachineConfigurationData", out _), Is.False);
+            Assert.That(serializedRack.TryGetProperty("storageApplianceConfigurationData", out _), Is.False);
+        }
+
+        [Test]
+        public void ExplicitlyClearedLegacyRackCollectionRemainsDefinedAfterPatchAttachment()
+        {
+            var rack = new NetworkCloudRackDefinition(
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/rack"),
+                "rack-serial",
+                new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            rack.BareMetalMachineConfigurationData.Clear();
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinition = rack
+            };
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement serializedRack = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition");
+            Assert.That(serializedRack.GetProperty("bareMetalMachineConfigurationData").GetArrayLength(), Is.Zero);
+            Assert.That(serializedRack.TryGetProperty("storageApplianceConfigurationData", out _), Is.False);
+        }
+
+        [Test]
         public void PatchCollectionAdditionAfterLegacyReadIsSerialized()
         {
             var rackPatch = new NetworkCloudRackDefinitionPatch();

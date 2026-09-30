@@ -75,7 +75,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
     }
 
-    internal sealed class NetworkCloudLegacyModelList<TLegacy, TPatch> : IList<TLegacy>
+    // The ChangeTrackingList base preserves undefined collection state for generated serialization,
+    // while the IList implementation provides a live classic view over the PATCH collection.
+    internal sealed class NetworkCloudLegacyModelList<TLegacy, TPatch> : ChangeTrackingList<TLegacy>, IList<TLegacy>
         where TLegacy : class
         where TPatch : class
     {
@@ -91,25 +93,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _inner = inner;
             _toLegacy = toLegacy;
             _toPatch = toPatch;
+            SynchronizeDefinition();
         }
 
-        public TLegacy this[int index]
+        public IList<TPatch> PatchItems => _inner;
+
+        public new TLegacy this[int index]
         {
             get => _toLegacy(_inner[index]);
-            set => _inner[index] = _toPatch(value);
+            set
+            {
+                _inner[index] = _toPatch(value);
+                MarkDefined();
+            }
         }
 
-        public int Count => _inner.Count;
+        public new int Count => _inner.Count;
 
-        public bool IsReadOnly => _inner.IsReadOnly;
+        public new bool IsReadOnly => _inner.IsReadOnly;
 
-        public void Add(TLegacy item) => _inner.Add(_toPatch(item));
+        public new void Add(TLegacy item)
+        {
+            _inner.Add(_toPatch(item));
+            MarkDefined();
+        }
 
-        public void Clear() => _inner.Clear();
+        public new void Clear()
+        {
+            _inner.Clear();
+            MarkDefined();
+        }
 
-        public bool Contains(TLegacy item) => IndexOf(item) >= 0;
+        public new bool Contains(TLegacy item) => IndexOf(item) >= 0;
 
-        public void CopyTo(TLegacy[] array, int arrayIndex)
+        public new void CopyTo(TLegacy[] array, int arrayIndex)
         {
             for (int i = 0; i < _inner.Count; i++)
             {
@@ -117,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        public IEnumerator<TLegacy> GetEnumerator()
+        public new IEnumerator<TLegacy> GetEnumerator()
         {
             foreach (TPatch item in _inner)
             {
@@ -125,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        public int IndexOf(TLegacy item)
+        public new int IndexOf(TLegacy item)
         {
             TPatch patch = _toPatch(item);
             for (int i = 0; i < _inner.Count; i++)
@@ -138,9 +155,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return -1;
         }
 
-        public void Insert(int index, TLegacy item) => _inner.Insert(index, _toPatch(item));
+        public new void Insert(int index, TLegacy item)
+        {
+            _inner.Insert(index, _toPatch(item));
+            MarkDefined();
+        }
 
-        public bool Remove(TLegacy item)
+        public new bool Remove(TLegacy item)
         {
             int index = IndexOf(item);
             if (index < 0)
@@ -148,12 +169,33 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return false;
             }
             _inner.RemoveAt(index);
+            MarkDefined();
             return true;
         }
 
-        public void RemoveAt(int index) => _inner.RemoveAt(index);
+        public new void RemoveAt(int index)
+        {
+            _inner.RemoveAt(index);
+            MarkDefined();
+        }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public void SynchronizeDefinition()
+        {
+            if (Optional.IsCollectionDefined(_inner))
+            {
+                MarkDefined();
+            }
+        }
+
+        private void MarkDefined()
+        {
+            if (IsUndefined)
+            {
+                base.Clear();
+            }
+        }
     }
 
     public partial class AdministrativeCredentials
@@ -415,16 +457,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class NetworkCloudRackDefinition
     {
         private string _compatibilityAvailabilityZone;
-        private IList<BareMetalMachineConfiguration> _compatibilityBareMetalMachineConfigurationData;
+        private NetworkCloudLegacyModelList<BareMetalMachineConfiguration, BareMetalMachineConfigurationPatch> _compatibilityBareMetalMachineConfigurationData;
         private ResourceIdentifier _compatibilityNetworkRackId;
         private string _compatibilityRackLocation;
         private string _compatibilityRackSerialNumber;
         private ResourceIdentifier _compatibilityRackSkuId;
-        private IList<StorageApplianceConfiguration> _compatibilityStorageApplianceConfigurationData;
+        private NetworkCloudLegacyModelList<StorageApplianceConfiguration, StorageApplianceConfigurationPatch> _compatibilityStorageApplianceConfigurationData;
 
         internal NetworkCloudRackDefinitionPatch CompatibilityPatch { get; set; }
 
         internal IDictionary<string, BinaryData> CompatibilityAdditionalBinaryDataProperties => _additionalBinaryDataProperties;
+
+        internal IList<BareMetalMachineConfigurationPatch> CompatibilityBareMetalMachineConfigurationDataPatch => _compatibilityBareMetalMachineConfigurationData.PatchItems;
+
+        internal IList<StorageApplianceConfigurationPatch> CompatibilityStorageApplianceConfigurationDataPatch => _compatibilityStorageApplianceConfigurationData.PatchItems;
 
         /// <summary> The zone name used for this rack when created. </summary>
         [CodeGenMember("AvailabilityZone")]
@@ -445,13 +491,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("BareMetalMachineConfigurationData")]
         public IList<BareMetalMachineConfiguration> BareMetalMachineConfigurationData
         {
-            get => CompatibilityPatch is null
-                ? _compatibilityBareMetalMachineConfigurationData
-                : new NetworkCloudLegacyModelList<BareMetalMachineConfiguration, BareMetalMachineConfigurationPatch>(
-                    CompatibilityPatch.BareMetalMachineConfigurationData,
+            get
+            {
+                _compatibilityBareMetalMachineConfigurationData.SynchronizeDefinition();
+                return _compatibilityBareMetalMachineConfigurationData;
+            }
+            private set => _compatibilityBareMetalMachineConfigurationData =
+                value as NetworkCloudLegacyModelList<BareMetalMachineConfiguration, BareMetalMachineConfigurationPatch>
+                ?? new NetworkCloudLegacyModelList<BareMetalMachineConfiguration, BareMetalMachineConfigurationPatch>(
+                    NetworkCloudPatchCompatibility.ToPatchList(value, NetworkCloudPatchCompatibility.ToPatch),
                     NetworkCloudPatchCompatibility.ToClassic,
                     NetworkCloudPatchCompatibility.ToPatch);
-            private set => _compatibilityBareMetalMachineConfigurationData = value;
         }
 
         /// <summary> The resource ID of the network rack that matches this rack definition. </summary>
@@ -518,13 +568,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [CodeGenMember("StorageApplianceConfigurationData")]
         public IList<StorageApplianceConfiguration> StorageApplianceConfigurationData
         {
-            get => CompatibilityPatch is null
-                ? _compatibilityStorageApplianceConfigurationData
-                : new NetworkCloudLegacyModelList<StorageApplianceConfiguration, StorageApplianceConfigurationPatch>(
-                    CompatibilityPatch.StorageApplianceConfigurationData,
+            get
+            {
+                _compatibilityStorageApplianceConfigurationData.SynchronizeDefinition();
+                return _compatibilityStorageApplianceConfigurationData;
+            }
+            private set => _compatibilityStorageApplianceConfigurationData =
+                value as NetworkCloudLegacyModelList<StorageApplianceConfiguration, StorageApplianceConfigurationPatch>
+                ?? new NetworkCloudLegacyModelList<StorageApplianceConfiguration, StorageApplianceConfigurationPatch>(
+                    NetworkCloudPatchCompatibility.ToPatchList(value, NetworkCloudPatchCompatibility.ToPatch),
                     NetworkCloudPatchCompatibility.ToClassic,
                     NetworkCloudPatchCompatibility.ToPatch);
-            private set => _compatibilityStorageApplianceConfigurationData = value;
         }
     }
 
