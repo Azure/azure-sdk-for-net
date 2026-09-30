@@ -168,7 +168,7 @@
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.30.0" />
     <PackageVersion Include="Azure.Storage.Common" Version="12.29.0" />
     <PackageVersion Include="Azure.Storage.Files.Shares" Version="12.24.0" />
-    <PackageVersion Include="Azure.Storage.Queues" Version="12.24.0" />
+    <PackageVersion Include="Azure.Storage.Queues" Version="12.28.0" />
 
     <!-- CDK -->
     <PackageVersion Include="Azure.Provisioning" Version="1.5.0" />
@@ -205,7 +205,7 @@
     <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.9" />
     <PackageVersion Include="System.ServiceModel.Primitives" Version="6.2.0" />
     <PackageVersion Update="Azure.Storage.Files.Shares" Version="12.21.0" />
-    <PackageVersion Update="Azure.Storage.Queues" Version="12.21.0" />
+    <PackageVersion Update="Azure.Storage.Queues" Version="12.28.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'
