@@ -162,7 +162,7 @@ foreach ($packageInfoFile in $packageInfoPaths) {
         $packageInfo = Get-Content $packageInfoFile -Raw | ConvertFrom-Json -ErrorAction Stop
         $packageName = if ($packageInfo.PSObject.Properties["Name"]) { [string] $packageInfo.Name } else { "" }
         $packageVersion = if ($packageInfo.PSObject.Properties["Version"]) { [string] $packageInfo.Version } else { "" }
-        $packageType = if ($packageInfo.PSObject.Properties["SdkType"]) { [string] $packageInfo.SdkType } else { "" }
+        $sdkType = if ($packageInfo.PSObject.Properties["SdkType"]) { [string] $packageInfo.SdkType } else { "" }
         $apiHash = if ($packageInfo.PSObject.Properties["ApiHash"]) { [string] $packageInfo.ApiHash } else { "" }
         $releaseStatus = if ($packageInfo.PSObject.Properties["ReleaseStatus"]) { [string] $packageInfo.ReleaseStatus } else { "" }
 
@@ -172,9 +172,10 @@ foreach ($packageInfoFile in $packageInfoPaths) {
         if ([string]::IsNullOrWhiteSpace($packageVersion)) {
             throw "Package-info file does not contain a package Version."
         }
-        if ([string]::IsNullOrWhiteSpace($packageType)) {
+        if ([string]::IsNullOrWhiteSpace($sdkType)) {
             throw "Package-info file does not contain an SdkType."
         }
+        $packageType = ConvertTo-ApiReviewPackageType $sdkType
 
         try {
             Test-PackageApproval $packageName $packageVersion $packageType $apiHash
