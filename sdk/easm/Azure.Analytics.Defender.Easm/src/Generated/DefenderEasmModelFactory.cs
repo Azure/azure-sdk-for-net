@@ -1968,10 +1968,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> A response containing error details. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="errorCode"> String error code indicating what went wrong. </param>
-        /// <returns> A new <see cref="Easm.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ResponseError error = default, string errorCode = default)
+        /// <returns> A new <see cref="Easm.ErrorResult"/> instance for mocking. </returns>
+        public static ErrorResult ErrorResult(ResponseError error = default, string errorCode = default)
         {
-            return new ErrorResponse(error, errorCode, additionalBinaryDataProperties: null);
+            return new ErrorResult(error, errorCode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A request body used to update an asset. </summary>
@@ -2530,11 +2530,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="affectedGroupsSummary"> A list of disco group summaries. </param>
         /// <param name="errors"> The list of exceptions. </param>
         /// <returns> A new <see cref="Easm.AssetChainSummaryResult"/> instance for mocking. </returns>
-        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = default, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary = default, IEnumerable<ErrorResponse> errors = default)
+        public static AssetChainSummaryResult AssetChainSummaryResult(IEnumerable<AssetChainKindSummaryResult> affectedAssetsSummary = default, IEnumerable<DiscoveryGroupSummaryResult> affectedGroupsSummary = default, IEnumerable<ErrorResult> errors = default)
         {
             affectedAssetsSummary ??= new ChangeTrackingList<AssetChainKindSummaryResult>();
             affectedGroupsSummary ??= new ChangeTrackingList<DiscoveryGroupSummaryResult>();
-            errors ??= new ChangeTrackingList<ErrorResponse>();
+            errors ??= new ChangeTrackingList<ErrorResult>();
 
             return new AssetChainSummaryResult(affectedAssetsSummary.ToList(), affectedGroupsSummary.ToList(), errors.ToList(), additionalBinaryDataProperties: null);
         }
