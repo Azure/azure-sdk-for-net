@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -79,26 +78,6 @@ namespace Azure.Containers.Apps.Sandbox
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of SandboxGroupClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="subscriptionId"> Azure subscription identifier. </param>
-        /// <param name="resourceGroupName"> Azure resource group name. </param>
-        /// <param name="sandboxGroupName"> Sandbox group name. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public SandboxGroupClient(Uri endpoint, string subscriptionId, string resourceGroupName, string sandboxGroupName, TokenCredential credential, SandboxGroupClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, subscriptionId, resourceGroupName, sandboxGroupName, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of SandboxGroupClient from a <see cref="SandboxGroupClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for SandboxGroupClient. </param>
-        [Experimental("SCME0002")]
-        public SandboxGroupClient(SandboxGroupClientSettings settings) : this(settings?.Endpoint, settings?.SubscriptionId, settings?.ResourceGroupName, settings?.SandboxGroupName, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
