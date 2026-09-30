@@ -401,8 +401,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 h.ShareClient = new Mock<ShareClient>();
                 h.ShareClient.Setup(c => c.Name).Returns("myshare");
                 MockResponse rawResp = new MockResponse(200);
-                rawResp.AddHeader("x-ms-file-blob-container-for-xfiles-change-feed", ContainerName);
-                ShareProperties props = ShareModelFactory.ShareProperties(enableSnapshotVirtualDirectoryAccess: default);
+                ShareProperties props = ShareModelFactory.ShareProperties(
+                    enableChangeFeed: true,
+                    changeFeedBlobContainerName: ContainerName);
                 Response<ShareProperties> propResp = Response.FromValue(props, rawResp);
                 h.ShareClient.Setup(c => c.GetPropertiesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(propResp);
                 h.ShareClient.Setup(c => c.GetProperties(It.IsAny<CancellationToken>())).Returns(propResp);
