@@ -55,6 +55,25 @@ test("the hermetic eval uses the real executor, configured model, and typed loca
     assert.throws(() => grade(events));
   }
 });
+test("the capability grader requires the exact workspace package path", () => {
+  assert.equal(spec.environment.files[0].dest, args.packagePath);
+  for (const stimulus of spec.stimuli.slice(0, 3)) {
+    assert.equal(stimulus.graders[0].config.args[1], grader);
+  }
+  grade([call(args)]);
+  for (const packagePath of [
+    "/tmp/Azure.Contoso.Widgets",
+    "auto-build-repair/evals/fixtures/package",
+    "auto-build-repair/evals/fixtures/sdk/contoso/Azure.Contoso.Widgets",
+    "sdk/other/Azure.Contoso.Widgets",
+    "sdk/contoso/Azure.Contoso.Widgets-copy",
+    "sdk/contoso/Azure.Contoso.Widgets/../Other",
+    "", null, undefined, 3, ["sdk/contoso/Azure.Contoso.Widgets"],
+  ]) {
+    assert.throws(() => grade([call({ ...args, packagePath })]),
+      /Invalid configured CustomCode invocation/, `reject packagePath ${JSON.stringify(packagePath)}`);
+  }
+});
 for (const [request, code, attempts] of [
   ["Fix CS1061", "BuildAfterPatchesFailed", 3],
   ["Fix AZC0030", "SpecChangeRequired", 0],

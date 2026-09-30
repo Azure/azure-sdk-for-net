@@ -137,6 +137,12 @@ Assert (($skill -match 'reaching the bound do not establish a green build') -and
     'iteration exhaustion cannot commit partial progress'
 Assert ($skill -match 'failing final results never authorize a push') `
     'skill applies the no-commit rule to every failure reason'
+Assert ($skill -match 'Use `-Eligible:\$false` only when the PR fails eligibility checks') `
+    'the ineligible override is restricted to failed eligibility checks'
+Assert ($skill -match 'Use `-ForcedStatus skipped_already_green` only when the baseline\s+package build was green and no engine attempt ran') `
+    'the already-green override requires a green baseline without an engine attempt'
+Assert ($skill -match '(?s)For capability or process failures, do not pass either override.*-EngineErrorsFile.*`failed`/`NoEngineResult`') `
+    'capability and process failures retain unforced failure reporting with captured stderr'
 
 Write-Host 'Failure report'
 Assert ($emitter -match 'Repair failed - changes are not eligible for publication') `

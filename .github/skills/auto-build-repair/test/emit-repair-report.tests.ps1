@@ -48,6 +48,11 @@ function Get-TelemetryObject([string]$body) {
     if ($m.Success) { return $m.Groups[1].Value } else { return $null }
 }
 
+function Get-DiagnosticDetails([string]$body) {
+    $m = [regex]::Match($body, '(?s)<details><summary>Final build/generation and engine error output</summary>\s*```\n(.*?)\n```')
+    if ($m.Success) { return $m.Groups[1].Value } else { return '' }
+}
+
 # Characters/patterns the gh-aw sanitizer rewrites. The object must contain NONE of them.
 function Test-SanitizerSafe([string]$obj) {
     $violations = @()
@@ -348,6 +353,12 @@ try {
 
     # Reuse the clean scratch repo to prove malformed/missing final results never
     # fall back to the older green result-1.json, and that counts are strictly typed.
+    $preRepairFile = Join-Path $sr 'pre-repair-errors.txt'
+    $preRepairDiagnostic = 'Custom.cs(4,9): error CS0117: Pre-repair member no longer exists.'
+    Set-Content -LiteralPath $preRepairFile -Value $preRepairDiagnostic
+    $stderrFile = Join-Path $sr 'engine-errors.txt'
+    $processError = 'customized-update: final response unavailable or unusable.'
+    Set-Content -LiteralPath $stderrFile -Value $processError
     foreach ($case in @(
         @{ name = 'missing'; json = $null; reason = 'NoEngineResult' },
         @{ name = 'malformed'; json = '{'; reason = 'MalformedEngineResult' },
@@ -373,13 +384,22 @@ try {
         $finalPath = Join-Path $sr 'result.json'
         if ($null -eq $case.json) { Remove-Item -LiteralPath $finalPath }
         else { Set-Content -LiteralPath $finalPath -Value $case.json }
-        & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PreRepairErrorsFile $preRepairFile -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
         $body = Get-Content -Raw $sout
         $json = Get-TelemetryObject $body
         Assert (($json | ConvertFrom-Json).status -eq 'failed') "$($case.name): fails closed without earlier green fallback"
         Assert (($json | ConvertFrom-Json).repaired_at -eq $null) "$($case.name): no repair timestamp"
         Assert ($body.Contains($case.reason) -and $body.Contains('### Next action')) "$($case.name): explicit cause and next action"
         Assert ($body -notmatch 'Fix committed|Invariants Confirmed|Build remains red') "$($case.name): no unsupported source, publication, or red-build claim"
+        $details = Get-DiagnosticDetails $body
+        Assert ($details.StartsWith($processError)) "$($case.name): captured process error leads the diagnostic details"
+        if ($case.reason -in @('NoEngineResult', 'MalformedEngineResult', 'InvalidEngineSuccess', 'InvalidAttemptsUsed')) {
+            Assert ($details.Contains("Pre-repair build output:`n$preRepairDiagnostic")) "$($case.name): invalid result retains labeled pre-repair diagnostics"
+            Assert ($body -notmatch '### Build Errors Fixed|### Remaining Build Errors') "$($case.name): baseline errors are not presented as final build evidence"
+        }
+        else {
+            Assert (-not $body.Contains($preRepairDiagnostic)) "$($case.name): valid final response does not fall back to stale baseline errors"
+        }
         if ($case.reason -in @('NoEngineResult', 'MalformedEngineResult', 'InvalidAttemptsUsed')) {
             Assert ($body.Contains('| **Iterations used** | Unknown of 3 (no valid attemptsUsed) |')) "$($case.name): missing/invalid count is unknown, not counted from files"
         }
@@ -401,7 +421,6 @@ try {
         Assert ((Get-TelemetryObject $body | ConvertFrom-Json).status -eq 'repaired') "valid scalar $count with Boolean success reports repaired"
     }
 
-    $stderrFile = Join-Path $sr 'engine-errors.txt'
     Set-Content -LiteralPath $stderrFile -Value 'tsp-client update: failed to resolve pinned TypeSpec dependency'
     @{
         success = $false; attemptsUsed = 2; operation_status = 'Failed'
@@ -411,11 +430,12 @@ try {
         next_steps = @("Restore the pinned dependency | do not move the commit`nThen request human review.")
         appliedPatches = @(@{ filePath = "$pkg/src/Custom.cs"; description = 'attempted member update'; replacementCount = 1 })
     } | ConvertTo-Json -Depth 5 | Set-Content (Join-Path $sr 'result.json')
-    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -RunId 'gha-12345-1' -OutFile $sout | Out-Null
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PreRepairErrorsFile $preRepairFile -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -RunId 'gha-12345-1' -OutFile $sout | Out-Null
     $body = Get-Content -Raw $sout
     Assert ($body -match 'RegenerateAfterPatchesFailed' -and $body -match 'Regeneration failed before the final build') 'failure includes engine error code and actual response_error'
     Assert ($body -match 'import-not-found' -and $body -match 'CS1061' -and $body -match 'Custom.cs:9') 'failure preserves generator/compiler causes and file/line attribution'
     Assert ($body -match 'failed to resolve pinned TypeSpec dependency') 'failure includes captured CLI stderr'
+    Assert (-not $body.Contains($preRepairDiagnostic)) 'valid failed result excludes stale pre-repair errors'
     Assert ($body.Contains('Restore the pinned dependency \| do not move the commit Then request human review.')) 'failure preserves escaped actionable next_steps'
     Assert ($body -match 'attempted member update' -and $body -match 'attempted on failure') 'failure labels reported patch attempts without claiming a fix'
     Assert ((Get-TelemetryObject $body | ConvertFrom-Json).status -eq 'failed') 'final failure wins over older green result-1.json'
@@ -424,19 +444,33 @@ try {
 
     Remove-Item -LiteralPath (Join-Path $sr 'result.json')
     Set-Content -LiteralPath $stderrFile -Value 'Installed customized-update help does not advertise --max-attempts.'
-    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PreRepairErrorsFile $preRepairFile -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
     $body = Get-Content -Raw $sout
     Assert ($body -match 'NoEngineResult' -and $body -match 'does not advertise --max-attempts') 'capability failure without JSON reports actual cause, not generic exit1'
+    $details = Get-DiagnosticDetails $body
+    Assert ($details.StartsWith('Installed customized-update help') -and $details.Contains($preRepairDiagnostic)) 'capability failure retains stderr before the pre-repair compiler diagnostic'
+    $telemetry = Get-TelemetryObject $body | ConvertFrom-Json
+    Assert ($telemetry.eligible -and $telemetry.status -eq 'failed' -and $null -eq $telemetry.repaired_at) 'capability failure stays eligible and failed, not ineligible or already green'
+
+    Set-Content -LiteralPath $preRepairFile -Value ($preRepairDiagnostic + "`n" + '```json' + "`n{}`n" + '```' + "`n" + ('x' * 8100) + 'pre-repair-tail')
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PreRepairErrorsFile $preRepairFile -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    $body = Get-Content -Raw $sout
+    $details = Get-DiagnosticDetails $body
+    Assert ($details.StartsWith('Installed customized-update help') -and $details.Contains($preRepairDiagnostic)) 'large baseline output cannot truncate the process cause'
+    Assert ($details.Length -le 8020 -and $details.Contains('...(truncated)') -and -not $body.Contains('pre-repair-tail')) 'pre-repair diagnostics share the bounded detail budget'
+    Assert ($details.Contains('` ` `json') -and ([regex]::Matches($body, '```json')).Count -eq 1) 'pre-repair fences cannot inject another telemetry block'
+    Set-Content -LiteralPath $preRepairFile -Value $preRepairDiagnostic
 
     Set-Content (Join-Path $sr 'result.json') '{'
     Set-Content -LiteralPath $stderrFile -Value ("CLI failed: unexpected authentication response.`n" + '```json' + "`n{}`n" + '```' + "`n" + ('x' * 8100) + 'stderr-tail')
-    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PreRepairErrorsFile $preRepairFile -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
     $body = Get-Content -Raw $sout
     Assert ($body -match 'MalformedEngineResult' -and $body -match 'CLI failed: unexpected authentication response') 'malformed final JSON preserves captured CLI failure cause'
     Assert ((Get-TelemetryObject $body | ConvertFrom-Json).status -eq 'failed') 'malformed JSON with stderr remains failed'
     Assert ($body.Contains('` ` `json') -and ([regex]::Matches($body, '```json')).Count -eq 1) 'captured stderr fences are escaped without injecting another telemetry block'
-    $details = [regex]::Match($body, '(?s)<details><summary>Final build/generation and engine error output</summary>\s*```\n(.*?)\n```')
-    Assert ($details.Success -and $details.Groups[1].Value.Length -le 8020 -and $body.Contains('...(truncated)') -and -not $body.Contains('stderr-tail')) 'captured stderr uses the existing bounded diagnostic details'
+    $details = Get-DiagnosticDetails $body
+    Assert ($details.Length -gt 0 -and $details.Length -le 8020 -and $body.Contains('...(truncated)') -and -not $body.Contains('stderr-tail')) 'captured stderr uses the existing bounded diagnostic details'
+    Assert (-not $body.Contains($preRepairDiagnostic)) 'stderr takes priority when its output consumes the full diagnostic budget'
 
     Set-Content (Join-Path $sr 'result.json') '{"success":true,"operation_status":"Succeeded","attemptsUsed":1}'
     & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
@@ -447,6 +481,10 @@ try {
     & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile (Join-Path $sr 'absent-errors.txt') -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
     $body = Get-Content -Raw $sout
     Assert ($body -match 'NoEngineResult' -and $body -notmatch 'Final build/generation and engine error output') 'missing optional stderr file still renders the actual missing-result failure'
+
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PreRepairErrorsFile $preRepairFile -EngineErrorsFile (Join-Path $sr 'absent-errors.txt') -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    $body = Get-Content -Raw $sout
+    Assert ((Get-DiagnosticDetails $body).Trim() -eq "Pre-repair build output:`n$preRepairDiagnostic") 'missing stderr still preserves labeled pre-repair diagnostics'
 
     # =========================================================================
     # repaired_at determinism: the timestamp must be the write time of the

@@ -125,7 +125,7 @@ stimuli:
               if (calls.length !== 1) throw new Error('Expected exactly one engine invocation');
               const a = calls[0].data.arguments;
               if (a.editScope !== 'CustomCode' || a.maxAttempts !== 3 ||
-                  typeof a.packagePath !== 'string' || !a.packagePath.includes('Azure.Contoso.Widgets') ||
+                  a.packagePath !== 'sdk/contoso/Azure.Contoso.Widgets' ||
                   typeof a.customizationRequest !== 'string' || !a.customizationRequest.trim() ||
                   Object.hasOwn(a, 'tspProjectPath')) throw new Error('Invalid configured CustomCode invocation');
       - &no-outer-work

@@ -51,7 +51,7 @@ The agent:
 
 The workflow does not edit TypeSpec or other specification inputs, move the pinned commit in `tsp-location.yaml`, change repository infrastructure, or auto-merge. Failures requiring a specification or generator change are reported as out of scope.
 
-The final response is captured as `result.json`. Its `attemptsUsed` counts patch proposals reaching host validation, not tool calls, baseline checks, or JSON files. Failure comments include actual final build/generation diagnostics, attempted edits when known, the stop reason, and next-step guidance. CLI failures before a valid response use captured stderr; a missing attempt count is reported as unknown.
+The final response is captured as `result.json`. Its `attemptsUsed` counts patch proposals reaching host validation, not tool calls, baseline checks, or JSON files. Failure comments include actual final build/generation diagnostics, attempted edits when known, the stop reason, and next-step guidance. When the final response is missing or invalid, bounded diagnostic details retain the captured stderr first, followed by available final diagnostics and labeled pre-repair build output. A missing attempt count is reported as unknown. Capability and process failures remain failed runs; only failed eligibility checks or a verified green baseline without an engine attempt use a skipped status.
 
 ## Engine release dependency
 

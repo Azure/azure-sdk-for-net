@@ -476,7 +476,10 @@ else {
         elseif ($scr) { [void]$sb.AppendLine('Request a separate spec-repository change; do not edit pinned spec inputs in this repair.') }
         else { [void]$sb.AppendLine('Review the final diagnostics, attempted patches, and workflow logs. Resolve the reported cause before starting a new repair run; do not repeat the engine invocation in this run.') }
         [void]$sb.AppendLine('')
-        $br = (@($remainingText, [string](Get-Prop $final 'response_error'), $engineErrors) | Where-Object { $_ }) -join "`n"
+        $br = (@($engineErrors, $remainingText, [string](Get-Prop $final 'response_error')) | Where-Object { $_ }) -join "`n"
+        if ($resultIssue -and $preRepairText) {
+            $br += "`nPre-repair build output:`n$preRepairText"
+        }
         # Guard the fenced block: strip any accidental closing fence in engine output.
         $safeBr = ($br -replace '```', '` ` `')
         if ($safeBr.Length -gt 8000) { $safeBr = $safeBr.Substring(0, 8000) + "`n...(truncated)" }
