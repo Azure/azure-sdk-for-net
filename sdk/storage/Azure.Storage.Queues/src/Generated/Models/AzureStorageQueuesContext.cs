@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues
     /// </summary>
     [ModelReaderWriterBuildable(typeof(KeyInfo))]
     [ModelReaderWriterBuildable(typeof(ListOfSentMessage))]
-    [ModelReaderWriterBuildable(typeof(ListQueuesResponse))]
+    [ModelReaderWriterBuildable(typeof(ListQueuesResult))]
     [ModelReaderWriterBuildable(typeof(PeekedMessage))]
     [ModelReaderWriterBuildable(typeof(PeekedMessages))]
     [ModelReaderWriterBuildable(typeof(QueueAccessPolicy))]
