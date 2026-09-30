@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentTaxonomyInput(@type, additionalBinaryDataProperties, target, riskCategories);
+            return new AgentTaxonomyInput(@type, additionalBinaryDataProperties, target, riskCategories ?? new ChangeTrackingList<RiskCategory>());
         }
     }
 }

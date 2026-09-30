@@ -169,7 +169,7 @@ namespace Azure.Communication.Messages
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RemoveParticipantsOptions(participantIds, additionalBinaryDataProperties);
+            return new RemoveParticipantsOptions(participantIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

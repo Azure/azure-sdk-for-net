@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EntityActionResultWithMetadata(id, warnings, statistics, entities, additionalBinaryDataProperties);
+            return new EntityActionResultWithMetadata(id, warnings ?? new ChangeTrackingList<DocumentWarning>(), statistics, entities ?? new ChangeTrackingList<NamedEntityWithMetadata>(), additionalBinaryDataProperties);
         }
     }
 }

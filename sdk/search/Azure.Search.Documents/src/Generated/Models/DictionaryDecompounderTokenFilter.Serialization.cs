@@ -221,7 +221,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 odataType,
                 name,
                 additionalBinaryDataProperties,
-                wordList,
+                wordList ?? new ChangeTrackingList<string>(),
                 minWordSize,
                 minSubwordSize,
                 maxSubwordSize,

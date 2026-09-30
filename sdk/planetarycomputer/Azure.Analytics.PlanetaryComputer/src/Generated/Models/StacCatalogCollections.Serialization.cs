@@ -175,7 +175,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StacCatalogCollections(links, collections, additionalBinaryDataProperties);
+            return new StacCatalogCollections(links ?? new ChangeTrackingList<StacLink>(), collections ?? new ChangeTrackingList<StacCollection>(), additionalBinaryDataProperties);
         }
     }
 }
