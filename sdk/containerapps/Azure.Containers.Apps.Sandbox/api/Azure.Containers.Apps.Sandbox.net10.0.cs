@@ -406,7 +406,11 @@ namespace Azure.Containers.Apps.Sandbox
         public SandboxGroupClient(Azure.Containers.Apps.Sandbox.SandboxGroupClientSettings settings) { }
         public SandboxGroupClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string sandboxGroupName, Azure.Core.TokenCredential credential) { }
         public SandboxGroupClient(System.Uri endpoint, string subscriptionId, string resourceGroupName, string sandboxGroupName, Azure.Core.TokenCredential credential, Azure.Containers.Apps.Sandbox.SandboxGroupClientOptions options) { }
+        public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public virtual string Name { get { throw null; } }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual string ResourceGroupName { get { throw null; } }
+        public virtual string SubscriptionId { get { throw null; } }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.ConnectionResource> CreateConnection(Azure.Containers.Apps.Sandbox.Models.CreateConnectionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.ConnectionResource>> CreateConnectionAsync(Azure.Containers.Apps.Sandbox.Models.CreateConnectionContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.DiskImageResource> CreateDiskImage(Azure.Containers.Apps.Sandbox.Models.CreateDiskImageContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

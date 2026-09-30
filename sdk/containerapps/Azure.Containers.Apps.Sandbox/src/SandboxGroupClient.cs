@@ -13,6 +13,18 @@ namespace Azure.Containers.Apps.Sandbox
 {
     public partial class SandboxGroupClient
     {
+        /// <summary> The subscription identifier of this sandbox group. </summary>
+        public virtual string SubscriptionId => _subscriptionId;
+
+        /// <summary> The resource group name of this sandbox group. </summary>
+        public virtual string ResourceGroupName => _resourceGroupName;
+
+        /// <summary> The name of this sandbox group. </summary>
+        public virtual string Name => _sandboxGroupName;
+
+        /// <summary> The Azure Resource Manager identifier of this sandbox group. </summary>
+        public virtual ResourceIdentifier Id => new ResourceIdentifier($"/subscriptions/{_subscriptionId}/resourceGroups/{_resourceGroupName}/providers/Microsoft.App/sandboxGroups/{_sandboxGroupName}");
+
         /// <summary> Gets a client for a sandbox in this group. </summary>
         /// <param name="id"> The identifier of the sandbox. </param>
         /// <returns> A client scoped to the sandbox. </returns>
