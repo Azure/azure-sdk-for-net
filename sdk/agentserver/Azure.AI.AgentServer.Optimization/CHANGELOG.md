@@ -1,25 +1,36 @@
 # Release History
 
-## 1.0.0-beta.1 (2026-09-30)
+## 1.0.0-beta.3 (2026-09-30)
 
-### Changes
+### Breaking Changes
 
-Consolidated configuration types ahead of public preview. The package now has a single canonical mutable options type that binds idiomatically via `Microsoft.Extensions.Configuration`, and the loader returns it directly (no result wrapper).
+Consolidated configuration types ahead of public preview. The package now has a single canonical mutable options type that binds idiomatically via `Microsoft.Extensions.Configuration`, and the loader returns it directly without a result wrapper.
 
-- `OptimizationConfig` → `OptimizationOptions` (mutable class, `{ get; set; }` properties).
-- `OptimizationConfigLoader` → `OptimizationOptionsLoader`.
-- Loader API collapsed from four overloads to two:
-  - `OptimizationOptionsLoader.Load(LoadOptions? = null)` → `OptimizationOptions?`
-  - `OptimizationOptionsLoader.LoadAsync(LoadOptions? = null, CancellationToken = default)` → `Task<OptimizationOptions?>`
-  - The previous `AuthenticationTokenProvider`-only overloads are gone — pass the provider via `LoadOptions.TokenProvider`.
-- Removed `LoadResult` wrapper. `LoadResult.SourceUsed` duplicated `OptimizationOptions.Source`, and `LoadResult.Warnings` is now surfaced as stderr diagnostics only.
-- `LoadConfigOptions` → `LoadOptions`.
-- `OptimizationSkill` is now a mutable class (was a `readonly struct`). Reference equality only.
-- `ToolDefinition` is now a mutable class with `{ get; set; }` properties.
-- `Skills` and `ToolDefinitions` collections are typed `IList<>` (mutable) instead of `IReadOnlyList<>`.
-- Removed the `OptimizationOptions.FromOptimizationConfig` / `ToOptimizationConfig` shim — there is now only one type.
+- Renamed `OptimizationConfig` to `OptimizationOptions`. The new type is a mutable class with `{ get; set; }` properties.
+- Renamed `OptimizationConfigLoader` to `OptimizationOptionsLoader`.
+- Replaced the previous loader overloads with:
+  - `OptimizationOptionsLoader.Load(LoadOptions? = null)` returning `OptimizationOptions?`.
+  - `OptimizationOptionsLoader.LoadAsync(LoadOptions? = null, CancellationToken = default)` returning `Task<OptimizationOptions?>`.
+- Removed the `AuthenticationTokenProvider`-only overloads. Pass the provider through `LoadOptions.TokenProvider`.
+- Removed the `LoadResult` wrapper. `LoadResult.SourceUsed` is available through `OptimizationOptions.Source`, and warnings are emitted as stderr diagnostics.
+- Renamed `LoadConfigOptions` to `LoadOptions`.
+- Changed `OptimizationSkill` from a `readonly struct` to a mutable class. It now uses reference equality.
+- Changed `ToolDefinition` to a mutable class with `{ get; set; }` properties.
+- Changed the `Skills` and `ToolDefinitions` collection types from `IReadOnlyList<>` to `IList<>`.
+- Removed `OptimizationOptions.FromOptimizationConfig` and `ToOptimizationConfig`.
+
+## 1.0.0-beta.2 (Unreleased)
+
+### Features Added
+
 - Multi-targeting: ships `net8.0` and `net10.0` assemblies, matching the sibling Core SDK.
 - Priority-3 resolution: `OptimizationOptionsLoader` now loads candidate configs from `OPTIMIZATION_LOCAL_DIR/<OPTIMIZATION_CANDIDATE_ID>/` on disk, populated by `azd ai agent optimize apply --candidate`.
-- `OptimizationConfigLoader.LoadConfig()` and `LoadConfigAsync()` — resolves optimized agent configurations from the resolver API or environment variable.
-- `OptimizationConfig` — immutable config object with instructions, model, temperature, skills, and tool definitions.
-- `OptimizationSkill` — represents a single learned skill with name, description, and body.
+
+## 1.0.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Initial release of `Azure.AI.AgentServer.Optimization`.
+- `OptimizationConfigLoader.LoadConfig()` and `LoadConfigAsync()` resolve optimized agent configurations from the resolver API or environment variable.
+- `OptimizationConfig` is an immutable configuration object with instructions, model, temperature, skills, and tool definitions.
+- `OptimizationSkill` represents a learned skill with a name, description, and body.
