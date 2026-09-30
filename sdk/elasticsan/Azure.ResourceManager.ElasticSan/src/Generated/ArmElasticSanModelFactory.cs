@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="totalReservedMBps"> Total MBps reserved by all the volume groups under an ElasticSan. </param>
         /// <param name="scaleUpProperties"> Scale up settings on Elastic San Appliance. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanData"/> instance for mocking. </returns>
-        public static ElasticSanData ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IEnumerable<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, ElasticSanVersion? version, long? usedCapacityGiB, int? totalReservedIops = default, int? totalReservedMBps = default, ElasticSanScaleUpProperties scaleUpProperties = default)
+        public static ElasticSanData ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IEnumerable<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, ElasticSanVersion? version, long? usedCapacityGiB, int? totalReservedIops = default, int? totalReservedMBps = default, ElasticSanScaleUpProperties scaleUpProperties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku is null && availabilityZones is null && provisioningState is null && baseSizeTiB is null && extendedCapacitySizeTiB is null && totalVolumeSizeGiB is null && volumeGroupCount is null && totalIops is null && totalMbps is null && totalSizeTiB is null && privateEndpointConnections is null && publicNetworkAccess is null && scaleUpProperties is null && version is null && usedCapacityGiB is null && totalReservedIops is null && totalReservedMBps is null ? default : new ElasticSanProperties(
+                new ElasticSanProperties(
                     sku,
                     (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
