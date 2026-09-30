@@ -7,7 +7,7 @@ jobs:
   validate_agent_output:
     needs: agent
     if: ${{ always() && needs.agent.result != 'skipped' }}
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       actions: read
     outputs:

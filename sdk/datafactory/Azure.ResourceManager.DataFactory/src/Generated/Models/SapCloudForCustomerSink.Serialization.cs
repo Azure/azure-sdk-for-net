@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadHttpRequestTimeout(prop, ref httpRequestTimeout);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new SapCloudForCustomerSink(
                 copySinkType,

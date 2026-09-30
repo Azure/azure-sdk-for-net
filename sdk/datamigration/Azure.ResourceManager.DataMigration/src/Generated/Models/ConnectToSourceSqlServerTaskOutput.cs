@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Output for the task that validates connection to SQL Server and also validates source server requirements
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>, and <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/>, and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
     /// </summary>
     public abstract partial class ConnectToSourceSqlServerTaskOutput
     {
