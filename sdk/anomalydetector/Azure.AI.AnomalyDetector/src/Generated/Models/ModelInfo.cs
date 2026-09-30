@@ -41,7 +41,7 @@ namespace Azure.AI.AnomalyDetector
             DataSource = dataSource;
             StartsOn = startsOn;
             EndsOn = endsOn;
-            Errors = new ChangeTrackingList<ErrorResponse>();
+            Errors = new ChangeTrackingList<ErrorResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ModelInfo"/>. </summary>
@@ -75,7 +75,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startsOn, DateTimeOffset endsOn, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startsOn, DateTimeOffset endsOn, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResult> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -134,7 +134,7 @@ namespace Azure.AI.AnomalyDetector
         public ModelStatus? Status { get; }
 
         /// <summary> Error messages after failure to create a model. </summary>
-        public IReadOnlyList<ErrorResponse> Errors { get; }
+        public IReadOnlyList<ErrorResult> Errors { get; }
 
         /// <summary> Diagnostics information to help inspect the states of a model or variable. </summary>
         public DiagnosticsInfo DiagnosticsInfo { get; }
