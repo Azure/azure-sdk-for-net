@@ -45,17 +45,6 @@ namespace Azure.ResourceManager.ElasticSan
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> resource sku. </param>
-        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
-        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
-        public ElasticSanData(AzureLocation location, ElasticSanSku sku, long? baseSizeTiB, long? extendedCapacitySizeTiB) : this(location, sku)
-        {
-            BaseSizeTiB = baseSizeTiB;
-            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
-        }
-
         /// <summary> Properties of ElasticSan. </summary>
         internal ElasticSanProperties Properties { get; set; }
 
