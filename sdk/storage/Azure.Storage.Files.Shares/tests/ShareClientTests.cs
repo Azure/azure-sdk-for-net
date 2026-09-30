@@ -766,6 +766,37 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task CreateAsync_ChangeFeed()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 3
+            };
+
+            try
+            {
+                // Act
+                await share.CreateAsync(options);
+
+                // Assert
+                Response<ShareProperties> response = await share.GetPropertiesAsync();
+                Assert.IsTrue(response.Value.EnableChangeFeed);
+                Assert.AreEqual(3, response.Value.ChangeFeedRetentionInDays);
+                Assert.IsNotNull(response.Value.ChangeFeedBlobContainerName);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
         //[RecordedTest]
         //[TestCase(null)]
         //[TestCase(true)]
@@ -2115,6 +2146,56 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(response.Value.EnablePaidBursting);
             Assert.AreEqual(5000, response.Value.PaidBurstingMaxIops);
             Assert.AreEqual(1000, response.Value.PaidBurstingMaxBandwidthMibps);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task SetPropertiesAsync_ChangeFeed()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 5
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnableChangeFeed);
+            Assert.AreEqual(5, response.Value.ChangeFeedRetentionInDays);
+            Assert.IsNotNull(response.Value.ChangeFeedBlobContainerName);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_06_06)]
+        public async Task SetPropertiesAsync_ChangeFeedRetentionInDaysOnly()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            await test.Share.SetPropertiesAsync(new ShareSetPropertiesOptions
+            {
+                EnableChangeFeed = true,
+                ChangeFeedRetentionInDays = 5
+            });
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                ChangeFeedRetentionInDays = 30
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.IsTrue(response.Value.EnableChangeFeed);
+            Assert.AreEqual(30, response.Value.ChangeFeedRetentionInDays);
         }
 
         [RecordedTest]
