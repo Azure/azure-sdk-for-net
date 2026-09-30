@@ -13,6 +13,14 @@ function GetPackageKey($pkg) {
   return $pkgKey
 }
 
+function ConvertTo-ApiReviewPackageType([string] $SdkType) {
+  switch ($SdkType.ToLowerInvariant()) {
+    "mgmt" { return "mgmt" }
+    { $_ -in @("client", "spring", "functions") } { return "client" }
+    default { throw "Unsupported package SdkType '$SdkType'." }
+  }
+}
+
 # Different language needs a different way to index the package. Build a map in convienice to lookup the package.
 # E.g. <groupId>:<packageName> is the package key in java.
 function GetPackageLookup($packageList) {

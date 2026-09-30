@@ -59,6 +59,18 @@ Describe "Get-PackageApprovalStatus.ps1" {
         ) -join "|")
     }
 
+    It "maps non-management SDK types to the client approval plane" {
+        foreach ($sdkType in @("spring", "functions")) {
+            $packageInfo = Get-Content $packageInfoPath -Raw | ConvertFrom-Json
+            $packageInfo.SdkType = $sdkType
+            $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
+
+            & $scriptPath -PackageInfoFiles $packageInfoPath
+
+            ($global:CapturedAzSdkArguments -join "|") | Should Match "--package-type\|client"
+        }
+    }
+
     It "omits the API hash when it is unavailable" {
         & $scriptPath -PackageInfoFiles $packageInfoPath
 
