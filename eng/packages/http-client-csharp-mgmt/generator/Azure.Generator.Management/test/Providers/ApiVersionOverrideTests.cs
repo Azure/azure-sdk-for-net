@@ -153,6 +153,27 @@ internal class ApiVersionOverrideTests
         Assert.That(body, Does.Not.Contain("Invoke(\"Microsoft.Tests/first\")"));
     }
 
+    [TestCase(true)]
+    [TestCase(false)]
+    public void ContinuationRequestsUseTheSameOperationVersionPrecedence(bool resourceAssociated)
+    {
+        var (resourceClient, models) = InputResourceData.ClientWithExtensionScopedResourceList();
+        AddWireDefaults(resourceClient);
+        var client = resourceAssociated ? resourceClient : InputFactory.Client("NonResourcePaging", methods: resourceClient.Methods);
+        var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client], inputModels: () => models);
+        var continuations = plugin.Object.TypeFactory.CreateClient(client)!.RestClient.Methods
+            .Where(m => m.Signature.Name.StartsWith("CreateNext")).ToArray();
+        Assert.That(continuations, Is.Not.Empty);
+        foreach (var continuation in continuations)
+        {
+            var body = continuation.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain("UpdateQuery(\"api-version\""));
+            Assert.That(body, Does.Contain("\"opaque-first\""));
+            Assert.That(body.Contains("_getApiVersion"), Is.EqualTo(resourceAssociated));
+            Assert.That(body, Does.Not.Contain("UpdateQuery(\"api-version\", _apiVersion)"));
+        }
+    }
+
     private static void AddWireDefaults(InputClient client, string version = "opaque-first")
     {
         foreach (var method in client.Methods)

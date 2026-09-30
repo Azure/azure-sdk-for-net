@@ -54,7 +54,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
                 ? conditional.Body.Single()
                 : statement;
             if (queryStatement is ExpressionStatement
-                { Expression: InvokeMethodExpression { MethodName: "AppendQuery", Arguments: [ScopedApi { Original: LiteralExpression { Literal: var name } }, _, ..] } invocation }
+                { Expression: InvokeMethodExpression { MethodName: "AppendQuery" or "UpdateQuery", Arguments: [ScopedApi { Original: LiteralExpression { Literal: var name } }, _, ..] } invocation }
                 && Equals(name, apiVersionQuery.SerializedName))
             {
                 invocation.Update(arguments: [invocation.Arguments[0], effectiveVersion, .. invocation.Arguments.Skip(2)]);

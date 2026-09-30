@@ -95,10 +95,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -138,10 +135,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _getApiVersion.Invoke("MgmtTypeSpec/wireVersionTests") ?? "opaque-read");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
