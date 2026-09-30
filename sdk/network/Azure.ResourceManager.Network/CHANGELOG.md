@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Restored preferred management model property names while retaining obsolete forwarding aliases for the previous names.
+- Restored strongly typed `ResourceType` metadata and connected compatibility setters and typed model-factory inputs to the serialized values, retaining the string `Type` aliases present in 1.17.0. Generated legacy factory overloads accepting string `type` still discard that input; use the typed `resourceType` overloads instead.
 - Preserved resource-reference wire formats and deserialization of renamed required properties.
 - Restored `WritableSubResource` types for virtual hub IP configurations, virtual network gateway default sites, and virtual network peering references.
 - Restored flattened gateway and peering address-prefix properties as forwarding accessors to their address-space models.

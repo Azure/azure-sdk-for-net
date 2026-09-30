@@ -26,19 +26,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        internal NetworkResourceData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type) : base(id, additionalBinaryDataProperties)
+        /// <param name="resourceType"> Resource type. </param>
+        internal NetworkResourceData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(id, additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Name of the resource. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
     }
 }

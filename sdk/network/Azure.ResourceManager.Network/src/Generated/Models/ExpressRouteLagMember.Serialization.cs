@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType);
             }
             if (options.Format != "W")
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ExpressRouteLagMemberPropertiesFormat properties = default;
-            string @type = default;
+            ResourceType resourceType = default;
             string name = default;
             string eTag = default;
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 additionalBinaryDataProperties,
                 properties,
-                @type,
+                resourceType,
                 name,
                 eTag);
         }

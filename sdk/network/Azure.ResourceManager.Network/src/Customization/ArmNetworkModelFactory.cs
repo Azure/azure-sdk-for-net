@@ -47,6 +47,8 @@ namespace Azure.ResourceManager.Network.Models
     // which would make a public method less accessible than one of its parameters.
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
+    // The native ResourceType overload has the same inaccessible helper parameter and must also be suppressed.
+    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType?), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
         /// <summary> Defines a managed rule set rule group with legacy string rules. </summary>
@@ -159,13 +161,15 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        // The legacy string parameter must populate the native typed constructor rather than be discarded.
+        // Cast the null branch to ResourceType? so implicit string conversion cannot create a present default struct.
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkApplianceData"/>. </summary>
         public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, double? bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default, ETag? eTag = default)
         {
             return new VirtualNetworkApplianceData(
                 id,
                 name,
-                @type,
+                @type is null ? (ResourceType?)null : new ResourceType(@type),
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
@@ -180,6 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        // Keep the released typed/string-bandwidth overload and forward its metadata through the canonical factory.
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkApplianceData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualNetworkApplianceData VirtualNetworkApplianceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ETag? etag = default, string bandwidthInGbps = default, IEnumerable<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, SubnetData subnet = default)
@@ -187,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkApplianceData model = VirtualNetworkApplianceData(
                 id: id,
                 name: name,
-                @type: default,
+                @type: resourceType?.ToString(),
                 location: location,
                 tags: tags,
                 ipConfigurations: ipConfigurations,
@@ -200,6 +205,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         // Preserve the released parameter name while initializing the renamed generated collection.
+        // Convert its string type into native metadata; the explicitly nullable null branch avoids a default struct.
         /// <summary> Initializes a new instance of <see cref="Models.P2SConnectionConfiguration"/>. </summary>
         public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id = default, string name = default, string @type = default, VirtualNetworkAddressSpace vpnClientAddressPool = default, RoutingConfigurationNfv routingConfiguration = default, bool? enableInternetSecurity = default, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations = default, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
         {
@@ -207,7 +213,7 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 default,
                 name,
-                @type,
+                @type is null ? (ResourceType?)null : new ResourceType(@type),
                 vpnClientAddressPool is null && routingConfiguration is null && enableInternetSecurity is null && configurationPolicyGroupAssociations is null && previousConfigurationPolicyGroupAssociations is null && provisioningState is null ? default : new P2SConnectionConfigurationProperties(
                     vpnClientAddressPool,
                     routingConfiguration,
@@ -219,6 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        // Keep the released flattened signature and forward ResourceType through the canonical factory without loss.
         /// <summary> Initializes a new instance of <see cref="Models.P2SConnectionConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<string> vpnClientAddressPrefixes, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState)
@@ -226,7 +233,7 @@ namespace Azure.ResourceManager.Network.Models
             return P2SConnectionConfiguration(
                 id: id,
                 name: name,
-                @type: default,
+                @type: resourceType?.ToString(),
                 vpnClientAddressPool: vpnClientAddressPrefixes is null ? default : new VirtualNetworkAddressSpace(vpnClientAddressPrefixes.ToList(), default, default),
                 routingConfiguration: default,
                 enableInternetSecurity: enableInternetSecurity,
@@ -238,6 +245,7 @@ namespace Azure.ResourceManager.Network.Models
 
         // Restores the released enum-shaped factory overload and delegates it to the canonical overload that accepts
         // the Boolean IsOnlyIPv6PeeringEnabled value.
+        // Preserve its string type in native metadata, using nullable null to avoid the implicit default-struct conversion.
         /// <summary> Initializes a new instance of <see cref="Network.HubVirtualNetworkConnectionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is deprecated and is no longer supported by the service.")]
@@ -250,7 +258,7 @@ namespace Azure.ResourceManager.Network.Models
             return HubVirtualNetworkConnectionData(
                 id,
                 name,
-                @type,
+                @type is null ? (ResourceType?)null : new ResourceType(@type),
                 allowHubToRemoteVnetTransit,
                 allowRemoteVnetToUseHubVnetGateways,
                 enableInternetSecurity,
@@ -282,10 +290,13 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        // This released legacy model has no generated factory; set its typed base storage beneath the read-only getter.
+        // This metadata repair does not add support for the other currently unassigned envelope arguments.
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayAvailableSslOptionsInfo"/>. </summary>
         public static ApplicationGatewayAvailableSslOptionsInfo ApplicationGatewayAvailableSslOptionsInfo(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<WritableSubResource> predefinedPolicies = default, ApplicationGatewaySslPolicyName? defaultPolicy = default, IEnumerable<ApplicationGatewaySslCipherSuite> availableCipherSuites = default, IEnumerable<ApplicationGatewaySslProtocol> availableProtocols = default)
         {
             var result = new ApplicationGatewayAvailableSslOptionsInfo();
+            ((NetworkTrackedResourceData)result).ResourceType = resourceType;
             foreach (var item in predefinedPolicies ?? Enumerable.Empty<WritableSubResource>())
             {
                 result.PredefinedPolicies.Add(item);
@@ -314,16 +325,19 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectionStateSnapshot();
         }
 
+        // Keep the released overload without RuleType and forward its metadata to the legacy model factory below.
         /// <summary> Initializes a new instance of <see cref="Models.InboundSecurityRule"/>. </summary>
         public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, IEnumerable<InboundSecurityRules> rules = default, NetworkProvisioningState? provisioningState = default)
         {
             return InboundSecurityRule(id, name, resourceType, etag, default, rules, provisioningState);
         }
 
+        // The released legacy type has no generated factory; preserve ResourceType in its inherited native storage.
+        // Other currently unassigned envelope arguments are outside this metadata repair.
         /// <summary> Initializes a new instance of <see cref="Models.InboundSecurityRule"/>. </summary>
         public static InboundSecurityRule InboundSecurityRule(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, InboundSecurityRuleType? ruleType = default, IEnumerable<InboundSecurityRules> rules = default, NetworkProvisioningState? provisioningState = default)
         {
-            var result = new InboundSecurityRule { RuleType = ruleType };
+            var result = new InboundSecurityRule { RuleType = ruleType, ResourceType = resourceType };
             foreach (var item in rules ?? Enumerable.Empty<InboundSecurityRules>())
             {
                 result.Rules.Add(item);
