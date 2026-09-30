@@ -58,6 +58,10 @@ Operations are grouped into subclients obtained from `SandboxGroupClient`. For e
 
 The client caches and reuses each subclient.
 
+### Resource clients
+
+For operations on a known resource, `SandboxGroupClient` also offers resource clients such as `GetSandbox(id)`, `GetVolume(volumeName)`, and `GetSecret(secretId)`. Each resource client holds its identifier and delegates requests to the corresponding subclient. The group's create and list methods return resource clients with their `Data` populated from the service response; a resource obtained by identifier alone has `Data == null`. Where the service supports retrieval, `Get()` or `GetAsync()` returns a **new** resource with the retrieved data, leaving the original resource's `Data` unchanged. Mutating operations do not refresh `Data`.
+
 ### Models
 
 Request and response models are in the `Azure.Containers.Apps.Sandbox.Models` namespace.
@@ -114,6 +118,19 @@ SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
 await foreach (SandboxProperties sandbox in sandboxesClient.GetSandboxesAsync())
 {
     Console.WriteLine($"{sandbox.Id}: {sandbox.State}");
+}
+```
+
+### Work with a sandbox resource
+
+```C#
+SandboxResource sandbox = sandboxGroupClient.GetSandbox("sandbox-id");
+Response<SandboxResource> current = await sandbox.GetAsync();
+Console.WriteLine($"{current.Value.Id}: {current.Value.Data.State}");
+
+await foreach (SandboxResource item in sandboxGroupClient.GetSandboxesAsync())
+{
+    Console.WriteLine($"{item.Id}: {item.Data.State}");
 }
 ```
 
