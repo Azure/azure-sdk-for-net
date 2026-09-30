@@ -1308,6 +1308,31 @@ namespace Azure.Generator.Management.Tests.Common
             return (mainClient, actionClient, [responseModel]);
         }
 
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDynamicResourceTypes()
+        {
+            var model = InputFactory.Model("DynamicResource", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true)], decorators: []);
+            const string path = "/providers/Microsoft.Tests/{kind}/{name}";
+            var operation = InputFactory.Operation("get", path: path, parameters:
+            [
+                InputFactory.PathParameter("kind", InputPrimitiveType.String, isRequired: true),
+                InputFactory.PathParameter("name", InputPrimitiveType.String, isRequired: true),
+            ], responses: [InputFactory.OperationResponse(bodytype: model)]);
+            var method = InputFactory.BasicServiceMethod("get", operation, parameters:
+            [
+                InputFactory.MethodParameter("kind", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true),
+                InputFactory.MethodParameter("name", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true),
+            ]);
+            var resources = new[] { "first", "second" }.Select(kind => new ResourceSchemaInput(
+                model,
+                [new ResourceMethod(ResourceOperationKind.Read, method, new RequestPathPattern(path),
+                    new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!)],
+                $"/providers/Microsoft.Tests/{kind}/{{name}}", $"Microsoft.Tests/{kind}", null, ResourceScope.Tenant,
+                kind, null, "/")).ToArray();
+            var client = InputFactory.Client("DynamicClient", methods: [method], decorators: [BuildArmProviderSchemaMultiResource(resources)]);
+            return (client, [model]);
+        }
+
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             return BuildArmProviderSchemaMultiResource([

@@ -1,0 +1,4263 @@
+{
+  "name": "Azure.Generator.MgmtApiVersionOverride.Tests",
+  "apiVersions": [
+    "2024-04-01",
+    "2024-05-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "createdByType",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "User",
+          "value": "User",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The entity was created by a user.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Application",
+          "value": "Application",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The entity was created by an application.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "ManagedIdentity",
+          "value": "ManagedIdentity",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The entity was created by a managed identity.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "6",
+          "kind": "enumvalue",
+          "name": "Key",
+          "value": "Key",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The entity was created by a key.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+      "doc": "The kind of entity that created the resource.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "7",
+      "kind": "enum",
+      "name": "Versions",
+      "apiVersions": [
+        "2024-04-01",
+        "2024-05-01"
+      ],
+      "crossLanguageDefinitionId": "MgmtTypeSpec.Versions",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "previous",
+          "value": "2024-04-01",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "current",
+          "value": "2024-05-01",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+      "doc": "Projected service versions, independent of the opaque wire defaults.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "GetAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "GetAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "GetAccept2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "17",
+      "kind": "constant",
+      "name": "GetAccept3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "18",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "19",
+      "kind": "constant",
+      "name": "GetAccept4",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "20",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "21",
+      "kind": "constant",
+      "name": "GetAccept5",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "22",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "23",
+      "kind": "constant",
+      "name": "GetAccept6",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "24",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "25",
+      "kind": "constant",
+      "name": "GetAccept7",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "26",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "27",
+      "kind": "constant",
+      "name": "CheckWireVersionAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "28",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "text/plain",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "29",
+      "kind": "model",
+      "name": "WireVersionTest",
+      "apiVersions": [
+        "2024-04-01",
+        "2024-05-01"
+      ],
+      "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+      "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionTest",
+      "usage": "Input,Output,Json",
+      "doc": "A resource whose operations have independent legacy wire versions.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ResourceManager.Private.@armResourceInternal",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "WireVersionTest"
+        }
+      },
+      "isExactName": false,
+      "baseModel": {
+        "$id": "30",
+        "kind": "model",
+        "name": "TrackedResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
+        "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+        "usage": "Input,Output,Json",
+        "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+        "summary": "Tracked Resource",
+        "decorators": [
+          {
+            "name": "Azure.ResourceManager.@armProviderNamespace",
+            "arguments": {}
+          }
+        ],
+        "serializationOptions": {
+          "json": {
+            "name": "TrackedResource"
+          }
+        },
+        "isExactName": false,
+        "baseModel": {
+          "$id": "31",
+          "kind": "model",
+          "name": "Resource",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
+          "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+          "usage": "Input,Output,Json",
+          "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
+          "summary": "Resource",
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@armProviderNamespace",
+              "arguments": {}
+            }
+          ],
+          "serializationOptions": {
+            "json": {
+              "name": "Resource"
+            }
+          },
+          "isExactName": false,
+          "properties": [
+            {
+              "$id": "32",
+              "kind": "property",
+              "name": "id",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "id",
+              "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+              "type": {
+                "$id": "33",
+                "kind": "string",
+                "name": "armResourceIdentifier",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+                "baseType": {
+                  "$id": "34",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id",
+              "serializationOptions": {
+                "json": {
+                  "name": "id"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "35",
+              "kind": "property",
+              "name": "name",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "name",
+              "doc": "The name of the resource",
+              "type": {
+                "$id": "36",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name",
+              "serializationOptions": {
+                "json": {
+                  "name": "name"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "37",
+              "kind": "property",
+              "name": "type",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "type",
+              "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+              "type": {
+                "$id": "38",
+                "kind": "string",
+                "name": "armResourceType",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceType",
+                "baseType": {
+                  "$id": "39",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type",
+              "serializationOptions": {
+                "json": {
+                  "name": "type"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "40",
+              "kind": "property",
+              "name": "systemData",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
+              "serializedName": "systemData",
+              "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+              "type": {
+                "$id": "41",
+                "kind": "model",
+                "name": "SystemData",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+                "usage": "Output,Json",
+                "doc": "Metadata pertaining to creation and last modification of the resource.",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armProviderNamespace",
+                    "arguments": {}
+                  }
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": "SystemData"
+                  }
+                },
+                "isExactName": false,
+                "properties": [
+                  {
+                    "$id": "42",
+                    "kind": "property",
+                    "name": "createdBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "createdBy",
+                    "doc": "The identity that created the resource.",
+                    "type": {
+                      "$id": "43",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdBy"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "44",
+                    "kind": "property",
+                    "name": "createdByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "createdByType",
+                    "doc": "The type of identity that created the resource.",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdByType"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "45",
+                    "kind": "property",
+                    "name": "createdAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "createdAt",
+                    "doc": "The timestamp of resource creation (UTC).",
+                    "type": {
+                      "$id": "46",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "47",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdAt"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "48",
+                    "kind": "property",
+                    "name": "lastModifiedBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "lastModifiedBy",
+                    "doc": "The identity that last modified the resource.",
+                    "type": {
+                      "$id": "49",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedBy"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "50",
+                    "kind": "property",
+                    "name": "lastModifiedByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "lastModifiedByType",
+                    "doc": "The type of identity that last modified the resource.",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedByType"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "51",
+                    "kind": "property",
+                    "name": "lastModifiedAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "serializedName": "lastModifiedAt",
+                    "doc": "The timestamp of resource last modification (UTC)",
+                    "type": {
+                      "$id": "52",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "53",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedAt"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  }
+                ]
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData",
+              "serializationOptions": {
+                "json": {
+                  "name": "systemData"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            }
+          ]
+        },
+        "properties": [
+          {
+            "$id": "54",
+            "kind": "property",
+            "name": "tags",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
+            "serializedName": "tags",
+            "doc": "Resource tags.",
+            "type": {
+              "$id": "55",
+              "kind": "dict",
+              "keyType": {
+                "$id": "56",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "valueType": {
+                "$id": "57",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.tags",
+            "serializationOptions": {
+              "json": {
+                "name": "tags"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "58",
+            "kind": "property",
+            "name": "location",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
+            "serializedName": "location",
+            "doc": "The geo-location where the resource lives",
+            "type": {
+              "$id": "59",
+              "kind": "string",
+              "name": "azureLocation",
+              "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+              "baseType": {
+                "$id": "60",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.location",
+            "serializationOptions": {
+              "json": {
+                "name": "location"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          }
+        ]
+      },
+      "properties": [
+        {
+          "$id": "61",
+          "kind": "property",
+          "name": "properties",
+          "apiVersions": [],
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$id": "62",
+            "kind": "model",
+            "name": "WireVersionTestProperties",
+            "apiVersions": [
+              "2024-04-01",
+              "2024-05-01"
+            ],
+            "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+            "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionTestProperties",
+            "usage": "Input,Output,Json",
+            "doc": "Resource properties.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "WireVersionTestProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "63",
+                "kind": "property",
+                "name": "value",
+                "apiVersions": [
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "serializedName": "value",
+                "doc": "A test value.",
+                "type": {
+                  "$id": "64",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionTestProperties.value",
+                "serializationOptions": {
+                  "json": {
+                    "name": "value"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionTest.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "65",
+          "kind": "property",
+          "name": "name",
+          "apiVersions": [],
+          "serializedName": "name",
+          "doc": "The name of the WireVersionTest",
+          "type": {
+            "$id": "66",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [
+            {
+              "name": "TypeSpec.@pattern",
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
+            }
+          ],
+          "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionTest.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "62"
+    },
+    {
+      "$ref": "30"
+    },
+    {
+      "$ref": "31"
+    },
+    {
+      "$ref": "41"
+    },
+    {
+      "$id": "67",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
+      "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+      "summary": "Error response",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "68",
+          "kind": "property",
+          "name": "error",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "69",
+            "kind": "model",
+            "name": "ErrorDetail",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
+            "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+            "usage": "Json,Exception",
+            "doc": "The error detail.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "70",
+                "kind": "property",
+                "name": "code",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "71",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "72",
+                "kind": "property",
+                "name": "message",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "73",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "74",
+                "kind": "property",
+                "name": "target",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "target",
+                "doc": "The error target.",
+                "type": {
+                  "$id": "75",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "76",
+                "kind": "property",
+                "name": "details",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "details",
+                "doc": "The error details.",
+                "type": {
+                  "$id": "77",
+                  "kind": "array",
+                  "name": "ArrayErrorDetail",
+                  "valueType": {
+                    "$ref": "69"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "78",
+                "kind": "property",
+                "name": "additionalInfo",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
+                "serializedName": "additionalInfo",
+                "doc": "The error additional info.",
+                "type": {
+                  "$id": "79",
+                  "kind": "array",
+                  "name": "ArrayErrorAdditionalInfo",
+                  "valueType": {
+                    "$id": "80",
+                    "kind": "model",
+                    "name": "ErrorAdditionalInfo",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
+                    "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+                    "usage": "Json,Exception",
+                    "doc": "The resource management error additional info.",
+                    "decorators": [
+                      {
+                        "name": "Azure.ResourceManager.@armProviderNamespace",
+                        "arguments": {}
+                      }
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
+                    "properties": [
+                      {
+                        "$id": "81",
+                        "kind": "property",
+                        "name": "type",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
+                        "serializedName": "type",
+                        "doc": "The additional info type.",
+                        "type": {
+                          "$id": "82",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "type"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "83",
+                        "kind": "property",
+                        "name": "info",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
+                        "serializedName": "info",
+                        "doc": "The additional info.",
+                        "type": {
+                          "$id": "84",
+                          "kind": "unknown",
+                          "name": "unknown",
+                          "crossLanguageDefinitionId": "",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "info"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo",
+                "serializationOptions": {
+                  "json": {
+                    "name": "additionalInfo"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "69"
+    },
+    {
+      "$ref": "80"
+    },
+    {
+      "$id": "85",
+      "kind": "model",
+      "name": "WireVersionTestListResult",
+      "apiVersions": [],
+      "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+      "usage": "Output,Json",
+      "doc": "The response of a WireVersionTest list operation.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "86",
+          "kind": "property",
+          "name": "value",
+          "apiVersions": [],
+          "serializedName": "value",
+          "doc": "The WireVersionTest items on this page",
+          "type": {
+            "$id": "87",
+            "kind": "array",
+            "name": "ArrayWireVersionTest",
+            "valueType": {
+              "$ref": "29"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "88",
+          "kind": "property",
+          "name": "nextLink",
+          "apiVersions": [],
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "89",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "90",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "91",
+      "kind": "client",
+      "name": "MgmtTypeSpecClient",
+      "isExactName": false,
+      "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "92",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "93",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "94",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "https://management.azure.com"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint",
+          "isExactName": false
+        },
+        {
+          "$id": "95",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "96",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "97",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "opaque-read"
+          },
+          "optional": true,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@armProviderSchema",
+          "arguments": {
+            "resources": [
+              {
+                "resourceModelId": "MgmtTypeSpec.WireVersionTest",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                "resourceType": "MgmtTypeSpec/wireVersionTests",
+                "methods": [
+                  {
+                    "$id": "98",
+                    "methodId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                    "scope": {
+                      "$id": "99",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "100",
+                    "methodId": "MgmtTypeSpec.WireVersionReads.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                    "scope": {
+                      "$id": "101",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "102",
+                    "methodId": "MgmtTypeSpec.WireVersionWrites.update",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                    "scope": {
+                      "$id": "103",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "104",
+                    "methodId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests",
+                    "scope": {
+                      "$id": "105",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "106",
+                    "methodId": "MgmtTypeSpec.WireVersionReads.listBySubscription",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/wireVersionTests",
+                    "scope": {
+                      "$id": "107",
+                      "kind": "Subscription",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                      "scopeResourceType": "Microsoft.Resources/subscriptions"
+                    }
+                  },
+                  {
+                    "$id": "108",
+                    "methodId": "MgmtTypeSpec.WireVersionActions.ping",
+                    "kind": "Action",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}/ping",
+                    "scope": {
+                      "$id": "109",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "110",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "WireVersionTest",
+                "nameConstraints": {
+                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                },
+                "apiVersions": [
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
+                "rbacRoles": []
+              }
+            ],
+            "nonResourceMethods": [
+              {
+                "methodId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion",
+                "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/checkWireVersion",
+                "scope": {
+                  "$id": "111",
+                  "kind": "Subscription",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                  "scopeResourceType": "Microsoft.Resources/subscriptions"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "crossLanguageDefinitionId": "MgmtTypeSpec",
+      "apiVersions": [
+        "2024-04-01",
+        "2024-05-01"
+      ],
+      "children": [
+        {
+          "$id": "112",
+          "kind": "client",
+          "name": "WireVersionOperations",
+          "isExactName": false,
+          "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests",
+          "methods": [
+            {
+              "$id": "113",
+              "kind": "basic",
+              "name": "get",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "Get a WireVersionTest",
+              "operation": {
+                "$id": "114",
+                "name": "get",
+                "isExactName": false,
+                "resourceName": "WireVersionTest",
+                "doc": "Get a WireVersionTest",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "115",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "116",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "117",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "opaque-read"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "118",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "119",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "120",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "121",
+                        "kind": "method",
+                        "name": "subscriptionId",
+                        "serializedName": "subscriptionId",
+                        "doc": "The ID of the target subscription. The value must be an UUID.",
+                        "type": {
+                          "$id": "122",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "123",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.subscriptionId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "124",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "125",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "126",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "127",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "128",
+                    "kind": "path",
+                    "name": "wireVersionTestName",
+                    "serializedName": "wireVersionTestName",
+                    "doc": "The name of the WireVersionTest",
+                    "type": {
+                      "$id": "129",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.wireVersionTestName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "130",
+                        "kind": "method",
+                        "name": "wireVersionTestName",
+                        "serializedName": "wireVersionTestName",
+                        "doc": "The name of the WireVersionTest",
+                        "type": {
+                          "$id": "131",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.wireVersionTestName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "132",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "11"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "133",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "29"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceRead",
+                    "arguments": {}
+                  },
+                  {
+                    "name": "Azure.ResourceManager.@hasApiVersionOverride",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "126"
+                },
+                {
+                  "$ref": "130"
+                },
+                {
+                  "$ref": "133"
+                },
+                {
+                  "$id": "134",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "119"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "29"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.get"
+            },
+            {
+              "$id": "135",
+              "kind": "paging",
+              "name": "listBySubscription",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "List WireVersionTest resources by subscription ID",
+              "operation": {
+                "$id": "136",
+                "name": "listBySubscription",
+                "isExactName": false,
+                "resourceName": "WireVersionTest",
+                "doc": "List WireVersionTest resources by subscription ID",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "137",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "138",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "139",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "opaque-read"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "140",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "141",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "142",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "121"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "143",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "13"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "144",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "13"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "85"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/wireVersionTests",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceList",
+                    "arguments": {}
+                  },
+                  {
+                    "name": "Azure.ResourceManager.@hasApiVersionOverride",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "144"
+                },
+                {
+                  "$id": "145",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "141"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "87"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listBySubscription",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
+              }
+            },
+            {
+              "$id": "146",
+              "kind": "paging",
+              "name": "listByResourceGroup",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "List WireVersionTest resources by resource group",
+              "operation": {
+                "$id": "147",
+                "name": "listByResourceGroup",
+                "isExactName": false,
+                "resourceName": "WireVersionTest",
+                "doc": "List WireVersionTest resources by resource group",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "148",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "149",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "150",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "opaque-read"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "151",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "152",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "153",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "121"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "154",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "155",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "156",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "157",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "158",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "15"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "159",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "85"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceList",
+                    "arguments": {}
+                  },
+                  {
+                    "name": "Azure.ResourceManager.@hasApiVersionOverride",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "156"
+                },
+                {
+                  "$ref": "159"
+                },
+                {
+                  "$id": "160",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "152"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "87"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionReads.listByResourceGroup",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
+              }
+            },
+            {
+              "$id": "161",
+              "kind": "basic",
+              "name": "createOrUpdate",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "Create a WireVersionTest",
+              "operation": {
+                "$id": "162",
+                "name": "createOrUpdate",
+                "isExactName": false,
+                "resourceName": "WireVersionTest",
+                "doc": "Create a WireVersionTest",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "163",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "164",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "165",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "opaque-write"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "166",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "167",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "168",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "121"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "169",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "170",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "171",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "172",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "173",
+                    "kind": "path",
+                    "name": "wireVersionTestName",
+                    "serializedName": "wireVersionTestName",
+                    "doc": "The name of the WireVersionTest",
+                    "type": {
+                      "$id": "174",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.wireVersionTestName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "175",
+                        "kind": "method",
+                        "name": "wireVersionTestName",
+                        "serializedName": "wireVersionTestName",
+                        "doc": "The name of the WireVersionTest",
+                        "type": {
+                          "$id": "176",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.wireVersionTestName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "177",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "17"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "178",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "17"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "179",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "19"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "180",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "181",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "29"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.resource",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "182",
+                        "kind": "method",
+                        "name": "resource",
+                        "serializedName": "resource",
+                        "doc": "Resource create parameters.",
+                        "type": {
+                          "$ref": "29"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.resource",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "resource"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "29"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "29"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+                    "arguments": {}
+                  },
+                  {
+                    "name": "Azure.ResourceManager.@hasApiVersionOverride",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "171"
+                },
+                {
+                  "$ref": "175"
+                },
+                {
+                  "$ref": "182"
+                },
+                {
+                  "$ref": "178"
+                },
+                {
+                  "$ref": "180"
+                },
+                {
+                  "$id": "183",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "167"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "29"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.createOrUpdate"
+            },
+            {
+              "$id": "184",
+              "kind": "basic",
+              "name": "update",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "Update a WireVersionTest",
+              "operation": {
+                "$id": "185",
+                "name": "update",
+                "isExactName": false,
+                "resourceName": "WireVersionTest",
+                "doc": "Update a WireVersionTest",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "186",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "187",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "188",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "opaque-write"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "189",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "190",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "191",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "121"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "192",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "193",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "194",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "195",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "196",
+                    "kind": "path",
+                    "name": "wireVersionTestName",
+                    "serializedName": "wireVersionTestName",
+                    "doc": "The name of the WireVersionTest",
+                    "type": {
+                      "$id": "197",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.wireVersionTestName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "198",
+                        "kind": "method",
+                        "name": "wireVersionTestName",
+                        "serializedName": "wireVersionTestName",
+                        "doc": "The name of the WireVersionTest",
+                        "type": {
+                          "$id": "199",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.wireVersionTestName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "200",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "21"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "201",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "21"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "202",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "23"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "203",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "23"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "204",
+                    "kind": "body",
+                    "name": "properties",
+                    "serializedName": "properties",
+                    "doc": "The resource properties to be updated.",
+                    "type": {
+                      "$ref": "29"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.properties",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "205",
+                        "kind": "method",
+                        "name": "properties",
+                        "serializedName": "properties",
+                        "doc": "The resource properties to be updated.",
+                        "type": {
+                          "$ref": "29"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.properties",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "properties"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "29"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PATCH",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": false,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceUpdate",
+                    "arguments": {}
+                  },
+                  {
+                    "name": "Azure.ResourceManager.@hasApiVersionOverride",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "194"
+                },
+                {
+                  "$ref": "198"
+                },
+                {
+                  "$ref": "205"
+                },
+                {
+                  "$ref": "201"
+                },
+                {
+                  "$ref": "203"
+                },
+                {
+                  "$id": "206",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "190"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "29"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionWrites.update"
+            },
+            {
+              "$id": "207",
+              "kind": "basic",
+              "name": "ping",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "A synchronous resource action.",
+              "operation": {
+                "$id": "208",
+                "name": "ping",
+                "isExactName": false,
+                "resourceName": "WireVersionActions",
+                "doc": "A synchronous resource action.",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "209",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "210",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "211",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-05-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "212",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "213",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "214",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "121"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "215",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "216",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "217",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "218",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "219",
+                    "kind": "path",
+                    "name": "wireVersionTestName",
+                    "serializedName": "wireVersionTestName",
+                    "doc": "The name of the WireVersionTest",
+                    "type": {
+                      "$id": "220",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.wireVersionTestName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "221",
+                        "kind": "method",
+                        "name": "wireVersionTestName",
+                        "serializedName": "wireVersionTestName",
+                        "doc": "The name of the WireVersionTest",
+                        "type": {
+                          "$id": "222",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.wireVersionTestName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "223",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "25"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "224",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "25"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "29"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/wireVersionTests/{wireVersionTestName}/ping",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceAction",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "217"
+                },
+                {
+                  "$ref": "221"
+                },
+                {
+                  "$ref": "224"
+                },
+                {
+                  "$id": "225",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "213"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "29"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionActions.ping"
+            },
+            {
+              "$id": "226",
+              "kind": "basic",
+              "name": "checkWireVersion",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01",
+                "2024-05-01"
+              ],
+              "doc": "",
+              "operation": {
+                "$id": "227",
+                "name": "checkWireVersion",
+                "isExactName": false,
+                "resourceName": "WireVersionProviderActions",
+                "doc": "",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "228",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "229",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "230",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "opaque-non-resource"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "231",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "232",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "233",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "121"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "234",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "27"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "235",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "27"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$id": "236",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "text/plain"
+                    ],
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/checkWireVersion",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@hasApiVersionOverride",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtApiVersionOverride.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "235"
+                },
+                {
+                  "$id": "237",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "232"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "236"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.WireVersionProviderActions.checkWireVersion"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "238",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "239",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "240",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "MgmtTypeSpec.endpoint",
+              "isExactName": false
+            },
+            {
+              "$ref": "95"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "MgmtTypeSpec",
+          "apiVersions": [
+            "2024-04-01",
+            "2024-05-01"
+          ],
+          "parent": {
+            "$ref": "91"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://management.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}
