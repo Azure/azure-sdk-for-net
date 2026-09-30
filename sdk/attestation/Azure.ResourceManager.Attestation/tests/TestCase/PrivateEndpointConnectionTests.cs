@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Attestation.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("Blocked until the Network subnet policy compatibility fix is released and playback assets are aligned. See https://github.com/Azure/azure-sdk-for-net/issues/63496.")]
         public async Task PrivateEndpointConnectionApiTest()
         {
             //Prepare
