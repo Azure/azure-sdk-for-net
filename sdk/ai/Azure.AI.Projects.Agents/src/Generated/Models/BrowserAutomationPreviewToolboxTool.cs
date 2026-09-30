@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewToolboxTool"/>. </summary>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolParameters"/> is null. </exception>
-        public BrowserAutomationPreviewToolboxTool(BrowserAutomationToolOptions toolParameters) : base(ToolboxToolType.BrowserAutomationPreview)
+        public BrowserAutomationPreviewToolboxTool(Extensions.OpenAI.BrowserAutomationToolOptions toolParameters) : base(ToolboxToolType.BrowserAutomationPreview)
         {
             Argument.AssertNotNull(toolParameters, nameof(toolParameters));
 
@@ -34,12 +34,12 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
-        internal BrowserAutomationPreviewToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrowserAutomationToolOptions toolParameters) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal BrowserAutomationPreviewToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Extensions.OpenAI.BrowserAutomationToolOptions toolParameters) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ToolParameters = toolParameters;
         }
 
         /// <summary> The Browser Automation Tool parameters. </summary>
-        public BrowserAutomationToolOptions ToolParameters { get; set; }
+        public Extensions.OpenAI.BrowserAutomationToolOptions ToolParameters { get; set; }
     }
 }

@@ -221,9 +221,9 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         WebIQ
     }
 
-    private AzureAISearchToolIndex GetAISearchIndex()
+    private Azure.AI.Extensions.OpenAI.AzureAISearchToolIndex GetAISearchIndex()
     {
-        AzureAISearchToolIndex index = new()
+        Azure.AI.Extensions.OpenAI.AzureAISearchToolIndex index = new()
         {
             ProjectConnectionId = TestEnvironment.AI_SEARCH_CONNECTION_NAME,
             IndexName = "sample_index",
@@ -288,7 +288,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                     City = "Centralia"
                 },
             },
-            ToolType.AzureAISearch => new AzureAISearchToolboxTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()]))
+            ToolType.AzureAISearch => new AzureAISearchToolboxTool(new Azure.AI.Extensions.OpenAI.AzureAISearchToolOptions(indexes: [GetAISearchIndex()]))
             {
                 Name = "azure-ai-search",
                 Description = "Test Azure AI search"
@@ -300,7 +300,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
                 ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
             },
-            ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
+            ToolType.OpenAPI => new OpenApiToolboxTool(new Azure.AI.Extensions.OpenAI.OpenApiFunctionDefinition(
                 name: "get_weather",
                 specification: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
                 authentication: new OpenApiAnonymousAuthenticationDetails()
@@ -310,7 +310,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Description = "Test Open API"
             },
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
-            new BrowserAutomationToolOptions(
+            new Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             ))
             {
@@ -319,7 +319,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             // TODO: Uncomment this code when the BrowserAutomation will be available on the service side.
             //ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
-            //new BrowserAutomationToolOptions(
+            //new Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
             //    new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             //))
             //{

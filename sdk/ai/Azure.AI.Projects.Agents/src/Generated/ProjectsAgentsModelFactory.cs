@@ -2618,7 +2618,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="azureAiSearch"> The azure ai search index resource. </param>
         /// <returns> A new <see cref="Agents.AzureAISearchToolboxTool"/> instance for mocking. </returns>
-        public static AzureAISearchToolboxTool AzureAISearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, AzureAISearchToolOptions azureAiSearch = default)
+        public static AzureAISearchToolboxTool AzureAISearchToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Extensions.OpenAI.AzureAISearchToolOptions azureAiSearch = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -2641,7 +2641,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="functionDefinition"> The openapi function definition. </param>
         /// <returns> A new <see cref="Agents.OpenApiToolboxTool"/> instance for mocking. </returns>
-        public static OpenApiToolboxTool OpenApiToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, OpenApiFunctionDefinition functionDefinition = default)
+        public static OpenApiToolboxTool OpenApiToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -2746,7 +2746,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
+        public static BrowserAutomationPreviewToolboxTool BrowserAutomationPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Extensions.OpenAI.BrowserAutomationToolOptions toolParameters = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 

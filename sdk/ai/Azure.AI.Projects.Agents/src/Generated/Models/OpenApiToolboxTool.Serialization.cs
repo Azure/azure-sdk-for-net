@@ -111,7 +111,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            OpenApiFunctionDefinition functionDefinition = default;
+            Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -152,7 +152,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("openapi"u8))
                 {
-                    functionDefinition = ModelReaderWriter.Read<OpenApiFunctionDefinition>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    functionDefinition = ModelReaderWriter.Read<Extensions.OpenAI.OpenApiFunctionDefinition>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
