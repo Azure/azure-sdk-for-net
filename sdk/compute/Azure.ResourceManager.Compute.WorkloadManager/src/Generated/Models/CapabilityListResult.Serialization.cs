@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (CapabilityData item in Value)
+            foreach (WorkloadCapabilityData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             {
                 return null;
             }
-            IList<CapabilityData> value = default;
+            IList<WorkloadCapabilityData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<CapabilityData> array = new List<CapabilityData>();
+                    List<WorkloadCapabilityData> array = new List<WorkloadCapabilityData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CapabilityData.DeserializeCapabilityData(item, options));
+                        array.Add(WorkloadCapabilityData.DeserializeWorkloadCapabilityData(item, options));
                     }
                     value = array;
                     continue;

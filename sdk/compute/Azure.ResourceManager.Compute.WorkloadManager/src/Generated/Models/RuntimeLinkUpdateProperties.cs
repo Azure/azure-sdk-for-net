@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <summary> Initializes a new instance of <see cref="RuntimeLinkUpdateProperties"/>. </summary>
         /// <param name="capacityProfile"> The mutable capacity policy for the runtime composition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuntimeLinkUpdateProperties(RuntimeLinkCapacityProfileUpdate capacityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuntimeLinkUpdateProperties(RuntimeLinkCapacityProfilePatch capacityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityProfile = capacityProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The mutable capacity policy for the runtime composition. </summary>
-        public RuntimeLinkCapacityProfileUpdate CapacityProfile { get; set; }
+        public RuntimeLinkCapacityProfilePatch CapacityProfile { get; set; }
     }
 }

@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
     /// <summary>
-    /// A class representing a Capability along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CapabilityResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkloadSpaceResource"/> using the GetCapabilities method.
+    /// A class representing a WorkloadCapability along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadCapabilityResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadSpaceResource"/> using the GetWorkloadCapabilities method.
     /// </summary>
-    public partial class CapabilityResource : ArmResource
+    public partial class WorkloadCapabilityResource : ArmResource
     {
         private readonly ClientDiagnostics _capabilitiesClientDiagnostics;
         private readonly Capabilities _capabilitiesRestClient;
-        private readonly CapabilityData _data;
+        private readonly WorkloadCapabilityData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/workloadSpaces/capabilities";
 
-        /// <summary> Initializes a new instance of CapabilityResource for mocking. </summary>
-        protected CapabilityResource()
+        /// <summary> Initializes a new instance of WorkloadCapabilityResource for mocking. </summary>
+        protected WorkloadCapabilityResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CapabilityResource(ArmClient client, CapabilityData data) : this(client, data.Id)
+        internal WorkloadCapabilityResource(ArmClient client, WorkloadCapabilityData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapabilityResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CapabilityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WorkloadCapabilityResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string capabilityApiVersion);
+            TryGetApiVersion(ResourceType, out string workloadCapabilityApiVersion);
             _capabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.WorkloadManager", ResourceType.Namespace, Diagnostics);
-            _capabilitiesRestClient = new Capabilities(_capabilitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, capabilityApiVersion ?? "2026-11-01-preview");
+            _capabilitiesRestClient = new Capabilities(_capabilitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadCapabilityApiVersion ?? "2026-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CapabilityData Data
+        public virtual WorkloadCapabilityData Data
         {
             get
             {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="WorkloadCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CapabilityResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadCapabilityResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.Get");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 };
                 HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
+                Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="WorkloadCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CapabilityResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadCapabilityResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.Get");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.Get");
             scope.Start();
             try
             {
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 };
                 HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
+                Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="WorkloadCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<CapabilityResource>> UpdateAsync(WaitUntil waitUntil, WorkloadCapabilityPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WorkloadCapabilityResource>> UpdateAsync(WaitUntil waitUntil, WorkloadCapabilityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.Update");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.Update");
             scope.Start();
             try
             {
@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 };
                 HttpMessage message = _capabilitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkloadCapabilityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WorkloadManagerArmOperation<CapabilityResource> operation = new WorkloadManagerArmOperation<CapabilityResource>(
-                    new CapabilityResourceOperationSource(Client),
+                WorkloadManagerArmOperation<WorkloadCapabilityResource> operation = new WorkloadManagerArmOperation<WorkloadCapabilityResource>(
+                    new WorkloadCapabilityResourceOperationSource(Client),
                     _capabilitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="WorkloadCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<CapabilityResource> Update(WaitUntil waitUntil, WorkloadCapabilityPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WorkloadCapabilityResource> Update(WaitUntil waitUntil, WorkloadCapabilityPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.Update");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.Update");
             scope.Start();
             try
             {
@@ -288,8 +288,8 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 };
                 HttpMessage message = _capabilitiesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WorkloadCapabilityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WorkloadManagerArmOperation<CapabilityResource> operation = new WorkloadManagerArmOperation<CapabilityResource>(
-                    new CapabilityResourceOperationSource(Client),
+                WorkloadManagerArmOperation<WorkloadCapabilityResource> operation = new WorkloadManagerArmOperation<WorkloadCapabilityResource>(
+                    new WorkloadCapabilityResourceOperationSource(Client),
                     _capabilitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="WorkloadCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.Delete");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.Delete");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="CapabilityResource"/>. </description>
+        /// <description> <see cref="WorkloadCapabilityResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.Delete");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.Delete");
             scope.Start();
             try
             {
@@ -411,12 +411,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<CapabilityResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadCapabilityResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.AddTag");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.AddTag");
             scope.Start();
             try
             {
@@ -431,19 +431,19 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     };
                     HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
-                    return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    WorkloadCapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<CapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<WorkloadCapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -459,12 +459,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<CapabilityResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadCapabilityResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.AddTag");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.AddTag");
             scope.Start();
             try
             {
@@ -479,19 +479,19 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     };
                     HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
-                    return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    WorkloadCapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
                     WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<CapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<WorkloadCapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -506,11 +506,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<CapabilityResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadCapabilityResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.SetTags");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.SetTags");
             scope.Start();
             try
             {
@@ -526,15 +526,15 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     };
                     HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
-                    return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    WorkloadCapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<CapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<WorkloadCapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -549,11 +549,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<CapabilityResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadCapabilityResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.SetTags");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.SetTags");
             scope.Start();
             try
             {
@@ -569,15 +569,15 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     };
                     HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
-                    return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    WorkloadCapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
                     WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<CapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<WorkloadCapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<CapabilityResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadCapabilityResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.RemoveTag");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.RemoveTag");
             scope.Start();
             try
             {
@@ -611,19 +611,19 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     };
                     HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
-                    return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    WorkloadCapabilityData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<CapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<WorkloadCapabilityResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -638,11 +638,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<CapabilityResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadCapabilityResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("CapabilityResource.RemoveTag");
+            using DiagnosticScope scope = _capabilitiesClientDiagnostics.CreateScope("WorkloadCapabilityResource.RemoveTag");
             scope.Start();
             try
             {
@@ -657,19 +657,19 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     };
                     HttpMessage message = _capabilitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<CapabilityData> response = Response.FromValue(CapabilityData.FromResponse(result), result);
-                    return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
+                    Response<WorkloadCapabilityData> response = Response.FromValue(WorkloadCapabilityData.FromResponse(result), result);
+                    return Response.FromValue(new WorkloadCapabilityResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    CapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    WorkloadCapabilityData current = Get(cancellationToken: cancellationToken).Value.Data;
                     WorkloadCapabilityPatch patch = new WorkloadCapabilityPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<CapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<WorkloadCapabilityResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

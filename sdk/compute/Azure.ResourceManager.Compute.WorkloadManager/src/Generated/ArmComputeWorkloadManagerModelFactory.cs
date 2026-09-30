@@ -75,53 +75,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                 default);
         }
 
-        /// <param name="provisioningState"> The provisioning state of the runtime binding. </param>
-        /// <param name="providerResourceId"> The provider resource created or referenced by the binding. </param>
-        /// <param name="provisioningMode"> Indicates whether Workload Manager owns or references the runtime. </param>
-        /// <param name="executionIdentity"> The identity made available to the execution runtime. </param>
-        /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
-        /// <returns> A new <see cref="Models.RuntimeBindingProperties"/> instance for mocking. </returns>
-        public static RuntimeBindingProperties RuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState = default, ResourceIdentifier providerResourceId = default, string provisioningMode = default, ExecutionIdentity executionIdentity = default, RuntimeNetworkProfile networkProfile = default)
-        {
-            return new UnknownRuntimeBindingProperties(
-                provisioningState,
-                providerResourceId,
-                default,
-                executionIdentity is null ? default : new RuntimeIdentityProfile(executionIdentity, default),
-                networkProfile,
-                default);
-        }
-
-        /// <summary>
-        /// Configuration for an identity used by an execution runtime.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ReferencedExecutionIdentity"/> and <see cref="Models.ServiceManagedExecutionIdentity"/>.
-        /// </summary>
-        /// <param name="provisioningMode"> Indicates whether the identity is managed by the service or supplied by the customer. </param>
-        /// <param name="scope"> The execution boundary across which the identity is shared. </param>
-        /// <returns> A new <see cref="Models.ExecutionIdentity"/> instance for mocking. </returns>
-        public static ExecutionIdentity ExecutionIdentity(string provisioningMode = default, ExecutionIdentityScope scope = default)
-        {
-            return new UnknownExecutionIdentity(default, scope, default);
-        }
-
-        /// <summary> A customer-provided identity used by an execution runtime. </summary>
-        /// <param name="scope"> The execution boundary across which the identity is shared. </param>
-        /// <param name="userAssignedIdentityResourceId"> The customer-provided user-assigned identity. </param>
-        /// <returns> A new <see cref="Models.ReferencedExecutionIdentity"/> instance for mocking. </returns>
-        public static ReferencedExecutionIdentity ReferencedExecutionIdentity(ExecutionIdentityScope scope = default, ResourceIdentifier userAssignedIdentityResourceId = default)
-        {
-            return new ReferencedExecutionIdentity(default, scope, default, userAssignedIdentityResourceId);
-        }
-
-        /// <summary> An identity created and owned by Workload Manager. </summary>
-        /// <param name="scope"> The execution boundary across which the identity is shared. </param>
-        /// <param name="userAssignedIdentityResourceId"> The service-created user-assigned identity. </param>
-        /// <returns> A new <see cref="Models.ServiceManagedExecutionIdentity"/> instance for mocking. </returns>
-        public static ServiceManagedExecutionIdentity ServiceManagedExecutionIdentity(ExecutionIdentityScope scope = default, ResourceIdentifier userAssignedIdentityResourceId = default)
-        {
-            return new ServiceManagedExecutionIdentity(default, scope, default, userAssignedIdentityResourceId);
-        }
-
         /// <summary> Network configuration for a managed runtime. </summary>
         /// <param name="subnetResourceId"> The customer-provided subnet used by the runtime. </param>
         /// <param name="egressMode"> Indicates who manages runtime egress. </param>
@@ -131,24 +84,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
             return new RuntimeNetworkProfile(subnetResourceId, egressMode, default);
         }
 
-        /// <param name="provisioningState"> The provisioning state of the runtime binding. </param>
-        /// <param name="providerResourceId"> The provider resource created or referenced by the binding. </param>
-        /// <param name="executionIdentity"> The identity made available to the execution runtime. </param>
-        /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
-        /// <param name="managedProfile"> The limited service-managed runtime configuration. </param>
-        /// <returns> A new <see cref="Models.ManagedRuntimeBindingProperties"/> instance for mocking. </returns>
-        public static ManagedRuntimeBindingProperties ManagedRuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState = default, ResourceIdentifier providerResourceId = default, ExecutionIdentity executionIdentity = default, RuntimeNetworkProfile networkProfile = default, ManagedRuntimeProfile managedProfile = default)
-        {
-            return new ManagedRuntimeBindingProperties(
-                provisioningState,
-                providerResourceId,
-                default,
-                executionIdentity is null ? default : new RuntimeIdentityProfile(executionIdentity, default),
-                networkProfile,
-                default,
-                managedProfile);
-        }
-
         /// <summary> Customer-selected configuration for a service-managed runtime. </summary>
         /// <param name="offering"> The required product offering when the runtime binding kind is Kubernetes. </param>
         /// <param name="provider"> The required provider when the runtime binding kind is ServerlessContainers. </param>
@@ -156,24 +91,6 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         public static ManagedRuntimeProfile ManagedRuntimeProfile(string offering = default, string provider = default)
         {
             return new ManagedRuntimeProfile(offering, provider, default);
-        }
-
-        /// <param name="provisioningState"> The provisioning state of the runtime binding. </param>
-        /// <param name="providerResourceId"> The provider resource created or referenced by the binding. </param>
-        /// <param name="executionIdentity"> The identity made available to the execution runtime. </param>
-        /// <param name="networkProfile"> The runtime network configuration for a managed runtime. </param>
-        /// <param name="resourceId"> The existing customer-owned runtime resource. </param>
-        /// <returns> A new <see cref="Models.ReferencedRuntimeBindingProperties"/> instance for mocking. </returns>
-        public static ReferencedRuntimeBindingProperties ReferencedRuntimeBindingProperties(WorkloadManagerProvisioningState? provisioningState = default, ResourceIdentifier providerResourceId = default, ExecutionIdentity executionIdentity = default, RuntimeNetworkProfile networkProfile = default, ResourceIdentifier resourceId = default)
-        {
-            return new ReferencedRuntimeBindingProperties(
-                provisioningState,
-                providerResourceId,
-                default,
-                executionIdentity is null ? default : new RuntimeIdentityProfile(executionIdentity, default),
-                networkProfile,
-                default,
-                resourceId);
         }
 
         /// <summary> Mutable properties of a runtime binding. </summary>
@@ -250,7 +167,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="runtimeLinkUpdateCapacityProfile"> The mutable capacity policy for the runtime composition. </param>
         /// <returns> A new <see cref="Models.RuntimeLinkPatch"/> instance for mocking. </returns>
-        public static RuntimeLinkPatch RuntimeLinkPatch(IDictionary<string, string> tags = default, RuntimeLinkCapacityProfileUpdate runtimeLinkUpdateCapacityProfile = default)
+        public static RuntimeLinkPatch RuntimeLinkPatch(IDictionary<string, string> tags = default, RuntimeLinkCapacityProfilePatch runtimeLinkUpdateCapacityProfile = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -260,10 +177,10 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <summary> Capacity policy values that may be updated for the runtime composition. </summary>
         /// <param name="minimumNodes"> The minimum number of execution nodes. </param>
         /// <param name="maximumNodes"> The maximum number of execution nodes. </param>
-        /// <returns> A new <see cref="Models.RuntimeLinkCapacityProfileUpdate"/> instance for mocking. </returns>
-        public static RuntimeLinkCapacityProfileUpdate RuntimeLinkCapacityProfileUpdate(int? minimumNodes = default, int? maximumNodes = default)
+        /// <returns> A new <see cref="Models.RuntimeLinkCapacityProfilePatch"/> instance for mocking. </returns>
+        public static RuntimeLinkCapacityProfilePatch RuntimeLinkCapacityProfilePatch(int? minimumNodes = default, int? maximumNodes = default)
         {
-            return new RuntimeLinkCapacityProfileUpdate(minimumNodes, maximumNodes, default);
+            return new RuntimeLinkCapacityProfilePatch(minimumNodes, maximumNodes, default);
         }
 
         /// <summary> A capability enabled for a workload space. </summary>
@@ -275,12 +192,12 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <returns> A new <see cref="WorkloadManager.CapabilityData"/> instance for mocking. </returns>
-        public static CapabilityData CapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadCapabilityProperties properties = default, WorkloadCapabilityKind? kind = default)
+        /// <returns> A new <see cref="WorkloadManager.WorkloadCapabilityData"/> instance for mocking. </returns>
+        public static WorkloadCapabilityData WorkloadCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadCapabilityProperties properties = default, WorkloadCapabilityKind? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CapabilityData(
+            return new WorkloadCapabilityData(
                 id,
                 name,
                 resourceType,

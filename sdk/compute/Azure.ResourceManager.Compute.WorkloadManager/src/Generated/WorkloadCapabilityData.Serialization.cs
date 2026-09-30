@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
     /// <summary> A capability enabled for a workload space. </summary>
-    public partial class CapabilityData : TrackedResourceData, IJsonModel<CapabilityData>
+    public partial class WorkloadCapabilityData : TrackedResourceData, IJsonModel<WorkloadCapabilityData>
     {
-        /// <summary> Initializes a new instance of <see cref="CapabilityData"/> for deserialization. </summary>
-        internal CapabilityData()
+        /// <summary> Initializes a new instance of <see cref="WorkloadCapabilityData"/> for deserialization. </summary>
+        internal WorkloadCapabilityData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilityData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCapabilityData(document.RootElement, options);
+                        return DeserializeWorkloadCapabilityData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilityData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadCapabilityData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilityData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeWorkloadManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilityData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadCapabilityData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CapabilityData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkloadCapabilityData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CapabilityData IPersistableModel<CapabilityData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CapabilityData)PersistableModelCreateCore(data, options);
+        WorkloadCapabilityData IPersistableModel<WorkloadCapabilityData>.Create(BinaryData data, ModelReaderWriterOptions options) => (WorkloadCapabilityData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CapabilityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkloadCapabilityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="capabilityData"> The <see cref="CapabilityData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CapabilityData capabilityData)
+        /// <param name="workloadCapabilityData"> The <see cref="WorkloadCapabilityData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(WorkloadCapabilityData workloadCapabilityData)
         {
-            if (capabilityData == null)
+            if (workloadCapabilityData == null)
             {
                 return null;
             }
-            return RequestContent.Create(capabilityData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(workloadCapabilityData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CapabilityData"/> from. </param>
-        internal static CapabilityData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WorkloadCapabilityData"/> from. </param>
+        internal static WorkloadCapabilityData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeWorkloadCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CapabilityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkloadCapabilityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilityData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilityData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadCapabilityData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -130,24 +130,24 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CapabilityData IJsonModel<CapabilityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CapabilityData)JsonModelCreateCore(ref reader, options);
+        WorkloadCapabilityData IJsonModel<WorkloadCapabilityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WorkloadCapabilityData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CapabilityData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilityData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadCapabilityData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapabilityData(document.RootElement, options);
+            return DeserializeWorkloadCapabilityData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CapabilityData DeserializeCapabilityData(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkloadCapabilityData DeserializeWorkloadCapabilityData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CapabilityData(
+            return new WorkloadCapabilityData(
                 id,
                 name,
                 resourceType,

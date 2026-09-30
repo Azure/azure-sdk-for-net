@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> Initializes a new instance of <see cref="CapabilityListResult"/>. </summary>
         /// <param name="value"> The Capability items on this page. </param>
-        internal CapabilityListResult(IEnumerable<CapabilityData> value)
+        internal CapabilityListResult(IEnumerable<WorkloadCapabilityData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="value"> The Capability items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityListResult(IList<CapabilityData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapabilityListResult(IList<WorkloadCapabilityData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         }
 
         /// <summary> The Capability items on this page. </summary>
-        public IList<CapabilityData> Value { get; }
+        public IList<WorkloadCapabilityData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

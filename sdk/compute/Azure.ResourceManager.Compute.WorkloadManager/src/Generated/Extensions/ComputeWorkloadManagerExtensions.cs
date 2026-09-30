@@ -92,21 +92,21 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="WorkloadCapabilityResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeWorkloadManagerArmClient.GetCapabilityResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeWorkloadManagerArmClient.GetWorkloadCapabilityResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
-        public static CapabilityResource GetCapabilityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadCapabilityResource"/> object. </returns>
+        public static WorkloadCapabilityResource GetWorkloadCapabilityResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeWorkloadManagerArmClient(client).GetCapabilityResource(id);
+            return GetMockableComputeWorkloadManagerArmClient(client).GetWorkloadCapabilityResource(id);
         }
 
         /// <summary>

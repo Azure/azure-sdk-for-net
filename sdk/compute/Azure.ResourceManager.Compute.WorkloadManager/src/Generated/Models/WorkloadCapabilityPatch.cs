@@ -39,5 +39,22 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal CapabilityUpdateProperties Properties { get; set; }
+
+        /// <summary> The version selection policy for the capability. </summary>
+        public WorkloadCapabilityVersionPolicy? CapabilityUpdateVersionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VersionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapabilityUpdateProperties();
+                }
+                Properties.VersionPolicy = value;
+            }
+        }
     }
 }

@@ -14,51 +14,51 @@ using Azure.ResourceManager.Compute.WorkloadManager;
 namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 {
     /// <summary> Capacity policy values that may be updated for the runtime composition. </summary>
-    public partial class RuntimeLinkCapacityProfileUpdate : IJsonModel<RuntimeLinkCapacityProfileUpdate>
+    public partial class RuntimeLinkCapacityProfilePatch : IJsonModel<RuntimeLinkCapacityProfilePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuntimeLinkCapacityProfileUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RuntimeLinkCapacityProfilePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRuntimeLinkCapacityProfileUpdate(document.RootElement, options);
+                        return DeserializeRuntimeLinkCapacityProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfileUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeWorkloadManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfileUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RuntimeLinkCapacityProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RuntimeLinkCapacityProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeLinkCapacityProfileUpdate IPersistableModel<RuntimeLinkCapacityProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RuntimeLinkCapacityProfilePatch IPersistableModel<RuntimeLinkCapacityProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RuntimeLinkCapacityProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RuntimeLinkCapacityProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RuntimeLinkCapacityProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RuntimeLinkCapacityProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfileUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfilePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(MinimumNodes))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RuntimeLinkCapacityProfileUpdate IJsonModel<RuntimeLinkCapacityProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RuntimeLinkCapacityProfilePatch IJsonModel<RuntimeLinkCapacityProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RuntimeLinkCapacityProfileUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RuntimeLinkCapacityProfilePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RuntimeLinkCapacityProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfileUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeLinkCapacityProfilePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRuntimeLinkCapacityProfileUpdate(document.RootElement, options);
+            return DeserializeRuntimeLinkCapacityProfilePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RuntimeLinkCapacityProfileUpdate DeserializeRuntimeLinkCapacityProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static RuntimeLinkCapacityProfilePatch DeserializeRuntimeLinkCapacityProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RuntimeLinkCapacityProfileUpdate(minimumNodes, maximumNodes, additionalBinaryDataProperties);
+            return new RuntimeLinkCapacityProfilePatch(minimumNodes, maximumNodes, additionalBinaryDataProperties);
         }
     }
 }

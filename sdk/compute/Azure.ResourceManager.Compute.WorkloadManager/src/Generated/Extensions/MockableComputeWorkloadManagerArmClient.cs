@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.Compute.WorkloadManager.Mocking
             return new RuntimeLinkResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="WorkloadCapabilityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityResource"/> object. </returns>
-        public virtual CapabilityResource GetCapabilityResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WorkloadCapabilityResource"/> object. </returns>
+        public virtual WorkloadCapabilityResource GetWorkloadCapabilityResource(ResourceIdentifier id)
         {
-            CapabilityResource.ValidateResourceId(id);
-            return new CapabilityResource(Client, id);
+            WorkloadCapabilityResource.ValidateResourceId(id);
+            return new WorkloadCapabilityResource(Client, id);
         }
     }
 }

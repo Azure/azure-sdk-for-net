@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
     /// <summary></summary>
-    internal partial class CapabilityResourceOperationSource : IOperationSource<CapabilityResource>
+    internal partial class WorkloadCapabilityResourceOperationSource : IOperationSource<WorkloadCapabilityResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CapabilityResourceOperationSource(ArmClient client)
+        internal WorkloadCapabilityResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CapabilityResource IOperationSource<CapabilityResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkloadCapabilityResource IOperationSource<WorkloadCapabilityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CapabilityData data = CapabilityData.DeserializeCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CapabilityResource(_client, data);
+            WorkloadCapabilityData data = WorkloadCapabilityData.DeserializeWorkloadCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadCapabilityResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CapabilityResource> IOperationSource<CapabilityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkloadCapabilityResource> IOperationSource<WorkloadCapabilityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CapabilityData data = CapabilityData.DeserializeCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CapabilityResource(_client, data);
+            WorkloadCapabilityData data = WorkloadCapabilityData.DeserializeWorkloadCapabilityData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkloadCapabilityResource(_client, data);
         }
     }
 }

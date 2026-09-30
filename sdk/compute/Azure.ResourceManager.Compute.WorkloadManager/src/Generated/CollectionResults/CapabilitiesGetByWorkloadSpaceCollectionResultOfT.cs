@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.WorkloadManager.Models;
 
 namespace Azure.ResourceManager.Compute.WorkloadManager
 {
-    internal partial class CapabilitiesGetByWorkloadSpaceCollectionResultOfT : Pageable<CapabilityData>
+    internal partial class CapabilitiesGetByWorkloadSpaceCollectionResultOfT : Pageable<WorkloadCapabilityData>
     {
         private readonly Capabilities _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CapabilitiesGetByWorkloadSpaceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<CapabilityData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<WorkloadCapabilityData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
                 }
                 CapabilityListResult result = CapabilityListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<CapabilityData>.FromValues((IReadOnlyList<CapabilityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<WorkloadCapabilityData>.FromValues((IReadOnlyList<WorkloadCapabilityData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -745,11 +745,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
             return GetRuntimeLinks().Get(linkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Capabilities in the <see cref="WorkloadSpaceResource"/>. </summary>
-        /// <returns> An object representing collection of Capabilities and their operations over a CapabilityResource. </returns>
-        public virtual CapabilityCollection GetCapabilities()
+        /// <summary> Gets a collection of WorkloadCapabilities in the <see cref="WorkloadSpaceResource"/>. </summary>
+        /// <returns> An object representing collection of WorkloadCapabilities and their operations over a WorkloadCapabilityResource. </returns>
+        public virtual WorkloadCapabilityCollection GetWorkloadCapabilities()
         {
-            return GetCachedClient(client => new CapabilityCollection(client, Id));
+            return GetCachedClient(client => new WorkloadCapabilityCollection(client, Id));
         }
 
         /// <summary> Gets a capability. </summary>
@@ -758,11 +758,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CapabilityResource>> GetCapabilityAsync(string capabilityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WorkloadCapabilityResource>> GetWorkloadCapabilityAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            return await GetCapabilities().GetAsync(capabilityName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadCapabilities().GetAsync(capabilityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a capability. </summary>
@@ -771,11 +771,11 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CapabilityResource> GetCapability(string capabilityName, CancellationToken cancellationToken = default)
+        public virtual Response<WorkloadCapabilityResource> GetWorkloadCapability(string capabilityName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
-            return GetCapabilities().Get(capabilityName, cancellationToken);
+            return GetWorkloadCapabilities().Get(capabilityName, cancellationToken);
         }
     }
 }

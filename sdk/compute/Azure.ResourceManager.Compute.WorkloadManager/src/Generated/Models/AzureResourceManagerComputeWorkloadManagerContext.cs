@@ -15,9 +15,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(CapabilityData))]
     [ModelReaderWriterBuildable(typeof(CapabilityListResult))]
-    [ModelReaderWriterBuildable(typeof(CapabilityResource))]
     [ModelReaderWriterBuildable(typeof(CapabilityUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ExecutionIdentity))]
     [ModelReaderWriterBuildable(typeof(ExecutionIdentityUpdate))]
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
     [ModelReaderWriterBuildable(typeof(RuntimeIdentityProfile))]
     [ModelReaderWriterBuildable(typeof(RuntimeIdentityProfileUpdate))]
     [ModelReaderWriterBuildable(typeof(RuntimeLinkCapacityProfile))]
-    [ModelReaderWriterBuildable(typeof(RuntimeLinkCapacityProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(RuntimeLinkCapacityProfilePatch))]
     [ModelReaderWriterBuildable(typeof(RuntimeLinkData))]
     [ModelReaderWriterBuildable(typeof(RuntimeLinkIntegrationProfile))]
     [ModelReaderWriterBuildable(typeof(RuntimeLinkListResult))]
@@ -47,8 +45,10 @@ namespace Azure.ResourceManager.Compute.WorkloadManager
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownExecutionIdentity))]
     [ModelReaderWriterBuildable(typeof(UnknownRuntimeBindingProperties))]
+    [ModelReaderWriterBuildable(typeof(WorkloadCapabilityData))]
     [ModelReaderWriterBuildable(typeof(WorkloadCapabilityPatch))]
     [ModelReaderWriterBuildable(typeof(WorkloadCapabilityProperties))]
+    [ModelReaderWriterBuildable(typeof(WorkloadCapabilityResource))]
     [ModelReaderWriterBuildable(typeof(WorkloadSpaceData))]
     [ModelReaderWriterBuildable(typeof(WorkloadSpaceListResult))]
     [ModelReaderWriterBuildable(typeof(WorkloadSpacePatch))]
