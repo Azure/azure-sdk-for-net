@@ -1,0 +1,8 @@
+{
+  "version": 0,
+  "snapshotTimestamp": "2024-01-15T08:00:00.000Z",
+  "cvId": 100,
+  "minLogWindowForNextSnapshot": "2024-01-15T08:00:00.000Z",
+  "maxLogWindowForCurrentSnapshot": "2024-01-15T09:00:00.000Z",
+  "status": "Finalized"
+}
