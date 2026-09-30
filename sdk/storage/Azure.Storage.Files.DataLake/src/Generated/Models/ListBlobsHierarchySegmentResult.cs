@@ -8,20 +8,20 @@
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> An enumeration of blobs. </summary>
-    internal partial class ListBlobsHierarchySegmentResponse
+    internal partial class ListBlobsHierarchySegmentResult
     {
-        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="segment"> The blob segment. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyListSegment segment)
+        internal ListBlobsHierarchySegmentResult(string serviceEndpoint, string containerName, BlobHierarchyListSegment segment)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             Segment = segment;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResult"/>. </summary>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="containerName"> The container name. </param>
         /// <param name="prefix"> The prefix filter. </param>
@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="delimiter"> The delimiter used for hierarchy. </param>
         /// <param name="segment"> The blob segment. </param>
         /// <param name="nextMarker"> The next marker for pagination. </param>
-        internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, string delimiter, BlobHierarchyListSegment segment, string nextMarker)
+        internal ListBlobsHierarchySegmentResult(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, string delimiter, BlobHierarchyListSegment segment, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
