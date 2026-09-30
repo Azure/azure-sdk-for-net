@@ -235,6 +235,7 @@ namespace Azure.ResourceManager.ElasticSan
         public ElasticSanVolumeData(long sizeGiB) { }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumeDataSourceInfo CreationData { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ElasticSan.Models.ManagedByResources> ManagedBy { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedByResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.ElasticSanProvisioningState? ProvisioningState { get { throw null; } }
         public long SizeGiB { get { throw null; } set { } }
         public Azure.ResourceManager.ElasticSan.Models.IscsiTargetInfo StorageTarget { get { throw null; } }
@@ -992,6 +993,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
     {
         public ElasticSanVolumePatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ElasticSan.Models.ManagedByResources> ManagedBy { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ManagedByResourceId { get { throw null; } set { } }
         public long? SizeGiB { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ElasticSan.Models.ElasticSanVolumePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
