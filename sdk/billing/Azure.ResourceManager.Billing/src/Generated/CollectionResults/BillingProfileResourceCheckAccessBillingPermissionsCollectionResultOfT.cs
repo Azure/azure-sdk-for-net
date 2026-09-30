@@ -17,7 +17,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class MicrosoftBillingBillingProfilesCheckAccessByBillingProfileCollectionResultOfT : Pageable<BillingCheckAccessResult>
+    internal partial class BillingProfileResourceCheckAccessBillingPermissionsCollectionResultOfT : Pageable<BillingCheckAccessResult>
     {
         private readonly BillingProfiles _client;
         private readonly string _billingAccountName;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftBillingBillingProfilesCheckAccessByBillingProfileCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingProfileResourceCheckAccessBillingPermissionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BillingProfiles client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftBillingBillingProfilesCheckAccessByBillingProfileCollectionResultOfT(BillingProfiles client, string billingAccountName, string billingProfileName, RequestContent content, RequestContext context, string diagnosticScope)
+        public BillingProfileResourceCheckAccessBillingPermissionsCollectionResultOfT(BillingProfiles client, string billingAccountName, string billingProfileName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftBillingBillingProfilesCheckAccessByBillingProfileCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingProfileResourceCheckAccessBillingPermissionsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftBillingBillingProfilesCheckAccessByBillingProfileCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BillingProfileResourceCheckAccessBillingPermissionsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<BillingCheckAccessResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);

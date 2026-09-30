@@ -17,39 +17,36 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT : Pageable<BillingCheckAccessResult>
+    internal partial class BillingDepartmentResourceCheckAccessBillingPermissionsCollectionResultOfT : Pageable<BillingCheckAccessResult>
     {
-        private readonly Customers _client;
+        private readonly Departments _client;
         private readonly string _billingAccountName;
-        private readonly string _billingProfileName;
-        private readonly string _customerName;
+        private readonly string _departmentName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Customers client used to send requests. </param>
+        /// <summary> Initializes a new instance of BillingDepartmentResourceCheckAccessBillingPermissionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Departments client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
+        /// <param name="departmentName"> The name of the department. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT(Customers client, string billingAccountName, string billingProfileName, string customerName, RequestContent content, RequestContext context, string diagnosticScope)
+        public BillingDepartmentResourceCheckAccessBillingPermissionsCollectionResultOfT(Departments client, string billingAccountName, string departmentName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _billingAccountName = billingAccountName;
-            _billingProfileName = billingProfileName;
-            _customerName = customerName;
+            _departmentName = departmentName;
             _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingDepartmentResourceCheckAccessBillingPermissionsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BillingDepartmentResourceCheckAccessBillingPermissionsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<BillingCheckAccessResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
@@ -66,7 +63,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateCheckAccessBillingPermissionsRequest(_billingAccountName, _billingProfileName, _customerName, _content, _context);
+            HttpMessage message = _client.CreateCheckAccessBillingPermissionsRequest(_billingAccountName, _departmentName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
