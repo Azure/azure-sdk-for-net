@@ -67,7 +67,8 @@ namespace Azure.Generator.Management.Providers
             _constructorParameters = constructorParameters;
             _backCompatProvider = backCompatProvider;
             _methodName = methodName;
-            _name = ManagementClientGenerator.Instance.OutputLibrary.GetUniqueCollectionResultName($"{enclosingTypeName}{methodName}");
+            _name = ManagementClientGenerator.Instance.OutputLibrary.GetArrayCollectionResultName(
+                $"{enclosingTypeName}{methodName}", ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace);
 
             _clientField = new FieldProvider(
                 FieldModifiers.Private | FieldModifiers.ReadOnly,

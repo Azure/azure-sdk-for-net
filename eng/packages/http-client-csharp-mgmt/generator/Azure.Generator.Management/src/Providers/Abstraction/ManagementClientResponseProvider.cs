@@ -30,7 +30,7 @@ namespace Azure.Generator.Management.Providers.Abstraction
             // Keep explicit package customizations and existing hand-written helper references.
             var library = ManagementClientGenerator.Instance.OutputLibrary;
             var customizedName = helper.CustomCodeView is not null || library.IsCollectionResultReferencedByCustomization(helper) ? helper.Name : null;
-            var name = library.GetRegularCollectionResultName(client, serviceMethod.Operation, type, isAsync, customizedName);
+            var name = library.GetRegularCollectionResultName(client, serviceMethod.Operation, type, isAsync, helper.Name, customizedName);
             if (customizedName is not null)
             {
                 return helper;
