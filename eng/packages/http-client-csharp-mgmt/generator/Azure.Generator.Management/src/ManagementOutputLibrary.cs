@@ -67,6 +67,7 @@ namespace Azure.Generator.Management
         // would otherwise produce the same helper type name.
         internal string GetUniqueCollectionResultName(string baseName)
         {
+            ReservePreservedCollectionResultNames();
             if (_collectionResultNames.Add(baseName))
             {
                 return baseName;
@@ -92,10 +93,7 @@ namespace Azure.Generator.Management
                 if (customizedName is not null)
                 {
                     name = customizedName;
-                    if (name.EndsWith(suffix, StringComparison.Ordinal))
-                    {
-                        _collectionResultNames.Add(name[..^suffix.Length]);
-                    }
+                    ReserveCollectionResultName(name);
                 }
                 else
                 {
@@ -112,12 +110,54 @@ namespace Azure.Generator.Management
         {
             // Existing hand-written code may construct a generated helper without declaring a partial
             // customization. Keep those identities too, rather than breaking package customizations.
-            _customReferencedCollectionResults ??= ManagementClientGenerator.Instance.SourceInputModel.Customization?.SyntaxTrees
-                .SelectMany(tree => tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>())
-                .Select(identifier => identifier.Identifier.ValueText)
-                .Where(name => name.EndsWith("CollectionResult", StringComparison.Ordinal) || name.EndsWith("CollectionResultOfT", StringComparison.Ordinal))
-                .ToHashSet(StringComparer.Ordinal) ?? new HashSet<string>(StringComparer.Ordinal);
-            return _customReferencedCollectionResults.Contains(helper.Name);
+            ReservePreservedCollectionResultNames();
+            return _customReferencedCollectionResults!.Contains(helper.Name);
+        }
+
+        private void ReservePreservedCollectionResultNames()
+        {
+            if (_customReferencedCollectionResults is not null)
+            {
+                return;
+            }
+
+            _customReferencedCollectionResults = new HashSet<string>(StringComparer.Ordinal);
+            var customization = ManagementClientGenerator.Instance.SourceInputModel.Customization;
+            if (customization is null)
+            {
+                return;
+            }
+
+            // Reserve the whole customization inventory before either regular or array helpers allocate
+            // a compact name. Otherwise an earlier operation can claim a later preserved identity and
+            // even bind that operation's partial customization when its provider is renamed.
+            foreach (var tree in customization.SyntaxTrees)
+            {
+                foreach (var node in tree.GetRoot().DescendantNodes())
+                {
+                    if (node is TypeDeclarationSyntax declaration)
+                    {
+                        ReserveCollectionResultName(declaration.Identifier.ValueText);
+                    }
+                    else if (node is IdentifierNameSyntax identifier && ReserveCollectionResultName(identifier.Identifier.ValueText))
+                    {
+                        _customReferencedCollectionResults.Add(identifier.Identifier.ValueText);
+                    }
+                }
+            }
+        }
+
+        private bool ReserveCollectionResultName(string name)
+        {
+            var suffix = name.EndsWith("CollectionResultOfT", StringComparison.Ordinal) ? "CollectionResultOfT"
+                : name.EndsWith("CollectionResult", StringComparison.Ordinal) ? "CollectionResult" : null;
+            if (suffix is null)
+            {
+                return false;
+            }
+
+            _collectionResultNames.Add(name[..^suffix.Length]);
+            return true;
         }
 
         internal void RegisterRegularCollectionResultName(TypeProvider helper, string name)
