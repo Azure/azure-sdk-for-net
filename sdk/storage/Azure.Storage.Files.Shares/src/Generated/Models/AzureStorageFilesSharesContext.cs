@@ -14,27 +14,11 @@ namespace Azure.Storage.Files.Shares
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ClearRange))]
-    [ModelReaderWriterBuildable(typeof(DirectoryItem))]
-    [ModelReaderWriterBuildable(typeof(FileItem))]
-    [ModelReaderWriterBuildable(typeof(FileProperty))]
-    [ModelReaderWriterBuildable(typeof(FileRange))]
-    [ModelReaderWriterBuildable(typeof(FilesAndDirectoriesListSegment))]
-    [ModelReaderWriterBuildable(typeof(HandleItem))]
-    [ModelReaderWriterBuildable(typeof(KeyInfo))]
-    [ModelReaderWriterBuildable(typeof(ListFilesAndDirectoriesSegmentResponse))]
-    [ModelReaderWriterBuildable(typeof(ListHandlesResponse))]
-    [ModelReaderWriterBuildable(typeof(ListSharesResponse))]
     [ModelReaderWriterBuildable(typeof(ShareAccessPolicy))]
     [ModelReaderWriterBuildable(typeof(ShareCorsRule))]
-    [ModelReaderWriterBuildable(typeof(ShareFileRangeList))]
-    [ModelReaderWriterBuildable(typeof(ShareFileRangeListSegment))]
-    [ModelReaderWriterBuildable(typeof(ShareItemInternal))]
     [ModelReaderWriterBuildable(typeof(ShareMetrics))]
     [ModelReaderWriterBuildable(typeof(ShareNfsSettings))]
     [ModelReaderWriterBuildable(typeof(ShareNfsSettingsEncryptionInTransit))]
-    [ModelReaderWriterBuildable(typeof(SharePermission))]
-    [ModelReaderWriterBuildable(typeof(SharePropertiesInternal))]
     [ModelReaderWriterBuildable(typeof(ShareProtocolSettings))]
     [ModelReaderWriterBuildable(typeof(ShareRetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(ShareServiceProperties))]
@@ -42,9 +26,7 @@ namespace Azure.Storage.Files.Shares
     [ModelReaderWriterBuildable(typeof(ShareSmbSettings))]
     [ModelReaderWriterBuildable(typeof(ShareSmbSettingsEncryptionInTransit))]
     [ModelReaderWriterBuildable(typeof(ShareStatistics))]
-    [ModelReaderWriterBuildable(typeof(SignedIdentifiers))]
     [ModelReaderWriterBuildable(typeof(SmbMultichannel))]
-    [ModelReaderWriterBuildable(typeof(StringEncoded))]
     [ModelReaderWriterBuildable(typeof(UserDelegationKey))]
     public partial class AzureStorageFilesSharesContext : ModelReaderWriterContext
     {
