@@ -264,6 +264,21 @@ namespace Azure.Security.ConfidentialLedger.Tests
         #endregion
 
         #region WaitForCommit
+        // Live verification (2026-09-30, ledger "ryan-acl-sdk-test", api-version 2026-07-31-preview):
+        //   - waitForCommit=true (LRO path, PostLedgerEntry): returned HTTP 200 with an
+        //     already-completed operation (HasCompleted=true, no polling); Operation.Id came from
+        //     the x-ms-ccf-transaction-id response header and GetTransactionStatus reported
+        //     "Committed" immediately.
+        //   - waitForCommit=true (value path, CreateLedgerEntry -> Response<LedgerWriteResult>):
+        //     the 200 body carried the full receipt inline (LedgerWriteResult.Receipt populated:
+        //     cert, leafComponents, nodeId, proof, signature), State=Committed, and one
+        //     ApplicationClaim. LedgerWriteResult.TransactionId is empty by design - the tx id is
+        //     conveyed via the x-ms-ccf-transaction-id header (also embedded in
+        //     receipt.leafComponents.commitEvidence), and callers track it via that id.
+        //   - waitForCommit=false (poll path): PostLedgerEntry(WaitUntil.Completed) polled the
+        //     transaction status endpoint to completion and reported "Committed".
+        // These tests are [LiveOnly] (skipped in Playback) because they require a real ledger and
+        // Azure credentials, so no session recordings are produced.
         private ConfidentialLedgerClient CreateWaitForCommitClient()
         {
             return InstrumentClient(
