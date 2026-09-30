@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AzureFunctionTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/>. </summary>

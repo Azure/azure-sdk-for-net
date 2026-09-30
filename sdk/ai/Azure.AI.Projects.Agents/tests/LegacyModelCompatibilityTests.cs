@@ -36,7 +36,9 @@ public class LegacyModelCompatibilityTests
     ];
 
     public static IEnumerable<TestCaseData> LegacyTypes =>
-        LegacyTypeNames.Select(name => new TestCaseData(name));
+        LegacyTypeNames
+            .Concat([nameof(AzureAISearchQueryType), nameof(AzureFunctionDefinitionFunction)])
+            .Select(name => new TestCaseData(name));
 
     public static IEnumerable<TestCaseData> Tools()
     {
@@ -83,6 +85,61 @@ public class LegacyModelCompatibilityTests
         Type type = typeof(AgentAdministrationClient).Assembly.GetType($"Azure.AI.Projects.Agents.{name}", throwOnError: true);
         Assert.That(type.IsPublic, Is.True);
         Assert.That(type.GetCustomAttribute<EditorBrowsableAttribute>()?.State, Is.EqualTo(EditorBrowsableState.Never));
+    }
+
+    [Test]
+    public void PublicTypesReferencedByLegacyModelsAreAlsoHidden()
+    {
+        Assembly assembly = typeof(AgentAdministrationClient).Assembly;
+        var pending = new Queue<Type>(LegacyTypeNames.Select(name =>
+            assembly.GetType($"Azure.AI.Projects.Agents.{name}", throwOnError: true)));
+        var visited = new HashSet<Type>();
+        while (pending.Count > 0)
+        {
+            Type type = pending.Dequeue();
+            if (type.HasElementType)
+            {
+                pending.Enqueue(type.GetElementType());
+                continue;
+            }
+            foreach (Type argument in type.GetGenericArguments())
+            {
+                pending.Enqueue(argument);
+            }
+            if (type.Assembly != assembly || !type.IsVisible || !visited.Add(type))
+            {
+                continue;
+            }
+
+            Assert.That(type.GetCustomAttribute<EditorBrowsableAttribute>()?.State,
+                Is.EqualTo(EditorBrowsableState.Never), type.FullName);
+            if (type.BaseType != null)
+            {
+                pending.Enqueue(type.BaseType);
+            }
+            foreach (Type interfaceType in type.GetInterfaces())
+            {
+                pending.Enqueue(interfaceType);
+            }
+            foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+            {
+                pending.Enqueue(field.FieldType);
+            }
+            foreach (MethodBase member in type.GetConstructors().Cast<MethodBase>().Concat(type.GetMethods()))
+            {
+                foreach (ParameterInfo parameter in member.GetParameters())
+                {
+                    pending.Enqueue(parameter.ParameterType);
+                }
+                if (member is MethodInfo method)
+                {
+                    pending.Enqueue(method.ReturnType);
+                }
+            }
+        }
+
+        Assert.That(visited, Does.Contain(typeof(AzureAISearchQueryType)));
+        Assert.That(visited, Does.Contain(typeof(AzureFunctionDefinitionFunction)));
     }
 
     [TestCaseSource(nameof(Tools))]

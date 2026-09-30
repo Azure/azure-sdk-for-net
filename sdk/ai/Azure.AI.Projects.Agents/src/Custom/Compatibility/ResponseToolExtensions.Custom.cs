@@ -10,6 +10,7 @@ using OpenAI.Responses;
 namespace Azure.AI.Projects.Agents;
 
 /// <summary> Provides conversions to the legacy agent tool models. </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
 public static partial class ResponseToolExtensions
 {
     /// <summary> Converts a shared response tool to its legacy agent tool representation. </summary>

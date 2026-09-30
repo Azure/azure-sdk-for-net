@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BingGroundingTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>

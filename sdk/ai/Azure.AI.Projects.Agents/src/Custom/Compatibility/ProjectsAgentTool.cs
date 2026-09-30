@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -13,6 +14,7 @@ namespace Azure.AI.Projects.Agents
     /// A tool that can be used to generate a response.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, and <see cref="MemorySearchPreviewTool"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public abstract partial class ProjectsAgentTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

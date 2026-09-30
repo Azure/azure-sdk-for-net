@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The definition of Azure function. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AzureFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

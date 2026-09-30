@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Search configuration for Bing Grounding. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BingGroundingSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

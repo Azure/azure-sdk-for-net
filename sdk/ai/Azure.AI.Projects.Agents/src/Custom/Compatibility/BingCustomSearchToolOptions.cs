@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The bing custom search tool parameters. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BingCustomSearchToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

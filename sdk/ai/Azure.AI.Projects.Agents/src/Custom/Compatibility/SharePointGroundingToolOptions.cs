@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The sharepoint grounding tool parameters. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SharePointGroundingToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

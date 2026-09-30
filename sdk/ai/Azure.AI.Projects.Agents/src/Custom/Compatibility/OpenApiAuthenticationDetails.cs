@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,6 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// authentication details for OpenApiFunctionDefinition
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAPIManagedAuthenticationDetails"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public abstract partial class OpenApiAuthenticationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

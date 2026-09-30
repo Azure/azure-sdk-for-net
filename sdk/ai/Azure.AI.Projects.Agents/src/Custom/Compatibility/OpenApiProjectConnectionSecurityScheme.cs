@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class OpenApiProjectConnectionSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

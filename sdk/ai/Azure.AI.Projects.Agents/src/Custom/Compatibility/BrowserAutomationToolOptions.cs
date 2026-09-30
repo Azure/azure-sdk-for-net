@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BrowserAutomationToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

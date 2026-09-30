@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Memory search options. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MemorySearchToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

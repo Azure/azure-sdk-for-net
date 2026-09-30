@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A bing custom search configuration. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BingCustomSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

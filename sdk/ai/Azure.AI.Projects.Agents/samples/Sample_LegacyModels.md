@@ -4,6 +4,8 @@ The 3.x compatibility prototype retains the public tool models from `Azure.AI.Pr
 They keep their original namespace, constructors, members, and serialization contracts, and are marked
 `EditorBrowsable(EditorBrowsableState.Never)` to discourage new source code from selecting them.
 The replacement tool models are in `Azure.AI.Extensions.OpenAI`.
+The retained legacy-only helper types, including `AzureAISearchQueryType` and
+`AzureFunctionDefinitionFunction`, are also hidden with `EditorBrowsable(Never)`.
 
 ## Fully qualified names are required when imports overlap
 
@@ -19,6 +21,32 @@ is ambiguous (`CS0104`). **`EditorBrowsable(Never)` affects IntelliSense, not co
 Use fully qualified names, as below, or explicit C# aliases to select the intended model.
 The same applies to other names present in both namespaces. Existing binaries do not encounter
 source-name ambiguity, and source using only one namespace does not need qualification for this reason.
+
+### Overlapping names
+
+Each name below exists in both `Azure.AI.Projects.Agents` and `Azure.AI.Extensions.OpenAI`.
+The compiler tests contain an explicit case for every name: the unqualified name must produce
+`CS0104`, and both fully qualified names must compile and bind to their respective assemblies.
+A separate test compares this list of cases with the public types in both assemblies.
+
+| Area | Names requiring qualification or aliases with both imports |
+| --- | --- |
+| A2A | `A2APreviewTool` |
+| Azure AI Search | `AzureAISearchTool`, `AzureAISearchToolIndex`, `AzureAISearchToolOptions` |
+| Azure Functions | `AzureFunctionBinding`, `AzureFunctionDefinition`, `AzureFunctionDefinitionFunction`, `AzureFunctionStorageQueue`, `AzureFunctionTool` |
+| Bing search | `BingCustomSearchPreviewTool`, `BingCustomSearchToolOptions`, `BingGroundingSearchToolOptions`, `BingGroundingTool` |
+| Browser automation | `BrowserAutomationPreviewTool`, `BrowserAutomationToolOptions` |
+| Structured output | `CaptureStructuredOutputsTool`, `StructuredOutputDefinition` |
+| Fabric | `FabricDataAgentToolOptions`, `MicrosoftFabricPreviewTool` |
+| Memory | `MemorySearchPreviewTool` |
+| OpenAPI | `OpenApiAuthenticationDetails`, `OpenApiFunctionDefinition`, `OpenApiProjectConnectionAuthenticationDetails`, `OpenApiProjectConnectionSecurityScheme` |
+| SharePoint | `SharePointGroundingToolOptions` |
+| Connections | `ToolProjectConnection` |
+
+Names with different casing are distinct in C#. For example, legacy `OpenAPITool` and shared
+`OpenApiTool` are not ambiguous with these two imports.
+
+### Compiled customer example
 
 The following example creates both model versions without contacting the service.
 The shared model is experimental and requires acknowledging its `AAIP002` diagnostic.

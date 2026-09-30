@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The structure for keeping storage queue name and URI. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AzureFunctionBinding
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

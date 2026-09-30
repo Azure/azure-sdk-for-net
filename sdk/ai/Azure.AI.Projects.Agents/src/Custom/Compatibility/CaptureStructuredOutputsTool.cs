@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for capturing structured outputs. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class CaptureStructuredOutputsTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>

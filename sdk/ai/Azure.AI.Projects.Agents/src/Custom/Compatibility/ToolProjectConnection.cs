@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A project connection resource. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ToolProjectConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

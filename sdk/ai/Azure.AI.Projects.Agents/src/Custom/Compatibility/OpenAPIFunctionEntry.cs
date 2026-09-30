@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The OpenAPIFunctionEntry. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class OpenAPIFunctionEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

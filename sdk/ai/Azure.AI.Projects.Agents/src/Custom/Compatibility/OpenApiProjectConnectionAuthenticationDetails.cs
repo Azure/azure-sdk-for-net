@@ -5,10 +5,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/>. </summary>

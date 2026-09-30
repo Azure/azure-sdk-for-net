@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AzureAISearchToolOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

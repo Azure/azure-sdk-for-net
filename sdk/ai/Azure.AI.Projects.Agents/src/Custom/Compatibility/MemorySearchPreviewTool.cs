@@ -5,11 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A tool for integrating memories into the agent. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MemorySearchPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchPreviewTool"/>. </summary>
