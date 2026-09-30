@@ -63,9 +63,9 @@ namespace Azure.Storage.Queues.Tests
         }
         #endregion
 
-        #region ListQueuesResult
+        #region ListQueuesResponse
         [Test]
-        public void ListQueuesResult_ShortConstructor_SetsProperties()
+        public void ListQueuesResponse_ShortConstructor_SetsProperties()
         {
             var response = new ListQueuesResult("https://account.queue.core.windows.net/", "prefix", 10, "nextMarker");
 
@@ -78,7 +78,7 @@ namespace Azure.Storage.Queues.Tests
         }
 
         [Test]
-        public void ListQueuesResult_FullConstructor_SetsAllProperties()
+        public void ListQueuesResponse_FullConstructor_SetsAllProperties()
         {
             var queueItems = new List<QueueItem>();
             var response = new ListQueuesResult("https://account.queue.core.windows.net/", "prefix", "marker", 10, queueItems, "nextMarker");
