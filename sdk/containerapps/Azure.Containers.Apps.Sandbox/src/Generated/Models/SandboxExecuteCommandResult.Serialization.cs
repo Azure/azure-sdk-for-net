@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Result of executing a command in a sandbox. </summary>
     public partial class SandboxExecuteCommandResult : IJsonModel<SandboxExecuteCommandResult>
@@ -89,9 +90,9 @@ namespace Azure.Containers.Apps.Sandbox
             writer.WritePropertyName("exitCode"u8);
             writer.WriteNumberValue(ExitCode);
             writer.WritePropertyName("stdout"u8);
-            writer.WriteStringValue(Stdout);
+            writer.WriteStringValue(StandardOutput);
             writer.WritePropertyName("stderr"u8);
-            writer.WriteStringValue(Stderr);
+            writer.WriteStringValue(StandardError);
             writer.WritePropertyName("executionTimeMs"u8);
             writer.WriteNumberValue(ExecutionTimeMs);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -137,8 +138,8 @@ namespace Azure.Containers.Apps.Sandbox
                 return null;
             }
             int exitCode = default;
-            string stdout = default;
-            string stderr = default;
+            string standardOutput = default;
+            string standardError = default;
             long executionTimeMs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,12 +151,12 @@ namespace Azure.Containers.Apps.Sandbox
                 }
                 if (prop.NameEquals("stdout"u8))
                 {
-                    stdout = prop.Value.GetString();
+                    standardOutput = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("stderr"u8))
                 {
-                    stderr = prop.Value.GetString();
+                    standardError = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("executionTimeMs"u8))
@@ -168,7 +169,7 @@ namespace Azure.Containers.Apps.Sandbox
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SandboxExecuteCommandResult(exitCode, stdout, stderr, executionTimeMs, additionalBinaryDataProperties);
+            return new SandboxExecuteCommandResult(exitCode, standardOutput, standardError, executionTimeMs, additionalBinaryDataProperties);
         }
     }
 }

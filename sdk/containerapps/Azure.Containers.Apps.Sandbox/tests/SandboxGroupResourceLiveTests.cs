@@ -18,9 +18,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task UpsertListGetKeysPeekAndDeleteSecret()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
             SandboxSecret secret = await CreateSecretAsync(sandboxGroup);
-            SandboxGroupSecrets client = sandboxGroup.GetSandboxGroupSecretsClient();
+            SecretsClient client = sandboxGroup.GetSecretsClient();
             bool found = false;
 
             Response<SecretKeysResult> keysResponse = await client.GetSecretKeysAsync(secret.Id);
@@ -44,9 +44,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task CreateGetListAndDeleteNamedEgressPolicy()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
             NamedEgressPolicy policy = await CreateEgressPolicyAsync(sandboxGroup);
-            SandboxGroupEgressPolicies client = sandboxGroup.GetSandboxGroupEgressPoliciesClient();
+            EgressPoliciesClient client = sandboxGroup.GetEgressPoliciesClient();
             bool found = false;
 
             Response<NamedEgressPolicy> getResponse = await client.GetEgressPolicyAsync(policy.Name);
@@ -68,9 +68,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task UploadGetListDownloadAndDeleteContentPackage()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
             ContentPackage package = await CreateContentPackageAsync(sandboxGroup);
-            SandboxGroupContentPackages client = sandboxGroup.GetSandboxGroupContentPackagesClient();
+            ContentPackagesClient client = sandboxGroup.GetContentPackagesClient();
             bool found = false;
 
             Response<ContentPackage> getResponse = await client.GetContentPackageAsync(package.Id);
@@ -86,13 +86,13 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(getResponse.Value.Id, Is.EqualTo(package.Id));
             Assert.That(found, Is.True);
 
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
             DownloadContentPackageToSandboxContent download = new DownloadContentPackageToSandboxContent(
                 package.Id,
                 "/tmp/package.bin");
             Response downloadResponse = await sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .DownloadContentPackageAsync(download);
+                .GetSandboxesClient()
+                .DownloadContentPackageAsync(sandbox.Id, download);
 
             Assert.That(downloadResponse.Status, Is.InRange(200, 299));
             await DeleteContentPackageIfExistsAsync(sandboxGroup, package.Id);

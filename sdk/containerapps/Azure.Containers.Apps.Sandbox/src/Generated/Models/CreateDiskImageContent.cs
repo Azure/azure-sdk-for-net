@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Request body for creating a disk image. </summary>
     public partial class CreateDiskImageContent
@@ -19,7 +20,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Initializes a new instance of <see cref="CreateDiskImageContent"/>. </summary>
         /// <param name="source"> Source used to create the disk image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public CreateDiskImageContent(CreateDiskImageSource source)
+        public CreateDiskImageContent(DiskImageSource source)
         {
             Argument.AssertNotNull(source, nameof(source));
 
@@ -33,7 +34,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="labels"> Customer-defined labels. </param>
         /// <param name="vnetConnectionName"> VNet connection used while creating the disk image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateDiskImageContent(CreateDiskImageSource source, string name, IDictionary<string, string> labels, string vnetConnectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateDiskImageContent(DiskImageSource source, string name, IDictionary<string, string> labels, string vnetConnectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             Name = name;
@@ -43,7 +44,7 @@ namespace Azure.Containers.Apps.Sandbox
         }
 
         /// <summary> Source used to create the disk image. </summary>
-        public CreateDiskImageSource Source { get; }
+        public DiskImageSource Source { get; }
 
         /// <summary> Disk image name. </summary>
         public string Name { get; set; }

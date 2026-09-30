@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Disk image created from a running sandbox. </summary>
     public partial class CommitSandboxResult : IJsonModel<CommitSandboxResult>

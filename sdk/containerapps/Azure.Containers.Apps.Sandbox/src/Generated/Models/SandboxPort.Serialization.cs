@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Represents a port exposed on a sandbox. </summary>
     public partial class SandboxPort : IJsonModel<SandboxPort>

@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Reference to an agent identity for assigning to a sandbox. </summary>
     public partial class SandboxAgentIdentityRef : IJsonModel<SandboxAgentIdentityRef>

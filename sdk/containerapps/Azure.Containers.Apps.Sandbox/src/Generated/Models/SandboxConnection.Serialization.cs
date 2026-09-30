@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing connection resource returned by the service. </summary>
     public partial class SandboxConnection : IJsonModel<SandboxConnection>
@@ -98,7 +99,7 @@ namespace Azure.Containers.Apps.Sandbox
             if (options.Format != "W")
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
+                writer.WriteStringValue(State.ToString());
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -211,7 +212,7 @@ namespace Azure.Containers.Apps.Sandbox
             string id = default;
             string name = default;
             string @type = default;
-            string state = default;
+            ResourceState state = default;
             IDictionary<string, string> labels = default;
             DateTimeOffset? createdOn = default;
             bool? deletable = default;
@@ -238,7 +239,7 @@ namespace Azure.Containers.Apps.Sandbox
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    state = prop.Value.GetString();
+                    state = new ResourceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("labels"u8))

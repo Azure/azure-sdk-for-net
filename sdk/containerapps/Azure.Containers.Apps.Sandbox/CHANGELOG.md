@@ -4,8 +4,15 @@
 
 ### Features Added
 
+- Initial preview release of the Azure Container Apps Sandbox data-plane client library.
+- Added `SandboxGroupClient` and resource-specific subclients for sandboxes, volumes, snapshots, secrets, connections, credentials, content packages, egress policies, and disk images.
+- Added support for sandbox lifecycle, files, commands, streams, networking, volume mounts, and content package operations.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Generated the client from the `2026-09-01-preview` Azure Container Apps Sandbox TypeSpec.
+- Added unit, playback, and live test coverage for the generated SDK scenarios.

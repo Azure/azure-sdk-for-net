@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> GitHub-specific auth configuration for a port. Permits users whose verified email ends with. </summary>
     public partial class PortAuthConfigGithub : IJsonModel<PortAuthConfigGithub>

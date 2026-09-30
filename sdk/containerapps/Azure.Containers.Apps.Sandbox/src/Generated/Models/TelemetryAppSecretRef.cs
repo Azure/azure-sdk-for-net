@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Reference to a secret in the parent artifact app. </summary>
     public partial class TelemetryAppSecretRef : TelemetrySecretReference

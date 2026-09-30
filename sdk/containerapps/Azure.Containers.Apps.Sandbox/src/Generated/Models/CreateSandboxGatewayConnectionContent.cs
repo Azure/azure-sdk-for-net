@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
+using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> AI Gateway connection reference used when creating a sandbox. </summary>
     public partial class CreateSandboxGatewayConnectionContent
@@ -19,7 +21,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Initializes a new instance of <see cref="CreateSandboxGatewayConnectionContent"/>. </summary>
         /// <param name="resourceId"> Azure resource ID of an AI Gateway server configuration or connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public CreateSandboxGatewayConnectionContent(string resourceId)
+        public CreateSandboxGatewayConnectionContent(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -29,13 +31,13 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Initializes a new instance of <see cref="CreateSandboxGatewayConnectionContent"/>. </summary>
         /// <param name="resourceId"> Azure resource ID of an AI Gateway server configuration or connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateSandboxGatewayConnectionContent(string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateSandboxGatewayConnectionContent(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource ID of an AI Gateway server configuration or connection. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

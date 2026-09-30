@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Identifies a connection to attach to a sandbox. </summary>
     public partial class AddConnectionContent

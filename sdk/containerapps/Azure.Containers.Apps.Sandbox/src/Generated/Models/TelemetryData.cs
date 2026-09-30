@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Specifies which category of telemetry data to route to an endpoint. </summary>
     public readonly partial struct TelemetryData : IEquatable<TelemetryData>

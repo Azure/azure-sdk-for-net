@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Per-container volume mount specifying which volume to mount and where. </summary>
     public partial class ContainerVolumeMount

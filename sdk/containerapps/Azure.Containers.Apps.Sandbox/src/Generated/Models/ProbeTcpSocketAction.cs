@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> TCP socket probe handler that checks whether a port accepts connections. </summary>
     public partial class ProbeTcpSocketAction

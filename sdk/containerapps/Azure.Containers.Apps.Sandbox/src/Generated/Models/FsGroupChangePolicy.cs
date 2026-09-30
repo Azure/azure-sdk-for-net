@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Policies for changing mounted-volume ownership. </summary>
     public readonly partial struct FsGroupChangePolicy : IEquatable<FsGroupChangePolicy>

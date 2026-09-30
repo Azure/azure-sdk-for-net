@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A shell command to execute in a running sandbox. </summary>
     public partial class ExecuteSandboxShellCommandContent

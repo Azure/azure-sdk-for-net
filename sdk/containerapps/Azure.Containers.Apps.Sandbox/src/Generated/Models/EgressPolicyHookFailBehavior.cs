@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Action to take when an egress policy webhook fails. </summary>
     public readonly partial struct EgressPolicyHookFailBehavior : IEquatable<EgressPolicyHookFailBehavior>

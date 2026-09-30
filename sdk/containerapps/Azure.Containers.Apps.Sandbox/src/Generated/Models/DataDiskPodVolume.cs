@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Data disk volume source backed by a persistent ext4 block device in cluster storage. </summary>
     public partial class DataDiskPodVolume : PodVolume

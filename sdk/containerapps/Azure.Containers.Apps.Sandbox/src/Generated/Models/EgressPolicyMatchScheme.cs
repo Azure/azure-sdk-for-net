@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> URI schemes that an egress rule can match. </summary>
     public readonly partial struct EgressPolicyMatchScheme : IEquatable<EgressPolicyMatchScheme>

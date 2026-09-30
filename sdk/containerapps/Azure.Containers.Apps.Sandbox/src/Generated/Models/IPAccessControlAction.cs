@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Actions applied to matching source addresses. </summary>
     public readonly partial struct IPAccessControlAction : IEquatable<IPAccessControlAction>

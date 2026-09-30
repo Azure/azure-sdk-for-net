@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> OTLP telemetry endpoint configuration. </summary>
     public partial class OtlpTelemetryEndpoint : TelemetryEndpoint, IJsonModel<OtlpTelemetryEndpoint>
@@ -117,12 +118,12 @@ namespace Azure.Containers.Apps.Sandbox
             }
             TelemetryEndpointKind kind = default;
             IList<TelemetryData> data = default;
-            IDictionary<string, LogColumnDef> columns = default;
+            IDictionary<string, TelemetryLogColumn> columns = default;
             bool? dynamicJsonColumns = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri endpoint = default;
             TelemetryProtocol protocol = default;
-            TelemetryHeaderAuth auth = default;
+            TelemetryHeaderAuthentication auth = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -146,10 +147,10 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    Dictionary<string, LogColumnDef> dictionary = new Dictionary<string, LogColumnDef>();
+                    Dictionary<string, TelemetryLogColumn> dictionary = new Dictionary<string, TelemetryLogColumn>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, LogColumnDef.DeserializeLogColumnDef(prop0.Value, options));
+                        dictionary.Add(prop0.Name, TelemetryLogColumn.DeserializeTelemetryLogColumn(prop0.Value, options));
                     }
                     columns = dictionary;
                     continue;
@@ -179,7 +180,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    auth = TelemetryHeaderAuth.DeserializeTelemetryHeaderAuth(prop.Value, options);
+                    auth = TelemetryHeaderAuthentication.DeserializeTelemetryHeaderAuthentication(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +191,7 @@ namespace Azure.Containers.Apps.Sandbox
             return new OtlpTelemetryEndpoint(
                 kind,
                 data,
-                columns ?? new ChangeTrackingDictionary<string, LogColumnDef>(),
+                columns ?? new ChangeTrackingDictionary<string, TelemetryLogColumn>(),
                 dynamicJsonColumns,
                 additionalBinaryDataProperties,
                 endpoint,

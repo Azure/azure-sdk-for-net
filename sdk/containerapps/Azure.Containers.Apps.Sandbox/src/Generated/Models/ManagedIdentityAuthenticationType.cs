@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The type of managed identity used for service authentication. </summary>
     public readonly partial struct ManagedIdentityAuthenticationType : IEquatable<ManagedIdentityAuthenticationType>

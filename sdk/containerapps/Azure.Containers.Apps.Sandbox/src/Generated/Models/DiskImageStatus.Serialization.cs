@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The provisioning status of a disk image. </summary>
     public partial class DiskImageStatus : IJsonModel<DiskImageStatus>
@@ -79,7 +80,7 @@ namespace Azure.Containers.Apps.Sandbox
                 throw new FormatException($"The model {nameof(DiskImageStatus)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State);
+            writer.WriteStringValue(State.ToString());
             if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
@@ -131,7 +132,7 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 return null;
             }
-            string state = default;
+            ResourceState state = default;
             string errorMessage = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset updatedOn = default;
@@ -140,7 +141,7 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 if (prop.NameEquals("state"u8))
                 {
-                    state = prop.Value.GetString();
+                    state = new ResourceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorMessage"u8))

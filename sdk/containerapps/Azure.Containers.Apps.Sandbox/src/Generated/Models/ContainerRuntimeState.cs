@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing container runtime state. </summary>
     public readonly partial struct ContainerRuntimeState : IEquatable<ContainerRuntimeState>

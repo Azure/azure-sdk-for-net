@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Network I/O counters. </summary>
     public partial class NetworkStats
@@ -22,30 +22,30 @@ namespace Azure.Containers.Apps.Sandbox
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkStats"/>. </summary>
-        /// <param name="rxBytes"> The number of bytes received. </param>
-        /// <param name="txBytes"> The number of bytes transmitted. </param>
-        /// <param name="rxPackets"> The number of packets received. </param>
-        /// <param name="txPackets"> The number of packets transmitted. </param>
+        /// <param name="bytesReceived"> The number of bytes received. </param>
+        /// <param name="bytesSent"> The number of bytes transmitted. </param>
+        /// <param name="packetsReceived"> The number of packets received. </param>
+        /// <param name="packetsSent"> The number of packets transmitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkStats(long? rxBytes, long? txBytes, long? rxPackets, long? txPackets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkStats(long? bytesReceived, long? bytesSent, long? packetsReceived, long? packetsSent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RxBytes = rxBytes;
-            TxBytes = txBytes;
-            RxPackets = rxPackets;
-            TxPackets = txPackets;
+            BytesReceived = bytesReceived;
+            BytesSent = bytesSent;
+            PacketsReceived = packetsReceived;
+            PacketsSent = packetsSent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The number of bytes received. </summary>
-        public long? RxBytes { get; }
+        public long? BytesReceived { get; }
 
         /// <summary> The number of bytes transmitted. </summary>
-        public long? TxBytes { get; }
+        public long? BytesSent { get; }
 
         /// <summary> The number of packets received. </summary>
-        public long? RxPackets { get; }
+        public long? PacketsReceived { get; }
 
         /// <summary> The number of packets transmitted. </summary>
-        public long? TxPackets { get; }
+        public long? PacketsSent { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> OTLP telemetry endpoint configuration. </summary>
     public partial class OtlpTelemetryEndpoint : TelemetryEndpoint
@@ -36,7 +37,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="endpoint"> OTLP endpoint URL (e.g., "https://customer.monitor.azure.com/otlp"). </param>
         /// <param name="protocol"> `Grpc` or `Http`. </param>
         /// <param name="auth"> Optional headers used to authenticate to the endpoint. </param>
-        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, LogColumnDef> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri endpoint, TelemetryProtocol protocol, TelemetryHeaderAuth auth) : base(kind, data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
+        internal OtlpTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, TelemetryLogColumn> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri endpoint, TelemetryProtocol protocol, TelemetryHeaderAuthentication auth) : base(kind, data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             Protocol = protocol;
@@ -50,6 +51,6 @@ namespace Azure.Containers.Apps.Sandbox
         public TelemetryProtocol Protocol { get; }
 
         /// <summary> Optional headers used to authenticate to the endpoint. </summary>
-        public TelemetryHeaderAuth Auth { get; set; }
+        public TelemetryHeaderAuthentication Auth { get; set; }
     }
 }

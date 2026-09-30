@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary>
     /// Customer-supplied selector that picks one of the managed identities already on a sandbox group.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SandboxGroupIdentitySelectorSystemAssignedIdentitySelector"/> and <see cref="SandboxGroupIdentitySelectorUserAssignedIdentitySelector"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SystemAssignedSandboxGroupIdentitySelector"/> and <see cref="UserAssignedSandboxGroupIdentitySelector"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSandboxGroupIdentitySelector))]
     public abstract partial class SandboxGroupIdentitySelector : IJsonModel<SandboxGroupIdentitySelector>
@@ -130,9 +131,9 @@ namespace Azure.Containers.Apps.Sandbox
                 switch (discriminator.GetString())
                 {
                     case "SystemAssigned":
-                        return SandboxGroupIdentitySelectorSystemAssignedIdentitySelector.DeserializeSandboxGroupIdentitySelectorSystemAssignedIdentitySelector(element, options);
+                        return SystemAssignedSandboxGroupIdentitySelector.DeserializeSystemAssignedSandboxGroupIdentitySelector(element, options);
                     case "UserAssigned":
-                        return SandboxGroupIdentitySelectorUserAssignedIdentitySelector.DeserializeSandboxGroupIdentitySelectorUserAssignedIdentitySelector(element, options);
+                        return UserAssignedSandboxGroupIdentitySelector.DeserializeUserAssignedSandboxGroupIdentitySelector(element, options);
                 }
             }
             return UnknownSandboxGroupIdentitySelector.DeserializeUnknownSandboxGroupIdentitySelector(element, options);

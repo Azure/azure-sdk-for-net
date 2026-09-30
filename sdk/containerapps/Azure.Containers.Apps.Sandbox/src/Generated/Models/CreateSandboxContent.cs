@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Request body for creating a sandbox. </summary>
     public partial class CreateSandboxContent
@@ -58,7 +59,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="telemetryConfig"> Telemetry configuration to apply to the sandbox. </param>
         /// <param name="projectId"> Optional project associated with the sandbox. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateSandboxContent(IDictionary<string, string> labels, IList<string> entrypoint, IList<string> command, IDictionary<string, string> environment, SandboxSource sourcesRef, SandboxResources resources, IList<CreateSandboxPortContent> ports, IList<string> connections, IList<CreateSandboxGatewayConnectionContent> gatewayConnections, IList<string> credentialRefs, SandboxEgressPolicy egressPolicy, string egressPolicyId, string sandboxGroupId, PresetSandboxType? presetSandboxType, string anthropicApiKey, SandboxPresetProperties presetProperties, SandboxLifecyclePolicy lifecycle, SandboxAgentIdentityRef agentIdentity, IList<SandboxVolume> volumes, IList<SandboxContentPackageDownload> contentPackageDownloads, string vnetConnectionName, IList<IdentitySetting> identitySettings, TelemetryConfig telemetryConfig, string projectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateSandboxContent(IDictionary<string, string> labels, IList<string> entrypoint, IList<string> command, IDictionary<string, string> environment, SandboxSource sourcesRef, SandboxResources resources, IList<CreateSandboxPortContent> ports, IList<string> connections, IList<CreateSandboxGatewayConnectionContent> gatewayConnections, IList<string> credentialRefs, SandboxEgressPolicy egressPolicy, string egressPolicyId, string sandboxGroupId, PresetSandboxType? presetSandboxType, string anthropicApiKey, SandboxPresetProperties presetProperties, SandboxLifecyclePolicy lifecycle, SandboxAgentIdentityRef agentIdentity, IList<SandboxVolume> volumes, IList<SandboxContentPackageDownload> contentPackageDownloads, string vnetConnectionName, IList<IdentitySetting> identitySettings, TelemetryConfiguration telemetryConfig, string projectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Labels = labels;
             Entrypoint = entrypoint;
@@ -154,7 +155,7 @@ namespace Azure.Containers.Apps.Sandbox
         public IList<IdentitySetting> IdentitySettings { get; }
 
         /// <summary> Telemetry configuration to apply to the sandbox. </summary>
-        public TelemetryConfig TelemetryConfig { get; set; }
+        public TelemetryConfiguration TelemetryConfig { get; set; }
 
         /// <summary> Optional project associated with the sandbox. </summary>
         public string ProjectId { get; set; }

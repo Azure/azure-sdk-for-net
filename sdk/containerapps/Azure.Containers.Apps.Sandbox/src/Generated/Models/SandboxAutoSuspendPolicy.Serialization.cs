@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Automatic suspension settings for a sandbox. </summary>
     public partial class SandboxAutoSuspendPolicy : IJsonModel<SandboxAutoSuspendPolicy>
@@ -80,10 +81,10 @@ namespace Azure.Containers.Apps.Sandbox
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (Optional.IsDefined(Interval))
+            if (Optional.IsDefined(IntervalSeconds))
             {
                 writer.WritePropertyName("interval"u8);
-                writer.WriteNumberValue(Interval.Value);
+                writer.WriteNumberValue(IntervalSeconds.Value);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -133,7 +134,7 @@ namespace Azure.Containers.Apps.Sandbox
                 return null;
             }
             bool enabled = default;
-            int? interval = default;
+            int? intervalSeconds = default;
             SandboxSuspendMode? mode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +150,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    interval = prop.Value.GetInt32();
+                    intervalSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -166,7 +167,7 @@ namespace Azure.Containers.Apps.Sandbox
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SandboxAutoSuspendPolicy(enabled, interval, mode, additionalBinaryDataProperties);
+            return new SandboxAutoSuspendPolicy(enabled, intervalSeconds, mode, additionalBinaryDataProperties);
         }
     }
 }

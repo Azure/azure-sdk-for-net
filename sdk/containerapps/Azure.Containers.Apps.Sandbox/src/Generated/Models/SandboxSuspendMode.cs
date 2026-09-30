@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Ways to preserve a suspended sandbox. </summary>
     public readonly partial struct SandboxSuspendMode : IEquatable<SandboxSuspendMode>

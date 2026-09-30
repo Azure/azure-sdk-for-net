@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Network I/O counters. </summary>
     public partial class NetworkStats : IJsonModel<NetworkStats>
@@ -73,25 +74,25 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 throw new FormatException($"The model {nameof(NetworkStats)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RxBytes))
+            if (Optional.IsDefined(BytesReceived))
             {
                 writer.WritePropertyName("rxBytes"u8);
-                writer.WriteNumberValue(RxBytes.Value);
+                writer.WriteNumberValue(BytesReceived.Value);
             }
-            if (Optional.IsDefined(TxBytes))
+            if (Optional.IsDefined(BytesSent))
             {
                 writer.WritePropertyName("txBytes"u8);
-                writer.WriteNumberValue(TxBytes.Value);
+                writer.WriteNumberValue(BytesSent.Value);
             }
-            if (Optional.IsDefined(RxPackets))
+            if (Optional.IsDefined(PacketsReceived))
             {
                 writer.WritePropertyName("rxPackets"u8);
-                writer.WriteNumberValue(RxPackets.Value);
+                writer.WriteNumberValue(PacketsReceived.Value);
             }
-            if (Optional.IsDefined(TxPackets))
+            if (Optional.IsDefined(PacketsSent))
             {
                 writer.WritePropertyName("txPackets"u8);
-                writer.WriteNumberValue(TxPackets.Value);
+                writer.WriteNumberValue(PacketsSent.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,10 +136,10 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 return null;
             }
-            long? rxBytes = default;
-            long? txBytes = default;
-            long? rxPackets = default;
-            long? txPackets = default;
+            long? bytesReceived = default;
+            long? bytesSent = default;
+            long? packetsReceived = default;
+            long? packetsSent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +149,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    rxBytes = prop.Value.GetInt64();
+                    bytesReceived = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("txBytes"u8))
@@ -157,7 +158,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    txBytes = prop.Value.GetInt64();
+                    bytesSent = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("rxPackets"u8))
@@ -166,7 +167,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    rxPackets = prop.Value.GetInt64();
+                    packetsReceived = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("txPackets"u8))
@@ -175,7 +176,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    txPackets = prop.Value.GetInt64();
+                    packetsSent = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +184,7 @@ namespace Azure.Containers.Apps.Sandbox
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkStats(rxBytes, txBytes, rxPackets, txPackets, additionalBinaryDataProperties);
+            return new NetworkStats(bytesReceived, bytesSent, packetsReceived, packetsSent, additionalBinaryDataProperties);
         }
     }
 }

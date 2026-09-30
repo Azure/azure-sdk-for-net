@@ -1,6 +1,6 @@
 # Azure Container Apps Sandbox client library for .NET
 
-Azure.Containers.Apps.Sandbox is a client library for developing .NET applications with rich experience.
+The Azure Container Apps Sandbox client library for .NET provides data-plane operations for creating and managing sandboxes and their related resources, including volumes, snapshots, files, secrets, connections, credentials, content packages, egress policies, and disk images.
 
 ## Getting started
 
@@ -15,18 +15,126 @@ dotnet add package Azure.Containers.Apps.Sandbox --prerelease
 ### Prerequisites
 
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+- You must have an Azure Container Apps sandbox group and its regional data-plane endpoint.
+- Your identity must have permission to access the sandbox group, such as the `Container Apps SandboxGroup Data Owner` role.
 
 ### Authenticate the client
 
-Azure Container Apps Sandbox uses Microsoft Entra ID authentication. Install the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package and create a `ContainerAppsSandboxClient` with a `TokenCredential`, such as `DefaultAzureCredential`.
+Azure Container Apps Sandbox uses Microsoft Entra ID authentication. Install the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package and create a `SandboxGroupClient` with a `TokenCredential`, such as `DefaultAzureCredential`.
+
+```C#
+using Azure.Containers.Apps.Sandbox;
+using Azure.Identity;
+
+Uri endpoint = new Uri("<sandbox-group-endpoint>");
+string subscriptionId = "<subscription-id>";
+string resourceGroupName = "<resource-group-name>";
+string sandboxGroupName = "<sandbox-group-name>";
+
+SandboxGroupClient sandboxGroupClient = new SandboxGroupClient(
+    endpoint,
+    subscriptionId,
+    resourceGroupName,
+    sandboxGroupName,
+    new DefaultAzureCredential());
+```
 
 ## Key concepts
 
+### Sandbox group client
+
+`SandboxGroupClient` is the entry point for a specific sandbox group. It contains the endpoint and Azure resource identifiers required by every request.
+
+### Resource subclients
+
+Operations are grouped into subclients obtained from `SandboxGroupClient`. For example:
+
+- `GetSandboxesClient()` manages sandboxes and sandbox-scoped operations such as files, networking, commands, lifecycle, and streams.
+- `GetVolumesClient()` manages sandbox-group volumes and volume files.
+- `GetSnapshotsClient()` manages snapshots.
+- `GetConnectionsClient()` and `GetCredentialsClient()` manage provider connections and credentials.
+- `GetSecretsClient()`, `GetContentPackagesClient()`, and `GetEgressPoliciesClient()` manage shared sandbox-group resources.
+- `GetDiskImagesClient()` and `GetPublicDiskImagesClient()` manage private and public disk images.
+
+The client caches and reuses each subclient.
+
+### Models
+
+Request and response models are in the `Azure.Containers.Apps.Sandbox.Models` namespace.
+
 ## Examples
+
+### Create and delete a sandbox
+
+```C#
+using Azure;
+using Azure.Containers.Apps.Sandbox;
+using Azure.Containers.Apps.Sandbox.Models;
+using Azure.Identity;
+
+SandboxGroupClient sandboxGroupClient = new SandboxGroupClient(
+    new Uri("<sandbox-group-endpoint>"),
+    "<subscription-id>",
+    "<resource-group-name>",
+    "<sandbox-group-name>",
+    new DefaultAzureCredential());
+
+SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
+CreateSandboxContent content = new CreateSandboxContent
+{
+    SourcesRef = new SandboxSource
+    {
+        DiskImage = new SandboxSourceDiskImage
+        {
+            Name = "ubuntu",
+            IsPublic = true
+        }
+    },
+    Resources = new SandboxResources("1000m", "2048Mi")
+};
+content.Labels.Add("environment", "development");
+
+Response<SandboxProperties> createResponse =
+    await sandboxesClient.CreateSandboxAsync(content);
+
+Console.WriteLine($"Created sandbox: {createResponse.Value.Id}");
+
+await sandboxesClient.DeleteAsync(createResponse.Value.Id);
+```
+
+### List sandboxes
+
+```C#
+SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
+
+await foreach (SandboxProperties sandbox in sandboxesClient.GetSandboxesAsync())
+{
+    Console.WriteLine($"{sandbox.Id}: {sandbox.State}");
+}
+```
+
+### List sandbox-group volumes
+
+```C#
+VolumesClient volumesClient = sandboxGroupClient.GetVolumesClient();
+
+await foreach (SandboxGroupVolume volume in volumesClient.GetVolumesAsync())
+{
+    Console.WriteLine($"{volume.VolumeName}: {volume.ProvisioningState}");
+}
+```
 
 ## Troubleshooting
 
+Service failures throw `RequestFailedException` and include an HTTP status code and service error details. For authentication failures, verify that the credential can obtain a token and that the identity has access to the sandbox group. For endpoint or routing failures, verify that the endpoint belongs to the same region as the sandbox group.
+
+To inspect requests and responses during development, enable Azure SDK logging before creating the client.
+
 ## Next steps
+
+- Review the [Azure SDK for .NET documentation](https://learn.microsoft.com/dotnet/azure/).
+- Review the [Azure Identity client library documentation](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme).
+- Explore the tests in the `tests` directory for additional sandbox and resource-management scenarios.
 
 ## Contributing
 
@@ -38,10 +146,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ### Testing
 
-Run unit tests without Azure resources:
+From the repository root, run unit and playback tests without Azure resources:
 
 ```dotnetcli
-dotnet test tests/Azure.Containers.Apps.Sandbox.Tests.csproj --filter TestCategory!=Live
+dotnet test sdk/containerapps/Azure.Containers.Apps.Sandbox/tests/Azure.Containers.Apps.Sandbox.Tests.csproj --filter TestCategory!=Live
 ```
 
 Create the sandbox group and role assignment used by live tests from the repository root:
@@ -68,7 +176,7 @@ $env:AZURE_TEST_MODE = "Record"
 dotnet test sdk/containerapps/Azure.Containers.Apps.Sandbox/tests/Azure.Containers.Apps.Sandbox.Tests.csproj -f net10.0
 ```
 
-The test suite consolidates the generated Java scenarios by resource area:
+The test suite consolidates the generated TypeSpec scenarios by resource area:
 
 - sandbox CRUD, lifecycle, policy, statistics, commands, and networking;
 - volumes, volume files, mounts, snapshots, and sandbox files;

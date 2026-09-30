@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Automatic suspension settings for a sandbox. </summary>
     public partial class SandboxAutoSuspendPolicy
@@ -25,13 +25,13 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Initializes a new instance of <see cref="SandboxAutoSuspendPolicy"/>. </summary>
         /// <param name="enabled"> Whether automatic suspension is enabled. </param>
-        /// <param name="interval"> The idle interval before suspension. </param>
+        /// <param name="intervalSeconds"> The idle interval before suspension. </param>
         /// <param name="mode"> How sandbox state is preserved during suspension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxAutoSuspendPolicy(bool enabled, int? interval, SandboxSuspendMode? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SandboxAutoSuspendPolicy(bool enabled, int? intervalSeconds, SandboxSuspendMode? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
-            Interval = interval;
+            IntervalSeconds = intervalSeconds;
             Mode = mode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -40,7 +40,7 @@ namespace Azure.Containers.Apps.Sandbox
         public bool Enabled { get; set; }
 
         /// <summary> The idle interval before suspension. </summary>
-        public int? Interval { get; set; }
+        public int? IntervalSeconds { get; set; }
 
         /// <summary> How sandbox state is preserved during suspension. </summary>
         public SandboxSuspendMode? Mode { get; set; }

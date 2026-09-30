@@ -8,8 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
+using Azure.Containers.Apps.Sandbox;
+using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class AppsSandboxModelFactory
@@ -44,8 +47,8 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="identitySettings"> Identity settings applied to the sandbox. </param>
         /// <param name="outboundIPAddresses"> Static outbound IP addresses for the cluster hosting this sandbox. </param>
         /// <param name="containerStatuses"> Live per-container runtime statuses for pod sandboxes. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerAppsSandbox"/> instance for mocking. </returns>
-        public static ContainerAppsSandbox ContainerAppsSandbox(string id = default, IDictionary<string, string> labels = default, IEnumerable<string> entrypoint = default, IEnumerable<string> command = default, SandboxSource sourcesRef = default, SandboxResources resources = default, DateTimeOffset? createdOn = default, SandboxState? state = default, SandboxStateDetails stateDetails = default, string snapshotId = default, long? coldStorageSizeInMb = default, IEnumerable<SandboxPort> ports = default, IEnumerable<string> connections = default, IEnumerable<GatewayConnection> gatewayConnections = default, IEnumerable<string> credentialRefs = default, SandboxEgressPolicy egressPolicy = default, string sandboxGroupId = default, string region = default, SandboxLifecyclePolicy lifecycle = default, Uri appUri = default, Uri managementUri = default, SandboxAgentIdentityRef agentIdentity = default, IEnumerable<SandboxVolume> volumes = default, IEnumerable<SandboxContentPackageDownload> contentPackageDownloads = default, string vnetConnectionName = default, IEnumerable<IdentitySetting> identitySettings = default, IEnumerable<string> outboundIPAddresses = default, IEnumerable<ContainerStatus> containerStatuses = default)
+        /// <returns> A new <see cref="Models.SandboxProperties"/> instance for mocking. </returns>
+        public static SandboxProperties SandboxProperties(string id = default, IDictionary<string, string> labels = default, IEnumerable<string> entrypoint = default, IEnumerable<string> command = default, SandboxSource sourcesRef = default, SandboxResources resources = default, DateTimeOffset? createdOn = default, SandboxState? state = default, SandboxStateDetails stateDetails = default, string snapshotId = default, long? coldStorageSizeInMb = default, IEnumerable<SandboxPort> ports = default, IEnumerable<string> connections = default, IEnumerable<GatewayConnection> gatewayConnections = default, IEnumerable<string> credentialRefs = default, SandboxEgressPolicy egressPolicy = default, ResourceIdentifier sandboxGroupId = default, string region = default, SandboxLifecyclePolicy lifecycle = default, Uri appUri = default, Uri managementUri = default, SandboxAgentIdentityRef agentIdentity = default, IEnumerable<SandboxVolume> volumes = default, IEnumerable<SandboxContentPackageDownload> contentPackageDownloads = default, string vnetConnectionName = default, IEnumerable<IdentitySetting> identitySettings = default, IEnumerable<string> outboundIPAddresses = default, IEnumerable<ContainerStatus> containerStatuses = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             entrypoint ??= new ChangeTrackingList<string>();
@@ -60,7 +63,7 @@ namespace Azure.Containers.Apps.Sandbox
             outboundIPAddresses ??= new ChangeTrackingList<string>();
             containerStatuses ??= new ChangeTrackingList<ContainerStatus>();
 
-            return new ContainerAppsSandbox(
+            return new SandboxProperties(
                 id,
                 labels,
                 entrypoint.ToList(),
@@ -97,7 +100,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="snapshot"> A snapshot source. </param>
         /// <param name="pod"> An inline pod definition. </param>
         /// <param name="artifactVersion"> The artifact version used as the sandbox source. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxSource"/> instance for mocking. </returns>
         public static SandboxSource SandboxSource(SandboxSourceDiskImage diskImage = default, SandboxSourceSnapshot snapshot = default, SandboxSourcePod pod = default, SandboxSourceArtifactVersion artifactVersion = default)
         {
             return new SandboxSource(diskImage, snapshot, pod, artifactVersion, additionalBinaryDataProperties: null);
@@ -107,7 +110,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="id"> The identifier of a sandbox-group disk image. </param>
         /// <param name="name"> Disk image name for public disk images (e.g., "nginx", "python3.12"). Mutually exclusive with Id. </param>
         /// <param name="isPublic"> Indicates whether this references a public disk image. Must be true when using Name, must be false when using Id. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSourceDiskImage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxSourceDiskImage"/> instance for mocking. </returns>
         public static SandboxSourceDiskImage SandboxSourceDiskImage(string id = default, string name = default, bool? isPublic = default)
         {
             return new SandboxSourceDiskImage(id, name, isPublic, additionalBinaryDataProperties: null);
@@ -115,7 +118,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> A snapshot used to restore a sandbox. </summary>
         /// <param name="id"> The snapshot identifier. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSourceSnapshot"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxSourceSnapshot"/> instance for mocking. </returns>
         public static SandboxSourceSnapshot SandboxSourceSnapshot(string id = default)
         {
             return new SandboxSourceSnapshot(id, additionalBinaryDataProperties: null);
@@ -127,7 +130,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="contentPackages"> Content packages available to the pod. </param>
         /// <param name="securityContext"> Security settings shared by all pod containers. </param>
         /// <param name="restartPolicy"> The container restart policy. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSourcePod"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxSourcePod"/> instance for mocking. </returns>
         public static SandboxSourcePod SandboxSourcePod(IEnumerable<ContainerSpec> containers = default, IEnumerable<PodVolume> volumes = default, IEnumerable<PodContentPackage> contentPackages = default, PodSecurityContext securityContext = default, ContainerRestartPolicy? restartPolicy = default)
         {
             containers ??= new ChangeTrackingList<ContainerSpec>();
@@ -157,7 +160,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="startupProbe"> Probe that determines when the container has started. </param>
         /// <param name="livenessProbe"> Probe that determines whether the container should be restarted. </param>
         /// <param name="readinessProbe"> Probe that determines whether the container can receive traffic. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerSpec"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerSpec"/> instance for mocking. </returns>
         public static ContainerSpec ContainerSpec(string name = default, SandboxSourceDiskImage diskImage = default, SandboxSourceArtifactVersion artifactVersion = default, IEnumerable<string> command = default, IEnumerable<string> arguments = default, IDictionary<string, string> environment = default, ContainerResources resources = default, IEnumerable<ContainerVolumeMount> volumeMounts = default, IEnumerable<SandboxContentPackageDownload> contentPackageDownloads = default, ContainerSecurityContext securityContext = default, ContainerProbe startupProbe = default, ContainerProbe livenessProbe = default, ContainerProbe readinessProbe = default)
         {
             command ??= new ChangeTrackingList<string>();
@@ -186,7 +189,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> An artifact version used as a sandbox source. </summary>
         /// <param name="id"> The artifact version identifier. </param>
         /// <param name="auth"> Authentication configuration used to access the artifact version. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSourceArtifactVersion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxSourceArtifactVersion"/> instance for mocking. </returns>
         public static SandboxSourceArtifactVersion SandboxSourceArtifactVersion(string id = default, SandboxSourceAuth auth = default)
         {
             return new SandboxSourceArtifactVersion(id, auth, additionalBinaryDataProperties: null);
@@ -194,7 +197,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Authentication configuration for a sandbox source. </summary>
         /// <param name="identity"> The identity used to access the sandbox source. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSourceAuth"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxSourceAuth"/> instance for mocking. </returns>
         public static SandboxSourceAuth SandboxSourceAuth(string identity = default)
         {
             return new SandboxSourceAuth(identity, additionalBinaryDataProperties: null);
@@ -204,7 +207,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="cpu"> Kubernetes-style CPU resource quantity string (e.g. "500m", "2", "0.5"). </param>
         /// <param name="memory"> Kubernetes-style memory resource quantity string (e.g. "256Mi", "1Gi", "2048"). </param>
         /// <param name="disk"> Kubernetes-style storage/disk resource quantity string (e.g. "256Mi", "1Gi", "2048"). </param>
-        /// <returns> A new <see cref="Sandbox.ContainerResources"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerResources"/> instance for mocking. </returns>
         public static ContainerResources ContainerResources(string cpu = default, string memory = default, string disk = default)
         {
             return new ContainerResources(cpu, memory, disk, additionalBinaryDataProperties: null);
@@ -214,7 +217,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="name"> The referenced pod volume name. </param>
         /// <param name="mountPath"> The absolute path where the volume is mounted. </param>
         /// <param name="readOnly"> Whether the volume is mounted read-only. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerVolumeMount"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerVolumeMount"/> instance for mocking. </returns>
         public static ContainerVolumeMount ContainerVolumeMount(string name = default, string mountPath = default, bool? readOnly = default)
         {
             return new ContainerVolumeMount(name, mountPath, readOnly, additionalBinaryDataProperties: null);
@@ -224,7 +227,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="contentPackageId"> The content package ID to download. </param>
         /// <param name="targetPath"> The target path in the sandbox where the content package will be downloaded. Must be an absolute path. Parent directories will be created if they don't exist. </param>
         /// <param name="action"> How to deliver the package. Mount exposes a zip package as a read-only file system. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxContentPackageDownload"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxContentPackageDownload"/> instance for mocking. </returns>
         public static SandboxContentPackageDownload SandboxContentPackageDownload(string contentPackageId = default, string targetPath = default, ContentPackageAction? action = default)
         {
             return new SandboxContentPackageDownload(contentPackageId, targetPath, action, additionalBinaryDataProperties: null);
@@ -239,7 +242,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="allowPrivilegeEscalation"> Whether the process can gain additional privileges. </param>
         /// <param name="readOnlyRootFilesystem"> Whether the container root filesystem is read-only. </param>
         /// <param name="seccompProfile"> The seccomp profile applied to the container. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerSecurityContext"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerSecurityContext"/> instance for mocking. </returns>
         public static ContainerSecurityContext ContainerSecurityContext(int? runAsUser = default, int? runAsGroup = default, bool? runAsNonRoot = default, bool? privileged = default, LinuxCapabilities capabilities = default, bool? allowPrivilegeEscalation = default, bool? readOnlyRootFilesystem = default, SeccompProfile seccompProfile = default)
         {
             return new ContainerSecurityContext(
@@ -257,7 +260,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Linux capabilities to add or drop from the container's default capability set. </summary>
         /// <param name="add"> Linux capabilities added to the container. </param>
         /// <param name="drop"> Linux capabilities removed from the container. </param>
-        /// <returns> A new <see cref="Sandbox.LinuxCapabilities"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LinuxCapabilities"/> instance for mocking. </returns>
         public static LinuxCapabilities LinuxCapabilities(IEnumerable<string> @add = default, IEnumerable<string> drop = default)
         {
             @add ??= new ChangeTrackingList<string>();
@@ -268,7 +271,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Seccomp profile configuration for a container. </summary>
         /// <param name="type"> The seccomp profile type. </param>
-        /// <returns> A new <see cref="Sandbox.SeccompProfile"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SeccompProfile"/> instance for mocking. </returns>
         public static SeccompProfile SeccompProfile(SeccompProfileType @type = default)
         {
             return new SeccompProfile(@type, additionalBinaryDataProperties: null);
@@ -284,7 +287,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="failureThreshold"> Consecutive failures required for the probe to fail. </param>
         /// <param name="successThreshold"> Consecutive successes required for the probe to succeed. </param>
         /// <param name="terminationGracePeriodSeconds"> The grace period in seconds before terminating the container after probe failure. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerProbe"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerProbe"/> instance for mocking. </returns>
         public static ContainerProbe ContainerProbe(ProbeHttpGetAction httpGet = default, ProbeExecAction exec = default, ProbeTcpSocketAction tcpSocket = default, int? initialDelaySeconds = default, int? periodSeconds = default, int? timeoutSeconds = default, int? failureThreshold = default, int? successThreshold = default, int? terminationGracePeriodSeconds = default)
         {
             return new ContainerProbe(
@@ -306,7 +309,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="host"> The host header sent by the probe. </param>
         /// <param name="scheme"> The URI scheme used by the probe. </param>
         /// <param name="httpHeaders"> Additional HTTP headers sent by the probe. </param>
-        /// <returns> A new <see cref="Sandbox.ProbeHttpGetAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ProbeHttpGetAction"/> instance for mocking. </returns>
         public static ProbeHttpGetAction ProbeHttpGetAction(int port = default, string path = default, string host = default, string scheme = default, IEnumerable<ProbeHttpHeader> httpHeaders = default)
         {
             httpHeaders ??= new ChangeTrackingList<ProbeHttpHeader>();
@@ -323,7 +326,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> HTTP header sent with a probe HTTP GET request. </summary>
         /// <param name="name"> The HTTP header name. </param>
         /// <param name="value"> The HTTP header value. </param>
-        /// <returns> A new <see cref="Sandbox.ProbeHttpHeader"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ProbeHttpHeader"/> instance for mocking. </returns>
         public static ProbeHttpHeader ProbeHttpHeader(string name = default, string value = default)
         {
             return new ProbeHttpHeader(name, value, additionalBinaryDataProperties: null);
@@ -331,7 +334,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Exec probe handler that runs a command in the container. </summary>
         /// <param name="command"> The command and arguments executed by the probe. </param>
-        /// <returns> A new <see cref="Sandbox.ProbeExecAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ProbeExecAction"/> instance for mocking. </returns>
         public static ProbeExecAction ProbeExecAction(IEnumerable<string> command = default)
         {
             command ??= new ChangeTrackingList<string>();
@@ -342,7 +345,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> TCP socket probe handler that checks whether a port accepts connections. </summary>
         /// <param name="port"> The port checked by the TCP probe. </param>
         /// <param name="host"> The host checked by the TCP probe. </param>
-        /// <returns> A new <see cref="Sandbox.ProbeTcpSocketAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ProbeTcpSocketAction"/> instance for mocking. </returns>
         public static ProbeTcpSocketAction ProbeTcpSocketAction(int port = default, string host = default)
         {
             return new ProbeTcpSocketAction(port, host, additionalBinaryDataProperties: null);
@@ -350,11 +353,11 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary>
         /// A named pod volume that containers can mount.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.DataDiskPodVolume"/>, <see cref="Sandbox.LocalPodVolume"/>, <see cref="Sandbox.ServiceManagedBlobPodVolume"/>, and <see cref="Sandbox.UserProvidedBlobPodVolume"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataDiskPodVolume"/>, <see cref="Models.LocalPodVolume"/>, <see cref="Models.ServiceManagedBlobPodVolume"/>, and <see cref="Models.UserProvidedBlobPodVolume"/>.
         /// </summary>
         /// <param name="kind"> The pod volume type. </param>
         /// <param name="name"> The pod volume name. </param>
-        /// <returns> A new <see cref="Sandbox.PodVolume"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PodVolume"/> instance for mocking. </returns>
         public static PodVolume PodVolume(string kind = default, string name = default)
         {
             return new UnknownPodVolume(new PodVolumeKind(kind), name, additionalBinaryDataProperties: null);
@@ -364,7 +367,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="name"> The pod volume name. </param>
         /// <param name="fileCacheSizeLimit"> The maximum local file cache size. </param>
         /// <param name="readOnly"> Whether the blob volume is read-only. </param>
-        /// <returns> A new <see cref="Sandbox.UserProvidedBlobPodVolume"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.UserProvidedBlobPodVolume"/> instance for mocking. </returns>
         public static UserProvidedBlobPodVolume UserProvidedBlobPodVolume(string name = default, string fileCacheSizeLimit = default, bool? readOnly = default)
         {
             return new UserProvidedBlobPodVolume(PodVolumeKind.AzureBlobByo, name, additionalBinaryDataProperties: null, fileCacheSizeLimit, readOnly);
@@ -374,7 +377,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="name"> The pod volume name. </param>
         /// <param name="fileCacheSizeLimit"> The maximum local file cache size. </param>
         /// <param name="readOnly"> Whether the blob volume is read-only. </param>
-        /// <returns> A new <see cref="Sandbox.ServiceManagedBlobPodVolume"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ServiceManagedBlobPodVolume"/> instance for mocking. </returns>
         public static ServiceManagedBlobPodVolume ServiceManagedBlobPodVolume(string name = default, string fileCacheSizeLimit = default, bool? readOnly = default)
         {
             return new ServiceManagedBlobPodVolume(PodVolumeKind.AzureBlob, name, additionalBinaryDataProperties: null, fileCacheSizeLimit, readOnly);
@@ -382,7 +385,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Data disk volume source backed by a persistent ext4 block device in cluster storage. </summary>
         /// <param name="name"> The pod volume name. </param>
-        /// <returns> A new <see cref="Sandbox.DataDiskPodVolume"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.DataDiskPodVolume"/> instance for mocking. </returns>
         public static DataDiskPodVolume DataDiskPodVolume(string name = default)
         {
             return new DataDiskPodVolume(PodVolumeKind.DataDisk, name, additionalBinaryDataProperties: null);
@@ -391,7 +394,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Local volume source backed by rootfs space. </summary>
         /// <param name="name"> The pod volume name. </param>
         /// <param name="size"> The requested local volume size. </param>
-        /// <returns> A new <see cref="Sandbox.LocalPodVolume"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.LocalPodVolume"/> instance for mocking. </returns>
         public static LocalPodVolume LocalPodVolume(string name = default, string size = default)
         {
             return new LocalPodVolume(PodVolumeKind.Local, name, additionalBinaryDataProperties: null, size);
@@ -399,7 +402,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Declares a content package available to containers in the pod. </summary>
         /// <param name="contentPackageId"> The referenced content package identifier. </param>
-        /// <returns> A new <see cref="Sandbox.PodContentPackage"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PodContentPackage"/> instance for mocking. </returns>
         public static PodContentPackage PodContentPackage(string contentPackageId = default)
         {
             return new PodContentPackage(contentPackageId, additionalBinaryDataProperties: null);
@@ -412,7 +415,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="supplementalGroups"> Supplemental group IDs assigned to pod processes. </param>
         /// <param name="fsGroup"> The group ID applied to mounted volumes. </param>
         /// <param name="fsGroupChangePolicy"> When ownership is changed on mounted volumes. </param>
-        /// <returns> A new <see cref="Sandbox.PodSecurityContext"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PodSecurityContext"/> instance for mocking. </returns>
         public static PodSecurityContext PodSecurityContext(int? runAsUser = default, int? runAsGroup = default, bool? runAsNonRoot = default, IEnumerable<int> supplementalGroups = default, int? fsGroup = default, FsGroupChangePolicy? fsGroupChangePolicy = default)
         {
             supplementalGroups ??= new ChangeTrackingList<int>();
@@ -431,7 +434,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="cpu"> The CPU allocation. </param>
         /// <param name="memory"> The memory allocation. </param>
         /// <param name="disk"> The disk allocation. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxResources"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxResources"/> instance for mocking. </returns>
         public static SandboxResources SandboxResources(string cpu = default, string memory = default, string disk = default)
         {
             return new SandboxResources(cpu, memory, disk, additionalBinaryDataProperties: null);
@@ -440,7 +443,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Details recorded when a sandbox enters the stopped state. </summary>
         /// <param name="stoppedReason"> Why the sandbox is stopped. </param>
         /// <param name="stoppedOn"> Wall-clock time the stop transition was recorded. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxStateDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxStateDetails"/> instance for mocking. </returns>
         public static SandboxStateDetails SandboxStateDetails(StoppedReason stoppedReason = default, DateTimeOffset stoppedOn = default)
         {
             return new SandboxStateDetails(stoppedReason, stoppedOn, additionalBinaryDataProperties: null);
@@ -455,7 +458,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="protocol"> The HTTP protocol version to use when forwarding requests to this port. Defaults to Http (HTTP/1.1). </param>
         /// <param name="ipAccessControl"> Source IP access-control settings. </param>
         /// <param name="cors"> Cross-origin request settings. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxPort"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxPort"/> instance for mocking. </returns>
         public static SandboxPort SandboxPort(string name = default, int port = default, Uri url = default, PortAuthConfig auth = default, PortActivationMode? activationMode = default, PortProtocol? protocol = default, IPAccessControl ipAccessControl = default, PortCorsConfig cors = default)
         {
             return new SandboxPort(
@@ -474,7 +477,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="anonymous"> Whether unauthenticated access is allowed. </param>
         /// <param name="github"> GitHub authentication settings. </param>
         /// <param name="entraId"> Microsoft Entra ID authentication settings. </param>
-        /// <returns> A new <see cref="Sandbox.PortAuthConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PortAuthConfig"/> instance for mocking. </returns>
         public static PortAuthConfig PortAuthConfig(bool? anonymous = default, PortAuthConfigGithub github = default, PortAuthConfigEntraId entraId = default)
         {
             return new PortAuthConfig(anonymous, github, entraId, additionalBinaryDataProperties: null);
@@ -486,7 +489,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="emailSuffixes"> Allowed email domain suffixes. A maximum of 100 identity filters can be configured. </param>
         /// <param name="usernames"> Allowed GitHub usernames. A maximum of 100 identity filters can be configured. </param>
         /// <param name="usernameSuffixes"> Allowed GitHub username suffixes. A maximum of 100 identity filters can be configured. </param>
-        /// <returns> A new <see cref="Sandbox.PortAuthConfigGithub"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PortAuthConfigGithub"/> instance for mocking. </returns>
         public static PortAuthConfigGithub PortAuthConfigGithub(bool? enabled = default, IEnumerable<string> emails = default, IEnumerable<string> emailSuffixes = default, IEnumerable<string> usernames = default, IEnumerable<string> usernameSuffixes = default)
         {
             emails ??= new ChangeTrackingList<string>();
@@ -509,7 +512,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="emailSuffixes"> Allowed email domain suffixes. A maximum of 100 identity filters can be configured. </param>
         /// <param name="objectIds"> Allowed Microsoft Entra user or group object IDs. A maximum of 100 identity filters can be configured. </param>
         /// <param name="tenantIds"> Allowed Microsoft Entra tenant IDs. A maximum of 100 identity filters can be configured. </param>
-        /// <returns> A new <see cref="Sandbox.PortAuthConfigEntraId"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PortAuthConfigEntraId"/> instance for mocking. </returns>
         public static PortAuthConfigEntraId PortAuthConfigEntraId(bool? enabled = default, IEnumerable<string> emails = default, IEnumerable<string> emailSuffixes = default, IEnumerable<string> objectIds = default, IEnumerable<string> tenantIds = default)
         {
             emails ??= new ChangeTrackingList<string>();
@@ -529,7 +532,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> IP access control configuration for a port. Rules are evaluated in priority order; first match wins. </summary>
         /// <param name="defaultAction"> The action applied when no access-control rule matches. </param>
         /// <param name="rules"> IP access-control rules evaluated by priority. </param>
-        /// <returns> A new <see cref="Sandbox.IPAccessControl"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.IPAccessControl"/> instance for mocking. </returns>
         public static IPAccessControl IPAccessControl(IPAccessControlAction defaultAction = default, IEnumerable<IPAccessControlRule> rules = default)
         {
             rules ??= new ChangeTrackingList<IPAccessControlRule>();
@@ -542,7 +545,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="action"> The action applied to matching source addresses. </param>
         /// <param name="priority"> The rule priority. Lower values are evaluated first. </param>
         /// <param name="sourceAddressPrefixes"> The source CIDR ranges matched by the rule. </param>
-        /// <returns> A new <see cref="Sandbox.IPAccessControlRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.IPAccessControlRule"/> instance for mocking. </returns>
         public static IPAccessControlRule IPAccessControlRule(string name = default, IPAccessControlAction action = default, int priority = default, IEnumerable<string> sourceAddressPrefixes = default)
         {
             sourceAddressPrefixes ??= new ChangeTrackingList<string>();
@@ -556,7 +559,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="allowHeaders"> Request headers allowed in cross-origin requests. </param>
         /// <param name="allowCredentials"> Whether cross-origin requests may include credentials. </param>
         /// <param name="maxAge"> The preflight response cache duration in seconds. </param>
-        /// <returns> A new <see cref="Sandbox.PortCorsConfig"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PortCorsConfig"/> instance for mocking. </returns>
         public static PortCorsConfig PortCorsConfig(IEnumerable<string> allowOrigins = default, IEnumerable<string> allowMethods = default, IEnumerable<string> allowHeaders = default, bool? allowCredentials = default, int? maxAge = default)
         {
             allowOrigins ??= new ChangeTrackingList<string>();
@@ -578,7 +581,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="mcpRuntimeUri"> MCP server endpoint URL resolved by the service. </param>
         /// <param name="connectionRuntimeUri"> Direct connection endpoint URL resolved by the service. </param>
         /// <param name="authentication"> Authentication resolved by the service. </param>
-        /// <returns> A new <see cref="Sandbox.GatewayConnection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GatewayConnection"/> instance for mocking. </returns>
         public static GatewayConnection GatewayConnection(string resourceId = default, string name = default, Uri mcpRuntimeUri = default, Uri connectionRuntimeUri = default, GatewayAuthentication authentication = default)
         {
             return new GatewayConnection(
@@ -592,7 +595,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Authentication returned for a gateway connection. </summary>
         /// <param name="identity"> Managed identity used by the connection. </param>
-        /// <returns> A new <see cref="Sandbox.GatewayAuthentication"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.GatewayAuthentication"/> instance for mocking. </returns>
         public static GatewayAuthentication GatewayAuthentication(ManagedIdentityAuthentication identity = default)
         {
             return new GatewayAuthentication(identity, additionalBinaryDataProperties: null);
@@ -601,7 +604,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Managed identity authentication configuration. </summary>
         /// <param name="type"> The type of managed identity to use. </param>
         /// <param name="identityResourceId"> Required for UserAssigned and omitted for SystemAssigned. </param>
-        /// <returns> A new <see cref="Sandbox.ManagedIdentityAuthentication"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ManagedIdentityAuthentication"/> instance for mocking. </returns>
         public static ManagedIdentityAuthentication ManagedIdentityAuthentication(ManagedIdentityAuthenticationType @type = default, string identityResourceId = default)
         {
             return new ManagedIdentityAuthentication(@type, identityResourceId, additionalBinaryDataProperties: null);
@@ -617,7 +620,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="trafficInspection"> Controls TLS inspection and handling of non-HTTP traffic. Defaults to Full. </param>
         /// <param name="enforcementMode"> Whether policy decisions are enforced or only audited. </param>
         /// <param name="validationWarnings"> Warnings found while validating the policy. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxEgressPolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxEgressPolicy"/> instance for mocking. </returns>
         public static SandboxEgressPolicy SandboxEgressPolicy(HttpEgressSection http = default, EgressPolicyAction? defaultAction = default, IEnumerable<EgressHostRule> hostRules = default, IEnumerable<EgressPolicyRule> rules = default, TdsEgressSection tds = default, TransportEgressSection transportRules = default, TrafficInspection? trafficInspection = default, EgressPolicyEnforcementMode? enforcementMode = default, IEnumerable<ValidationWarning> validationWarnings = default)
         {
             hostRules ??= new ChangeTrackingList<EgressHostRule>();
@@ -644,7 +647,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="trafficInspection"> Controls the scope of TLS inspection for the egress proxy. Defaults to Full. </param>
         /// <param name="enforcementMode"> Whether policy decisions are enforced or only audited. </param>
         /// <param name="defaultForward"> The default proxy used to forward egress traffic. </param>
-        /// <returns> A new <see cref="Sandbox.HttpEgressSection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.HttpEgressSection"/> instance for mocking. </returns>
         public static HttpEgressSection HttpEgressSection(EgressPolicyAction defaultAction = default, IEnumerable<EgressHostRule> hostRules = default, IEnumerable<EgressPolicyRule> rules = default, TrafficInspection? trafficInspection = default, EgressPolicyEnforcementMode? enforcementMode = default, EgressForwardProxy defaultForward = default)
         {
             hostRules ??= new ChangeTrackingList<EgressHostRule>();
@@ -663,7 +666,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> A host pattern and the egress action applied to matching traffic. </summary>
         /// <param name="pattern"> The host glob pattern to match. </param>
         /// <param name="action"> The action applied to matching hosts. </param>
-        /// <returns> A new <see cref="Sandbox.EgressHostRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressHostRule"/> instance for mocking. </returns>
         public static EgressHostRule EgressHostRule(string pattern = default, EgressPolicyAction? action = default)
         {
             return new EgressHostRule(pattern, action, additionalBinaryDataProperties: null);
@@ -676,7 +679,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="proxyActions"> Additional proxy actions applied to matching traffic. </param>
         /// <param name="source"> The source that supplied the rule. </param>
         /// <param name="hookRef"> A webhook that dynamically determines the action. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressPolicyRule"/> instance for mocking. </returns>
         public static EgressPolicyRule EgressPolicyRule(string name = default, EgressPolicyRuleMatch match = default, EgressPolicyRuleAction action = default, IEnumerable<string> proxyActions = default, string source = default, EgressPolicyHookRef hookRef = default)
         {
             proxyActions ??= new ChangeTrackingList<string>();
@@ -697,7 +700,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="methods"> The HTTP methods to match. </param>
         /// <param name="scheme"> The URI scheme to match. </param>
         /// <param name="normalizePath"> Whether to decode and normalize the request path before matching. Defaults to true. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyRuleMatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressPolicyRuleMatch"/> instance for mocking. </returns>
         public static EgressPolicyRuleMatch EgressPolicyRuleMatch(string host = default, string path = default, IEnumerable<string> methods = default, EgressPolicyMatchScheme? scheme = default, bool? normalizePath = default)
         {
             methods ??= new ChangeTrackingList<string>();
@@ -720,7 +723,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="routingMode"> How rewritten traffic is routed. </param>
         /// <param name="forward"> Controls how matching traffic is forwarded. </param>
         /// <param name="forwardProxy"> The proxy used to forward matching traffic. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyRuleAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressPolicyRuleAction"/> instance for mocking. </returns>
         public static EgressPolicyRuleAction EgressPolicyRuleAction(EgressPolicyActionType @type = default, IEnumerable<EgressPolicyHeaderTransform> headers = default, string scheme = default, string host = default, string path = default, EgressRuleRoutingMode? routingMode = default, EgressForwardMode? forward = default, EgressForwardProxy forwardProxy = default)
         {
             headers ??= new ChangeTrackingList<EgressPolicyHeaderTransform>();
@@ -742,7 +745,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="name"> The header name. </param>
         /// <param name="value"> A static header value. </param>
         /// <param name="valueRef"> A dynamic source for the header value. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyHeaderTransform"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressPolicyHeaderTransform"/> instance for mocking. </returns>
         public static EgressPolicyHeaderTransform EgressPolicyHeaderTransform(EgressPolicyHeaderOperation operation = default, string name = default, string value = default, EgressPolicyValueRef valueRef = default)
         {
             return new EgressPolicyHeaderTransform(operation, name, value, valueRef, additionalBinaryDataProperties: null);
@@ -751,7 +754,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> A dynamic value reference for header transforms. Exactly one of the ref fields should be set. </summary>
         /// <param name="secretRef"> A value loaded from a sandbox-group secret. </param>
         /// <param name="managedIdentityRef"> A value obtained from a managed identity token. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyValueRef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressPolicyValueRef"/> instance for mocking. </returns>
         public static EgressPolicyValueRef EgressPolicyValueRef(EgressPolicySecretRef secretRef = default, EgressPolicyManagedIdentityRef managedIdentityRef = default)
         {
             return new EgressPolicyValueRef(secretRef, managedIdentityRef, additionalBinaryDataProperties: null);
@@ -761,7 +764,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="secretId"> The secret identifier. </param>
         /// <param name="secretKey"> The key within the secret. </param>
         /// <param name="format"> An optional format applied to the secret value. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicySecretRef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressPolicySecretRef"/> instance for mocking. </returns>
         public static EgressPolicySecretRef EgressPolicySecretRef(string secretId = default, string secretKey = default, string format = default)
         {
             return new EgressPolicySecretRef(secretId, secretKey, format, additionalBinaryDataProperties: null);
@@ -772,8 +775,8 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="format"> An optional format applied to the token value. </param>
         /// <param name="type"> The managed identity type. </param>
         /// <param name="identityResourceId"> The resource ID of the user-assigned managed identity. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyManagedIdentityRef"/> instance for mocking. </returns>
-        public static EgressPolicyManagedIdentityRef EgressPolicyManagedIdentityRef(string resource = default, string format = default, EgressPolicyManagedIdentityType? @type = default, string identityResourceId = default)
+        /// <returns> A new <see cref="Models.EgressPolicyManagedIdentityRef"/> instance for mocking. </returns>
+        public static EgressPolicyManagedIdentityRef EgressPolicyManagedIdentityRef(string resource = default, string format = default, EgressPolicyManagedIdentityType? @type = default, ResourceIdentifier identityResourceId = default)
         {
             return new EgressPolicyManagedIdentityRef(resource, format, @type, identityResourceId, additionalBinaryDataProperties: null);
         }
@@ -781,7 +784,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Proxy configuration for forwarded egress traffic. </summary>
         /// <param name="url"> The proxy URL. </param>
         /// <param name="certificateAuthority"> The certificate authority data used to validate the proxy. </param>
-        /// <returns> A new <see cref="Sandbox.EgressForwardProxy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressForwardProxy"/> instance for mocking. </returns>
         public static EgressForwardProxy EgressForwardProxy(Uri url = default, string certificateAuthority = default)
         {
             return new EgressForwardProxy(url, certificateAuthority, additionalBinaryDataProperties: null);
@@ -794,8 +797,8 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="authHeaders"> Authentication headers added to the webhook request. </param>
         /// <param name="timeoutMs"> The webhook timeout in milliseconds. </param>
         /// <param name="routingMode"> How the webhook request is routed. </param>
-        /// <returns> A new <see cref="Sandbox.EgressPolicyHookRef"/> instance for mocking. </returns>
-        public static EgressPolicyHookRef EgressPolicyHookRef(string endpoint = default, EgressPolicyHookFailBehavior? failBehavior = default, IEnumerable<string> requestHeaders = default, IEnumerable<EgressPolicyHeaderTransform> authHeaders = default, int? timeoutMs = default, EgressRuleRoutingMode? routingMode = default)
+        /// <returns> A new <see cref="Models.EgressPolicyHookRef"/> instance for mocking. </returns>
+        public static EgressPolicyHookRef EgressPolicyHookRef(Uri endpoint = default, EgressPolicyHookFailBehavior? failBehavior = default, IEnumerable<string> requestHeaders = default, IEnumerable<EgressPolicyHeaderTransform> authHeaders = default, int? timeoutMs = default, EgressRuleRoutingMode? routingMode = default)
         {
             requestHeaders ??= new ChangeTrackingList<string>();
             authHeaders ??= new ChangeTrackingList<EgressPolicyHeaderTransform>();
@@ -814,7 +817,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="defaultAction"> The action applied when no TDS rule matches. </param>
         /// <param name="credentials"> Named credentials referenced by TDS rules. </param>
         /// <param name="rules"> TDS rules evaluated in order. </param>
-        /// <returns> A new <see cref="Sandbox.TdsEgressSection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TdsEgressSection"/> instance for mocking. </returns>
         public static TdsEgressSection TdsEgressSection(EgressPolicyActionType defaultAction = default, IEnumerable<TdsCredential> credentials = default, IEnumerable<TdsEgressRule> rules = default)
         {
             credentials ??= new ChangeTrackingList<TdsCredential>();
@@ -828,7 +831,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="kind"> The authentication method. </param>
         /// <param name="username"> The SQL username. </param>
         /// <param name="secretRef"> A reference to the stored password or token. </param>
-        /// <returns> A new <see cref="Sandbox.TdsCredential"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TdsCredential"/> instance for mocking. </returns>
         public static TdsCredential TdsCredential(string name = default, TdsAuthKind kind = default, string username = default, EgressPolicySecretRef secretRef = default)
         {
             return new TdsCredential(name, kind, username, secretRef, additionalBinaryDataProperties: null);
@@ -839,7 +842,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="match"> The database traffic matched by the rule. </param>
         /// <param name="action"> The static action applied to matching traffic. </param>
         /// <param name="hookRef"> A webhook that dynamically determines the action. </param>
-        /// <returns> A new <see cref="Sandbox.TdsEgressRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TdsEgressRule"/> instance for mocking. </returns>
         public static TdsEgressRule TdsEgressRule(string name = default, TdsEgressMatch match = default, TdsEgressAction action = default, EgressPolicyHookRef hookRef = default)
         {
             return new TdsEgressRule(name, match, action, hookRef, additionalBinaryDataProperties: null);
@@ -848,7 +851,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Match criteria for a TDS egress rule. All specified criteria must match. </summary>
         /// <param name="host"> The database server host pattern. </param>
         /// <param name="databases"> The database names to match. </param>
-        /// <returns> A new <see cref="Sandbox.TdsEgressMatch"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TdsEgressMatch"/> instance for mocking. </returns>
         public static TdsEgressMatch TdsEgressMatch(string host = default, IEnumerable<string> databases = default)
         {
             databases ??= new ChangeTrackingList<string>();
@@ -859,7 +862,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> The allow or deny action applied by a TDS rule. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="credential"> The credential used for an allowed connection. </param>
-        /// <returns> A new <see cref="Sandbox.TdsEgressAction"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TdsEgressAction"/> instance for mocking. </returns>
         public static TdsEgressAction TdsEgressAction(EgressPolicyActionType @type = default, string credential = default)
         {
             return new TdsEgressAction(@type, credential, additionalBinaryDataProperties: null);
@@ -868,7 +871,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> TCP and UDP egress rules for a sandbox. </summary>
         /// <param name="defaultAction"> The action applied when no transport rule matches. </param>
         /// <param name="rules"> Transport rules evaluated in order. </param>
-        /// <returns> A new <see cref="Sandbox.TransportEgressSection"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TransportEgressSection"/> instance for mocking. </returns>
         public static TransportEgressSection TransportEgressSection(EgressPolicyActionType defaultAction = default, IEnumerable<TransportEgressRule> rules = default)
         {
             rules ??= new ChangeTrackingList<TransportEgressRule>();
@@ -881,7 +884,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="protocol"> The transport protocol to match. </param>
         /// <param name="destination"> The destination IPv4 CIDR to match. </param>
         /// <param name="port"> The destination port to match. </param>
-        /// <returns> A new <see cref="Sandbox.TransportEgressRule"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TransportEgressRule"/> instance for mocking. </returns>
         public static TransportEgressRule TransportEgressRule(EgressPolicyActionType action = default, TransportProtocol protocol = default, string destination = default, int port = default)
         {
             return new TransportEgressRule(action, protocol, destination, port, additionalBinaryDataProperties: null);
@@ -890,7 +893,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> A non-fatal policy validation warning. </summary>
         /// <param name="code"> A machine-readable warning code. </param>
         /// <param name="message"> A human-readable warning message. </param>
-        /// <returns> A new <see cref="Sandbox.ValidationWarning"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ValidationWarning"/> instance for mocking. </returns>
         public static ValidationWarning ValidationWarning(string code = default, string message = default)
         {
             return new ValidationWarning(code, message, additionalBinaryDataProperties: null);
@@ -899,7 +902,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Automatic suspension and deletion settings for a sandbox. </summary>
         /// <param name="autoSuspendPolicy"> Automatic suspension settings. </param>
         /// <param name="autoDeletePolicy"> Automatic deletion settings. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxLifecyclePolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxLifecyclePolicy"/> instance for mocking. </returns>
         public static SandboxLifecyclePolicy SandboxLifecyclePolicy(SandboxAutoSuspendPolicy autoSuspendPolicy = default, SandboxAutoDeletePolicy autoDeletePolicy = default)
         {
             return new SandboxLifecyclePolicy(autoSuspendPolicy, autoDeletePolicy, additionalBinaryDataProperties: null);
@@ -907,12 +910,12 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Automatic suspension settings for a sandbox. </summary>
         /// <param name="enabled"> Whether automatic suspension is enabled. </param>
-        /// <param name="interval"> The idle interval before suspension. </param>
+        /// <param name="intervalSeconds"> The idle interval before suspension. </param>
         /// <param name="mode"> How sandbox state is preserved during suspension. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxAutoSuspendPolicy"/> instance for mocking. </returns>
-        public static SandboxAutoSuspendPolicy SandboxAutoSuspendPolicy(bool enabled = default, int? interval = default, SandboxSuspendMode? mode = default)
+        /// <returns> A new <see cref="Models.SandboxAutoSuspendPolicy"/> instance for mocking. </returns>
+        public static SandboxAutoSuspendPolicy SandboxAutoSuspendPolicy(bool enabled = default, int? intervalSeconds = default, SandboxSuspendMode? mode = default)
         {
-            return new SandboxAutoSuspendPolicy(enabled, interval, mode, additionalBinaryDataProperties: null);
+            return new SandboxAutoSuspendPolicy(enabled, intervalSeconds, mode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Automatic deletion settings for a sandbox. </summary>
@@ -920,7 +923,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="deleteIntervalInDays"> The deletion delay in days. </param>
         /// <param name="deleteIntervalInSeconds"> The deletion delay in seconds. </param>
         /// <param name="trigger"> The event that starts the deletion timer. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxAutoDeletePolicy"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxAutoDeletePolicy"/> instance for mocking. </returns>
         public static SandboxAutoDeletePolicy SandboxAutoDeletePolicy(bool enabled = default, int? deleteIntervalInDays = default, long? deleteIntervalInSeconds = default, AutoDeleteTrigger? trigger = default)
         {
             return new SandboxAutoDeletePolicy(enabled, deleteIntervalInDays, deleteIntervalInSeconds, trigger, additionalBinaryDataProperties: null);
@@ -929,7 +932,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Reference to an agent identity for assigning to a sandbox. </summary>
         /// <param name="tenantId"> Tenant ID where the agent identity is registered. </param>
         /// <param name="agentId"> Unique identifier for the agent identity. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxAgentIdentityRef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxAgentIdentityRef"/> instance for mocking. </returns>
         public static SandboxAgentIdentityRef SandboxAgentIdentityRef(string tenantId = default, string agentId = default)
         {
             return new SandboxAgentIdentityRef(tenantId, agentId, additionalBinaryDataProperties: null);
@@ -939,7 +942,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="volumeName"> The volume name. </param>
         /// <param name="mountpoint"> The path where the volume is mounted. </param>
         /// <param name="readOnly"> Whether the mount is read-only. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxVolume"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxVolume"/> instance for mocking. </returns>
         public static SandboxVolume SandboxVolume(string volumeName = default, string mountpoint = default, bool? readOnly = default)
         {
             return new SandboxVolume(volumeName, mountpoint, readOnly, additionalBinaryDataProperties: null);
@@ -948,7 +951,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Per-identity availability setting on a sandbox. Allows explicit control over which identities from the group are served to the sandbox. </summary>
         /// <param name="identity"> Managed identity resource ID, system-assigned identity marker, or client ID. </param>
         /// <param name="lifecycle"> Lifecycle phase gating for this identity. </param>
-        /// <returns> A new <see cref="Sandbox.IdentitySetting"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.IdentitySetting"/> instance for mocking. </returns>
         public static IdentitySetting IdentitySetting(string identity = default, IdentitySettingLifecycle? lifecycle = default)
         {
             return new IdentitySetting(identity, lifecycle, additionalBinaryDataProperties: null);
@@ -966,7 +969,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="lastStartedOn"> The time when the container last started. </param>
         /// <param name="lastFinishedOn"> The time when the container last stopped. </param>
         /// <param name="probes"> Runtime status keyed by probe type. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerStatus"/> instance for mocking. </returns>
         public static ContainerStatus ContainerStatus(string name = default, ContainerRuntimeState state = default, bool ready = default, bool started = default, int restartCount = default, ContainerStatusReason? reason = default, string message = default, int? lastExitCode = default, DateTimeOffset? lastStartedOn = default, DateTimeOffset? lastFinishedOn = default, IDictionary<string, ContainerProbeStatus> probes = default)
         {
             probes ??= new ChangeTrackingDictionary<string, ContainerProbeStatus>();
@@ -993,7 +996,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="lastCheckedOn"> The time when the probe last ran. </param>
         /// <param name="lastTransitionOn"> The time when the probe result last changed. </param>
         /// <param name="message"> Details about the latest probe result. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerProbeStatus"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ContainerProbeStatus"/> instance for mocking. </returns>
         public static ContainerProbeStatus ContainerProbeStatus(ContainerProbeResult? lastResult = default, int? consecutiveFailures = default, int? consecutiveSuccesses = default, DateTimeOffset? lastCheckedOn = default, DateTimeOffset? lastTransitionOn = default, string message = default)
         {
             return new ContainerProbeStatus(
@@ -1031,8 +1034,8 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="identitySettings"> Identity settings to apply to the sandbox. </param>
         /// <param name="telemetryConfig"> Telemetry configuration to apply to the sandbox. </param>
         /// <param name="projectId"> Optional project associated with the sandbox. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSandboxContent"/> instance for mocking. </returns>
-        public static CreateSandboxContent CreateSandboxContent(IDictionary<string, string> labels = default, IEnumerable<string> entrypoint = default, IEnumerable<string> command = default, IDictionary<string, string> environment = default, SandboxSource sourcesRef = default, SandboxResources resources = default, IEnumerable<CreateSandboxPortContent> ports = default, IEnumerable<string> connections = default, IEnumerable<CreateSandboxGatewayConnectionContent> gatewayConnections = default, IEnumerable<string> credentialRefs = default, SandboxEgressPolicy egressPolicy = default, string egressPolicyId = default, string sandboxGroupId = default, PresetSandboxType? presetSandboxType = default, string anthropicApiKey = default, SandboxPresetProperties presetProperties = default, SandboxLifecyclePolicy lifecycle = default, SandboxAgentIdentityRef agentIdentity = default, IEnumerable<SandboxVolume> volumes = default, IEnumerable<SandboxContentPackageDownload> contentPackageDownloads = default, string vnetConnectionName = default, IEnumerable<IdentitySetting> identitySettings = default, TelemetryConfig telemetryConfig = default, string projectId = default)
+        /// <returns> A new <see cref="Models.CreateSandboxContent"/> instance for mocking. </returns>
+        public static CreateSandboxContent CreateSandboxContent(IDictionary<string, string> labels = default, IEnumerable<string> entrypoint = default, IEnumerable<string> command = default, IDictionary<string, string> environment = default, SandboxSource sourcesRef = default, SandboxResources resources = default, IEnumerable<CreateSandboxPortContent> ports = default, IEnumerable<string> connections = default, IEnumerable<CreateSandboxGatewayConnectionContent> gatewayConnections = default, IEnumerable<string> credentialRefs = default, SandboxEgressPolicy egressPolicy = default, string egressPolicyId = default, string sandboxGroupId = default, PresetSandboxType? presetSandboxType = default, string anthropicApiKey = default, SandboxPresetProperties presetProperties = default, SandboxLifecyclePolicy lifecycle = default, SandboxAgentIdentityRef agentIdentity = default, IEnumerable<SandboxVolume> volumes = default, IEnumerable<SandboxContentPackageDownload> contentPackageDownloads = default, string vnetConnectionName = default, IEnumerable<IdentitySetting> identitySettings = default, TelemetryConfiguration telemetryConfig = default, string projectId = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             entrypoint ??= new ChangeTrackingList<string>();
@@ -1082,7 +1085,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="protocol"> HTTP protocol version used when forwarding requests to this port. </param>
         /// <param name="ipAccessControl"> IP access control configuration for the port. </param>
         /// <param name="cors"> CORS configuration for the port. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSandboxPortContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CreateSandboxPortContent"/> instance for mocking. </returns>
         public static CreateSandboxPortContent CreateSandboxPortContent(string name = default, int port = default, PortAuthConfig auth = default, PortActivationMode? activationMode = default, PortProtocol? protocol = default, IPAccessControl ipAccessControl = default, PortCorsConfig cors = default)
         {
             return new CreateSandboxPortContent(
@@ -1098,15 +1101,15 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> AI Gateway connection reference used when creating a sandbox. </summary>
         /// <param name="resourceId"> Azure resource ID of an AI Gateway server configuration or connection. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSandboxGatewayConnectionContent"/> instance for mocking. </returns>
-        public static CreateSandboxGatewayConnectionContent CreateSandboxGatewayConnectionContent(string resourceId = default)
+        /// <returns> A new <see cref="Models.CreateSandboxGatewayConnectionContent"/> instance for mocking. </returns>
+        public static CreateSandboxGatewayConnectionContent CreateSandboxGatewayConnectionContent(ResourceIdentifier resourceId = default)
         {
             return new CreateSandboxGatewayConnectionContent(resourceId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Preset-specific properties for sandbox creation. These properties configure optional features for specific preset types. </summary>
         /// <param name="isWorkIqConnectionEnabled"> Whether to enable the WorkIQ connection for the GitHubCopilot preset. When true, the WorkIQ managed API must be available in the region. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxPresetProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxPresetProperties"/> instance for mocking. </returns>
         public static SandboxPresetProperties SandboxPresetProperties(bool? isWorkIqConnectionEnabled = default)
         {
             return new SandboxPresetProperties(isWorkIqConnectionEnabled, additionalBinaryDataProperties: null);
@@ -1115,56 +1118,56 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Configures telemetry collection for a sandbox. Passed in sandbox creation requests. </summary>
         /// <param name="endpoints"> One or more telemetry endpoints to route data to. </param>
         /// <param name="metricsIntervalSeconds"> Optional metrics collection interval in seconds. Must be &gt;= 2. Defaults to 15 if not specified. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryConfig"/> instance for mocking. </returns>
-        public static TelemetryConfig TelemetryConfig(IEnumerable<TelemetryEndpoint> endpoints = default, int? metricsIntervalSeconds = default)
+        /// <returns> A new <see cref="Models.TelemetryConfiguration"/> instance for mocking. </returns>
+        public static TelemetryConfiguration TelemetryConfiguration(IEnumerable<TelemetryEndpoint> endpoints = default, int? metricsIntervalSeconds = default)
         {
             endpoints ??= new ChangeTrackingList<TelemetryEndpoint>();
 
-            return new TelemetryConfig(endpoints.ToList(), metricsIntervalSeconds, additionalBinaryDataProperties: null);
+            return new TelemetryConfiguration(endpoints.ToList(), metricsIntervalSeconds, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Base type for telemetry endpoint configuration. Polymorphic on `kind` discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.ApplicationInsightsTelemetryEndpoint"/>, <see cref="Sandbox.LogAnalyticsLegacyTelemetryEndpoint"/>, <see cref="Sandbox.LogAnalyticsTelemetryEndpoint"/>, and <see cref="Sandbox.OtlpTelemetryEndpoint"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ApplicationInsightsTelemetryEndpoint"/>, <see cref="Models.LogAnalyticsLegacyTelemetryEndpoint"/>, <see cref="Models.LogAnalyticsTelemetryEndpoint"/>, and <see cref="Models.OtlpTelemetryEndpoint"/>.
         /// </summary>
         /// <param name="kind"> The telemetry endpoint type. </param>
         /// <param name="data"> Which telemetry data to route: `sandbox`, `system`. If empty, all data is routed. </param>
         /// <param name="columns"> Custom columns added to forwarded log records. </param>
         /// <param name="dynamicJsonColumns"> Whether to add top-level JSON fields from container logs as columns. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryEndpoint"/> instance for mocking. </returns>
-        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryData> data = default, IDictionary<string, LogColumnDef> columns = default, bool? dynamicJsonColumns = default)
+        /// <returns> A new <see cref="Models.TelemetryEndpoint"/> instance for mocking. </returns>
+        public static TelemetryEndpoint TelemetryEndpoint(string kind = default, IEnumerable<TelemetryData> data = default, IDictionary<string, TelemetryLogColumn> columns = default, bool? dynamicJsonColumns = default)
         {
             data ??= new ChangeTrackingList<TelemetryData>();
-            columns ??= new ChangeTrackingDictionary<string, LogColumnDef>();
+            columns ??= new ChangeTrackingDictionary<string, TelemetryLogColumn>();
 
             return new UnknownTelemetryEndpoint(new TelemetryEndpointKind(kind), data.ToList(), columns, dynamicJsonColumns, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Defines a single column in a custom log output schema. Polymorphic on `kind` discriminator: `"Value"` or `"Ref"`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.RefLogColumnDef"/> and <see cref="Sandbox.ValueLogColumnDef"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LiteralTelemetryLogColumn"/> and <see cref="Models.ReferenceTelemetryLogColumn"/>.
         /// </summary>
         /// <param name="kind"> The log column type. </param>
-        /// <returns> A new <see cref="Sandbox.LogColumnDef"/> instance for mocking. </returns>
-        public static LogColumnDef LogColumnDef(string kind = default)
+        /// <returns> A new <see cref="Models.TelemetryLogColumn"/> instance for mocking. </returns>
+        public static TelemetryLogColumn TelemetryLogColumn(string kind = default)
         {
-            return new UnknownLogColumnDef(new LogColumnDefKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownTelemetryLogColumn(new TelemetryLogColumnKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> A column whose value is resolved from a well-known Azure Container Apps Sandbox attribute at runtime. </summary>
         /// <param name="refName"> The Azure Container Apps Sandbox attribute to resolve. </param>
-        /// <returns> A new <see cref="Sandbox.RefLogColumnDef"/> instance for mocking. </returns>
-        public static RefLogColumnDef RefLogColumnDef(LogColumnRef refName = default)
+        /// <returns> A new <see cref="Models.ReferenceTelemetryLogColumn"/> instance for mocking. </returns>
+        public static ReferenceTelemetryLogColumn ReferenceTelemetryLogColumn(LogColumnRef refName = default)
         {
-            return new RefLogColumnDef(LogColumnDefKind.Ref, additionalBinaryDataProperties: null, refName);
+            return new ReferenceTelemetryLogColumn(TelemetryLogColumnKind.Ref, additionalBinaryDataProperties: null, refName);
         }
 
         /// <summary> A column whose value is a literal string provided by the partner. </summary>
         /// <param name="value"> The static value injected into every log record. </param>
-        /// <returns> A new <see cref="Sandbox.ValueLogColumnDef"/> instance for mocking. </returns>
-        public static ValueLogColumnDef ValueLogColumnDef(string value = default)
+        /// <returns> A new <see cref="Models.LiteralTelemetryLogColumn"/> instance for mocking. </returns>
+        public static LiteralTelemetryLogColumn LiteralTelemetryLogColumn(string value = default)
         {
-            return new ValueLogColumnDef(LogColumnDefKind.Value, additionalBinaryDataProperties: null, value);
+            return new LiteralTelemetryLogColumn(TelemetryLogColumnKind.Value, additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> Application Insights telemetry endpoint configuration. Uses the connection string to derive the ingestion and live-metrics endpoints. </summary>
@@ -1172,11 +1175,11 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="columns"> Custom columns added to forwarded log records. </param>
         /// <param name="dynamicJsonColumns"> Whether to add top-level JSON fields from container logs as columns. </param>
         /// <param name="auth"> Authentication used for Application Insights. </param>
-        /// <returns> A new <see cref="Sandbox.ApplicationInsightsTelemetryEndpoint"/> instance for mocking. </returns>
-        public static ApplicationInsightsTelemetryEndpoint ApplicationInsightsTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, LogColumnDef> columns = default, bool? dynamicJsonColumns = default, TelemetryApplicationInsightsAuth auth = default)
+        /// <returns> A new <see cref="Models.ApplicationInsightsTelemetryEndpoint"/> instance for mocking. </returns>
+        public static ApplicationInsightsTelemetryEndpoint ApplicationInsightsTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, TelemetryLogColumn> columns = default, bool? dynamicJsonColumns = default, TelemetryApplicationInsightsAuthentication auth = default)
         {
             data ??= new ChangeTrackingList<TelemetryData>();
-            columns ??= new ChangeTrackingDictionary<string, LogColumnDef>();
+            columns ??= new ChangeTrackingDictionary<string, TelemetryLogColumn>();
 
             return new ApplicationInsightsTelemetryEndpoint(
                 TelemetryEndpointKind.ApplicationInsights,
@@ -1190,10 +1193,10 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Secret-based authentication for an Application Insights endpoint. </summary>
         /// <param name="secretId"> Reference to a user-managed secret containing key-value pairs. </param>
         /// <param name="secretKey"> The key within the secret whose value is the Application Insights connection string. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryApplicationInsightsAuth"/> instance for mocking. </returns>
-        public static TelemetryApplicationInsightsAuth TelemetryApplicationInsightsAuth(string secretId = default, string secretKey = default)
+        /// <returns> A new <see cref="Models.TelemetryApplicationInsightsAuthentication"/> instance for mocking. </returns>
+        public static TelemetryApplicationInsightsAuthentication TelemetryApplicationInsightsAuthentication(string secretId = default, string secretKey = default)
         {
-            return new TelemetryApplicationInsightsAuth(secretId, secretKey, additionalBinaryDataProperties: null);
+            return new TelemetryApplicationInsightsAuthentication(secretId, secretKey, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Log Analytics Legacy (Data Collector API) telemetry endpoint configuration. </summary>
@@ -1203,11 +1206,11 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="workspaceId"> The Log Analytics workspace ID. </param>
         /// <param name="tableName"> The custom log table name (e.g., "ContainerAppConsoleLogs"). </param>
         /// <param name="auth"> Secret containing the Log Analytics shared key. </param>
-        /// <returns> A new <see cref="Sandbox.LogAnalyticsLegacyTelemetryEndpoint"/> instance for mocking. </returns>
-        public static LogAnalyticsLegacyTelemetryEndpoint LogAnalyticsLegacyTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, LogColumnDef> columns = default, bool? dynamicJsonColumns = default, string workspaceId = default, string tableName = default, TelemetrySecretReference auth = default)
+        /// <returns> A new <see cref="Models.LogAnalyticsLegacyTelemetryEndpoint"/> instance for mocking. </returns>
+        public static LogAnalyticsLegacyTelemetryEndpoint LogAnalyticsLegacyTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, TelemetryLogColumn> columns = default, bool? dynamicJsonColumns = default, string workspaceId = default, string tableName = default, TelemetrySecretReference auth = default)
         {
             data ??= new ChangeTrackingList<TelemetryData>();
-            columns ??= new ChangeTrackingDictionary<string, LogColumnDef>();
+            columns ??= new ChangeTrackingDictionary<string, TelemetryLogColumn>();
 
             return new LogAnalyticsLegacyTelemetryEndpoint(
                 TelemetryEndpointKind.LogAnalyticsLegacy,
@@ -1222,10 +1225,10 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary>
         /// Base type for telemetry endpoint secret references.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.TelemetryAppSecretRef"/> and <see cref="Sandbox.TelemetrySandboxGroupSecretRef"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TelemetryAppSecretRef"/> and <see cref="Models.TelemetrySandboxGroupSecretRef"/>.
         /// </summary>
         /// <param name="kind"> The secret-reference type. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetrySecretReference"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TelemetrySecretReference"/> instance for mocking. </returns>
         public static TelemetrySecretReference TelemetrySecretReference(string kind = default)
         {
             return new UnknownTelemetrySecretReference(new TelemetrySecretReferenceKind(kind), additionalBinaryDataProperties: null);
@@ -1234,7 +1237,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Reference to a sandbox-group GlobalSecret. </summary>
         /// <param name="secretId"> Identifier of the sandbox-group secret. </param>
         /// <param name="secretKey"> Key within the secret whose value should be used. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetrySandboxGroupSecretRef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TelemetrySandboxGroupSecretRef"/> instance for mocking. </returns>
         public static TelemetrySandboxGroupSecretRef TelemetrySandboxGroupSecretRef(string secretId = default, string secretKey = default)
         {
             return new TelemetrySandboxGroupSecretRef(TelemetrySecretReferenceKind.GlobalSecret, additionalBinaryDataProperties: null, secretId, secretKey);
@@ -1242,7 +1245,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Reference to a secret in the parent artifact app. </summary>
         /// <param name="secretRef"> Name of the secret in the parent artifact app's secret bundle. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryAppSecretRef"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.TelemetryAppSecretRef"/> instance for mocking. </returns>
         public static TelemetryAppSecretRef TelemetryAppSecretRef(string secretRef = default)
         {
             return new TelemetryAppSecretRef(TelemetrySecretReferenceKind.AppSecret, additionalBinaryDataProperties: null, secretRef);
@@ -1256,11 +1259,11 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="dcrImmutableId"> Data Collection Rule immutable ID. </param>
         /// <param name="tableName"> Target stream name in the DCR. </param>
         /// <param name="auth"> Required managed identity authentication. The identity must be assigned to the sandbox group. </param>
-        /// <returns> A new <see cref="Sandbox.LogAnalyticsTelemetryEndpoint"/> instance for mocking. </returns>
-        public static LogAnalyticsTelemetryEndpoint LogAnalyticsTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, LogColumnDef> columns = default, bool? dynamicJsonColumns = default, Uri dceEndpoint = default, string dcrImmutableId = default, string tableName = default, TelemetryAuth auth = default)
+        /// <returns> A new <see cref="Models.LogAnalyticsTelemetryEndpoint"/> instance for mocking. </returns>
+        public static LogAnalyticsTelemetryEndpoint LogAnalyticsTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, TelemetryLogColumn> columns = default, bool? dynamicJsonColumns = default, Uri dceEndpoint = default, string dcrImmutableId = default, string tableName = default, TelemetryAuthentication auth = default)
         {
             data ??= new ChangeTrackingList<TelemetryData>();
-            columns ??= new ChangeTrackingDictionary<string, LogColumnDef>();
+            columns ??= new ChangeTrackingDictionary<string, TelemetryLogColumn>();
 
             return new LogAnalyticsTelemetryEndpoint(
                 TelemetryEndpointKind.LogAnalytics,
@@ -1276,28 +1279,28 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary>
         /// Managed identity authentication for a telemetry endpoint.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.TelemetryManagedIdentityAuth"/> and <see cref="Sandbox.TelemetrySystemAssignedManagedIdentityAuth"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TelemetryManagedIdentityAuthentication"/> and <see cref="Models.TelemetrySystemAssignedManagedIdentityAuthentication"/>.
         /// </summary>
         /// <param name="kind"> The telemetry authentication type. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryAuth"/> instance for mocking. </returns>
-        public static TelemetryAuth TelemetryAuth(string kind = default)
+        /// <returns> A new <see cref="Models.TelemetryAuthentication"/> instance for mocking. </returns>
+        public static TelemetryAuthentication TelemetryAuthentication(string kind = default)
         {
-            return new UnknownTelemetryAuth(new TelemetryAuthKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownTelemetryAuthentication(new TelemetryAuthenticationKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> User-assigned managed identity authentication for Log Analytics. </summary>
         /// <param name="identity"> Azure resource ID of a user-assigned managed identity. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryManagedIdentityAuth"/> instance for mocking. </returns>
-        public static TelemetryManagedIdentityAuth TelemetryManagedIdentityAuth(string identity = default)
+        /// <returns> A new <see cref="Models.TelemetryManagedIdentityAuthentication"/> instance for mocking. </returns>
+        public static TelemetryManagedIdentityAuthentication TelemetryManagedIdentityAuthentication(string identity = default)
         {
-            return new TelemetryManagedIdentityAuth(TelemetryAuthKind.ManagedIdentity, additionalBinaryDataProperties: null, identity);
+            return new TelemetryManagedIdentityAuthentication(TelemetryAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, identity);
         }
 
         /// <summary> System-assigned managed identity authentication for Log Analytics. </summary>
-        /// <returns> A new <see cref="Sandbox.TelemetrySystemAssignedManagedIdentityAuth"/> instance for mocking. </returns>
-        public static TelemetrySystemAssignedManagedIdentityAuth TelemetrySystemAssignedManagedIdentityAuth()
+        /// <returns> A new <see cref="Models.TelemetrySystemAssignedManagedIdentityAuthentication"/> instance for mocking. </returns>
+        public static TelemetrySystemAssignedManagedIdentityAuthentication TelemetrySystemAssignedManagedIdentityAuthentication()
         {
-            return new TelemetrySystemAssignedManagedIdentityAuth(TelemetryAuthKind.SystemAssignedManagedIdentity, additionalBinaryDataProperties: null);
+            return new TelemetrySystemAssignedManagedIdentityAuthentication(TelemetryAuthenticationKind.SystemAssignedManagedIdentity, additionalBinaryDataProperties: null);
         }
 
         /// <summary> OTLP telemetry endpoint configuration. </summary>
@@ -1307,11 +1310,11 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="endpoint"> OTLP endpoint URL (e.g., "https://customer.monitor.azure.com/otlp"). </param>
         /// <param name="protocol"> `Grpc` or `Http`. </param>
         /// <param name="auth"> Optional headers used to authenticate to the endpoint. </param>
-        /// <returns> A new <see cref="Sandbox.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, LogColumnDef> columns = default, bool? dynamicJsonColumns = default, Uri endpoint = default, TelemetryProtocol protocol = default, TelemetryHeaderAuth auth = default)
+        /// <returns> A new <see cref="Models.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
+        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<TelemetryData> data = default, IDictionary<string, TelemetryLogColumn> columns = default, bool? dynamicJsonColumns = default, Uri endpoint = default, TelemetryProtocol protocol = default, TelemetryHeaderAuthentication auth = default)
         {
             data ??= new ChangeTrackingList<TelemetryData>();
-            columns ??= new ChangeTrackingDictionary<string, LogColumnDef>();
+            columns ??= new ChangeTrackingDictionary<string, TelemetryLogColumn>();
 
             return new OtlpTelemetryEndpoint(
                 TelemetryEndpointKind.OTLP,
@@ -1328,921 +1331,31 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="headerName"> HTTP header to inject (e.g., "x-api-key", "Authorization"). </param>
         /// <param name="secretId"> Reference to a user-managed secret containing key-value pairs. </param>
         /// <param name="secretKey"> The key within the secret whose value should be used as the header value. </param>
-        /// <returns> A new <see cref="Sandbox.TelemetryHeaderAuth"/> instance for mocking. </returns>
-        public static TelemetryHeaderAuth TelemetryHeaderAuth(string headerName = default, string secretId = default, string secretKey = default)
+        /// <returns> A new <see cref="Models.TelemetryHeaderAuthentication"/> instance for mocking. </returns>
+        public static TelemetryHeaderAuthentication TelemetryHeaderAuthentication(string headerName = default, string secretId = default, string secretKey = default)
         {
-            return new TelemetryHeaderAuth(headerName, secretId, secretKey, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response containing the total number of sandboxes in a scope. </summary>
-        /// <param name="count"> Total number of resources. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxCountResult"/> instance for mocking. </returns>
-        public static SandboxCountResult SandboxCountResult(int count = default)
-        {
-            return new SandboxCountResult(count, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Options for creating a disk image from a sandbox. </summary>
-        /// <param name="labels"> Labels to assign to the new disk image. </param>
-        /// <returns> A new <see cref="Sandbox.CommitSandboxContent"/> instance for mocking. </returns>
-        public static CommitSandboxContent CommitSandboxContent(IDictionary<string, string> labels = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommitSandboxContent(labels, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Disk image created from a running sandbox. </summary>
-        /// <param name="diskImage"> The disk image created from the sandbox. </param>
-        /// <returns> A new <see cref="Sandbox.CommitSandboxResult"/> instance for mocking. </returns>
-        public static CommitSandboxResult CommitSandboxResult(DiskImage diskImage = default)
-        {
-            return new CommitSandboxResult(diskImage, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing disk image resource returned by the service. </summary>
-        /// <param name="id"> Disk image identifier assigned by the service. </param>
-        /// <param name="name"> Disk image name. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="image"> Resolved image metadata assigned by the service. </param>
-        /// <param name="status"> Current disk-image status. </param>
-        /// <param name="sizeInMb"> Disk-image size assigned by the service. </param>
-        /// <returns> A new <see cref="Sandbox.DiskImage"/> instance for mocking. </returns>
-        public static DiskImage DiskImage(string id = default, string name = default, IDictionary<string, string> labels = default, DiskImageImage image = default, DiskImageStatus status = default, long? sizeInMb = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiskImage(
-                id,
-                name,
-                labels,
-                image,
-                status,
-                sizeInMb,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Resolved container image metadata for a disk image. </summary>
-        /// <param name="base"> The resolved base image reference. </param>
-        /// <param name="entrypoint"> The container entrypoint. </param>
-        /// <param name="command"> The default command arguments. </param>
-        /// <returns> A new <see cref="Sandbox.DiskImageImage"/> instance for mocking. </returns>
-        public static DiskImageImage DiskImageImage(string @base = default, IEnumerable<string> entrypoint = default, IEnumerable<string> command = default)
-        {
-            entrypoint ??= new ChangeTrackingList<string>();
-            command ??= new ChangeTrackingList<string>();
-
-            return new DiskImageImage(@base, entrypoint.ToList(), command.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The provisioning status of a disk image. </summary>
-        /// <param name="state"> The current provisioning state. </param>
-        /// <param name="errorMessage"> The failure message when provisioning did not succeed. </param>
-        /// <param name="createdOn"> The time when provisioning started. </param>
-        /// <param name="updatedOn"> The time when the status was last updated. </param>
-        /// <returns> A new <see cref="Sandbox.DiskImageStatus"/> instance for mocking. </returns>
-        public static DiskImageStatus DiskImageStatus(string state = default, string errorMessage = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
-        {
-            return new DiskImageStatus(state, errorMessage, createdOn, updatedOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A content package to download into a sandbox. </summary>
-        /// <param name="contentPackageId"> The content package identifier. </param>
-        /// <param name="targetPath"> The destination file path in the sandbox. </param>
-        /// <returns> A new <see cref="Sandbox.DownloadContentPackageToSandboxContent"/> instance for mocking. </returns>
-        public static DownloadContentPackageToSandboxContent DownloadContentPackageToSandboxContent(string contentPackageId = default, string targetPath = default)
-        {
-            return new DownloadContentPackageToSandboxContent(contentPackageId, targetPath, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Pod volumes and container mounts to add to a sandbox. </summary>
-        /// <param name="volumes"> The pod-level volume definitions. </param>
-        /// <param name="containerMounts"> Volume mounts grouped by container. </param>
-        /// <returns> A new <see cref="Sandbox.AddPodVolumeMountsContent"/> instance for mocking. </returns>
-        public static AddPodVolumeMountsContent AddPodVolumeMountsContent(IEnumerable<PodVolume> volumes = default, IEnumerable<ContainerVolumeMounts> containerMounts = default)
-        {
-            volumes ??= new ChangeTrackingList<PodVolume>();
-            containerMounts ??= new ChangeTrackingList<ContainerVolumeMounts>();
-
-            return new AddPodVolumeMountsContent(volumes.ToList(), containerMounts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Per-container grouping of volume mounts for the add operation. </summary>
-        /// <param name="containerName"> The container that receives the mounts. </param>
-        /// <param name="volumeMounts"> The volume mounts to add to the container. </param>
-        /// <returns> A new <see cref="Sandbox.ContainerVolumeMounts"/> instance for mocking. </returns>
-        public static ContainerVolumeMounts ContainerVolumeMounts(string containerName = default, IEnumerable<ContainerVolumeMount> volumeMounts = default)
-        {
-            volumeMounts ??= new ChangeTrackingList<ContainerVolumeMount>();
-
-            return new ContainerVolumeMounts(containerName, volumeMounts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating a snapshot. </summary>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSnapshotContent"/> instance for mocking. </returns>
-        public static CreateSnapshotContent CreateSnapshotContent(IDictionary<string, string> labels = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CreateSnapshotContent(labels, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing snapshot resource returned by the service. </summary>
-        /// <param name="id"> Snapshot identifier assigned by the service. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="sandboxId"> Source sandbox identifier assigned by the service. </param>
-        /// <param name="createdAtUtc"> Creation timestamp assigned by the service. </param>
-        /// <param name="resources"> Captured resources assigned by the service. </param>
-        /// <param name="sourcePodContainers"> Captured pod containers assigned by the service. </param>
-        /// <param name="sizeInMb"> Snapshot size assigned by the service. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSnapshot"/> instance for mocking. </returns>
-        public static SandboxSnapshot SandboxSnapshot(string id = default, IDictionary<string, string> labels = default, string sandboxId = default, DateTimeOffset createdAtUtc = default, SnapshotResources resources = default, IEnumerable<SnapshotPodContainer> sourcePodContainers = default, long? sizeInMb = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            sourcePodContainers ??= new ChangeTrackingList<SnapshotPodContainer>();
-
-            return new SandboxSnapshot(
-                id,
-                labels,
-                sandboxId,
-                createdAtUtc,
-                resources,
-                sourcePodContainers.ToList(),
-                sizeInMb,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Resources captured in a sandbox snapshot. </summary>
-        /// <param name="cpu"> The captured CPU allocation. </param>
-        /// <param name="memory"> The captured memory allocation. </param>
-        /// <param name="disk"> The captured disk allocation. </param>
-        /// <returns> A new <see cref="Sandbox.SnapshotResources"/> instance for mocking. </returns>
-        public static SnapshotResources SnapshotResources(string cpu = default, string memory = default, string disk = default)
-        {
-            return new SnapshotResources(cpu, memory, disk, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A container captured in a sandbox snapshot. </summary>
-        /// <param name="name"> The container name. </param>
-        /// <param name="diskImageId"> The disk image created for the container. </param>
-        /// <returns> A new <see cref="Sandbox.SnapshotPodContainer"/> instance for mocking. </returns>
-        public static SnapshotPodContainer SnapshotPodContainer(string name = default, string diskImageId = default)
-        {
-            return new SnapshotPodContainer(name, diskImageId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A data volume mount to add to a sandbox. </summary>
-        /// <param name="volumeMount"> The volume and mount path to add. </param>
-        /// <returns> A new <see cref="Sandbox.AddVolumeMountContent"/> instance for mocking. </returns>
-        public static AddVolumeMountContent AddVolumeMountContent(SandboxVolume volumeMount = default)
-        {
-            return new AddVolumeMountContent(volumeMount, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Current resource and network statistics for a sandbox. </summary>
-        /// <param name="tokenUsage"> Token usage reported by the sandbox. </param>
-        /// <param name="cpu"> CPU usage and load statistics. </param>
-        /// <param name="memory"> Memory usage statistics. </param>
-        /// <param name="network"> Network I/O statistics. </param>
-        /// <param name="disk"> Filesystem usage by mount point. </param>
-        /// <param name="uptimeSecs"> The sandbox uptime in seconds. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxStatsResult"/> instance for mocking. </returns>
-        public static SandboxStatsResult SandboxStatsResult(TokenUsageStats tokenUsage = default, CpuStats cpu = default, MemoryStats memory = default, NetworkStats network = default, IEnumerable<DiskStatsEntry> disk = default, double? uptimeSecs = default)
-        {
-            disk ??= new ChangeTrackingList<DiskStatsEntry>();
-
-            return new SandboxStatsResult(
-                tokenUsage,
-                cpu,
-                memory,
-                network,
-                disk.ToList(),
-                uptimeSecs,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Token usage statistics for a sandbox. </summary>
-        /// <param name="totalInputTokens"> The total number of input tokens processed. </param>
-        /// <param name="totalOutputTokens"> The total number of output tokens generated. </param>
-        /// <param name="requestCount"> The number of requests included in the totals. </param>
-        /// <returns> A new <see cref="Sandbox.TokenUsageStats"/> instance for mocking. </returns>
-        public static TokenUsageStats TokenUsageStats(long? totalInputTokens = default, long? totalOutputTokens = default, int? requestCount = default)
-        {
-            return new TokenUsageStats(totalInputTokens, totalOutputTokens, requestCount, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> CPU usage counters and load averages. </summary>
-        /// <param name="user"> CPU time spent in user mode. </param>
-        /// <param name="nice"> CPU time spent running prioritized user processes. </param>
-        /// <param name="system"> CPU time spent in system mode. </param>
-        /// <param name="idle"> CPU time spent idle. </param>
-        /// <param name="iowait"> CPU time spent waiting for I/O. </param>
-        /// <param name="irq"> CPU time spent handling hardware interrupts. </param>
-        /// <param name="softirq"> CPU time spent handling software interrupts. </param>
-        /// <param name="steal"> CPU time taken by the hypervisor. </param>
-        /// <param name="loadAvg1"> The one-minute load average. </param>
-        /// <param name="loadAvg5"> The five-minute load average. </param>
-        /// <param name="loadAvg15"> The fifteen-minute load average. </param>
-        /// <returns> A new <see cref="Sandbox.CpuStats"/> instance for mocking. </returns>
-        public static CpuStats CpuStats(long? user = default, long? nice = default, long? system = default, long? idle = default, long? iowait = default, long? irq = default, long? softirq = default, long? steal = default, double? loadAvg1 = default, double? loadAvg5 = default, double? loadAvg15 = default)
-        {
-            return new CpuStats(
-                user,
-                nice,
-                system,
-                idle,
-                iowait,
-                irq,
-                softirq,
-                steal,
-                loadAvg1,
-                loadAvg5,
-                loadAvg15,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Memory statistics in bytes. </summary>
-        /// <param name="totalBytes"> The total memory in bytes. </param>
-        /// <param name="availableBytes"> The available memory in bytes. </param>
-        /// <param name="usedBytes"> The used memory in bytes. </param>
-        /// <returns> A new <see cref="Sandbox.MemoryStats"/> instance for mocking. </returns>
-        public static MemoryStats MemoryStats(long? totalBytes = default, long? availableBytes = default, long? usedBytes = default)
-        {
-            return new MemoryStats(totalBytes, availableBytes, usedBytes, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Network I/O counters. </summary>
-        /// <param name="rxBytes"> The number of bytes received. </param>
-        /// <param name="txBytes"> The number of bytes transmitted. </param>
-        /// <param name="rxPackets"> The number of packets received. </param>
-        /// <param name="txPackets"> The number of packets transmitted. </param>
-        /// <returns> A new <see cref="Sandbox.NetworkStats"/> instance for mocking. </returns>
-        public static NetworkStats NetworkStats(long? rxBytes = default, long? txBytes = default, long? rxPackets = default, long? txPackets = default)
-        {
-            return new NetworkStats(rxBytes, txBytes, rxPackets, txPackets, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Filesystem usage for a single mount point. </summary>
-        /// <param name="mountPoint"> Mount path (e.g., "/containers/container-0/bundle/rootfs"). Deprecated: use Label instead. </param>
-        /// <param name="filesystem"> The filesystem type. </param>
-        /// <param name="totalBytes"> The total filesystem capacity in bytes. </param>
-        /// <param name="usedBytes"> The used filesystem capacity in bytes. </param>
-        /// <param name="availableBytes"> The available filesystem capacity in bytes. </param>
-        /// <param name="label"> Human-friendly display label (e.g., "container-0"). If set, UI should prefer this over MountPoint. </param>
-        /// <returns> A new <see cref="Sandbox.DiskStatsEntry"/> instance for mocking. </returns>
-        public static DiskStatsEntry DiskStatsEntry(string mountPoint = default, string filesystem = default, long? totalBytes = default, long? usedBytes = default, long? availableBytes = default, string label = default)
-        {
-            return new DiskStatsEntry(
-                mountPoint,
-                filesystem,
-                totalBytes,
-                usedBytes,
-                availableBytes,
-                label,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A command to execute directly in a running sandbox. </summary>
-        /// <param name="command"> The executable to run. </param>
-        /// <param name="arguments"> Arguments passed to the executable. </param>
-        /// <param name="environment"> Environment variables for the command. </param>
-        /// <param name="workingDirectory"> The working directory for the command. </param>
-        /// <param name="user"> The user that runs the command. </param>
-        /// <param name="activationMode"> The port activation behavior while the command runs. </param>
-        /// <returns> A new <see cref="Sandbox.ExecuteSandboxCommandContent"/> instance for mocking. </returns>
-        public static ExecuteSandboxCommandContent ExecuteSandboxCommandContent(string command = default, IEnumerable<string> arguments = default, IDictionary<string, string> environment = default, string workingDirectory = default, string user = default, PortActivationMode? activationMode = default)
-        {
-            arguments ??= new ChangeTrackingList<string>();
-            environment ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ExecuteSandboxCommandContent(
-                command,
-                arguments.ToList(),
-                environment,
-                workingDirectory,
-                user,
-                activationMode,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Result of executing a command in a sandbox. </summary>
-        /// <param name="exitCode"> The process exit code. </param>
-        /// <param name="stdout"> Text written to standard output. </param>
-        /// <param name="stderr"> Text written to standard error. </param>
-        /// <param name="executionTimeMs"> The command execution time in milliseconds. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxExecuteCommandResult"/> instance for mocking. </returns>
-        public static SandboxExecuteCommandResult SandboxExecuteCommandResult(int exitCode = default, string stdout = default, string stderr = default, long executionTimeMs = default)
-        {
-            return new SandboxExecuteCommandResult(exitCode, stdout, stderr, executionTimeMs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A shell command to execute in a running sandbox. </summary>
-        /// <param name="command"> The command line evaluated by the shell. </param>
-        /// <param name="shell"> The shell executable to use. </param>
-        /// <param name="environment"> Environment variables for the shell command. </param>
-        /// <param name="workingDirectory"> The working directory for the shell command. </param>
-        /// <param name="user"> The user that runs the shell command. </param>
-        /// <param name="activationMode"> The port activation behavior while the command runs. </param>
-        /// <returns> A new <see cref="Sandbox.ExecuteSandboxShellCommandContent"/> instance for mocking. </returns>
-        public static ExecuteSandboxShellCommandContent ExecuteSandboxShellCommandContent(string command = default, string shell = default, IDictionary<string, string> environment = default, string workingDirectory = default, string user = default, PortActivationMode? activationMode = default)
-        {
-            environment ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ExecuteSandboxShellCommandContent(
-                command,
-                shell,
-                environment,
-                workingDirectory,
-                user,
-                activationMode,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Result of executing a shell command in a sandbox. </summary>
-        /// <param name="exitCode"> The process exit code. </param>
-        /// <param name="stdout"> Text written to standard output. </param>
-        /// <param name="stderr"> Text written to standard error. </param>
-        /// <param name="executionTimeMs"> The command execution time in milliseconds. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxExecuteShellCommandResult"/> instance for mocking. </returns>
-        public static SandboxExecuteShellCommandResult SandboxExecuteShellCommandResult(int exitCode = default, string stdout = default, string stderr = default, long executionTimeMs = default)
-        {
-            return new SandboxExecuteShellCommandResult(exitCode, stdout, stderr, executionTimeMs, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing connection resource returned by the service. </summary>
-        /// <param name="id"> Connection identifier assigned by the service. </param>
-        /// <param name="name"> Connection name. </param>
-        /// <param name="type"> Connection type. </param>
-        /// <param name="state"> Current connection state. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
-        /// <param name="deletable"> Whether the connection can currently be deleted. </param>
-        /// <param name="usedBySandboxIds"> Sandboxes currently using this connection. </param>
-        /// <param name="policyRules"> Runtime policy rules. </param>
-        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxConnection"/> instance for mocking. </returns>
-        public static SandboxConnection SandboxConnection(string id = default, string name = default, string @type = default, string state = default, IDictionary<string, string> labels = default, DateTimeOffset? createdOn = default, bool? deletable = default, IEnumerable<string> usedBySandboxIds = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            usedBySandboxIds ??= new ChangeTrackingList<string>();
-            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
-            enabledToolGroups ??= new ChangeTrackingList<string>();
-
-            return new SandboxConnection(
-                id,
-                name,
-                @type,
-                state,
-                labels,
-                createdOn,
-                deletable,
-                usedBySandboxIds.ToList(),
-                policyRules.ToList(),
-                enabledToolGroups.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A runtime policy rule that activates a declared PolicyHookBinding. Supplied per-sandbox at creation time (e.g., "block mail to ceo. </summary>
-        /// <param name="hookId"> References string PolicyHookBinding.Id on a tool. Must match a declared hook. </param>
-        /// <param name="patterns"> Glob patterns used to allow or deny calls based on extracted field values. </param>
-        /// <returns> A new <see cref="Sandbox.McpPolicyRule"/> instance for mocking. </returns>
-        public static McpPolicyRule McpPolicyRule(string hookId = default, IEnumerable<string> patterns = default)
-        {
-            patterns ??= new ChangeTrackingList<string>();
-
-            return new McpPolicyRule(hookId, patterns.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating a connection. </summary>
-        /// <param name="name"> Connection name. </param>
-        /// <param name="type"> Connection type. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="parameterValueSetName"> Parameter value set selected when creating the connection. </param>
-        /// <param name="parameterValueSetValues"> Sensitive parameter values supplied when creating the connection. </param>
-        /// <param name="policyRules"> Runtime policy rules. </param>
-        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
-        /// <returns> A new <see cref="Sandbox.CreateConnectionContent"/> instance for mocking. </returns>
-        public static CreateConnectionContent CreateConnectionContent(string name = default, string @type = default, IDictionary<string, string> labels = default, string parameterValueSetName = default, IDictionary<string, string> parameterValueSetValues = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            parameterValueSetValues ??= new ChangeTrackingDictionary<string, string>();
-            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
-            enabledToolGroups ??= new ChangeTrackingList<string>();
-
-            return new CreateConnectionContent(
-                name,
-                @type,
-                labels,
-                parameterValueSetName,
-                parameterValueSetValues,
-                policyRules.ToList(),
-                enabledToolGroups.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Parameters used to authorize a connection. </summary>
-        /// <param name="parameterValues"> Provider-specific authorization parameters. </param>
-        /// <returns> A new <see cref="Sandbox.AuthorizeConnectionContent"/> instance for mocking. </returns>
-        public static AuthorizeConnectionContent AuthorizeConnectionContent(IDictionary<string, string> parameterValues = default)
-        {
-            parameterValues ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AuthorizeConnectionContent(parameterValues, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Options for generating a connection consent link. </summary>
-        /// <param name="redirectUri"> The URI to redirect to after consent completes. </param>
-        /// <returns> A new <see cref="Sandbox.GenerateConsentLinkContent"/> instance for mocking. </returns>
-        public static GenerateConsentLinkContent GenerateConsentLinkContent(Uri redirectUri = default)
-        {
-            return new GenerateConsentLinkContent(redirectUri, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Consent link generated for connection authorization. </summary>
-        /// <param name="consentLink"> The URL where a user grants consent for the connection. </param>
-        /// <returns> A new <see cref="Sandbox.GenerateConsentLinkResult"/> instance for mocking. </returns>
-        public static GenerateConsentLinkResult GenerateConsentLinkResult(Uri consentLink = default)
-        {
-            return new GenerateConsentLinkResult(consentLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Policy and tool settings to apply to a connection. </summary>
-        /// <param name="policyRules"> Runtime policy rules for connection tool calls. </param>
-        /// <param name="enabledToolGroups"> Tool groups enabled for the connection. </param>
-        /// <returns> A new <see cref="Sandbox.UpdatePolicyRulesContent"/> instance for mocking. </returns>
-        public static UpdatePolicyRulesContent UpdatePolicyRulesContent(IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
-        {
-            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
-            enabledToolGroups ??= new ChangeTrackingList<string>();
-
-            return new UpdatePolicyRulesContent(policyRules.ToList(), enabledToolGroups.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A binary content package available to sandboxes in a sandbox group. </summary>
-        /// <param name="id"> The content package identifier. </param>
-        /// <param name="size"> The package size in bytes. </param>
-        /// <param name="labels"> Customer-defined labels for the package. </param>
-        /// <param name="contentType"> The media type of the uploaded content. </param>
-        /// <param name="createdOn"> The time when the package was created. </param>
-        /// <returns> A new <see cref="Sandbox.ContentPackage"/> instance for mocking. </returns>
-        public static ContentPackage ContentPackage(string id = default, long size = default, IDictionary<string, string> labels = default, string contentType = default, DateTimeOffset? createdOn = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContentPackage(
-                id,
-                size,
-                labels,
-                contentType,
-                createdOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing sandbox-group credential resource returned by the service. </summary>
-        /// <param name="name"> Credential name assigned by the service. </param>
-        /// <param name="displayName"> The credential display name. </param>
-        /// <param name="provider"> The provider that uses the credential. </param>
-        /// <param name="state"> Current credential state. </param>
-        /// <param name="source"> The source metadata for the credential. </param>
-        /// <param name="origin"> Origin of the credential. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupCredential"/> instance for mocking. </returns>
-        public static SandboxGroupCredential SandboxGroupCredential(string name = default, string displayName = default, SandboxGroupCredentialProvider provider = default, ConnectionState state = default, SandboxGroupCredentialSource source = default, SandboxGroupCredentialOrigin origin = default)
-        {
-            return new SandboxGroupCredential(
-                name,
-                displayName,
-                provider,
-                state,
-                source,
-                origin,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Stored source metadata for a sandbox group credential. </summary>
-        /// <param name="kind"> The credential source type. </param>
-        /// <param name="connectionResourceId"> The Azure resource ID of the referenced connection. </param>
-        /// <param name="connectionRefDetails"> Authentication details for the referenced gateway connection. </param>
-        /// <param name="parameterValues"> Sensitive provider parameters for the credential. </param>
-        /// <param name="connectionId"> The identifier of an existing connection. </param>
-        /// <param name="connectionType"> The type of the referenced connection. </param>
-        /// <param name="connectionName"> The name of the referenced connection. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupCredentialSource"/> instance for mocking. </returns>
-        public static SandboxGroupCredentialSource SandboxGroupCredentialSource(SandboxGroupCredentialSourceKind kind = default, string connectionResourceId = default, SandboxGroupCredentialConnectionRefDetails connectionRefDetails = default, IDictionary<string, string> parameterValues = default, string connectionId = default, string connectionType = default, string connectionName = default)
-        {
-            parameterValues ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SandboxGroupCredentialSource(
-                kind,
-                connectionResourceId,
-                connectionRefDetails,
-                parameterValues,
-                connectionId,
-                connectionType,
-                connectionName,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Connector Namespace reference details required by egress HookRef resolution. </summary>
-        /// <param name="authentication"> Authentication used by the referenced connection. </param>
-        /// <param name="tokenExchangeEndpoint"> The endpoint used to exchange tokens for the connection. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupCredentialConnectionRefDetails"/> instance for mocking. </returns>
-        public static SandboxGroupCredentialConnectionRefDetails SandboxGroupCredentialConnectionRefDetails(GatewayConnectionAuthRecord authentication = default, Uri tokenExchangeEndpoint = default)
-        {
-            return new SandboxGroupCredentialConnectionRefDetails(authentication, tokenExchangeEndpoint, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Managed identity authentication for a gateway connection. </summary>
-        /// <param name="type"> The managed identity type. </param>
-        /// <param name="identityResourceId"> The resource ID of the user-assigned managed identity. </param>
-        /// <returns> A new <see cref="Sandbox.GatewayConnectionAuthRecord"/> instance for mocking. </returns>
-        public static GatewayConnectionAuthRecord GatewayConnectionAuthRecord(GatewayConnectionAuthType @type = default, string identityResourceId = default)
-        {
-            return new GatewayConnectionAuthRecord(@type, identityResourceId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating or updating a sandbox-group credential. </summary>
-        /// <param name="displayName"> A display name for the credential. </param>
-        /// <param name="provider"> The provider that uses the credential. </param>
-        /// <param name="source"> The source of the credential material. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSandboxGroupCredentialContent"/> instance for mocking. </returns>
-        public static CreateSandboxGroupCredentialContent CreateSandboxGroupCredentialContent(string displayName = default, SandboxGroupCredentialProvider provider = default, SandboxGroupCredentialSource source = default)
-        {
-            return new CreateSandboxGroupCredentialContent(displayName, provider, source, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A service-managed disk image shared across sandbox groups. </summary>
-        /// <param name="name"> The public image name. </param>
-        /// <param name="status"> The current status of the public image. </param>
-        /// <returns> A new <see cref="Sandbox.PublicDiskImage"/> instance for mocking. </returns>
-        public static PublicDiskImage PublicDiskImage(string name = default, DiskImageStatus status = default)
-        {
-            return new PublicDiskImage(name, status, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating a disk image. </summary>
-        /// <param name="source"> Source used to create the disk image. </param>
-        /// <param name="name"> Disk image name. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="vnetConnectionName"> VNet connection used while creating the disk image. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageContent"/> instance for mocking. </returns>
-        public static CreateDiskImageContent CreateDiskImageContent(CreateDiskImageSource source = default, string name = default, IDictionary<string, string> labels = default, string vnetConnectionName = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CreateDiskImageContent(source, name, labels, vnetConnectionName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The source used to create a disk image.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.CreateDiskImageSourceBlobSource"/> and <see cref="Sandbox.CreateDiskImageSourceRegistrySource"/>.
-        /// </summary>
-        /// <param name="kind"> The disk image source type. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageSource"/> instance for mocking. </returns>
-        public static CreateDiskImageSource CreateDiskImageSource(string kind = default)
-        {
-            return new UnknownCreateDiskImageSource(new CreateDiskImageSourceKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A disk image source stored in Azure Blob Storage. </summary>
-        /// <param name="blobSourceUri"> A URI that grants access to the source blob. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageSourceBlobSource"/> instance for mocking. </returns>
-        public static CreateDiskImageSourceBlobSource CreateDiskImageSourceBlobSource(Uri blobSourceUri = default)
-        {
-            return new CreateDiskImageSourceBlobSource(CreateDiskImageSourceKind.Blob, additionalBinaryDataProperties: null, blobSourceUri);
-        }
-
-        /// <summary> A disk image source pulled from a container registry. </summary>
-        /// <param name="imageReference"> The container image reference to import. </param>
-        /// <param name="authentication"> Authentication used to access the registry. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageSourceRegistrySource"/> instance for mocking. </returns>
-        public static CreateDiskImageSourceRegistrySource CreateDiskImageSourceRegistrySource(string imageReference = default, RegistryAuthentication authentication = default)
-        {
-            return new CreateDiskImageSourceRegistrySource(CreateDiskImageSourceKind.Registry, additionalBinaryDataProperties: null, imageReference, authentication);
-        }
-
-        /// <summary> Registry authentication options. Exactly one option must be supplied. </summary>
-        /// <param name="registryCredentials"> Username and token authentication. </param>
-        /// <param name="identity"> Managed identity authentication. </param>
-        /// <returns> A new <see cref="Sandbox.RegistryAuthentication"/> instance for mocking. </returns>
-        public static RegistryAuthentication RegistryAuthentication(RegistryCredentials registryCredentials = default, ManagedIdentityAuthentication identity = default)
-        {
-            return new RegistryAuthentication(registryCredentials, identity, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Username and token credentials for a container registry. </summary>
-        /// <param name="username"> The registry username. </param>
-        /// <param name="token"> The registry access token or password. </param>
-        /// <returns> A new <see cref="Sandbox.RegistryCredentials"/> instance for mocking. </returns>
-        public static RegistryCredentials RegistryCredentials(string username = default, string token = default)
-        {
-            return new RegistryCredentials(username, token, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing named egress policy resource. </summary>
-        /// <param name="id"> Policy identifier assigned by the service. </param>
-        /// <param name="name"> The policy name. </param>
-        /// <param name="description"> A description of the policy. </param>
-        /// <param name="defaultAction"> The action applied when no rule matches. </param>
-        /// <param name="enforcementMode"> Whether policy decisions are enforced or only audited. </param>
-        /// <param name="rules"> Ordered egress rules evaluated by the policy. </param>
-        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
-        /// <param name="updatedOn"> Last-update timestamp assigned by the service. </param>
-        /// <returns> A new <see cref="Sandbox.NamedEgressPolicy"/> instance for mocking. </returns>
-        public static NamedEgressPolicy NamedEgressPolicy(string id = default, string name = default, string description = default, EgressPolicyAction defaultAction = default, EgressPolicyEnforcementMode? enforcementMode = default, IEnumerable<EgressPolicyRule> rules = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
-        {
-            rules ??= new ChangeTrackingList<EgressPolicyRule>();
-
-            return new NamedEgressPolicy(
-                id,
-                name,
-                description,
-                defaultAction,
-                enforcementMode,
-                rules.ToList(),
-                createdOn,
-                updatedOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing secret resource returned by the service. </summary>
-        /// <param name="id"> Secret identifier assigned by the service. </param>
-        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
-        /// <param name="updatedOn"> Last-update timestamp assigned by the service. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxSecret"/> instance for mocking. </returns>
-        public static SandboxSecret SandboxSecret(string id = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
-        {
-            return new SandboxSecret(id, createdOn, updatedOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Keys stored in a secret. </summary>
-        /// <param name="keys"> The key names stored in the secret. </param>
-        /// <returns> A new <see cref="Sandbox.SecretKeysResult"/> instance for mocking. </returns>
-        public static SecretKeysResult SecretKeysResult(IEnumerable<string> keys = default)
-        {
-            keys ??= new ChangeTrackingList<string>();
-
-            return new SecretKeysResult(keys.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Selected values from a secret. </summary>
-        /// <param name="values"> The sensitive key-value pairs stored in the secret. </param>
-        /// <returns> A new <see cref="Sandbox.SecretPeekResult"/> instance for mocking. </returns>
-        public static SecretPeekResult SecretPeekResult(IDictionary<string, string> values = default)
-        {
-            values ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SecretPeekResult(values, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating or updating a secret. </summary>
-        /// <param name="values"> Sensitive secret values. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSecretContent"/> instance for mocking. </returns>
-        public static CreateSecretContent CreateSecretContent(IDictionary<string, string> values = default)
-        {
-            values ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CreateSecretContent(values, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response containing the total number of snapshots in a scope. </summary>
-        /// <param name="count"> Total number of resources. </param>
-        /// <returns> A new <see cref="Sandbox.SnapshotCountResult"/> instance for mocking. </returns>
-        public static SnapshotCountResult SnapshotCountResult(int count = default)
-        {
-            return new SnapshotCountResult(count, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Customer-facing volume resource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.DataDiskVolume"/>, <see cref="Sandbox.ServiceManagedBlobVolume"/>, and <see cref="Sandbox.UserProvidedBlobVolume"/>.
-        /// </summary>
-        /// <param name="type"> Represents the type of volume. </param>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="labels"> Customer-defined labels for the volume. </param>
-        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupVolume"/> instance for mocking. </returns>
-        public static SandboxGroupVolume SandboxGroupVolume(string @type = default, string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UnknownSandboxGroupVolume(new VolumeType(@type), volumeName, labels, provisioningState, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A volume backed by a customer-owned Azure Blob container. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="labels"> Customer-defined labels for the volume. </param>
-        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
-        /// <param name="storageContainerResourceId"> The Azure resource ID of the blob container. </param>
-        /// <param name="auth"> Authentication used to access the blob container. </param>
-        /// <returns> A new <see cref="Sandbox.UserProvidedBlobVolume"/> instance for mocking. </returns>
-        public static UserProvidedBlobVolume UserProvidedBlobVolume(string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default, string storageContainerResourceId = default, BlobVolumeAuthentication auth = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new UserProvidedBlobVolume(
-                VolumeType.AzureBlobByo,
-                volumeName,
-                labels,
-                provisioningState,
-                additionalBinaryDataProperties: null,
-                storageContainerResourceId,
-                auth);
-        }
-
-        /// <summary>
-        /// Authentication configuration for accessing a user-provided blob container.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.BlobVolumeManagedIdentityAuthentication"/>.
-        /// </summary>
-        /// <param name="kind"> The authentication mechanism. </param>
-        /// <returns> A new <see cref="Sandbox.BlobVolumeAuthentication"/> instance for mocking. </returns>
-        public static BlobVolumeAuthentication BlobVolumeAuthentication(string kind = default)
-        {
-            return new UnknownBlobVolumeAuthentication(new BlobVolumeAuthenticationKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Authenticates with a managed identity already assigned to the sandbox group. </summary>
-        /// <param name="identity"> The managed identity to use. </param>
-        /// <returns> A new <see cref="Sandbox.BlobVolumeManagedIdentityAuthentication"/> instance for mocking. </returns>
-        public static BlobVolumeManagedIdentityAuthentication BlobVolumeManagedIdentityAuthentication(SandboxGroupIdentitySelector identity = default)
-        {
-            return new BlobVolumeManagedIdentityAuthentication(BlobVolumeAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, identity);
-        }
-
-        /// <summary>
-        /// Customer-supplied selector that picks one of the managed identities already on a sandbox group.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.SandboxGroupIdentitySelectorSystemAssignedIdentitySelector"/> and <see cref="Sandbox.SandboxGroupIdentitySelectorUserAssignedIdentitySelector"/>.
-        /// </summary>
-        /// <param name="kind"> The managed identity selector type. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupIdentitySelector"/> instance for mocking. </returns>
-        public static SandboxGroupIdentitySelector SandboxGroupIdentitySelector(string kind = default)
-        {
-            return new UnknownSandboxGroupIdentitySelector(new SandboxGroupIdentitySelectorKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Selects the sandbox group's system-assigned managed identity. </summary>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupIdentitySelectorSystemAssignedIdentitySelector"/> instance for mocking. </returns>
-        public static SandboxGroupIdentitySelectorSystemAssignedIdentitySelector SandboxGroupIdentitySelectorSystemAssignedIdentitySelector()
-        {
-            return new SandboxGroupIdentitySelectorSystemAssignedIdentitySelector(SandboxGroupIdentitySelectorKind.SystemAssigned, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Selects a user-assigned managed identity by resource ID. </summary>
-        /// <param name="resourceId"> The resource ID of the user-assigned managed identity. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupIdentitySelectorUserAssignedIdentitySelector"/> instance for mocking. </returns>
-        public static SandboxGroupIdentitySelectorUserAssignedIdentitySelector SandboxGroupIdentitySelectorUserAssignedIdentitySelector(string resourceId = default)
-        {
-            return new SandboxGroupIdentitySelectorUserAssignedIdentitySelector(SandboxGroupIdentitySelectorKind.UserAssigned, additionalBinaryDataProperties: null, resourceId);
-        }
-
-        /// <summary> A service-managed Azure Blob volume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="labels"> Customer-defined labels for the volume. </param>
-        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
-        /// <param name="usage"> Current volume usage. </param>
-        /// <returns> A new <see cref="Sandbox.ServiceManagedBlobVolume"/> instance for mocking. </returns>
-        public static ServiceManagedBlobVolume ServiceManagedBlobVolume(string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default, BlobVolumeUsage usage = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceManagedBlobVolume(
-                VolumeType.AzureBlob,
-                volumeName,
-                labels,
-                provisioningState,
-                additionalBinaryDataProperties: null,
-                usage);
-        }
-
-        /// <summary> Usage statistics for a blob-backed volume. </summary>
-        /// <param name="usedBytes"> The used storage in bytes. </param>
-        /// <param name="itemCount"> The number of items in the volume. </param>
-        /// <param name="calculatedAtUtc"> The time when the usage was calculated. </param>
-        /// <returns> A new <see cref="Sandbox.BlobVolumeUsage"/> instance for mocking. </returns>
-        public static BlobVolumeUsage BlobVolumeUsage(long usedBytes = default, long itemCount = default, DateTimeOffset calculatedAtUtc = default)
-        {
-            return new BlobVolumeUsage(usedBytes, itemCount, calculatedAtUtc, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A persistent data disk volume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="labels"> Customer-defined labels for the volume. </param>
-        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
-        /// <param name="size"> The requested disk size. </param>
-        /// <param name="isAttached"> Whether the volume is currently attached. </param>
-        /// <param name="clusterId"> Resource name of an AKS managed cluster. </param>
-        /// <param name="attachedSandboxId"> The identifier of the attached sandbox. </param>
-        /// <param name="usage"> Current disk usage and upload status. </param>
-        /// <returns> A new <see cref="Sandbox.DataDiskVolume"/> instance for mocking. </returns>
-        public static DataDiskVolume DataDiskVolume(string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default, string size = default, bool isAttached = default, string clusterId = default, string attachedSandboxId = default, DataDiskVolumeUsage usage = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataDiskVolume(
-                VolumeType.DataDisk,
-                volumeName,
-                labels,
-                provisioningState,
-                additionalBinaryDataProperties: null,
-                size,
-                isAttached,
-                clusterId,
-                attachedSandboxId,
-                usage);
-        }
-
-        /// <summary> Usage statistics for a data disk volume. </summary>
-        /// <param name="compressedBlobSizeBytes"> The compressed backup size in bytes. </param>
-        /// <param name="usedSizeBytes"> The used disk space in bytes. </param>
-        /// <param name="lastUploadedAtUtc"> The time when the disk was last uploaded. </param>
-        /// <returns> A new <see cref="Sandbox.DataDiskVolumeUsage"/> instance for mocking. </returns>
-        public static DataDiskVolumeUsage DataDiskVolumeUsage(long compressedBlobSizeBytes = default, long usedSizeBytes = default, DateTimeOffset lastUploadedAtUtc = default)
-        {
-            return new DataDiskVolumeUsage(compressedBlobSizeBytes, usedSizeBytes, lastUploadedAtUtc, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Volume counts grouped by type. </summary>
-        /// <param name="counts"> Volume counts grouped by type. </param>
-        /// <returns> A new <see cref="Sandbox.VolumeCountResult"/> instance for mocking. </returns>
-        public static VolumeCountResult VolumeCountResult(IEnumerable<VolumeTypeCount> counts = default)
-        {
-            counts ??= new ChangeTrackingList<VolumeTypeCount>();
-
-            return new VolumeCountResult(counts.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The number of volumes of one type. </summary>
-        /// <param name="type"> The volume type. </param>
-        /// <param name="count"> The number of volumes. </param>
-        /// <returns> A new <see cref="Sandbox.VolumeTypeCount"/> instance for mocking. </returns>
-        public static VolumeTypeCount VolumeTypeCount(VolumeType @type = default, int count = default)
-        {
-            return new VolumeTypeCount(@type, count, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Files and directories returned from a volume path. </summary>
-        /// <param name="path"> The directory path that was listed. </param>
-        /// <param name="items"> Files and directories contained in the path. </param>
-        /// <returns> A new <see cref="Sandbox.VolumeListDirectoryResult"/> instance for mocking. </returns>
-        public static VolumeListDirectoryResult VolumeListDirectoryResult(string path = default, IEnumerable<VolumePathItem> items = default)
-        {
-            items ??= new ChangeTrackingList<VolumePathItem>();
-
-            return new VolumeListDirectoryResult(path, items.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Metadata for a file or directory in a volume. </summary>
-        /// <param name="itemName"> The file or directory name. </param>
-        /// <param name="path"> The full path in the volume. </param>
-        /// <param name="isDirectory"> Whether the item is a directory. </param>
-        /// <param name="sizeBytes"> The file size in bytes. </param>
-        /// <param name="lastModifiedUtc"> The time when the item was last modified. </param>
-        /// <param name="contentType"> The media type of the file. </param>
-        /// <param name="eTag"> An HTTP entity tag used for optimistic concurrency, as defined by RFC 9110. </param>
-        /// <returns> A new <see cref="Sandbox.VolumePathItem"/> instance for mocking. </returns>
-        public static VolumePathItem VolumePathItem(string itemName = default, string path = default, bool isDirectory = default, long? sizeBytes = default, DateTimeOffset? lastModifiedUtc = default, string contentType = default, string eTag = default)
-        {
-            return new VolumePathItem(
-                itemName,
-                path,
-                isDirectory,
-                sizeBytes,
-                lastModifiedUtc,
-                contentType,
-                eTag,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Options for creating a fork of a data disk volume. </summary>
-        /// <param name="destinationVolumeName"> The name of the new volume. </param>
-        /// <param name="labels"> Labels to assign to the new volume. </param>
-        /// <returns> A new <see cref="Sandbox.ForkDataDiskVolumeContent"/> instance for mocking. </returns>
-        public static ForkDataDiskVolumeContent ForkDataDiskVolumeContent(string destinationVolumeName = default, IDictionary<string, string> labels = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ForkDataDiskVolumeContent(destinationVolumeName, labels, additionalBinaryDataProperties: null);
+            return new TelemetryHeaderAuthentication(headerName, secretId, secretKey, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result of a sandbox file operation. </summary>
         /// <param name="success"> Whether the file operation succeeded. </param>
         /// <param name="error"> The error message when the operation failed. </param>
         /// <param name="message"> Additional information about the operation. </param>
-        /// <returns> A new <see cref="Sandbox.FileOpStatusResult"/> instance for mocking. </returns>
-        public static FileOpStatusResult FileOpStatusResult(bool success = default, string error = default, string message = default)
+        /// <returns> A new <see cref="Models.SandboxFileOperationResult"/> instance for mocking. </returns>
+        public static SandboxFileOperationResult SandboxFileOperationResult(bool success = default, string error = default, string message = default)
         {
-            return new FileOpStatusResult(success, error, message, additionalBinaryDataProperties: null);
+            return new SandboxFileOperationResult(success, error, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Files and directories returned for a directory listing. </summary>
         /// <param name="path"> The directory path that was listed. </param>
         /// <param name="entries"> Files and directories contained in the path. </param>
-        /// <returns> A new <see cref="Sandbox.DirListingResult"/> instance for mocking. </returns>
-        public static DirListingResult DirListingResult(string path = default, IEnumerable<FileInfo> entries = default)
+        /// <returns> A new <see cref="Models.SandboxDirectoryListingResult"/> instance for mocking. </returns>
+        public static SandboxDirectoryListingResult SandboxDirectoryListingResult(string path = default, IEnumerable<SandboxFileInfo> entries = default)
         {
-            entries ??= new ChangeTrackingList<FileInfo>();
+            entries ??= new ChangeTrackingList<SandboxFileInfo>();
 
-            return new DirListingResult(path, entries.ToList(), additionalBinaryDataProperties: null);
+            return new SandboxDirectoryListingResult(path, entries.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Metadata for a file or directory in a sandbox. </summary>
@@ -2250,21 +1363,21 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The full path in the sandbox. </param>
         /// <param name="size"> The size in bytes. </param>
         /// <param name="mode"> The Unix file mode. </param>
-        /// <param name="isDir"> Whether the path is a directory. </param>
-        /// <param name="isSymlink"> Whether the path is a symbolic link. </param>
-        /// <param name="symlinkTarget"> The symbolic link target, when applicable. </param>
+        /// <param name="isDirectory"> Whether the path is a directory. </param>
+        /// <param name="isSymbolicLink"> Whether the path is a symbolic link. </param>
+        /// <param name="symbolicLinkTarget"> The symbolic link target, when applicable. </param>
         /// <param name="modifiedTime"> The last modification time as a Unix timestamp. </param>
-        /// <returns> A new <see cref="Sandbox.FileInfo"/> instance for mocking. </returns>
-        public static FileInfo FileInfo(string name = default, string path = default, long size = default, int mode = default, bool isDir = default, bool isSymlink = default, string symlinkTarget = default, long modifiedTime = default)
+        /// <returns> A new <see cref="Models.SandboxFileInfo"/> instance for mocking. </returns>
+        public static SandboxFileInfo SandboxFileInfo(string name = default, string path = default, long size = default, int mode = default, bool isDirectory = default, bool isSymbolicLink = default, string symbolicLinkTarget = default, long modifiedTime = default)
         {
-            return new FileInfo(
+            return new SandboxFileInfo(
                 name,
                 path,
                 size,
                 mode,
-                isDir,
-                isSymlink,
-                symlinkTarget,
+                isDirectory,
+                isSymbolicLink,
+                symbolicLinkTarget,
                 modifiedTime,
                 additionalBinaryDataProperties: null);
         }
@@ -2273,17 +1386,17 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="path"> The directory path to create. </param>
         /// <param name="createParents"> Whether to create missing parent directories. </param>
         /// <param name="mode"> The Unix mode for the new directory. </param>
-        /// <returns> A new <see cref="Sandbox.MkDirContent"/> instance for mocking. </returns>
-        public static MkDirContent MkDirContent(string path = default, bool? createParents = default, int? mode = default)
+        /// <returns> A new <see cref="Models.SandboxDirectoryContent"/> instance for mocking. </returns>
+        public static SandboxDirectoryContent SandboxDirectoryContent(string path = default, bool? createParents = default, int? mode = default)
         {
-            return new MkDirContent(path, createParents, mode, additionalBinaryDataProperties: null);
+            return new SandboxDirectoryContent(path, createParents, mode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result of writing a sandbox file. </summary>
         /// <param name="success"> Whether the file was written successfully. </param>
         /// <param name="error"> The error message when the write failed. </param>
         /// <param name="bytesWritten"> The number of bytes written. </param>
-        /// <returns> A new <see cref="Sandbox.WriteFileResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.WriteFileResult"/> instance for mocking. </returns>
         public static WriteFileResult WriteFileResult(bool success = default, string error = default, long? bytesWritten = default)
         {
             return new WriteFileResult(success, error, bytesWritten, additionalBinaryDataProperties: null);
@@ -2293,7 +1406,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="http"> HTTP egress decisions. </param>
         /// <param name="statefulTcp"> Recent stateful TCP connection decisions. </param>
         /// <param name="lastUpdated"> The time when the decision data was last updated. </param>
-        /// <returns> A new <see cref="Sandbox.EgressDecisionsResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressDecisionsResult"/> instance for mocking. </returns>
         public static EgressDecisionsResult EgressDecisionsResult(NetworkEgressDecisions http = default, StatefulTcpEgress statefulTcp = default, DateTimeOffset lastUpdated = default)
         {
             return new EgressDecisionsResult(http, statefulTcp, lastUpdated, additionalBinaryDataProperties: null);
@@ -2302,7 +1415,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Network egress decisions (allowed and denied). </summary>
         /// <param name="allowed"> Last 50 allowed egress requests (most recent first). </param>
         /// <param name="denied"> Last 50 denied egress requests (most recent first). </param>
-        /// <returns> A new <see cref="Sandbox.NetworkEgressDecisions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.NetworkEgressDecisions"/> instance for mocking. </returns>
         public static NetworkEgressDecisions NetworkEgressDecisions(IEnumerable<EgressDecisionEntry> allowed = default, IEnumerable<EgressDecisionEntry> denied = default)
         {
             allowed ??= new ChangeTrackingList<EgressDecisionEntry>();
@@ -2320,7 +1433,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="connectionId"> The connection associated with the request, when applicable. </param>
         /// <param name="connectionName"> Connection display name if this is an API Hub connector call. </param>
         /// <param name="matchedRule"> Name of the egress policy rule that matched this request. </param>
-        /// <returns> A new <see cref="Sandbox.EgressDecisionEntry"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.EgressDecisionEntry"/> instance for mocking. </returns>
         public static EgressDecisionEntry EgressDecisionEntry(DateTimeOffset timestamp = default, string host = default, string @method = default, string path = default, string scheme = default, string connectionId = default, string connectionName = default, string matchedRule = default)
         {
             return new EgressDecisionEntry(
@@ -2337,7 +1450,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Recent stateful TCP connection events. </summary>
         /// <param name="connections"> Last 50 stateful-TCP connection audit entries (most recent first). </param>
-        /// <returns> A new <see cref="Sandbox.StatefulTcpEgress"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StatefulTcpEgress"/> instance for mocking. </returns>
         public static StatefulTcpEgress StatefulTcpEgress(IEnumerable<StatefulTcpEntry> connections = default)
         {
             connections ??= new ChangeTrackingList<StatefulTcpEntry>();
@@ -2361,7 +1474,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="durationMs"> Elapsed time from accept to this phase, in milliseconds. </param>
         /// <param name="failureReason"> Optional failure detail when the outcome is not Connected. </param>
         /// <param name="startedOn"> When the connection was accepted (identical across both phases). </param>
-        /// <returns> A new <see cref="Sandbox.StatefulTcpEntry"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.StatefulTcpEntry"/> instance for mocking. </returns>
         public static StatefulTcpEntry StatefulTcpEntry(DateTimeOffset timestamp = default, string phase = default, string outcome = default, string connectorType = default, string server = default, int? port = default, string database = default, string proxyLoginName = default, string sourceIP = default, string correlationId = default, long? bytesIn = default, long? bytesOut = default, long? durationMs = default, string failureReason = default, DateTimeOffset? startedOn = default)
         {
             return new StatefulTcpEntry(
@@ -2385,7 +1498,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Ports configured on a sandbox. </summary>
         /// <param name="ports"> The sandbox ports. </param>
-        /// <returns> A new <see cref="Sandbox.PortsListResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.PortsListResult"/> instance for mocking. </returns>
         public static PortsListResult PortsListResult(IEnumerable<SandboxPort> ports = default)
         {
             ports ??= new ChangeTrackingList<SandboxPort>();
@@ -2395,7 +1508,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Identifies a connection to attach to a sandbox. </summary>
         /// <param name="connectionId"> The connection identifier. </param>
-        /// <returns> A new <see cref="Sandbox.AddConnectionContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.AddConnectionContent"/> instance for mocking. </returns>
         public static AddConnectionContent AddConnectionContent(string connectionId = default)
         {
             return new AddConnectionContent(connectionId, additionalBinaryDataProperties: null);
@@ -2403,7 +1516,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Connections currently attached to a sandbox. </summary>
         /// <param name="connectionIds"> The identifiers of connections attached to the sandbox. </param>
-        /// <returns> A new <see cref="Sandbox.ConnectionsListResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.ConnectionsListResult"/> instance for mocking. </returns>
         public static ConnectionsListResult ConnectionsListResult(IEnumerable<string> connectionIds = default)
         {
             connectionIds ??= new ChangeTrackingList<string>();
@@ -2414,7 +1527,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Identifies a sandbox port to remove. </summary>
         /// <param name="name"> The port name. </param>
         /// <param name="port"> The port number. </param>
-        /// <returns> A new <see cref="Sandbox.RemovePortContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.RemovePortContent"/> instance for mocking. </returns>
         public static RemovePortContent RemovePortContent(string name = default, int? port = default)
         {
             return new RemovePortContent(name, port, additionalBinaryDataProperties: null);
@@ -2422,7 +1535,7 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> The complete set of ports to configure on a sandbox. </summary>
         /// <param name="ports"> The ports that replace the current configuration. </param>
-        /// <returns> A new <see cref="Sandbox.UpdatePortsContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.UpdatePortsContent"/> instance for mocking. </returns>
         public static UpdatePortsContent UpdatePortsContent(IEnumerable<SandboxPortUpdate> ports = default)
         {
             ports ??= new ChangeTrackingList<SandboxPortUpdate>();
@@ -2443,7 +1556,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="protocol"> HTTP protocol. </param>
         /// <param name="ipAccessControl"> IP access-control configuration. </param>
         /// <param name="cors"> CORS configuration. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxPortUpdate"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SandboxPortUpdate"/> instance for mocking. </returns>
         public static SandboxPortUpdate SandboxPortUpdate(string name = default, int port = default, Uri url = default, PortAuthConfig auth = default, PortActivationMode? activationMode = default, PortProtocol? protocol = default, IPAccessControl ipAccessControl = default, PortCorsConfig cors = default)
         {
             return new SandboxPortUpdate(
@@ -2456,6 +1569,896 @@ namespace Azure.Containers.Apps.Sandbox
                 ipAccessControl,
                 cors,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for creating a disk image from a sandbox. </summary>
+        /// <param name="labels"> Labels to assign to the new disk image. </param>
+        /// <returns> A new <see cref="Models.CommitSandboxContent"/> instance for mocking. </returns>
+        public static CommitSandboxContent CommitSandboxContent(IDictionary<string, string> labels = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommitSandboxContent(labels, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Disk image created from a running sandbox. </summary>
+        /// <param name="diskImage"> The disk image created from the sandbox. </param>
+        /// <returns> A new <see cref="Models.CommitSandboxResult"/> instance for mocking. </returns>
+        public static CommitSandboxResult CommitSandboxResult(DiskImage diskImage = default)
+        {
+            return new CommitSandboxResult(diskImage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing disk image resource returned by the service. </summary>
+        /// <param name="id"> Disk image identifier assigned by the service. </param>
+        /// <param name="name"> Disk image name. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="image"> Resolved image metadata assigned by the service. </param>
+        /// <param name="status"> Current disk-image status. </param>
+        /// <param name="sizeInMb"> Disk-image size assigned by the service. </param>
+        /// <returns> A new <see cref="Models.DiskImage"/> instance for mocking. </returns>
+        public static DiskImage DiskImage(string id = default, string name = default, IDictionary<string, string> labels = default, ImageMetadata image = default, DiskImageStatus status = default, long? sizeInMb = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiskImage(
+                id,
+                name,
+                labels,
+                image,
+                status,
+                sizeInMb,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resolved container image metadata for a disk image. </summary>
+        /// <param name="baseImage"> The resolved base image reference. </param>
+        /// <param name="entrypoint"> The container entrypoint. </param>
+        /// <param name="command"> The default command arguments. </param>
+        /// <returns> A new <see cref="Models.ImageMetadata"/> instance for mocking. </returns>
+        public static ImageMetadata ImageMetadata(string baseImage = default, IEnumerable<string> entrypoint = default, IEnumerable<string> command = default)
+        {
+            entrypoint ??= new ChangeTrackingList<string>();
+            command ??= new ChangeTrackingList<string>();
+
+            return new ImageMetadata(baseImage, entrypoint.ToList(), command.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The provisioning status of a disk image. </summary>
+        /// <param name="state"> The current provisioning state. </param>
+        /// <param name="errorMessage"> The failure message when provisioning did not succeed. </param>
+        /// <param name="createdOn"> The time when provisioning started. </param>
+        /// <param name="updatedOn"> The time when the status was last updated. </param>
+        /// <returns> A new <see cref="Models.DiskImageStatus"/> instance for mocking. </returns>
+        public static DiskImageStatus DiskImageStatus(ResourceState state = default, string errorMessage = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
+        {
+            return new DiskImageStatus(state, errorMessage, createdOn, updatedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A content package to download into a sandbox. </summary>
+        /// <param name="contentPackageId"> The content package identifier. </param>
+        /// <param name="targetPath"> The destination file path in the sandbox. </param>
+        /// <returns> A new <see cref="Models.DownloadContentPackageToSandboxContent"/> instance for mocking. </returns>
+        public static DownloadContentPackageToSandboxContent DownloadContentPackageToSandboxContent(string contentPackageId = default, string targetPath = default)
+        {
+            return new DownloadContentPackageToSandboxContent(contentPackageId, targetPath, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Pod volumes and container mounts to add to a sandbox. </summary>
+        /// <param name="volumes"> The pod-level volume definitions. </param>
+        /// <param name="containerMounts"> Volume mounts grouped by container. </param>
+        /// <returns> A new <see cref="Models.PodVolumeMountsContent"/> instance for mocking. </returns>
+        public static PodVolumeMountsContent PodVolumeMountsContent(IEnumerable<PodVolume> volumes = default, IEnumerable<ContainerVolumeMounts> containerMounts = default)
+        {
+            volumes ??= new ChangeTrackingList<PodVolume>();
+            containerMounts ??= new ChangeTrackingList<ContainerVolumeMounts>();
+
+            return new PodVolumeMountsContent(volumes.ToList(), containerMounts.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Per-container grouping of volume mounts for the add operation. </summary>
+        /// <param name="containerName"> The container that receives the mounts. </param>
+        /// <param name="volumeMounts"> The volume mounts to add to the container. </param>
+        /// <returns> A new <see cref="Models.ContainerVolumeMounts"/> instance for mocking. </returns>
+        public static ContainerVolumeMounts ContainerVolumeMounts(string containerName = default, IEnumerable<ContainerVolumeMount> volumeMounts = default)
+        {
+            volumeMounts ??= new ChangeTrackingList<ContainerVolumeMount>();
+
+            return new ContainerVolumeMounts(containerName, volumeMounts.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating a snapshot. </summary>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <returns> A new <see cref="Models.CreateSnapshotContent"/> instance for mocking. </returns>
+        public static CreateSnapshotContent CreateSnapshotContent(IDictionary<string, string> labels = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateSnapshotContent(labels, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing snapshot resource returned by the service. </summary>
+        /// <param name="id"> Snapshot identifier assigned by the service. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="sandboxId"> Source sandbox identifier assigned by the service. </param>
+        /// <param name="createdAtUtc"> Creation timestamp assigned by the service. </param>
+        /// <param name="resources"> Captured resources assigned by the service. </param>
+        /// <param name="sourcePodContainers"> Captured pod containers assigned by the service. </param>
+        /// <param name="sizeInMb"> Snapshot size assigned by the service. </param>
+        /// <returns> A new <see cref="Models.SandboxSnapshot"/> instance for mocking. </returns>
+        public static SandboxSnapshot SandboxSnapshot(string id = default, IDictionary<string, string> labels = default, string sandboxId = default, DateTimeOffset createdAtUtc = default, SnapshotResources resources = default, IEnumerable<SnapshotPodContainer> sourcePodContainers = default, long? sizeInMb = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+            sourcePodContainers ??= new ChangeTrackingList<SnapshotPodContainer>();
+
+            return new SandboxSnapshot(
+                id,
+                labels,
+                sandboxId,
+                createdAtUtc,
+                resources,
+                sourcePodContainers.ToList(),
+                sizeInMb,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resources captured in a sandbox snapshot. </summary>
+        /// <param name="cpu"> The captured CPU allocation. </param>
+        /// <param name="memory"> The captured memory allocation. </param>
+        /// <param name="disk"> The captured disk allocation. </param>
+        /// <returns> A new <see cref="Models.SnapshotResources"/> instance for mocking. </returns>
+        public static SnapshotResources SnapshotResources(string cpu = default, string memory = default, string disk = default)
+        {
+            return new SnapshotResources(cpu, memory, disk, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A container captured in a sandbox snapshot. </summary>
+        /// <param name="name"> The container name. </param>
+        /// <param name="diskImageId"> The disk image created for the container. </param>
+        /// <returns> A new <see cref="Models.SnapshotPodContainer"/> instance for mocking. </returns>
+        public static SnapshotPodContainer SnapshotPodContainer(string name = default, string diskImageId = default)
+        {
+            return new SnapshotPodContainer(name, diskImageId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A data volume mount to add to a sandbox. </summary>
+        /// <param name="volumeMount"> The volume and mount path to add. </param>
+        /// <returns> A new <see cref="Models.SandboxVolumeMountContent"/> instance for mocking. </returns>
+        public static SandboxVolumeMountContent SandboxVolumeMountContent(SandboxVolume volumeMount = default)
+        {
+            return new SandboxVolumeMountContent(volumeMount, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response containing the total number of sandboxes in a scope. </summary>
+        /// <param name="count"> Total number of resources. </param>
+        /// <returns> A new <see cref="Models.SandboxCountResult"/> instance for mocking. </returns>
+        public static SandboxCountResult SandboxCountResult(int count = default)
+        {
+            return new SandboxCountResult(count, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Current resource and network statistics for a sandbox. </summary>
+        /// <param name="tokenUsage"> Token usage reported by the sandbox. </param>
+        /// <param name="cpu"> CPU usage and load statistics. </param>
+        /// <param name="memory"> Memory usage statistics. </param>
+        /// <param name="network"> Network I/O statistics. </param>
+        /// <param name="disk"> Filesystem usage by mount point. </param>
+        /// <param name="uptimeSecs"> The sandbox uptime in seconds. </param>
+        /// <returns> A new <see cref="Models.SandboxStatsResult"/> instance for mocking. </returns>
+        public static SandboxStatsResult SandboxStatsResult(TokenUsageStats tokenUsage = default, CpuStats cpu = default, MemoryStats memory = default, NetworkStats network = default, IEnumerable<DiskStatsEntry> disk = default, double? uptimeSecs = default)
+        {
+            disk ??= new ChangeTrackingList<DiskStatsEntry>();
+
+            return new SandboxStatsResult(
+                tokenUsage,
+                cpu,
+                memory,
+                network,
+                disk.ToList(),
+                uptimeSecs,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Token usage statistics for a sandbox. </summary>
+        /// <param name="totalInputTokens"> The total number of input tokens processed. </param>
+        /// <param name="totalOutputTokens"> The total number of output tokens generated. </param>
+        /// <param name="requestCount"> The number of requests included in the totals. </param>
+        /// <returns> A new <see cref="Models.TokenUsageStats"/> instance for mocking. </returns>
+        public static TokenUsageStats TokenUsageStats(long? totalInputTokens = default, long? totalOutputTokens = default, int? requestCount = default)
+        {
+            return new TokenUsageStats(totalInputTokens, totalOutputTokens, requestCount, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> CPU usage counters and load averages. </summary>
+        /// <param name="user"> CPU time spent in user mode. </param>
+        /// <param name="nice"> CPU time spent running prioritized user processes. </param>
+        /// <param name="system"> CPU time spent in system mode. </param>
+        /// <param name="idle"> CPU time spent idle. </param>
+        /// <param name="iowait"> CPU time spent waiting for I/O. </param>
+        /// <param name="irq"> CPU time spent handling hardware interrupts. </param>
+        /// <param name="softirq"> CPU time spent handling software interrupts. </param>
+        /// <param name="steal"> CPU time taken by the hypervisor. </param>
+        /// <param name="loadAverage1Minute"> The one-minute load average. </param>
+        /// <param name="loadAverage5Minutes"> The five-minute load average. </param>
+        /// <param name="loadAverage15Minutes"> The fifteen-minute load average. </param>
+        /// <returns> A new <see cref="Models.CpuStats"/> instance for mocking. </returns>
+        public static CpuStats CpuStats(long? user = default, long? nice = default, long? system = default, long? idle = default, long? iowait = default, long? irq = default, long? softirq = default, long? steal = default, double? loadAverage1Minute = default, double? loadAverage5Minutes = default, double? loadAverage15Minutes = default)
+        {
+            return new CpuStats(
+                user,
+                nice,
+                system,
+                idle,
+                iowait,
+                irq,
+                softirq,
+                steal,
+                loadAverage1Minute,
+                loadAverage5Minutes,
+                loadAverage15Minutes,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Memory statistics in bytes. </summary>
+        /// <param name="totalBytes"> The total memory in bytes. </param>
+        /// <param name="availableBytes"> The available memory in bytes. </param>
+        /// <param name="usedBytes"> The used memory in bytes. </param>
+        /// <returns> A new <see cref="Models.MemoryStats"/> instance for mocking. </returns>
+        public static MemoryStats MemoryStats(long? totalBytes = default, long? availableBytes = default, long? usedBytes = default)
+        {
+            return new MemoryStats(totalBytes, availableBytes, usedBytes, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network I/O counters. </summary>
+        /// <param name="bytesReceived"> The number of bytes received. </param>
+        /// <param name="bytesSent"> The number of bytes transmitted. </param>
+        /// <param name="packetsReceived"> The number of packets received. </param>
+        /// <param name="packetsSent"> The number of packets transmitted. </param>
+        /// <returns> A new <see cref="Models.NetworkStats"/> instance for mocking. </returns>
+        public static NetworkStats NetworkStats(long? bytesReceived = default, long? bytesSent = default, long? packetsReceived = default, long? packetsSent = default)
+        {
+            return new NetworkStats(bytesReceived, bytesSent, packetsReceived, packetsSent, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Filesystem usage for a single mount point. </summary>
+        /// <param name="mountPoint"> Mount path (e.g., "/containers/container-0/bundle/rootfs"). Deprecated: use Label instead. </param>
+        /// <param name="filesystem"> The filesystem type. </param>
+        /// <param name="totalBytes"> The total filesystem capacity in bytes. </param>
+        /// <param name="usedBytes"> The used filesystem capacity in bytes. </param>
+        /// <param name="availableBytes"> The available filesystem capacity in bytes. </param>
+        /// <param name="label"> Human-friendly display label (e.g., "container-0"). If set, UI should prefer this over MountPoint. </param>
+        /// <returns> A new <see cref="Models.DiskStatsEntry"/> instance for mocking. </returns>
+        public static DiskStatsEntry DiskStatsEntry(string mountPoint = default, string filesystem = default, long? totalBytes = default, long? usedBytes = default, long? availableBytes = default, string label = default)
+        {
+            return new DiskStatsEntry(
+                mountPoint,
+                filesystem,
+                totalBytes,
+                usedBytes,
+                availableBytes,
+                label,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A command to execute directly in a running sandbox. </summary>
+        /// <param name="command"> The executable to run. </param>
+        /// <param name="arguments"> Arguments passed to the executable. </param>
+        /// <param name="environment"> Environment variables for the command. </param>
+        /// <param name="workingDirectory"> The working directory for the command. </param>
+        /// <param name="user"> The user that runs the command. </param>
+        /// <param name="activationMode"> The port activation behavior while the command runs. </param>
+        /// <returns> A new <see cref="Models.ExecuteSandboxCommandContent"/> instance for mocking. </returns>
+        public static ExecuteSandboxCommandContent ExecuteSandboxCommandContent(string command = default, IEnumerable<string> arguments = default, IDictionary<string, string> environment = default, string workingDirectory = default, string user = default, PortActivationMode? activationMode = default)
+        {
+            arguments ??= new ChangeTrackingList<string>();
+            environment ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExecuteSandboxCommandContent(
+                command,
+                arguments.ToList(),
+                environment,
+                workingDirectory,
+                user,
+                activationMode,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of executing a command in a sandbox. </summary>
+        /// <param name="exitCode"> The process exit code. </param>
+        /// <param name="standardOutput"> Text written to standard output. </param>
+        /// <param name="standardError"> Text written to standard error. </param>
+        /// <param name="executionTimeMs"> The command execution time in milliseconds. </param>
+        /// <returns> A new <see cref="Models.SandboxExecuteCommandResult"/> instance for mocking. </returns>
+        public static SandboxExecuteCommandResult SandboxExecuteCommandResult(int exitCode = default, string standardOutput = default, string standardError = default, long executionTimeMs = default)
+        {
+            return new SandboxExecuteCommandResult(exitCode, standardOutput, standardError, executionTimeMs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A shell command to execute in a running sandbox. </summary>
+        /// <param name="command"> The command line evaluated by the shell. </param>
+        /// <param name="shell"> The shell executable to use. </param>
+        /// <param name="environment"> Environment variables for the shell command. </param>
+        /// <param name="workingDirectory"> The working directory for the shell command. </param>
+        /// <param name="user"> The user that runs the shell command. </param>
+        /// <param name="activationMode"> The port activation behavior while the command runs. </param>
+        /// <returns> A new <see cref="Models.ExecuteSandboxShellCommandContent"/> instance for mocking. </returns>
+        public static ExecuteSandboxShellCommandContent ExecuteSandboxShellCommandContent(string command = default, string shell = default, IDictionary<string, string> environment = default, string workingDirectory = default, string user = default, PortActivationMode? activationMode = default)
+        {
+            environment ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ExecuteSandboxShellCommandContent(
+                command,
+                shell,
+                environment,
+                workingDirectory,
+                user,
+                activationMode,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of executing a shell command in a sandbox. </summary>
+        /// <param name="exitCode"> The process exit code. </param>
+        /// <param name="standardOutput"> Text written to standard output. </param>
+        /// <param name="standardError"> Text written to standard error. </param>
+        /// <param name="executionTimeMs"> The command execution time in milliseconds. </param>
+        /// <returns> A new <see cref="Models.SandboxExecuteShellCommandResult"/> instance for mocking. </returns>
+        public static SandboxExecuteShellCommandResult SandboxExecuteShellCommandResult(int exitCode = default, string standardOutput = default, string standardError = default, long executionTimeMs = default)
+        {
+            return new SandboxExecuteShellCommandResult(exitCode, standardOutput, standardError, executionTimeMs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing connection resource returned by the service. </summary>
+        /// <param name="id"> Connection identifier assigned by the service. </param>
+        /// <param name="name"> Connection name. </param>
+        /// <param name="type"> Connection type. </param>
+        /// <param name="state"> Current connection state. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
+        /// <param name="deletable"> Whether the connection can currently be deleted. </param>
+        /// <param name="usedBySandboxIds"> Sandboxes currently using this connection. </param>
+        /// <param name="policyRules"> Runtime policy rules. </param>
+        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
+        /// <returns> A new <see cref="Models.SandboxConnection"/> instance for mocking. </returns>
+        public static SandboxConnection SandboxConnection(string id = default, string name = default, string @type = default, ResourceState state = default, IDictionary<string, string> labels = default, DateTimeOffset? createdOn = default, bool? deletable = default, IEnumerable<string> usedBySandboxIds = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+            usedBySandboxIds ??= new ChangeTrackingList<string>();
+            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
+            enabledToolGroups ??= new ChangeTrackingList<string>();
+
+            return new SandboxConnection(
+                id,
+                name,
+                @type,
+                state,
+                labels,
+                createdOn,
+                deletable,
+                usedBySandboxIds.ToList(),
+                policyRules.ToList(),
+                enabledToolGroups.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A runtime policy rule that activates a declared PolicyHookBinding. Supplied per-sandbox at creation time (e.g., "block mail to ceo. </summary>
+        /// <param name="hookId"> References string PolicyHookBinding.Id on a tool. Must match a declared hook. </param>
+        /// <param name="patterns"> Glob patterns used to allow or deny calls based on extracted field values. </param>
+        /// <returns> A new <see cref="Models.McpPolicyRule"/> instance for mocking. </returns>
+        public static McpPolicyRule McpPolicyRule(string hookId = default, IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyRule(hookId, patterns.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating a connection. </summary>
+        /// <param name="name"> Connection name. </param>
+        /// <param name="type"> Connection type. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="parameterValueSetName"> Parameter value set selected when creating the connection. </param>
+        /// <param name="parameterValueSetValues"> Sensitive parameter values supplied when creating the connection. </param>
+        /// <param name="policyRules"> Runtime policy rules. </param>
+        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
+        /// <returns> A new <see cref="Models.CreateConnectionContent"/> instance for mocking. </returns>
+        public static CreateConnectionContent CreateConnectionContent(string name = default, string @type = default, IDictionary<string, string> labels = default, string parameterValueSetName = default, IDictionary<string, string> parameterValueSetValues = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+            parameterValueSetValues ??= new ChangeTrackingDictionary<string, string>();
+            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
+            enabledToolGroups ??= new ChangeTrackingList<string>();
+
+            return new CreateConnectionContent(
+                name,
+                @type,
+                labels,
+                parameterValueSetName,
+                parameterValueSetValues,
+                policyRules.ToList(),
+                enabledToolGroups.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Parameters used to authorize a connection. </summary>
+        /// <param name="parameterValues"> Provider-specific authorization parameters. </param>
+        /// <returns> A new <see cref="Models.AuthorizeConnectionContent"/> instance for mocking. </returns>
+        public static AuthorizeConnectionContent AuthorizeConnectionContent(IDictionary<string, string> parameterValues = default)
+        {
+            parameterValues ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AuthorizeConnectionContent(parameterValues, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for generating a connection consent link. </summary>
+        /// <param name="redirectUri"> The URI to redirect to after consent completes. </param>
+        /// <returns> A new <see cref="Models.GenerateConsentLinkContent"/> instance for mocking. </returns>
+        public static GenerateConsentLinkContent GenerateConsentLinkContent(Uri redirectUri = default)
+        {
+            return new GenerateConsentLinkContent(redirectUri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Consent link generated for connection authorization. </summary>
+        /// <param name="consentLink"> The URL where a user grants consent for the connection. </param>
+        /// <returns> A new <see cref="Models.GenerateConsentLinkResult"/> instance for mocking. </returns>
+        public static GenerateConsentLinkResult GenerateConsentLinkResult(Uri consentLink = default)
+        {
+            return new GenerateConsentLinkResult(consentLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Policy and tool settings to apply to a connection. </summary>
+        /// <param name="policyRules"> Runtime policy rules for connection tool calls. </param>
+        /// <param name="enabledToolGroups"> Tool groups enabled for the connection. </param>
+        /// <returns> A new <see cref="Models.UpdatePolicyRulesContent"/> instance for mocking. </returns>
+        public static UpdatePolicyRulesContent UpdatePolicyRulesContent(IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
+        {
+            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
+            enabledToolGroups ??= new ChangeTrackingList<string>();
+
+            return new UpdatePolicyRulesContent(policyRules.ToList(), enabledToolGroups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A binary content package available to sandboxes in a sandbox group. </summary>
+        /// <param name="id"> The content package identifier. </param>
+        /// <param name="size"> The package size in bytes. </param>
+        /// <param name="labels"> Customer-defined labels for the package. </param>
+        /// <param name="contentType"> The media type of the uploaded content. </param>
+        /// <param name="createdOn"> The time when the package was created. </param>
+        /// <returns> A new <see cref="Models.ContentPackage"/> instance for mocking. </returns>
+        public static ContentPackage ContentPackage(string id = default, long size = default, IDictionary<string, string> labels = default, string contentType = default, DateTimeOffset? createdOn = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContentPackage(
+                id,
+                size,
+                labels,
+                contentType,
+                createdOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing sandbox-group credential resource returned by the service. </summary>
+        /// <param name="name"> Credential name assigned by the service. </param>
+        /// <param name="displayName"> The credential display name. </param>
+        /// <param name="provider"> The provider that uses the credential. </param>
+        /// <param name="state"> Current credential state. </param>
+        /// <param name="source"> The source metadata for the credential. </param>
+        /// <param name="origin"> Origin of the credential. </param>
+        /// <returns> A new <see cref="Models.SandboxGroupCredential"/> instance for mocking. </returns>
+        public static SandboxGroupCredential SandboxGroupCredential(string name = default, string displayName = default, SandboxGroupCredentialProvider provider = default, ResourceState state = default, SandboxGroupCredentialSource source = default, SandboxGroupCredentialOrigin origin = default)
+        {
+            return new SandboxGroupCredential(
+                name,
+                displayName,
+                provider,
+                state,
+                source,
+                origin,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Stored source metadata for a sandbox group credential. </summary>
+        /// <param name="kind"> The credential source type. </param>
+        /// <param name="connectionResourceId"> The Azure resource ID of the referenced connection. </param>
+        /// <param name="connectionRefDetails"> Authentication details for the referenced gateway connection. </param>
+        /// <param name="parameterValues"> Sensitive provider parameters for the credential. </param>
+        /// <param name="connectionId"> The identifier of an existing connection. </param>
+        /// <param name="connectionType"> The type of the referenced connection. </param>
+        /// <param name="connectionName"> The name of the referenced connection. </param>
+        /// <returns> A new <see cref="Models.SandboxGroupCredentialSource"/> instance for mocking. </returns>
+        public static SandboxGroupCredentialSource SandboxGroupCredentialSource(SandboxGroupCredentialSourceKind kind = default, string connectionResourceId = default, SandboxGroupCredentialConnectionRefDetails connectionRefDetails = default, IDictionary<string, string> parameterValues = default, string connectionId = default, string connectionType = default, string connectionName = default)
+        {
+            parameterValues ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SandboxGroupCredentialSource(
+                kind,
+                connectionResourceId,
+                connectionRefDetails,
+                parameterValues,
+                connectionId,
+                connectionType,
+                connectionName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Connector Namespace reference details required by egress HookRef resolution. </summary>
+        /// <param name="authentication"> Authentication used by the referenced connection. </param>
+        /// <param name="tokenExchangeEndpoint"> The endpoint used to exchange tokens for the connection. </param>
+        /// <returns> A new <see cref="Models.SandboxGroupCredentialConnectionRefDetails"/> instance for mocking. </returns>
+        public static SandboxGroupCredentialConnectionRefDetails SandboxGroupCredentialConnectionRefDetails(GatewayConnectionAuthRecord authentication = default, Uri tokenExchangeEndpoint = default)
+        {
+            return new SandboxGroupCredentialConnectionRefDetails(authentication, tokenExchangeEndpoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Managed identity authentication for a gateway connection. </summary>
+        /// <param name="type"> The managed identity type. </param>
+        /// <param name="identityResourceId"> The resource ID of the user-assigned managed identity. </param>
+        /// <returns> A new <see cref="Models.GatewayConnectionAuthRecord"/> instance for mocking. </returns>
+        public static GatewayConnectionAuthRecord GatewayConnectionAuthRecord(GatewayConnectionAuthType @type = default, string identityResourceId = default)
+        {
+            return new GatewayConnectionAuthRecord(@type, identityResourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating or updating a sandbox-group credential. </summary>
+        /// <param name="displayName"> A display name for the credential. </param>
+        /// <param name="provider"> The provider that uses the credential. </param>
+        /// <param name="source"> The source of the credential material. </param>
+        /// <returns> A new <see cref="Models.CreateSandboxGroupCredentialContent"/> instance for mocking. </returns>
+        public static CreateSandboxGroupCredentialContent CreateSandboxGroupCredentialContent(string displayName = default, SandboxGroupCredentialProvider provider = default, SandboxGroupCredentialSource source = default)
+        {
+            return new CreateSandboxGroupCredentialContent(displayName, provider, source, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating a disk image. </summary>
+        /// <param name="source"> Source used to create the disk image. </param>
+        /// <param name="name"> Disk image name. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="vnetConnectionName"> VNet connection used while creating the disk image. </param>
+        /// <returns> A new <see cref="Models.CreateDiskImageContent"/> instance for mocking. </returns>
+        public static CreateDiskImageContent CreateDiskImageContent(DiskImageSource source = default, string name = default, IDictionary<string, string> labels = default, string vnetConnectionName = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateDiskImageContent(source, name, labels, vnetConnectionName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The source used to create a disk image.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobDiskImageSource"/> and <see cref="Models.RegistryDiskImageSource"/>.
+        /// </summary>
+        /// <param name="kind"> The disk image source type. </param>
+        /// <returns> A new <see cref="Models.DiskImageSource"/> instance for mocking. </returns>
+        public static DiskImageSource DiskImageSource(string kind = default)
+        {
+            return new UnknownDiskImageSource(new DiskImageSourceKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A disk image source stored in Azure Blob Storage. </summary>
+        /// <param name="blobSourceUri"> A URI that grants access to the source blob. </param>
+        /// <returns> A new <see cref="Models.BlobDiskImageSource"/> instance for mocking. </returns>
+        public static BlobDiskImageSource BlobDiskImageSource(Uri blobSourceUri = default)
+        {
+            return new BlobDiskImageSource(DiskImageSourceKind.Blob, additionalBinaryDataProperties: null, blobSourceUri);
+        }
+
+        /// <summary> A disk image source pulled from a container registry. </summary>
+        /// <param name="imageReference"> The container image reference to import. </param>
+        /// <param name="authentication"> Authentication used to access the registry. </param>
+        /// <returns> A new <see cref="Models.RegistryDiskImageSource"/> instance for mocking. </returns>
+        public static RegistryDiskImageSource RegistryDiskImageSource(string imageReference = default, RegistryAuthentication authentication = default)
+        {
+            return new RegistryDiskImageSource(DiskImageSourceKind.Registry, additionalBinaryDataProperties: null, imageReference, authentication);
+        }
+
+        /// <summary> Registry authentication options. Exactly one option must be supplied. </summary>
+        /// <param name="registryCredentials"> Username and token authentication. </param>
+        /// <param name="identity"> Managed identity authentication. </param>
+        /// <returns> A new <see cref="Models.RegistryAuthentication"/> instance for mocking. </returns>
+        public static RegistryAuthentication RegistryAuthentication(RegistryCredentials registryCredentials = default, ManagedIdentityAuthentication identity = default)
+        {
+            return new RegistryAuthentication(registryCredentials, identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Username and token credentials for a container registry. </summary>
+        /// <param name="username"> The registry username. </param>
+        /// <param name="token"> The registry access token or password. </param>
+        /// <returns> A new <see cref="Models.RegistryCredentials"/> instance for mocking. </returns>
+        public static RegistryCredentials RegistryCredentials(string username = default, string token = default)
+        {
+            return new RegistryCredentials(username, token, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A service-managed disk image shared across sandbox groups. </summary>
+        /// <param name="name"> The public image name. </param>
+        /// <param name="status"> The current status of the public image. </param>
+        /// <returns> A new <see cref="Models.PublicDiskImage"/> instance for mocking. </returns>
+        public static PublicDiskImage PublicDiskImage(string name = default, DiskImageStatus status = default)
+        {
+            return new PublicDiskImage(name, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing named egress policy resource. </summary>
+        /// <param name="id"> Policy identifier assigned by the service. </param>
+        /// <param name="name"> The policy name. </param>
+        /// <param name="description"> A description of the policy. </param>
+        /// <param name="defaultAction"> The action applied when no rule matches. </param>
+        /// <param name="enforcementMode"> Whether policy decisions are enforced or only audited. </param>
+        /// <param name="rules"> Ordered egress rules evaluated by the policy. </param>
+        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
+        /// <param name="updatedOn"> Last-update timestamp assigned by the service. </param>
+        /// <returns> A new <see cref="Models.NamedEgressPolicy"/> instance for mocking. </returns>
+        public static NamedEgressPolicy NamedEgressPolicy(string id = default, string name = default, string description = default, EgressPolicyAction defaultAction = default, EgressPolicyEnforcementMode? enforcementMode = default, IEnumerable<EgressPolicyRule> rules = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        {
+            rules ??= new ChangeTrackingList<EgressPolicyRule>();
+
+            return new NamedEgressPolicy(
+                id,
+                name,
+                description,
+                defaultAction,
+                enforcementMode,
+                rules.ToList(),
+                createdOn,
+                updatedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing secret resource returned by the service. </summary>
+        /// <param name="id"> Secret identifier assigned by the service. </param>
+        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
+        /// <param name="updatedOn"> Last-update timestamp assigned by the service. </param>
+        /// <returns> A new <see cref="Models.SandboxSecret"/> instance for mocking. </returns>
+        public static SandboxSecret SandboxSecret(string id = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        {
+            return new SandboxSecret(id, createdOn, updatedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Keys stored in a secret. </summary>
+        /// <param name="keys"> The key names stored in the secret. </param>
+        /// <returns> A new <see cref="Models.SecretKeysResult"/> instance for mocking. </returns>
+        public static SecretKeysResult SecretKeysResult(IEnumerable<string> keys = default)
+        {
+            keys ??= new ChangeTrackingList<string>();
+
+            return new SecretKeysResult(keys.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Selected values from a secret. </summary>
+        /// <param name="values"> The sensitive key-value pairs stored in the secret. </param>
+        /// <returns> A new <see cref="Models.SecretPeekResult"/> instance for mocking. </returns>
+        public static SecretPeekResult SecretPeekResult(IDictionary<string, string> values = default)
+        {
+            values ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SecretPeekResult(values, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating or updating a secret. </summary>
+        /// <param name="values"> Sensitive secret values. </param>
+        /// <returns> A new <see cref="Models.SetSecretContent"/> instance for mocking. </returns>
+        public static SetSecretContent SetSecretContent(IDictionary<string, string> values = default)
+        {
+            values ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SetSecretContent(values, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Response containing the total number of snapshots in a scope. </summary>
+        /// <param name="count"> Total number of resources. </param>
+        /// <returns> A new <see cref="Models.SnapshotCountResult"/> instance for mocking. </returns>
+        public static SnapshotCountResult SnapshotCountResult(int count = default)
+        {
+            return new SnapshotCountResult(count, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Customer-facing volume resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataDiskVolume"/>, <see cref="Models.ServiceManagedBlobVolume"/>, and <see cref="Models.UserProvidedBlobVolume"/>.
+        /// </summary>
+        /// <param name="type"> Represents the type of volume. </param>
+        /// <param name="volumeName"> The volume name. </param>
+        /// <param name="labels"> Customer-defined labels for the volume. </param>
+        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
+        /// <returns> A new <see cref="Models.SandboxGroupVolume"/> instance for mocking. </returns>
+        public static SandboxGroupVolume SandboxGroupVolume(string @type = default, string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new UnknownSandboxGroupVolume(new VolumeType(@type), volumeName, labels, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A volume backed by a customer-owned Azure Blob container. </summary>
+        /// <param name="volumeName"> The volume name. </param>
+        /// <param name="labels"> Customer-defined labels for the volume. </param>
+        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
+        /// <param name="storageContainerResourceId"> The Azure resource ID of the blob container. </param>
+        /// <param name="auth"> Authentication used to access the blob container. </param>
+        /// <returns> A new <see cref="Models.UserProvidedBlobVolume"/> instance for mocking. </returns>
+        public static UserProvidedBlobVolume UserProvidedBlobVolume(string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default, string storageContainerResourceId = default, BlobVolumeAuthentication auth = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new UserProvidedBlobVolume(
+                VolumeType.AzureBlobByo,
+                volumeName,
+                labels,
+                provisioningState,
+                additionalBinaryDataProperties: null,
+                storageContainerResourceId,
+                auth);
+        }
+
+        /// <summary>
+        /// Authentication configuration for accessing a user-provided blob container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobVolumeManagedIdentityAuthentication"/>.
+        /// </summary>
+        /// <param name="kind"> The authentication mechanism. </param>
+        /// <returns> A new <see cref="Models.BlobVolumeAuthentication"/> instance for mocking. </returns>
+        public static BlobVolumeAuthentication BlobVolumeAuthentication(string kind = default)
+        {
+            return new UnknownBlobVolumeAuthentication(new BlobVolumeAuthenticationKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Authenticates with a managed identity already assigned to the sandbox group. </summary>
+        /// <param name="identity"> The managed identity to use. </param>
+        /// <returns> A new <see cref="Models.BlobVolumeManagedIdentityAuthentication"/> instance for mocking. </returns>
+        public static BlobVolumeManagedIdentityAuthentication BlobVolumeManagedIdentityAuthentication(SandboxGroupIdentitySelector identity = default)
+        {
+            return new BlobVolumeManagedIdentityAuthentication(BlobVolumeAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, identity);
+        }
+
+        /// <summary>
+        /// Customer-supplied selector that picks one of the managed identities already on a sandbox group.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SystemAssignedSandboxGroupIdentitySelector"/> and <see cref="Models.UserAssignedSandboxGroupIdentitySelector"/>.
+        /// </summary>
+        /// <param name="kind"> The managed identity selector type. </param>
+        /// <returns> A new <see cref="Models.SandboxGroupIdentitySelector"/> instance for mocking. </returns>
+        public static SandboxGroupIdentitySelector SandboxGroupIdentitySelector(string kind = default)
+        {
+            return new UnknownSandboxGroupIdentitySelector(new SandboxGroupIdentitySelectorKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Selects the sandbox group's system-assigned managed identity. </summary>
+        /// <returns> A new <see cref="Models.SystemAssignedSandboxGroupIdentitySelector"/> instance for mocking. </returns>
+        public static SystemAssignedSandboxGroupIdentitySelector SystemAssignedSandboxGroupIdentitySelector()
+        {
+            return new SystemAssignedSandboxGroupIdentitySelector(SandboxGroupIdentitySelectorKind.SystemAssigned, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Selects a user-assigned managed identity by resource ID. </summary>
+        /// <param name="resourceId"> The resource ID of the user-assigned managed identity. </param>
+        /// <returns> A new <see cref="Models.UserAssignedSandboxGroupIdentitySelector"/> instance for mocking. </returns>
+        public static UserAssignedSandboxGroupIdentitySelector UserAssignedSandboxGroupIdentitySelector(string resourceId = default)
+        {
+            return new UserAssignedSandboxGroupIdentitySelector(SandboxGroupIdentitySelectorKind.UserAssigned, additionalBinaryDataProperties: null, resourceId);
+        }
+
+        /// <summary> A service-managed Azure Blob volume. </summary>
+        /// <param name="volumeName"> The volume name. </param>
+        /// <param name="labels"> Customer-defined labels for the volume. </param>
+        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
+        /// <param name="usage"> Current volume usage. </param>
+        /// <returns> A new <see cref="Models.ServiceManagedBlobVolume"/> instance for mocking. </returns>
+        public static ServiceManagedBlobVolume ServiceManagedBlobVolume(string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default, BlobVolumeUsage usage = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceManagedBlobVolume(
+                VolumeType.AzureBlob,
+                volumeName,
+                labels,
+                provisioningState,
+                additionalBinaryDataProperties: null,
+                usage);
+        }
+
+        /// <summary> Usage statistics for a blob-backed volume. </summary>
+        /// <param name="usedBytes"> The used storage in bytes. </param>
+        /// <param name="itemCount"> The number of items in the volume. </param>
+        /// <param name="calculatedAtUtc"> The time when the usage was calculated. </param>
+        /// <returns> A new <see cref="Models.BlobVolumeUsage"/> instance for mocking. </returns>
+        public static BlobVolumeUsage BlobVolumeUsage(long usedBytes = default, long itemCount = default, DateTimeOffset calculatedAtUtc = default)
+        {
+            return new BlobVolumeUsage(usedBytes, itemCount, calculatedAtUtc, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A persistent data disk volume. </summary>
+        /// <param name="volumeName"> The volume name. </param>
+        /// <param name="labels"> Customer-defined labels for the volume. </param>
+        /// <param name="provisioningState"> Current provisioning state assigned by the service. </param>
+        /// <param name="size"> The requested disk size. </param>
+        /// <param name="isAttached"> Whether the volume is currently attached. </param>
+        /// <param name="clusterId"> Resource name of an AKS managed cluster. </param>
+        /// <param name="attachedSandboxId"> The identifier of the attached sandbox. </param>
+        /// <param name="usage"> Current disk usage and upload status. </param>
+        /// <returns> A new <see cref="Models.DataDiskVolume"/> instance for mocking. </returns>
+        public static DataDiskVolume DataDiskVolume(string volumeName = default, IDictionary<string, string> labels = default, VolumeProvisioningState provisioningState = default, string size = default, bool isAttached = default, string clusterId = default, string attachedSandboxId = default, DataDiskVolumeUsage usage = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataDiskVolume(
+                VolumeType.DataDisk,
+                volumeName,
+                labels,
+                provisioningState,
+                additionalBinaryDataProperties: null,
+                size,
+                isAttached,
+                clusterId,
+                attachedSandboxId,
+                usage);
+        }
+
+        /// <summary> Usage statistics for a data disk volume. </summary>
+        /// <param name="compressedBlobSizeBytes"> The compressed backup size in bytes. </param>
+        /// <param name="usedSizeBytes"> The used disk space in bytes. </param>
+        /// <param name="lastUploadedAtUtc"> The time when the disk was last uploaded. </param>
+        /// <returns> A new <see cref="Models.DataDiskVolumeUsage"/> instance for mocking. </returns>
+        public static DataDiskVolumeUsage DataDiskVolumeUsage(long compressedBlobSizeBytes = default, long usedSizeBytes = default, DateTimeOffset lastUploadedAtUtc = default)
+        {
+            return new DataDiskVolumeUsage(compressedBlobSizeBytes, usedSizeBytes, lastUploadedAtUtc, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Volume counts grouped by type. </summary>
+        /// <param name="counts"> Volume counts grouped by type. </param>
+        /// <returns> A new <see cref="Models.VolumeCountResult"/> instance for mocking. </returns>
+        public static VolumeCountResult VolumeCountResult(IEnumerable<VolumeTypeCount> counts = default)
+        {
+            counts ??= new ChangeTrackingList<VolumeTypeCount>();
+
+            return new VolumeCountResult(counts.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The number of volumes of one type. </summary>
+        /// <param name="type"> The volume type. </param>
+        /// <param name="count"> The number of volumes. </param>
+        /// <returns> A new <see cref="Models.VolumeTypeCount"/> instance for mocking. </returns>
+        public static VolumeTypeCount VolumeTypeCount(VolumeType @type = default, int count = default)
+        {
+            return new VolumeTypeCount(@type, count, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Files and directories returned from a volume path. </summary>
+        /// <param name="path"> The directory path that was listed. </param>
+        /// <param name="items"> Files and directories contained in the path. </param>
+        /// <returns> A new <see cref="Models.VolumeListDirectoryResult"/> instance for mocking. </returns>
+        public static VolumeListDirectoryResult VolumeListDirectoryResult(string path = default, IEnumerable<VolumePathItem> items = default)
+        {
+            items ??= new ChangeTrackingList<VolumePathItem>();
+
+            return new VolumeListDirectoryResult(path, items.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metadata for a file or directory in a volume. </summary>
+        /// <param name="itemName"> The file or directory name. </param>
+        /// <param name="path"> The full path in the volume. </param>
+        /// <param name="isDirectory"> Whether the item is a directory. </param>
+        /// <param name="sizeBytes"> The file size in bytes. </param>
+        /// <param name="lastModifiedUtc"> The time when the item was last modified. </param>
+        /// <param name="contentType"> The media type of the file. </param>
+        /// <param name="eTag"> An HTTP entity tag used for optimistic concurrency, as defined by RFC 9110. </param>
+        /// <returns> A new <see cref="Models.VolumePathItem"/> instance for mocking. </returns>
+        public static VolumePathItem VolumePathItem(string itemName = default, string path = default, bool isDirectory = default, long? sizeBytes = default, DateTimeOffset? lastModifiedUtc = default, string contentType = default, ETag? eTag = default)
+        {
+            return new VolumePathItem(
+                itemName,
+                path,
+                isDirectory,
+                sizeBytes,
+                lastModifiedUtc,
+                contentType,
+                eTag,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Options for creating a fork of a data disk volume. </summary>
+        /// <param name="destinationVolumeName"> The name of the new volume. </param>
+        /// <param name="labels"> Labels to assign to the new volume. </param>
+        /// <returns> A new <see cref="Models.ForkDataDiskVolumeContent"/> instance for mocking. </returns>
+        public static ForkDataDiskVolumeContent ForkDataDiskVolumeContent(string destinationVolumeName = default, IDictionary<string, string> labels = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ForkDataDiskVolumeContent(destinationVolumeName, labels, additionalBinaryDataProperties: null);
         }
     }
 }

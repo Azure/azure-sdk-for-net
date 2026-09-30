@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Reasons reported for a container status. </summary>
     public readonly partial struct ContainerStatusReason : IEquatable<ContainerStatusReason>

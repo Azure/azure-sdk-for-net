@@ -21,15 +21,15 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task CreateGetListCountAndDeleteSandbox()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandbox sandboxClient = sandboxGroup.GetSandboxGroupSandboxClient(sandbox.Id);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient sandboxClient = sandboxGroup.GetSandboxesClient();
 
-            Response<ContainerAppsSandbox> getResponse = await sandboxClient.GetPropertiesAsync();
-            Response<SandboxCountResult> countResponse = await sandboxGroup.GetSandboxCountAsync();
+            Response<SandboxProperties> getResponse = await sandboxClient.GetPropertiesAsync(sandbox.Id);
+            Response<SandboxCountResult> countResponse = await sandboxClient.GetSandboxCountAsync();
             bool found = false;
 
-            await foreach (ContainerAppsSandbox item in sandboxGroup.GetSandboxesAsync())
+            await foreach (SandboxProperties item in sandboxClient.GetSandboxesAsync())
             {
                 if (item.Id == sandbox.Id)
                 {
@@ -48,12 +48,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task DisableAndEnableSandbox()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandbox sandboxClient = sandboxGroup.GetSandboxGroupSandboxClient(sandbox.Id);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient sandboxClient = sandboxGroup.GetSandboxesClient();
 
-            Response<ContainerAppsSandbox> disabled = await sandboxClient.DisableAsync();
-            Response<ContainerAppsSandbox> enabled = await sandboxClient.EnableAsync();
+            Response<SandboxProperties> disabled = await sandboxClient.DisableAsync(sandbox.Id);
+            Response<SandboxProperties> enabled = await sandboxClient.EnableAsync(sandbox.Id);
 
             Assert.That(disabled.Value.Id, Is.EqualTo(sandbox.Id));
             Assert.That(enabled.Value.Id, Is.EqualTo(sandbox.Id));
@@ -62,12 +62,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task GetSandboxStats()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
 
             Response<SandboxStatsResult> response = await sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .GetStatsAsync();
+                .GetSandboxesClient()
+                .GetStatsAsync(sandbox.Id);
 
             Assert.That(response.Value, Is.Not.Null);
         }
@@ -75,15 +75,15 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task SetSandboxLifecyclePolicy()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
             SandboxLifecyclePolicy policy = new SandboxLifecyclePolicy(
                 new SandboxAutoSuspendPolicy(false),
                 new SandboxAutoDeletePolicy(false));
 
-            Response<ContainerAppsSandbox> response = await sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .SetLifecyclePolicyAsync(policy);
+            Response<SandboxProperties> response = await sandboxGroup
+                .GetSandboxesClient()
+                .SetLifecyclePolicyAsync(sandbox.Id, policy);
 
             Assert.That(response.Value.Id, Is.EqualTo(sandbox.Id));
         }
@@ -91,18 +91,16 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task SetEgressPolicyAndGetDecisions()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandboxNetworking networking = sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .GetSandboxGroupSandboxNetworkingClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient networking = sandboxGroup.GetSandboxesClient();
             SandboxEgressPolicy policy = new SandboxEgressPolicy
             {
                 DefaultAction = EgressPolicyAction.Allow
             };
 
-            Response<SandboxEgressPolicy> setResponse = await networking.SetEgressPolicyAsync(policy);
-            Response<EgressDecisionsResult> decisionsResponse = await networking.GetEgressDecisionsAsync();
+            Response<SandboxEgressPolicy> setResponse = await networking.SetEgressPolicyAsync(sandbox.Id, policy);
+            Response<EgressDecisionsResult> decisionsResponse = await networking.GetEgressDecisionsAsync(sandbox.Id);
 
             Assert.That(setResponse.Value.DefaultAction, Is.EqualTo(EgressPolicyAction.Allow));
             Assert.That(decisionsResponse.Value, Is.Not.Null);
@@ -111,15 +109,15 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task ExecuteCommandAndShellCommand()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandbox sandboxClient = sandboxGroup.GetSandboxGroupSandboxClient(sandbox.Id);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient sandboxClient = sandboxGroup.GetSandboxesClient();
             ExecuteSandboxCommandContent command = new ExecuteSandboxCommandContent("/bin/echo");
             command.Arguments.Add("sandbox-command");
             ExecuteSandboxShellCommandContent shellCommand = new ExecuteSandboxShellCommandContent("echo sandbox-shell");
 
-            Response<SandboxExecuteCommandResult> commandResponse = await sandboxClient.ExecuteCommandAsync(command);
-            Response<SandboxExecuteShellCommandResult> shellResponse = await sandboxClient.ExecuteShellCommandAsync(shellCommand);
+            Response<SandboxExecuteCommandResult> commandResponse = await sandboxClient.ExecuteCommandAsync(sandbox.Id, command);
+            Response<SandboxExecuteShellCommandResult> shellResponse = await sandboxClient.ExecuteShellCommandAsync(sandbox.Id, shellCommand);
 
             Assert.That(commandResponse.Value, Is.Not.Null);
             Assert.That(shellResponse.Value, Is.Not.Null);
@@ -128,23 +126,22 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task ManageSandboxPorts()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandboxNetworking networking = sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .GetSandboxGroupSandboxNetworkingClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient networking = sandboxGroup.GetSandboxesClient();
             CreateSandboxPortContent port = new CreateSandboxPortContent(8080)
             {
                 Name = "http"
             };
 
-            Response<PortsListResult> added = await networking.AddPortAsync(port);
-            Response<PortsListResult> listed = await networking.GetPortsAsync();
+            Response<PortsListResult> added = await networking.AddPortAsync(sandbox.Id, port);
+            Response<PortsListResult> listed = await networking.GetPortsAsync(sandbox.Id);
 
             Assert.That(added.Value, Is.Not.Null);
             Assert.That(listed.Value, Is.Not.Null);
 
             Response partialUpdate = await networking.UpdatePortAsync(
+                sandbox.Id,
                 RequestContent.Create(BinaryData.FromString(
                     """
                     {
@@ -161,6 +158,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 Name = currentPort.Name
             };
             Response<PortsListResult> setResponse = await networking.SetPortsAsync(
+                sandbox.Id,
                 new UpdatePortsContent(new[] { updatedPort }));
             Assert.That(setResponse.Value.Ports, Has.Count.EqualTo(1));
 
@@ -169,7 +167,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 Name = "http",
                 Port = 8080
             };
-            Response<PortsListResult> removed = await networking.RemovePortAsync(remove);
+            Response<PortsListResult> removed = await networking.RemovePortAsync(sandbox.Id, remove);
 
             Assert.That(removed.Value, Is.Not.Null);
         }

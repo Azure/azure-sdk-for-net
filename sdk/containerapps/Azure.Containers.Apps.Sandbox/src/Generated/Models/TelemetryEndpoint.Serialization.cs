@@ -8,8 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary>
     /// Base type for telemetry endpoint configuration. Polymorphic on `kind` discriminator.

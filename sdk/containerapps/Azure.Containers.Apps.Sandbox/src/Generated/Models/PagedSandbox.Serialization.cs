@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Paged collection of Sandbox items. </summary>
     internal partial class PagedSandbox : IJsonModel<PagedSandbox>
@@ -88,7 +89,7 @@ namespace Azure.Containers.Apps.Sandbox
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ContainerAppsSandbox item in Value)
+            foreach (SandboxProperties item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,17 +141,17 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 return null;
             }
-            IList<ContainerAppsSandbox> value = default;
+            IList<SandboxProperties> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ContainerAppsSandbox> array = new List<ContainerAppsSandbox>();
+                    List<SandboxProperties> array = new List<SandboxProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppsSandbox.DeserializeContainerAppsSandbox(item, options));
+                        array.Add(SandboxProperties.DeserializeSandboxProperties(item, options));
                     }
                     value = array;
                     continue;

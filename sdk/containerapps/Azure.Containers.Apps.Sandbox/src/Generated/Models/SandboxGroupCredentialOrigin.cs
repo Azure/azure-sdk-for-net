@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The service feature that created the credential. </summary>
     public readonly partial struct SandboxGroupCredentialOrigin : IEquatable<SandboxGroupCredentialOrigin>

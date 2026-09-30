@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Seccomp profile type for container syscall filtering. </summary>
     public readonly partial struct SeccompProfileType : IEquatable<SeccompProfileType>

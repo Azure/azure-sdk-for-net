@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Events that can start automatic sandbox deletion. </summary>
     public readonly partial struct AutoDeleteTrigger : IEquatable<AutoDeleteTrigger>

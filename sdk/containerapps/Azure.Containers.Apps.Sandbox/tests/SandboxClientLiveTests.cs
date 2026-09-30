@@ -17,12 +17,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task CreateAndDeleteSandbox()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            Response<ContainerAppsSandbox> createResponse = await sandboxGroup.CreateSandboxAsync(
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxesClient sandboxes = sandboxGroup.GetSandboxesClient();
+            Response<SandboxProperties> createResponse = await sandboxes.CreateSandboxAsync(
                 CreateSandboxContent(Recording.GenerateId()));
-            SandboxGroupSandbox sandboxClient = sandboxGroup.GetSandboxGroupSandboxClient(createResponse.Value.Id);
 
-            Response<ContainerAppsSandbox> getResponse = await sandboxClient.GetPropertiesAsync();
+            Response<SandboxProperties> getResponse = await sandboxes.GetPropertiesAsync(createResponse.Value.Id);
 
             Assert.That(createResponse.Value.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(getResponse.Value.Id, Is.EqualTo(createResponse.Value.Id));

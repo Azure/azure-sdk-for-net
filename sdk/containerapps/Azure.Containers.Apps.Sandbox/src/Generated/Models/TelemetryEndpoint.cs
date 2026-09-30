@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary>
     /// Base type for telemetry endpoint configuration. Polymorphic on `kind` discriminator.
@@ -27,7 +28,7 @@ namespace Azure.Containers.Apps.Sandbox
         {
             Kind = kind;
             Data = data.ToList();
-            Columns = new ChangeTrackingDictionary<string, LogColumnDef>();
+            Columns = new ChangeTrackingDictionary<string, TelemetryLogColumn>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TelemetryEndpoint"/>. </summary>
@@ -36,7 +37,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="columns"> Custom columns added to forwarded log records. </param>
         /// <param name="dynamicJsonColumns"> Whether to add top-level JSON fields from container logs as columns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, LogColumnDef> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, TelemetryLogColumn> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Data = data;
@@ -52,7 +53,7 @@ namespace Azure.Containers.Apps.Sandbox
         public IList<TelemetryData> Data { get; }
 
         /// <summary> Custom columns added to forwarded log records. </summary>
-        public IDictionary<string, LogColumnDef> Columns { get; }
+        public IDictionary<string, TelemetryLogColumn> Columns { get; }
 
         /// <summary> Whether to add top-level JSON fields from container logs as columns. </summary>
         public bool? DynamicJsonColumns { get; set; }

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Controls the scope of TLS inspection for the egress proxy on a per-sandbox basis. </summary>
     public readonly partial struct TrafficInspection : IEquatable<TrafficInspection>

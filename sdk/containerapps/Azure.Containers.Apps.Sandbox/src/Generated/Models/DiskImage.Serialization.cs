@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing disk image resource returned by the service. </summary>
     public partial class DiskImage : IJsonModel<DiskImage>
@@ -169,7 +170,7 @@ namespace Azure.Containers.Apps.Sandbox
             string id = default;
             string name = default;
             IDictionary<string, string> labels = default;
-            DiskImageImage image = default;
+            ImageMetadata image = default;
             DiskImageStatus status = default;
             long? sizeInMb = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -204,7 +205,7 @@ namespace Azure.Containers.Apps.Sandbox
                 }
                 if (prop.NameEquals("image"u8))
                 {
-                    image = DiskImageImage.DeserializeDiskImageImage(prop.Value, options);
+                    image = ImageMetadata.DeserializeImageMetadata(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

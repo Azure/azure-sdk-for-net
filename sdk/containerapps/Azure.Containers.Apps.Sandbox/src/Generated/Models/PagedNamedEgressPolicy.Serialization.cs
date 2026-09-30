@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Paged collection of NamedEgressPolicy items. </summary>
     internal partial class PagedNamedEgressPolicy : IJsonModel<PagedNamedEgressPolicy>

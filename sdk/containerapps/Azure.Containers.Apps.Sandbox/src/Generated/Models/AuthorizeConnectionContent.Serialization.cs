@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Parameters used to authorize a connection. </summary>
     public partial class AuthorizeConnectionContent : IJsonModel<AuthorizeConnectionContent>

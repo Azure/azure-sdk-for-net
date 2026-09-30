@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing sandbox-group credential resource returned by the service. </summary>
     public partial class SandboxGroupCredential
@@ -33,7 +33,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="source"> The source metadata for the credential. </param>
         /// <param name="origin"> Origin of the credential. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxGroupCredential(string name, string displayName, SandboxGroupCredentialProvider provider, ConnectionState state, SandboxGroupCredentialSource source, SandboxGroupCredentialOrigin origin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SandboxGroupCredential(string name, string displayName, SandboxGroupCredentialProvider provider, ResourceState state, SandboxGroupCredentialSource source, SandboxGroupCredentialOrigin origin, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -54,7 +54,7 @@ namespace Azure.Containers.Apps.Sandbox
         public SandboxGroupCredentialProvider Provider { get; }
 
         /// <summary> Current credential state. </summary>
-        public ConnectionState State { get; }
+        public ResourceState State { get; }
 
         /// <summary> The source metadata for the credential. </summary>
         public SandboxGroupCredentialSource Source { get; }

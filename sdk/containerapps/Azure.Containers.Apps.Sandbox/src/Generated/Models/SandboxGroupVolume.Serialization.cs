@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary>
     /// Customer-facing volume resource.

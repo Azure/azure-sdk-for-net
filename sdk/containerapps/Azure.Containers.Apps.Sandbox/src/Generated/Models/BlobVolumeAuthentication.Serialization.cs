@@ -8,8 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary>
     /// Authentication configuration for accessing a user-provided blob container.

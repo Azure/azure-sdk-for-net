@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing sandbox-group credential resource returned by the service. </summary>
     public partial class SandboxGroupCredential : IJsonModel<SandboxGroupCredential>
@@ -155,7 +156,7 @@ namespace Azure.Containers.Apps.Sandbox
             string name = default;
             string displayName = default;
             SandboxGroupCredentialProvider provider = default;
-            ConnectionState state = default;
+            ResourceState state = default;
             SandboxGroupCredentialSource source = default;
             SandboxGroupCredentialOrigin origin = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -178,7 +179,7 @@ namespace Azure.Containers.Apps.Sandbox
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    state = new ConnectionState(prop.Value.GetString());
+                    state = new ResourceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))

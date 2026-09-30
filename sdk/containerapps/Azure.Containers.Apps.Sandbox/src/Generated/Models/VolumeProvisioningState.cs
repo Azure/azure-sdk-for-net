@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Current backing-storage provisioning state. </summary>
     public readonly partial struct VolumeProvisioningState : IEquatable<VolumeProvisioningState>

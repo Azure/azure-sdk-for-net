@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing connection resource returned by the service. </summary>
     public partial class SandboxConnection
@@ -41,7 +42,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="policyRules"> Runtime policy rules. </param>
         /// <param name="enabledToolGroups"> Enabled tool groups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxConnection(string id, string name, string @type, string state, IDictionary<string, string> labels, DateTimeOffset? createdOn, bool? deletable, IReadOnlyList<string> usedBySandboxIds, IList<McpPolicyRule> policyRules, IList<string> enabledToolGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SandboxConnection(string id, string name, string @type, ResourceState state, IDictionary<string, string> labels, DateTimeOffset? createdOn, bool? deletable, IReadOnlyList<string> usedBySandboxIds, IList<McpPolicyRule> policyRules, IList<string> enabledToolGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -66,7 +67,7 @@ namespace Azure.Containers.Apps.Sandbox
         public string Type { get; }
 
         /// <summary> Current connection state. </summary>
-        public string State { get; }
+        public ResourceState State { get; }
 
         /// <summary> Customer-defined labels. </summary>
         public IDictionary<string, string> Labels { get; }

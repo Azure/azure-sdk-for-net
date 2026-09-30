@@ -21,11 +21,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(201, SandboxJson),
                 new MockResponse(204));
-            SandboxGroup sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+            SandboxGroupClient sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+            SandboxesClient sandboxes = sandboxGroup.GetSandboxesClient();
 
-            Response<ContainerAppsSandbox> created =
-                sandboxGroup.CreateSandbox(SandboxClientTestBase.CreateSandboxContent("sync-test"));
-            Response deleted = sandboxGroup.GetSandboxGroupSandboxClient(created.Value.Id).Delete();
+            Response<SandboxProperties> created =
+                sandboxes.CreateSandbox(SandboxClientTestBase.CreateSandboxContent("sync-test"));
+            Response deleted = sandboxes.Delete(created.Value.Id);
 
             Assert.That(created.Value.Id, Is.EqualTo("sandbox-id"));
             Assert.That(deleted.Status, Is.EqualTo(204));
@@ -42,14 +43,14 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                     $$"""{"value":[{{SandboxJson}}],"nextLink":"{{nextLink}}"}"""),
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"value":[{"id":"sandbox-2","sourcesRef":{"diskImage":{"name":"ubuntu","isPublic":true}},"resources":{"cpu":"1","memory":"2Gi"},"state":"Running"}]}"""));
-            SandboxGroup sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+            SandboxGroupClient sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
             List<string> ids = new List<string>();
 
-            foreach (Page<ContainerAppsSandbox> page in sandboxGroup
+            foreach (Page<SandboxProperties> page in sandboxGroup.GetSandboxesClient()
                 .GetSandboxes(skipToken: "page-1", labels: "environment=test")
                 .AsPages())
             {
-                foreach (ContainerAppsSandbox sandbox in page.Values)
+                foreach (SandboxProperties sandbox in page.Values)
                 {
                     ids.Add(sandbox.Id);
                 }
@@ -71,11 +72,11 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                     $$"""{"value":[{{SandboxJson}}],"nextLink":"{{nextLink}}"}"""),
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"value":[{"id":"sandbox-2"}]}"""));
-            SandboxGroup sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+            SandboxGroupClient sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
             RequestContext context = new RequestContext();
             List<string> payloads = new List<string>();
 
-            foreach (Page<BinaryData> page in sandboxGroup
+            foreach (Page<BinaryData> page in sandboxGroup.GetSandboxesClient()
                 .GetSandboxes("page-1", "environment=test", context)
                 .AsPages())
             {
@@ -96,15 +97,15 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(404,
                     """{"error":{"code":"NotFound","message":"Sandbox was not found."}}"""));
-            SandboxGroupSandbox client = SandboxClientTestHelpers
+            SandboxesClient client = SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
-                .GetSandboxGroupSandboxClient("missing");
+                .GetSandboxesClient();
             RequestContext context = new RequestContext
             {
                 ErrorOptions = ErrorOptions.NoThrow
             };
 
-            Response response = client.GetProperties(context);
+            Response response = client.GetProperties("missing", context);
 
             Assert.That(response.Status, Is.EqualTo(404));
         }
@@ -115,9 +116,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(201,
                     """{"itemName":"example.txt","path":"workspace/example.txt","isDirectory":false,"eTag":"etag"}"""));
-            SandboxGroupVolumes client = SandboxClientTestHelpers
+            VolumesClient client = SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
-                .GetSandboxGroupVolumesClient();
+                .GetVolumesClient();
             MatchConditions conditions = new MatchConditions
             {
                 IfMatch = new ETag("\"etag\"")
@@ -142,9 +143,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(201,
                     """{"itemName":"example.txt","path":"workspace/example.txt","isDirectory":false}"""));
-            SandboxGroupVolumes client = SandboxClientTestHelpers
+            VolumesClient client = SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
-                .GetSandboxGroupVolumesClient();
+                .GetVolumesClient();
 
             Response<VolumePathItem> response = client.UploadVolumeFile(
                 "volume",

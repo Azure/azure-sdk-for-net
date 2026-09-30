@@ -18,7 +18,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task GetAndListPublicDiskImages()
         {
-            SandboxGroupDiskImages client = CreateSandboxGroupClient().GetSandboxGroupDiskImagesClient();
+            PublicDiskImagesClient client = CreateSandboxGroupClient().GetPublicDiskImagesClient();
             Response<PublicDiskImage> getResponse = await client.GetPublicDiskImageAsync("ubuntu");
             bool found = false;
 
@@ -39,10 +39,10 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [LiveOnly(Reason = "Creating an OCI-backed disk image is long-running and should not run in the default test suite.")]
         public async Task CreateGetListAndDeleteDiskImageFromOciReference()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            SandboxGroupDiskImages client = sandboxGroup.GetSandboxGroupDiskImagesClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            DiskImagesClient client = sandboxGroup.GetDiskImagesClient();
             CreateDiskImageContent content = new CreateDiskImageContent(
-                new CreateDiskImageSourceRegistrySource("mcr.microsoft.com/azurelinux/base/core:3.0"))
+                new RegistryDiskImageSource("mcr.microsoft.com/azurelinux/base/core:3.0"))
             {
                 Name = Recording.GenerateId("image-", 40)
             };
@@ -72,14 +72,14 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [LiveOnly(Reason = "Committing a sandbox to a disk image is long-running and should not run in the default test suite.")]
         public async Task CommitRunningSandboxAsDiskImage()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
             CommitSandboxContent content = new CommitSandboxContent();
             content.Labels.Add("test-id", Recording.GenerateId("commit-test-", 40));
 
             Response<CommitSandboxResult> response = await sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .CommitAsync(content);
+                .GetSandboxesClient()
+                .CommitAsync(sandbox.Id, content);
             RegisterCleanup(() => DeleteDiskImageIfExistsAsync(sandboxGroup, response.Value.DiskImage.Id));
 
             Assert.That(response.Value.DiskImage.Id, Is.Not.Null.And.Not.Empty);
