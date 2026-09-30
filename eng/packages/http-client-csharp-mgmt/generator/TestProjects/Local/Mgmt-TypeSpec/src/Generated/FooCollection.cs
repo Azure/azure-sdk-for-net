@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FooData, FooResource>(new FoosGetAllAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
+            return new AsyncPageableWrapper<FooData, FooResource>(new FooDataAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FooData, FooResource>(new FoosGetAllCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
+            return new PageableWrapper<FooData, FooResource>(new FooDataCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FooCollection.GetAll"), data => new FooResource(Client, data));
         }
 
         /// <summary>

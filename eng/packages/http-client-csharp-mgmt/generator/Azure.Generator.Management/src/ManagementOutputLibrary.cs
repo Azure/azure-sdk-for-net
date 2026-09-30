@@ -4,13 +4,16 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 
 namespace Azure.Generator.Management
@@ -54,6 +57,9 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
         private readonly HashSet<string> _collectionResultNames = new(StringComparer.Ordinal);
+        private readonly Dictionary<(ClientProvider Client, InputOperation Operation, bool HasItemType, bool IsAsync), string> _regularCollectionResultNames = new();
+        private readonly Dictionary<TypeProvider, string> _regularCollectionResultProviderNames = new();
+        private HashSet<string>? _customReferencedCollectionResults;
 
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
 
@@ -73,6 +79,90 @@ namespace Azure.Generator.Management
             }
 
             return $"{baseName}{suffix}";
+        }
+
+        internal string GetRegularCollectionResultName(ClientProvider client, InputOperation operation, CSharpType? itemType, bool isAsync, string? customizedName = null)
+        {
+            var key = (client, operation, itemType is not null, isAsync);
+            if (!_regularCollectionResultNames.TryGetValue(key, out var name))
+            {
+                // Item names avoid repeating long REST client and operation names. A helper may be rebuilt
+                // for different back-compat providers, so reserve a name once per operation and result shape.
+                var suffix = $"CollectionResult{(itemType is null ? "" : "OfT")}";
+                if (customizedName is not null)
+                {
+                    name = customizedName;
+                    if (name.EndsWith(suffix, StringComparison.Ordinal))
+                    {
+                        _collectionResultNames.Add(name[..^suffix.Length]);
+                    }
+                }
+                else
+                {
+                    var baseName = $"{itemType?.Name ?? nameof(BinaryData)}{(isAsync ? "Async" : "")}";
+                    name = $"{GetUniqueCollectionResultName(baseName)}{suffix}";
+                }
+                _regularCollectionResultNames.Add(key, name);
+            }
+
+            return name;
+        }
+
+        internal bool IsCollectionResultReferencedByCustomization(TypeProvider helper)
+        {
+            // Existing hand-written code may construct a generated helper without declaring a partial
+            // customization. Keep those identities too, rather than breaking package customizations.
+            _customReferencedCollectionResults ??= ManagementClientGenerator.Instance.SourceInputModel.Customization?.SyntaxTrees
+                .SelectMany(tree => tree.GetRoot().DescendantNodes().OfType<IdentifierNameSyntax>())
+                .Select(identifier => identifier.Identifier.ValueText)
+                .Where(name => name.EndsWith("CollectionResult", StringComparison.Ordinal) || name.EndsWith("CollectionResultOfT", StringComparison.Ordinal))
+                .ToHashSet(StringComparer.Ordinal) ?? new HashSet<string>(StringComparer.Ordinal);
+            return _customReferencedCollectionResults.Contains(helper.Name);
+        }
+
+        internal void RegisterRegularCollectionResultName(TypeProvider helper, string name)
+        {
+            _regularCollectionResultProviderNames.Add(helper, name);
+            ApplyRegularCollectionResultName(helper);
+        }
+
+        internal void ApplyRegularCollectionResultName(TypeProvider helper)
+        {
+            if (_regularCollectionResultProviderNames.TryGetValue(helper, out var name))
+            {
+                // Upstream visitors reset collection-result providers. Restore the allocated identity
+                // before the management visitors and reference analysis consume the rebuilt provider.
+                var oldName = helper.Name;
+                helper.Update(name: name, relativeFilePath: Path.Combine("src", "Generated", "CollectionResults", $"{name}.cs"));
+                if (oldName != name)
+                {
+                    foreach (var method in helper.Methods)
+                    {
+                        RenameHelperInDocs(method.XmlDocs.Summary, oldName, name);
+                        RenameHelperInDocs(method.XmlDocs.Returns, oldName, name);
+                    }
+                }
+            }
+        }
+
+        private static void RenameHelperInDocs(XmlDocStatement? docs, string oldName, string name)
+        {
+            if (docs is null)
+            {
+                return;
+            }
+
+            foreach (var line in docs.Lines)
+            {
+                var arguments = line.GetArguments();
+                for (var i = 0; i < arguments.Length; i++)
+                {
+                    if (arguments[i] is string text)
+                    {
+                        arguments[i] = text.Replace(oldName, name, StringComparison.Ordinal);
+                    }
+                }
+            }
         }
 
         internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
