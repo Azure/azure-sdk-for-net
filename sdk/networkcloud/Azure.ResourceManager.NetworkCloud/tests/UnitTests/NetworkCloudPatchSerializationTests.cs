@@ -192,6 +192,34 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         }
 
         [Test]
+        public void ReadingLegacyPropertyPreservesAssignedPatchIdentityAndEdits()
+        {
+            var principal = new ServicePrincipalInformationPatch
+            {
+                Password = "old-password"
+            };
+            var patch = new NetworkCloudClusterPatch
+            {
+                ClusterServicePrincipalPatch = principal
+            };
+
+            ServicePrincipalInformation legacyPrincipal = patch.ClusterServicePrincipal;
+            principal.Password = "patch-password";
+
+            Assert.That(patch.ClusterServicePrincipalPatch, Is.SameAs(principal));
+            Assert.That(legacyPrincipal.Password, Is.EqualTo("patch-password"));
+
+            using JsonDocument document = Serialize(patch);
+            Assert.That(
+                document.RootElement
+                    .GetProperty("properties")
+                    .GetProperty("clusterServicePrincipal")
+                    .GetProperty("password")
+                    .GetString(),
+                Is.EqualTo("patch-password"));
+        }
+
+        [Test]
         public void InPlaceLegacyVirtualMachineCredentialsEditIsSerialized()
         {
             var patch = new NetworkCloudVirtualMachinePatch
@@ -250,6 +278,66 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
         }
 
         [Test]
+        public void PatchCollectionAdditionAfterLegacyReadIsSerialized()
+        {
+            var rackPatch = new NetworkCloudRackDefinitionPatch();
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinitionPatch = rackPatch
+            };
+
+            _ = patch.AggregatorOrSingleRackDefinition;
+            rackPatch.BareMetalMachineConfigurationData.Add(
+                new BareMetalMachineConfigurationPatch
+                {
+                    MachineName = "new-machine"
+                });
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement machines = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition")
+                .GetProperty("bareMetalMachineConfigurationData");
+            Assert.That(machines.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(machines[0].GetProperty("machineName").GetString(), Is.EqualTo("new-machine"));
+        }
+
+        [Test]
+        public void PatchCollectionRemovalAndReplacementAfterLegacyReadAreSerialized()
+        {
+            var rackPatch = new NetworkCloudRackDefinitionPatch();
+            rackPatch.StorageApplianceConfigurationData.Add(
+                new StorageApplianceConfigurationPatch
+                {
+                    StorageApplianceName = "remove"
+                });
+            rackPatch.StorageApplianceConfigurationData.Add(
+                new StorageApplianceConfigurationPatch
+                {
+                    StorageApplianceName = "replace"
+                });
+            var patch = new NetworkCloudClusterPatch
+            {
+                AggregatorOrSingleRackDefinitionPatch = rackPatch
+            };
+
+            _ = patch.AggregatorOrSingleRackDefinition;
+            rackPatch.StorageApplianceConfigurationData.RemoveAt(0);
+            rackPatch.StorageApplianceConfigurationData[0] = new StorageApplianceConfigurationPatch
+            {
+                StorageApplianceName = "replacement"
+            };
+
+            using JsonDocument document = Serialize(patch);
+            JsonElement appliances = document.RootElement
+                .GetProperty("properties")
+                .GetProperty("aggregatorOrSingleRackDefinition")
+                .GetProperty("storageApplianceConfigurationData");
+            Assert.That(appliances.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(appliances[0].GetProperty("storageApplianceName").GetString(), Is.EqualTo("replacement"));
+        }
+
+        [Test]
         public void LegacyRackListUsesNetworkRackIdForIdentity()
         {
             var firstId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/first");
@@ -284,6 +372,37 @@ namespace Azure.ResourceManager.NetworkCloud.Tests
 
             Assert.That(legacyRacks.Contains(null), Is.True);
             Assert.That(legacyRacks.Remove(null), Is.True);
+            Assert.That(legacyRacks, Is.Empty);
+        }
+
+        [Test]
+        public void LegacyRackListRecognizesMappedRackAfterIdEdit()
+        {
+            var originalId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/original");
+            var newId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.ManagedNetworkFabric/networkRacks/new");
+            var patch = new NetworkCloudClusterPatch();
+            IList<NetworkCloudRackDefinition> legacyRacks = patch.ComputeRackDefinitions;
+            var rack = new NetworkCloudRackDefinition(originalId, "serial", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.NetworkCloud/rackSkus/rackSku"));
+            legacyRacks.Add(rack);
+
+            rack.NetworkRackId = newId;
+
+            Assert.That(legacyRacks.Contains(rack), Is.True);
+            Assert.That(legacyRacks.Remove(rack), Is.True);
+            Assert.That(legacyRacks, Is.Empty);
+        }
+
+        [Test]
+        public void LegacyRackListRecognizesMappedSparseRack()
+        {
+            var patch = new NetworkCloudClusterPatch();
+            patch.ComputeRackDefinitionsPatch.Add(new NetworkCloudRackDefinitionPatch());
+            IList<NetworkCloudRackDefinition> legacyRacks = patch.ComputeRackDefinitions;
+            NetworkCloudRackDefinition sparseRack = legacyRacks[0];
+
+            Assert.That(sparseRack.NetworkRackId, Is.Null);
+            Assert.That(legacyRacks.Contains(sparseRack), Is.True);
+            Assert.That(legacyRacks.Remove(sparseRack), Is.True);
             Assert.That(legacyRacks, Is.Empty);
         }
 

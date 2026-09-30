@@ -35,12 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                NetworkCloudRackDefinition value = NetworkCloudPatchCompatibility.ToClassic(AggregatorOrSingleRackDefinitionPatch);
-                if (value is not null)
-                {
-                    AggregatorOrSingleRackDefinitionPatch = NetworkCloudPatchCompatibility.ToPatch(value);
-                }
-                return value;
+                return NetworkCloudPatchCompatibility.ToClassic(AggregatorOrSingleRackDefinitionPatch);
             }
             set
             {
@@ -54,12 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                ServicePrincipalInformation value = NetworkCloudPatchCompatibility.ToClassic(ClusterServicePrincipalPatch);
-                if (value is not null)
-                {
-                    ClusterServicePrincipalPatch = NetworkCloudPatchCompatibility.ToPatch(value);
-                }
-                return value;
+                return NetworkCloudPatchCompatibility.ToClassic(ClusterServicePrincipalPatch);
             }
             set
             {
@@ -73,12 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                ValidationThreshold value = NetworkCloudPatchCompatibility.ToClassic(ComputeDeploymentThresholdPatch);
-                if (value is not null)
-                {
-                    ComputeDeploymentThresholdPatch = NetworkCloudPatchCompatibility.ToPatch(value);
-                }
-                return value;
+                return NetworkCloudPatchCompatibility.ToClassic(ComputeDeploymentThresholdPatch);
             }
             set
             {
@@ -99,12 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                ClusterSecretArchive value = NetworkCloudPatchCompatibility.ToClassic(SecretArchivePatch);
-                if (value is not null)
-                {
-                    SecretArchivePatch = NetworkCloudPatchCompatibility.ToPatch(value);
-                }
-                return value;
+                return NetworkCloudPatchCompatibility.ToClassic(SecretArchivePatch);
             }
             set
             {
@@ -118,12 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                ClusterUpdateStrategy value = NetworkCloudPatchCompatibility.ToClassic(UpdateStrategyPatch);
-                if (value is not null)
-                {
-                    UpdateStrategyPatch = NetworkCloudPatchCompatibility.ToPatch(value);
-                }
-                return value;
+                return NetworkCloudPatchCompatibility.ToClassic(UpdateStrategyPatch);
             }
             set
             {

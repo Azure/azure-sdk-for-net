@@ -24,12 +24,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         public NetworkCloudRackDefinition this[int index]
         {
-            get
-            {
-                NetworkCloudRackDefinition value = NetworkCloudPatchCompatibility.ToClassic(_inner[index]);
-                _inner[index] = NetworkCloudPatchCompatibility.ToPatch(value);
-                return value;
-            }
+            get => NetworkCloudPatchCompatibility.ToClassic(_inner[index]);
             set => _inner[index] = NetworkCloudPatchCompatibility.ToPatch(value);
         }
 
@@ -71,6 +66,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                 }
                 return -1;
+            }
+
+            if (NetworkCloudLegacyPatchMap<NetworkCloudRackDefinition, NetworkCloudRackDefinitionPatch>.TryGetPatch(item, out NetworkCloudRackDefinitionPatch mappedPatch))
+            {
+                for (int i = 0; i < _inner.Count; i++)
+                {
+                    if (ReferenceEquals(_inner[i], mappedPatch))
+                    {
+                        return i;
+                    }
+                }
             }
 
             if (item.NetworkRackId is null)

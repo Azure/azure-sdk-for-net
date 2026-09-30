@@ -43,20 +43,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             WaitTimeMinutes = waitTimeMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The maximum number of worker nodes that can be offline within the increment of update, e.g., rack-by-rack. Limited by the maximum number of machines in the increment. Defaults to the whole increment size. </summary>
-        public long? MaxUnavailable { get; set; }
-
-        /// <summary> The strategy for updating the cluster. </summary>
-        public ClusterUpdateStrategyType StrategyType { get; set; }
-
-        /// <summary> Selection of how the threshold should be evaluated. </summary>
-        public ValidationThresholdType ThresholdType { get; set; }
-
-        /// <summary> The numeric threshold value. </summary>
-        public long ThresholdValue { get; set; }
-
-        /// <summary> The time to wait between the increments of update defined by the strategy. </summary>
-        public long? WaitTimeMinutes { get; set; }
     }
 }

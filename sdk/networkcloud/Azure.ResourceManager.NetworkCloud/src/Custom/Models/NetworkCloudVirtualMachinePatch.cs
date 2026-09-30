@@ -16,12 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                ImageRepositoryCredentials value = NetworkCloudPatchCompatibility.ToClassic(VmImageRepositoryCredentialsPatch);
-                if (value is not null)
-                {
-                    VmImageRepositoryCredentialsPatch = NetworkCloudPatchCompatibility.ToPatch(value);
-                }
-                return value;
+                return NetworkCloudPatchCompatibility.ToClassic(VmImageRepositoryCredentialsPatch);
             }
             set
             {
