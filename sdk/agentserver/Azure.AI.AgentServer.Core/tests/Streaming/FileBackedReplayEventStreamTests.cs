@@ -354,8 +354,14 @@ public sealed class FileBackedReplayEventStreamTests
         }
 
         await stream.EmitAsync(new SseItem<string>("9001") { EventId = "9001" });
-        await stream.EmitAsync(new SseItem<string>("9002") { EventId = "9002" }, close: true);
-        ((IDisposable)stream).Dispose();
+        await stream.EmitAsync(new SseItem<string>("9002") { EventId = "9002" });
+
+        // Keep the stream active while checking the compaction result. Closing with this test's
+        // intentionally tiny 1 ms TTL lets the registry's close-clock sweep legitimately delete the
+        // file before File.ReadAllText runs, which races the assertion and is unrelated to whether
+        // post-compaction writes landed in the live file. Dispose the registry to stop its timer and
+        // release the writer without deleting the persistent active-stream file.
+        registry.Dispose();
 
         // The post-compaction emits must be present in the LIVE on-disk file. If the reused write
         // handle had stayed bound to the pre-replace (orphaned) file, these values would be missing
