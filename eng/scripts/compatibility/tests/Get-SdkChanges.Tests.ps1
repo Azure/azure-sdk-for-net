@@ -88,6 +88,21 @@ BeforeAll {
     }
 }
 
+Describe 'Standalone detector prerequisites' -Tag 'UnitTest' {
+    It 'requires PowerShell 7.6 for <Script>' -TestCases @(
+        @{ Script = 'Get-SdkChanges.ps1' },
+        @{ Script = 'Get-SdkChanges.Helpers.ps1' }
+    ) {
+        param($Script)
+        $tokens = $null
+        $parseErrors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile(
+            (Join-Path $PSScriptRoot '..' $Script), [ref]$tokens, [ref]$parseErrors)
+        $parseErrors.Count | Should -Be 0
+        $ast.ScriptRequirements.RequiredPSVersion | Should -Be ([version]'7.6')
+    }
+}
+
 Describe 'Latest stable NuGet baseline' -Tag 'UnitTest' {
     BeforeAll {
         function New-TestVersionQuery {

@@ -22,7 +22,7 @@ Baseline packages and dependencies are restored using the SDK repository's
 
 Version discovery uses NuGet.org's metadata-only
 [`/search/query` endpoint](https://github.com/NuGet/NuGetGallery/blob/main/src/NuGet.Services.SearchService.Core/README.md#searchquery---internal-v2-search-endpoint)
-on `azuresearch-usnc.nuget.org`, which CI permits without allowing package
+on `azuresearch-usnc.nuget.org`, which the repository's network policy permits without allowing package
 downloads from `api.nuget.org`. An exact package-ID query with
 `ignoreFilter=true` and `semVerLevel=2.0.0` includes unlisted and prerelease
 versions; the detector enumerates every page and selects the highest stable
@@ -59,10 +59,7 @@ while retaining mapping-ambiguity and checksum validation.
 The PowerShell host must run on a .NET
 runtime compatible with the selected SDK's MSBuild diagnostic reader. For the
 current .NET 10 SDK, the detector requires PowerShell 7.6 or newer; installing
-an SDK alone does not upgrade PowerShell. The CI collector, assertion, and
-reporting helpers retain PowerShell 7.0 support because they do not load
-MSBuild. This lets an unsupported host publish explicit prerequisite errors
-and fail the final assertion, rather than exit before producing any reports.
+an SDK alone does not upgrade PowerShell.
 
 The detector evaluates all declared target frameworks unless `TargetFramework`
 is set in the environment. `Configuration` must match the prepared artifacts:
@@ -96,51 +93,38 @@ structured `apiChanges`, native
 `diagnostics`, and `limitations`. Classified results also retain that original
 evidence, including when AI classification fails.
 
-### SDK PR reports
+### On-demand reports and validation
 
-SDK PR build jobs collect native reports immediately after Release packaging,
-even when that build failed. Collection clears inherited target-framework
-overrides and records each selected package independently. Existing validation
-steps remain in place; the final compatibility assertion fails on detected
-breaks or detector errors, not merely on the extractor's exit code. No-GA and
-assembly-free packages are reported as not applicable, never compatible.
+The standalone detector is an on-demand reporting tool, not another SDK PR
+compatibility gate. Normal library builds continue to use the existing
+build-integrated ApiCompat validation, pinned `ApiCompatVersion`, and approved
+exceptions. No per-package standalone collection, enforcement, or report
+publication is added to SDK PR builds.
 
-CI enforcement honors the existing CODEOWNERS-protected
-`eng/apicompatbaselines/ApiCompatVersionOptOut.txt`, matching the evaluated
-`MSBuildProjectName` exactly (case-insensitively), not the NuGet package ID or
-selection alias. The assertion reads the list from its explicit `SdkRepoPath`
-at enforcement time. An approved opt-out waives only a detected breaking
-verdict: the detector still runs, the unchanged changes are published, the
-status remains `breaking_changes`, and CI logs the waiver. Detector errors,
-missing or modified reports, and unrelated build failures are not waived.
-An absent `ApiCompatVersion` is not an opt-out.
+On-demand detection still reports changes for projects listed in
+`eng/apicompatbaselines/ApiCompatVersionOptOut.txt`; a build-enforcement
+exception does not erase diagnostic evidence. No-GA and assembly-free
+packages are explicitly not applicable, never compatible. Compatibility
+violations are a successful extraction with `hasBreakingChange=true`;
+detector errors fail the invocation without producing a successful report.
 
-The job publishes `sdk-api-changes_<job-name>` artifacts even after failure;
-the existing publisher adds `-FailedAttempt<attempt>` for failed jobs. Each
-artifact contains `summary.json` and per-project `result.json`, unchanged
-`sdk-changes.json`, and process logs. Detector failures instead include
-`error.json`; any incomplete raw output is named `failed-sdk-changes.json`
-and must not be replayed as a successful comparison.
-
-Use a successful collected `sdk-changes.json` with the common tool's
+Use a successfully generated report with the common tool's
 `--sdk-change-json-file-path` option to classify and select mitigations.
 Retain its baseline, framework scope, and source revision when interpreting
 the result; replay does not refresh the original comparison. Do not combine
 that option with `--changes-only`, which requests fresh detection instead.
 
-The existing Compliance job runs the native and CI Pester suites on SDK PRs.
-To run the same suites locally from the repository root:
+The existing Compliance job runs the standalone detector's Pester fixtures,
+not comparisons of the selected SDK libraries. To run the same suite locally
+from the repository root:
 
 ```powershell
-Invoke-Pester -Path @(
-    '.\eng\scripts\compatibility\tests',
-    '.\eng\scripts\compatibility\ci-tests'
-) -Output Normal
+Invoke-Pester -Path '.\eng\scripts\compatibility\tests' -Output Normal
 ```
 
 The native suite includes physical and mapped-path fixtures with 4,278 sources
-and three target frameworks. Each runs the production detector through the CI
-process wrapper's default 300-second timeout, with only registry discovery
+and three target frameworks. Each runs the standalone entrypoint in a child
+process with a 300-second regression limit, with only registry discovery
 isolated from the network.
 
 ### Supplemental extraction: additions, not a second compatibility checker

@@ -3,12 +3,11 @@
 BeforeAll {
     Set-StrictMode -Version 3
     . (Join-Path $PSScriptRoot '..' 'Get-SdkChanges.Helpers.ps1')
-    . (Join-Path $PSScriptRoot '..' 'SdkChangesCI.Helpers.ps1')
     $repo = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..' '..')).Path
 }
 
 Describe 'Large SDK source freshness validation' -Tag 'IntegrationTest' {
-    It 'finishes the production detector within its default CI timeout for 4278 <Mode> sources and three frameworks' -TestCases @(
+    It 'finishes the standalone detector within 300 seconds for 4278 <Mode> sources and three frameworks' -TestCases @(
         @{ Mode = 'physical' }, @{ Mode = 'mapped' }
     ) {
         param($Mode)
@@ -97,14 +96,39 @@ Describe 'Large SDK source freshness validation' -Tag 'IntegrationTest' {
         if ($Mode -eq 'mapped') { @($documents | Where-Object { $_.Name -like '/_/*' }).Count | Should -BeGreaterOrEqual 4278 }
 
         $output = Join-Path $root 'report.json'
+        $start = [System.Diagnostics.ProcessStartInfo]::new((Get-Process -Id $PID).Path)
+        $start.WorkingDirectory = $root
+        $start.UseShellExecute = $false
+        $start.RedirectStandardOutput = $true
+        $start.RedirectStandardError = $true
+        $start.Environment['Configuration'] = 'Release'
+        [void]$start.Environment.Remove('TargetFramework')
+        [void]$start.Environment.Remove('TargetFrameworks')
+        foreach ($argument in @(
+            '-NoProfile', '-NonInteractive', '-File', (Join-Path $PSScriptRoot 'fixtures' 'LargeSourceDetector.ps1'),
+            '-SdkRepoPath', $root, '-PackagePath', $sourceDirectory, '-OutputJsonFile', $output
+        )) {
+            $start.ArgumentList.Add($argument)
+        }
+        $process = [System.Diagnostics.Process]::new()
+        $process.StartInfo = $start
         $watch = [System.Diagnostics.Stopwatch]::StartNew()
-        $process = Invoke-SdkChangesCIProcess -PowerShellPath (Get-Process -Id $PID).Path `
-            -DetectorPath (Join-Path $PSScriptRoot 'fixtures' 'LargeSourceDetector.ps1') `
-            -SdkRepoPath $root -PackagePath $sourceDirectory -OutputJsonFile $output
-        $watch.Stop()
+        try {
+            if (!$process.Start()) { throw 'Could not start the standalone detector fixture.' }
+            $stdout = $process.StandardOutput.ReadToEndAsync()
+            $stderr = $process.StandardError.ReadToEndAsync()
+            if (!$process.WaitForExit(300000)) {
+                $process.Kill($true)
+                $process.WaitForExit()
+                throw 'The large-source standalone detector exceeded the 300-second regression limit.'
+            }
+            $process.ExitCode | Should -Be 0 -Because "$($stdout.GetAwaiter().GetResult())`n$($stderr.GetAwaiter().GetResult())"
+        }
+        finally {
+            $watch.Stop()
+            $process.Dispose()
+        }
         Write-Host "Large $Mode fixture detector: $($watch.Elapsed.TotalSeconds.ToString('F1')) seconds."
-        $process.TimedOut | Should -BeFalse
-        $process.ExitCode | Should -Be 0 -Because "$($process.StdOut)`n$($process.StdErr)"
         $watch.Elapsed.TotalSeconds | Should -BeLessThan 300
         $report = Read-SdkChangeJson $output
         $report.hasBreakingChange | Should -BeFalse
