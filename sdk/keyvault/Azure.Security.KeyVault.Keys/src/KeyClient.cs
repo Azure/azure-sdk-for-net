@@ -352,7 +352,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Creates and stores a new Algorithm Key Pair (AKP) key. If the named key already exists,
         /// a new version of the key is created. This operation requires the keys/create permission.
-        /// Only available with service version <see cref="KeyClientOptions.ServiceVersion.V2026_05_01_Preview"/> and newer.
+        /// Only available with service version <see cref="KeyClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="akpKeyOptions">The key options object containing information about the Algorithm Key Pair (AKP) key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -383,7 +383,7 @@ namespace Azure.Security.KeyVault.Keys
         /// <summary>
         /// Creates and stores a new Algorithm Key Pair (AKP) key. If the named key already exists,
         /// a new version of the key is created. This operation requires the keys/create permission.
-        /// Only available with service version <see cref="KeyClientOptions.ServiceVersion.V2026_05_01_Preview"/> and newer.
+        /// Only available with service version <see cref="KeyClientOptions.ServiceVersion.V2026_07_01_Preview"/> and newer.
         /// </summary>
         /// <param name="akpKeyOptions">The key options object containing information about the Algorithm Key Pair (AKP) key being created.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
