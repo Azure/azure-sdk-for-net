@@ -89,7 +89,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of ImageAnalysisClient from a <see cref="ImageAnalysisClientSettings"/>. </summary>
         /// <param name="settings"> The settings for ImageAnalysisClient. </param>
         [Experimental("SCME0002")]
-        public ImageAnalysisClient(ImageAnalysisClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public ImageAnalysisClient(ImageAnalysisClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 
