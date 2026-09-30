@@ -5,14 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Relationships;
-using Azure.ResourceManager.Relationships.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Relationships.Mocking
@@ -38,63 +34,5 @@ namespace Azure.ResourceManager.Relationships.Mocking
         private ClientDiagnostics ContainsRelationshipsClientDiagnostics => _containsRelationshipsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Relationships.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ContainsRelationships ContainsRelationshipsRestClient => _containsRelationshipsRestClient ??= new ContainsRelationships(ContainsRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01");
-
-        /// <summary>
-        /// List ContainsRelationship resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relationships/contains. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainsRelationships_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainsRelationship> GetBySubscriptionContainsRelationshipsAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ContainsRelationshipsGetBySubscriptionContainsRelationshipsAsyncCollectionResultOfT(ContainsRelationshipsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableRelationshipsSubscriptionResource.GetBySubscriptionContainsRelationships");
-        }
-
-        /// <summary>
-        /// List ContainsRelationship resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Relationships/contains. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ContainsRelationships_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainsRelationship> GetBySubscriptionContainsRelationships(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ContainsRelationshipsGetBySubscriptionContainsRelationshipsCollectionResultOfT(ContainsRelationshipsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableRelationshipsSubscriptionResource.GetBySubscriptionContainsRelationships");
-        }
     }
 }

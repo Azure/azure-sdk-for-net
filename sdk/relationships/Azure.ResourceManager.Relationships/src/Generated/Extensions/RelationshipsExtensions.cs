@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Relationships.Mocking;
-using Azure.ResourceManager.Relationships.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Relationships
@@ -264,82 +263,6 @@ namespace Azure.ResourceManager.Relationships
             Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableRelationshipsArmClient(client).GetServiceGroupMemberRelationshipAsync(scope, name, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// List ContainsRelationship resources by resource group
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsResourceGroupResource.GetByResourceGroupContainsRelationshipsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainsRelationship> GetByResourceGroupContainsRelationshipsAsync(this ResourceGroupResource resourceGroupResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRelationshipsResourceGroupResource(resourceGroupResource).GetByResourceGroupContainsRelationshipsAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// List ContainsRelationship resources by resource group
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsResourceGroupResource.GetByResourceGroupContainsRelationships(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainsRelationship> GetByResourceGroupContainsRelationships(this ResourceGroupResource resourceGroupResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRelationshipsResourceGroupResource(resourceGroupResource).GetByResourceGroupContainsRelationships(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// List ContainsRelationship resources by subscription ID
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsSubscriptionResource.GetBySubscriptionContainsRelationshipsAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainsRelationship> GetBySubscriptionContainsRelationshipsAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableRelationshipsSubscriptionResource(subscriptionResource).GetBySubscriptionContainsRelationshipsAsync(filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// List ContainsRelationship resources by subscription ID
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsSubscriptionResource.GetBySubscriptionContainsRelationships(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainsRelationship> GetBySubscriptionContainsRelationships(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableRelationshipsSubscriptionResource(subscriptionResource).GetBySubscriptionContainsRelationships(filter, cancellationToken);
         }
     }
 }

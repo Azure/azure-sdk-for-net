@@ -257,62 +257,6 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
-        /// List ServiceGroupMemberRelationship resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServiceGroupMemberRelationships_ListByParent. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGroupMemberRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceGroupMemberRelationshipResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ServiceGroupMemberRelationshipData, ServiceGroupMemberRelationshipResource>(new ServiceGroupMemberRelationshipsGetByParentAsyncCollectionResultOfT(_serviceGroupMemberRelationshipsRestClient, Id.ToString(), context, "ServiceGroupMemberRelationshipCollection.GetAll"), data => new ServiceGroupMemberRelationshipResource(Client, data));
-        }
-
-        /// <summary>
-        /// List ServiceGroupMemberRelationship resources by parent
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ServiceGroupMemberRelationships_ListByParent. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGroupMemberRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceGroupMemberRelationshipResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ServiceGroupMemberRelationshipData, ServiceGroupMemberRelationshipResource>(new ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT(_serviceGroupMemberRelationshipsRestClient, Id.ToString(), context, "ServiceGroupMemberRelationshipCollection.GetAll"), data => new ServiceGroupMemberRelationshipResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>

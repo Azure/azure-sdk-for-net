@@ -269,62 +269,6 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
-        /// List DependencyOfRelationship resources by scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Relationships/dependencyOf. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DependencyOfRelationshipsByServiceGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGroupDependencyOfRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceGroupDependencyOfRelationshipResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DependencyOfRelationshipData, ServiceGroupDependencyOfRelationshipResource>(new ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT(_serviceGroupDependencyOfRelationshipRestClient, Id.Name, context, "ServiceGroupDependencyOfRelationshipCollection.GetAll"), data => new ServiceGroupDependencyOfRelationshipResource(Client, data));
-        }
-
-        /// <summary>
-        /// List DependencyOfRelationship resources by scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.Relationships/dependencyOf. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DependencyOfRelationshipsByServiceGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGroupDependencyOfRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceGroupDependencyOfRelationshipResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DependencyOfRelationshipData, ServiceGroupDependencyOfRelationshipResource>(new ServiceGroupDependencyOfRelationshipGetAllCollectionResultOfT(_serviceGroupDependencyOfRelationshipRestClient, Id.Name, context, "ServiceGroupDependencyOfRelationshipCollection.GetAll"), data => new ServiceGroupDependencyOfRelationshipResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
