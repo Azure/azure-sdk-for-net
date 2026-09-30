@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
+            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
                 _containerGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
+            return new ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
                 _containerGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

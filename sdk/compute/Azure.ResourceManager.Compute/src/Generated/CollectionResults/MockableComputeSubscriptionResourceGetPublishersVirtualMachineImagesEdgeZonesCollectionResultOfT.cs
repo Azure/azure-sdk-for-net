@@ -17,7 +17,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT : Pageable<VirtualMachineImageBase>
+    internal partial class MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT : Pageable<VirtualMachineImageBase>
     {
         private readonly VirtualMachineImagesEdgeZoneOperationGroup _client;
         private readonly string _subscriptionId;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Compute
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, RequestContext context, string diagnosticScope)
+        public MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Compute
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);

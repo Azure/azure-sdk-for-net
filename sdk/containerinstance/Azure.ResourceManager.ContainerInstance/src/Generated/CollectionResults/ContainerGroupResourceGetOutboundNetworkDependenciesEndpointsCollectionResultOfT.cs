@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    internal partial class MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT : Pageable<string>
+    internal partial class ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT : Pageable<string>
     {
         private readonly ContainerGroups _client;
         private readonly Guid _subscriptionId;
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.ContainerInstance
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ContainerGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="containerGroupName"> The name of the container group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(ContainerGroups client, Guid subscriptionId, string resourceGroupName, string containerGroupName, RequestContext context, string diagnosticScope)
+        public ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(ContainerGroups client, Guid subscriptionId, string resourceGroupName, string containerGroupName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.ContainerInstance
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftContainerInstanceContainerGroupsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ContainerGroupResourceGetOutboundNetworkDependenciesEndpointsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);

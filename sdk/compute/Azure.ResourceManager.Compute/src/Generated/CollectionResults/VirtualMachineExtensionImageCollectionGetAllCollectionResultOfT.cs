@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
+    internal partial class VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
     {
         private readonly VirtualMachineExtensionImages _client;
         private readonly string _subscriptionId;
@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Compute
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineExtensionImages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="publisherName"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, RequestContext context, string diagnosticScope)
+        public VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputeVirtualMachineExtensionImagesListTypesCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<VirtualMachineExtensionImageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
