@@ -86,6 +86,60 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.AreEqual(resourcePath, transport.Requests[9].Uri.Path);
         }
 
+        [Test]
+        public async Task Lifecycle_PollsPendingLongRunningOperations()
+        {
+            const string relationshipName = "dependency1";
+            string relationship = CreateDependencyRelationship(relationshipName, SourceServiceGroupId, TargetServiceGroupId);
+            string resourcePath = $"{SourceServiceGroupId}/providers/Microsoft.Relationships/dependencyOf/{relationshipName}";
+            const string createPollingPath = "/providers/Microsoft.Relationships/operations/create-operation";
+            const string updatePollingPath = "/providers/Microsoft.Relationships/operations/update-operation";
+            const string deletePollingPath = "/providers/Microsoft.Relationships/operations/delete-operation";
+            var transport = new MockTransport(
+                CreatePendingResponse("Azure-AsyncOperation", createPollingPath),
+                CreatePollingResponse("InProgress"),
+                CreatePollingResponse("Succeeded"),
+                CreateResponse(relationship),
+                CreatePendingResponse("Azure-AsyncOperation", updatePollingPath),
+                CreatePollingResponse("InProgress"),
+                CreatePollingResponse("Succeeded"),
+                CreateResponse(relationship),
+                CreatePendingResponse("Location", deletePollingPath),
+                CreatePendingResponse("Location", deletePollingPath),
+                new MockResponse(204));
+            var client = CreateClient(transport);
+            var sourceId = new ResourceIdentifier(SourceServiceGroupId);
+            var targetId = new ResourceIdentifier(TargetServiceGroupId);
+            ServiceGroupDependencyOfRelationshipCollection collection = client.GetServiceGroupDependencyOfRelationships(sourceId);
+            var data = new DependencyOfRelationshipData
+            {
+                Properties = ArmRelationshipsModelFactory.DependencyOfRelationshipProperties(sourceId, targetId)
+            };
+
+            ArmOperation<ServiceGroupDependencyOfRelationshipResource> createOperation = await collection.CreateOrUpdateAsync(WaitUntil.Completed, relationshipName, data);
+            Assert.IsTrue(createOperation.HasCompleted);
+            Assert.AreEqual(targetId, createOperation.Value.Data.Properties.TargetId);
+
+            ArmOperation<ServiceGroupDependencyOfRelationshipResource> updateOperation = await createOperation.Value.UpdateAsync(WaitUntil.Completed, data);
+            Assert.IsTrue(updateOperation.HasCompleted);
+            Assert.AreEqual(targetId, updateOperation.Value.Data.Properties.TargetId);
+
+            ArmOperation deleteOperation = await updateOperation.Value.DeleteAsync(WaitUntil.Completed);
+            Assert.IsTrue(deleteOperation.HasCompleted);
+
+            Assert.AreEqual(resourcePath, transport.Requests[0].Uri.Path);
+            Assert.AreEqual(createPollingPath, transport.Requests[1].Uri.Path);
+            Assert.AreEqual(createPollingPath, transport.Requests[2].Uri.Path);
+            Assert.AreEqual(resourcePath, transport.Requests[3].Uri.Path);
+            Assert.AreEqual(resourcePath, transport.Requests[4].Uri.Path);
+            Assert.AreEqual(updatePollingPath, transport.Requests[5].Uri.Path);
+            Assert.AreEqual(updatePollingPath, transport.Requests[6].Uri.Path);
+            Assert.AreEqual(resourcePath, transport.Requests[7].Uri.Path);
+            Assert.AreEqual(resourcePath, transport.Requests[8].Uri.Path);
+            Assert.AreEqual(deletePollingPath, transport.Requests[9].Uri.Path);
+            Assert.AreEqual(deletePollingPath, transport.Requests[10].Uri.Path);
+        }
+
         private static ArmClient CreateClient(MockTransport transport)
         {
             return new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
@@ -94,6 +148,21 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         private static MockResponse CreateResponse(string content)
         {
             return new MockResponse(200).SetContent(content).AddHeader("Content-Type", "application/json");
+        }
+
+        private static MockResponse CreatePendingResponse(string pollingHeader, string pollingPath)
+        {
+            return new MockResponse(202)
+                .AddHeader(pollingHeader, $"https://management.azure.com{pollingPath}")
+                .AddHeader("Retry-After", "0");
+        }
+
+        private static MockResponse CreatePollingResponse(string status)
+        {
+            return new MockResponse(200)
+                .SetContent($"{{\"status\":\"{status}\"}}")
+                .AddHeader("Content-Type", "application/json")
+                .AddHeader("Retry-After", "0");
         }
 
         private static string CreatePage(string relationship, string nextLink = null)
