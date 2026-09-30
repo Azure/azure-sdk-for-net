@@ -1333,6 +1333,42 @@ namespace Azure.Generator.Management.Tests.Common
             return (client, [model]);
         }
 
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDynamicResourcePaging(string mode, string kindName = "kind", bool enumKind = false)
+        {
+            var (originalClient, models) = ClientWithDynamicResourceTypes();
+            var read = originalClient.Methods.Single();
+            InputType kindType = enumKind ? InputFactory.StringEnum("DynamicKind", [("First", "first"), ("Second", "second")]) : InputPrimitiveType.String;
+            var kind = InputFactory.PathParameter(kindName, kindType, serializedName: "kind", isRequired: true);
+            var filter = InputFactory.QueryParameter("filter", InputPrimitiveType.String, serializedName: "$filter");
+            var pageSize = InputFactory.QueryParameter("maxPageSize", InputPrimitiveType.Int32);
+            var version = InputFactory.QueryParameter("apiVersion", InputPrimitiveType.String, isRequired: true, isApiVersion: true,
+                defaultValue: new InputConstant("opaque-page", InputPrimitiveType.String), serializedName: "api-version", scope: InputParameterScope.Client);
+            var page = InputFactory.Model("DynamicPage", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json, properties:
+            [
+                InputFactory.Property("value", InputFactory.Array(models[0])),
+                InputFactory.Property("nextLink", InputPrimitiveType.Url)
+            ]);
+            const string path = "/providers/Microsoft.Tests/{kind}";
+            var operation = InputFactory.Operation("GetAll", path: path, parameters: [kind, filter, pageSize, version],
+                responses: [InputFactory.OperationResponse(bodytype: page)]);
+            var paging = new InputPagingServiceMetadata(["value"],
+                new InputNextLink(null, ["nextLink"], InputResponseLocation.Body, mode is "filter" or "both" ? [filter] : null),
+                null, mode is "page-size" or "both" ? ["maxPageSize"] : []);
+            var list = InputFactory.PagingServiceMethod("GetAll", operation, pagingMetadata: paging, parameters:
+            [
+                InputFactory.MethodParameter(kindName, kindType, serializedName: "kind", isRequired: true, location: InputRequestLocation.Path),
+                InputFactory.MethodParameter("filter", InputPrimitiveType.String, serializedName: "$filter", location: InputRequestLocation.Query),
+                InputFactory.MethodParameter("maxPageSize", InputPrimitiveType.Int32, location: InputRequestLocation.Query)
+            ]);
+            var resources = new[] { "first", "second" }.Select(resourceKind => new ResourceSchemaInput(models[0],
+            [
+                new ResourceMethod(ResourceOperationKind.Read, read, new RequestPathPattern(read.Operation.Path), new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!),
+                new ResourceMethod(ResourceOperationKind.List, list, new RequestPathPattern(path), new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!)
+            ], $"/providers/Microsoft.Tests/{resourceKind}/{{name}}", $"Microsoft.Tests/{resourceKind}", null, ResourceScope.Tenant, resourceKind, null, "/")).ToArray();
+            var client = InputFactory.Client("DynamicPaging", methods: [read, list], decorators: [BuildArmProviderSchemaMultiResource(resources)]);
+            return (client, [.. models, page]);
+        }
+
         private static InputDecoratorInfo BuildArmProviderSchema(InputModelType resourceModel, IReadOnlyList<ResourceMethod> methods, RequestPathPattern resourceIdPattern, string resourceType, string? singletonResourceName, ResourceScope resourceScope, string? resourceName)
         {
             return BuildArmProviderSchemaMultiResource([

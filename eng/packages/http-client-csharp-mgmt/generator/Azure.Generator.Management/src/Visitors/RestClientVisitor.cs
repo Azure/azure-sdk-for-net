@@ -21,6 +21,8 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class RestClientVisitor : ScmLibraryVisitor
 {
+    private readonly Dictionary<(RestClientProvider Client, InputServiceMethod Method), MethodSignature> _initialRequestSignatures = [];
+
     protected override ScmMethodProvider? VisitCreateRequestMethod(InputServiceMethod serviceMethod, RestClientProvider enclosingType, ScmMethodProvider? createRequestMethodProvider)
     {
         var client = ManagementClientGenerator.Instance.InputLibrary.GetClientByMethod(serviceMethod)!;
@@ -28,6 +30,17 @@ internal class RestClientVisitor : ScmLibraryVisitor
         if (createRequestMethodProvider?.BodyStatements is null || !client.HasOperationApiVersionDefaults || apiVersionParameter is not InputQueryParameter apiVersionQuery)
         {
             return createRequestMethodProvider;
+        }
+
+        // The base generator visits the initial request before its continuation. Keep its
+        // actual parameters so filtered next-page signatures can retain resource-type context
+        // without reconstructing parameter types, wire aliases, or compatibility names.
+        var key = (enclosingType, serviceMethod);
+        if (!_initialRequestSignatures.TryGetValue(key, out var initialSignature)
+            || initialSignature.Name == createRequestMethodProvider.Signature.Name)
+        {
+            initialSignature = createRequestMethodProvider.Signature;
+            _initialRequestSignatures[key] = initialSignature;
         }
 
         var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
@@ -43,7 +56,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
         var effectiveVersion = resources.Length == 0
             ? defaultVersion
             : ((ManagementClientProvider)enclosingType.ClientProvider).ApiVersionResolverField.As<Func<Azure.Core.ResourceType, string>>()
-                .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider)).NullCoalesce(defaultVersion);
+                .Invoke("Invoke", BuildResourceTypeExpression(resources, serviceMethod, createRequestMethodProvider, initialSignature)).NullCoalesce(defaultVersion);
 
         var statements = new List<MethodBodyStatement>();
         foreach (var statement in createRequestMethodProvider.BodyStatements)
@@ -69,7 +82,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
         return createRequestMethodProvider;
     }
 
-    private static ValueExpression BuildResourceTypeExpression(ArmResourceMetadata[] resources, InputServiceMethod serviceMethod, MethodProvider requestMethod)
+    private static ValueExpression BuildResourceTypeExpression(ArmResourceMetadata[] resources, InputServiceMethod serviceMethod, MethodProvider requestMethod, MethodSignature initialSignature)
     {
         var resourceType = resources[0].ResourceType;
         if (resources.All(r => r.ResourceType.Equals(resourceType)) && resourceType.All(segment => segment.IsConstant))
@@ -82,6 +95,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
         // choosing the first metadata entry. Truncate action suffixes to the resource path.
         var path = new RequestPathPattern(new RequestPathPattern(serviceMethod.Operation.Path).Take(resources[0].ResourceIdPattern.Count));
         ValueExpression? result = null;
+        var retainedParameters = new List<ParameterProvider>();
         foreach (var segment in path.ResourceType)
         {
             ValueExpression value;
@@ -91,11 +105,33 @@ internal class RestClientVisitor : ScmLibraryVisitor
             }
             else
             {
-                var parameter = requestMethod.Signature.Parameters.FirstOrDefault(p => p.WireInfo.SerializedName == segment.VariableName)
-                    ?? throw new InvalidOperationException($"Cannot resolve the API-version resource type for '{serviceMethod.Name}': missing path parameter '{segment.VariableName}'.");
+                var parameter = requestMethod.Signature.Parameters.FirstOrDefault(p => p.WireInfo.SerializedName == segment.VariableName);
+                if (parameter is null)
+                {
+                    parameter = initialSignature.Parameters.FirstOrDefault(p => p.WireInfo.SerializedName == segment.VariableName)
+                        ?? throw new InvalidOperationException($"Cannot resolve the API-version resource type for '{serviceMethod.Name}': missing path parameter '{segment.VariableName}'.");
+                    if (!retainedParameters.Contains(parameter))
+                    {
+                        retainedParameters.Add(parameter);
+                    }
+                }
                 value = parameter.Type.IsEnum ? parameter.Type.ToSerial(parameter) : parameter;
             }
             result = result is null ? value : new BinaryOperatorExpression("+", new BinaryOperatorExpression("+", result, Literal("/")), value);
+        }
+        if (retainedParameters.Count > 0)
+        {
+            // Collection-result call sites read this completed signature and match the
+            // retained parameters to their initial-request fields. Do not replay path
+            // parameters into the next-link URI or mark them as reinjected query values.
+            var signature = requestMethod.Signature;
+            signature.Update(parameters:
+            [
+                signature.Parameters[0],
+                .. initialSignature.Parameters.Where(retainedParameters.Contains),
+                .. signature.Parameters.Skip(1)
+            ]);
+            requestMethod.Update(signature: signature);
         }
         return result ?? throw new InvalidOperationException($"Cannot resolve the API-version resource type for '{serviceMethod.Name}'.");
     }
