@@ -12,24 +12,24 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Contains the batch query response and the headers, id, and status of the request. </summary>
-    internal partial class BatchQueryResponse
+    internal partial class BatchQueryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
-        internal BatchQueryResponse()
+        /// <summary> Initializes a new instance of <see cref="BatchQueryResult"/>. </summary>
+        internal BatchQueryResult()
         {
             Headers = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchQueryResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchQueryResult"/>. </summary>
         /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
         /// <param name="status"> The HTTP status code of the response. </param>
         /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>
         /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchQueryResponse(string id, int? status, LogsBatchQueryResult body, IDictionary<string, string> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchQueryResult(string id, int? status, LogsBatchQueryResult body, IDictionary<string, string> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
