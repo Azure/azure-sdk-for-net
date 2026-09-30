@@ -6,157 +6,57 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents an access policy. </summary>
-    public partial class BlobAccessPolicy : IPersistableModel<BlobAccessPolicy>, IXmlSerializable
+    public partial class BlobAccessPolicy : IXmlSerializable
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobAccessPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "X":
-                    using (Stream dataStream = data.ToStream())
-                    {
-                        return DeserializeBlobAccessPolicy(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobAccessPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "X":
-                    using (MemoryStream stream = new MemoryStream(256))
-                    {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
-                        {
-                            WriteXml(writer, options, "AccessPolicy");
-                        }
-                        if (stream.Position > int.MaxValue)
-                        {
-                            return BinaryData.FromStream(stream);
-                        }
-                        else
-                        {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-                        }
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobAccessPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobAccessPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BlobAccessPolicy IPersistableModel<BlobAccessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobAccessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        /// <param name="nameHint"> An optional name hint. </param>
-        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
-        {
-            if (nameHint != null)
-            {
-                writer.WriteStartElement(nameHint);
-            }
-
-            XmlModelWriteCore(writer, options);
-
-            if (nameHint != null)
-            {
-                writer.WriteEndElement();
-            }
-        }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
-            {
-                throw new FormatException($"The model {nameof(BlobAccessPolicy)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(PolicyStartsOn))
+            writer.WriteStartElement(nameHint ?? "AccessPolicy");
+            if (Common.Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WriteStartElement("Start");
-                writer.WriteStringValue(PolicyStartsOn.Value, "O");
+                writer.WriteValue(PolicyStartsOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(PolicyExpiresOn))
+            if (Common.Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WriteStartElement("Expiry");
-                writer.WriteStringValue(PolicyExpiresOn.Value, "O");
+                writer.WriteValue(PolicyExpiresOn.Value, "O");
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(Permissions))
+            if (Common.Optional.IsDefined(Permissions))
             {
                 writer.WriteStartElement("Permission");
                 writer.WriteValue(Permissions);
                 writer.WriteEndElement();
             }
+            writer.WriteEndElement();
         }
 
-        /// <param name="element"> The xml element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BlobAccessPolicy DeserializeBlobAccessPolicy(XElement element, ModelReaderWriterOptions options)
+        internal static BlobAccessPolicy DeserializeBlobAccessPolicy(XElement element)
         {
-            if (element == null)
-            {
-                return null;
-            }
-
             DateTimeOffset? policyStartsOn = default;
             DateTimeOffset? policyExpiresOn = default;
             string permissions = default;
-
-            foreach (var child in element.Elements())
+            if (element.Element("Start") is XElement startElement)
             {
-                string localName = child.Name.LocalName;
-                if (localName == "Start")
-                {
-                    policyStartsOn = child.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (localName == "Expiry")
-                {
-                    policyExpiresOn = child.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (localName == "Permission")
-                {
-                    permissions = (string)child;
-                    continue;
-                }
+                policyStartsOn = startElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("Expiry") is XElement expiryElement)
+            {
+                policyExpiresOn = expiryElement.GetDateTimeOffsetValue("O");
+            }
+            if (element.Element("Permission") is XElement permissionElement)
+            {
+                permissions = (string)permissionElement;
             }
             return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

@@ -11,25 +11,17 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class DeleteSnapshotsOptionExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DeleteSnapshotsOption value) => value switch
         {
-            DeleteSnapshotsOption.OnlySnapshots => "only",
             DeleteSnapshotsOption.IncludeSnapshots => "include",
+            DeleteSnapshotsOption.OnlySnapshots => "only",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOption value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static DeleteSnapshotsOption ToDeleteSnapshotsOption(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "only"))
-            {
-                return DeleteSnapshotsOption.OnlySnapshots;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include"))
-            {
-                return DeleteSnapshotsOption.IncludeSnapshots;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include")) return DeleteSnapshotsOption.IncludeSnapshots;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "only")) return DeleteSnapshotsOption.OnlySnapshots;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOption value.");
         }
     }

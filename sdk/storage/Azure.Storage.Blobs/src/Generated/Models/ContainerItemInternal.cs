@@ -5,30 +5,36 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
+    /// <summary> An Azure Storage container. </summary>
     internal partial class ContainerItemInternal
     {
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
-        /// <param name="name"> The name of the container. </param>
-        /// <param name="properties"> The properties of the container. </param>
+        /// <param name="name"></param>
+        /// <param name="properties"> Properties of a container. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ContainerItemInternal(string name, ContainerPropertiesInternal properties)
         {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
+
             Name = name;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
-        /// <param name="name"> The name of the container. </param>
-        /// <param name="deleted"> Whether the container is soft-deleted. </param>
-        /// <param name="version"> The version of the container. </param>
-        /// <param name="properties"> The properties of the container. </param>
-        /// <param name="metadata"> The metadata of the container. </param>
-        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IDictionary<string, string> metadata)
+        /// <param name="name"></param>
+        /// <param name="deleted"></param>
+        /// <param name="version"></param>
+        /// <param name="properties"> Properties of a container. </param>
+        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
+        internal ContainerItemInternal(string name, bool? deleted, string version, ContainerPropertiesInternal properties, IReadOnlyDictionary<string, string> metadata)
         {
             Name = name;
             Deleted = deleted;
@@ -37,19 +43,15 @@ namespace Azure.Storage.Blobs.Models
             Metadata = metadata;
         }
 
-        /// <summary> The name of the container. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-
-        /// <summary> Whether the container is soft-deleted. </summary>
+        /// <summary> Gets the deleted. </summary>
         public bool? Deleted { get; }
-
-        /// <summary> The version of the container. </summary>
+        /// <summary> Gets the version. </summary>
         public string Version { get; }
-
-        /// <summary> The properties of the container. </summary>
+        /// <summary> Properties of a container. </summary>
         public ContainerPropertiesInternal Properties { get; }
-
-        /// <summary> The metadata of the container. </summary>
-        public IDictionary<string, string> Metadata { get; }
+        /// <summary> Dictionary of &lt;string&gt;. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

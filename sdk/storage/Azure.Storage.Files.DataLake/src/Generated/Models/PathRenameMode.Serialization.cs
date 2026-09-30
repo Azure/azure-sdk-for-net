@@ -11,7 +11,6 @@ namespace Azure.Storage.Files.DataLake.Models
 {
     internal static partial class PathRenameModeExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PathRenameMode value) => value switch
         {
             PathRenameMode.Legacy => "legacy",
@@ -19,17 +18,10 @@ namespace Azure.Storage.Files.DataLake.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathRenameMode value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static PathRenameMode ToPathRenameMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "legacy"))
-            {
-                return PathRenameMode.Legacy;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "posix"))
-            {
-                return PathRenameMode.Posix;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "legacy")) return PathRenameMode.Legacy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "posix")) return PathRenameMode.Posix;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathRenameMode value.");
         }
     }

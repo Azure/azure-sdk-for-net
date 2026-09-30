@@ -6,16 +6,16 @@
 #nullable disable
 
 using System;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> A key-value pair associated with a blob. </summary>
+    /// <summary> The BlobTag. </summary>
     internal partial class BlobTag
     {
         /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
-        /// <param name="key"> The key of the tag. </param>
-        /// <param name="value"> The value of the tag. </param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public BlobTag(string key, string value)
         {
@@ -26,10 +26,9 @@ namespace Azure.Storage.Blobs.Models
             Value = value;
         }
 
-        /// <summary> The key of the tag. </summary>
+        /// <summary> Gets or sets the key. </summary>
         public string Key { get; set; }
-
-        /// <summary> The value of the tag. </summary>
+        /// <summary> Gets or sets the value. </summary>
         public string Value { get; set; }
     }
 }

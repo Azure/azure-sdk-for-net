@@ -1,11 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -13,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
     /// The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256".
     /// Must be provided if the x-ms-encryption-key header is provided.
     /// </summary>
-    [CodeGenType("EncryptionAlgorithmType")]
+    [CodeGenModel("EncryptionAlgorithmType")]
     internal enum EncryptionAlgorithmTypeInternal
     {
         /// <summary>

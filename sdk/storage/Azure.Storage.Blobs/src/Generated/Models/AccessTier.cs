@@ -7,140 +7,90 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The access tiers. </summary>
+    /// <summary> The AccessTier. </summary>
     public readonly partial struct AccessTier : IEquatable<AccessTier>
     {
         private readonly string _value;
-        /// <summary> The P4 access tier. </summary>
-        private const string P4Value = "P4";
-        /// <summary> The P6 access tier. </summary>
-        private const string P6Value = "P6";
-        /// <summary> The P10 access tier. </summary>
-        private const string P10Value = "P10";
-        /// <summary> The P15 access tier. </summary>
-        private const string P15Value = "P15";
-        /// <summary> The P20 access tier. </summary>
-        private const string P20Value = "P20";
-        /// <summary> The P30 access tier. </summary>
-        private const string P30Value = "P30";
-        /// <summary> The P40 access tier. </summary>
-        private const string P40Value = "P40";
-        /// <summary> The P50 access tier. </summary>
-        private const string P50Value = "P50";
-        /// <summary> The P60 access tier. </summary>
-        private const string P60Value = "P60";
-        /// <summary> The P70 access tier. </summary>
-        private const string P70Value = "P70";
-        /// <summary> The P80 access tier. </summary>
-        private const string P80Value = "P80";
-        /// <summary> The Hot access tier. </summary>
-        private const string HotValue = "Hot";
-        /// <summary> The Cool access tier. </summary>
-        private const string CoolValue = "Cool";
-        /// <summary> The Archive access tier. </summary>
-        private const string ArchiveValue = "Archive";
-        /// <summary> The Premium access tier. </summary>
-        private const string PremiumValue = "Premium";
-        /// <summary> The Cold access tier. </summary>
-        private const string ColdValue = "Cold";
-        /// <summary> The Smart access tier. </summary>
-        private const string SmartValue = "Smart";
 
         /// <summary> Initializes a new instance of <see cref="AccessTier"/>. </summary>
-        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AccessTier(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> The P4 access tier. </summary>
+        private const string P4Value = "P4";
+        private const string P6Value = "P6";
+        private const string P10Value = "P10";
+        private const string P15Value = "P15";
+        private const string P20Value = "P20";
+        private const string P30Value = "P30";
+        private const string P40Value = "P40";
+        private const string P50Value = "P50";
+        private const string P60Value = "P60";
+        private const string P70Value = "P70";
+        private const string P80Value = "P80";
+        private const string HotValue = "Hot";
+        private const string CoolValue = "Cool";
+        private const string ArchiveValue = "Archive";
+        private const string PremiumValue = "Premium";
+        private const string ColdValue = "Cold";
+        private const string SmartValue = "Smart";
+
+        /// <summary> P4. </summary>
         public static AccessTier P4 { get; } = new AccessTier(P4Value);
-
-        /// <summary> The P6 access tier. </summary>
+        /// <summary> P6. </summary>
         public static AccessTier P6 { get; } = new AccessTier(P6Value);
-
-        /// <summary> The P10 access tier. </summary>
+        /// <summary> P10. </summary>
         public static AccessTier P10 { get; } = new AccessTier(P10Value);
-
-        /// <summary> The P15 access tier. </summary>
+        /// <summary> P15. </summary>
         public static AccessTier P15 { get; } = new AccessTier(P15Value);
-
-        /// <summary> The P20 access tier. </summary>
+        /// <summary> P20. </summary>
         public static AccessTier P20 { get; } = new AccessTier(P20Value);
-
-        /// <summary> The P30 access tier. </summary>
+        /// <summary> P30. </summary>
         public static AccessTier P30 { get; } = new AccessTier(P30Value);
-
-        /// <summary> The P40 access tier. </summary>
+        /// <summary> P40. </summary>
         public static AccessTier P40 { get; } = new AccessTier(P40Value);
-
-        /// <summary> The P50 access tier. </summary>
+        /// <summary> P50. </summary>
         public static AccessTier P50 { get; } = new AccessTier(P50Value);
-
-        /// <summary> The P60 access tier. </summary>
+        /// <summary> P60. </summary>
         public static AccessTier P60 { get; } = new AccessTier(P60Value);
-
-        /// <summary> The P70 access tier. </summary>
+        /// <summary> P70. </summary>
         public static AccessTier P70 { get; } = new AccessTier(P70Value);
-
-        /// <summary> The P80 access tier. </summary>
+        /// <summary> P80. </summary>
         public static AccessTier P80 { get; } = new AccessTier(P80Value);
-
-        /// <summary> The Hot access tier. </summary>
+        /// <summary> Hot. </summary>
         public static AccessTier Hot { get; } = new AccessTier(HotValue);
-
-        /// <summary> The Cool access tier. </summary>
+        /// <summary> Cool. </summary>
         public static AccessTier Cool { get; } = new AccessTier(CoolValue);
-
-        /// <summary> The Archive access tier. </summary>
+        /// <summary> Archive. </summary>
         public static AccessTier Archive { get; } = new AccessTier(ArchiveValue);
-
-        /// <summary> The Premium access tier. </summary>
+        /// <summary> Premium. </summary>
         public static AccessTier Premium { get; } = new AccessTier(PremiumValue);
-
-        /// <summary> The Cold access tier. </summary>
+        /// <summary> Cold. </summary>
         public static AccessTier Cold { get; } = new AccessTier(ColdValue);
-
-        /// <summary> The Smart access tier. </summary>
+        /// <summary> Smart. </summary>
         public static AccessTier Smart { get; } = new AccessTier(SmartValue);
-
         /// <summary> Determines if two <see cref="AccessTier"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AccessTier left, AccessTier right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AccessTier"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AccessTier left, AccessTier right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="AccessTier"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AccessTier"/>. </summary>
         public static implicit operator AccessTier(string value) => new AccessTier(value);
 
-        /// <summary> Converts a string to a <see cref="AccessTier"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator AccessTier?(string value) => value == null ? null : new AccessTier(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AccessTier other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(AccessTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

@@ -1,15 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// LeaseStatus.
     /// </summary>
-    [CodeGenType("LeaseStatusType")]
+    [CodeGenModel("LeaseStatusType")]
 #pragma warning disable CA1717 // Only FlagsAttribute enums should have plural names
     public enum LeaseStatus
 #pragma warning restore CA1717 // Only FlagsAttribute enums should have plural names

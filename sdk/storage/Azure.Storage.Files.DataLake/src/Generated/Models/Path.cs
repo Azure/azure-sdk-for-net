@@ -6,85 +6,69 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
+    /// <summary> The Path. </summary>
     internal partial class Path
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="Path"/>. </summary>
         internal Path()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="Path"/>. </summary>
-        /// <param name="name"> The path name. </param>
-        /// <param name="isDirectory"> Whether the path is a directory. </param>
-        /// <param name="lastModified"> The last modified time. </param>
-        /// <param name="eTag"> The entity tag. </param>
-        /// <param name="contentLength"> The content length. </param>
-        /// <param name="owner"> The owner of the path. </param>
-        /// <param name="group"> The owning group of the path. </param>
-        /// <param name="permissions"> The POSIX access permissions. </param>
+        /// <param name="name"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="owner"></param>
+        /// <param name="group"></param>
+        /// <param name="permissions"></param>
         /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
-        /// <param name="creationTime"> The creation time. </param>
-        /// <param name="expiryTime"> The expiry time. </param>
-        /// <param name="encryptionContext"> The encryption context. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Path(string name, string isDirectory, DateTimeOffset? lastModified, string eTag, string contentLength, string owner, string @group, string permissions, string encryptionScope, string creationTime, string expiryTime, string encryptionContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="creationTime"></param>
+        /// <param name="expiryTime"></param>
+        /// <param name="encryptionContext"></param>
+        /// <param name="contentLength"></param>
+        /// <param name="isDirectory"></param>
+        /// <param name="etag"></param>
+        internal Path(string name, DateTimeOffset? lastModified, string owner, string group, string permissions, string encryptionScope, string creationTime, string expiryTime, string encryptionContext, string contentLength, string isDirectory, string etag)
         {
             Name = name;
-            IsDirectory = isDirectory;
             LastModified = lastModified;
-            ETag = eTag;
-            ContentLength = contentLength;
             Owner = owner;
-            Group = @group;
+            Group = group;
             Permissions = permissions;
             EncryptionScope = encryptionScope;
             CreationTime = creationTime;
             ExpiryTime = expiryTime;
             EncryptionContext = encryptionContext;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            ContentLength = contentLength;
+            IsDirectory = isDirectory;
+            Etag = etag;
         }
 
-        /// <summary> The path name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-
-        /// <summary> Whether the path is a directory. </summary>
-        public string IsDirectory { get; }
-
-        /// <summary> The last modified time. </summary>
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset? LastModified { get; }
-
-        /// <summary> The entity tag. </summary>
-        public string ETag { get; }
-
-        /// <summary> The content length. </summary>
-        public string ContentLength { get; }
-
-        /// <summary> The owner of the path. </summary>
+        /// <summary> Gets the owner. </summary>
         public string Owner { get; }
-
-        /// <summary> The owning group of the path. </summary>
+        /// <summary> Gets the group. </summary>
         public string Group { get; }
-
-        /// <summary> The POSIX access permissions. </summary>
+        /// <summary> Gets the permissions. </summary>
         public string Permissions { get; }
-
         /// <summary> The name of the encryption scope under which the blob is encrypted. </summary>
         public string EncryptionScope { get; }
-
-        /// <summary> The creation time. </summary>
+        /// <summary> Gets the creation time. </summary>
         public string CreationTime { get; }
-
-        /// <summary> The expiry time. </summary>
+        /// <summary> Gets the expiry time. </summary>
         public string ExpiryTime { get; }
-
-        /// <summary> The encryption context. </summary>
+        /// <summary> Gets the encryption context. </summary>
         public string EncryptionContext { get; }
+        /// <summary> Gets the content length. </summary>
+        public string ContentLength { get; }
+        /// <summary> Gets the is directory. </summary>
+        public string IsDirectory { get; }
+        /// <summary> Gets the etag. </summary>
+        public string Etag { get; }
     }
 }

@@ -7,22 +7,21 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> A clear range. </summary>
+    /// <summary> The ClearRange. </summary>
     internal partial class ClearRange
     {
         /// <summary> Initializes a new instance of <see cref="ClearRange"/>. </summary>
-        /// <param name="start"> The start of the byte range. </param>
-        /// <param name="end"> The end of the byte range. </param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
         internal ClearRange(long start, long end)
         {
             Start = start;
             End = end;
         }
 
-        /// <summary> The start of the byte range. </summary>
+        /// <summary> Gets the start. </summary>
         public long Start { get; }
-
-        /// <summary> The end of the byte range. </summary>
+        /// <summary> Gets the end. </summary>
         public long End { get; }
     }
 }

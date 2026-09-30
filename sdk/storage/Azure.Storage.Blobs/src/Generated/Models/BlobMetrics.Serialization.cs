@@ -5,102 +5,19 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The metrics properties. </summary>
-    public partial class BlobMetrics : IPersistableModel<BlobMetrics>, IXmlSerializable
+    public partial class BlobMetrics : IXmlSerializable
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BlobMetrics PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobMetrics>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "X":
-                    using (Stream dataStream = data.ToStream())
-                    {
-                        return DeserializeBlobMetrics(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobMetrics)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobMetrics>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "X":
-                    using (MemoryStream stream = new MemoryStream(256))
-                    {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
-                        {
-                            WriteXml(writer, options, "Metrics");
-                        }
-                        if (stream.Position > int.MaxValue)
-                        {
-                            return BinaryData.FromStream(stream);
-                        }
-                        else
-                        {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-                        }
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BlobMetrics)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BlobMetrics>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BlobMetrics IPersistableModel<BlobMetrics>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BlobMetrics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        /// <param name="nameHint"> An optional name hint. </param>
-        private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
-        {
-            if (nameHint != null)
-            {
-                writer.WriteStartElement(nameHint);
-            }
-
-            XmlModelWriteCore(writer, options);
-
-            if (nameHint != null)
-            {
-                writer.WriteEndElement();
-            }
-        }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BlobMetrics>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
-            {
-                throw new FormatException($"The model {nameof(BlobMetrics)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(Version))
+            writer.WriteStartElement(nameHint ?? "Metrics");
+            if (Common.Optional.IsDefined(Version))
             {
                 writer.WriteStartElement("Version");
                 writer.WriteValue(Version);
@@ -109,63 +26,42 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeApis))
+            if (Common.Optional.IsDefined(IncludeApis))
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (Common.Optional.IsDefined(RetentionPolicy))
             {
-                writer.WriteStartElement("RetentionPolicy");
-                writer.WriteObjectValue(RetentionPolicy, options);
-                writer.WriteEndElement();
+                writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
             }
+            writer.WriteEndElement();
         }
 
-        /// <param name="element"> The xml element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BlobMetrics DeserializeBlobMetrics(XElement element, ModelReaderWriterOptions options)
+        internal static BlobMetrics DeserializeBlobMetrics(XElement element)
         {
-            if (element == null)
-            {
-                return null;
-            }
-
             string version = default;
             bool enabled = default;
             bool? includeApis = default;
             BlobRetentionPolicy retentionPolicy = default;
-
-            foreach (var child in element.Elements())
+            if (element.Element("Version") is XElement versionElement)
             {
-                string localName = child.Name.LocalName;
-                if (localName == "Version")
-                {
-                    version = (string)child;
-                    continue;
-                }
-                if (localName == "Enabled")
-                {
-                    enabled = (bool)child;
-                    continue;
-                }
-                if (localName == "IncludeAPIs")
-                {
-                    includeApis = (bool?)child;
-                    continue;
-                }
-                if (localName == "RetentionPolicy")
-                {
-                    retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(child, options);
-                    continue;
-                }
+                version = (string)versionElement;
+            }
+            if (element.Element("Enabled") is XElement enabledElement)
+            {
+                enabled = (bool)enabledElement;
+            }
+            if (element.Element("IncludeAPIs") is XElement includeAPIsElement)
+            {
+                includeApis = (bool?)includeAPIsElement;
+            }
+            if (element.Element("RetentionPolicy") is XElement retentionPolicyElement)
+            {
+                retentionPolicy = BlobRetentionPolicy.DeserializeBlobRetentionPolicy(retentionPolicyElement);
             }
             return new BlobMetrics(version, enabled, includeApis, retentionPolicy);
         }
-
-        /// <param name="writer"> The XML writer. </param>
-        /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

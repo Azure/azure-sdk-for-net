@@ -11,7 +11,6 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class RehydratePriorityExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RehydratePriority value) => value switch
         {
             RehydratePriority.High => "High",
@@ -19,17 +18,10 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RehydratePriority value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static RehydratePriority ToRehydratePriority(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High"))
-            {
-                return RehydratePriority.High;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
-            {
-                return RehydratePriority.Standard;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "High")) return RehydratePriority.High;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return RehydratePriority.Standard;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RehydratePriority value.");
         }
     }

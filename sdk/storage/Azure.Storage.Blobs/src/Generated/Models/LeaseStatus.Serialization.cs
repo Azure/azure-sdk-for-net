@@ -11,25 +11,17 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class LeaseStatusExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LeaseStatus value) => value switch
         {
-            LeaseStatus.Unlocked => "unlocked",
             LeaseStatus.Locked => "locked",
+            LeaseStatus.Unlocked => "unlocked",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseStatus value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static LeaseStatus ToLeaseStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked"))
-            {
-                return LeaseStatus.Unlocked;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked"))
-            {
-                return LeaseStatus.Locked;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked")) return LeaseStatus.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked")) return LeaseStatus.Unlocked;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseStatus value.");
         }
     }

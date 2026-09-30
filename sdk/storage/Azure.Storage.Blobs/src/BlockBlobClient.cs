@@ -17,7 +17,6 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Shared;
-using static Azure.Storage.Blobs.BlobExtensions;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -384,7 +383,7 @@ namespace Azure.Storage.Blobs.Specialized
             return new BlockBlobRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                endpoint: blobUri,
+                url: blobUri.AbsoluteUri,
                 version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
@@ -899,7 +898,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false);
 
-                    Response response;
+                    ResponseWithHeaders<BlockBlobUploadHeaders> response;
 
                     using DisposableBucket disposableBucket = new();
                     if (ClientSideEncryption != default)
@@ -907,85 +906,77 @@ namespace Azure.Storage.Blobs.Specialized
                         disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
                     }
 
-                    Argument.AssertNotNull(content, nameof(content));
-
                     if (async)
                     {
                         response = await BlockBlobRestClient.UploadAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
-                            content: RequestContent.Create(content),
+                            body: content,
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                             blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                            blobContentMd5: blobHttpHeaders?.ContentHash is { } contentHashAsync
-                                ? BinaryData.FromBytes(contentHashAsync)
-                                : null,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
                             blobCacheControl: blobHttpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: blobHttpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            tier: accessTier?.ToString(),
-                            requestConditions: conditions,
+                            tier: accessTier,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
-                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode?.ToSerialString(),
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult?.MD5AsArray is { } md5Async
-                                ? BinaryData.FromBytes(md5Async)
-                                : null,
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Async
-                                ? BinaryData.FromBytes(crc64Async)
-                                : null,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
-                            context: cancellationToken.ToRequestContext())
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = BlockBlobRestClient.Upload(
                             contentLength: (content?.Length - content?.Position) ?? 0,
-                            content: RequestContent.Create(content),
+                            body: content,
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                             blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                            blobContentMd5: blobHttpHeaders?.ContentHash is { } contentHashSync
-                                ? BinaryData.FromBytes(contentHashSync)
-                                : null,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
                             blobCacheControl: blobHttpHeaders?.CacheControl,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: blobHttpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
-                            tier: accessTier?.ToString(),
-                            requestConditions: conditions,
+                            tier: accessTier,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
-                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode?.ToSerialString(),
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
-                            transactionalContentMD5: hashResult?.MD5AsArray is { } md5Sync
-                                ? BinaryData.FromBytes(md5Sync)
-                                : null,
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Sync
-                                ? BinaryData.FromBytes(crc64Sync)
-                                : null,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
-                            context: cancellationToken.ToRequestContext());
+                            cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContentInfo(BlobContentInfoHeaderType.BlockBlobUpload),
-                        response);
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1362,31 +1353,24 @@ namespace Azure.Storage.Blobs.Specialized
 
                     long contentLength = (content?.Length - content?.Position) ?? 0;
 
-                    Argument.AssertNotNull(content, nameof(content));
-                    Argument.AssertNotNullOrEmpty(base64BlockId, nameof(base64BlockId));
-
-                    Response response;
+                    ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
 
                     if (async)
                     {
                         response = await BlockBlobRestClient.StageBlockAsync(
                             blockId: base64BlockId,
                             contentLength: contentLength,
-                            content: RequestContent.Create(content),
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Async
-                                ? BinaryData.FromBytes(crc64Async)
-                                : null,
-                            transactionalContentMD5: hashResult?.MD5AsArray is { } md5Async
-                                ? BinaryData.FromBytes(md5Async)
-                                : null,
+                            body: content,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
-                            context: cancellationToken.ToRequestContext())
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
@@ -1394,26 +1378,22 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlockBlobRestClient.StageBlock(
                             blockId: base64BlockId,
                             contentLength: contentLength,
-                            content: RequestContent.Create(content),
-                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Sync
-                                ? BinaryData.FromBytes(crc64Sync)
-                                : null,
-                            transactionalContentMD5: hashResult?.MD5AsArray is { } md5Sync
-                                ? BinaryData.FromBytes(md5Sync)
-                                : null,
+                            body: content,
+                            transactionalContentCrc64: hashResult?.StorageCrc64AsArray,
+                            transactionalContentMD5: hashResult?.MD5AsArray,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             structuredBodyType: structuredBodyType,
                             structuredContentLength: structuredContentLength,
-                            context: cancellationToken.ToRequestContext());
+                            cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlockInfo(BlockInfoHeaderType.StageBlock),
-                        response);
+                        response.ToBlockInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -1846,25 +1826,19 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    Argument.AssertNotNullOrEmpty(base64BlockId, nameof(base64BlockId));
-                    Argument.AssertNotNull(sourceUri, nameof(sourceUri));
-                    Response response;
+                    ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response;
 
                     if (async)
                     {
-                        response = await BlockBlobRestClient.StageBlockFromUrlAsync(
+                        response = await BlockBlobRestClient.StageBlockFromURLAsync(
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
-                            sourceContentMd5: sourceContentHash is { } srcMd5Async
-                                ? BinaryData.FromBytes(srcMd5Async)
-                                : null,
-                            sourceContentCrc64: null,
-                            timeout: null,
+                            sourceContentMD5: sourceContentHash,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -1872,28 +1846,24 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
-                            fileRequestIntent: sourceShareTokenIntent?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent,
                             sourceEncryptionKey: sourceCustomerProvidedKey?.EncryptionKey,
                             sourceEncryptionKeySha256: sourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
-                            context: cancellationToken.ToRequestContext())
+                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
-                        response = BlockBlobRestClient.StageBlockFromUrl(
+                        response = BlockBlobRestClient.StageBlockFromURL(
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRange.ToString(),
-                            sourceContentMd5: sourceContentHash is { } srcMd5Async
-                                ? BinaryData.FromBytes(srcMd5Async)
-                                : null,
-                            sourceContentCrc64: null,
-                            timeout: null,
+                            sourceContentMD5: sourceContentHash,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
-                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             leaseId: conditions?.LeaseId,
                             sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
@@ -1901,16 +1871,16 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
-                            fileRequestIntent: sourceShareTokenIntent?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent,
                             sourceEncryptionKey: sourceCustomerProvidedKey?.EncryptionKey,
                             sourceEncryptionKeySha256: sourceCustomerProvidedKey?.EncryptionKeyHash,
-                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
-                            context: cancellationToken.ToRequestContext());
+                            sourceEncryptionAlgorithm: sourceCustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            cancellationToken: cancellationToken);
                     }
 
                     return Response.FromValue(
-                        response.ToBlockInfo(BlockInfoHeaderType.StageBlockFromUrl),
-                        response);
+                        response.ToBlockInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2317,7 +2287,7 @@ namespace Azure.Storage.Blobs.Specialized
                     scope.Start();
                     BlockLookupList blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
 
-                    Response response;
+                    ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response;
 
                     using DisposableBucket disposableBucket = new();
                     if (ClientSideEncryption != default)
@@ -2333,9 +2303,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                             blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                            blobContentMd5: blobHttpHeaders?.ContentHash is { } blobContentHash
-                                ? BinaryData.FromBytes(blobContentHash)
-                                : null,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: blobHttpHeaders?.ContentDisposition,
@@ -2344,7 +2312,10 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             tier: accessTier,
-                            requestConditions: conditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
@@ -2361,9 +2332,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                             blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                            blobContentMd5: blobHttpHeaders?.ContentHash is { } blobContentHash
-                                ? BinaryData.FromBytes(blobContentHash)
-                                : null,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
                             metadata: metadata,
                             leaseId: conditions?.LeaseId,
                             blobContentDisposition: blobHttpHeaders?.ContentDisposition,
@@ -2372,7 +2341,10 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             tier: accessTier,
-                            requestConditions: conditions,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             immutabilityPolicyExpiry: immutabilityPolicy?.ExpiresOn,
@@ -2382,8 +2354,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContentInfo(BlobContentInfoHeaderType.BlockBlobCommitBlockList),
-                        response);
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -2583,7 +2555,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    Response<BlockList> response;
+                    ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response;
 
                     if (async)
                     {
@@ -2762,16 +2734,19 @@ namespace Azure.Storage.Blobs.Specialized
                         OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
 
-                    Response<Stream> response;
+                    ResponseWithHeaders<Stream, BlobQueryHeaders> response;
 
                     if (async)
                     {
-                        response = await BlockBlobRestClient.QueryAsync(
+                        response = await BlobRestClient.QueryAsync(
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            requestConditions: options?.Conditions,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
                             ifTags: options?.Conditions?.TagConditions,
                             queryRequest: queryRequest,
                             cancellationToken: cancellationToken)
@@ -2779,12 +2754,15 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlockBlobRestClient.Query(
+                        response = BlobRestClient.Query(
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
-                            requestConditions: options?.Conditions,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
                             ifTags: options?.Conditions?.TagConditions,
                             queryRequest: queryRequest,
                             cancellationToken: cancellationToken);
@@ -3240,19 +3218,17 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    Argument.AssertNotNull(copySource, nameof(copySource));
-                    Response response;
+                    ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
 
                     if (async)
                     {
-                        response = await BlockBlobRestClient.UploadBlobFromUrlAsync(
+                        response = await BlockBlobRestClient.PutBlobFromUrlAsync(
+                            contentLength: 0,
                             copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
-                            blobContentMd5: options?.HttpHeaders?.ContentHash is { } contentHashAsync
-                                ? BinaryData.FromBytes(contentHashAsync)
-                                : null,
+                            blobContentMD5: options?.HttpHeaders?.ContentHash,
                             blobCacheControl: options?.HttpHeaders?.CacheControl,
                             metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
@@ -3262,16 +3238,17 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             tier: options?.AccessTier,
-                            requestConditions: options?.DestinationConditions,
+                            ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                            ifMatch: options?.DestinationConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.DestinationConditions?.IfNoneMatch?.ToString(),
                             ifTags: options?.DestinationConditions?.TagConditions,
                             sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: options?.SourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfTags: options?.SourceConditions?.TagConditions,
-                            sourceContentMd5: options?.ContentHash is { } srcHashAsync
-                                ? BinaryData.FromBytes(srcHashAsync)
-                                : null,
+                            sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
@@ -3285,14 +3262,13 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlockBlobRestClient.UploadBlobFromUrl(
+                        response = BlockBlobRestClient.PutBlobFromUrl(
+                            contentLength: 0,
                             copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
-                            blobContentMd5: options?.HttpHeaders?.ContentHash is { } contentHashSync
-                                ? BinaryData.FromBytes(contentHashSync)
-                                : null,
+                            blobContentMD5: options?.HttpHeaders?.ContentHash,
                             blobCacheControl: options?.HttpHeaders?.CacheControl,
                             metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
@@ -3302,16 +3278,17 @@ namespace Azure.Storage.Blobs.Specialized
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             tier: options?.AccessTier,
-                            requestConditions: options?.DestinationConditions,
+                            ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                            ifMatch: options?.DestinationConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.DestinationConditions?.IfNoneMatch?.ToString(),
                             ifTags: options?.DestinationConditions?.TagConditions,
                             sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
                             sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
                             sourceIfMatch: options?.SourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch?.ToString(),
                             sourceIfTags: options?.SourceConditions?.TagConditions,
-                            sourceContentMd5: options?.ContentHash is { } srcHashSync
-                                ? BinaryData.FromBytes(srcHashSync)
-                                : null,
+                            sourceContentMD5: options?.ContentHash,
                             blobTagsString: options?.Tags?.ToTagsString(),
                             copySourceBlobProperties: options?.CopySourceBlobProperties,
                             copySourceAuthorization: options?.SourceAuthentication?.ToString(),
@@ -3324,8 +3301,8 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     return Response.FromValue(
-                        response.ToBlobContentInfo(BlobContentInfoHeaderType.BlockBlobPutBlobFromUrl),
-                        response);
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

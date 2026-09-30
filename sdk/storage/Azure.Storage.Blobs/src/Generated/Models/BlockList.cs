@@ -6,11 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Blobs;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Contains the committed and uncommitted blocks in a block blob. </summary>
+    /// <summary> The BlockList. </summary>
     public partial class BlockList
     {
         /// <summary> Initializes a new instance of <see cref="BlockList"/>. </summary>
@@ -21,8 +21,8 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlockList"/>. </summary>
-        /// <param name="committedBlocks"> The list of committed blocks. </param>
-        /// <param name="uncommittedBlocks"> The list of uncommitted blocks. </param>
+        /// <param name="committedBlocks"></param>
+        /// <param name="uncommittedBlocks"></param>
         internal BlockList(IEnumerable<BlobBlock> committedBlocks, IEnumerable<BlobBlock> uncommittedBlocks)
         {
             CommittedBlocks = committedBlocks;

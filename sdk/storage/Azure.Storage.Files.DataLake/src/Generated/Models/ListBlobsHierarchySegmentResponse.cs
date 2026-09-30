@@ -5,31 +5,39 @@
 
 #nullable disable
 
+using System;
+using Azure.Storage.Common;
+
 namespace Azure.Storage.Files.DataLake.Models
 {
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsHierarchySegmentResponse
     {
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="containerName"> The container name. </param>
-        /// <param name="segment"> The blob segment. </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="containerName"></param>
+        /// <param name="segment"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
         internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, BlobHierarchyListSegment segment)
         {
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(segment, nameof(segment));
+
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             Segment = segment;
         }
 
         /// <summary> Initializes a new instance of <see cref="ListBlobsHierarchySegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"> The service endpoint. </param>
-        /// <param name="containerName"> The container name. </param>
-        /// <param name="prefix"> The prefix filter. </param>
-        /// <param name="marker"> The marker for pagination. </param>
-        /// <param name="maxResults"> The maximum number of results. </param>
-        /// <param name="delimiter"> The delimiter used for hierarchy. </param>
-        /// <param name="segment"> The blob segment. </param>
-        /// <param name="nextMarker"> The next marker for pagination. </param>
+        /// <param name="serviceEndpoint"></param>
+        /// <param name="containerName"></param>
+        /// <param name="prefix"></param>
+        /// <param name="marker"></param>
+        /// <param name="maxResults"></param>
+        /// <param name="delimiter"></param>
+        /// <param name="segment"></param>
+        /// <param name="nextMarker"></param>
         internal ListBlobsHierarchySegmentResponse(string serviceEndpoint, string containerName, string prefix, string marker, int? maxResults, string delimiter, BlobHierarchyListSegment segment, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
@@ -42,28 +50,21 @@ namespace Azure.Storage.Files.DataLake.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> The service endpoint. </summary>
+        /// <summary> Gets the service endpoint. </summary>
         public string ServiceEndpoint { get; }
-
-        /// <summary> The container name. </summary>
+        /// <summary> Gets the container name. </summary>
         public string ContainerName { get; }
-
-        /// <summary> The prefix filter. </summary>
+        /// <summary> Gets the prefix. </summary>
         public string Prefix { get; }
-
-        /// <summary> The marker for pagination. </summary>
+        /// <summary> Gets the marker. </summary>
         public string Marker { get; }
-
-        /// <summary> The maximum number of results. </summary>
+        /// <summary> Gets the max results. </summary>
         public int? MaxResults { get; }
-
-        /// <summary> The delimiter used for hierarchy. </summary>
+        /// <summary> Gets the delimiter. </summary>
         public string Delimiter { get; }
-
-        /// <summary> The blob segment. </summary>
+        /// <summary> Gets the segment. </summary>
         public BlobHierarchyListSegment Segment { get; }
-
-        /// <summary> The next marker for pagination. </summary>
+        /// <summary> Gets the next marker. </summary>
         public string NextMarker { get; }
     }
 }

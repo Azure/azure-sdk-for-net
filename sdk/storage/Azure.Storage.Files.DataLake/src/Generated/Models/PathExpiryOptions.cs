@@ -10,67 +10,48 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
+    /// <summary> The PathExpiryOptions. </summary>
     internal readonly partial struct PathExpiryOptions : IEquatable<PathExpiryOptions>
     {
         private readonly string _value;
-        /// <summary> Never expire. </summary>
-        private const string NeverExpireValue = "NeverExpire";
-        /// <summary> Relative to creation time. </summary>
-        private const string RelativeToCreationValue = "RelativeToCreation";
-        /// <summary> Relative to now. </summary>
-        private const string RelativeToNowValue = "RelativeToNow";
-        /// <summary> Absolute time. </summary>
-        private const string AbsoluteValue = "Absolute";
 
         /// <summary> Initializes a new instance of <see cref="PathExpiryOptions"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PathExpiryOptions(string value)
         {
-            _value = value;
+            _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Never expire. </summary>
+        private const string NeverExpireValue = "NeverExpire";
+        private const string RelativeToCreationValue = "RelativeToCreation";
+        private const string RelativeToNowValue = "RelativeToNow";
+        private const string AbsoluteValue = "Absolute";
+
+        /// <summary> NeverExpire. </summary>
         public static PathExpiryOptions NeverExpire { get; } = new PathExpiryOptions(NeverExpireValue);
-
-        /// <summary> Relative to creation time. </summary>
+        /// <summary> RelativeToCreation. </summary>
         public static PathExpiryOptions RelativeToCreation { get; } = new PathExpiryOptions(RelativeToCreationValue);
-
-        /// <summary> Relative to now. </summary>
+        /// <summary> RelativeToNow. </summary>
         public static PathExpiryOptions RelativeToNow { get; } = new PathExpiryOptions(RelativeToNowValue);
-
-        /// <summary> Absolute time. </summary>
+        /// <summary> Absolute. </summary>
         public static PathExpiryOptions Absolute { get; } = new PathExpiryOptions(AbsoluteValue);
-
         /// <summary> Determines if two <see cref="PathExpiryOptions"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PathExpiryOptions left, PathExpiryOptions right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="PathExpiryOptions"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PathExpiryOptions left, PathExpiryOptions right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="PathExpiryOptions"/>. </summary>
-        /// <param name="value"> The value. </param>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PathExpiryOptions"/>. </summary>
         public static implicit operator PathExpiryOptions(string value) => new PathExpiryOptions(value);
 
-        /// <summary> Converts a string to a <see cref="PathExpiryOptions"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator PathExpiryOptions?(string value) => value == null ? null : new PathExpiryOptions(value);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PathExpiryOptions other && Equals(other);
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool Equals(PathExpiryOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

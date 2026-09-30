@@ -11,7 +11,6 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class FilterBlobsIncludeItemExtensions
     {
-        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FilterBlobsIncludeItem value) => value switch
         {
             FilterBlobsIncludeItem.None => "none",
@@ -19,17 +18,10 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilterBlobsIncludeItem value.")
         };
 
-        /// <param name="value"> The value to deserialize. </param>
         public static FilterBlobsIncludeItem ToFilterBlobsIncludeItem(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none"))
-            {
-                return FilterBlobsIncludeItem.None;
-            }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "versions"))
-            {
-                return FilterBlobsIncludeItem.Versions;
-            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return FilterBlobsIncludeItem.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "versions")) return FilterBlobsIncludeItem.Versions;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FilterBlobsIncludeItem value.");
         }
     }

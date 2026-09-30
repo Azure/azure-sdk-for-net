@@ -6,47 +6,43 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The service properties. </summary>
+    /// <summary> Storage Service Properties. </summary>
     public partial class BlobServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="BlobServiceProperties"/>. </summary>
-        /// <param name="logging"> The logging properties. </param>
-        /// <param name="hourMetrics"> The hour metrics properties. </param>
-        /// <param name="minuteMetrics"> The minute metrics properties. </param>
-        /// <param name="defaultServiceVersion"> The default service version. </param>
-        /// <param name="deleteRetentionPolicy"> The delete retention policy. </param>
-        /// <param name="staticWebsite"> The static website properties. </param>
-        /// <param name="cors"> The CORS properties. </param>
-        internal BlobServiceProperties(BlobAnalyticsLogging logging, BlobMetrics hourMetrics, BlobMetrics minuteMetrics, string defaultServiceVersion, BlobRetentionPolicy deleteRetentionPolicy, BlobStaticWebsite staticWebsite, IList<BlobCorsRule> cors)
+        /// <param name="logging"> Azure Analytics Logging settings. </param>
+        /// <param name="hourMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
+        /// <param name="minuteMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
+        /// <param name="cors"> The set of CORS rules. </param>
+        /// <param name="defaultServiceVersion"> The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
+        /// <param name="deleteRetentionPolicy"> the retention policy which determines how long the associated data should persist. </param>
+        /// <param name="staticWebsite"> The properties that enable an account to host a static website. </param>
+        internal BlobServiceProperties(BlobAnalyticsLogging logging, BlobMetrics hourMetrics, BlobMetrics minuteMetrics, IList<BlobCorsRule> cors, string defaultServiceVersion, BlobRetentionPolicy deleteRetentionPolicy, BlobStaticWebsite staticWebsite)
         {
             Logging = logging;
             HourMetrics = hourMetrics;
             MinuteMetrics = minuteMetrics;
+            Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
             StaticWebsite = staticWebsite;
-            Cors = cors;
         }
 
-        /// <summary> The logging properties. </summary>
+        /// <summary> Azure Analytics Logging settings. </summary>
         public BlobAnalyticsLogging Logging { get; set; }
-
-        /// <summary> The hour metrics properties. </summary>
+        /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </summary>
         public BlobMetrics HourMetrics { get; set; }
-
-        /// <summary> The minute metrics properties. </summary>
+        /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </summary>
         public BlobMetrics MinuteMetrics { get; set; }
-
-        /// <summary> The default service version. </summary>
+        /// <summary> The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>
         public string DefaultServiceVersion { get; set; }
-
-        /// <summary> The delete retention policy. </summary>
+        /// <summary> the retention policy which determines how long the associated data should persist. </summary>
         public BlobRetentionPolicy DeleteRetentionPolicy { get; set; }
-
-        /// <summary> The static website properties. </summary>
+        /// <summary> The properties that enable an account to host a static website. </summary>
         public BlobStaticWebsite StaticWebsite { get; set; }
     }
 }

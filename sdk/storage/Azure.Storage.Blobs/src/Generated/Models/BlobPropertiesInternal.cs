@@ -6,72 +6,77 @@
 #nullable disable
 
 using System;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
+    /// <summary> Properties of a blob. </summary>
     internal partial class BlobPropertiesInternal
     {
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
-        /// <param name="lastModified"> The date-time the blob was last modified. </param>
-        /// <param name="eTag"> The blob ETag. </param>
-        internal BlobPropertiesInternal(DateTimeOffset lastModified, string eTag)
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
+        internal BlobPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
+            Argument.AssertNotNull(etag, nameof(etag));
+
             LastModified = lastModified;
-            ETag = eTag;
+            Etag = etag;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
-        /// <param name="creationTime"> The date-time the blob was created. </param>
-        /// <param name="lastModified"> The date-time the blob was last modified. </param>
-        /// <param name="eTag"> The blob ETag. </param>
-        /// <param name="contentLength"> The content length of the blob. </param>
-        /// <param name="contentType"> The content type of the blob. </param>
-        /// <param name="contentEncoding"> The content encoding of the blob. </param>
-        /// <param name="contentLanguage"> The content language of the blob. </param>
-        /// <param name="contentMd5"> The content MD5 of the blob. </param>
-        /// <param name="contentDisposition"> The content disposition of the blob. </param>
-        /// <param name="cacheControl"> The cache control of the blob. </param>
-        /// <param name="blobSequenceNumber"> The sequence number of the blob. </param>
-        /// <param name="blobType"> The blob type. </param>
-        /// <param name="leaseStatus"> The lease status of the blob. </param>
-        /// <param name="leaseState"> The lease state of the blob. </param>
-        /// <param name="leaseDuration"> The lease duration of the blob. </param>
-        /// <param name="copyId"> The copy ID of the blob. </param>
-        /// <param name="copyStatus"> The copy status of the blob. </param>
-        /// <param name="copySource"> The copy source of the blob. </param>
-        /// <param name="copyProgress"> The copy progress of the blob. </param>
-        /// <param name="copyCompletionTime"> The copy completion date-time of the blob. </param>
-        /// <param name="copyStatusDescription"> The copy status description of the blob. </param>
-        /// <param name="serverEncrypted"> Whether the blob is encrypted on the server. </param>
-        /// <param name="incrementalCopy"> Whether the blob is an incremental copy. </param>
-        /// <param name="destinationSnapshot"> The name of the destination snapshot. </param>
-        /// <param name="deletedTime"> The date-time the blob was deleted. </param>
-        /// <param name="remainingRetentionDays"> The remaining retention days of the blob. </param>
-        /// <param name="accessTier"> The access tier of the blob. </param>
-        /// <param name="accessTierInferred"> Whether the access tier is inferred. </param>
-        /// <param name="archiveStatus"> The archive status of the blob. </param>
-        /// <param name="smartAccessTier"> The smart access tier of the blob. </param>
-        /// <param name="customerProvidedKeySha256"> The SHA-256 hash of the blob's encryption key, if provided. </param>
-        /// <param name="encryptionScope"> The encryption scope of the blob. </param>
-        /// <param name="accessTierChangeTime"> The date-time that the access tier of the blob changed. </param>
-        /// <param name="tagCount"> The number of tags for the blob. </param>
-        /// <param name="expiresOn"> The expiry time of the blob. </param>
-        /// <param name="isSealed"> Whether the blob is sealed. </param>
-        /// <param name="rehydratePriority"> The rehydrate priority of the blob. </param>
-        /// <param name="lastAccessedOn"> The date-time the blob was last accessed. </param>
-        /// <param name="immutabilityPolicyExpiresOn"> The date-time the immutability policy of the blob expires. </param>
-        /// <param name="immutabilityPolicyMode"> The immutability policy mode of the blob. </param>
-        /// <param name="legalHold"> Whether the blob is under legal hold. </param>
-        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string eTag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, BinaryData contentMd5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
+        /// <param name="creationTime"></param>
+        /// <param name="lastModified"></param>
+        /// <param name="etag"></param>
+        /// <param name="contentLength"> Size in bytes. </param>
+        /// <param name="contentType"></param>
+        /// <param name="contentEncoding"></param>
+        /// <param name="contentLanguage"></param>
+        /// <param name="contentMD5"></param>
+        /// <param name="contentDisposition"></param>
+        /// <param name="cacheControl"></param>
+        /// <param name="blobSequenceNumber"></param>
+        /// <param name="blobType"></param>
+        /// <param name="leaseStatus"></param>
+        /// <param name="leaseState"></param>
+        /// <param name="leaseDuration"></param>
+        /// <param name="copyId"></param>
+        /// <param name="copyStatus"></param>
+        /// <param name="copySource"></param>
+        /// <param name="copyProgress"></param>
+        /// <param name="copyCompletionTime"></param>
+        /// <param name="copyStatusDescription"></param>
+        /// <param name="serverEncrypted"></param>
+        /// <param name="incrementalCopy"></param>
+        /// <param name="destinationSnapshot"></param>
+        /// <param name="deletedTime"></param>
+        /// <param name="remainingRetentionDays"></param>
+        /// <param name="accessTier"></param>
+        /// <param name="accessTierInferred"></param>
+        /// <param name="archiveStatus"></param>
+        /// <param name="smartAccessTier"></param>
+        /// <param name="customerProvidedKeySha256"></param>
+        /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
+        /// <param name="accessTierChangeTime"></param>
+        /// <param name="tagCount"></param>
+        /// <param name="expiresOn"></param>
+        /// <param name="isSealed"></param>
+        /// <param name="rehydratePriority"> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </param>
+        /// <param name="lastAccessedOn"></param>
+        /// <param name="immutabilityPolicyExpiresOn"></param>
+        /// <param name="immutabilityPolicyMode"></param>
+        /// <param name="legalHold"></param>
+        internal BlobPropertiesInternal(DateTimeOffset? creationTime, DateTimeOffset lastModified, string etag, long? contentLength, string contentType, string contentEncoding, string contentLanguage, byte[] contentMD5, string contentDisposition, string cacheControl, long? blobSequenceNumber, BlobType? blobType, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, string copyId, CopyStatus? copyStatus, string copySource, string copyProgress, DateTimeOffset? copyCompletionTime, string copyStatusDescription, bool? serverEncrypted, bool? incrementalCopy, string destinationSnapshot, DateTimeOffset? deletedTime, int? remainingRetentionDays, AccessTier? accessTier, bool? accessTierInferred, ArchiveStatus? archiveStatus, AccessTier? smartAccessTier, string customerProvidedKeySha256, string encryptionScope, DateTimeOffset? accessTierChangeTime, int? tagCount, DateTimeOffset? expiresOn, bool? isSealed, RehydratePriority? rehydratePriority, DateTimeOffset? lastAccessedOn, DateTimeOffset? immutabilityPolicyExpiresOn, BlobImmutabilityPolicyMode? immutabilityPolicyMode, bool? legalHold)
         {
             CreationTime = creationTime;
             LastModified = lastModified;
-            ETag = eTag;
+            Etag = etag;
             ContentLength = contentLength;
             ContentType = contentType;
             ContentEncoding = contentEncoding;
             ContentLanguage = contentLanguage;
-            ContentMd5 = contentMd5;
+            ContentMD5 = contentMD5;
             ContentDisposition = contentDisposition;
             CacheControl = cacheControl;
             BlobSequenceNumber = blobSequenceNumber;
@@ -107,142 +112,87 @@ namespace Azure.Storage.Blobs.Models
             LegalHold = legalHold;
         }
 
-        /// <summary> The date-time the blob was created. </summary>
+        /// <summary> Gets the creation time. </summary>
         public DateTimeOffset? CreationTime { get; }
-
-        /// <summary> The date-time the blob was last modified. </summary>
+        /// <summary> Gets the last modified. </summary>
         public DateTimeOffset LastModified { get; }
-
-        /// <summary> The blob ETag. </summary>
-        public string ETag { get; }
-
-        /// <summary> The content length of the blob. </summary>
+        /// <summary> Gets the etag. </summary>
+        public string Etag { get; }
+        /// <summary> Size in bytes. </summary>
         public long? ContentLength { get; }
-
-        /// <summary> The content type of the blob. </summary>
+        /// <summary> Gets the content type. </summary>
         public string ContentType { get; }
-
-        /// <summary> The content encoding of the blob. </summary>
+        /// <summary> Gets the content encoding. </summary>
         public string ContentEncoding { get; }
-
-        /// <summary> The content language of the blob. </summary>
+        /// <summary> Gets the content language. </summary>
         public string ContentLanguage { get; }
-
-        /// <summary>
-        /// The content MD5 of the blob.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ContentMd5 { get; }
-
-        /// <summary> The content disposition of the blob. </summary>
+        /// <summary> Gets the content md 5. </summary>
+        public byte[] ContentMD5 { get; }
+        /// <summary> Gets the content disposition. </summary>
         public string ContentDisposition { get; }
-
-        /// <summary> The cache control of the blob. </summary>
+        /// <summary> Gets the cache control. </summary>
         public string CacheControl { get; }
-
-        /// <summary> The sequence number of the blob. </summary>
+        /// <summary> Gets the blob sequence number. </summary>
         public long? BlobSequenceNumber { get; }
-
-        /// <summary> The blob type. </summary>
+        /// <summary> Gets the blob type. </summary>
         public BlobType? BlobType { get; }
-
-        /// <summary> The lease status of the blob. </summary>
+        /// <summary> Gets the lease status. </summary>
         public LeaseStatus? LeaseStatus { get; }
-
-        /// <summary> The lease state of the blob. </summary>
+        /// <summary> Gets the lease state. </summary>
         public LeaseState? LeaseState { get; }
-
-        /// <summary> The lease duration of the blob. </summary>
+        /// <summary> Gets the lease duration. </summary>
         public LeaseDurationType? LeaseDuration { get; }
-
-        /// <summary> The copy ID of the blob. </summary>
+        /// <summary> Gets the copy id. </summary>
         public string CopyId { get; }
-
-        /// <summary> The copy status of the blob. </summary>
+        /// <summary> Gets the copy status. </summary>
         public CopyStatus? CopyStatus { get; }
-
-        /// <summary> The copy source of the blob. </summary>
+        /// <summary> Gets the copy source. </summary>
         public string CopySource { get; }
-
-        /// <summary> The copy progress of the blob. </summary>
+        /// <summary> Gets the copy progress. </summary>
         public string CopyProgress { get; }
-
-        /// <summary> The copy completion date-time of the blob. </summary>
+        /// <summary> Gets the copy completion time. </summary>
         public DateTimeOffset? CopyCompletionTime { get; }
-
-        /// <summary> The copy status description of the blob. </summary>
+        /// <summary> Gets the copy status description. </summary>
         public string CopyStatusDescription { get; }
-
-        /// <summary> Whether the blob is encrypted on the server. </summary>
+        /// <summary> Gets the server encrypted. </summary>
         public bool? ServerEncrypted { get; }
-
-        /// <summary> Whether the blob is an incremental copy. </summary>
+        /// <summary> Gets the incremental copy. </summary>
         public bool? IncrementalCopy { get; }
-
-        /// <summary> The name of the destination snapshot. </summary>
+        /// <summary> Gets the destination snapshot. </summary>
         public string DestinationSnapshot { get; }
-
-        /// <summary> The date-time the blob was deleted. </summary>
+        /// <summary> Gets the deleted time. </summary>
         public DateTimeOffset? DeletedTime { get; }
-
-        /// <summary> The remaining retention days of the blob. </summary>
+        /// <summary> Gets the remaining retention days. </summary>
         public int? RemainingRetentionDays { get; }
-
-        /// <summary> The access tier of the blob. </summary>
+        /// <summary> Gets the access tier. </summary>
         public AccessTier? AccessTier { get; }
-
-        /// <summary> Whether the access tier is inferred. </summary>
+        /// <summary> Gets the access tier inferred. </summary>
         public bool? AccessTierInferred { get; }
-
-        /// <summary> The archive status of the blob. </summary>
+        /// <summary> Gets the archive status. </summary>
         public ArchiveStatus? ArchiveStatus { get; }
-
-        /// <summary> The smart access tier of the blob. </summary>
+        /// <summary> Gets the smart access tier. </summary>
         public AccessTier? SmartAccessTier { get; }
-
-        /// <summary> The SHA-256 hash of the blob's encryption key, if provided. </summary>
+        /// <summary> Gets the customer provided key sha 256. </summary>
         public string CustomerProvidedKeySha256 { get; }
-
-        /// <summary> The encryption scope of the blob. </summary>
+        /// <summary> The name of the encryption scope under which the blob is encrypted. </summary>
         public string EncryptionScope { get; }
-
-        /// <summary> The date-time that the access tier of the blob changed. </summary>
+        /// <summary> Gets the access tier change time. </summary>
         public DateTimeOffset? AccessTierChangeTime { get; }
-
-        /// <summary> The number of tags for the blob. </summary>
+        /// <summary> Gets the tag count. </summary>
         public int? TagCount { get; }
-
-        /// <summary> The expiry time of the blob. </summary>
+        /// <summary> Gets the expires on. </summary>
         public DateTimeOffset? ExpiresOn { get; }
-
-        /// <summary> Whether the blob is sealed. </summary>
+        /// <summary> Gets the is sealed. </summary>
         public bool? IsSealed { get; }
-
-        /// <summary> The rehydrate priority of the blob. </summary>
+        /// <summary> If an object is in rehydrate pending state then this header is returned with priority of rehydrate. Valid values are High and Standard. </summary>
         public RehydratePriority? RehydratePriority { get; }
-
-        /// <summary> The date-time the blob was last accessed. </summary>
+        /// <summary> Gets the last accessed on. </summary>
         public DateTimeOffset? LastAccessedOn { get; }
-
-        /// <summary> The date-time the immutability policy of the blob expires. </summary>
+        /// <summary> Gets the immutability policy expires on. </summary>
         public DateTimeOffset? ImmutabilityPolicyExpiresOn { get; }
-
-        /// <summary> The immutability policy mode of the blob. </summary>
+        /// <summary> Gets the immutability policy mode. </summary>
         public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get; }
-
-        /// <summary> Whether the blob is under legal hold. </summary>
+        /// <summary> Gets the legal hold. </summary>
         public bool? LegalHold { get; }
     }
 }
