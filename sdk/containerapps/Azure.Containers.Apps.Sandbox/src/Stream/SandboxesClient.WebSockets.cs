@@ -5,9 +5,9 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Containers.Apps.Sandbox.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Containers.Apps.Sandbox.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Containers.Apps.Sandbox
@@ -48,7 +48,7 @@ namespace Azure.Containers.Apps.Sandbox
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             using HttpMessage message = CreateGetSandboxExecStreamRequest(id, containerName, user, cancellationToken.ToRequestContext());
-            return ConnectWebSocketAsync(message.Request.Uri.ToUri(), cancellationToken);
+            return ConnectWebSocketAsync(message.Request.Uri.ToUri(), "SandboxesClient.ConnectToSandboxExecStream", cancellationToken);
         }
 
         /// <summary> Opens an unbuffered HTTP log stream. Dispose the returned stream after reading it. </summary>
@@ -100,16 +100,20 @@ namespace Azure.Containers.Apps.Sandbox
             string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(request, nameof(request));
-            SandboxStream stream = await ConnectToSandboxExecStreamAsync(id, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxesClient.StartSandboxExecSession");
+            scope.Start();
+            SandboxStream stream = null;
             try
             {
+                stream = await ConnectToSandboxExecStreamAsync(id, containerName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 SandboxExecSession session = new SandboxExecSession(stream);
                 await session.StartAsync(request, cancellationToken).ConfigureAwait(false);
                 return session;
             }
-            catch
+            catch (Exception ex)
             {
-                stream.Dispose();
+                scope.Failed(ex);
+                stream?.Dispose();
                 throw;
             }
         }
@@ -118,8 +122,18 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual async Task<SandboxProcessStream> OpenSandboxProcessStreamAsync(string id,
             string containerName = default, CancellationToken cancellationToken = default)
         {
-            SandboxStream stream = await ConnectToSandboxProcessesStreamAsync(id, containerName, cancellationToken).ConfigureAwait(false);
-            return new SandboxProcessStream(stream);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxesClient.OpenSandboxProcessStream");
+            scope.Start();
+            try
+            {
+                SandboxStream stream = await ConnectToSandboxProcessesStreamAsync(id, containerName, cancellationToken).ConfigureAwait(false);
+                return new SandboxProcessStream(stream);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary> Opens a process WebSocket connection. The caller must dispose the returned stream. </summary>
@@ -131,18 +145,18 @@ namespace Azure.Containers.Apps.Sandbox
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             using HttpMessage message = CreateGetSandboxProcessesStreamRequest(id, containerName, cancellationToken.ToRequestContext());
-            return ConnectWebSocketAsync(message.Request.Uri.ToUri(), cancellationToken);
+            return ConnectWebSocketAsync(message.Request.Uri.ToUri(), "SandboxesClient.ConnectToSandboxProcessesStream", cancellationToken);
         }
 
-        private async Task<SandboxStream> ConnectWebSocketAsync(Uri httpUri, CancellationToken cancellationToken)
+        private async Task<SandboxStream> ConnectWebSocketAsync(Uri httpUri, string scopeName, CancellationToken cancellationToken)
         {
-            if (_webSocketCredential == null)
-                throw new InvalidOperationException("A TokenCredential is required for sandbox WebSocket connections.");
-
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxesClient.ConnectWebSocket");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
             try
             {
+                if (_webSocketCredential == null)
+                    throw new InvalidOperationException("A TokenCredential is required for sandbox WebSocket connections.");
+
                 UriBuilder builder = new UriBuilder(httpUri)
                 {
                     Scheme = httpUri.Scheme switch
@@ -162,7 +176,7 @@ namespace Azure.Containers.Apps.Sandbox
                 scope.Failed(ex);
                 throw;
             }
-    #pragma warning restore AZC0004, AZC0015
         }
+#pragma warning restore AZC0004, AZC0015
     }
 }

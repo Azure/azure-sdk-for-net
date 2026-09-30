@@ -210,6 +210,19 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         [Test]
+        public async Task ExecSessionPreservesCloseDescription()
+        {
+            TestSocket socket = new TestSocket();
+            socket.EnqueueClose("Process exited");
+            await using SandboxExecSession session = new SandboxExecSession(new SandboxStream(socket));
+
+            SandboxExecEvent closed = await session.ReceiveAsync();
+
+            Assert.That(closed.Type, Is.EqualTo(SandboxExecEventType.Closed));
+            Assert.That(closed.Text, Is.EqualTo("Process exited"));
+        }
+
+        [Test]
         public async Task LargeExecInputIsSplitIntoServiceSizedFrames()
         {
             TestSocket socket = new TestSocket();
@@ -252,6 +265,40 @@ namespace Azure.Containers.Apps.Sandbox.Tests
 
             Assert.That(uri.AbsolutePath, Does.EndWith("/sandboxes/sandbox-id/processes/stream"));
             Assert.That(uri.Query, Is.EqualTo("?api-version=2026-09-01-preview"));
+        }
+
+        [Test]
+        public async Task SandboxResourceStreamsUseItsIdentifier()
+        {
+            MockTransport transport = new MockTransport(new MockResponse(200).SetContent("log line\n"));
+            SandboxesClient client = CreateClient(out _, transport);
+            SandboxResource resource = new SandboxResource(client, "sandbox/id");
+            List<Uri> websocketUris = new List<Uri>();
+            client.WebSocketConnector = (address, _, _) =>
+            {
+                websocketUris.Add(address);
+                return Task.FromResult<ISandboxWebSocketClient>(new TestSocket());
+            };
+
+            await using (SandboxExecSession session = await resource.StartSandboxExecSessionAsync(
+                new Models.SandboxExecStartRequest("sh")))
+            {
+            }
+
+            await using (SandboxProcessStream process = await resource.OpenSandboxProcessStreamAsync())
+            {
+            }
+
+            Response<Stream> logs = await resource.OpenSandboxLogStreamAsync(follow: false);
+            using (logs.Value)
+            {
+                Assert.That(logs.GetRawResponse().Status, Is.EqualTo(200));
+            }
+
+            Assert.That(websocketUris, Has.Count.EqualTo(2));
+            Assert.That(websocketUris[0].AbsolutePath, Does.EndWith("/sandboxes/sandbox%2Fid/exec/stream"));
+            Assert.That(websocketUris[1].AbsolutePath, Does.EndWith("/sandboxes/sandbox%2Fid/processes/stream"));
+            Assert.That(transport.SingleRequest.Uri.ToUri().AbsolutePath, Does.EndWith("/sandboxes/sandbox%2Fid/logstream"));
         }
 
         [Test]
@@ -311,6 +358,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             public bool FailSend { get; set; }
             public bool WasDisposed { get; private set; }
             public void Enqueue(string text) => _received.Enqueue(new SandboxStreamMessage(SandboxStreamMessageType.Text, BinaryData.FromString(text)));
+            public void EnqueueClose(string description) => _received.Enqueue(new SandboxStreamMessage(SandboxStreamMessageType.Close, null, closeDescription: description));
             public Task SendAsync(BinaryData data, SandboxStreamMessageType type, CancellationToken cancellationToken)
             {
                 if (FailSend)

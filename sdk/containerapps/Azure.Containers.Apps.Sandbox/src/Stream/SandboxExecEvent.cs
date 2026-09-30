@@ -37,7 +37,7 @@ namespace Azure.Containers.Apps.Sandbox
         public SandboxExecEventType Type { get; }
         /// <summary> The raw standard output or standard error bytes, if present. </summary>
         public BinaryData Data { get; }
-        /// <summary> The session ID or error message, if present. </summary>
+        /// <summary> The session ID, error message, or WebSocket close description, if present. </summary>
         public string Text { get; }
         /// <summary> The exit code, if present. </summary>
         public int? ExitCode { get; }

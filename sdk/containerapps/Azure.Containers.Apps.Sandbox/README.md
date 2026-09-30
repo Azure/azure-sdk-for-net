@@ -54,6 +54,7 @@ Its read-only `SubscriptionId`, `ResourceGroupName`, and `Name` properties expos
 
 For operations on a known resource, `SandboxGroupClient` also offers resource clients such as `GetSandbox(id)`, `GetVolume(volumeName)`, and `GetSecret(secretId)`. Each resource client holds its identifier and delegates requests to the corresponding subclient. The group's create and list methods return resource clients with their `Data` populated from the service response; a resource obtained by identifier alone has `Data == null`. Where the service supports retrieval, `Get()` or `GetAsync()` returns a **new** resource with the retrieved data, leaving the original resource's `Data` unchanged. Mutating operations do not refresh `Data`.
 `SandboxResource.Id` is the sandbox's opaque string identifier, not an ARM resource identifier.
+`SandboxResource` also offers async exec and process WebSocket streams and an HTTP log stream scoped to its `Id`.
 
 ### Models
 
@@ -141,8 +142,8 @@ await foreach (VolumeResource volume in sandboxGroupClient.GetVolumesAsync())
 Exec and process streams use WebSocket connections. The process stream sends one text frame per refresh in the service's `top` output format:
 
 ```C#
-SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
-await using SandboxProcessStream stream = await sandboxesClient.OpenSandboxProcessStreamAsync("<sandbox-id>");
+SandboxResource sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
+await using SandboxProcessStream stream = await sandbox.OpenSandboxProcessStreamAsync();
 string snapshot;
 while ((snapshot = await stream.ReadSnapshotAsync()) != null)
 {
@@ -157,10 +158,18 @@ The exec session sends a JSON start frame from `SandboxExecStartRequest`, then a
 ```C#
 using Azure.Containers.Apps.Sandbox.Models;
 
-SandboxExecStartRequest request = new SandboxExecStartRequest("/bin/sh");
-await using SandboxExecSession session = await sandboxesClient.StartSandboxExecSessionAsync("<sandbox-id>", request);
-await session.SendInputAsync(BinaryData.FromString("echo hello\n"));
-await session.CloseInputAsync();
+SandboxExecStartRequest request = new SandboxExecStartRequest("/bin/sh")
+{
+    Tty = false,
+    Stdin = false
+};
+request.Arguments.Add("-c");
+request.Arguments.Add("echo hello");
+SandboxResource sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
+await using SandboxExecSession session = await sandbox.StartSandboxExecSessionAsync(request);
+SandboxExecEvent started = await session.ReceiveAsync();
+if (started.Type != SandboxExecEventType.SessionId)
+    throw new InvalidOperationException("Exec session did not start.");
 
 SandboxExecEvent execEvent;
 while ((execEvent = await session.ReceiveAsync()).Type != SandboxExecEventType.Closed)
@@ -179,8 +188,9 @@ The low-level `ConnectToSandboxExecStreamAsync` and `ConnectToSandboxProcessesSt
 Log streaming is **HTTP chunked transfer**, not WebSocket. Dispose the returned `Stream` when finished; it is not buffered. The default format is plain text; `SandboxLogFormat.Json` returns newline-delimited JSON with `timestamp`, `stream`, and `message` fields.
 
 ```C#
-Response<Stream> response = await sandboxesClient.OpenSandboxLogStreamAsync(
-    "<sandbox-id>", logFormat: SandboxLogFormat.Json, follow: false);
+SandboxResource sandbox = sandboxGroupClient.GetSandbox("<sandbox-id>");
+Response<Stream> response = await sandbox.OpenSandboxLogStreamAsync(
+    logFormat: SandboxLogFormat.Json, follow: false);
 using StreamReader reader = new StreamReader(response.Value);
 string line;
 while ((line = await reader.ReadLineAsync()) != null)
@@ -228,6 +238,20 @@ $env:AZURE_TEST_MODE = "Live"
 dotnet test sdk/containerapps/Azure.Containers.Apps.Sandbox/tests/Azure.Containers.Apps.Sandbox.Tests.csproj -f net10.0
 ```
 
+To run only the WebSocket live tests (exec, including a TTY stdin-to-file round trip, and process streaming):
+
+```powershell
+$env:AZURE_TEST_MODE = "Live"
+dotnet test sdk/containerapps/Azure.Containers.Apps.Sandbox/tests/Azure.Containers.Apps.Sandbox.Tests.csproj -f net10.0 --filter 'FullyQualifiedName~SandboxWebSocketLiveTests'
+```
+
+To run the HTTP log stream live test (reads the JSON log response to completion):
+
+```powershell
+$env:AZURE_TEST_MODE = "Live"
+dotnet test sdk/containerapps/Azure.Containers.Apps.Sandbox/tests/Azure.Containers.Apps.Sandbox.Tests.csproj -f net10.0 --filter 'FullyQualifiedName~SandboxLogStreamLiveTests'
+```
+
 The resource template deploys a `Microsoft.App/sandboxGroups` resource in `eastus2` and grants the generated test identity the `Container Apps SandboxGroup Data Owner` role. Override the `sandboxLocation` template parameter if the service is enabled in a different region for your subscription.
 
 The sandbox group, endpoint, and role assignment are shared test infrastructure. Sandboxes, volumes, snapshots, secrets, egress policies, content packages, files, and other mutable data-plane resources are created by individual tests and registered for reverse-order cleanup in `SandboxClientTestBase`.
@@ -245,4 +269,4 @@ The test suite consolidates the generated TypeSpec scenarios by resource area:
 - volumes, volume files, mounts, snapshots, and sandbox files;
 - secrets, content packages, named egress policies, and disk images.
 
-Connection, credential, and interactive stream request construction is covered with `MockTransport`, including pagination, optional query parameters, and request serialization. Provider authorization and WebSocket frame exchange are not exercised as live tests because they require provider-specific secrets or transport support outside Azure.Core HTTP recording. Long-running disk-image creation and commit scenarios are marked live-only.
+Connection, credential, and interactive stream request construction is covered with `MockTransport`, including pagination, optional query parameters, and request serialization. WebSocket exec and process streams have live-only tests because Azure.Core HTTP recording cannot capture WebSocket frames. The exec stdin test writes an exact byte count through a TTY session, then reads the file through a second exec session to verify that the input reached the container. The HTTP log stream live test checks that historical JSON logs can be read to completion. Provider authorization requires provider-specific secrets and is not exercised by these tests. Long-running disk-image creation and commit scenarios are marked live-only.
