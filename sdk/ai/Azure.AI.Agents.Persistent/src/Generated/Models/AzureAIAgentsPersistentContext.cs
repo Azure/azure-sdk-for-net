@@ -249,7 +249,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(UnknownStructuredToolOutput))]
     [ModelReaderWriterBuildable(typeof(UnknownToolDefinition))]
     [ModelReaderWriterBuildable(typeof(UnknownVectorStoreChunkingStrategy))]
-    [ModelReaderWriterBuildable(typeof(UnknownVectorStoreChunkingStrategyResult))]
+    [ModelReaderWriterBuildable(typeof(UnknownVectorStoreChunkingStrategyResponse))]
     [ModelReaderWriterBuildable(typeof(UpdateAgentRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateMessageRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateRunRequest))]

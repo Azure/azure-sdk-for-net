@@ -15,7 +15,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a vector store chunking strategy configuration.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorStoreAutoChunkingStrategyResponse"/> and <see cref="VectorStoreStaticChunkingStrategyResponse"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownVectorStoreChunkingStrategyResult))]
+    [PersistableModelProxy(typeof(UnknownVectorStoreChunkingStrategyResponse))]
     public abstract partial class VectorStoreChunkingStrategyResponse : IJsonModel<VectorStoreChunkingStrategyResponse>
     {
         /// <param name="data"> The data to parse. </param>
@@ -130,7 +130,7 @@ namespace Azure.AI.Agents.Persistent
                         return VectorStoreStaticChunkingStrategyResponse.DeserializeVectorStoreStaticChunkingStrategyResponse(element, options);
                 }
             }
-            return UnknownVectorStoreChunkingStrategyResult.DeserializeUnknownVectorStoreChunkingStrategyResult(element, options);
+            return UnknownVectorStoreChunkingStrategyResponse.DeserializeUnknownVectorStoreChunkingStrategyResponse(element, options);
         }
     }
 }
