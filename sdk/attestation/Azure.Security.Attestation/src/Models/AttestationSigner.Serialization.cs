@@ -8,6 +8,8 @@ using System.Text.Json;
 
 namespace Azure.Security.Attestation
 {
+    // AttestationSigner is the 1.0.0 certificate-based type, but its wire shape is a JsonWebKey; generated
+    // AttestationResult serialization calls DeserializeAttestationSigner for PolicySigner and DeprecatedPolicySigner.
     public partial class AttestationSigner : IJsonModel<AttestationSigner>
     {
         void IJsonModel<AttestationSigner>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
