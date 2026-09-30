@@ -20,21 +20,5 @@ namespace Azure.Security.Attestation
         {
             return new TpmAttestationResponse(data, additionalBinaryDataProperties: null);
         }
-
-        /// <summary> Attestation request for Trusted Platform Module (TPM) attestation. </summary>
-        /// <param name="data"> Protocol data containing artifacts for attestation. </param>
-        /// <returns> A new <see cref="Attestation.TpmAttestationRequest"/> instance for mocking. </returns>
-        public static TpmAttestationRequest TpmAttestationRequest(BinaryData data = default)
-        {
-            return new TpmAttestationRequest(data, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> StoredAttestationPolicy. </summary>
-        /// <param name="attestationPolicy"> Policy text to set as a sequence of UTF-8 encoded octets. </param>
-        /// <returns> A new <see cref="Attestation.StoredAttestationPolicy"/> instance for mocking. </returns>
-        public static StoredAttestationPolicy StoredAttestationPolicy(string attestationPolicy = default)
-        {
-            return new StoredAttestationPolicy(attestationPolicy, additionalBinaryDataProperties: null);
-        }
     }
 }
