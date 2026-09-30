@@ -102,7 +102,7 @@ namespace Azure.Containers.Apps.Sandbox
         {
             SandboxStreamMessage message = await _stream.ReceiveMessageAsync(cancellationToken).ConfigureAwait(false);
             if (message.Type == SandboxStreamMessageType.Close)
-                return new SandboxExecEvent(SandboxExecEventType.Closed);
+                return new SandboxExecEvent(SandboxExecEventType.Closed, text: message.CloseDescription);
             if (message.Type != SandboxStreamMessageType.Text)
                 throw new InvalidDataException("Exec stream messages must be JSON text.");
 
