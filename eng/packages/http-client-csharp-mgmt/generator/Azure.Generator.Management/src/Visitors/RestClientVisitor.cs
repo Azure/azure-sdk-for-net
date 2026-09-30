@@ -121,15 +121,19 @@ internal class RestClientVisitor : ScmLibraryVisitor
         }
         if (retainedParameters.Count > 0)
         {
-            // Collection-result call sites read this completed signature and match the
-            // retained parameters to their initial-request fields. Do not replay path
-            // parameters into the next-link URI or mark them as reinjected query values.
+            // Azure paging call sites filter captured fields in their initial order.
+            // Merge restored and surviving parameters in that same order, keeping the
+            // surviving providers intact. Context is not replayed into the next-link URI.
             var signature = requestMethod.Signature;
+            var parametersByName = signature.Parameters.Skip(1).ToDictionary(p => p.Name, StringComparer.Ordinal);
+            foreach (var parameter in retainedParameters)
+            {
+                parametersByName.TryAdd(parameter.Name, parameter);
+            }
             signature.Update(parameters:
             [
                 signature.Parameters[0],
-                .. initialSignature.Parameters.Where(retainedParameters.Contains),
-                .. signature.Parameters.Skip(1)
+                .. initialSignature.Parameters.Where(p => parametersByName.ContainsKey(p.Name)).Select(p => parametersByName[p.Name])
             ]);
             requestMethod.Update(signature: signature);
         }

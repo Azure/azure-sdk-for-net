@@ -1333,7 +1333,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (client, [model]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDynamicResourcePaging(string mode, string kindName = "kind", bool enumKind = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithDynamicResourcePaging(string mode, string kindName = "kind", bool enumKind = false, bool reinjectScope = false)
         {
             var (originalClient, models) = ClientWithDynamicResourceTypes();
             var read = originalClient.Methods.Single();
@@ -1348,14 +1348,23 @@ namespace Azure.Generator.Management.Tests.Common
                 InputFactory.Property("value", InputFactory.Array(models[0])),
                 InputFactory.Property("nextLink", InputPrimitiveType.Url)
             ]);
-            const string path = "/providers/Microsoft.Tests/{kind}";
-            var operation = InputFactory.Operation("GetAll", path: path, parameters: [kind, filter, pageSize, version],
+            var scope = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
+            var scopePrefix = reinjectScope ? "/resourceGroups/{resourceGroupName}" : string.Empty;
+            if (reinjectScope)
+            {
+                read.Operation.Update(path: scopePrefix + read.Operation.Path, parameters: [scope, .. read.Operation.Parameters]);
+                read.Update(parameters: [InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Path), .. read.Parameters]);
+            }
+            var path = scopePrefix + "/providers/Microsoft.Tests/{kind}";
+            var operation = InputFactory.Operation("GetAll", path: path, parameters: [.. reinjectScope ? new[] { scope } : [], kind, filter, pageSize, version],
                 responses: [InputFactory.OperationResponse(bodytype: page)]);
             var paging = new InputPagingServiceMetadata(["value"],
-                new InputNextLink(null, ["nextLink"], InputResponseLocation.Body, mode is "filter" or "both" ? [filter] : null),
+                new InputNextLink(null, ["nextLink"], InputResponseLocation.Body,
+                    reinjectScope ? [scope, .. mode is "filter" or "both" ? new[] { filter } : []] : mode is "filter" or "both" ? [filter] : null),
                 null, mode is "page-size" or "both" ? ["maxPageSize"] : []);
             var list = InputFactory.PagingServiceMethod("GetAll", operation, pagingMetadata: paging, parameters:
             [
+                .. reinjectScope ? new[] { InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Path) } : [],
                 InputFactory.MethodParameter(kindName, kindType, serializedName: "kind", isRequired: true, location: InputRequestLocation.Path),
                 InputFactory.MethodParameter("filter", InputPrimitiveType.String, serializedName: "$filter", location: InputRequestLocation.Query),
                 InputFactory.MethodParameter("maxPageSize", InputPrimitiveType.Int32, location: InputRequestLocation.Query)
@@ -1364,7 +1373,7 @@ namespace Azure.Generator.Management.Tests.Common
             [
                 new ResourceMethod(ResourceOperationKind.Read, read, new RequestPathPattern(read.Operation.Path), new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!),
                 new ResourceMethod(ResourceOperationKind.List, list, new RequestPathPattern(path), new ArmScopeInfo(ResourceScope.Tenant, new RequestPathPattern("/"), null), null!)
-            ], $"/providers/Microsoft.Tests/{resourceKind}/{{name}}", $"Microsoft.Tests/{resourceKind}", null, ResourceScope.Tenant, resourceKind, null, "/")).ToArray();
+            ], $"{scopePrefix}/providers/Microsoft.Tests/{resourceKind}/{{name}}", $"Microsoft.Tests/{resourceKind}", null, ResourceScope.Tenant, resourceKind, null, "/")).ToArray();
             var client = InputFactory.Client("DynamicPaging", methods: [read, list], decorators: [BuildArmProviderSchemaMultiResource(resources)]);
             return (client, [.. models, page]);
         }
