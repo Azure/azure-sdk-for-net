@@ -44,6 +44,7 @@ SandboxGroupClient sandboxGroupClient = new SandboxGroupClient(
 ### Sandbox group client
 
 `SandboxGroupClient` is the entry point for a specific sandbox group. It contains the endpoint and Azure resource identifiers required by every request.
+Its read-only `SubscriptionId`, `ResourceGroupName`, and `Name` properties expose the identifiers supplied when the client was created. `Id` is the sandbox group's full Azure Resource Manager `ResourceIdentifier`; it does not represent an individual sandbox.
 
 ### Resource subclients
 
@@ -61,6 +62,7 @@ The client caches and reuses each subclient.
 ### Resource clients
 
 For operations on a known resource, `SandboxGroupClient` also offers resource clients such as `GetSandbox(id)`, `GetVolume(volumeName)`, and `GetSecret(secretId)`. Each resource client holds its identifier and delegates requests to the corresponding subclient. The group's create and list methods return resource clients with their `Data` populated from the service response; a resource obtained by identifier alone has `Data == null`. Where the service supports retrieval, `Get()` or `GetAsync()` returns a **new** resource with the retrieved data, leaving the original resource's `Data` unchanged. Mutating operations do not refresh `Data`.
+`SandboxResource.Id` is the sandbox's opaque string identifier, not an ARM resource identifier.
 
 ### Models
 

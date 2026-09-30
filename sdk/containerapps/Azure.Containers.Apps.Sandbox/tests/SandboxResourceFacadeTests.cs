@@ -22,6 +22,21 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             """{"id":"sandbox-id","sourcesRef":{"diskImage":{"name":"ubuntu","isPublic":true}},"resources":{"cpu":"1","memory":"2Gi"},"state":"Running"}""";
 
         [Test]
+        public void GroupExposesCapturedIdentifiersWithoutSendingRequests()
+        {
+            MockTransport transport = new MockTransport();
+            SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+
+            Assert.That(group.SubscriptionId, Is.EqualTo(SandboxClientTestHelpers.SubscriptionId));
+            Assert.That(group.ResourceGroupName, Is.EqualTo(SandboxClientTestHelpers.ResourceGroupName));
+            Assert.That(group.Name, Is.EqualTo(SandboxClientTestHelpers.SandboxGroupName));
+            Assert.That(group.Id.ToString(), Is.EqualTo(
+                $"/subscriptions/{SandboxClientTestHelpers.SubscriptionId}/resourceGroups/{SandboxClientTestHelpers.ResourceGroupName}/providers/Microsoft.App/sandboxGroups/{SandboxClientTestHelpers.SandboxGroupName}"));
+            Assert.That(group.GetSandbox("opaque-id").Id, Is.EqualTo("opaque-id"));
+            Assert.That(transport.Requests, Is.Empty);
+        }
+
+        [Test]
         public void ResourceFactoriesValidateNamesAndDoNotFetchData()
         {
             SandboxGroupClient group = SandboxClientTestHelpers.CreateSandboxGroupClient(new MockTransport());
