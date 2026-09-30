@@ -1,0 +1,23 @@
+# These resource facades are operational clients, not output models. AZC0035's
+# model-factory requirement does not apply; each approval is scoped to one
+# existing resource type so future types remain subject to the analyzer.
+# ConnectionResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.ConnectionResource
+# ContentPackageResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.ContentPackageResource
+# CredentialResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.CredentialResource
+# DiskImageResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.DiskImageResource
+# EgressPolicyResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.EgressPolicyResource
+# PublicDiskImageResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.PublicDiskImageResource
+# SandboxResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.SandboxResource
+# SecretResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.SecretResource
+# SnapshotResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.SnapshotResource
+# VolumeResource is an operational client, not an output model.
+nowarn:AZC0035 T:Azure.Containers.Apps.Sandbox.VolumeResource
