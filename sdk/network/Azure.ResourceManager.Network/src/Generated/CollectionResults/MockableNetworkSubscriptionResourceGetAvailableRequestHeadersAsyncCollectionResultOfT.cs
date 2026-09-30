@@ -17,19 +17,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT : AsyncPageable<string>
+    internal partial class MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT : AsyncPageable<string>
     {
         private readonly ApplicationGateways _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApplicationGateways client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGateways client, Guid subscriptionId, RequestContext context, string diagnosticScope)
+        public MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGateways client, Guid subscriptionId, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Network
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
