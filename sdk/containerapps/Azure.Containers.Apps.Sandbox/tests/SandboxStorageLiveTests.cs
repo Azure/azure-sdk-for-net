@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -51,9 +53,11 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             SandboxGroupVolume volume = await CreateVolumeAsync(sandboxGroup);
             string directory = "workspace";
             string path = $"{directory}/example.txt";
-            BinaryData content = BinaryData.FromString("Hello");
+            const string fileContent = "Hello";
 
             Response<VolumePathItem> directoryResponse = await client.CreateVolumeDirectoryAsync(volume.VolumeName, directory);
+            using MemoryStream uploadContent = new MemoryStream(Encoding.UTF8.GetBytes(fileContent));
+            using RequestContent requestContent = RequestContent.Create(uploadContent);
             RequestContext context = new RequestContext
             {
                 ErrorOptions = ErrorOptions.NoThrow
@@ -61,7 +65,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Response uploadResponse = await client.UploadVolumeFileAsync(
                 volume.VolumeName,
                 path,
-                RequestContent.Create(content),
+                requestContent,
                 overwrite: true,
                 matchConditions: default,
                 context);
@@ -69,13 +73,15 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Response<VolumeListDirectoryResult> listResponse = await client.GetVolumeFilesMetadataAsync(
                 volume.VolumeName,
                 directory);
-            Response<BinaryData> downloadResponse = await client.DownloadVolumeFileAsync(volume.VolumeName, path);
+            Response<Stream> downloadResponse = await client.DownloadVolumeFileAsync(volume.VolumeName, path);
+            using StreamReader reader = new StreamReader(downloadResponse.Value);
+            string downloadedContent = await reader.ReadToEndAsync();
 
             Assert.That(directoryResponse.Value.IsDirectory, Is.True);
             Assert.That(uploadResponse.Status, Is.EqualTo(200));
             Assert.That(uploadedItem.Path, Is.EqualTo(path));
             Assert.That(listResponse.Value, Is.Not.Null);
-            Assert.That(downloadResponse.Value.ToString(), Is.EqualTo("Hello"));
+            Assert.That(downloadedContent, Is.EqualTo(fileContent));
 
             await DeleteVolumePathAsync(client, volume.VolumeName, path);
             await DeleteVolumePathAsync(client, volume.VolumeName, directory, recursive: true);

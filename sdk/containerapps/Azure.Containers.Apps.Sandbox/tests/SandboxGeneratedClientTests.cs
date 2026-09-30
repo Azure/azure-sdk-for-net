@@ -3,6 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -123,15 +127,17 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             {
                 IfMatch = new ETag("\"etag\"")
             };
+            using MemoryStream content = new MemoryStream(Encoding.UTF8.GetBytes("content"));
 
             Response<VolumePathItem> response = client.UploadVolumeFile(
                 "volume",
                 "workspace/example.txt",
-                BinaryData.FromString("content"),
+                content,
                 overwrite: true,
                 matchConditions: conditions);
 
             Assert.That(response.Value.Path, Is.EqualTo("workspace/example.txt"));
+            Assert.That(content.CanRead, Is.True);
             Assert.That(transport.Requests[0].Headers.TryGetValue("If-Match", out string ifMatch), Is.True);
             Assert.That(ifMatch, Is.EqualTo("\"etag\""));
             Assert.That(transport.Requests[0].Uri.Query, Does.Contain("overwrite=true"));
@@ -146,20 +152,124 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             VolumesClient client = SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
                 .GetVolumesClient();
+            using MemoryStream content = new MemoryStream(Encoding.UTF8.GetBytes("content"));
 
             Response<VolumePathItem> response = client.UploadVolumeFile(
                 "volume",
                 "workspace/example.txt",
-                BinaryData.FromString("content"),
+                content,
                 overwrite: false);
 
             Assert.That(response.Value.Path, Is.EqualTo("workspace/example.txt"));
             Assert.That(transport.Requests[0].Uri.Query, Does.Contain("overwrite=false"));
         }
 
+        [Test]
+        public async Task UploadVolumeFileAsyncPreservesStreamAndInitialPosition()
+        {
+            MockTransport transport = new MockTransport(
+                SandboxClientTestHelpers.CreateJsonResponse(201,
+                    """{"itemName":"example.txt","path":"workspace/example.txt","isDirectory":false}"""));
+            VolumesClient client = SandboxClientTestHelpers
+                .CreateSandboxGroupClient(transport)
+                .GetVolumesClient();
+            byte[] payload = Encoding.UTF8.GetBytes("skip-content");
+            using MemoryStream content = new MemoryStream(payload)
+            {
+                Position = 5
+            };
+
+            Response<VolumePathItem> response = await client.UploadVolumeFileAsync(
+                "volume",
+                "workspace/example.txt",
+                content);
+
+            Assert.That(response.Value.Path, Is.EqualTo("workspace/example.txt"));
+            Assert.That(content.CanRead, Is.True);
+            Assert.That(content.Position, Is.EqualTo(5));
+            using MemoryStream requestBody = new MemoryStream();
+            transport.Requests[0].Content.WriteTo(requestBody, CancellationToken.None);
+            Assert.That(Encoding.UTF8.GetString(requestBody.ToArray()), Is.EqualTo("content"));
+        }
+
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        public void UploadVolumeFileRejectsInvalidStreams(bool canRead, bool canSeek)
+        {
+            VolumesClient client = SandboxClientTestHelpers
+                .CreateSandboxGroupClient(new MockTransport())
+                .GetVolumesClient();
+            using Stream content = new CapabilityStream(canRead, canSeek);
+
+            ArgumentException exception = Assert.Throws<ArgumentException>(() =>
+                client.UploadVolumeFile("volume", "workspace/example.txt", content));
+
+            Assert.That(exception.ParamName, Is.EqualTo("content"));
+        }
+
+        [Test]
+        public void DownloadVolumeFileReturnsReadableStreamAfterMethodReturns()
+        {
+            MockResponse response = new MockResponse(200)
+            {
+                ContentStream = new MemoryStream(Encoding.UTF8.GetBytes("downloaded"))
+            };
+            VolumesClient client = SandboxClientTestHelpers
+                .CreateSandboxGroupClient(new MockTransport(response))
+                .GetVolumesClient();
+
+            Response<Stream> download = client.DownloadVolumeFile("volume", "workspace/example.txt");
+            using StreamReader reader = new StreamReader(download.Value);
+
+            Assert.That(reader.ReadToEnd(), Is.EqualTo("downloaded"));
+        }
+
         private static string CreateSandboxesNextLink(string skipToken) =>
             $"{SandboxClientTestHelpers.Endpoint}/subscriptions/{SandboxClientTestHelpers.SubscriptionId}" +
             $"/resourceGroups/{SandboxClientTestHelpers.ResourceGroupName}/sandboxGroups/{SandboxClientTestHelpers.SandboxGroupName}" +
             $"/sandboxes?skipToken={skipToken}";
+
+        private sealed class CapabilityStream : Stream
+        {
+            private readonly MemoryStream _stream = new MemoryStream(Encoding.UTF8.GetBytes("content"));
+            private readonly bool _canRead;
+            private readonly bool _canSeek;
+
+            public CapabilityStream(bool canRead, bool canSeek)
+            {
+                _canRead = canRead;
+                _canSeek = canSeek;
+            }
+
+            public override bool CanRead => _canRead;
+            public override bool CanSeek => _canSeek;
+            public override bool CanWrite => false;
+            public override long Length => _stream.Length;
+            public override long Position
+            {
+                get => _stream.Position;
+                set => _stream.Position = value;
+            }
+
+            public override void Flush() => _stream.Flush();
+            public override int Read(byte[] buffer, int offset, int count) =>
+                _stream.Read(buffer, offset, count);
+            public override long Seek(long offset, SeekOrigin origin) =>
+                _stream.Seek(offset, origin);
+            public override void SetLength(long value) =>
+                throw new NotSupportedException();
+            public override void Write(byte[] buffer, int offset, int count) =>
+                throw new NotSupportedException();
+
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing)
+                {
+                    _stream.Dispose();
+                }
+
+                base.Dispose(disposing);
+            }
+        }
     }
 }

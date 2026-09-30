@@ -62,6 +62,10 @@ The client caches and reuses each subclient.
 
 Request and response models are in the `Azure.Containers.Apps.Sandbox.Models` namespace.
 
+### File transfer streams
+
+Sandbox file, volume file, and content package upload convenience methods accept readable, seekable `Stream` instances. The client does not dispose upload streams. File download convenience methods return unbuffered `Stream` instances that the caller must dispose.
+
 ## Examples
 
 ### Create and delete a sandbox
