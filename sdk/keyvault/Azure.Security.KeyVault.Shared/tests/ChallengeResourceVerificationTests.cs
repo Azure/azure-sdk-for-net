@@ -39,7 +39,8 @@ namespace Azure.Security.KeyVault.Tests
                 "https://resource.example%2Fpath@contoso.test",
                 "https://resource.example@contoso.test:443",
                 "https://resource.example@contoso.test:8443",
-                "https://resource.example@contoso.test/")] string resource,
+                "https://resource.example@contoso.test/",
+                "https://@contoso.test")] string resource,
             [Values("resource", "scope")] string parameter,
             [Values(false, true)] bool includeClaims)
         {
@@ -51,12 +52,13 @@ namespace Azure.Security.KeyVault.Tests
             [Values(
                 "https://resource.example%40contoso.test",
                 "https://contoso.test:invalid",
+                "https://user:secret@contoso.test:invalid",
                 "https://[invalid",
                 "relative-resource")] string resource,
             [Values("resource", "scope")] string parameter,
             [Values(false, true)] bool includeClaims)
         {
-            AssertInvalidChallenge(resource, parameter, includeClaims, $"The challenge contains invalid scope '{resource}/.default'.");
+            AssertInvalidChallenge(resource, parameter, includeClaims, "The challenge contains an invalid scope.");
         }
 
         private void AssertInvalidChallenge(string resource, string parameter, bool includeClaims, string expectedMessage)
@@ -179,7 +181,6 @@ namespace Azure.Security.KeyVault.Tests
                 "https://xn--bcher-kva.test",
                 "https://contoso.test/path@segment",
                 "https://contoso.test/path%40segment",
-                "https://@contoso.test",
                 "http://contoso.test")] string resource,
             [Values("resource", "scope")] string parameter)
         {

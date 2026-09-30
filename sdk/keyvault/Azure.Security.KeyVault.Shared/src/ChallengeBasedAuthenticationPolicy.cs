@@ -236,10 +236,11 @@ namespace Azure.Security.KeyVault
         {
             if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
             {
-                throw new InvalidOperationException($"The challenge contains invalid scope '{scope}'.");
+                throw new InvalidOperationException("The challenge contains an invalid scope.");
             }
 
-            if (scopeUri.UserInfo.Length > 0)
+            // UserInfo can be empty for an authority such as https://@host, so check the authority delimiter.
+            if (scopeUri.GetComponents(UriComponents.StrongAuthority, UriFormat.UriEscaped).IndexOf('@') >= 0)
             {
                 throw new InvalidOperationException("The challenge scope must not contain user information.");
             }
