@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary>
     /// Base class for WorkloadNetworkDhcpServer and WorkloadNetworkDhcpRelay to
     /// inherit from
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadNetworkDhcpServer"/> and <see cref="WorkloadNetworkDhcpRelay"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadNetworkDhcpRelay"/> and <see cref="WorkloadNetworkDhcpServer"/>.
     /// </summary>
     public abstract partial class WorkloadNetworkDhcpEntity
     {

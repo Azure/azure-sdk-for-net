@@ -77,7 +77,7 @@ if: >-
 
 engine:
   id: copilot
-  version: "1.0.83"
+  version: "1.0.80"
 
 # Agent job runs read-only; copilot-requests:write bills Copilot CLI usage to the org.
 # The separate safe-outputs jobs receive the write scopes they need (contents/pull-requests).

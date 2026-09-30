@@ -30,7 +30,7 @@ Synchronous sample:
 string WebIQProjectConnectionId = projectClient.Connections.GetConnection(WebIQProjectConnectionName).Value.Id;
 WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
 {
-    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -47,7 +47,7 @@ Asynchronous sample:
 string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
 WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
 {
-    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
