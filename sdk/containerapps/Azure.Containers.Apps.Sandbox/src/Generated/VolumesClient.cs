@@ -630,38 +630,6 @@ namespace Azure.Containers.Apps.Sandbox
             }
         }
 
-        /// <summary> Download a file from a volume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="path"> The file path to download. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> DownloadVolumeFile(string volumeName, string path, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
-            Response result = DownloadVolumeFile(volumeName, path, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Download a file from a volume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="path"> The file path to download. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="path"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> DownloadVolumeFileAsync(string volumeName, string path, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-
-            Response result = await DownloadVolumeFileAsync(volumeName, path, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Create a directory within a volume.
         /// <list type="bullet">
@@ -1036,46 +1004,6 @@ namespace Azure.Containers.Apps.Sandbox
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Upload a file to a volume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="path"> The destination file path. </param>
-        /// <param name="content"> The file content to upload. </param>
-        /// <param name="overwrite"> Whether to replace an existing file. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VolumePathItem> UploadVolumeFile(string volumeName, string path, BinaryData content, bool? overwrite = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-            Argument.AssertNotNull(content, nameof(content));
-
-            Response result = UploadVolumeFile(volumeName, path, RequestContent.Create(content), overwrite, matchConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((VolumePathItem)result, result);
-        }
-
-        /// <summary> Upload a file to a volume. </summary>
-        /// <param name="volumeName"> The volume name. </param>
-        /// <param name="path"> The destination file path. </param>
-        /// <param name="content"> The file content to upload. </param>
-        /// <param name="overwrite"> Whether to replace an existing file. </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VolumePathItem>> UploadVolumeFileAsync(string volumeName, string path, BinaryData content, bool? overwrite = default, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(path, nameof(path));
-            Argument.AssertNotNull(content, nameof(content));
-
-            Response result = await UploadVolumeFileAsync(volumeName, path, RequestContent.Create(content), overwrite, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VolumePathItem)result, result);
         }
     }
 }

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.TestFramework;
@@ -24,6 +26,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             SandboxesClient files = sandboxGroup.GetSandboxesClient();
             string directory = $"/tmp/{Recording.GenerateId("sdk-", 24)}";
             string path = $"{directory}/example.txt";
+            const string fileContent = "Hello from the .NET SDK";
 
             Response<SandboxFileOperationResult> directoryResponse = await files.CreateSandboxDirectoryAsync(
                 sandbox.Id,
@@ -31,22 +34,25 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 {
                     CreateParents = true
                 });
+            using MemoryStream uploadContent = new MemoryStream(Encoding.UTF8.GetBytes(fileContent));
             Response<WriteFileResult> writeResponse = await files.UploadSandboxFileAsync(
                 sandbox.Id,
                 path,
-                BinaryData.FromString("Hello from the .NET SDK"),
+                uploadContent,
                 createDirs: true);
             Response<SandboxFileInfo> metadataResponse =
                 await files.GetSandboxFileMetadataAsync(sandbox.Id, path);
             Response<SandboxDirectoryListingResult> listResponse =
                 await files.GetSandboxFilesMetadataAsync(sandbox.Id, directory);
-            Response<BinaryData> readResponse = await files.DownloadSandboxFileAsync(sandbox.Id, path);
+            Response<Stream> readResponse = await files.DownloadSandboxFileAsync(sandbox.Id, path);
+            using StreamReader reader = new StreamReader(readResponse.Value);
+            string downloadedContent = await reader.ReadToEndAsync();
 
             Assert.That(directoryResponse.Value, Is.Not.Null);
             Assert.That(writeResponse.Value, Is.Not.Null);
             Assert.That(metadataResponse.Value.Path, Is.EqualTo(path));
             Assert.That(listResponse.Value, Is.Not.Null);
-            Assert.That(readResponse.Value.ToString(), Is.EqualTo("Hello from the .NET SDK"));
+            Assert.That(downloadedContent, Is.EqualTo(fileContent));
 
             await files.DeleteSandboxFileAsync(sandbox.Id, path);
             await files.DeleteSandboxFileAsync(sandbox.Id, directory, recursive: true);

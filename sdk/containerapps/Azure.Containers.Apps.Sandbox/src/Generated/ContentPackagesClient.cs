@@ -357,35 +357,5 @@ namespace Azure.Containers.Apps.Sandbox
                 throw;
             }
         }
-
-        /// <summary> Creates a content package from uploaded binary content and optional labels. </summary>
-        /// <param name="content"> Binary content of the package. </param>
-        /// <param name="contentType"> Media type of the uploaded content. </param>
-        /// <param name="labels"> Comma-separated key=value labels that all resources must match. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ContentPackage> UploadContentPackage(BinaryData content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            Response result = UploadContentPackage(RequestContent.Create(content), contentType, labels, cancellationToken.ToRequestContext());
-            return Response.FromValue((ContentPackage)result, result);
-        }
-
-        /// <summary> Creates a content package from uploaded binary content and optional labels. </summary>
-        /// <param name="content"> Binary content of the package. </param>
-        /// <param name="contentType"> Media type of the uploaded content. </param>
-        /// <param name="labels"> Comma-separated key=value labels that all resources must match. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ContentPackage>> UploadContentPackageAsync(BinaryData content, string contentType = default, string labels = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            Response result = await UploadContentPackageAsync(RequestContent.Create(content), contentType, labels, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ContentPackage)result, result);
-        }
     }
 }
