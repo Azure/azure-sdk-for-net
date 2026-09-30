@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(data.ChangeNumber);
         }
 
-        // Regression test for ManagedRuleSetRuleGroup deserialization with mixed string/number rule IDs
+        // API version 2026-01-01 changes the rules wire field from string[] to int32[].
         [Test]
-        public void DeserializeManagedRuleSetRuleGroupWithMixedRuleTypes()
+        public void DeserializeManagedRuleSetRuleGroupWithIntegerRuleIds()
         {
             using var sr = new StreamReader(Path.Combine("TestData", "ManagedRuleSetRuleGroup.json"));
             using var jsonContent = JsonDocument.Parse(sr.BaseStream);
@@ -84,13 +84,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.NotNull(data.RuleIds);
             Assert.AreEqual(6, data.RuleIds.Count);
 
-            // Verify that both string and numeric rule IDs are properly converted to strings
-            Assert.AreEqual("920100", data.RuleIds[0]); // Originally string
-            Assert.AreEqual("920110", data.RuleIds[1]); // Originally number
-            Assert.AreEqual("920120", data.RuleIds[2]); // Originally string
-            Assert.AreEqual("920130", data.RuleIds[3]); // Originally number
-            Assert.AreEqual("920140", data.RuleIds[4]); // Originally string
-            Assert.AreEqual("920150", data.RuleIds[5]); // Originally number
+            CollectionAssert.AreEqual(new[] { 920100, 920110, 920120, 920130, 920140, 920150 }, data.RuleIds);
         }
     }
 }
