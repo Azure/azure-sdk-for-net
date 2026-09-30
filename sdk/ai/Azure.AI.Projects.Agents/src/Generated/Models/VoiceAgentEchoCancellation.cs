@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Server-side echo cancellation settings for input audio. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentEchoCancellation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

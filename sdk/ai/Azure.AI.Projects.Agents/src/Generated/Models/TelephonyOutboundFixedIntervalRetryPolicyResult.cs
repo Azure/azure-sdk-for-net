@@ -10,27 +10,26 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
     [Experimental("AAIP001")]
-    public partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicyResult
+    public partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicy
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/>. </summary>
-        /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. </param>
         /// <param name="interval"> The fixed delay in seconds between attempts. </param>
-        internal TelephonyOutboundFixedIntervalRetryPolicyResult(int maxAttempts, TimeSpan interval) : base(TelephonyOutboundRetryPolicyType.FixedInterval, maxAttempts)
+        public TelephonyOutboundFixedIntervalRetryPolicyResult(TimeSpan interval) : base(TelephonyOutboundRetryPolicyType.FixedInterval)
         {
             Interval = interval;
         }
 
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/>. </summary>
-        /// <param name="type"> The retry strategy. </param>
-        /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. </param>
+        /// <param name="type"> The retry strategy. Only fixed-interval retries are currently supported. </param>
+        /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. Defaults to 1. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="interval"> The fixed delay in seconds between attempts. </param>
-        internal TelephonyOutboundFixedIntervalRetryPolicyResult(TelephonyOutboundRetryPolicyType @type, int maxAttempts, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan interval) : base(@type, maxAttempts, additionalBinaryDataProperties)
+        internal TelephonyOutboundFixedIntervalRetryPolicyResult(TelephonyOutboundRetryPolicyType @type, int? maxAttempts, IDictionary<string, BinaryData> additionalBinaryDataProperties, TimeSpan interval) : base(@type, maxAttempts, additionalBinaryDataProperties)
         {
             Interval = interval;
         }
 
         /// <summary> The fixed delay in seconds between attempts. </summary>
-        public TimeSpan Interval { get; }
+        public TimeSpan Interval { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Fabric.Models
         {
             Argument.AssertNotNull(administration, nameof(administration));
 
+            Overage = new CapacityOverageProperties();
             Administration = administration;
         }
 

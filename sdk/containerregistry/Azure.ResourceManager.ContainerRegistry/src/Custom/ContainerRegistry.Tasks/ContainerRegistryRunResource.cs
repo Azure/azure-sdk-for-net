@@ -4,17 +4,17 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
-using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ContainerRegistry.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {

@@ -10096,7 +10096,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="previousKeys"> A readonly collection of key vault keys previously used by this disk encryption set while a key rotation is in progress. It will be empty if there is no ongoing key rotation. </param>
         /// <param name="provisioningState"> The disk encryption set provisioning state. </param>
         /// <param name="rotationToLatestKeyVersionEnabled"> Set this flag to true to enable auto-updating of this disk encryption set to the latest key version. </param>
-        /// <param name="lastKeyRotationTimestamp"></param>
+        /// <param name="lastKeyRotationTimestamp"> The time when the active key of this disk encryption set was updated. </param>
         /// <param name="autoKeyRotationError"> The error that was encountered during auto-key rotation. If an error is present, then auto-key rotation will not be attempted until the error on this disk encryption set is fixed. </param>
         /// <param name="federatedClientId"> Multi-tenant application client id to access key vault in a different tenant. Setting the value to 'None' will clear the property. </param>
         /// <returns> A new <see cref="Compute.DiskEncryptionSetData"/> instance for mocking. </returns>
@@ -10110,13 +10110,13 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
+                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && lastKeyRotationTimestamp is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
                     encryptionType,
                     activeKey,
                     (previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>()).ToList(),
                     provisioningState,
                     rotationToLatestKeyVersionEnabled,
-                    default,
+                    lastKeyRotationTimestamp,
                     autoKeyRotationError,
                     federatedClientId,
                     default),
@@ -10831,7 +10831,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
-        /// <param name="restore"></param>
+        /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
@@ -10843,14 +10843,14 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && restore is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
                     securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
-                    default,
+                    restore,
                     validationsProfile,
                     default,
                     default),
