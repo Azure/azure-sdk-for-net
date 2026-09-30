@@ -106,18 +106,13 @@ namespace Azure.Security.Attestation
         [System.ObsoleteAttribute("DeprecatedVersion is deprecated, use Version instead")]
         public string DeprecatedVersion { get { throw null; } }
         public System.BinaryData EnclaveHeldData { get { throw null; } }
-        public System.DateTimeOffset? Exp { get { throw null; } }
         public System.DateTimeOffset Expiration { get { throw null; } }
-        public System.DateTimeOffset? Iat { get { throw null; } }
         public object InittimeClaims { get { throw null; } }
         public bool? IsDebuggable { get { throw null; } }
-        public string Iss { get { throw null; } }
         public System.DateTimeOffset IssuedAt { get { throw null; } }
         public System.Uri Issuer { get { throw null; } }
-        public string Jti { get { throw null; } }
         public string MrEnclave { get { throw null; } }
         public string MrSigner { get { throw null; } }
-        public System.DateTimeOffset? Nbf { get { throw null; } }
         public string Nonce { get { throw null; } }
         public System.DateTimeOffset NotBefore { get { throw null; } }
         public object PolicyClaims { get { throw null; } }

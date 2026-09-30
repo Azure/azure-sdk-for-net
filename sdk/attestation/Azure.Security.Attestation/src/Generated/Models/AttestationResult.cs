@@ -103,30 +103,6 @@ namespace Azure.Security.Attestation
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Unique Identifier for the token. </summary>
-        public string Jti { get; }
-
-        /// <summary> The Principal who issued the token. </summary>
-        public string Iss { get; }
-
-        /// <summary>
-        /// The time at which the token was issued, in the number of seconds since
-        /// 1970-01-0T00:00:00Z UTC
-        /// </summary>
-        public DateTimeOffset? Iat { get; }
-
-        /// <summary>
-        /// The expiration time after which the token is no longer valid, in the number of
-        /// seconds since 1970-01-0T00:00:00Z UTC
-        /// </summary>
-        public DateTimeOffset? Exp { get; }
-
-        /// <summary>
-        /// The not before time before which the token cannot be considered valid, in the
-        /// number of seconds since 1970-01-0T00:00:00Z UTC
-        /// </summary>
-        public DateTimeOffset? Nbf { get; }
-
         /// <summary> The Nonce input to the attestation request, if provided. </summary>
         public string Nonce { get; }
 

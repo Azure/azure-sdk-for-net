@@ -25,6 +25,13 @@ namespace Azure.Security.Attestation
         {
         }
 
+        // Raw JWT claims; exposed publicly through the typed properties below, as in 1.0.0.
+        internal string Jti { get; }
+        internal string Iss { get; }
+        internal DateTimeOffset? Iat { get; }
+        internal DateTimeOffset? Exp { get; }
+        internal DateTimeOffset? Nbf { get; }
+
         /// <summary>
         /// Gets the time when this attestation token was issued.
         /// </summary>
