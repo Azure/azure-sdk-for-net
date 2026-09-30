@@ -1,14 +1,11 @@
 # Release History
 
-## 2.0.0-beta.5 (Unreleased)
+## 2.0.0-beta.5 (2026-09-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added support for the `2026-07-31-preview` service API version (now the default `ServiceVersion`).
+- Added a `waitForCommit` parameter to `PostLedgerEntry`/`PostLedgerEntryAsync`. When set to `true`, the service holds the response until the transaction is globally committed and the returned `Operation` is already completed, so no additional status polling is required.
 
 ## 2.0.0-beta.4 (2026-09-18)
 

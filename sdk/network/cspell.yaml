@@ -5,7 +5,9 @@ overrides:
     words:
       - dscp
       - fqdns
+      - gbps
       - ipam
+      - lacp
       - snat
       - vnets
       - vxlan

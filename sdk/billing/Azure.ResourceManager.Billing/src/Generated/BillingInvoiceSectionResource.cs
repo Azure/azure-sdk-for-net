@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionAsyncCollectionResultOfT(
+            return new BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT(
+            return new BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT(
                 _invoiceSectionsRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
