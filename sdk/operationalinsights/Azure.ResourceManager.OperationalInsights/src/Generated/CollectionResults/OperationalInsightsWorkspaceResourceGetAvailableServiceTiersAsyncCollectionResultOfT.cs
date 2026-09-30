@@ -18,23 +18,23 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal partial class MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT : AsyncPageable<OperationalInsightsIntelligencePack>
+    internal partial class OperationalInsightsWorkspaceResourceGetAvailableServiceTiersAsyncCollectionResultOfT : AsyncPageable<OperationalInsightsAvailableServiceTier>
     {
-        private readonly IntelligencePacks _client;
+        private readonly AvailableServiceTiers _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The IntelligencePacks client used to send requests. </param>
+        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceResourceGetAvailableServiceTiersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The AvailableServiceTiers client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT(IntelligencePacks client, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context, string diagnosticScope)
+        public OperationalInsightsWorkspaceResourceGetAvailableServiceTiersAsyncCollectionResultOfT(AvailableServiceTiers client, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.OperationalInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OperationalInsightsWorkspaceResourceGetAvailableServiceTiersAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<OperationalInsightsIntelligencePack>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of OperationalInsightsWorkspaceResourceGetAvailableServiceTiersAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<OperationalInsightsAvailableServiceTier>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<OperationalInsightsIntelligencePack> result = ParseArrayFromResponse(response);
-            yield return Page<OperationalInsightsIntelligencePack>.FromValues(result, null, response);
+            IReadOnlyList<OperationalInsightsAvailableServiceTier> result = ParseArrayFromResponse(response);
+            yield return Page<OperationalInsightsAvailableServiceTier>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetIntelligencePacksRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
+            HttpMessage message = _client.CreateGetAvailableServiceTiersRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<OperationalInsightsIntelligencePack> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<OperationalInsightsAvailableServiceTier> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<OperationalInsightsIntelligencePack> result = new List<OperationalInsightsIntelligencePack>();
+            List<OperationalInsightsAvailableServiceTier> result = new List<OperationalInsightsAvailableServiceTier>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<OperationalInsightsIntelligencePack>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationalInsightsContext.Default));
+                result.Add(ModelReaderWriter.Read<OperationalInsightsAvailableServiceTier>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationalInsightsContext.Default));
             }
             return result;
         }
