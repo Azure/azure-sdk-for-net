@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Versioning.PreviewVersion.V2.csproj" />
+  <Project Path="tests/Versioning.PreviewVersion.V2.Tests.csproj" />
 </Solution>
