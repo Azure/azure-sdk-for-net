@@ -14,8 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AttestationRestClient sub-client. </summary>
-    public partial class AttestationRestClient
+    internal partial class AttestationRestClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;

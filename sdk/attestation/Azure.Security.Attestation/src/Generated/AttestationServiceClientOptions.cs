@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Security.Attestation
 {
     /// <summary> Client options for <see cref="AttestationServiceClient"/>. </summary>
-    public partial class AttestationServiceClientOptions : ClientOptions
+    internal partial class AttestationServiceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_06_01;
 
@@ -52,8 +52,7 @@ namespace Azure.Security.Attestation
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> The 2025-06-01 API version. </summary>
             V2025_06_01 = 1

@@ -75,11 +75,6 @@ namespace Azure.Security.Attestation
         public override T Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
     }
-    public partial class AttestationRestClient
-    {
-        protected AttestationRestClient() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-    }
     public partial class AttestationResult : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>
     {
         internal AttestationResult() { }
@@ -144,42 +139,6 @@ namespace Azure.Security.Attestation
         Azure.Security.Attestation.AttestationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AttestationServiceClient
-    {
-        protected AttestationServiceClient() { }
-        public AttestationServiceClient(Azure.Security.Attestation.AttestationServiceClientSettings settings) { }
-        public AttestationServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public AttestationServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationServiceClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Security.Attestation.AttestationRestClient GetAttestationRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.MetadataConfigurationRestClient GetMetadataConfigurationRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.PolicyCertificatesRestClient GetPolicyCertificatesRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.PolicyRestClient GetPolicyRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.SigningCertificatesRestClient GetSigningCertificatesRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.TcbBaselinesRestClient GetTcbBaselinesRestClient() { throw null; }
-    }
-    public static partial class AttestationServiceClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Security.Attestation.AttestationServiceClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Security.Attestation.AttestationServiceClientSettings> configureSettings) { throw null; }
-    }
-    public partial class AttestationServiceClientOptions : Azure.Core.ClientOptions
-    {
-        public AttestationServiceClientOptions(Azure.Security.Attestation.AttestationServiceClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationServiceClientOptions.ServiceVersion.V2025_06_01) { }
-        public enum ServiceVersion
-        {
-            V2025_06_01 = 1,
-        }
-    }
-    public partial class AttestationServiceClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public AttestationServiceClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Security.Attestation.AttestationServiceClientOptions Options { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class AttestationSigner : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationSigner>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationSigner>
     {
@@ -282,11 +241,6 @@ namespace Azure.Security.Attestation
         public static Azure.Security.Attestation.AzureSecurityAttestationContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class MetadataConfigurationRestClient
-    {
-        protected MetadataConfigurationRestClient() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyCertificateResolution : System.IEquatable<Azure.Security.Attestation.PolicyCertificateResolution>
     {
@@ -318,11 +272,6 @@ namespace Azure.Security.Attestation
         Azure.Security.Attestation.PolicyCertificatesModificationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyCertificatesModificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PolicyCertificatesRestClient
-    {
-        protected PolicyCertificatesRestClient() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyModification : System.IEquatable<Azure.Security.Attestation.PolicyModification>
@@ -357,16 +306,6 @@ namespace Azure.Security.Attestation
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.PolicyModificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PolicyRestClient
-    {
-        protected PolicyRestClient() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-    }
-    public partial class SigningCertificatesRestClient
-    {
-        protected SigningCertificatesRestClient() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-    }
     public partial class StoredAttestationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.StoredAttestationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>
     {
         public StoredAttestationPolicy() { }
@@ -380,11 +319,6 @@ namespace Azure.Security.Attestation
         Azure.Security.Attestation.StoredAttestationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.StoredAttestationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TcbBaselinesRestClient
-    {
-        protected TcbBaselinesRestClient() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
     }
     public partial class TpmAttestationRequest : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.TpmAttestationRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.TpmAttestationRequest>
     {

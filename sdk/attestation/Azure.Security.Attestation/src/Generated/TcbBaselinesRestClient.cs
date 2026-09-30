@@ -14,8 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The TcbBaselinesRestClient sub-client. </summary>
-    public partial class TcbBaselinesRestClient
+    internal partial class TcbBaselinesRestClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;

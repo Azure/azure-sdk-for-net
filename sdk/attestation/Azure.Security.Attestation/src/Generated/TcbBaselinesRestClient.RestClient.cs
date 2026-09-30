@@ -10,8 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary></summary>
-    public partial class TcbBaselinesRestClient
+    internal partial class TcbBaselinesRestClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

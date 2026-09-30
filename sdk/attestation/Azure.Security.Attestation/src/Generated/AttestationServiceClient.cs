@@ -6,15 +6,13 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> Describes the interface for the per-tenant enclave service. </summary>
-    public partial class AttestationServiceClient
+    internal partial class AttestationServiceClient
     {
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://attest.azure.net/.default" };
@@ -34,7 +32,6 @@ namespace Azure.Security.Attestation
         /// <summary> Initializes a new instance of AttestationServiceClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AttestationServiceClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AttestationServiceClientOptions())
         {
         }
@@ -66,15 +63,7 @@ namespace Azure.Security.Attestation
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AttestationServiceClient(Uri endpoint, TokenCredential credential, AttestationServiceClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of AttestationServiceClient from a <see cref="AttestationServiceClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for AttestationServiceClient. </param>
-        [Experimental("SCME0002")]
-        public AttestationServiceClient(AttestationServiceClientSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 

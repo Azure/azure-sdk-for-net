@@ -14,8 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The PolicyRestClient sub-client. </summary>
-    public partial class PolicyRestClient
+    internal partial class PolicyRestClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;

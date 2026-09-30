@@ -10,8 +10,7 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary></summary>
-    public partial class AttestationRestClient
+    internal partial class AttestationRestClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

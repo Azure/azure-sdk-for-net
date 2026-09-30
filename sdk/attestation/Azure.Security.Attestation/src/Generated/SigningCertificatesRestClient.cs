@@ -14,8 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The SigningCertificatesRestClient sub-client. </summary>
-    public partial class SigningCertificatesRestClient
+    internal partial class SigningCertificatesRestClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;

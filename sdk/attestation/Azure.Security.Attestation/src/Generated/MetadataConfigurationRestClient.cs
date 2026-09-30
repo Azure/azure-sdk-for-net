@@ -14,8 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The MetadataConfigurationRestClient sub-client. </summary>
-    public partial class MetadataConfigurationRestClient
+    internal partial class MetadataConfigurationRestClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
