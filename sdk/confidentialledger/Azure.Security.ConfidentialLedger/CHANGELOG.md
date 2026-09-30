@@ -4,8 +4,8 @@
 
 ### Features Added
 
-- Added support for the `2026-07-31-preview` service API version (now the default `ServiceVersion`).
-- Added a `waitForCommit` parameter to `PostLedgerEntry`/`PostLedgerEntryAsync`. When set to `true`, the service holds the response until the transaction is globally committed and the returned `Operation` is already completed, so no additional status polling is required.
+- Added support for the `2026-07-31-preview` service API version, selectable via `ConfidentialLedgerClientOptions.ServiceVersion.V2026_07_31_Preview`. The default `ServiceVersion` remains the latest GA version `V2026_02_23`, so clients that leave the version unspecified are unaffected; preview features such as `waitForCommit` require explicitly opting in to the preview version.
+- Added a `waitForCommit` parameter to `PostLedgerEntry`/`PostLedgerEntryAsync`. When set to `true`, the service holds the response until the transaction is globally committed and the returned `Operation` is already completed, so no additional status polling is required. The operation is only treated as already-completed when the response body confirms `"state": "Committed"`; against an API version or service build that does not support `waitForCommit`, the client falls back to normal status polling.
 
 ## 2.0.0-beta.4 (2026-09-18)
 
