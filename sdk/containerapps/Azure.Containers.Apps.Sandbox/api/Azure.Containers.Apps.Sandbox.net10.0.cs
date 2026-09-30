@@ -280,6 +280,8 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Response Commit(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.CommitSandboxResult>> CommitAsync(string id, Azure.Containers.Apps.Sandbox.Models.CommitSandboxContent body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CommitAsync(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStream> ConnectToSandboxExecStreamAsync(string id, string containerName = null, string user = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStream> ConnectToSandboxProcessesStreamAsync(string id, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxProperties> CreateSandbox(Azure.Containers.Apps.Sandbox.Models.CreateSandboxContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateSandbox(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxProperties>> CreateSandboxAsync(Azure.Containers.Apps.Sandbox.Models.CreateSandboxContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -344,10 +346,6 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Pageable<Azure.Containers.Apps.Sandbox.Models.SandboxProperties> GetSandboxes(string skipToken = null, string labels = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetSandboxesAsync(string skipToken, string labels, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Containers.Apps.Sandbox.Models.SandboxProperties> GetSandboxesAsync(string skipToken = null, string labels = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetSandboxExecStream(string id, string containerName, string user, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetSandboxExecStream(string id, string containerName = null, string user = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxExecStreamAsync(string id, string containerName, string user, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxExecStreamAsync(string id, string containerName = null, string user = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSandboxFileMetadata(string id, string path, string containerName, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxFileInfo> GetSandboxFileMetadata(string id, string path, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxFileMetadataAsync(string id, string path, string containerName, Azure.RequestContext context) { throw null; }
@@ -356,18 +354,12 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxDirectoryListingResult> GetSandboxFilesMetadata(string id, string path, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxFilesMetadataAsync(string id, string path, string containerName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxDirectoryListingResult>> GetSandboxFilesMetadataAsync(string id, string path, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetSandboxLogStream(string id, int? tailLines, int? logFormat, bool? follow, string containerName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetSandboxLogStream(string id, int? tailLines = default(int?), int? logFormat = default(int?), bool? follow = default(bool?), string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxLogStreamAsync(string id, int? tailLines, int? logFormat, bool? follow, string containerName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxLogStreamAsync(string id, int? tailLines = default(int?), int? logFormat = default(int?), bool? follow = default(bool?), string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetSandboxProcessesStream(string id, string containerName, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response GetSandboxProcessesStream(string id, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxProcessesStreamAsync(string id, string containerName, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxProcessesStreamAsync(string id, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetStats(string id, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxStatsResult> GetStats(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetStatsAsync(string id, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxStatsResult>> GetStatsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> OpenSandboxLogStreamAsync(string id, int tailLines = 100, Azure.Containers.Apps.Sandbox.SandboxLogFormat logFormat = Azure.Containers.Apps.Sandbox.SandboxLogFormat.Text, bool follow = true, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxProcessStream> OpenSandboxProcessStreamAsync(string id, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.PortsListResult> RemovePort(string id, Azure.Containers.Apps.Sandbox.Models.RemovePortContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RemovePort(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.PortsListResult>> RemovePortAsync(string id, Azure.Containers.Apps.Sandbox.Models.RemovePortContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -388,6 +380,7 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Response SetPorts(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.PortsListResult>> SetPortsAsync(string id, Azure.Containers.Apps.Sandbox.Models.UpdatePortsContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPortsAsync(string id, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxExecSession> StartSandboxExecSessionAsync(string id, Azure.Containers.Apps.Sandbox.Models.SandboxExecStartRequest request, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Stop(string id, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxSnapshot> Stop(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopAsync(string id, Azure.RequestContext context) { throw null; }
@@ -398,6 +391,33 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Response<Azure.Containers.Apps.Sandbox.Models.WriteFileResult> UploadSandboxFile(string id, string path, System.IO.Stream content, bool? createDirs = default(bool?), int? mode = default(int?), string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadSandboxFileAsync(string id, string path, Azure.Core.RequestContent content, bool? createDirs = default(bool?), int? mode = default(int?), string containerName = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.WriteFileResult>> UploadSandboxFileAsync(string id, string path, System.IO.Stream content, bool? createDirs = default(bool?), int? mode = default(int?), string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SandboxExecEvent
+    {
+        internal SandboxExecEvent() { }
+        public System.BinaryData Data { get { throw null; } }
+        public int? ExitCode { get { throw null; } }
+        public string Text { get { throw null; } }
+        public Azure.Containers.Apps.Sandbox.SandboxExecEventType Type { get { throw null; } }
+    }
+    public enum SandboxExecEventType
+    {
+        SessionId = 0,
+        Stdout = 1,
+        Stderr = 2,
+        ExitCode = 3,
+        Error = 4,
+        Closed = 5,
+    }
+    public partial class SandboxExecSession : System.IAsyncDisposable, System.IDisposable
+    {
+        protected SandboxExecSession() { }
+        public virtual System.Threading.Tasks.Task CloseInputAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
+        public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxExecEvent> ReceiveAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task ResizeAsync(uint height, uint width, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendInputAsync(System.BinaryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SandboxGroupClient
     {
@@ -650,6 +670,40 @@ namespace Azure.Containers.Apps.Sandbox
         public virtual Azure.Response SetSecret(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.Apps.Sandbox.Models.SandboxSecret>> SetSecretAsync(Azure.Containers.Apps.Sandbox.Models.SetSecretContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetSecretAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+    }
+    public enum SandboxLogFormat
+    {
+        Text = 0,
+        Json = 1,
+    }
+    public partial class SandboxProcessStream : System.IAsyncDisposable, System.IDisposable
+    {
+        protected SandboxProcessStream() { }
+        public void Dispose() { }
+        public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task<string> ReadSnapshotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SandboxStream : System.IAsyncDisposable, System.IDisposable
+    {
+        protected SandboxStream() { }
+        public void Dispose() { }
+        public virtual System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStreamMessage> ReceiveMessageAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendMessageAsync(System.BinaryData data, Azure.Containers.Apps.Sandbox.SandboxStreamMessageType type = Azure.Containers.Apps.Sandbox.SandboxStreamMessageType.Text, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SandboxStreamMessage
+    {
+        internal SandboxStreamMessage() { }
+        public string CloseDescription { get { throw null; } }
+        public int? CloseStatus { get { throw null; } }
+        public System.BinaryData Data { get { throw null; } }
+        public Azure.Containers.Apps.Sandbox.SandboxStreamMessageType Type { get { throw null; } }
+    }
+    public enum SandboxStreamMessageType
+    {
+        Text = 0,
+        Binary = 1,
+        Close = 2,
     }
     public partial class SecretsClient
     {
@@ -3124,6 +3178,20 @@ namespace Azure.Containers.Apps.Sandbox.Models
         Azure.Containers.Apps.Sandbox.Models.SandboxEgressPolicy System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.SandboxEgressPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.SandboxEgressPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.SandboxEgressPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SandboxExecStartRequest
+    {
+        public SandboxExecStartRequest(string command) { }
+        public System.Collections.Generic.IList<string> Arguments { get { throw null; } }
+        public string Command { get { throw null; } }
+        public bool Detach { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Environment { get { throw null; } }
+        public uint Height { get { throw null; } set { } }
+        public bool Stdin { get { throw null; } set { } }
+        public bool Tty { get { throw null; } set { } }
+        public string User { get { throw null; } set { } }
+        public uint Width { get { throw null; } set { } }
+        public string WorkingDirectory { get { throw null; } set { } }
     }
     public partial class SandboxExecuteCommandResult : System.ClientModel.Primitives.IJsonModel<Azure.Containers.Apps.Sandbox.Models.SandboxExecuteCommandResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.Models.SandboxExecuteCommandResult>
     {

@@ -147,9 +147,60 @@ await foreach (SandboxGroupVolume volume in volumesClient.GetVolumesAsync())
 }
 ```
 
+### Stream sandbox processes
+
+Exec and process streams use WebSocket connections. The process stream sends one text frame per refresh in the service's `top` output format:
+
+```C#
+SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
+await using SandboxProcessStream stream = await sandboxesClient.OpenSandboxProcessStreamAsync("<sandbox-id>");
+string snapshot;
+while ((snapshot = await stream.ReadSnapshotAsync()) != null)
+{
+    Console.WriteLine(snapshot);
+}
+```
+
+### Execute an interactive command
+
+The exec session sends a JSON start frame from `SandboxExecStartRequest`, then accepts stdin bytes and yields decoded events (stdout/stderr bytes, session ID, exit code, or service error). The start request is specific to WebSocket exec and is separate from the HTTP `ExecuteSandboxCommandContent` model:
+
+```C#
+using Azure.Containers.Apps.Sandbox.Models;
+
+SandboxExecStartRequest request = new SandboxExecStartRequest("/bin/sh");
+await using SandboxExecSession session = await sandboxesClient.StartSandboxExecSessionAsync("<sandbox-id>", request);
+await session.SendInputAsync(BinaryData.FromString("echo hello\n"));
+await session.CloseInputAsync();
+
+SandboxExecEvent execEvent;
+while ((execEvent = await session.ReceiveAsync()).Type != SandboxExecEventType.Closed)
+{
+    if (execEvent.Type == SandboxExecEventType.Stdout)
+        Console.WriteLine(execEvent.Data);
+    if (execEvent.Type == SandboxExecEventType.Error)
+        throw new InvalidOperationException(execEvent.Text);
+}
+```
+
+The low-level `ConnectToSandboxExecStreamAsync` and `ConnectToSandboxProcessesStreamAsync` methods return raw WebSocket frames for advanced scenarios. WebSocket frames cannot be recorded by the HTTP test transport.
+
+### Read sandbox logs
+
+Log streaming is **HTTP chunked transfer**, not WebSocket. Dispose the returned `Stream` when finished; it is not buffered. The default format is plain text; `SandboxLogFormat.Json` returns newline-delimited JSON with `timestamp`, `stream`, and `message` fields.
+
+```C#
+Response<Stream> response = await sandboxesClient.OpenSandboxLogStreamAsync(
+    "<sandbox-id>", logFormat: SandboxLogFormat.Json, follow: false);
+using StreamReader reader = new StreamReader(response.Value);
+string line;
+while ((line = await reader.ReadLineAsync()) != null)
+    Console.WriteLine(line);
+```
+
 ## Troubleshooting
 
-Service failures throw `RequestFailedException` and include an HTTP status code and service error details. For authentication failures, verify that the credential can obtain a token and that the identity has access to the sandbox group. For endpoint or routing failures, verify that the endpoint belongs to the same region as the sandbox group.
+HTTP service failures throw `RequestFailedException` and include an HTTP status code and service error details. WebSocket connection and frame failures can instead throw `WebSocketException`. For authentication failures, verify that the credential can obtain a token and that the identity has access to the sandbox group. For endpoint or routing failures, verify that the endpoint belongs to the same region as the sandbox group.
 
 To inspect requests and responses during development, enable Azure SDK logging before creating the client.
 
