@@ -28,7 +28,7 @@ Describe "Mark-PackageReleased.ps1" {
     BeforeEach {
         $global:LanguageShort = "python"
         $global:AzSdkExitCode = 0
-        $global:AzSdkVersion = "0.6.50"
+        $global:AzSdkVersion = "0.6.51"
         $global:AzSdkOutput = '{"operation_status":"Succeeded","api_review_hub":{"packageVersionId":"version123","isReleased":true},"api_view":{"revisionId":"revision456","isReleased":true}}'
         $global:CapturedAzSdkArguments = @()
         $global:CapturedAzSdkInvocations = @()
@@ -90,7 +90,7 @@ Describe "Mark-PackageReleased.ps1" {
     }
 
     It "fails when the azsdk version is unsupported" {
-        $global:AzSdkVersion = "0.6.49"
+        $global:AzSdkVersion = "0.6.50"
         $caughtError = $null
 
         try {
@@ -100,7 +100,7 @@ Describe "Mark-PackageReleased.ps1" {
             $caughtError = $_
         }
 
-        $caughtError.Exception.Message | Should Match "version 0.6.50 or later is required"
+        $caughtError.Exception.Message | Should Match "version 0.6.51 or later is required"
         $global:CapturedAzSdkInvocations.Count | Should Be 0
     }
 

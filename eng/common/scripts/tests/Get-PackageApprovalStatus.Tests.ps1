@@ -28,7 +28,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
     BeforeEach {
         $global:LanguageShort = "python"
         $global:AzSdkExitCode = 0
-        $global:AzSdkVersion = "0.6.49"
+        $global:AzSdkVersion = "0.6.51"
         $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":true,"finalSource":"reviewHub","reason":"approved"}}'
         $global:CapturedAzSdkArguments = @()
         $global:CapturedAzSdkInvocations = @()
@@ -82,7 +82,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
     }
 
     It "fails when the azsdk version is unsupported" {
-        $global:AzSdkVersion = "0.6.48"
+        $global:AzSdkVersion = "0.6.50"
         $caughtError = $null
 
         try {
@@ -92,7 +92,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
             $caughtError = $_
         }
 
-        $caughtError.Exception.Message | Should Match "version 0.6.49 or later is required"
+        $caughtError.Exception.Message | Should Match "version 0.6.51 or later is required"
         $global:CapturedAzSdkInvocations.Count | Should Be 0
     }
 
