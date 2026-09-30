@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A webhook that dynamically decides how matching egress traffic is handled. </summary>
     public partial class EgressPolicyHookRef : IJsonModel<EgressPolicyHookRef>
@@ -79,7 +80,7 @@ namespace Azure.Containers.Apps.Sandbox
                 throw new FormatException($"The model {nameof(EgressPolicyHookRef)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteStringValue(Endpoint);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
             if (Optional.IsDefined(FailBehavior))
             {
                 writer.WritePropertyName("failBehavior"u8);
@@ -162,7 +163,7 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 return null;
             }
-            string endpoint = default;
+            Uri endpoint = default;
             EgressPolicyHookFailBehavior? failBehavior = default;
             IList<string> requestHeaders = default;
             IList<EgressPolicyHeaderTransform> authHeaders = default;
@@ -173,7 +174,7 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 if (prop.NameEquals("endpoint"u8))
                 {
-                    endpoint = prop.Value.GetString();
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("failBehavior"u8))

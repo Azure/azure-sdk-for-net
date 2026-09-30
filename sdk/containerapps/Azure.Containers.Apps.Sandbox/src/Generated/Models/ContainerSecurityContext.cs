@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Container-level security context — overrides pod-level settings where applicable. Follows Kubernetes container securityContext semantics. </summary>
     public partial class ContainerSecurityContext

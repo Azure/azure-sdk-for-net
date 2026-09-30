@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> CPU usage counters and load averages. </summary>
     public partial class CpuStats
@@ -30,11 +30,11 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="irq"> CPU time spent handling hardware interrupts. </param>
         /// <param name="softirq"> CPU time spent handling software interrupts. </param>
         /// <param name="steal"> CPU time taken by the hypervisor. </param>
-        /// <param name="loadAvg1"> The one-minute load average. </param>
-        /// <param name="loadAvg5"> The five-minute load average. </param>
-        /// <param name="loadAvg15"> The fifteen-minute load average. </param>
+        /// <param name="loadAverage1Minute"> The one-minute load average. </param>
+        /// <param name="loadAverage5Minutes"> The five-minute load average. </param>
+        /// <param name="loadAverage15Minutes"> The fifteen-minute load average. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CpuStats(long? user, long? nice, long? system, long? idle, long? iowait, long? irq, long? softirq, long? steal, double? loadAvg1, double? loadAvg5, double? loadAvg15, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CpuStats(long? user, long? nice, long? system, long? idle, long? iowait, long? irq, long? softirq, long? steal, double? loadAverage1Minute, double? loadAverage5Minutes, double? loadAverage15Minutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             User = user;
             Nice = nice;
@@ -44,9 +44,9 @@ namespace Azure.Containers.Apps.Sandbox
             Irq = irq;
             Softirq = softirq;
             Steal = steal;
-            LoadAvg1 = loadAvg1;
-            LoadAvg5 = loadAvg5;
-            LoadAvg15 = loadAvg15;
+            LoadAverage1Minute = loadAverage1Minute;
+            LoadAverage5Minutes = loadAverage5Minutes;
+            LoadAverage15Minutes = loadAverage15Minutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,12 +75,12 @@ namespace Azure.Containers.Apps.Sandbox
         public long? Steal { get; }
 
         /// <summary> The one-minute load average. </summary>
-        public double? LoadAvg1 { get; }
+        public double? LoadAverage1Minute { get; }
 
         /// <summary> The five-minute load average. </summary>
-        public double? LoadAvg5 { get; }
+        public double? LoadAverage5Minutes { get; }
 
         /// <summary> The fifteen-minute load average. </summary>
-        public double? LoadAvg15 { get; }
+        public double? LoadAverage15Minutes { get; }
     }
 }

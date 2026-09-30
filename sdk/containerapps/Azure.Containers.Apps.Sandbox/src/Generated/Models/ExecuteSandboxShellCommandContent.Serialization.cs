@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A shell command to execute in a running sandbox. </summary>
     public partial class ExecuteSandboxShellCommandContent : IJsonModel<ExecuteSandboxShellCommandContent>

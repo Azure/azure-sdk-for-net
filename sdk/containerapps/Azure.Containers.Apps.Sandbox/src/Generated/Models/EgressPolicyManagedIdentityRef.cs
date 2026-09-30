@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
+using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A managed identity token used as a dynamic header value. </summary>
     public partial class EgressPolicyManagedIdentityRef
@@ -32,7 +34,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="type"> The managed identity type. </param>
         /// <param name="identityResourceId"> The resource ID of the user-assigned managed identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EgressPolicyManagedIdentityRef(string resource, string format, EgressPolicyManagedIdentityType? @type, string identityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EgressPolicyManagedIdentityRef(string resource, string format, EgressPolicyManagedIdentityType? @type, ResourceIdentifier identityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             Format = format;
@@ -51,6 +53,6 @@ namespace Azure.Containers.Apps.Sandbox
         public EgressPolicyManagedIdentityType? Type { get; set; }
 
         /// <summary> The resource ID of the user-assigned managed identity. </summary>
-        public string IdentityResourceId { get; set; }
+        public ResourceIdentifier IdentityResourceId { get; set; }
     }
 }

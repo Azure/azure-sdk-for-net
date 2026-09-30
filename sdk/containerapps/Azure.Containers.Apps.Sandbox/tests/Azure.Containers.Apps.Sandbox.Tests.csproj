@@ -14,8 +14,4 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Containers.Apps.Sandbox.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 </Project>

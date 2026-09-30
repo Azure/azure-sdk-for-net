@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Reference to a secret in the parent artifact app. </summary>
     public partial class TelemetryAppSecretRef : TelemetrySecretReference, IJsonModel<TelemetryAppSecretRef>

@@ -16,18 +16,19 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         internal const string ResourceGroupName = "test-rg";
         internal const string SandboxGroupName = "test-group";
 
-        internal static SandboxGroup CreateSandboxGroupClient(MockTransport transport)
+        internal static SandboxGroupClient CreateSandboxGroupClient(MockTransport transport)
         {
-            ContainerAppsSandboxClientOptions options = new ContainerAppsSandboxClientOptions
+            SandboxGroupClientOptions options = new SandboxGroupClientOptions
             {
                 Transport = transport
             };
-            ContainerAppsSandboxClient client = new ContainerAppsSandboxClient(
+            return new SandboxGroupClient(
                 new Uri(Endpoint),
+                SubscriptionId,
+                ResourceGroupName,
+                SandboxGroupName,
                 new MockCredential(),
                 options);
-
-            return client.GetSandboxGroupClient(SubscriptionId, ResourceGroupName, SandboxGroupName);
         }
 
         internal static MockResponse CreateJsonResponse(int status, string content)

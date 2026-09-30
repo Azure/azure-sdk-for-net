@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Result of executing a shell command in a sandbox. </summary>
     public partial class SandboxExecuteShellCommandResult
@@ -18,28 +18,28 @@ namespace Azure.Containers.Apps.Sandbox
 
         /// <summary> Initializes a new instance of <see cref="SandboxExecuteShellCommandResult"/>. </summary>
         /// <param name="exitCode"> The process exit code. </param>
-        /// <param name="stdout"> Text written to standard output. </param>
-        /// <param name="stderr"> Text written to standard error. </param>
+        /// <param name="standardOutput"> Text written to standard output. </param>
+        /// <param name="standardError"> Text written to standard error. </param>
         /// <param name="executionTimeMs"> The command execution time in milliseconds. </param>
-        internal SandboxExecuteShellCommandResult(int exitCode, string stdout, string stderr, long executionTimeMs)
+        internal SandboxExecuteShellCommandResult(int exitCode, string standardOutput, string standardError, long executionTimeMs)
         {
             ExitCode = exitCode;
-            Stdout = stdout;
-            Stderr = stderr;
+            StandardOutput = standardOutput;
+            StandardError = standardError;
             ExecutionTimeMs = executionTimeMs;
         }
 
         /// <summary> Initializes a new instance of <see cref="SandboxExecuteShellCommandResult"/>. </summary>
         /// <param name="exitCode"> The process exit code. </param>
-        /// <param name="stdout"> Text written to standard output. </param>
-        /// <param name="stderr"> Text written to standard error. </param>
+        /// <param name="standardOutput"> Text written to standard output. </param>
+        /// <param name="standardError"> Text written to standard error. </param>
         /// <param name="executionTimeMs"> The command execution time in milliseconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SandboxExecuteShellCommandResult(int exitCode, string stdout, string stderr, long executionTimeMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SandboxExecuteShellCommandResult(int exitCode, string standardOutput, string standardError, long executionTimeMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExitCode = exitCode;
-            Stdout = stdout;
-            Stderr = stderr;
+            StandardOutput = standardOutput;
+            StandardError = standardError;
             ExecutionTimeMs = executionTimeMs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,10 +48,10 @@ namespace Azure.Containers.Apps.Sandbox
         public int ExitCode { get; }
 
         /// <summary> Text written to standard output. </summary>
-        public string Stdout { get; }
+        public string StandardOutput { get; }
 
         /// <summary> Text written to standard error. </summary>
-        public string Stderr { get; }
+        public string StandardError { get; }
 
         /// <summary> The command execution time in milliseconds. </summary>
         public long ExecutionTimeMs { get; }

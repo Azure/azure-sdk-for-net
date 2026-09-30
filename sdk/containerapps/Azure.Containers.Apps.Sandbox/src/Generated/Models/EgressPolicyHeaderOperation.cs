@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Types of header transformation operations. </summary>
     public readonly partial struct EgressPolicyHeaderOperation : IEquatable<EgressPolicyHeaderOperation>

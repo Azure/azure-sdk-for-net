@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The provisioning status of a disk image. </summary>
     public partial class DiskImageStatus
@@ -20,7 +20,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="state"> The current provisioning state. </param>
         /// <param name="createdOn"> The time when provisioning started. </param>
         /// <param name="updatedOn"> The time when the status was last updated. </param>
-        internal DiskImageStatus(string state, DateTimeOffset createdOn, DateTimeOffset updatedOn)
+        internal DiskImageStatus(ResourceState state, DateTimeOffset createdOn, DateTimeOffset updatedOn)
         {
             State = state;
             CreatedOn = createdOn;
@@ -33,7 +33,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="createdOn"> The time when provisioning started. </param>
         /// <param name="updatedOn"> The time when the status was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskImageStatus(string state, string errorMessage, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskImageStatus(ResourceState state, string errorMessage, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ErrorMessage = errorMessage;
@@ -43,7 +43,7 @@ namespace Azure.Containers.Apps.Sandbox
         }
 
         /// <summary> The current provisioning state. </summary>
-        public string State { get; }
+        public ResourceState State { get; }
 
         /// <summary> The failure message when provisioning did not succeed. </summary>
         public string ErrorMessage { get; }

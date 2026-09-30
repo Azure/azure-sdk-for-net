@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary>
     /// Customer-supplied selector that picks one of the managed identities already on a sandbox group.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SandboxGroupIdentitySelectorSystemAssignedIdentitySelector"/> and <see cref="SandboxGroupIdentitySelectorUserAssignedIdentitySelector"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SystemAssignedSandboxGroupIdentitySelector"/> and <see cref="UserAssignedSandboxGroupIdentitySelector"/>.
     /// </summary>
     public abstract partial class SandboxGroupIdentitySelector
     {

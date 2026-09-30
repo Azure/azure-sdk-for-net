@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Authentication method for a TDS egress connection. </summary>
     public readonly partial struct TdsAuthKind : IEquatable<TdsAuthKind>

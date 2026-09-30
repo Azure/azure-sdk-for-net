@@ -4,20 +4,29 @@
     "AzureClients": {
       "type": "object",
       "properties": {
-        "ContainerAppsSandboxClient": {
+        "SandboxGroupClient": {
           "type": "object",
-          "description": "Configuration for ContainerAppsSandboxClient.",
+          "description": "Configuration for SandboxGroupClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
               "format": "uri",
               "description": "Gets or sets the Endpoint."
             },
+            "SubscriptionId": {
+              "type": "string"
+            },
+            "ResourceGroupName": {
+              "type": "string"
+            },
+            "SandboxGroupName": {
+              "type": "string"
+            },
             "Credential": {
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/containerAppsSandboxClientOptions"
+              "$ref": "#/definitions/sandboxGroupClientOptions"
             }
           }
         }
@@ -29,7 +38,7 @@
     }
   },
   "definitions": {
-    "containerAppsSandboxClientOptions": {
+    "sandboxGroupClientOptions": {
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"

@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Connector Namespace reference details required by egress HookRef resolution. </summary>
     public partial class SandboxGroupCredentialConnectionRefDetails : IJsonModel<SandboxGroupCredentialConnectionRefDetails>

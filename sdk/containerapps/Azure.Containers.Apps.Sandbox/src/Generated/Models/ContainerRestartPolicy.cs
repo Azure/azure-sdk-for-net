@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Policies for restarting a stopped container. </summary>
     public readonly partial struct ContainerRestartPolicy : IEquatable<ContainerRestartPolicy>

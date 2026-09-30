@@ -49,31 +49,31 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             }
         }
 
-        protected SandboxGroup CreateSandboxGroupClient()
+        protected SandboxGroupClient CreateSandboxGroupClient()
         {
-            ContainerAppsSandboxClientOptions options = InstrumentClientOptions(new ContainerAppsSandboxClientOptions());
-            ContainerAppsSandboxClient client = InstrumentClient(
-                new ContainerAppsSandboxClient(new Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options));
-
-            return InstrumentClient(client.GetSandboxGroupClient(
+            SandboxGroupClientOptions options = InstrumentClientOptions(new SandboxGroupClientOptions());
+            return InstrumentClient(new SandboxGroupClient(
+                new Uri(TestEnvironment.Endpoint),
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.ResourceGroup,
-                TestEnvironment.SandboxGroupName));
+                TestEnvironment.SandboxGroupName,
+                TestEnvironment.Credential,
+                options));
         }
 
-        protected async Task<ContainerAppsSandbox> CreateSandboxAsync(
-            SandboxGroup sandboxGroup,
+        protected async Task<SandboxProperties> CreateSandboxAsync(
+            SandboxGroupClient sandboxGroup,
             string testId = null)
         {
             CreateSandboxContent content = CreateSandboxContent(testId ?? Recording.GenerateId("sandbox-test-", 40));
-            Response<ContainerAppsSandbox> response = await sandboxGroup.CreateSandboxAsync(
+            Response<SandboxProperties> response = await sandboxGroup.GetSandboxesClient().CreateSandboxAsync(
                 content).ConfigureAwait(false);
 
             RegisterCleanup(() => DeleteSandboxIfExistsAsync(sandboxGroup, response.Value.Id));
             return response.Value;
         }
 
-        protected async Task<ContainerAppsSandbox> CreatePodSandboxAsync(SandboxGroup sandboxGroup)
+        protected async Task<SandboxProperties> CreatePodSandboxAsync(SandboxGroupClient sandboxGroup)
         {
             ContainerSpec container = new ContainerSpec("default")
             {
@@ -99,16 +99,16 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             };
             content.Labels.Add("test-id", Recording.GenerateId("pod-test-", 40));
 
-            Response<ContainerAppsSandbox> response = await sandboxGroup.CreateSandboxAsync(content).ConfigureAwait(false);
+            Response<SandboxProperties> response = await sandboxGroup.GetSandboxesClient().CreateSandboxAsync(content).ConfigureAwait(false);
             RegisterCleanup(() => DeleteSandboxIfExistsAsync(sandboxGroup, response.Value.Id));
             return response.Value;
         }
 
         protected async Task<SandboxGroupVolume> CreateVolumeAsync(
-            SandboxGroup sandboxGroup,
+            SandboxGroupClient sandboxGroup,
             bool dataDisk = false)
         {
-            SandboxGroupVolumes client = sandboxGroup.GetSandboxGroupVolumesClient();
+            VolumesClient client = sandboxGroup.GetVolumesClient();
             string volumeName = Recording.GenerateId("volume-", 40);
             SandboxGroupVolume volume = dataDisk
                 ? new DataDiskVolume("4Gi")
@@ -121,21 +121,20 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         protected async Task<SandboxSnapshot> CreateSnapshotAsync(
-            SandboxGroup sandboxGroup,
+            SandboxGroupClient sandboxGroup,
             string sandboxId)
         {
-            SandboxGroupSandbox sandboxClient = sandboxGroup.GetSandboxGroupSandboxClient(sandboxId);
             CreateSnapshotContent content = new CreateSnapshotContent();
             content.Labels.Add("test-id", Recording.GenerateId("snapshot-test-", 40));
 
-            Response<SandboxSnapshot> response = await sandboxClient.CreateSnapshotAsync(content).ConfigureAwait(false);
+            Response<SandboxSnapshot> response = await sandboxGroup.GetSandboxesClient().CreateSnapshotAsync(sandboxId, content).ConfigureAwait(false);
             RegisterCleanup(() => DeleteSnapshotIfExistsAsync(sandboxGroup, response.Value.Id));
             return response.Value;
         }
 
-        protected async Task<SandboxSecret> CreateSecretAsync(SandboxGroup sandboxGroup)
+        protected async Task<SandboxSecret> CreateSecretAsync(SandboxGroupClient sandboxGroup)
         {
-            SandboxGroupSecrets client = sandboxGroup.GetSandboxGroupSecretsClient();
+            SecretsClient client = sandboxGroup.GetSecretsClient();
             string secretId = Recording.GenerateId("secret-", 40);
             Dictionary<string, string> values = new Dictionary<string, string>
             {
@@ -145,14 +144,14 @@ namespace Azure.Containers.Apps.Sandbox.Tests
 
             Response<SandboxSecret> response = await client.SetSecretAsync(
                 secretId,
-                new CreateSecretContent(values)).ConfigureAwait(false);
+                new SetSecretContent(values)).ConfigureAwait(false);
             RegisterCleanup(() => client.DeleteSecretAsync(secretId));
             return response.Value;
         }
 
-        protected async Task<NamedEgressPolicy> CreateEgressPolicyAsync(SandboxGroup sandboxGroup)
+        protected async Task<NamedEgressPolicy> CreateEgressPolicyAsync(SandboxGroupClient sandboxGroup)
         {
-            SandboxGroupEgressPolicies client = sandboxGroup.GetSandboxGroupEgressPoliciesClient();
+            EgressPoliciesClient client = sandboxGroup.GetEgressPoliciesClient();
             string policyId = Recording.GenerateId("policy-", 40);
             NamedEgressPolicy policy = new NamedEgressPolicy(policyId, EgressPolicyAction.Allow)
             {
@@ -164,9 +163,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             return response.Value;
         }
 
-        protected async Task<ContentPackage> CreateContentPackageAsync(SandboxGroup sandboxGroup)
+        protected async Task<ContentPackage> CreateContentPackageAsync(SandboxGroupClient sandboxGroup)
         {
-            SandboxGroupContentPackages client = sandboxGroup.GetSandboxGroupContentPackagesClient();
+            ContentPackagesClient client = sandboxGroup.GetContentPackagesClient();
             Response<ContentPackage> response = await client.UploadContentPackageAsync(
                 BinaryData.FromString("sandbox test package"),
                 "application/octet-stream",
@@ -176,15 +175,14 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         protected static async Task AddVolumeMountAsync(
-            SandboxGroup sandboxGroup,
+            SandboxGroupClient sandboxGroup,
             string sandboxId,
             SandboxVolume mount)
         {
             try
             {
-                await sandboxGroup
-                    .GetSandboxGroupSandboxClient(sandboxId)
-                    .AddVolumeMountAsync(new AddVolumeMountContent(mount))
+                await sandboxGroup.GetSandboxesClient()
+                    .AddVolumeMountAsync(sandboxId, new SandboxVolumeMountContent(mount))
                     .ConfigureAwait(false);
             }
             catch (RequestFailedException exception) when (exception.Status == 200)
@@ -198,7 +196,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             _cleanupActions.Push(cleanupAction);
         }
 
-        protected async Task DeleteSandboxIfExistsAsync(SandboxGroup sandboxGroup, string sandboxId)
+        protected async Task DeleteSandboxIfExistsAsync(SandboxGroupClient sandboxGroup, string sandboxId)
         {
             if (_deletedSandboxIds.Contains(sandboxId))
             {
@@ -207,7 +205,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
 
             try
             {
-                await sandboxGroup.GetSandboxGroupSandboxClient(sandboxId).DeleteAsync().ConfigureAwait(false);
+                await sandboxGroup.GetSandboxesClient().DeleteAsync(sandboxId).ConfigureAwait(false);
                 _deletedSandboxIds.Add(sandboxId);
             }
             catch (RequestFailedException exception) when (exception.Status == 200 || exception.Status == 404)
@@ -217,7 +215,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             }
         }
 
-        protected async Task DeleteSnapshotIfExistsAsync(SandboxGroup sandboxGroup, string snapshotId)
+        protected async Task DeleteSnapshotIfExistsAsync(SandboxGroupClient sandboxGroup, string snapshotId)
         {
             if (_deletedSnapshotIds.Contains(snapshotId))
             {
@@ -226,7 +224,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
 
             try
             {
-                await sandboxGroup.GetSandboxGroupSnapshotsClient().DeleteSnapshotAsync(snapshotId).ConfigureAwait(false);
+                await sandboxGroup.GetSnapshotsClient().DeleteSnapshotAsync(snapshotId).ConfigureAwait(false);
                 _deletedSnapshotIds.Add(snapshotId);
             }
             catch (RequestFailedException exception) when (exception.Status == 202 || exception.Status == 404)
@@ -236,7 +234,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             }
         }
 
-        protected async Task DeleteContentPackageIfExistsAsync(SandboxGroup sandboxGroup, string contentPackageId)
+        protected async Task DeleteContentPackageIfExistsAsync(SandboxGroupClient sandboxGroup, string contentPackageId)
         {
             if (_deletedContentPackageIds.Contains(contentPackageId))
             {
@@ -246,7 +244,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             try
             {
                 await sandboxGroup
-                    .GetSandboxGroupContentPackagesClient()
+                    .GetContentPackagesClient()
                     .DeleteContentPackageAsync(contentPackageId)
                     .ConfigureAwait(false);
                 _deletedContentPackageIds.Add(contentPackageId);
@@ -258,7 +256,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             }
         }
 
-        protected async Task DeleteDiskImageIfExistsAsync(SandboxGroup sandboxGroup, string diskImageId)
+        protected async Task DeleteDiskImageIfExistsAsync(SandboxGroupClient sandboxGroup, string diskImageId)
         {
             if (_deletedDiskImageIds.Contains(diskImageId))
             {
@@ -268,7 +266,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             try
             {
                 await sandboxGroup
-                    .GetSandboxGroupDiskImagesClient()
+                    .GetDiskImagesClient()
                     .DeleteDiskImageAsync(diskImageId)
                     .ConfigureAwait(false);
                 _deletedDiskImageIds.Add(diskImageId);

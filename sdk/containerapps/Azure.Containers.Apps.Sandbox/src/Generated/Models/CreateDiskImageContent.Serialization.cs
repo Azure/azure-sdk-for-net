@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Request body for creating a disk image. </summary>
     public partial class CreateDiskImageContent : IJsonModel<CreateDiskImageContent>
@@ -159,7 +160,7 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 return null;
             }
-            CreateDiskImageSource source = default;
+            DiskImageSource source = default;
             string name = default;
             IDictionary<string, string> labels = default;
             string vnetConnectionName = default;
@@ -168,7 +169,7 @@ namespace Azure.Containers.Apps.Sandbox
             {
                 if (prop.NameEquals("source"u8))
                 {
-                    source = CreateDiskImageSource.DeserializeCreateDiskImageSource(prop.Value, options);
+                    source = DiskImageSource.DeserializeDiskImageSource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

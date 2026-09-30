@@ -19,8 +19,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task AddPodVolumeMountsToSandbox()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreatePodSandboxAsync(sandboxGroup);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreatePodSandboxAsync(sandboxGroup);
             LocalPodVolume volume = new LocalPodVolume("workspace", "1Gi");
             ContainerVolumeMount mount = new ContainerVolumeMount("workspace", "/workspace")
             {
@@ -29,15 +29,15 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             ContainerVolumeMounts mounts = new ContainerVolumeMounts(
                 "default",
                 new List<ContainerVolumeMount> { mount });
-            AddPodVolumeMountsContent content = new AddPodVolumeMountsContent(
+            PodVolumeMountsContent content = new PodVolumeMountsContent(
                 new List<PodVolume> { volume },
                 new List<ContainerVolumeMounts> { mounts });
 
             try
             {
                 Response response = await sandboxGroup
-                    .GetSandboxGroupSandboxClient(sandbox.Id)
-                    .AddPodVolumeMountsAsync(content);
+                    .GetSandboxesClient()
+                    .AddPodVolumeMountsAsync(sandbox.Id, content);
 
                 Assert.That(response.Status, Is.InRange(200, 299));
             }

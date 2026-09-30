@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Azure Blob Storage volume source, backed by blobfuse2. </summary>
     public partial class ServiceManagedBlobPodVolume : PodVolume

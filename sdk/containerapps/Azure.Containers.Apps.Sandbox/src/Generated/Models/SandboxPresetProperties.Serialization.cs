@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Preset-specific properties for sandbox creation. These properties configure optional features for specific preset types. </summary>
     public partial class SandboxPresetProperties : IJsonModel<SandboxPresetProperties>

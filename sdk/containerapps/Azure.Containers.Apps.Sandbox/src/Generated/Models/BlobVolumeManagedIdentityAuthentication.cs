@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Authenticates with a managed identity already assigned to the sandbox group. </summary>
     public partial class BlobVolumeManagedIdentityAuthentication : BlobVolumeAuthentication

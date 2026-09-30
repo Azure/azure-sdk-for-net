@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Modes for enforcing an egress policy. </summary>
     public readonly partial struct EgressPolicyEnforcementMode : IEquatable<EgressPolicyEnforcementMode>

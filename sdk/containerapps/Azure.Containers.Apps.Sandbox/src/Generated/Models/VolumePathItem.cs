@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Metadata for a file or directory in a volume. </summary>
     public partial class VolumePathItem
@@ -36,7 +37,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="contentType"> The media type of the file. </param>
         /// <param name="eTag"> An HTTP entity tag used for optimistic concurrency, as defined by RFC 9110. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumePathItem(string itemName, string path, bool isDirectory, long? sizeBytes, DateTimeOffset? lastModifiedUtc, string contentType, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumePathItem(string itemName, string path, bool isDirectory, long? sizeBytes, DateTimeOffset? lastModifiedUtc, string contentType, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ItemName = itemName;
             Path = path;
@@ -67,6 +68,6 @@ namespace Azure.Containers.Apps.Sandbox
         public string ContentType { get; }
 
         /// <summary> An HTTP entity tag used for optimistic concurrency, as defined by RFC 9110. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
     }
 }

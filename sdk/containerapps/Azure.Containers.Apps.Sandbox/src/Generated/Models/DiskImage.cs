@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Customer-facing disk image resource returned by the service. </summary>
     public partial class DiskImage
@@ -31,7 +31,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="status"> Current disk-image status. </param>
         /// <param name="sizeInMb"> Disk-image size assigned by the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskImage(string id, string name, IDictionary<string, string> labels, DiskImageImage image, DiskImageStatus status, long? sizeInMb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskImage(string id, string name, IDictionary<string, string> labels, ImageMetadata image, DiskImageStatus status, long? sizeInMb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -52,7 +52,7 @@ namespace Azure.Containers.Apps.Sandbox
         public IDictionary<string, string> Labels { get; }
 
         /// <summary> Resolved image metadata assigned by the service. </summary>
-        public DiskImageImage Image { get; }
+        public ImageMetadata Image { get; }
 
         /// <summary> Current disk-image status. </summary>
         public DiskImageStatus Status { get; }

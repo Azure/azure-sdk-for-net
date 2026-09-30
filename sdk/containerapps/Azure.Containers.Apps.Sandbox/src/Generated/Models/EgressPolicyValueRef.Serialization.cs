@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A dynamic value reference for header transforms. Exactly one of the ref fields should be set. </summary>
     public partial class EgressPolicyValueRef : IJsonModel<EgressPolicyValueRef>

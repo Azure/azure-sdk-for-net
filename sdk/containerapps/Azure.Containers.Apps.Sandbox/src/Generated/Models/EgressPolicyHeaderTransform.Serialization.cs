@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Describes a header transformation to apply to matching requests. </summary>
     public partial class EgressPolicyHeaderTransform : IJsonModel<EgressPolicyHeaderTransform>

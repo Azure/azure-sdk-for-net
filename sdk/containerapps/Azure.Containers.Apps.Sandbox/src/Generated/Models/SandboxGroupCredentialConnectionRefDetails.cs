@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Connector Namespace reference details required by egress HookRef resolution. </summary>
     public partial class SandboxGroupCredentialConnectionRefDetails

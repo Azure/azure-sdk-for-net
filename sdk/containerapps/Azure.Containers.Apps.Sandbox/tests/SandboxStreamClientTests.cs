@@ -15,9 +15,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public async Task GetSandboxExecStreamBuildsExpectedRequest()
         {
             MockTransport transport = new MockTransport(new MockResponse(200));
-            SandboxGroupSandboxStreams client = CreateClient(transport);
+            SandboxesClient client = CreateClient(transport);
 
-            Response response = await client.GetSandboxExecStreamAsync("worker", "sandbox-user");
+            Response response = await client.GetSandboxExecStreamAsync("sandbox-id", "worker", "sandbox-user");
 
             Assert.That(response.Status, Is.EqualTo(200));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
@@ -30,9 +30,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public async Task GetSandboxProcessesStreamBuildsExpectedRequest()
         {
             MockTransport transport = new MockTransport(new MockResponse(200));
-            SandboxGroupSandboxStreams client = CreateClient(transport);
+            SandboxesClient client = CreateClient(transport);
 
-            Response response = await client.GetSandboxProcessesStreamAsync("worker");
+            Response response = await client.GetSandboxProcessesStreamAsync("sandbox-id", "worker");
 
             Assert.That(response.Status, Is.EqualTo(200));
             Assert.That(transport.Requests[0].Uri.ToString(), Does.Contain("/sandboxes/sandbox-id/processes/stream?"));
@@ -43,9 +43,10 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public async Task GetSandboxLogStreamSerializesOptionalParameters()
         {
             MockTransport transport = new MockTransport(new MockResponse(200));
-            SandboxGroupSandboxStreams client = CreateClient(transport);
+            SandboxesClient client = CreateClient(transport);
 
             Response response = await client.GetSandboxLogStreamAsync(
+                "sandbox-id",
                 tailLines: 100,
                 logFormat: 1,
                 follow: true,
@@ -59,10 +60,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(transport.Requests[0].Uri.Query, Does.Contain("containerName=worker"));
         }
 
-        private static SandboxGroupSandboxStreams CreateClient(MockTransport transport) =>
+        private static SandboxesClient CreateClient(MockTransport transport) =>
             SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
-                .GetSandboxGroupSandboxClient("sandbox-id")
-                .GetSandboxGroupSandboxStreamsClient();
+                .GetSandboxesClient();
     }
 }

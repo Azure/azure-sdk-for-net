@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Per-identity availability setting on a sandbox. Allows explicit control over which identities from the group are served to the sandbox. </summary>
     public partial class IdentitySetting

@@ -21,7 +21,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(201, ConnectionJson));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
             CreateConnectionContent content = new CreateConnectionContent("github", "GitHub")
             {
                 ParameterValueSetName = "oauth"
@@ -47,7 +47,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"id":"connection-id","name":"github","type":"GitHub","state":"Ready","usedBySandboxIds":["sandbox-id"]}"""));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
 
             Response<SandboxConnection> response = await client.GetConnectionAsync("connection-id", includeSandboxIds: true);
 
@@ -67,7 +67,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                     $$"""{"value":[{{ConnectionJson}}],"nextLink":"{{nextLink}}"}"""),
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"value":[{"id":"connection-2","name":"ado","type":"AzureDevOps","state":"Ready"}]}"""));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
             List<string> ids = new List<string>();
 
             await foreach (Page<SandboxConnection> page in client
@@ -93,7 +93,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public async Task DeleteConnectionSendsForceQueryParameter()
         {
             MockTransport transport = new MockTransport(new MockResponse(204));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
 
             Response response = await client.DeleteConnectionAsync("connection-id", force: true);
 
@@ -107,7 +107,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200, ConnectionJson));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
             AuthorizeConnectionContent content = new AuthorizeConnectionContent(
                 new Dictionary<string, string> { ["authorizationCode"] = "code" });
 
@@ -125,7 +125,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"consentLink":"https://login.example.com/consent"}"""));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
             GenerateConsentLinkContent content = new GenerateConsentLinkContent
             {
                 RedirectUri = new Uri("https://localhost/callback")
@@ -145,7 +145,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200, ConnectionJson));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
 
             Response<SandboxConnection> response =
                 await client.RefreshConnectionAsync("connection-id", includeSandboxIds: true);
@@ -161,7 +161,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200, ConnectionJson));
-            SandboxGroupConnections client = CreateClient(transport);
+            ConnectionsClient client = CreateClient(transport);
             UpdatePolicyRulesContent content = new UpdatePolicyRulesContent(
                 new[] { new McpPolicyRule("block-mail", new[] { "*@example.com" }) });
             content.EnabledToolGroups.Add("mail");
@@ -182,13 +182,12 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"connectionIds":["connection-id"]}"""));
-            SandboxGroupSandboxNetworking client = SandboxClientTestHelpers
+            SandboxesClient client = SandboxClientTestHelpers
                 .CreateSandboxGroupClient(transport)
-                .GetSandboxGroupSandboxClient("sandbox-id")
-                .GetSandboxGroupSandboxNetworkingClient();
+                .GetSandboxesClient();
 
             Response<ConnectionsListResult> response =
-                await client.AddConnectionAsync(new AddConnectionContent("connection-id"));
+                await client.AddConnectionAsync("sandbox-id", new AddConnectionContent("connection-id"));
 
             Assert.That(response.Value.ConnectionIds, Does.Contain("connection-id"));
             Assert.That(transport.Requests[0].Uri.ToString(), Does.Contain("/sandboxes/sandbox-id/connections/add?"));
@@ -196,7 +195,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 Does.Contain("\"connectionId\":\"connection-id\""));
         }
 
-        private static SandboxGroupConnections CreateClient(MockTransport transport) =>
-            SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandboxGroupConnectionsClient();
+        private static ConnectionsClient CreateClient(MockTransport transport) =>
+            SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetConnectionsClient();
     }
 }

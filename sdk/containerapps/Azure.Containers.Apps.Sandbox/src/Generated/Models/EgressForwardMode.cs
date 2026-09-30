@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Controls how egress traffic is forwarded. </summary>
     public readonly partial struct EgressForwardMode : IEquatable<EgressForwardMode>

@@ -19,27 +19,28 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task CreateListReadWriteAndDeleteSandboxFiles()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandboxFiles files = sandboxGroup
-                .GetSandboxGroupSandboxClient(sandbox.Id)
-                .GetSandboxGroupSandboxFilesClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient files = sandboxGroup.GetSandboxesClient();
             string directory = $"/tmp/{Recording.GenerateId("sdk-", 24)}";
             string path = $"{directory}/example.txt";
 
-            Response<FileOpStatusResult> directoryResponse = await files.CreateSandboxDirectoryAsync(
-                new MkDirContent(directory)
+            Response<SandboxFileOperationResult> directoryResponse = await files.CreateSandboxDirectoryAsync(
+                sandbox.Id,
+                new SandboxDirectoryContent(directory)
                 {
                     CreateParents = true
                 });
             Response<WriteFileResult> writeResponse = await files.UploadSandboxFileAsync(
+                sandbox.Id,
                 path,
                 BinaryData.FromString("Hello from the .NET SDK"),
                 createDirs: true);
-            Response<Azure.Containers.Apps.Sandbox.FileInfo> metadataResponse =
-                await files.GetSandboxFileMetadataAsync(path);
-            Response<DirListingResult> listResponse = await files.GetSandboxFilesMetadataAsync(directory);
-            Response<BinaryData> readResponse = await files.DownloadSandboxFileAsync(path);
+            Response<SandboxFileInfo> metadataResponse =
+                await files.GetSandboxFileMetadataAsync(sandbox.Id, path);
+            Response<SandboxDirectoryListingResult> listResponse =
+                await files.GetSandboxFilesMetadataAsync(sandbox.Id, directory);
+            Response<BinaryData> readResponse = await files.DownloadSandboxFileAsync(sandbox.Id, path);
 
             Assert.That(directoryResponse.Value, Is.Not.Null);
             Assert.That(writeResponse.Value, Is.Not.Null);
@@ -47,8 +48,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(listResponse.Value, Is.Not.Null);
             Assert.That(readResponse.Value.ToString(), Is.EqualTo("Hello from the .NET SDK"));
 
-            await files.DeleteSandboxFileAsync(path);
-            await files.DeleteSandboxFileAsync(directory, recursive: true);
+            await files.DeleteSandboxFileAsync(sandbox.Id, path);
+            await files.DeleteSandboxFileAsync(sandbox.Id, directory, recursive: true);
         }
     }
 }

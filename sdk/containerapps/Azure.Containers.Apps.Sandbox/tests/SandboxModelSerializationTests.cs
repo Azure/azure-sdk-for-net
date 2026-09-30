@@ -13,7 +13,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public void CreateDiskImageSerializesBlobSource()
         {
             CreateDiskImageContent content = new CreateDiskImageContent(
-                new CreateDiskImageSourceBlobSource(new Uri("https://storage.example.com/images/image.vhd")))
+                new BlobDiskImageSource(new Uri("https://storage.example.com/images/image.vhd")))
             {
                 Name = "blob-image",
                 VnetConnectionName = "test-vnet"
@@ -67,7 +67,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             BlobVolumeManagedIdentityAuthentication authentication =
                 new BlobVolumeManagedIdentityAuthentication(
-                    new SandboxGroupIdentitySelectorSystemAssignedIdentitySelector());
+                    new SystemAssignedSandboxGroupIdentitySelector());
             UserProvidedBlobVolume volume = new UserProvidedBlobVolume(
                 "/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Storage/storageAccounts/account/blobServices/default/containers/container",
                 authentication);

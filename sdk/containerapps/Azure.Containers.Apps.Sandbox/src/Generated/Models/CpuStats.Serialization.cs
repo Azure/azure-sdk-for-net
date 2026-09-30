@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> CPU usage counters and load averages. </summary>
     public partial class CpuStats : IJsonModel<CpuStats>
@@ -113,20 +114,20 @@ namespace Azure.Containers.Apps.Sandbox
                 writer.WritePropertyName("steal"u8);
                 writer.WriteNumberValue(Steal.Value);
             }
-            if (Optional.IsDefined(LoadAvg1))
+            if (Optional.IsDefined(LoadAverage1Minute))
             {
                 writer.WritePropertyName("loadAvg1"u8);
-                writer.WriteNumberValue(LoadAvg1.Value);
+                writer.WriteNumberValue(LoadAverage1Minute.Value);
             }
-            if (Optional.IsDefined(LoadAvg5))
+            if (Optional.IsDefined(LoadAverage5Minutes))
             {
                 writer.WritePropertyName("loadAvg5"u8);
-                writer.WriteNumberValue(LoadAvg5.Value);
+                writer.WriteNumberValue(LoadAverage5Minutes.Value);
             }
-            if (Optional.IsDefined(LoadAvg15))
+            if (Optional.IsDefined(LoadAverage15Minutes))
             {
                 writer.WritePropertyName("loadAvg15"u8);
-                writer.WriteNumberValue(LoadAvg15.Value);
+                writer.WriteNumberValue(LoadAverage15Minutes.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -178,9 +179,9 @@ namespace Azure.Containers.Apps.Sandbox
             long? irq = default;
             long? softirq = default;
             long? steal = default;
-            double? loadAvg1 = default;
-            double? loadAvg5 = default;
-            double? loadAvg15 = default;
+            double? loadAverage1Minute = default;
+            double? loadAverage5Minutes = default;
+            double? loadAverage15Minutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -262,7 +263,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    loadAvg1 = prop.Value.GetDouble();
+                    loadAverage1Minute = prop.Value.GetDouble();
                     continue;
                 }
                 if (prop.NameEquals("loadAvg5"u8))
@@ -271,7 +272,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    loadAvg5 = prop.Value.GetDouble();
+                    loadAverage5Minutes = prop.Value.GetDouble();
                     continue;
                 }
                 if (prop.NameEquals("loadAvg15"u8))
@@ -280,7 +281,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    loadAvg15 = prop.Value.GetDouble();
+                    loadAverage15Minutes = prop.Value.GetDouble();
                     continue;
                 }
                 if (options.Format != "W")
@@ -297,9 +298,9 @@ namespace Azure.Containers.Apps.Sandbox
                 irq,
                 softirq,
                 steal,
-                loadAvg1,
-                loadAvg5,
-                loadAvg15,
+                loadAverage1Minute,
+                loadAverage5Minutes,
+                loadAverage15Minutes,
                 additionalBinaryDataProperties);
         }
     }

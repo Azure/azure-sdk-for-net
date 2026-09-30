@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     internal partial class UnknownTelemetryEndpoint : TelemetryEndpoint
     {
@@ -18,7 +18,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="columns"> Custom columns added to forwarded log records. </param>
         /// <param name="dynamicJsonColumns"> Whether to add top-level JSON fields from container logs as columns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, LogColumnDef> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
+        internal UnknownTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, TelemetryLogColumn> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
         {
         }
     }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Log Analytics Legacy (Data Collector API) telemetry endpoint configuration. </summary>
     public partial class LogAnalyticsLegacyTelemetryEndpoint : TelemetryEndpoint
@@ -40,7 +41,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="workspaceId"> The Log Analytics workspace ID. </param>
         /// <param name="tableName"> The custom log table name (e.g., "ContainerAppConsoleLogs"). </param>
         /// <param name="auth"> Secret containing the Log Analytics shared key. </param>
-        internal LogAnalyticsLegacyTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, LogColumnDef> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workspaceId, string tableName, TelemetrySecretReference auth) : base(kind, data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
+        internal LogAnalyticsLegacyTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, TelemetryLogColumn> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workspaceId, string tableName, TelemetrySecretReference auth) : base(kind, data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             TableName = tableName;

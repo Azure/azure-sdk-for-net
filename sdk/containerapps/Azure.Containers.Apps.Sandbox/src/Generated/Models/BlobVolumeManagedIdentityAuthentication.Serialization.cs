@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Authenticates with a managed identity already assigned to the sandbox group. </summary>
     public partial class BlobVolumeManagedIdentityAuthentication : BlobVolumeAuthentication, IJsonModel<BlobVolumeManagedIdentityAuthentication>

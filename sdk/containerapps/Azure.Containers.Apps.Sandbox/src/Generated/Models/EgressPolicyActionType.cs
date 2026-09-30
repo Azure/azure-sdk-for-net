@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Types of actions that an egress policy rule can take. </summary>
     public readonly partial struct EgressPolicyActionType : IEquatable<EgressPolicyActionType>

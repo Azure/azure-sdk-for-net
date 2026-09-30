@@ -20,8 +20,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task CreateGetListCountAndDeleteVolume()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            SandboxGroupVolumes client = sandboxGroup.GetSandboxGroupVolumesClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            VolumesClient client = sandboxGroup.GetVolumesClient();
             SandboxGroupVolume volume = await CreateVolumeAsync(sandboxGroup);
             bool found = false;
 
@@ -46,8 +46,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task ManageVolumeDirectoryAndFile()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            SandboxGroupVolumes client = sandboxGroup.GetSandboxGroupVolumesClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            VolumesClient client = sandboxGroup.GetVolumesClient();
             SandboxGroupVolume volume = await CreateVolumeAsync(sandboxGroup);
             string directory = "workspace";
             string path = $"{directory}/example.txt";
@@ -85,8 +85,8 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [Ignore("Forking requires a populated data disk, but the current service cannot mount a data disk with the public Ubuntu image because that image consumes the full disk budget, and data-disk file upload is unsupported.")]
         public async Task ForkDataDiskVolume()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            SandboxGroupVolumes client = sandboxGroup.GetSandboxGroupVolumesClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            VolumesClient client = sandboxGroup.GetVolumesClient();
             SandboxGroupVolume source = await CreateVolumeAsync(sandboxGroup, dataDisk: true);
 
             string destinationName = Recording.GenerateId("fork-", 40);
@@ -101,9 +101,9 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task AddVolumeMountToSandbox()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
             SandboxGroupVolume volume = await CreateVolumeAsync(sandboxGroup);
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
             SandboxVolume mount = new SandboxVolume(volume.VolumeName, "/mnt/data")
             {
                 ReadOnly = true
@@ -113,7 +113,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         private static async Task DeleteVolumePathAsync(
-            SandboxGroupVolumes client,
+            VolumesClient client,
             string volumeName,
             string path,
             bool? recursive = default)

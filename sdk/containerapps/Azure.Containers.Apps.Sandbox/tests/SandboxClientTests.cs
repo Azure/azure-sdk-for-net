@@ -38,24 +38,22 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 """);
             MockResponse deleteResponse = new MockResponse(204);
             MockTransport transport = new MockTransport(createResponse, deleteResponse);
-            ContainerAppsSandboxClientOptions options = new ContainerAppsSandboxClientOptions
+            SandboxGroupClientOptions options = new SandboxGroupClientOptions
             {
                 Transport = transport
             };
-            ContainerAppsSandboxClient client = new ContainerAppsSandboxClient(
+            SandboxGroupClient sandboxGroup = new SandboxGroupClient(
                 new Uri("https://management.eastus2.azuredevcompute.io"),
-                new MockCredential(),
-                options);
-            SandboxGroup sandboxGroup = client.GetSandboxGroupClient(
                 "00000000-0000-0000-0000-000000000000",
                 "test-rg",
-                "test-group");
+                "test-group",
+                new MockCredential(),
+                options);
+            SandboxesClient sandboxes = sandboxGroup.GetSandboxesClient();
 
-            Response<ContainerAppsSandbox> created = await sandboxGroup.CreateSandboxAsync(
+            Response<SandboxProperties> created = await sandboxes.CreateSandboxAsync(
                 SandboxClientTestBase.CreateSandboxContent("unit-test"));
-            Response deleted = await sandboxGroup
-                .GetSandboxGroupSandboxClient(created.Value.Id)
-                .DeleteAsync();
+            Response deleted = await sandboxes.DeleteAsync(created.Value.Id);
 
             Assert.That(created.Value.Id, Is.EqualTo("sandbox-id"));
             Assert.That(deleted.Status, Is.EqualTo(204));
@@ -106,18 +104,17 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 }
                 """);
             MockTransport transport = new MockTransport(response);
-            ContainerAppsSandboxClientOptions options = new ContainerAppsSandboxClientOptions
+            SandboxGroupClientOptions options = new SandboxGroupClientOptions
             {
                 Transport = transport
             };
-            ContainerAppsSandboxClient client = new ContainerAppsSandboxClient(
+            SandboxGroupClient sandboxGroup = new SandboxGroupClient(
                 new Uri("https://management.eastus2.azuredevcompute.io"),
-                new MockCredential(),
-                options);
-            SandboxGroup sandboxGroup = client.GetSandboxGroupClient(
                 "00000000-0000-0000-0000-000000000000",
                 "test-rg",
-                "test-group");
+                "test-group",
+                new MockCredential(),
+                options);
             CreateSandboxContent content = SandboxClientTestBase.CreateSandboxContent("maximum-set");
             content.Entrypoint.Add("/bin/sh");
             content.Command.Add("-c");
@@ -132,7 +129,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                 new SandboxAutoSuspendPolicy(false),
                 new SandboxAutoDeletePolicy(false));
 
-            Response<ContainerAppsSandbox> result = await sandboxGroup.CreateSandboxAsync(content);
+            Response<SandboxProperties> result = await sandboxGroup.GetSandboxesClient().CreateSandboxAsync(content);
             string requestContent = ReadContent(transport.Requests[0]);
 
             Assert.That(result.Value.Id, Is.EqualTo("sandbox-id"));

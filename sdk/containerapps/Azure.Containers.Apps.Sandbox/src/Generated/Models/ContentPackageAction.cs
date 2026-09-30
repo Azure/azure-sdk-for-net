@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Specifies how a content package should be delivered to the container. </summary>
     public readonly partial struct ContentPackageAction : IEquatable<ContentPackageAction>

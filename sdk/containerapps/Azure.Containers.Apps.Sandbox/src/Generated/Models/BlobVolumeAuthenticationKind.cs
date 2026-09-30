@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Authentication mechanisms for accessing a user-provided blob container. </summary>
     internal readonly partial struct BlobVolumeAuthenticationKind : IEquatable<BlobVolumeAuthenticationKind>

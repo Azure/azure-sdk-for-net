@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A volume backed by a customer-owned Azure Blob container. </summary>
     public partial class UserProvidedBlobVolume : SandboxGroupVolume, IJsonModel<UserProvidedBlobVolume>

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Managed identity types supported by an egress rule. </summary>
     public readonly partial struct EgressPolicyManagedIdentityType : IEquatable<EgressPolicyManagedIdentityType>

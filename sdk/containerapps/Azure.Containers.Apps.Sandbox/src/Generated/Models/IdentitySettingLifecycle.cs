@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Controls which identity lifecycle phases a specific identity is available in. </summary>
     public readonly partial struct IdentitySettingLifecycle : IEquatable<IdentitySettingLifecycle>

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Specifies the protocol used to send telemetry data to an OTLP endpoint. </summary>
     public readonly partial struct TelemetryProtocol : IEquatable<TelemetryProtocol>

@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> L4 transport protocol for an L3 egress rule. </summary>
     public readonly partial struct TransportProtocol : IEquatable<TransportProtocol>

@@ -18,10 +18,10 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task CreateGetListCountAndDeleteSnapshot()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
             SandboxSnapshot snapshot = await CreateSnapshotAsync(sandboxGroup, sandbox.Id);
-            SandboxGroupSnapshots client = sandboxGroup.GetSandboxGroupSnapshotsClient();
+            SnapshotsClient client = sandboxGroup.GetSnapshotsClient();
             bool found = false;
 
             Response<SandboxSnapshot> getResponse = await client.GetSnapshotAsync(snapshot.Id);
@@ -45,13 +45,13 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         [RecordedTest]
         public async Task StopAndResumeSandbox()
         {
-            SandboxGroup sandboxGroup = CreateSandboxGroupClient();
-            ContainerAppsSandbox sandbox = await CreateSandboxAsync(sandboxGroup);
-            SandboxGroupSandbox sandboxClient = sandboxGroup.GetSandboxGroupSandboxClient(sandbox.Id);
+            SandboxGroupClient sandboxGroup = CreateSandboxGroupClient();
+            SandboxProperties sandbox = await CreateSandboxAsync(sandboxGroup);
+            SandboxesClient sandboxClient = sandboxGroup.GetSandboxesClient();
 
-            Response<SandboxSnapshot> stopResponse = await sandboxClient.StopAsync();
+            Response<SandboxSnapshot> stopResponse = await sandboxClient.StopAsync(sandbox.Id);
             RegisterCleanup(() => DeleteSnapshotIfExistsAsync(sandboxGroup, stopResponse.Value.Id));
-            Response<ContainerAppsSandbox> resumeResponse = await sandboxClient.ResumeAsync();
+            Response<SandboxProperties> resumeResponse = await sandboxClient.ResumeAsync(sandbox.Id);
 
             Assert.That(stopResponse.Value.SandboxId, Is.EqualTo(sandbox.Id));
             Assert.That(resumeResponse.Value.Id, Is.EqualTo(sandbox.Id));

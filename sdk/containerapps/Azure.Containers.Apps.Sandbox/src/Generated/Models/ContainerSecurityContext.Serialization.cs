@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Container-level security context — overrides pod-level settings where applicable. Follows Kubernetes container securityContext semantics. </summary>
     public partial class ContainerSecurityContext : IJsonModel<ContainerSecurityContext>

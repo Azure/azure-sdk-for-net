@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> The supported managed identity selector types. </summary>
     internal readonly partial struct SandboxGroupIdentitySelectorKind : IEquatable<SandboxGroupIdentitySelectorKind>

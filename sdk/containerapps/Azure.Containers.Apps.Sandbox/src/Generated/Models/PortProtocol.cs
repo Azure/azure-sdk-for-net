@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Specifies the HTTP protocol version to use when forwarding requests to a port. </summary>
     public readonly partial struct PortProtocol : IEquatable<PortProtocol>

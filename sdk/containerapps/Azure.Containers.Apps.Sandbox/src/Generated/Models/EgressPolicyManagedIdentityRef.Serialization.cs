@@ -9,8 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
+using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A managed identity token used as a dynamic header value. </summary>
     public partial class EgressPolicyManagedIdentityRef : IJsonModel<EgressPolicyManagedIdentityRef>
@@ -140,7 +142,7 @@ namespace Azure.Containers.Apps.Sandbox
             string resource = default;
             string format = default;
             EgressPolicyManagedIdentityType? @type = default;
-            string identityResourceId = default;
+            ResourceIdentifier identityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,7 +167,11 @@ namespace Azure.Containers.Apps.Sandbox
                 }
                 if (prop.NameEquals("identityResourceId"u8))
                 {
-                    identityResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

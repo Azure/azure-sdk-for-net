@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Azure Monitor Log Analytics endpoint configuration. </summary>
     public partial class LogAnalyticsTelemetryEndpoint : TelemetryEndpoint
@@ -20,7 +21,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="tableName"> Target stream name in the DCR. </param>
         /// <param name="auth"> Required managed identity authentication. The identity must be assigned to the sandbox group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/>, <paramref name="dceEndpoint"/>, <paramref name="dcrImmutableId"/>, <paramref name="tableName"/> or <paramref name="auth"/> is null. </exception>
-        public LogAnalyticsTelemetryEndpoint(IEnumerable<TelemetryData> data, Uri dceEndpoint, string dcrImmutableId, string tableName, TelemetryAuth auth) : base(TelemetryEndpointKind.LogAnalytics, data)
+        public LogAnalyticsTelemetryEndpoint(IEnumerable<TelemetryData> data, Uri dceEndpoint, string dcrImmutableId, string tableName, TelemetryAuthentication auth) : base(TelemetryEndpointKind.LogAnalytics, data)
         {
             Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(dceEndpoint, nameof(dceEndpoint));
@@ -44,7 +45,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="dcrImmutableId"> Data Collection Rule immutable ID. </param>
         /// <param name="tableName"> Target stream name in the DCR. </param>
         /// <param name="auth"> Required managed identity authentication. The identity must be assigned to the sandbox group. </param>
-        internal LogAnalyticsTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, LogColumnDef> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri dceEndpoint, string dcrImmutableId, string tableName, TelemetryAuth auth) : base(kind, data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
+        internal LogAnalyticsTelemetryEndpoint(TelemetryEndpointKind kind, IList<TelemetryData> data, IDictionary<string, TelemetryLogColumn> columns, bool? dynamicJsonColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri dceEndpoint, string dcrImmutableId, string tableName, TelemetryAuthentication auth) : base(kind, data, columns, dynamicJsonColumns, additionalBinaryDataProperties)
         {
             DceEndpoint = dceEndpoint;
             DcrImmutableId = dcrImmutableId;
@@ -62,6 +63,6 @@ namespace Azure.Containers.Apps.Sandbox
         public string TableName { get; }
 
         /// <summary> Required managed identity authentication. The identity must be assigned to the sandbox group. </summary>
-        public TelemetryAuth Auth { get; }
+        public TelemetryAuthentication Auth { get; }
     }
 }

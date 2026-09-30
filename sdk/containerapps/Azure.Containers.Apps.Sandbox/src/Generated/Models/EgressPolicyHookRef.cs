@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> A webhook that dynamically decides how matching egress traffic is handled. </summary>
     public partial class EgressPolicyHookRef
@@ -19,7 +20,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <summary> Initializes a new instance of <see cref="EgressPolicyHookRef"/>. </summary>
         /// <param name="endpoint"> The webhook endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public EgressPolicyHookRef(string endpoint)
+        public EgressPolicyHookRef(Uri endpoint)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
@@ -36,7 +37,7 @@ namespace Azure.Containers.Apps.Sandbox
         /// <param name="timeoutMs"> The webhook timeout in milliseconds. </param>
         /// <param name="routingMode"> How the webhook request is routed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EgressPolicyHookRef(string endpoint, EgressPolicyHookFailBehavior? failBehavior, IList<string> requestHeaders, IList<EgressPolicyHeaderTransform> authHeaders, int? timeoutMs, EgressRuleRoutingMode? routingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EgressPolicyHookRef(Uri endpoint, EgressPolicyHookFailBehavior? failBehavior, IList<string> requestHeaders, IList<EgressPolicyHeaderTransform> authHeaders, int? timeoutMs, EgressRuleRoutingMode? routingMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             FailBehavior = failBehavior;
@@ -48,7 +49,7 @@ namespace Azure.Containers.Apps.Sandbox
         }
 
         /// <summary> The webhook endpoint. </summary>
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
 
         /// <summary> The action to take when the webhook fails. </summary>
         public EgressPolicyHookFailBehavior? FailBehavior { get; set; }

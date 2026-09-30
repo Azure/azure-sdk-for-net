@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 using Azure.Core;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Request body for creating a sandbox. </summary>
     public partial class CreateSandboxContent : IJsonModel<CreateSandboxContent>
@@ -355,7 +356,7 @@ namespace Azure.Containers.Apps.Sandbox
             IList<SandboxContentPackageDownload> contentPackageDownloads = default;
             string vnetConnectionName = default;
             IList<IdentitySetting> identitySettings = default;
-            TelemetryConfig telemetryConfig = default;
+            TelemetryConfiguration telemetryConfig = default;
             string projectId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -645,7 +646,7 @@ namespace Azure.Containers.Apps.Sandbox
                     {
                         continue;
                     }
-                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
+                    telemetryConfig = TelemetryConfiguration.DeserializeTelemetryConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("projectId"u8))

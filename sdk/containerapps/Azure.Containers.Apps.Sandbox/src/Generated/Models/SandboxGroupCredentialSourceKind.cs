@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Supported credential source kinds. </summary>
     public readonly partial struct SandboxGroupCredentialSourceKind : IEquatable<SandboxGroupCredentialSourceKind>

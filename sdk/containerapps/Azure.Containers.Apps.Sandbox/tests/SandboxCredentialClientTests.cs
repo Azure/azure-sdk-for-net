@@ -20,7 +20,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200, CredentialJson));
-            SandboxGroupCredentials client = CreateClient(transport);
+            CredentialsClient client = CreateClient(transport);
             SandboxGroupCredentialSource source = new SandboxGroupCredentialSource(SandboxGroupCredentialSourceKind.Pat);
             source.ParameterValues.Add("token", "secret");
             CreateSandboxGroupCredentialContent content = new CreateSandboxGroupCredentialContent(
@@ -46,7 +46,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         {
             MockTransport transport = new MockTransport(
                 SandboxClientTestHelpers.CreateJsonResponse(200, CredentialJson));
-            SandboxGroupCredentials client = CreateClient(transport);
+            CredentialsClient client = CreateClient(transport);
 
             Response<SandboxGroupCredential> response = await client.GetCredentialAsync("copilot");
 
@@ -67,7 +67,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
                     $$"""{"value":[{{CredentialJson}}],"nextLink":"{{nextLink}}"}"""),
                 SandboxClientTestHelpers.CreateJsonResponse(200,
                     """{"value":[{"name":"claude","provider":"Claude","state":"Ready","source":{"kind":"Pat"},"origin":"User"}]}"""));
-            SandboxGroupCredentials client = CreateClient(transport);
+            CredentialsClient client = CreateClient(transport);
             List<string> names = new List<string>();
 
             await foreach (Page<SandboxGroupCredential> page in client.GetCredentialsAsync("page-1").AsPages())
@@ -88,7 +88,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         public async Task DeleteCredentialSendsExpectedRequest()
         {
             MockTransport transport = new MockTransport(new MockResponse(204));
-            SandboxGroupCredentials client = CreateClient(transport);
+            CredentialsClient client = CreateClient(transport);
 
             Response response = await client.DeleteCredentialAsync("copilot");
 
@@ -97,7 +97,7 @@ namespace Azure.Containers.Apps.Sandbox.Tests
             Assert.That(transport.Requests[0].Uri.ToString(), Does.Contain("/credentials/copilot?"));
         }
 
-        private static SandboxGroupCredentials CreateClient(MockTransport transport) =>
-            SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetSandboxGroupCredentialsClient();
+        private static CredentialsClient CreateClient(MockTransport transport) =>
+            SandboxClientTestHelpers.CreateSandboxGroupClient(transport).GetCredentialsClient();
     }
 }

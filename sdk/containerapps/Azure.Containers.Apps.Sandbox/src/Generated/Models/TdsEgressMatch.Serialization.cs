@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Containers.Apps.Sandbox;
 
-namespace Azure.Containers.Apps.Sandbox
+namespace Azure.Containers.Apps.Sandbox.Models
 {
     /// <summary> Match criteria for a TDS egress rule. All specified criteria must match. </summary>
     public partial class TdsEgressMatch : IJsonModel<TdsEgressMatch>

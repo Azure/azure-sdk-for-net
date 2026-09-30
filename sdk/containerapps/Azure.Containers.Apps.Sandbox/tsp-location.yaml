@@ -1,5 +1,5 @@
 directory: specification/app/data-plane/ContainerApps
-commit: 7a7239408dbf572b10df6da25b72d17b6067aa2f
+commit: 576ad929639c20c130cce4d8ee192d5b30dc6d26
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
