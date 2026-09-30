@@ -13,22 +13,22 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> The update-specific managed service identity (all fields optional for PATCH). </summary>
-    public partial class ManagedServiceIdentityUpdate
+    public partial class AppNetworkManagedServiceIdentityPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
-        public ManagedServiceIdentityUpdate()
+        /// <summary> Initializes a new instance of <see cref="AppNetworkManagedServiceIdentityPatch"/>. </summary>
+        public AppNetworkManagedServiceIdentityPatch()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentityUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppNetworkManagedServiceIdentityPatch"/>. </summary>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServiceIdentityUpdate(ManagedServiceIdentityType? @type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppNetworkManagedServiceIdentityPatch(ManagedServiceIdentityType? @type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             UserAssignedIdentities = userAssignedIdentities;

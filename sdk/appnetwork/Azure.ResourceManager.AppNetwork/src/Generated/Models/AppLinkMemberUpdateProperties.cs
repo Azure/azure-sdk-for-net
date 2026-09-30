@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="upgradeProfile"> Upgrade profile. </param>
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkMemberUpdateProperties(UpgradeProfileUpdate upgradeProfile, ConnectivityProfileUpdate connectivityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkMemberUpdateProperties(AppLinkMemberUpgradeProfilePatch upgradeProfile, AppLinkConnectivityProfilePatch connectivityProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpgradeProfile = upgradeProfile;
             ConnectivityProfile = connectivityProfile;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Upgrade profile. </summary>
-        public UpgradeProfileUpdate UpgradeProfile { get; set; }
+        public AppLinkMemberUpgradeProfilePatch UpgradeProfile { get; set; }
 
         /// <summary> Connectivity profile. </summary>
-        public ConnectivityProfileUpdate ConnectivityProfile { get; set; }
+        public AppLinkConnectivityProfilePatch ConnectivityProfile { get; set; }
     }
 }

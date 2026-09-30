@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> The updatable AppLinkMember connectivity profile. </summary>
-    public partial class ConnectivityProfileUpdate
+    public partial class AppLinkConnectivityProfilePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityProfileUpdate"/>. </summary>
-        public ConnectivityProfileUpdate()
+        /// <summary> Initializes a new instance of <see cref="AppLinkConnectivityProfilePatch"/>. </summary>
+        public AppLinkConnectivityProfilePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectivityProfileUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkConnectivityProfilePatch"/>. </summary>
         /// <param name="eastWestGateway"> East-West gateway profile. </param>
         /// <param name="network"> The network name for an Azure Kubernetes Application Network member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityProfileUpdate(EastWestGatewayProfileUpdate eastWestGateway, string network, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkConnectivityProfilePatch(EastWestGatewayProfileUpdate eastWestGateway, string network, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EastWestGateway = eastWestGateway;
             Network = network;

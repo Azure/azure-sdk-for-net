@@ -14,51 +14,51 @@ using Azure.ResourceManager.AppNetwork;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> The updatable AppLinkMember upgrade profile. </summary>
-    public partial class UpgradeProfileUpdate : IJsonModel<UpgradeProfileUpdate>
+    public partial class AppLinkMemberUpgradeProfilePatch : IJsonModel<AppLinkMemberUpgradeProfilePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradeProfileUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppLinkMemberUpgradeProfilePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpgradeProfileUpdate(document.RootElement, options);
+                        return DeserializeAppLinkMemberUpgradeProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeProfileUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeProfileUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpgradeProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppLinkMemberUpgradeProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeProfileUpdate IPersistableModel<UpgradeProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppLinkMemberUpgradeProfilePatch IPersistableModel<AppLinkMemberUpgradeProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpgradeProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppLinkMemberUpgradeProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpgradeProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppLinkMemberUpgradeProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeProfileUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Mode))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradeProfileUpdate IJsonModel<UpgradeProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppLinkMemberUpgradeProfilePatch IJsonModel<AppLinkMemberUpgradeProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UpgradeProfileUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppLinkMemberUpgradeProfilePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradeProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppLinkMemberUpgradeProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeProfileUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLinkMemberUpgradeProfilePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradeProfileUpdate(document.RootElement, options);
+            return DeserializeAppLinkMemberUpgradeProfilePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpgradeProfileUpdate DeserializeUpgradeProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppLinkMemberUpgradeProfilePatch DeserializeAppLinkMemberUpgradeProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpgradeProfileUpdate(mode, fullyManagedUpgradeProfile, selfManagedUpgradeProfile, additionalBinaryDataProperties);
+            return new AppLinkMemberUpgradeProfilePatch(mode, fullyManagedUpgradeProfile, selfManagedUpgradeProfile, additionalBinaryDataProperties);
         }
     }
 }

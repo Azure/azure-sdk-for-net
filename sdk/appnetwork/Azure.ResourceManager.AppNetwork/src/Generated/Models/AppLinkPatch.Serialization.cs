@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentityUpdate identity = default;
+            AppNetworkManagedServiceIdentityPatch identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentityUpdate.DeserializeManagedServiceIdentityUpdate(prop.Value, options);
+                    identity = AppNetworkManagedServiceIdentityPatch.DeserializeAppNetworkManagedServiceIdentityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

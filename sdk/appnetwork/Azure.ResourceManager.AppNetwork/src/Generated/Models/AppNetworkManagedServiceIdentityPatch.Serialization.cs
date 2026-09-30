@@ -16,51 +16,51 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> The update-specific managed service identity (all fields optional for PATCH). </summary>
-    public partial class ManagedServiceIdentityUpdate : IJsonModel<ManagedServiceIdentityUpdate>
+    public partial class AppNetworkManagedServiceIdentityPatch : IJsonModel<AppNetworkManagedServiceIdentityPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedServiceIdentityUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AppNetworkManagedServiceIdentityPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppNetworkManagedServiceIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedServiceIdentityUpdate(document.RootElement, options);
+                        return DeserializeAppNetworkManagedServiceIdentityPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppNetworkManagedServiceIdentityPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppNetworkManagedServiceIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppNetworkManagedServiceIdentityPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedServiceIdentityUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AppNetworkManagedServiceIdentityPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedServiceIdentityUpdate IPersistableModel<ManagedServiceIdentityUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AppNetworkManagedServiceIdentityPatch IPersistableModel<AppNetworkManagedServiceIdentityPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedServiceIdentityUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppNetworkManagedServiceIdentityPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedServiceIdentityUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppNetworkManagedServiceIdentityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppNetworkManagedServiceIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppNetworkManagedServiceIdentityPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Type))
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedServiceIdentityUpdate IJsonModel<ManagedServiceIdentityUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AppNetworkManagedServiceIdentityPatch IJsonModel<AppNetworkManagedServiceIdentityPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedServiceIdentityUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AppNetworkManagedServiceIdentityPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppNetworkManagedServiceIdentityPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppNetworkManagedServiceIdentityPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedServiceIdentityUpdate(document.RootElement, options);
+            return DeserializeAppNetworkManagedServiceIdentityPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedServiceIdentityUpdate DeserializeManagedServiceIdentityUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppNetworkManagedServiceIdentityPatch DeserializeAppNetworkManagedServiceIdentityPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedServiceIdentityUpdate(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new AppNetworkManagedServiceIdentityPatch(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

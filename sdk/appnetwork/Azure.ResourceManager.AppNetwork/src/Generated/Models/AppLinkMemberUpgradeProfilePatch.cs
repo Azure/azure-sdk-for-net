@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppNetwork.Models
 {
     /// <summary> The updatable AppLinkMember upgrade profile. </summary>
-    public partial class UpgradeProfileUpdate
+    public partial class AppLinkMemberUpgradeProfilePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeProfileUpdate"/>. </summary>
-        public UpgradeProfileUpdate()
+        /// <summary> Initializes a new instance of <see cref="AppLinkMemberUpgradeProfilePatch"/>. </summary>
+        public AppLinkMemberUpgradeProfilePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeProfileUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppLinkMemberUpgradeProfilePatch"/>. </summary>
         /// <param name="mode"> Upgrade mode. </param>
         /// <param name="fullyManagedUpgradeProfile"> Fully managed upgrade profile. </param>
         /// <param name="selfManagedUpgradeProfile"> Self managed upgrade profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeProfileUpdate(AppLinkUpgradeMode? mode, FullyManagedUpgradeProfileUpdate fullyManagedUpgradeProfile, SelfManagedUpgradeProfileUpdate selfManagedUpgradeProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkMemberUpgradeProfilePatch(AppLinkUpgradeMode? mode, FullyManagedUpgradeProfileUpdate fullyManagedUpgradeProfile, SelfManagedUpgradeProfileUpdate selfManagedUpgradeProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
             FullyManagedUpgradeProfile = fullyManagedUpgradeProfile;

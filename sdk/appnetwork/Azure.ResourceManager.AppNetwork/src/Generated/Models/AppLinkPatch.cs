@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkPatch(IDictionary<string, string> tags, ManagedServiceIdentityUpdate identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkPatch(IDictionary<string, string> tags, AppNetworkManagedServiceIdentityPatch identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.AppNetwork.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentityUpdate Identity { get; set; }
+        public AppNetworkManagedServiceIdentityPatch Identity { get; set; }
     }
 }
