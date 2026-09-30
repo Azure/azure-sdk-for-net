@@ -1,5 +1,6 @@
 import "@azure-tools/typespec-azure-resource-manager";
 import "./api-version-override.tsp";
+import "./api-version-escaping.tsp";
 using TypeSpec.Versioning;
 using Azure.ResourceManager;
 

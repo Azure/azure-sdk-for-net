@@ -21,6 +21,8 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _escapedWireVersionReadsClientDiagnostics;
+        private EscapedWireVersionReads _escapedWireVersionReadsRestClient;
         private ClientDiagnostics _wireVersionOperationsClientDiagnostics;
         private WireVersionOperations _wireVersionOperationsRestClient;
 
@@ -36,6 +38,16 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
         {
         }
 
+        private ClientDiagnostics EscapedWireVersionReadsClientDiagnostics => _escapedWireVersionReadsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EscapedWireVersionReads EscapedWireVersionReadsRestClient => _escapedWireVersionReadsRestClient ??= new EscapedWireVersionReads(
+            EscapedWireVersionReadsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-05-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
         private ClientDiagnostics WireVersionOperationsClientDiagnostics => _wireVersionOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtApiVersionOverride.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private WireVersionOperations WireVersionOperationsRestClient => _wireVersionOperationsRestClient ??= new WireVersionOperations(
@@ -45,6 +57,62 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             Endpoint,
             "2024-05-01",
             resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+
+        /// <summary>
+        /// List EscapedWireVersionTest resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/escapedWireVersionTests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EscapedWireVersionReads_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> opaque-read&amp;channel=legacy%2Fplus+#hash. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EscapedWireVersionTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EscapedWireVersionTestResource> GetEscapedWireVersionTestsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EscapedWireVersionTestData, EscapedWireVersionTestResource>(new EscapedWireVersionReadsGetBySubscriptionAsyncCollectionResultOfT(EscapedWireVersionReadsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetEscapedWireVersionTests"), data => new EscapedWireVersionTestResource(Client, data));
+        }
+
+        /// <summary>
+        /// List EscapedWireVersionTest resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/escapedWireVersionTests. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EscapedWireVersionReads_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> opaque-read&amp;channel=legacy%2Fplus+#hash. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EscapedWireVersionTestResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EscapedWireVersionTestResource> GetEscapedWireVersionTests(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EscapedWireVersionTestData, EscapedWireVersionTestResource>(new EscapedWireVersionReadsGetBySubscriptionCollectionResultOfT(EscapedWireVersionReadsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAzureGeneratorMgmtApiVersionOverrideTestsSubscriptionResource.GetEscapedWireVersionTests"), data => new EscapedWireVersionTestResource(Client, data));
+        }
 
         /// <summary>
         /// List WireVersionTest resources by subscription ID
