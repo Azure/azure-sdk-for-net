@@ -114,9 +114,12 @@ Retain its baseline, framework scope, and source revision when interpreting
 the result; replay does not refresh the original comparison. Do not combine
 that option with `--changes-only`, which requests fresh detection instead.
 
-The existing Compliance job runs the standalone detector's Pester fixtures,
-not comparisons of the selected SDK libraries. To run the same suite locally
-from the repository root:
+The existing `eng/scripts/ci.yml` pipeline runs these fixtures when engineering
+scripts change. Its `UnitTest` selection covers detector unit tests;
+`SdkCompatibilityTest` adds only the detector's integration and performance
+fixtures, without enabling unrelated integration tests. SDK library CI and
+its Compliance job are unchanged. To run the detector suite locally from the
+repository root:
 
 ```powershell
 Invoke-Pester -Path '.\eng\scripts\compatibility\tests' -Output Normal

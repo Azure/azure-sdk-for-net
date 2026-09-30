@@ -100,7 +100,7 @@ BeforeAll {
         -Evaluation $fixtures.After.Evaluation -Rules $rules -SdkRepoPath $repo -WorkDirectory (Join-Path $fixtureRoot 'reverse')
 }
 
-Describe 'Real offline SDK ApiCompat task' -Tag 'IntegrationTest' {
+Describe 'Real offline SDK ApiCompat task' -Tag 'IntegrationTest', 'SdkCompatibilityTest' {
     It 'reports an unbuilt IncludeBuildOutput=false metapackage as assembly-free without looking up NuGet' {
         $root = Join-Path $fixtureRoot 'Metapackage'
         Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'fixtures') -Destination $root -Recurse

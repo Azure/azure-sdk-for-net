@@ -6,7 +6,7 @@ BeforeAll {
     $repo = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..' '..')).Path
 }
 
-Describe 'Large SDK source freshness validation' -Tag 'IntegrationTest' {
+Describe 'Large SDK source freshness validation' -Tag 'IntegrationTest', 'SdkCompatibilityTest' {
     It 'finishes the standalone detector within 300 seconds for 4278 <Mode> sources and three frameworks' -TestCases @(
         @{ Mode = 'physical' }, @{ Mode = 'mapped' }
     ) {
