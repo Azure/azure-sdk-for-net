@@ -17,7 +17,7 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class ComponentAPIsAnnotationsOperationGroupCreateCollectionResultOfT : Pageable<ApplicationInsightsAnnotation>
+    internal partial class ApplicationInsightsComponentResourceCreateAnnotationsCollectionResultOfT : Pageable<ApplicationInsightsAnnotation>
     {
         private readonly Annotations _client;
         private readonly Guid _subscriptionId;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComponentAPIsAnnotationsOperationGroupCreateCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentResourceCreateAnnotationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Annotations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsAnnotationsOperationGroupCreateCollectionResultOfT(Annotations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
+        public ApplicationInsightsComponentResourceCreateAnnotationsCollectionResultOfT(Annotations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComponentAPIsAnnotationsOperationGroupCreateCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApplicationInsightsComponentResourceCreateAnnotationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComponentAPIsAnnotationsOperationGroupCreateCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ApplicationInsightsComponentResourceCreateAnnotationsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ApplicationInsightsAnnotation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);

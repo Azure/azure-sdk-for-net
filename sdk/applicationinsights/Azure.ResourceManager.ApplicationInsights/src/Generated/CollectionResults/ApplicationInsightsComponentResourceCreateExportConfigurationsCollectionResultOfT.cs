@@ -17,48 +17,48 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT : Pageable<ApplicationInsightsAnnotation>
+    internal partial class ApplicationInsightsComponentResourceCreateExportConfigurationsCollectionResultOfT : Pageable<ApplicationInsightsComponentExportConfiguration>
     {
-        private readonly Annotations _client;
-        private readonly string _resourceGroupName;
+        private readonly ExportConfigurations _client;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly string _resourceName;
-        private readonly string _annotationId;
+        private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Annotations client used to send requests. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentResourceCreateExportConfigurationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ExportConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT(Annotations client, string resourceGroupName, Guid subscriptionId, string resourceName, string annotationId, RequestContext context, string diagnosticScope)
+        public ApplicationInsightsComponentResourceCreateExportConfigurationsCollectionResultOfT(ExportConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
-            _resourceGroupName = resourceGroupName;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
-            _annotationId = annotationId;
+            _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApplicationInsightsComponentResourceCreateExportConfigurationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComponentAPIsAnnotationsOperationGroupGetCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ApplicationInsightsAnnotation>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ApplicationInsightsComponentResourceCreateExportConfigurationsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ApplicationInsightsComponentExportConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<ApplicationInsightsAnnotation> result = ParseArrayFromResponse(response);
-            yield return Page<ApplicationInsightsAnnotation>.FromValues(result, null, response);
+            IReadOnlyList<ApplicationInsightsComponentExportConfiguration> result = ParseArrayFromResponse(response);
+            yield return Page<ApplicationInsightsComponentExportConfiguration>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAnnotationsRequest(_resourceGroupName, _subscriptionId, _resourceName, _annotationId, _context);
+            HttpMessage message = _client.CreateCreateExportConfigurationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<ApplicationInsightsAnnotation> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<ApplicationInsightsComponentExportConfiguration> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<ApplicationInsightsAnnotation> result = new List<ApplicationInsightsAnnotation>();
+            List<ApplicationInsightsComponentExportConfiguration> result = new List<ApplicationInsightsComponentExportConfiguration>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<ApplicationInsightsAnnotation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApplicationInsightsContext.Default));
+                result.Add(ModelReaderWriter.Read<ApplicationInsightsComponentExportConfiguration>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApplicationInsightsContext.Default));
             }
             return result;
         }

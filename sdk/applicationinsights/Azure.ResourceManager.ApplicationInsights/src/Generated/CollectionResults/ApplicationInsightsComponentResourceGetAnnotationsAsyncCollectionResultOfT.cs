@@ -14,49 +14,52 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.ApplicationInsights.Models;
 
-namespace Azure.ResourceManager.ApiManagement
+namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT : AsyncPageable<NetworkStatusContractWithLocation>
+    internal partial class ApplicationInsightsComponentResourceGetAnnotationsAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsAnnotation>
     {
-        private readonly NetworkStatus _client;
-        private readonly Guid _subscriptionId;
+        private readonly Annotations _client;
         private readonly string _resourceGroupName;
-        private readonly string _serviceName;
+        private readonly Guid _subscriptionId;
+        private readonly string _resourceName;
+        private readonly string _annotationId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The NetworkStatus client used to send requests. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentResourceGetAnnotationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Annotations client used to send requests. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serviceName"> The name of the API Management service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
+        /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT(NetworkStatus client, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context, string diagnosticScope)
+        public ApplicationInsightsComponentResourceGetAnnotationsAsyncCollectionResultOfT(Annotations client, string resourceGroupName, Guid subscriptionId, string resourceName, string annotationId, RequestContext context, string diagnosticScope)
         {
             _client = client;
-            _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _serviceName = serviceName;
+            _subscriptionId = subscriptionId;
+            _resourceName = resourceName;
+            _annotationId = annotationId;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApplicationInsightsComponentResourceGetAnnotationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<NetworkStatusContractWithLocation>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ApplicationInsightsComponentResourceGetAnnotationsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ApplicationInsightsAnnotation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<NetworkStatusContractWithLocation> result = ParseArrayFromResponse(response);
-            yield return Page<NetworkStatusContractWithLocation>.FromValues(result, null, response);
+            IReadOnlyList<ApplicationInsightsAnnotation> result = ParseArrayFromResponse(response);
+            yield return Page<ApplicationInsightsAnnotation>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -64,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetNetworkStatusesRequest(_subscriptionId, _resourceGroupName, _serviceName, _context);
+            HttpMessage message = _client.CreateGetAnnotationsRequest(_resourceGroupName, _subscriptionId, _resourceName, _annotationId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -81,14 +84,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<NetworkStatusContractWithLocation> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<ApplicationInsightsAnnotation> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<NetworkStatusContractWithLocation> result = new List<NetworkStatusContractWithLocation>();
+            List<ApplicationInsightsAnnotation> result = new List<ApplicationInsightsAnnotation>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<NetworkStatusContractWithLocation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default));
+                result.Add(ModelReaderWriter.Read<ApplicationInsightsAnnotation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApplicationInsightsContext.Default));
             }
             return result;
         }

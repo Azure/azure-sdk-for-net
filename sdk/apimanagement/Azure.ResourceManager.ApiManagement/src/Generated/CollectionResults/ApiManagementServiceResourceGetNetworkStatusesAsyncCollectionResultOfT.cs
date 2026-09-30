@@ -14,49 +14,49 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ApplicationInsights.Models;
+using Azure.ResourceManager.ApiManagement.Models;
 
-namespace Azure.ResourceManager.ApplicationInsights
+namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class ComponentAPIsProactiveDetectionConfigurationsOperationGroupListAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentProactiveDetectionConfiguration>
+    internal partial class ApiManagementServiceResourceGetNetworkStatusesAsyncCollectionResultOfT : AsyncPageable<NetworkStatusContractWithLocation>
     {
-        private readonly ProactiveDetectionConfigurations _client;
+        private readonly NetworkStatus _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _resourceName;
+        private readonly string _serviceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComponentAPIsProactiveDetectionConfigurationsOperationGroupListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ProactiveDetectionConfigurations client used to send requests. </param>
+        /// <summary> Initializes a new instance of ApiManagementServiceResourceGetNetworkStatusesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The NetworkStatus client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
+        /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsProactiveDetectionConfigurationsOperationGroupListAsyncCollectionResultOfT(ProactiveDetectionConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope)
+        public ApiManagementServiceResourceGetNetworkStatusesAsyncCollectionResultOfT(NetworkStatus client, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _resourceName = resourceName;
+            _serviceName = serviceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComponentAPIsProactiveDetectionConfigurationsOperationGroupListAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApiManagementServiceResourceGetNetworkStatusesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComponentAPIsProactiveDetectionConfigurationsOperationGroupListAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApplicationInsightsComponentProactiveDetectionConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ApiManagementServiceResourceGetNetworkStatusesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<NetworkStatusContractWithLocation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration> result = ParseArrayFromResponse(response);
-            yield return Page<ApplicationInsightsComponentProactiveDetectionConfiguration>.FromValues(result, null, response);
+            IReadOnlyList<NetworkStatusContractWithLocation> result = ParseArrayFromResponse(response);
+            yield return Page<NetworkStatusContractWithLocation>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetProactiveDetectionConfigurationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
+            HttpMessage message = _client.CreateGetNetworkStatusesRequest(_subscriptionId, _resourceGroupName, _serviceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<NetworkStatusContractWithLocation> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<ApplicationInsightsComponentProactiveDetectionConfiguration> result = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
+            List<NetworkStatusContractWithLocation> result = new List<NetworkStatusContractWithLocation>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<ApplicationInsightsComponentProactiveDetectionConfiguration>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApplicationInsightsContext.Default));
+                result.Add(ModelReaderWriter.Read<NetworkStatusContractWithLocation>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApiManagementContext.Default));
             }
             return result;
         }

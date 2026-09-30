@@ -17,7 +17,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal partial class MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceCollectionResultOfT : Pageable<NetworkStatusContractWithLocation>
+    internal partial class ApiManagementServiceResourceGetNetworkStatusesCollectionResultOfT : Pageable<NetworkStatusContractWithLocation>
     {
         private readonly NetworkStatus _client;
         private readonly Guid _subscriptionId;
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ApiManagementServiceResourceGetNetworkStatusesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NetworkStatus client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceCollectionResultOfT(NetworkStatus client, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context, string diagnosticScope)
+        public ApiManagementServiceResourceGetNetworkStatusesCollectionResultOfT(NetworkStatus client, Guid subscriptionId, string resourceGroupName, string serviceName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ApiManagement
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApiManagementServiceResourceGetNetworkStatusesCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ApiManagementServiceResourceGetNetworkStatusesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NetworkStatusContractWithLocation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);

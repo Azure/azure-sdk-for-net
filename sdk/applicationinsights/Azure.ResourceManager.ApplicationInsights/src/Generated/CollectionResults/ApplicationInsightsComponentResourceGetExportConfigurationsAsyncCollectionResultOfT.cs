@@ -18,57 +18,45 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentFavorite>
+    internal partial class ApplicationInsightsComponentResourceGetExportConfigurationsAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentExportConfiguration>
     {
-        private readonly Favorites _client;
+        private readonly ExportConfigurations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceName;
-        private readonly string _favoriteType;
-        private readonly string _sourceType;
-        private readonly bool? _canFetchContent;
-        private readonly IEnumerable<string> _tags;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Favorites client used to send requests. </param>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentResourceGetExportConfigurationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ExportConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
-        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to 'other' (not present in this enum). </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
-        /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT(Favorites client, Guid subscriptionId, string resourceGroupName, string resourceName, string favoriteType, string sourceType, bool? canFetchContent, IEnumerable<string> tags, RequestContext context, string diagnosticScope)
+        public ApplicationInsightsComponentResourceGetExportConfigurationsAsyncCollectionResultOfT(ExportConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
-            _favoriteType = favoriteType;
-            _sourceType = sourceType;
-            _canFetchContent = canFetchContent;
-            _tags = tags;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApplicationInsightsComponentResourceGetExportConfigurationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of FavoritesFavoritesOperationGroupListAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ApplicationInsightsComponentFavorite>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ApplicationInsightsComponentResourceGetExportConfigurationsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ApplicationInsightsComponentExportConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<ApplicationInsightsComponentFavorite> result = ParseArrayFromResponse(response);
-            yield return Page<ApplicationInsightsComponentFavorite>.FromValues(result, null, response);
+            IReadOnlyList<ApplicationInsightsComponentExportConfiguration> result = ParseArrayFromResponse(response);
+            yield return Page<ApplicationInsightsComponentExportConfiguration>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -76,7 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetFavoritesRequest(_subscriptionId, _resourceGroupName, _resourceName, _favoriteType, _sourceType, _canFetchContent, _tags, _context);
+            HttpMessage message = _client.CreateGetExportConfigurationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -93,14 +81,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<ApplicationInsightsComponentFavorite> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<ApplicationInsightsComponentExportConfiguration> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<ApplicationInsightsComponentFavorite> result = new List<ApplicationInsightsComponentFavorite>();
+            List<ApplicationInsightsComponentExportConfiguration> result = new List<ApplicationInsightsComponentExportConfiguration>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<ApplicationInsightsComponentFavorite>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApplicationInsightsContext.Default));
+                result.Add(ModelReaderWriter.Read<ApplicationInsightsComponentExportConfiguration>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerApplicationInsightsContext.Default));
             }
             return result;
         }
