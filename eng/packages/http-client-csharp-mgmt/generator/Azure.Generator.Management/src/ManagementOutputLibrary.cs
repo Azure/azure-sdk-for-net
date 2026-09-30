@@ -53,7 +53,28 @@ namespace Azure.Generator.Management
         private ExtensionProvider? _extensionProvider;
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
+        private readonly HashSet<string> _collectionResultNames = new(StringComparer.Ordinal);
+
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+
+        // Keep collection-result names compact, adding a numeric suffix only when two methods
+        // would otherwise produce the same helper type name.
+        internal string GetUniqueCollectionResultName(string baseName)
+        {
+            if (_collectionResultNames.Add(baseName))
+            {
+                return baseName;
+            }
+
+            var suffix = 0;
+            while (!_collectionResultNames.Add($"{baseName}{suffix}"))
+            {
+                suffix++;
+            }
+
+            return $"{baseName}{suffix}";
+        }
+
         internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
         {
             var operationSources = OperationSourceDict;

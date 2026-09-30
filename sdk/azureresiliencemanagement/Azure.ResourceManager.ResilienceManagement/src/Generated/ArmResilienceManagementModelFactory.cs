@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Defines an action for the recovery orchestration group.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryGroupManualAction"/> and <see cref="Models.RecoveryGroupCustomRunbookAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryGroupCustomRunbookAction"/> and <see cref="Models.RecoveryGroupManualAction"/>.
         /// </summary>
         /// <param name="name"> The name of the recovery orchestration group action. </param>
         /// <param name="description"> A description of the recovery orchestration group action, containing the instructions to be performed during this action. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceNativeProtectionSolutionSetting"/>, <see cref="Models.ResourceCustomProtectionSetting"/>, and <see cref="Models.ResourceSiteRecoveryProtectionSetting"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceCustomProtectionSetting"/>, <see cref="Models.ResourceNativeProtectionSolutionSetting"/>, and <see cref="Models.ResourceSiteRecoveryProtectionSetting"/>.
         /// </summary>
         /// <param name="protectionSolutionType"> A setting that indicates the resource protected with which recovery solution. </param>
         /// <returns> A new <see cref="Models.ResourceBaseProtectionSolutionSetting"/> instance for mocking. </returns>
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Definition of job-resource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryJobResourceProperties"/> and <see cref="Models.DrillRunResourceProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DrillRunResourceProperties"/> and <see cref="Models.RecoveryJobResourceProperties"/>.
         /// </summary>
         /// <param name="status"> The current status of the job execution. </param>
         /// <param name="startsOn"> The start time of the job execution. </param>

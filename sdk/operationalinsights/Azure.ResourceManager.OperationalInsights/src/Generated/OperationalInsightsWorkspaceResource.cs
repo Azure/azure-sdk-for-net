@@ -1326,7 +1326,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftOperationalInsightsWorkspacesIntelligencePacksListAsyncCollectionResultOfT(
+            return new OperationalInsightsWorkspaceResourceGetIntelligencePacksAsyncCollectionResultOfT(
                 _intelligencePacksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftOperationalInsightsWorkspacesIntelligencePacksListCollectionResultOfT(
+            return new OperationalInsightsWorkspaceResourceGetIntelligencePacksCollectionResultOfT(
                 _intelligencePacksRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftOperationalInsightsWorkspacesListByWorkspaceAsyncCollectionResultOfT(
+            return new OperationalInsightsWorkspaceResourceGetAvailableServiceTiersAsyncCollectionResultOfT(
                 _availableServiceTiersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftOperationalInsightsWorkspacesListByWorkspaceCollectionResultOfT(
+            return new OperationalInsightsWorkspaceResourceGetAvailableServiceTiersCollectionResultOfT(
                 _availableServiceTiersRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

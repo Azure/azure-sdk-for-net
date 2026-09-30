@@ -174,13 +174,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
+                    var subDirectoryOverride = StorageConfig.GetSubDirectoryOverride();
+
                     // Dropping a connection string moves this directory, stranding whatever the prior
                     // configuration persisted, exactly as changing an instrumentation key does today.
                     storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: configuredStorageDirectory,
                         instrumentationKey: connectionVars.InstrumentationKey,
-                        omitInstrumentationKey: connectionVars.IsUnconfigured);
+                        omitInstrumentationKey: connectionVars.IsUnconfigured,
+                        subDirectoryOverride: subDirectoryOverride);
+
+                    if (subDirectoryOverride != null)
+                    {
+                        AzureMonitorExporterEventSource.Log.StorageSubDirectoryOverrideApplied(StorageConfig.SubDirectoryOverrideName, subDirectoryOverride, storageDirectory);
+                    }
 
                     // The directory is still needed: it roots the per-destination storage that routed
                     // telemetry persists into. A provider here would not be, though. Nothing writes to

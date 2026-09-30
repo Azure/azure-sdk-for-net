@@ -23,6 +23,7 @@ namespace Azure.Identity
         internal readonly IX509Certificate2Provider _certificateProvider;
         private readonly Func<string> _clientAssertionCallback;
         private readonly Func<CancellationToken, Task<string>> _clientAssertionCallbackAsync;
+        private readonly Func<AssertionRequestOptions, CancellationToken, Task<ClientSignedAssertion>> _clientSignedAssertionCallbackAsync;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
         internal readonly bool _enableMtlsProofOfPossession;
 
@@ -59,6 +60,13 @@ namespace Azure.Identity
             : base(pipeline, tenantId, clientId, options)
         {
             _clientAssertionCallbackAsync = assertionCallback;
+        }
+
+        internal MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AssertionRequestOptions, CancellationToken, Task<ClientSignedAssertion>> assertionCallback, TokenCredentialOptions options)
+            : base(pipeline, tenantId, clientId, options)
+        {
+            _clientSignedAssertionCallbackAsync = assertionCallback;
+            _enableMtlsProofOfPossession = true;
         }
 
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> appTokenProviderCallback, TokenCredentialOptions options)
@@ -130,6 +138,11 @@ namespace Azure.Identity
                     throw new InvalidOperationException($"Cannot set both {nameof(_clientAssertionCallback)} and {nameof(_clientAssertionCallbackAsync)}");
                 }
                 confClientBuilder.WithClientAssertion(_clientAssertionCallbackAsync);
+            }
+
+            if (_clientSignedAssertionCallbackAsync != null)
+            {
+                confClientBuilder.WithClientAssertion(_clientSignedAssertionCallbackAsync);
             }
 
             if (_certificateProvider != null)

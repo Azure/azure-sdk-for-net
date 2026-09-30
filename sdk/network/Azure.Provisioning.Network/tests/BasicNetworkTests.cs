@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
@@ -12,6 +13,64 @@ namespace Azure.Provisioning.Network.Tests;
 
 public class BasicNetworkTests
 {
+    [Test]
+    public void ResourceNameRequirementsArePreserved()
+    {
+        (ProvisionableResource Resource, int MinLength, int MaxLength)[] resources =
+        [
+            (new NetworkSecurityGroup("nsg"), 1, 80),
+            (new VirtualNetwork("vnet"), 2, 64),
+            (new NetworkInterface("nic"), 1, 80)
+        ];
+
+        foreach (var (resource, minLength, maxLength) in resources)
+        {
+            ResourceNameRequirements requirements = resource.GetResourceNameRequirements();
+            Assert.That(requirements.MinLength, Is.EqualTo(minLength), resource.GetType().Name);
+            Assert.That(requirements.MaxLength, Is.EqualTo(maxLength), resource.GetType().Name);
+            Assert.That(
+                requirements.ValidCharacters,
+                Is.EqualTo(ResourceNameCharacters.Alphanumeric | ResourceNameCharacters.Hyphen |
+                    ResourceNameCharacters.Underscore | ResourceNameCharacters.Period),
+                resource.GetType().Name);
+        }
+    }
+
+    [Test]
+    public async Task DefaultResourceNamesArePreserved()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                infra.Add(new NetworkSecurityGroup("nsg", NetworkSecurityGroup.ResourceVersions.V2020_05_01));
+                infra.Add(new VirtualNetwork("vnet", VirtualNetwork.ResourceVersions.V2021_08_01));
+                infra.Add(new NetworkInterface("nic", NetworkInterface.ResourceVersions.V2025_05_01));
+                return infra;
+            });
+
+        test.Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource nsg 'Microsoft.Network/networkSecurityGroups@2020-05-01' = {
+              name: take('nsg-${uniqueString(resourceGroup().id)}', 80)
+              location: location
+            }
+
+            resource vnet 'Microsoft.Network/virtualNetworks@2021-08-01' = {
+              name: take('vnet-${uniqueString(resourceGroup().id)}', 64)
+              location: location
+            }
+
+            resource nic 'Microsoft.Network/networkInterfaces@2025-05-01' = {
+              name: take('nic-${uniqueString(resourceGroup().id)}', 80)
+              location: location
+            }
+            """);
+    }
+
     internal static Trycep CreateVNetTwoSubnetsTest()
     {
         return new Trycep().Define(
@@ -808,7 +867,7 @@ public class BasicNetworkTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource vNetHub 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+            resource vNetHub 'Microsoft.Network/virtualNetworks@2026-01-01' = {
               name: vNetHubName
               location: location
               properties: {
@@ -828,7 +887,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource vNetSpoke 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+            resource vNetSpoke 'Microsoft.Network/virtualNetworks@2026-01-01' = {
               name: vNetSpokeName
               location: location
               properties: {
@@ -848,7 +907,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
+            resource hubToSpoke 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2026-01-01' = {
               name: 'peering-to-${vNetSpokeName}'
               parent: vNetHub
               properties: {
@@ -862,7 +921,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2025-05-01' = {
+            resource spokeToHub 'Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2026-01-01' = {
               name: 'peering-to-${vNetHubName}'
               parent: vNetSpoke
               properties: {
@@ -876,7 +935,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
+            resource bastionPublicIP 'Microsoft.Network/publicIPAddresses@2026-01-01' = {
               name: '${bastionHostName}-pip'
               location: location
               properties: {
@@ -887,7 +946,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource bastionHost 'Microsoft.Network/bastionHosts@2025-05-01' = {
+            resource bastionHost 'Microsoft.Network/bastionHosts@2026-01-01' = {
               name: bastionHostName
               location: location
               properties: {
@@ -1022,7 +1081,7 @@ public class BasicNetworkTests
 
             var firewallPolicyName = '${firewallName}-firewallPolicy'
 
-            resource workloadIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
+            resource workloadIpGroup 'Microsoft.Network/ipGroups@2026-01-01' = {
               name: 'workload-ipgroup-${uniqueString(resourceGroup().id)}'
               location: location
               properties: {
@@ -1033,7 +1092,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource infraIpGroup 'Microsoft.Network/ipGroups@2025-05-01' = {
+            resource infraIpGroup 'Microsoft.Network/ipGroups@2026-01-01' = {
               name: 'infra-ipgroup-${uniqueString(resourceGroup().id)}'
               location: location
               properties: {
@@ -1044,7 +1103,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource vnet 'Microsoft.Network/virtualNetworks@2025-05-01' = {
+            resource vnet 'Microsoft.Network/virtualNetworks@2026-01-01' = {
               name: virtualNetworkName
               location: location
               properties: {
@@ -1064,7 +1123,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource publicIP 'Microsoft.Network/publicIPAddresses@2025-05-01' = {
+            resource publicIP 'Microsoft.Network/publicIPAddresses@2026-01-01' = {
               name: 'publicIP1'
               location: location
               properties: {
@@ -1076,7 +1135,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource firewallPolicy 'Microsoft.Network/firewallPolicies@2025-05-01' = {
+            resource firewallPolicy 'Microsoft.Network/firewallPolicies@2026-01-01' = {
               name: firewallPolicyName
               location: location
               properties: {
@@ -1084,7 +1143,7 @@ public class BasicNetworkTests
               }
             }
 
-            resource firewall 'Microsoft.Network/azureFirewalls@2025-05-01' = {
+            resource firewall 'Microsoft.Network/azureFirewalls@2026-01-01' = {
               name: firewallName
               location: location
               properties: {

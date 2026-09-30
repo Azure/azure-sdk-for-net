@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ComputeBulkActionsZoneAllocationPolicy(distributionStrategy, zonePreferences ?? new ChangeTrackingList<ComputeBulkActionsZonePreference>(), additionalBinaryDataProperties);

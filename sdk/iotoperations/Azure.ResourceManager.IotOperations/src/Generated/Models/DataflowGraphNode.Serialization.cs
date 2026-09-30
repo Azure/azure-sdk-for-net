@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// DataflowGraph node properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphSourceNode"/>, <see cref="DataflowGraphGraphNode"/>, and <see cref="DataflowGraphDestinationNode"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphDestinationNode"/>, <see cref="DataflowGraphGraphNode"/>, and <see cref="DataflowGraphSourceNode"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataflowGraphNode))]
     public abstract partial class DataflowGraphNode : IJsonModel<DataflowGraphNode>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Source":
-                        return DataflowGraphSourceNode.DeserializeDataflowGraphSourceNode(element, options);
-                    case "Graph":
-                        return DataflowGraphGraphNode.DeserializeDataflowGraphGraphNode(element, options);
                     case "Destination":
                         return DataflowGraphDestinationNode.DeserializeDataflowGraphDestinationNode(element, options);
+                    case "Graph":
+                        return DataflowGraphGraphNode.DeserializeDataflowGraphGraphNode(element, options);
+                    case "Source":
+                        return DataflowGraphSourceNode.DeserializeDataflowGraphSourceNode(element, options);
                 }
             }
             return UnknownDataflowGraphNode.DeserializeUnknownDataflowGraphNode(element, options);
