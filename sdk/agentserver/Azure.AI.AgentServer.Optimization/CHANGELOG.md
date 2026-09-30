@@ -2,7 +2,7 @@
 
 ## 1.0.0-beta.3 (2026-09-30)
 
-### Changes
+### Features Added
 
 Consolidated configuration types ahead of public preview. The package now has a single canonical mutable options type that binds idiomatically via `Microsoft.Extensions.Configuration`, and the loader returns it directly (no result wrapper).
 
