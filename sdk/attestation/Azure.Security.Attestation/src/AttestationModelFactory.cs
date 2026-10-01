@@ -13,7 +13,7 @@ namespace Azure.Security.Attestation
     /// Factory class for creating Attestation Service Model types, used for Mocking.
     /// </summary>
     // Suppress generated overloads that would sit beside the hand-written 1.0.0 factory methods below, exposing internal parameter names.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationResult", typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(object), typeof(object), typeof(object), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(bool?), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(BinaryData), typeof(object), typeof(string), typeof(bool?), typeof(object), typeof(BinaryData), typeof(BinaryData), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(string))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationResult", typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(object), typeof(string), typeof(string), typeof(object), typeof(object), typeof(object), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(bool?), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(BinaryData), typeof(object), typeof(string), typeof(bool?), typeof(object), typeof(BinaryData), typeof(BinaryData), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(string))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("PolicyCertificatesModificationResult", typeof(string), typeof(PolicyCertificateResolution?))]
     // These models have public constructors and setters, so factory methods add nothing for mocking.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TpmAttestationRequest", typeof(BinaryData))]
@@ -112,7 +112,7 @@ namespace Azure.Security.Attestation
                 issuedAt,
                 expiration,
                 notBefore,
-                cnf as IDictionary<string, string> ?? new ChangeTrackingDictionary<string, string>(),
+                cnf,
                 nonce,
                 version,
                 runtimeClaims,
@@ -141,10 +141,7 @@ namespace Azure.Security.Attestation
                 deprecatedPolicySigner,
                 deprecatedPolicyHash,
                 deprecatedRpData,
-                null)
-            {
-                Confirmation = cnf,
-            };
+                null);
         }
         /// <summary>
         /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.

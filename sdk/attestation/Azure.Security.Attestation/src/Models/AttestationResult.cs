@@ -69,14 +69,12 @@ namespace Azure.Security.Attestation
         /// </summary>
         public object Confirmation
         {
-            get => _confirmation ?? InternalCnf;
-            internal set => _confirmation = value;
+            get => InternalCnf;
         }
 
-        private object _confirmation;
-
+        // object, as in 1.0.0: RFC 7800 cnf is usually a nested object, which Record<string> cannot hold.
         [CodeGenMember("Cnf")]
-        internal IDictionary<string, string> InternalCnf { get; }
+        internal object InternalCnf { get; }
 
         /// <summary>
         /// Gets the RFC 7519 "jti" claim name (https://tools.ietf.org/html/rfc7519#section-4)

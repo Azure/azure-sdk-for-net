@@ -60,6 +60,7 @@ namespace Azure.Security.Attestation.Tests
         // Every claim has a distinct value, so a property bound to the wrong claim name fails.
         private const string AllClaims = @"{
             ""jti"":""jti-1"", ""iss"":""https://contoso.attest.azure.net"", ""iat"":1600000001, ""exp"":1600000002, ""nbf"":1600000003,
+            ""cnf"":{""jwk"":{""kty"":""RSA"",""e"":""AQAB""}},
             ""nonce"":""nonce-1"", ""x-ms-ver"":""ver-1"", ""x-ms-attestation-type"":""sgx"",
             ""x-ms-runtime"":{""r"":1}, ""x-ms-inittime"":{""i"":1}, ""x-ms-policy"":{""p"":1},
             ""x-ms-sgx-collateral"":{""c"":1}, ""maa-attestationcollateral"":{""dc"":1},
@@ -81,6 +82,7 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1600000001), result.IssuedAt);
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1600000002), result.Expiration);
             Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(1600000003), result.NotBefore);
+            AssertObjectClaim(result.Confirmation, "jwk");
             Assert.AreEqual("nonce-1", result.Nonce);
             Assert.AreEqual("ver-1", result.Version);
             Assert.AreEqual("sgx", result.VerifierType);
@@ -150,6 +152,16 @@ namespace Azure.Security.Attestation.Tests
 
             Assert.AreEqual("id-1", written.RootElement.GetProperty("jti").GetString());
             Assert.IsFalse(written.RootElement.TryGetProperty("cnf", out _));
+        }
+
+        [Test]
+        public void ModelFactoryCnfRoundTrips()
+        {
+            AttestationResult result = AttestationModelFactory.AttestationResult(cnf: "cnf");
+
+            AttestationResult roundTripped = ModelReaderWriter.Read<AttestationResult>(ModelReaderWriter.Write(result));
+
+            Assert.AreEqual("cnf", roundTripped.Confirmation);
         }
 
         private static AttestationResult Parse(string json)
