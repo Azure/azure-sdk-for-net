@@ -64,15 +64,26 @@ public class ResponseItemDeserializationTests
     }
 
     [TestCaseSource(nameof(AzureResponseItemKinds))]
-    public void AsAgentResponseItemMaterializesAzureSubtype(ResponseItemKind discriminator, Type expectedType)
+    public void LegacyConversionAndNativeNormalizationPreserveTheirRespectiveTypes(ResponseItemKind discriminator, Type expectedType)
     {
         string json = $$"""{ "type": "{{discriminator.ToString()}}" }""";
 
         ResponseItem item = ModelReaderWriter.Read<ResponseItem>(BinaryData.FromString(json));
 #pragma warning disable OPENAI001
-        ResponseItem agentItem = item.AsAgentResponseItem();
+        ResponseItem normalized = AzureAIExtensions.NormalizeNativeResponseItem(item);
+        AgentResponseItem agentItem = item.AsAgentResponseItem();
 #pragma warning restore OPENAI001
-        Assert.That(agentItem, Is.InstanceOf(expectedType), $"AsAgentResponseItem for '{discriminator}' should yield {expectedType.Name} but was {agentItem?.GetType().Name}.");
+        Assert.That(normalized, Is.InstanceOf(expectedType),
+            $"Native normalization for '{discriminator}' should yield {expectedType.Name}.");
+        Type legacyType = expectedType == typeof(SharePointGroundingToolCall) ? typeof(SharepointGroundingToolCall)
+            : expectedType == typeof(SharePointGroundingToolCallOutput) ? typeof(SharepointGroundingToolCallOutput)
+            : expectedType == typeof(MemorySearchToolCall) ? typeof(MemorySearchToolCallResponseItem)
+            : expectedType == typeof(MemoryCommandToolCall) || expectedType == typeof(MemoryCommandToolCallOutput)
+                ? typeof(UnknownAgentResponseItem)
+                : expectedType;
+        Assert.That(agentItem, Is.InstanceOf(legacyType),
+            $"Legacy conversion for '{discriminator}' should yield {legacyType.Name}.");
+        Assert.That(((ResponseItem)agentItem).Kind, Is.EqualTo(discriminator));
     }
 }
 #pragma warning restore AAIP001

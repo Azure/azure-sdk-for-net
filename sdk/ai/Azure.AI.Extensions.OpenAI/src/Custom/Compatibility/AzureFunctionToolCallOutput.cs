@@ -1,0 +1,132 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text.Json;
+using OpenAI.Responses;
+
+#pragma warning disable OPENAI001
+#pragma warning disable AAIP001
+#pragma warning disable AAIP002
+
+namespace Azure.AI.Extensions.OpenAI;
+
+public partial class AzureFunctionToolCallOutput : AgentResponseItem
+{
+    /// <inheritdoc/>
+    protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+    {
+        ValidateLegacyFormat(options);
+        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+        return DeserializeAzureFunctionToolCallOutput(document.RootElement, options);
+    }
+
+    /// <inheritdoc/>
+    protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    {
+        ValidateLegacyFormat(options);
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
+        return DeserializeAzureFunctionToolCallOutput(document.RootElement, options);
+    }
+
+    internal AzureFunctionToolCallOutput(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string name, BinaryData output, ToolCallStatus status) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+    {
+        CallId = callId;
+        Name = name;
+        Output = output;
+        Status = status;
+    }
+
+    internal static AzureFunctionToolCallOutput DeserializeAzureFunctionToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
+    {
+        if (element.ValueKind == JsonValueKind.Null)
+        {
+            return null;
+        }
+        AgentResponseItemKind @type = default;
+        string id = default;
+        AgentReference agentReference = default;
+        string responseId = default;
+        IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        string callId = default;
+        string name = default;
+        BinaryData output = default;
+        ToolCallStatus status = default;
+        foreach (var prop in element.EnumerateObject())
+        {
+            if (prop.NameEquals("type"u8))
+            {
+                @type = new AgentResponseItemKind(prop.Value.GetString());
+                continue;
+            }
+            if (prop.NameEquals("id"u8))
+            {
+                id = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("agent_reference"u8))
+            {
+                if (prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
+                agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                continue;
+            }
+            if (prop.NameEquals("response_id"u8))
+            {
+                responseId = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("call_id"u8))
+            {
+                callId = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("name"u8))
+            {
+                name = prop.Value.GetString();
+                continue;
+            }
+            if (prop.NameEquals("output"u8))
+            {
+                if (prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    continue;
+                }
+                output = BinaryData.FromString(prop.Value.GetRawText());
+                continue;
+            }
+            if (prop.NameEquals("status"u8))
+            {
+                status = prop.Value.GetString().ToToolCallStatus();
+                continue;
+            }
+            if (options.Format != "W")
+            {
+                additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+        }
+        return new AzureFunctionToolCallOutput(
+            @type,
+            id,
+            agentReference,
+            responseId,
+            additionalBinaryDataProperties,
+            callId,
+            name,
+            output,
+            status);
+    }
+
+    internal AzureFunctionToolCallOutput(string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.AzureFunctionCallOutput)
+    {
+        CallId = callId;
+        Name = name;
+        Output = output;
+        Status = status;
+        _additionalBinaryDataProperties = additionalBinaryDataProperties;
+    }
+}

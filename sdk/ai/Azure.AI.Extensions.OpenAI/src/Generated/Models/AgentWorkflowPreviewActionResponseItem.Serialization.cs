@@ -4,32 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
-    public partial class AgentWorkflowPreviewActionResponseItem : ResponseItem, IJsonModel<AgentWorkflowPreviewActionResponseItem>
+    public partial class AgentWorkflowPreviewActionResponseItem : AgentResponseItem, IJsonModel<AgentWorkflowPreviewActionResponseItem>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAgentWorkflowPreviewActionResponseItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -108,105 +89,5 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AgentWorkflowPreviewActionResponseItem IJsonModel<AgentWorkflowPreviewActionResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentWorkflowPreviewActionResponseItem)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AgentWorkflowPreviewActionResponseItem)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentWorkflowPreviewActionResponseItem(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentWorkflowPreviewActionResponseItem DeserializeAgentWorkflowPreviewActionResponseItem(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ResponseItemKind @type = "workflow_action";
-            string id = default;
-            AgentReference agentReference = default;
-            string responseId = default;
-            string csdlActionKind = default;
-            string actionId = default;
-            string parentActionId = default;
-            string previousActionId = default;
-            AgentWorkflowPreviewActionStatus? status = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new ResponseItemKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("agent_reference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("CSDLActionKind"u8))
-                {
-                    csdlActionKind = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("action_id"u8))
-                {
-                    actionId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("parent_action_id"u8))
-                {
-                    parentActionId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("previous_action_id"u8))
-                {
-                    previousActionId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = new AgentWorkflowPreviewActionStatus(prop.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new AgentWorkflowPreviewActionResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                csdlActionKind,
-                actionId,
-                parentActionId,
-                previousActionId,
-                status,
-                additionalBinaryDataProperties);
-        }
     }
 }

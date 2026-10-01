@@ -28,10 +28,12 @@ public static partial class AzureAIExtensions
     /// <param name="responseItem"> The OpenAI response item to convert. </param>
     /// <returns> The agent response item representation. </returns>
     [Experimental("OPENAI001")]
-    internal static ResponseItem AsAgentResponseItem(this ResponseItem responseItem)
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public static AgentResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
-        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-        return ModelReaderWriter.Read<ResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+        Argument.AssertNotNull(responseItem, nameof(responseItem));
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelReaderWriterOptions.Json, AzureAIExtensionsOpenAIContext.Default);
+        return ModelReaderWriter.Read<AgentResponseItem>(serializedResponseItem, ModelReaderWriterOptions.Json, AzureAIExtensionsOpenAIContext.Default);
     }
 
     // Whether an already-materialized item still needs client-side normalization: its discriminator is one this
@@ -47,7 +49,12 @@ public static partial class AzureAIExtensions
     // Returns the strongly-typed Azure subtype for an item that needs it, or the item unchanged otherwise.
     [Experimental("AAIP001")]
     private static ResponseItem NormalizeAgentResponseItem(ResponseItem item)
-        => NeedsAgentItemNormalization(item) ? item.AsAgentResponseItem() : item;
+        => NeedsAgentItemNormalization(item) ? NormalizeNativeResponseItem(item) : item;
+
+    [Experimental("OPENAI001")]
+    internal static ResponseItem NormalizeNativeResponseItem(ResponseItem item) => ModelReaderWriter.Read<ResponseItem>(
+        ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default),
+        ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
 
     // Round-trips a tool through the Azure context so a tool that OpenAI could not strongly type re-dispatches
     // to its concrete Azure subtype, mirroring AsAgentResponseItem for the tool axis.
@@ -98,7 +105,7 @@ public static partial class AzureAIExtensions
             ResponseItem item = items[i];
             if (NeedsAgentItemNormalization(item))
             {
-                items[i] = item.AsAgentResponseItem();
+                items[i] = NormalizeNativeResponseItem(item);
             }
         }
     }

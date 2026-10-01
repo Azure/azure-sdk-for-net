@@ -4,32 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of an Azure Function tool call. </summary>
-    public partial class AzureFunctionToolCallOutput : ResponseItem, IJsonModel<AzureFunctionToolCallOutput>
+    public partial class AzureFunctionToolCallOutput : AgentResponseItem, IJsonModel<AzureFunctionToolCallOutput>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAzureFunctionToolCallOutput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureFunctionToolCallOutput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -110,102 +91,5 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AzureFunctionToolCallOutput IJsonModel<AzureFunctionToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureFunctionToolCallOutput)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AzureFunctionToolCallOutput)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureFunctionToolCallOutput(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureFunctionToolCallOutput DeserializeAzureFunctionToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ResponseItemKind @type = "azure_function_call_output";
-            string id = default;
-            AgentReference agentReference = default;
-            string responseId = default;
-            string callId = default;
-            string name = default;
-            BinaryData output = default;
-            ToolCallStatus status = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new ResponseItemKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("agent_reference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("call_id"u8))
-                {
-                    callId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("output"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    output = prop.Value.GetUtf8Bytes();
-                    continue;
-                }
-                if (prop.NameEquals("status"u8))
-                {
-                    status = prop.Value.GetString().ToToolCallStatus();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new AzureFunctionToolCallOutput(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                callId,
-                name,
-                output,
-                status,
-                additionalBinaryDataProperties);
-        }
     }
 }

@@ -9,41 +9,12 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI;
 
 /// <summary> Represents options for configuring a project responses client. </summary>
-[Experimental("OPENAI001")]
-public partial class ProjectResponsesClientOptions : ResponsesClientOptions
+public partial class ProjectResponsesClientOptions : ProjectOpenAIClientOptions
 {
-    private string _apiVersion;
-    private string _agentName;
-
     /// <summary> Initializes a new instance of <see cref="ProjectResponsesClientOptions"/>. </summary>
     public ProjectResponsesClientOptions() : base()
     {
-        _apiVersion = "v1";
     }
-
-    /// <summary> Gets or sets the API version used for project OpenAI requests. </summary>
-    public string ApiVersion
-    {
-        get => _apiVersion;
-        set
-        {
-            AssertNotFrozen();
-            _apiVersion = value;
-        }
-    }
-
-    /// <summary> Gets or sets the agent name used when building an agent endpoint. </summary>
-    public string AgentName
-    {
-        get => _agentName;
-        set
-        {
-            AssertNotFrozen();
-            _agentName = value;
-        }
-    }
-
-    internal AuthenticationTokenProvider TokenProvider { get; set; }
 
     /// <summary>
     /// Convert a <see cref="ProjectOpenAIClientOptions"/> instance to a new
@@ -86,4 +57,21 @@ public partial class ProjectResponsesClientOptions : ResponsesClientOptions
 
         return destination;
     }
+
+    // The supplied pipeline has already captured all policy lists. Only the
+    // native client's option values need translating across the sibling types.
+    [Experimental("OPENAI001")]
+    internal ResponsesClientOptions ToNativeOptions() => new()
+    {
+        Endpoint = Endpoint,
+        OrganizationId = OrganizationId,
+        ProjectId = ProjectId,
+        UserAgentApplicationId = UserAgentApplicationId,
+        RetryPolicy = RetryPolicy,
+        MessageLoggingPolicy = MessageLoggingPolicy,
+        Transport = Transport,
+        NetworkTimeout = NetworkTimeout,
+        ClientLoggingOptions = ClientLoggingOptions,
+        EnableDistributedTracing = EnableDistributedTracing
+    };
 }

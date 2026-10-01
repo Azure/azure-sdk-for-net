@@ -89,7 +89,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync(options);
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = await responseClient.CreateResponseAsync(options: new());
         Console.WriteLine(response.GetOutputText());
@@ -139,7 +139,7 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
+        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResource(options);
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = responseClient.CreateResponse(options: new());
         Console.WriteLine(response.GetOutputText());

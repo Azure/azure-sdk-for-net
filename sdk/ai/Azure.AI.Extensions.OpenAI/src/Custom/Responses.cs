@@ -6,6 +6,7 @@ using System.Threading;
 using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI;
+
 [CodeGenSuppress("Compactconversation", typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(PromptCacheRetentionEnum?), typeof(PromptCacheOptionsParam), typeof(ServiceTierEnum?), typeof(CancellationToken))]
 [CodeGenSuppress("CompactconversationAsync", typeof(string), typeof(BinaryData), typeof(string), typeof(string), typeof(string), typeof(PromptCacheRetentionEnum?), typeof(PromptCacheOptionsParam), typeof(ServiceTierEnum?), typeof(CancellationToken))]
 internal partial class Responses { }

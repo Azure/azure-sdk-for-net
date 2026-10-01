@@ -1,5 +1,9 @@
 # Migration guide: `Azure.AI.Extensions.OpenAI` 2.x to 3.0.0-beta.1
 
+> The compatibility prototype described in [CompatibilityPrototype.md](CompatibilityPrototype.md)
+> restores the released 2.0 contracts and adds distinct native conversation entry points. The
+> historical 3.0.0-beta.1 migration below describes the unshimmed release, not the prototype's final API.
+
 This guide helps you upgrade from the 2.x releases of `Azure.AI.Extensions.OpenAI` to `3.0.0-beta.1`.
 
 ## Overview

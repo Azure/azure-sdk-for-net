@@ -5,13 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A Fabric data agent tool call. </summary>
     [Experimental("AAIP001")]
-    public partial class FabricDataAgentToolCall : ResponseItem
+    public partial class FabricDataAgentToolCall : AgentResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
         /// <param name="status"> The status of the tool call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="arguments"/> is null. </exception>
-        public FabricDataAgentToolCall(string callId, string arguments, ToolCallStatus status) : base("fabric_dataagent_preview_call")
+        public FabricDataAgentToolCall(string callId, string arguments, ToolCallStatus status)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(arguments, nameof(arguments));

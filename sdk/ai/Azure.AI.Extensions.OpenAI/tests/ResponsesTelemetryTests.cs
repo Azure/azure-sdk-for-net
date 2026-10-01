@@ -199,7 +199,7 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         AIProjectClient projectClient = GetTestProjectClient();
         var conversationsClient = projectClient.ProjectOpenAIClient.GetProjectConversationsClient();
 
-        ClientResult<ConversationResource> result = await conversationsClient.CreateProjectConversationAsync();
+        ClientResult<ConversationResource> result = await conversationsClient.CreateProjectConversationResourceAsync();
         ConversationResource conversation = result.Value;
 
         Assert.That(conversation, Is.Not.Null);

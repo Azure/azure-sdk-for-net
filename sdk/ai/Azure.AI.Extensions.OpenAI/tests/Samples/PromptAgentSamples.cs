@@ -160,7 +160,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
         #region Snippet:ConversationClient
         CreateResponseOptions CreateResponseOptions = new();
         // Optionally, use a conversation to automatically maintain state between calls.
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation.Id);
         #endregion
         List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
@@ -212,7 +212,7 @@ public class PromptAgentSamples : ProjectsOpenAITestBase
             Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
             Metadata = { ["foo"] = "bar" },
         };
-        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync(conversationOptions);
 
         //
         // Add items to an existing conversation to supplement the interaction state

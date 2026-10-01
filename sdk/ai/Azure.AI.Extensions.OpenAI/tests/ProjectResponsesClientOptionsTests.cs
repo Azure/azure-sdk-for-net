@@ -92,17 +92,21 @@ public class ProjectResponsesClientOptionsTests
     }
 
     [Test]
-    public void NewOptionsInstance_CanBeUsedToConstructResponsesClient()
+    public void NativeOptionsSnapshot_CanBeUsedToConstructResponsesClient()
     {
         ProjectResponsesClientOptions options = new()
         {
             Endpoint = new Uri("https://example.foundry.azure.com/api/projects/p/openai/v1"),
         };
 
-        // Direct construction against the new options type compiles and binds.
+        Assert.That(options, Is.InstanceOf<ProjectOpenAIClientOptions>());
+        Assert.That(typeof(ResponsesClientOptions).IsAssignableFrom(typeof(ProjectResponsesClientOptions)), Is.False);
+
+        // Preserve the GA hierarchy and adapt after the project's pipeline has
+        // captured its options. The sibling native hierarchy cannot also be inherited.
         ResponsesClient client = new(
             credential: new System.ClientModel.ApiKeyCredential("fake-key-for-smoke-test"),
-            options: options);
+            options: options.ToNativeOptions());
         Assert.That(client, Is.Not.Null);
     }
 

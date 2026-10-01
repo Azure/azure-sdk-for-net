@@ -6,13 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of an A2A (Agent-to-Agent) tool call. </summary>
     [Experimental("AAIP001")]
-    public partial class A2AToolCallOutput : ResponseItem
+    public partial class A2AToolCallOutput : AgentResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

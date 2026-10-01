@@ -10,6 +10,7 @@ namespace Azure.AI.Extensions.OpenAI;
 public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
 {
     private string _apiVersion;
+    private string _agentName;
 
     /// <summary> Gets or sets the API version used for project OpenAI requests. </summary>
     public string ApiVersion
@@ -29,6 +30,14 @@ public partial class ProjectOpenAIClientOptions : OpenAIClientOptions
     }
 
     /// <summary> Gets or sets the agent name used when building an agent endpoint. </summary>
-    public string AgentName { get; set; } = null;
+    public string AgentName
+    {
+        get => _agentName;
+        set
+        {
+            AssertNotFrozen();
+            _agentName = value;
+        }
+    }
     internal AuthenticationTokenProvider TokenProvider { get; set; }
 }

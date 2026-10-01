@@ -5,13 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An OpenAPI tool call. </summary>
     [Experimental("AAIP002")]
-    public partial class OpenApiToolCall : ResponseItem
+    public partial class OpenApiToolCall : AgentResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,7 +21,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"> A JSON string of the arguments to pass to the tool. </param>
         /// <param name="status"> The status of the tool call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/>, <paramref name="name"/> or <paramref name="arguments"/> is null. </exception>
-        public OpenApiToolCall(string callId, string name, string arguments, ToolCallStatus status) : base("openapi_call")
+        public OpenApiToolCall(string callId, string name, string arguments, ToolCallStatus status)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(name, nameof(name));

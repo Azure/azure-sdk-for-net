@@ -1,5 +1,8 @@
 # Azure AI Extensions OpenAI client library for .NET
 
+For the 2.0 compatibility prototype, see [compatibility scope and tradeoffs](CompatibilityPrototype.md),
+including the retained hierarchy, native conversation API names, and source-level limitations.
+
 Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers.
 
 **Note:** This package can be used to create requests to the _existing_ agents. Create, update, and delete operations on Azure resources are recommended to be used with enhanced privileges. The `Azure.AI.Projects.Agents` library provides simplified access to Agent administration functionality, such as creating and managing Agents and enabling OpenTelemetry tracing. `Azure.AI.Projects` also allows enumerating AI models, working with datasets, managing search indexes, evaluating generative AI performance. In this tutorial we are showing how to create Agents with the specific data mining functionalities provided by tools.
@@ -285,7 +288,7 @@ set the conversation parameter while calling `GetProjectResponsesClientForAgent`
 ```C# Snippet:ConversationClient
 CreateResponseOptions CreateResponseOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
-ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(FOUNDRY_AGENT_NAME, conversation.Id);
 ```
 
@@ -303,7 +306,7 @@ ConversationCreationOptions conversationOptions = new()
     Items = { ResponseItem.CreateSystemMessageItem("Your preferred genre of story today is: horror.") },
     Metadata = { ["foo"] = "bar" },
 };
-ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(conversationOptions);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync(conversationOptions);
 
 //
 // Add items to an existing conversation to supplement the interaction state

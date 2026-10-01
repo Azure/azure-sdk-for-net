@@ -24,16 +24,13 @@ namespace Azure.AI.Extensions.OpenAI;
 [Experimental("OPENAI001")]
 public static partial class ResponseResultExtensions
 {
-    // ResponseResult
-    extension(ResponseResult response)
-    {
+    /// <summary> Gets the response's agent using the preview accessor entry point. </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.CompilerServices.SpecialName]
+    public static AgentReference get_Agent(ResponseResult response) => response.Agent;
 
-        /// <summary> Gets the agent associated with the response result. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-
-        /// <summary> Gets the agent conversation ID associated with the response result. </summary>
-        [Experimental("SCME0001")]
-        public string AgentConversationId => response.Patch.GetStringEx("$.conversation.id"u8);
-    }
+    /// <summary> Gets the conversation using the preview accessor entry point. </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.CompilerServices.SpecialName]
+    public static string get_AgentConversationId(ResponseResult response) => response.AgentConversationId;
 }

@@ -131,7 +131,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
         BingGroundingTool bingGroundingTool = await GetBingGroundingToolAsync();
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
         ProjectResponsesClient responsesForConversation =
             client.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME, conversation.Id);
 
@@ -246,7 +246,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
         BingGroundingTool bingGroundingTool = await GetBingGroundingToolAsync();
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
         ProjectResponsesClient responsesForConversation =
             client.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME, conversation.Id);
 
@@ -255,7 +255,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 
         List<ResponseItem> items = [];
-        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectConversationItemsAsync(conversation.Id))
+        await foreach (ResponseItem item in client.GetProjectConversationsClient().GetProjectResponseItemsAsync(conversation.Id))
         {
             items.Add(item);
         }

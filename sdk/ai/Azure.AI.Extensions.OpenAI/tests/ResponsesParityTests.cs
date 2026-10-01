@@ -125,7 +125,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         {
             ProjectOpenAIClient openAIClientForConversations = GetTestProjectOpenAIClient();
             ProjectConversationsClient conversationsClient = openAIClientForConversations.GetProjectConversationsClient();
-            existingConversation = await conversationsClient.CreateProjectConversationAsync();
+            existingConversation = await conversationsClient.CreateProjectConversationResourceAsync();
         }
 
         ProjectResponsesClient responsesClient = null;
@@ -389,7 +389,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             }
         }
 
-        ConversationResource newConversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource newConversation = await client.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
         ProjectResponsesClient responsesForNewConversation = client.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME, newConversation.Id);
         ResponseResult newResponse = await responsesForNewConversation.CreateResponseAsync("Hello, new conversation!");
 
@@ -437,7 +437,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await client.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
         Assert.That(conversation.Id, Does.StartWith("conv_"));
 
         FunctionTool functionTool = ResponseTool.CreateFunctionTool(

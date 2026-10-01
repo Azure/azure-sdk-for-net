@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Prototyped hidden compatibility models and entry points for the released 2.0 API, including the response-item base hierarchy, conversation operations, factories, and client-option adaptation.
+- Added distinctly named native conversation resource/item methods alongside the restored legacy signatures. See `CompatibilityPrototype.md` for the API mapping and the limits of source, preview, and behavioral compatibility.
+
 ### Breaking Changes
 
 ### Bugs Fixed

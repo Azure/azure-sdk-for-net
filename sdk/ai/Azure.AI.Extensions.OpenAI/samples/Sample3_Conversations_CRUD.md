@@ -13,19 +13,19 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversations_ConversationCRUD_Sync
-ConversationResource conversation1 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+ConversationResource conversation1 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResource();
 Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-ConversationResource conversation2 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+ConversationResource conversation2 = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResource();
 Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversations_ConversationCRUD_Async
-ConversationResource conversation1 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ConversationResource conversation1 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
 Console.WriteLine($"Created conversation (id: {conversation1.Id})");
 
-ConversationResource conversation2 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ConversationResource conversation2 = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
 Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 ```
 
@@ -33,13 +33,13 @@ Console.WriteLine($"Created conversation (id: {conversation2.Id})");
 
 Synchronous sample:
 ```C# Snippet:Sample_GetConversation_ConversationCRUD_Sync
-ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversation(conversationId: conversation1.Id);
+ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationResource(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetConversation_ConversationCRUD_Async
-ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(conversationId: conversation1.Id);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationResourceAsync(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
@@ -47,7 +47,7 @@ Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversa
 
 Synchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Sync
-foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversations())
+foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationResources())
 {
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
@@ -55,7 +55,7 @@ foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjec
 
 Asynchronous sample:
 ```C# Snippet:Sample_ListConversations_ConversationCRUD_Async
-await foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationsAsync())
+await foreach (ConversationResource res in projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationResourcesAsync())
 {
     Console.WriteLine($"Listed conversation (id: {res.Id})");
 }
@@ -69,10 +69,10 @@ ConversationUpdateOptions updateOptions = new()
 {
     Metadata = { ["key"] = "value" },
 };
-projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversation(conversation1.Id, updateOptions);
+projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversationResource(conversation1.Id, updateOptions);
 
 // Get the updated conversation.
-conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversation(conversationId: conversation1.Id);
+conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationResource(conversationId: conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
@@ -82,10 +82,10 @@ ConversationUpdateOptions updateOptions = new()
 {
     Metadata = { ["key"] = "value" },
 };
-await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversationAsync(conversation.Id, updateOptions);
+await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().UpdateProjectConversationResourceAsync(conversation.Id, updateOptions);
 
 // Get the updated conversation.
-conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationAsync(conversation1.Id);
+conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().GetProjectConversationResourceAsync(conversation1.Id);
 Console.WriteLine($"Got conversation (id: {conversation.Id}, metadata: {conversation.Metadata})");
 ```
 
