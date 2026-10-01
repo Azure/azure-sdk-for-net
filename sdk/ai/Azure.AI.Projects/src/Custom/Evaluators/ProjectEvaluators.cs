@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,7 +27,8 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-        ClientResult result = StartPendingUpload(name, version, pendingUploadRequest, default, cancellationToken.ToRequestOptions());
+        using BinaryContent content = pendingUploadRequest;
+        ClientResult result = StartPendingUpload(name, version, content, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
     }
 
@@ -44,7 +46,8 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(pendingUploadRequest, nameof(pendingUploadRequest));
 
-        ClientResult result = await StartPendingUploadAsync(name, version, pendingUploadRequest, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        using BinaryContent content = pendingUploadRequest;
+        ClientResult result = await StartPendingUploadAsync(name, version, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((PendingUploadResult)result, result.GetRawResponse());
     }
 
@@ -62,7 +65,8 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-        ClientResult result = GetCredential(name, version, credentialRequest, default, cancellationToken.ToRequestOptions());
+        using BinaryContent content = credentialRequest;
+        ClientResult result = GetCredential(name, version, content, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
     }
 
@@ -80,7 +84,8 @@ public partial class ProjectEvaluators
         Argument.AssertNotNullOrEmpty(version, nameof(version));
         Argument.AssertNotNull(credentialRequest, nameof(credentialRequest));
 
-        ClientResult result = await GetCredentialAsync(name, version, credentialRequest, default, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        using BinaryContent content = credentialRequest;
+        ClientResult result = await GetCredentialAsync(name, version, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((DatasetCredential)result, result.GetRawResponse());
     }
 }

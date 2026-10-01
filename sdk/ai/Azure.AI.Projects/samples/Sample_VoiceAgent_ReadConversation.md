@@ -2,7 +2,7 @@
 
 This sample holds a realtime session with `Store = true`, so the Foundry service persists the
 conversation the session produces, then reads that conversation back afterward through the
-REST-only `BetaVoiceAgentsConversations` surface -- no realtime connection needed for the read.
+REST-only `AgentEndpointConversations` surface -- no realtime connection needed for the read.
 
 Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint and `FOUNDRY_MODEL_NAME` to a
 realtime-capable model deployment name before running this sample.
@@ -26,7 +26,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
 // Passing store: true (via options.QueryString) persists this session's conversation so
-// it can be read back afterward through BetaVoiceAgentsConversations; the response.done
+// it can be read back afterward through AgentEndpointConversations; the response.done
 // event reports the resulting conversation ID.
 string conversationId;
 using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
@@ -55,8 +55,8 @@ using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_Read
 // Once the session above closes, the conversation it produced becomes readable through
-// the REST-only BetaVoiceAgentsConversations surface -- no realtime connection needed.
-BetaVoiceAgentsConversations conversationsClient = projectClient.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
+// the REST-only AgentEndpointConversations surface -- no realtime connection needed.
+AgentEndpointConversations conversationsClient = projectClient.AgentAdministrationClient.GetAgentEndpointConversations();
 
 VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(agentName, conversationId);
 Console.WriteLine($"Conversation {conversation.Id} status: {conversation.Status}");

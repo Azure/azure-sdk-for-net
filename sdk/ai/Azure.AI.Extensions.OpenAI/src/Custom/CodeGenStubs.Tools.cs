@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -23,7 +24,10 @@ public partial class AzureFunctionDefinitionFunction
 [CodeGenType("BingCustomSearchPreviewTool")] public partial class BingCustomSearchPreviewTool { }
 [CodeGenType("BingGroundingTool")] public partial class BingGroundingTool { }
 [CodeGenType("BrowserAutomationPreviewTool")] public partial class BrowserAutomationPreviewTool { }
-[CodeGenType("BrowserAutomationToolConnectionParameters")] public partial class BrowserAutomationToolConnectionOptions { }
+[Experimental("AAIP001")]
+[CodeGenType("BrowserAutomationToolConnectionParameters")]
+public partial class BrowserAutomationToolConnectionOptions { }
+[Experimental("AAIP001")] public partial class BrowserAutomationToolOptions { }
 [CodeGenType("CaptureStructuredOutputsTool")] public partial class CaptureStructuredOutputsTool { }
 [CodeGenType("FabricDataAgentToolOptions")] public partial class FabricDataAgentToolOptions { }
 [CodeGenType("FabricIQPreviewTool")] public partial class FabricIQPreviewTool { }

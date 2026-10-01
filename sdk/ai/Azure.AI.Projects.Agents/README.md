@@ -603,103 +603,49 @@ AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint),
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
 
-An Agent optimization job accepts optimization criteria, evaluators, and several models as parameters. It also accepts baselines used as an optimization starting point.
-Several models need to be defined for different purposes:
-  - `OptimizationModel` - reads the Agent evaluation result and reason and creates the improved target description: system prompt, tool description or skill.
-  - `EvalModel` - used for Agent evaluation.
-  - `model_search_space` - the models considered during Agent optimization.
-  - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
+An agent optimization job specifies a model to generate candidate changes, an evaluation model and dataset, and the attributes to optimize. Its baseline configuration supplies the current prompt, model, skills, and tools, while the target configuration identifies the Foundry agent. For more information about optimizing Hosted Agents, see the [documentation](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
 
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-AgentOptimizationJob job = new()
-{
-    Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+AgentOptimizationJob job = new(
+    optimizationModelConfiguration: new AgentOptimizationModelConfiguration(modelDeploymentName),
+    optimizationConfiguration: new AgentOptimizationConfiguration(
+        evaluationConfiguration: new AgentOptimizationEvaluationConfiguration(
+            trainingSet: GetDataset(0, 7),
+            evaluators: [GetEvaluator()],
+            evaluationModel: new EvaluationModelConfiguration(modelDeploymentName))
         {
-            AgentVersion = agentVersion.Version
+            ValidationSet = GetDataset(7, 3)
         },
-        trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-    )
-    {
-        ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
+        candidateSearchConfiguration: new AgentOptimizationCandidateSearchConfiguration
         {
-            OptimizationModel = modelDeploymentName,
-            EvalModel = modelDeploymentName,
-            MaxCandidates = 3,
-            OptimizationConfig =
-            {
-                // Start from bad prompt.
-                {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
-                {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
-                {"skills", BinaryData.FromObjectAsJson(new[]
-                    {new {
-                        name = "add two numbers",
-                        description = "Adds two numbers",
-                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
-                    }}
-                )},
-                {"tools",  BinaryData.FromObjectAsJson(new[]{
-                    new
-                    {
-                        type = "function",
-                        function = new
-                        {
-                            name = "sum_numbers",
-                            description = "Sum two numbers",
-                            parameters = new
-                            {
-                                type = "object",
-                                properties = new
-                                {
-                                    First = new
-                                    {
-                                        type = "number",
-                                        description = "First addend"
-                                    },
-                                    Second = new
-                                    {
-                                        type = "number",
-                                        description = "Second addend"
-                                    }
-                                },
-                                required = new[] { "First", "Second"},
-                                additionalProperties = false
-                            }
-                        }
-                    }
-                })}
-            }
-        }
+            MaxCandidates = 3
+        },
+        agentOptimizationSpace: new AgentOptimizationSpace
+        {
+            TargetAttributes = { TargetAttribute.Instructions, TargetAttribute.Model, TargetAttribute.Skills, TargetAttribute.Tools },
+            ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+        })
+    {
+        BaselineAgentConfiguration = GetBaselineConfiguration(modelDeploymentName)
+    })
+{
+    TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(agentVersion.Name)
+    {
+        Version = agentVersion.Version
     }
 };
 AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
-After the job has completed, the optimization candidates may be listed along with the optimized parameters:
+After the job completes, its result reports the baseline and best candidate IDs, their scores when available, and the number of completed candidates. Individual candidate mutations are not available through the public agent client in this release.
 
-```C# Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
-{
-    Console.WriteLine("======================================================");
-    Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
-    if (candidate.Mutations.Count == 0)
-    {
-        Console.WriteLine("<No mutations, baseline>");
-    }
-    else
-    {
-        Console.WriteLine("Mutations:");
-        foreach (KeyValuePair<string, BinaryData> mutation in candidate.Mutations)
-        {
-            Console.WriteLine($"    {mutation.Key}: {mutation.Value}");
-        }
-    }
-    Console.WriteLine("======================================================");
-}
+```C# Snippet:Sample_OptimizationResult_AgentsOptimizationCandidates_Async
+AgentOptimizationResultCandidateSummary summary = submittedJob.Result?.CandidateSummary
+    ?? throw new InvalidOperationException($"Job {submittedJob.Id} did not return a candidate summary.");
+Console.WriteLine($"Baseline candidate: {summary.BaselineId} (score: {summary.BaselineScore})");
+Console.WriteLine($"Best candidate: {summary.BestId} (score: {summary.BestScore})");
+Console.WriteLine($"Completed candidates: {summary.CompletedCandidateCount}");
 ```
 
 

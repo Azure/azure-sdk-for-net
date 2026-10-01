@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="VoiceResponseBase"/>. </summary>
         internal VoiceResponseBase()
         {
-            OutputModalities = new ChangeTrackingList<VoiceResponseBaseOutputModality>();
+            OutputModalities = new ChangeTrackingList<RealtimeOutputModality>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseBase"/>. </summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Agents
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceResponseBase(VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceResponseBase(VoiceResponseBaseObject? @object, RealtimeResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<RealtimeOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Status = status;
@@ -64,7 +64,7 @@ namespace Azure.AI.Projects.Agents
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
         ///   `incomplete`, `in_progress`).
         /// </summary>
-        public VoiceResponseBaseStatus? Status { get; }
+        public RealtimeResponseStatus? Status { get; }
 
         /// <summary> Additional details about the status. </summary>
         public RealtimeResponseStatusDetails StatusDetails { get; }
@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Agents
         ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
         ///   output to mode `text` will disable audio output from the model.
         /// </summary>
-        public IList<VoiceResponseBaseOutputModality> OutputModalities { get; }
+        public IList<RealtimeOutputModality> OutputModalities { get; }
 
         /// <summary>
         /// Maximum number of output tokens for a single assistant response,

@@ -57,15 +57,14 @@ namespace Azure.AI.Projects.Agents;
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
-    private Azure.AI.Projects.Agents._Beta.BetaAgents _cachedBetaAgents;
     [Experimental("AAIP001")]
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     [Experimental("AAIP001")]
-    private Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
+    private AgentEndpointConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
-    private Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsTelephony _cachedAgentTelephony;
+    private AgentTelephony _cachedAgentTelephony;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -89,7 +88,7 @@ public partial class AgentAdministrationClient
         };
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
-            new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
+            new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
             new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
@@ -1096,16 +1095,6 @@ public partial class AgentAdministrationClient
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
-    /// <summary>
-    /// Gets the lazily-initialized BetaAgents sub-client. The generated BetaAgents type is
-    /// otherwise only reachable through the internal InternalProjectsClient aggregator, which
-    /// would leave its operations (e.g. GenerateAgent) completely inaccessible externally.
-    /// </summary>
-    public virtual Azure.AI.Projects.Agents._Beta.BetaAgents GetBetaAgentsClient()
-    {
-        return Volatile.Read(ref _cachedBetaAgents) ?? Interlocked.CompareExchange(ref _cachedBetaAgents, new Azure.AI.Projects.Agents._Beta.BetaAgents(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBetaAgents;
-    }
-
     /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
     [Experimental("AAIP001")]
     public virtual ProjectAgentSkills GetAgentSkills()
@@ -1132,19 +1121,17 @@ public partial class AgentAdministrationClient
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
     }
 
-    /// <summary> Gets the client for the voice Agent. </summary>
+    /// <summary> Gets the client for voice agent conversations. </summary>
     [Experimental("AAIP001")]
-    public virtual Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations GetBetaVoiceAgentEndpointConversations()
+    public virtual AgentEndpointConversations GetAgentEndpointConversations()
     {
-        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 
-    /// <summary>
-    /// Gets the AgentTelephony sub-client.
-    /// </summary>
+    /// <summary> Gets the agent telephony sub-client. </summary>
     [Experimental("AAIP001")]
-    public virtual Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
+    public virtual AgentTelephony GetAgentTelephony()
     {
-        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new Azure.AI.Projects.Agents._Beta.VoiceAgents.BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 }

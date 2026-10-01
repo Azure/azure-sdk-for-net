@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 using OpenAI.Responses;
@@ -63,7 +64,8 @@ namespace Azure.AI.Projects.Agents
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, MCPToolboxToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, McpToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUri = serverUri;
@@ -89,7 +91,8 @@ namespace Azure.AI.Projects.Agents
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolboxToolConnectorId? ConnectorId { get; set; }
+        [Experimental("AAIP002")]
+        public McpToolConnectorId? ConnectorId { get; set; }
 
         /// <summary>
         /// The Secure MCP Tunnel ID to use instead of a direct server URL. One of

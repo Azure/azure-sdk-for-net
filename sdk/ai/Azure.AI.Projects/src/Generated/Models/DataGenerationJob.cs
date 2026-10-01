@@ -4,38 +4,54 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Data Generation Job resource. </summary>
-    [Experimental("AAIP001")]
-    public partial class DataGenerationJob
+    /// <summary>
+    /// Data Generation Job resource.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJob"/>, <see cref="ReinforcementFineTuningDataGenerationJob"/>, and <see cref="SupervisedFineTuningDataGenerationJob"/>.
+    /// </summary>
+    public abstract partial class DataGenerationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJob"/>. </summary>
-        public DataGenerationJob()
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
+        private protected DataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario)
         {
+            Name = name;
+            Sources = sources.ToList();
+            GenerationConfiguration = generationConfiguration;
+            Scenario = scenario;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJob"/>. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
-        /// <param name="inputs"> Caller-supplied inputs. </param>
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJob(string id, DataGenerationJobInputs inputs, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Inputs = inputs;
             Result = result;
             Status = status;
             Error = error;
+            Name = name;
+            Sources = sources;
+            GenerationConfiguration = generationConfiguration;
+            Scenario = scenario;
             CreatedOn = createdOn;
             FinishedOn = finishedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,14 +60,23 @@ namespace Azure.AI.Projects
         /// <summary> Server-assigned unique identifier. </summary>
         public string Id { get; }
 
-        /// <summary> Caller-supplied inputs. </summary>
-        public DataGenerationJobInputs Inputs { get; set; }
-
         /// <summary> Result produced on success. </summary>
         public DataGenerationJobResult Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
         public ProjectsJobStatus Status { get; }
+
+        /// <summary> The display name of the data generation job. </summary>
+        public string Name { get; }
+
+        /// <summary> The sources used for the data generation job. </summary>
+        public IList<DataGenerationJobSource> Sources { get; }
+
+        /// <summary> The generation configuration for the data generation job. </summary>
+        public DataGenerationJobOptions GenerationConfiguration { get; }
+
+        /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
+        internal DataGenerationJobScenario Scenario { get; set; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
         public DateTimeOffset CreatedOn { get; }

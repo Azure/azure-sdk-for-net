@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -24,7 +25,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="eagerness"></param>
         /// <param name="createResponse"></param>
         /// <param name="interruptResponse"></param>
-        internal VoiceAgentSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSemanticVadTurnDetectionEagerness? eagerness, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
+        internal VoiceAgentSemanticVadTurnDetection(VoiceAgentTurnDetectionType @type, bool? autoTruncate, IDictionary<string, BinaryData> additionalBinaryDataProperties, RealtimeSemanticVadEagernessLevel? eagerness, bool? createResponse, bool? interruptResponse) : base(@type, autoTruncate, additionalBinaryDataProperties)
         {
             Eagerness = eagerness;
             CreateResponse = createResponse;
@@ -32,7 +33,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Gets or sets the Eagerness. </summary>
-        public VoiceAgentSemanticVadTurnDetectionEagerness? Eagerness { get; set; }
+        public RealtimeSemanticVadEagernessLevel? Eagerness { get; set; }
 
         /// <summary> Gets or sets the CreateResponse. </summary>
         public bool? CreateResponse { get; set; }

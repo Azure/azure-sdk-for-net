@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
-    [Experimental("AAIP001")]
     public partial class SimulationSeedDataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="SimulationSeedDataGenerationJobOptions"/>. </summary>

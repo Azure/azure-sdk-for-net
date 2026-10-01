@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -74,7 +75,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Eagerness))
             {
                 writer.WritePropertyName("eagerness"u8);
-                writer.WriteStringValue(Eagerness.Value.ToString());
+                writer.WriteObjectValue<RealtimeSemanticVadEagernessLevel?>(Eagerness.Value, options);
             }
             if (Optional.IsDefined(CreateResponse))
             {
@@ -116,7 +117,7 @@ namespace Azure.AI.Projects.Agents
             VoiceAgentTurnDetectionType @type = default;
             bool? autoTruncate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VoiceAgentSemanticVadTurnDetectionEagerness? eagerness = default;
+            RealtimeSemanticVadEagernessLevel? eagerness = default;
             bool? createResponse = default;
             bool? interruptResponse = default;
             foreach (var prop in element.EnumerateObject())
@@ -141,7 +142,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    eagerness = new VoiceAgentSemanticVadTurnDetectionEagerness(prop.Value.GetString());
+                    eagerness = ModelReaderWriter.Read<RealtimeSemanticVadEagernessLevel?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("create_response"u8))

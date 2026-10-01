@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents._Beta.VoiceAgents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
@@ -47,7 +46,7 @@ public class AgentTelephonyTests : AgentsTestBase
     public async Task TestTelephonyBindingsCRUD()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
+        AgentTelephony telephonyClient = agentsClient.GetAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
 
         // Clean up any binding left over from a prior failed run.
@@ -112,10 +111,10 @@ public class AgentTelephonyTests : AgentsTestBase
     public async Task TestGetTelephonyCallsReturnsEmptyForNewAgent()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
+        AgentTelephony telephonyClient = agentsClient.GetAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
 
-        List<TelephonyCallSummary> calls = await telephonyClient.GetTelephonyCallsAsync(agentName, foundryFeatures: default, provider: (TelephonyProvider?)null).ToListAsync();
+        List<TelephonyCallSummary> calls = await telephonyClient.GetTelephonyCallsAsync(agentName, (TelephonyProvider?)null).ToListAsync();
         Console.WriteLine($"[REST] LIST telephony calls -> {calls.Count} call(s)");
 
         Assert.That(calls, Is.Not.Null);
@@ -133,7 +132,7 @@ public class AgentTelephonyTests : AgentsTestBase
     public async Task TestTelephonyTransferTargetsRoundTrip()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
+        AgentTelephony telephonyClient = agentsClient.GetAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
 
         TelephonyTransferTargets targets = await telephonyClient.GetTelephonyTransferTargetsAsync(agentName, cancellationToken: CancellationToken.None);
@@ -167,7 +166,7 @@ public class AgentTelephonyTests : AgentsTestBase
     public async Task TestTelephonyBindingNotFoundOperations()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
+        AgentTelephony telephonyClient = agentsClient.GetAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
         const string fakeBindingId = "twilio:+10000000000";
 
@@ -197,7 +196,7 @@ public class AgentTelephonyTests : AgentsTestBase
     public async Task TestTelephonyCallNotFoundOperations()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
+        AgentTelephony telephonyClient = agentsClient.GetAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
         const string fakeCallId = "cs-e2e-tests-nonexistent-call";
 
@@ -232,7 +231,7 @@ public class AgentTelephonyTests : AgentsTestBase
     public async Task TestTelephonyCallJobNotFoundOperations()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsTelephony telephonyClient = agentsClient.GetBetaVoiceAgentTelephony();
+        AgentTelephony telephonyClient = agentsClient.GetAgentTelephony();
         string agentName = await EnsureTelephonyAgentAsync(agentsClient);
         const string fakeCallJobId = "cs-e2e-tests-nonexistent-call-job";
 

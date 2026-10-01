@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Containers;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -89,7 +90,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(MemoryLimit))
             {
                 writer.WritePropertyName("memory_limit"u8);
-                writer.WriteStringValue(MemoryLimit.Value.ToString());
+                writer.WriteObjectValue<ContainerMemoryLimit?>(MemoryLimit.Value, options);
             }
             if (Optional.IsCollectionDefined(Skills))
             {
@@ -174,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                         memoryLimit = null;
                         continue;
                     }
-                    memoryLimit = new ContainerMemoryLimit(prop.Value.GetString());
+                    memoryLimit = ModelReaderWriter.Read<ContainerMemoryLimit?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))

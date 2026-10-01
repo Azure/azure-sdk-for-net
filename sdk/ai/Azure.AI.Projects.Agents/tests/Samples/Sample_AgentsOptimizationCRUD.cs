@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -15,61 +14,23 @@ namespace Azure.AI.Projects.Agents.Tests.Samples;
 
 public class Sample_AgentsOptimizationCRUD : SamplesBase
 {
-    #region Snippet:Sample_OptimizationCriterion_AgentsOptimization
-    private readonly AgentOptimizationDatasetCriterion _criterion = new(
-        name: "Groundedness",
-        instruction: """
-        You are a Groundedness Evaluator.
-
-        Your task is to evaluate how well the given response is grounded in the provided ground truth.  
-        Groundedness means the response’s statements are factually supported by the ground truth.  
-        Evaluate factual alignment only — ignore grammar, fluency, or completeness.
-        
-        ---
-        
-        ### Input:
-        Query:
-        {{query}}
-        
-        Response:
-        {{response}}
-        
-        Ground Truth:
-        {{ground_truth}}
-        
-        ---
-        
-        ### Scoring Scale (1–5):
-        5 → Fully grounded. All claims supported by ground truth.  
-        4 → Mostly grounded. Minor unsupported details.  
-        3 → Partially grounded. About half the claims supported.  
-        2 → Mostly ungrounded. Only a few details supported.  
-        1 → Not grounded. Almost all information unsupported.
-        
-        ---
-
-        ### Output Format (JSON):
-        {
-            "result": <integer from 1 to 5>,
-            "reason": "<brief explanation for the score>"
-        }
-        """
-    );
+    #region Snippet:Sample_OptimizationEvaluator_AgentsOptimization
+    private static AgentOptimizationEvaluator GetEvaluator() =>
+        new(name: "builtin.meteor_score");
     #endregion
     #region Snippet:Sample_Dataset_AgentsOptimization
-    private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+    private static AgentOptimizationTargetCompletionEvaluationSet GetDataset(int start, int itemNumber)
     {
-        List<AgentOptimizationDatasetItem> items = [];
+        List<AgentOptimizationTargetCompletionTestCase> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
-            items.Add(new AgentOptimizationDatasetItem()
+            items.Add(new AgentOptimizationTargetCompletionTestCase(
+                query: $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.")
             {
-                Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
-                GroundTruth = $"The answer is {(42 + i * 2)}",
-                Criteria = { _criterion }
+                GroundTruth = $"The answer is {(42 + i * 2)}"
             });
         }
-        return new(items);
+        return new(new AgentOptimizationTargetCompletionInlineDataSource(items));
     }
     #endregion
 
@@ -102,29 +63,29 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Async
-        AgentOptimizationJob job = new()
-        {
-            Inputs = new(
-                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+        AgentOptimizationJob job = new(
+            optimizationModelConfiguration: new AgentOptimizationModelConfiguration(modelDeploymentName),
+            optimizationConfiguration: new AgentOptimizationConfiguration(
+                evaluationConfiguration: new AgentOptimizationEvaluationConfiguration(
+                    trainingSet: GetDataset(0, 7),
+                    evaluators: [GetEvaluator()],
+                    evaluationModel: new EvaluationModelConfiguration(modelDeploymentName))
                 {
-                    AgentVersion = agentVersion.Version
+                    ValidationSet = GetDataset(7, 3)
                 },
-                trainDataset: GetDataset(0, 7),
-                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-            )
-            {
-                ValidationDataset = GetDataset(7, 3),
-                Options = new AgentOptimizationOptions()
+                candidateSearchConfiguration: new AgentOptimizationCandidateSearchConfiguration
                 {
-                    OptimizationModel = modelDeploymentName,
-                    EvalModel = modelDeploymentName,
-                    MaxCandidates = 3,
-                    OptimizationConfig =
-                    {
-                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) }
-                    }
-                }
+                    MaxCandidates = 3
+                },
+                agentOptimizationSpace: new AgentOptimizationSpace
+                {
+                    TargetAttributes = { TargetAttribute.Instructions, TargetAttribute.Model },
+                    ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+                }))
+        {
+            TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(agentVersion.Name)
+            {
+                Version = agentVersion.Version
             }
         };
         AgentOptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
@@ -166,7 +127,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Async
         Console.WriteLine("Listing optimization jobs:");
-        await foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAllAsync())
+        await foreach (AgentOptimizationJob oneJob in jobsClient.GetAllAsync())
         {
             Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
         }
@@ -208,29 +169,29 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimization_Sync
-        AgentOptimizationJob job = new()
-        {
-            Inputs = new(
-                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+        AgentOptimizationJob job = new(
+            optimizationModelConfiguration: new AgentOptimizationModelConfiguration(modelDeploymentName),
+            optimizationConfiguration: new AgentOptimizationConfiguration(
+                evaluationConfiguration: new AgentOptimizationEvaluationConfiguration(
+                    trainingSet: GetDataset(0, 7),
+                    evaluators: [GetEvaluator()],
+                    evaluationModel: new EvaluationModelConfiguration(modelDeploymentName))
                 {
-                    AgentVersion = agentVersion.Version
+                    ValidationSet = GetDataset(7, 3)
                 },
-                trainDataset: GetDataset(0, 7),
-                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-            )
-            {
-                ValidationDataset = GetDataset(7, 3),
-                Options = new AgentOptimizationOptions()
+                candidateSearchConfiguration: new AgentOptimizationCandidateSearchConfiguration
                 {
-                    OptimizationModel = modelDeploymentName,
-                    EvalModel = modelDeploymentName,
-                    MaxCandidates = 3,
-                    OptimizationConfig =
-                    {
-                        {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                        {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) }
-                    }
-                }
+                    MaxCandidates = 3
+                },
+                agentOptimizationSpace: new AgentOptimizationSpace
+                {
+                    TargetAttributes = { TargetAttribute.Instructions, TargetAttribute.Model },
+                    ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+                }))
+        {
+            TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(agentVersion.Name)
+            {
+                Version = agentVersion.Version
             }
         };
         AgentOptimizationJob submittedJob1 = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
@@ -272,7 +233,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_ListOptimizationJobs_AgentsOptimization_Sync
         Console.WriteLine("Listing optimization jobs:");
-        foreach (AgentOptimizationJobListItem oneJob in jobsClient.GetAll())
+        foreach (AgentOptimizationJob oneJob in jobsClient.GetAll())
         {
             Console.WriteLine($"    Job: {oneJob.Id}, Status: {oneJob.Status}.");
         }

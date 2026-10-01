@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -146,9 +147,11 @@ public partial class DataGenerationJobs
     [Experimental("SCME0006")]
     public virtual OperationResult Create(bool waitUntilCompleted, DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(job, nameof(job));
+        using BinaryContent content = BinaryContent.Create(job, ModelSerializationExtensions.WireOptions);
         return CreateGenerationJob(
             waitUntilCompleted: waitUntilCompleted,
-            content: job,
+            content: content,
             foundryFeatures: default(string),
             operationId: operationId,
             options: cancellationToken.ToRequestOptions()
@@ -178,9 +181,11 @@ public partial class DataGenerationJobs
     [Experimental("SCME0006")]
     public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, DataGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(job, nameof(job));
+        using BinaryContent content = BinaryContent.Create(job, ModelSerializationExtensions.WireOptions);
         return await CreateGenerationJobAsync(
             waitUntilCompleted: waitUntilCompleted,
-            content: job,
+            content: content,
             foundryFeatures: default(string),
             operationId: operationId,
             options: cancellationToken.ToRequestOptions()

@@ -1,0 +1,14 @@
+# Generated implementations must reference experimental models without marking
+# unrelated public toolbox or client types experimental.
+[Generated/{AgentOptimizationJobCandidates,InternalProjectsClient,ProjectsAgentsModelFactory}.cs]
+dotnet_diagnostic.AAIP001.severity = none
+
+[Generated/CollectionResults/AgentOptimizationJobCandidatesGetCandidates*.cs]
+dotnet_diagnostic.AAIP001.severity = none
+
+[Generated/Models/{BrowserAutomationToolboxTool,BrowserAutomationToolboxTool.Serialization}.cs]
+dotnet_diagnostic.AAIP001.severity = none
+
+# Preview members emitted on otherwise unmarked toolbox types.
+[Generated/Models/{MCPToolboxTool.Serialization,ToolboxShellContainerAutoEnvironment.Serialization}.cs]
+dotnet_diagnostic.AAIP002.severity = none

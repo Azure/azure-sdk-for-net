@@ -175,10 +175,10 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             VoiceResponseBaseObject? @object = default;
-            VoiceResponseBaseStatus? status = default;
+            RealtimeResponseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
-            IList<VoiceResponseBaseOutputModality> outputModalities = default;
+            IList<RealtimeOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
@@ -206,7 +206,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = new VoiceResponseBaseStatus(prop.Value.GetString());
+                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -233,10 +233,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
+                    List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new VoiceResponseBaseOutputModality(item.GetString()));
+                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
                     }
                     outputModalities = array;
                     continue;
@@ -348,7 +348,7 @@ namespace Azure.AI.Projects.Agents
                 status,
                 statusDetails,
                 usage,
-                outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
+                outputModalities ?? new ChangeTrackingList<RealtimeOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties,
                 id,

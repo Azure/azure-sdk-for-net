@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
@@ -49,7 +50,8 @@ public partial class EvaluatorGenerationJobs
     public virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(job, nameof(job));
-        return Create(waitUntilCompleted, job, default(string), operationId, cancellationToken.ToRequestOptions());
+        using BinaryContent content = job;
+        return Create(waitUntilCompleted, content, operationId, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
@@ -82,7 +84,8 @@ public partial class EvaluatorGenerationJobs
     public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(job, nameof(job));
-        return await CreateAsync(waitUntilCompleted, job, default(string), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        using BinaryContent content = job;
+        return await CreateAsync(waitUntilCompleted, content, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 
     /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
@@ -93,11 +96,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<EvaluatorGenerationJob> Get(string jobId, CancellationToken cancellationToken = default)
     {
-        return Get(
-            jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        ClientResult result = Get(jobId, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
@@ -108,11 +109,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<EvaluatorGenerationJob>> GetAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        return Get(
-            jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        ClientResult result = await GetAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Returns a list of evaluator generation jobs. </summary>
@@ -142,7 +141,6 @@ public partial class EvaluatorGenerationJobs
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAllRequest(
-                    foundryFeatures: default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
@@ -180,7 +178,6 @@ public partial class EvaluatorGenerationJobs
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAllRequest(
-                    foundryFeatures: default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
@@ -199,11 +196,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<EvaluatorGenerationJob> Cancel(string jobId, CancellationToken cancellationToken = default)
     {
-        return Cancel(
-            jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        ClientResult result = Cancel(jobId, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Cancels an evaluator generation job by its ID. </summary>
@@ -214,11 +209,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<EvaluatorGenerationJob>> CancelAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        return await CancelAsync(
-            jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        ClientResult result = await CancelAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -232,10 +225,8 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
     {
-        return Delete(
-            jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken);
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        return Delete(jobId, cancellationToken.ToRequestOptions());
     }
 
     /// <summary>
@@ -249,9 +240,7 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        return await DeleteAsync(
-            jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
+        Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+        return await DeleteAsync(jobId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 }

@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -87,7 +88,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connector_id"u8);
-                writer.WriteStringValue(ConnectorId.Value.ToString());
+                writer.WriteObjectValue<McpToolConnectorId?>(ConnectorId.Value, options);
             }
             if (Optional.IsDefined(TunnelId))
             {
@@ -198,7 +199,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             Uri serverUri = default;
-            MCPToolboxToolConnectorId? connectorId = default;
+            McpToolConnectorId? connectorId = default;
             string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
@@ -266,7 +267,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    connectorId = new MCPToolboxToolConnectorId(prop.Value.GetString());
+                    connectorId = ModelReaderWriter.Read<McpToolConnectorId?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tunnel_id"u8))

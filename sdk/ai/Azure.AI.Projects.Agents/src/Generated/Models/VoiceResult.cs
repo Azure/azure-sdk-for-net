@@ -61,7 +61,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResult(VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<RealtimeItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdOn, DateTimeOffset? completedOn) : base(@object, status, statusDetails, usage, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResult(VoiceResponseBaseObject? @object, RealtimeResponseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<RealtimeOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<RealtimeItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdOn, DateTimeOffset? completedOn) : base(@object, status, statusDetails, usage, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
             Id = id;
             Output = output;

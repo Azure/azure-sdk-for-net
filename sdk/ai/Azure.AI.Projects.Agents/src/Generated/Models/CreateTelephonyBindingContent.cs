@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The request to create a telephony binding.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/> and <see cref="CreateTwilioTelephonyBindingContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateTeamsPhoneExtensibilityTelephonyBindingContent"/> and <see cref="CreateTwilioTelephonyBindingContent"/>.
     /// </summary>
     public abstract partial class CreateTelephonyBindingContent
     {

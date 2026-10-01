@@ -1009,8 +1009,11 @@ namespace Azure.AI.Projects
             return new UnknownEvaluationTarget(@type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
-        /// <param name="model"> The unique identifier of the Azure AI model. </param>
+        /// <summary>
+        /// A target that identifies an Azure AI model.
+        /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
+        /// </summary>
+        /// <param name="model"> The name of the model deployment to invoke as the evaluation target. </param>
         /// <param name="samplingParams"> The parameters used to control the sampling behavior of the model during text generation. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIModelTarget"/> instance for mocking. </returns>
         public static AzureAIModelTarget AzureAIModelTarget(string model = default, ModelSamplingParams samplingParams = default)
@@ -1029,11 +1032,14 @@ namespace Azure.AI.Projects
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Represents a target specifying an Azure AI agent. </summary>
-        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
-        /// <param name="version"> The version of the Azure AI agent. </param>
-        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        /// <param name="tools"></param>
+        /// <summary>
+        /// A target that identifies an Azure AI agent.
+        /// See [evaluate model or agent targets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-targets?tabs=python).
+        /// </summary>
+        /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
+        /// <param name="version"> The version of the Azure AI agent. When omitted, the latest version is used. </param>
+        /// <param name="toolDescriptions"> Optional descriptions of tools available to the agent. </param>
+        /// <param name="tools"> Tool definitions made available when invoking the agent. </param>
         /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
         public static AzureAIAgentTarget AzureAIAgentTarget(string name, string version, IEnumerable<ToolDescription> toolDescriptions, IEnumerable<ResponseTool> tools)
@@ -2486,25 +2492,72 @@ namespace Azure.AI.Projects
             return new DispatchRoutineResult(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Caller-supplied inputs for a data generation job. </summary>
-        /// <param name="name"> The display name of the data generation job. </param>
-        /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="options"> The options for the data generation job. </param>
-        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <param name="outputOptions"> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
+        /// <summary> Result produced by a successful data generation job. </summary>
+        /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
+        /// <param name="generatedSamples"> The number of samples actually generated. </param>
+        /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobResult"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions options = default, DataGenerationJobScenario scenario = default, DataGenerationJobOutputOptions outputOptions = default)
+        public static DataGenerationJobResult DataGenerationJobResult(IEnumerable<DataGenerationJobOutput> outputs = default, int generatedSamples = default, DataGenerationTokenUsage tokenUsage = default)
         {
-            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+            outputs ??= new ChangeTrackingList<DataGenerationJobOutput>();
 
-            return new DataGenerationJobInputs(
+            return new DataGenerationJobResult(outputs.ToList(), generatedSamples, tokenUsage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Output information for a data generation job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.DatasetDataGenerationJobOutput"/> and <see cref="Projects.FileDataGenerationJobOutput"/>.
+        /// </summary>
+        /// <param name="type"> The type of the output. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DataGenerationJobOutput DataGenerationJobOutput(string @type = default)
+        {
+            return new UnknownDataGenerationJobOutput(new DataGenerationJobOutputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Azure OpenAI file output for a data generation job. This is a preview feature. </summary>
+        /// <param name="id"> The id of the output Azure OpenAI file. </param>
+        /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
+        /// <returns> A new <see cref="Projects.FileDataGenerationJobOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static FileDataGenerationJobOutput FileDataGenerationJobOutput(string id = default, string filename = default)
+        {
+            return new FileDataGenerationJobOutput(DataGenerationJobOutputType.File, additionalBinaryDataProperties: null, id, filename);
+        }
+
+        /// <summary> Dataset output for a data generation job. </summary>
+        /// <param name="id"> The id of the output dataset created. </param>
+        /// <param name="name"> The name of the output dataset. </param>
+        /// <param name="version"> The version of the output dataset. </param>
+        /// <param name="description"> Description of the output dataset. </param>
+        /// <param name="tags"> Tag dictionary of the output dataset. </param>
+        /// <returns> A new <see cref="Projects.DatasetDataGenerationJobOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = default, string name = default, string version = default, string description = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatasetDataGenerationJobOutput(
+                DataGenerationJobOutputType.Dataset,
+                additionalBinaryDataProperties: null,
+                id,
                 name,
-                sources.ToList(),
-                options,
-                scenario,
-                outputOptions,
-                additionalBinaryDataProperties: null);
+                version,
+                description,
+                tags);
+        }
+
+        /// <summary> Token usage information for a data generation job. </summary>
+        /// <param name="promptTokens"> The number of prompt tokens used. </param>
+        /// <param name="completionTokens"> The number of completion tokens generated. </param>
+        /// <param name="totalTokens"> Total number of tokens used. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationTokenUsage"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DataGenerationTokenUsage DataGenerationTokenUsage(long promptTokens = default, long completionTokens = default, long totalTokens = default)
+        {
+            return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2648,7 +2701,7 @@ namespace Azure.AI.Projects
             return new SimulationSeedDataGenerationJobOptions(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
+        /// <summary> The options for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
@@ -2659,86 +2712,40 @@ namespace Azure.AI.Projects
             return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
         }
 
-        /// <summary> Output options for data generation job. </summary>
-        /// <param name="name"> Name to assign to the output. Used as the filename for Azure OpenAI file outputs (fine-tuning scenarios) and as the dataset name for dataset outputs (evaluation scenario). </param>
-        /// <param name="description"> Description to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
-        /// <param name="tags"> Tags to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
+        /// <summary> Dataset output target for an evaluation data generation job. </summary>
+        /// <param name="name"> Dataset name to assign to the output. </param>
+        /// <param name="description"> Description to assign to the output dataset. </param>
+        /// <param name="tags"> Tags to assign to the output dataset. </param>
         /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobOutputOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobOutputTarget"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobOutputOptions DataGenerationJobOutputOptions(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
+        public static EvaluationDataGenerationJobOutputTarget EvaluationDataGenerationJobOutputTarget(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataGenerationJobOutputOptions(name, description, tags, writeMode, additionalBinaryDataProperties: null);
+            return new EvaluationDataGenerationJobOutputTarget(name, description, tags, writeMode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Result produced by a successful data generation job. </summary>
-        /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
-        /// <param name="generatedSamples"> The number of samples actually generated. </param>
-        /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobResult"/> instance for mocking. </returns>
+        /// <summary> File output target for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
+        /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
+        /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
+        /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobOutputTarget"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobResult DataGenerationJobResult(IEnumerable<DataGenerationJobOutput> outputs = default, int generatedSamples = default, DataGenerationTokenUsage tokenUsage = default)
+        public static SupervisedFineTuningDataGenerationJobOutputTarget SupervisedFineTuningDataGenerationJobOutputTarget(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
-            outputs ??= new ChangeTrackingList<DataGenerationJobOutput>();
-
-            return new DataGenerationJobResult(outputs.ToList(), generatedSamples, tokenUsage, additionalBinaryDataProperties: null);
+            return new SupervisedFineTuningDataGenerationJobOutputTarget(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Output information for a data generation job.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.DatasetDataGenerationJobOutput"/> and <see cref="Projects.FileDataGenerationJobOutput"/>.
-        /// </summary>
-        /// <param name="type"> The type of the output. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobOutput"/> instance for mocking. </returns>
+        /// <summary> File output target for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
+        /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
+        /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
+        /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobOutputTarget"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobOutput DataGenerationJobOutput(string @type = default)
+        public static ReinforcementFineTuningDataGenerationJobOutputTarget ReinforcementFineTuningDataGenerationJobOutputTarget(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
-            return new UnknownDataGenerationJobOutput(new DataGenerationJobOutputType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Azure OpenAI file output for a data generation job. </summary>
-        /// <param name="id"> The id of the output Azure OpenAI file. </param>
-        /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
-        /// <returns> A new <see cref="Projects.FileDataGenerationJobOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static FileDataGenerationJobOutput FileDataGenerationJobOutput(string id = default, string filename = default)
-        {
-            return new FileDataGenerationJobOutput(DataGenerationJobOutputType.File, additionalBinaryDataProperties: null, id, filename);
-        }
-
-        /// <summary> Dataset output for a data generation job. </summary>
-        /// <param name="id"> The id of the output dataset created. </param>
-        /// <param name="name"> The name of the output dataset. </param>
-        /// <param name="version"> The version of the output dataset. </param>
-        /// <param name="description"> Description of the output dataset. </param>
-        /// <param name="tags"> Tag dictionary of the output dataset. </param>
-        /// <returns> A new <see cref="Projects.DatasetDataGenerationJobOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DatasetDataGenerationJobOutput DatasetDataGenerationJobOutput(string id = default, string name = default, string version = default, string description = default, IReadOnlyDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DatasetDataGenerationJobOutput(
-                DataGenerationJobOutputType.Dataset,
-                additionalBinaryDataProperties: null,
-                id,
-                name,
-                version,
-                description,
-                tags);
-        }
-
-        /// <summary> Token usage information for a data generation job. </summary>
-        /// <param name="promptTokens"> The number of prompt tokens used. </param>
-        /// <param name="completionTokens"> The number of completion tokens generated. </param>
-        /// <param name="totalTokens"> Total number of tokens used. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DataGenerationTokenUsage DataGenerationTokenUsage(long promptTokens = default, long completionTokens = default, long totalTokens = default)
-        {
-            return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
+            return new ReinforcementFineTuningDataGenerationJobOutputTarget(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Evaluation rule action for continuous evaluation. </summary>

@@ -4,14 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Caller-supplied inputs for a data generation job. </summary>
-    [Experimental("AAIP001")]
-    public partial class DataGenerationJobInputs
+    /// <summary>
+    /// Caller-supplied inputs for a data generation job.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJobInputs"/>, <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>, and <see cref="SupervisedFineTuningDataGenerationJobInputs"/>.
+    /// </summary>
+    internal abstract partial class DataGenerationJobInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -19,51 +20,41 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="options"> The options for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="sources"/> or <paramref name="options"/> is null. </exception>
-        public DataGenerationJobInputs(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario)
+        private protected DataGenerationJobInputs(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(sources, nameof(sources));
-            Argument.AssertNotNull(options, nameof(options));
-
             Name = name;
             Sources = sources.ToList();
-            Options = options;
+            GenerationConfiguration = generationConfiguration;
             Scenario = scenario;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="options"> The options for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        /// <param name="outputOptions"> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions options, DataGenerationJobScenario scenario, DataGenerationJobOutputOptions outputOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Sources = sources;
-            Options = options;
+            GenerationConfiguration = generationConfiguration;
             Scenario = scenario;
-            OutputOptions = outputOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The display name of the data generation job. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The sources used for the data generation job. </summary>
         public IList<DataGenerationJobSource> Sources { get; }
 
-        /// <summary> The options for the data generation job. </summary>
-        public DataGenerationJobOptions Options { get; set; }
+        /// <summary> The generation configuration for the data generation job. </summary>
+        public DataGenerationJobOptions GenerationConfiguration { get; }
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
-        public DataGenerationJobScenario Scenario { get; set; }
-
-        /// <summary> Optional caller-supplied metadata for the job's output. See individual fields for whether they apply to file outputs (fine-tuning scenarios), dataset outputs (evaluation scenario), or both. </summary>
-        public DataGenerationJobOutputOptions OutputOptions { get; set; }
+        internal DataGenerationJobScenario Scenario { get; set; }
     }
 }
