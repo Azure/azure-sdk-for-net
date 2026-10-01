@@ -33,9 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
         internal IDisposable RegisterCallback(Func<IReadOnlyDictionary<string, string>, Task> callback)
         {
             Argument.AssertNotNull(callback, nameof(callback));
-
             var registration = new CallbackRegistration(this, callback);
-            var spin = new SpinWait();
 
             while (true)
             {
@@ -50,8 +48,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
                 {
                     return registration;
                 }
-
-                spin.SpinOnce();
             }
         }
 
@@ -83,8 +79,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
 
         private void UnregisterCallback(CallbackRegistration registration)
         {
-            var spin = new SpinWait();
-
             while (true)
             {
                 CallbackRegistration[] current = Volatile.Read(ref _callbacks);
@@ -104,8 +98,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
                 {
                     return;
                 }
-
-                spin.SpinOnce();
             }
         }
 
