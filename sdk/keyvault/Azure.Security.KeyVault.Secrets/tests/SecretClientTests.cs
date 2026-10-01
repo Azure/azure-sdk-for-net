@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
+    [NonParallelizable]
     public class SecretClientTests: ClientTestBase
     {
         public SecretClientTests(bool isAsync) : base(isAsync)
@@ -25,6 +26,104 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         public SecretClient Client { get; }
+
+        [SetUp]
+        public void Setup()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [Test]
+        public void ChallengeResourceWithUserInfoIsRejected([Values("resource", "scope")] string parameter)
+        {
+            string value = "https://resource.example@contoso.test";
+            if (parameter == "scope")
+            {
+                value += "/.default";
+            }
+
+            var transport = new MockTransport(new MockResponse(401).WithHeader(
+                "WWW-Authenticate",
+                $"Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", {parameter}=\"{value}\""));
+            int credentialCalls = 0;
+            var credential = new MockCredential
+            {
+                GetTokenCallback = (_, _) => credentialCalls++
+            };
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://test.contoso.test"), credential, new SecretClientOptions { Transport = transport }));
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetSecretAsync("test"));
+            Assert.That(credentialCalls, Is.Zero);
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
+            Assert.That(transport.SingleRequest.Headers.Contains("Authorization"), Is.False);
+        }
+
+        [Test]
+        public void RedirectDoesNotDiscloseToken(
+            [Values(301, 302, 307, 308)] int status,
+            [Values(false, true)] bool allowRedirect)
+        {
+            int credentialCalls = 0;
+            var credential = new MockCredential
+            {
+                GetTokenCallback = (_, _) => credentialCalls++
+            };
+            int sends = 0;
+            var transport = new MockTransport(request =>
+            {
+                switch (++sends)
+                {
+                    case 1:
+                        Assert.That(request.Uri.Host, Is.EqualTo("redirect.vault.azure.net"));
+                        Assert.That(request.Headers.Contains("Authorization"), Is.False);
+                        return new MockResponse(401).WithHeader(
+                            "WWW-Authenticate",
+                            "Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", resource=\"https://vault.azure.net\"");
+                    case 2:
+                        Assert.That(request.Uri.Host, Is.EqualTo("redirect.vault.azure.net"));
+                        Assert.That(request.Headers.Contains("Authorization"), Is.True);
+                        return new MockResponse(status).WithHeader("Location", "https://test.contoso.test/secrets/test");
+                    case 3:
+                        Assert.That(allowRedirect, Is.True);
+                        Assert.That(request.Uri.Host, Is.EqualTo("test.contoso.test"));
+                        Assert.That(request.Headers.Contains("Authorization"), Is.False);
+                        return new MockResponse(401).WithHeader(
+                            "WWW-Authenticate",
+                            "Bearer authorization=\"https://login.microsoftonline.com/11111111-1111-1111-1111-111111111111\", resource=\"https://resource.example@contoso.test\"");
+                    default:
+                        throw new AssertionException("A redirected challenge must not result in an authenticated resend.");
+                }
+            });
+            var options = new SecretClientOptions { Transport = transport };
+            if (allowRedirect)
+            {
+                options.AddPolicy(new HttpPipelineSynchronousPolicyForTest(
+                    message => RedirectPolicy.SetAllowAutoRedirect(message, true)), HttpPipelinePosition.PerCall);
+            }
+            using SecretClient client = InstrumentClient(new SecretClient(
+                new Uri("https://redirect.vault.azure.net"), credential, options));
+
+            if (allowRedirect)
+            {
+                Assert.ThrowsAsync<InvalidOperationException>(async () => await client.GetSecretAsync("test"));
+            }
+            else
+            {
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await client.GetSecretAsync("test"));
+                Assert.That(exception.Status, Is.EqualTo(status));
+            }
+
+            Assert.That(sends, Is.EqualTo(allowRedirect ? 3 : 2));
+            Assert.That(credentialCalls, Is.EqualTo(1));
+        }
 
         [Test]
         public void SetArgumentValidation()
