@@ -1,4 +1,4 @@
-# Azure.ResourceManager.PrivateTrafficManager management client library for .NET
+# Microsoft Azure Private Traffic Manager management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
