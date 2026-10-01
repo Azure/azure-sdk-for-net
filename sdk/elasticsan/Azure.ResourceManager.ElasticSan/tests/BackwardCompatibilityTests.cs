@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using NUnit.Framework;
@@ -76,6 +78,48 @@ namespace Azure.ResourceManager.ElasticSan.Tests
 
             Assert.IsNull(patch.ManagedByResourceId);
             Assert.IsEmpty(patch.ManagedBy);
+        }
+
+        [Test]
+        public void VolumeGroupDataDeleteRetentionPolicyRoundTripsThroughWire()
+        {
+            ElasticSanVolumeGroupData data = new()
+            {
+                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy
+                {
+                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
+                    RetentionPeriodDays = 7
+                }
+            };
+
+            BinaryData json = ModelReaderWriter.Write(data);
+            StringAssert.Contains("\"deleteRetentionPolicy\"", json.ToString());
+
+            ElasticSanVolumeGroupData deserialized = ModelReaderWriter.Read<ElasticSanVolumeGroupData>(json);
+
+            Assert.IsNotNull(deserialized.DeleteRetentionPolicy);
+            Assert.AreEqual(ElasticSanDeleteRetentionPolicyState.Enabled, deserialized.DeleteRetentionPolicy.PolicyState);
+            Assert.AreEqual(7, deserialized.DeleteRetentionPolicy.RetentionPeriodDays);
+        }
+
+        [Test]
+        public void VolumeGroupPatchDeleteRetentionPolicyIsSerialized()
+        {
+            ElasticSanVolumeGroupPatch patch = new();
+            Assert.IsNull(patch.DeleteRetentionPolicy);
+
+            patch.DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy
+            {
+                PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
+                RetentionPeriodDays = 7
+            };
+
+            string json = ModelReaderWriter.Write(patch).ToString();
+            StringAssert.Contains("\"deleteRetentionPolicy\"", json);
+            StringAssert.Contains("\"retentionPeriodDays\":7", json);
+
+            ElasticSanVolumeGroupPatch deserialized = ModelReaderWriter.Read<ElasticSanVolumeGroupPatch>(BinaryData.FromString(json));
+            Assert.AreEqual(7, deserialized.DeleteRetentionPolicy.RetentionPeriodDays);
         }
     }
 }
