@@ -1,16 +1,20 @@
 # Release History
 
-## 3.0.0-beta.3 (Unreleased)
+## 3.0.0-beta.4 (Unreleased)
 
 ### Features Added
-- Added the `BetaVoiceAgentTelephony` client.
-- Added the `BetaVoiceAgentEndpointConversations` client.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.0.0-beta.3 (2026-09-16)
+
+### Features Added
+- Added the `BetaVoiceAgentsTelephony` client.
+- Added the `BetaVoiceAgentsConversations` client.
 
 ## 3.0.0-beta.2 (2026-09-03)
 

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\access\src\_Specs_.Azure.ClientGenerator.Core.Access.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\client-api-versions\src\Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\header\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\path\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Path.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
@@ -85,6 +86,7 @@
     <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v1\src\Resiliency.SrvDriven.V1.csproj" Aliases="SrvDrivenV1" />
     <ProjectReference Include="..\Spector\http\resiliency\srv-driven\v2\src\Resiliency.SrvDriven.V2.csproj" Aliases="SrvDrivenV2" />
     <ProjectReference Include="..\Spector\http\response\body-or-no-content\src\Response.BodyOrNoContent.csproj" Aliases="ResponseBodyOrNoContent" />
+    <ProjectReference Include="..\Spector\http\response\status-code-range\src\Response.StatusCodeRange.csproj" Aliases="ResponseStatusCodeRange" />
     <ProjectReference Include="..\Spector\http\routes\src\Routes.csproj" />
     <ProjectReference Include="..\Spector\http\serialization\encoded-name\json\src\Serialization.EncodedName.Json.csproj" />
     <ProjectReference Include="..\Spector\http\server\endpoint\not-defined\src\Server.Endpoint.NotDefined.csproj" />

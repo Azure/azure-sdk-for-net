@@ -232,34 +232,56 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        if (previousResponseId is not null && _records.TryGetValue(previousResponseId, out var prev))
-        {
-            var allIds = new List<string>();
-            allIds.AddRange(prev.HistoryItemIds);
-            allIds.AddRange(prev.InputItemIds);
-            allIds.AddRange(prev.OutputItemIds);
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
-        }
+        var uniqueIds = new List<string>();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
 
-        if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
+        // previousResponseId takes precedence so responses created after it are never included.
+        if (previousResponseId is not null)
         {
-            var allIds = new List<string>();
+            if (_records.TryGetValue(previousResponseId, out var prev))
+            {
+                AppendRecordItemIds(prev, uniqueIds, seen);
+            }
+        }
+        else if (conversationId is not null && _conversationResponses.TryGetValue(conversationId, out var responseIds))
+        {
             lock (responseIds)
             {
                 foreach (var respId in responseIds)
                 {
                     if (_records.TryGetValue(respId, out var r))
                     {
-                        allIds.AddRange(r.InputItemIds);
-                        allIds.AddRange(r.OutputItemIds);
+                        AppendRecordItemIds(r, uniqueIds, seen);
                     }
                 }
             }
-
-            return Task.FromResult(allIds.Take(limit).AsEnumerable());
         }
 
-        return Task.FromResult(Enumerable.Empty<string>());
+        IEnumerable<string> result = limit switch
+        {
+            -1 => uniqueIds,
+            <= 0 => Enumerable.Empty<string>(),
+            _ => uniqueIds.TakeLast(limit),
+        };
+        return Task.FromResult(result);
+    }
+
+    private static void AppendRecordItemIds(ResponseRecord record, List<string> uniqueIds, HashSet<string> seen)
+    {
+        AppendUnique(record.HistoryItemIds, uniqueIds, seen);
+        AppendUnique(record.InputItemIds, uniqueIds, seen);
+        AppendUnique(record.OutputItemIds, uniqueIds, seen);
+    }
+
+    private static void AppendUnique(IEnumerable<string> ids, List<string> uniqueIds, HashSet<string> seen)
+    {
+        foreach (var id in ids)
+        {
+            if (seen.Add(id))
+            {
+                uniqueIds.Add(id);
+            }
+        }
     }
 
     /// <summary>

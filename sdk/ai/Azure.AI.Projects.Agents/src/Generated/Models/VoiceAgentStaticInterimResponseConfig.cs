@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A static interim response selected from configured text. </summary>
+    [Experimental("AAIP001")]
     public partial class VoiceAgentStaticInterimResponseConfig : VoiceAgentInterimResponseConfig
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentStaticInterimResponseConfig"/>. </summary>
