@@ -59,7 +59,7 @@ jobs:
     path: tools
     fetchDepth: 1
     sparseCheckoutDirectories: eng
-  - checkout: ${{ variables.LanguageRepository }}
+  - checkout: ${{ variables.LanguageRepoResource }}
     path: lang
     fetchDepth: 1
     sparseCheckoutDirectories: eng
