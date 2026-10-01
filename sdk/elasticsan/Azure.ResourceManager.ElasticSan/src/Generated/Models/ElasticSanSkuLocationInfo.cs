@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         internal ElasticSanSkuLocationInfo()
         {
             Zones = new ChangeTrackingList<string>();
-            ZoneDetails = new ChangeTrackingList<SkuZoneDetails>();
+            ZoneDetails = new ChangeTrackingList<ElasticSanSkuZoneDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanSkuLocationInfo"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="zones"> The zones. </param>
         /// <param name="zoneDetails"> Details of capabilities available in each zone. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<SkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSanSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IReadOnlyList<ElasticSanSkuZoneDetails> zoneDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public IReadOnlyList<string> Zones { get; }
 
         /// <summary> Details of capabilities available in each zone. </summary>
-        public IReadOnlyList<SkuZoneDetails> ZoneDetails { get; }
+        public IReadOnlyList<ElasticSanSkuZoneDetails> ZoneDetails { get; }
     }
 }

@@ -13,23 +13,23 @@ using Azure.ResourceManager.ElasticSan;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
-    public partial class ManagedByResources
+    public partial class ElasticSanManagedByInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedByResources"/>. </summary>
-        public ManagedByResources()
+        /// <summary> Initializes a new instance of <see cref="ElasticSanManagedByInfo"/>. </summary>
+        public ElasticSanManagedByInfo()
         {
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedByResources"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanManagedByInfo"/>. </summary>
         /// <param name="clientId"> ClientId of the application managing the resource. </param>
         /// <param name="version"> Version number to keep track of resources using the Volume. </param>
         /// <param name="resourceIds"> ARM Resource IDs of the resources managing the volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedByResources(string clientId, int? version, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSanManagedByInfo(string clientId, int? version, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
             Version = version;

@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
-        /// <param name="encryptionInTransit"> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </param>
+        /// <param name="isEncryptionInTransitEnabled"> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </param>
         /// <param name="reservedIops"> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </param>
         /// <param name="reservedMBps"> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </param>
         /// <param name="qualityOfService"> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </param>
         /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupProperties(ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, bool? encryptionInTransit, int? reservedIops, int? reservedMBps, QualityOfService? qualityOfService, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeGroupProperties(ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, ElasticSanNetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, bool? isEncryptionInTransitEnabled, int? reservedIops, int? reservedMBps, ElasticSanQualityOfService? qualityOfService, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             NetworkAcls = networkAcls;
             PrivateEndpointConnections = privateEndpointConnections;
             EnforceDataIntegrityCheckForIscsi = enforceDataIntegrityCheckForIscsi;
-            EncryptionInTransit = encryptionInTransit;
+            IsEncryptionInTransitEnabled = isEncryptionInTransitEnabled;
             ReservedIops = reservedIops;
             ReservedMBps = reservedMBps;
             QualityOfService = qualityOfService;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public bool? EnforceDataIntegrityCheckForIscsi { get; set; }
 
         /// <summary> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </summary>
-        public bool? EncryptionInTransit { get; set; }
+        public bool? IsEncryptionInTransitEnabled { get; set; }
 
         /// <summary> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </summary>
         public int? ReservedIops { get; set; }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public int? ReservedMBps { get; set; }
 
         /// <summary> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </summary>
-        public QualityOfService? QualityOfService { get; set; }
+        public ElasticSanQualityOfService? QualityOfService { get; set; }
 
         /// <summary> The retention policy for the soft deleted volume group and its associated resources. </summary>
         public ElasticSanDeleteRetentionPolicy DeleteRetentionPolicy { get; set; }

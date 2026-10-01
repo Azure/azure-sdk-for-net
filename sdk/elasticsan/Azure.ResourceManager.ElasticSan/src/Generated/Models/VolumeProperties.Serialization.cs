@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStartArray();
-                foreach (ManagedByResources item in ManagedBy)
+                foreach (ElasticSanManagedByInfo item in ManagedBy)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanVolumeDataSourceInfo creationData = default;
             long sizeGiB = default;
             IscsiTargetInfo storageTarget = default;
-            IList<ManagedByResources> managedBy = default;
+            IList<ElasticSanManagedByInfo> managedBy = default;
             ElasticSanProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    List<ManagedByResources> array = new List<ManagedByResources>();
+                    List<ElasticSanManagedByInfo> array = new List<ElasticSanManagedByInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedByResources.DeserializeManagedByResources(item, options));
+                        array.Add(ElasticSanManagedByInfo.DeserializeElasticSanManagedByInfo(item, options));
                     }
                     managedBy = array;
                     continue;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 creationData,
                 sizeGiB,
                 storageTarget,
-                managedBy ?? new ChangeTrackingList<ManagedByResources>(),
+                managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

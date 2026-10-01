@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan
     public partial class ElasticSanVolumeResource : ArmResource
     {
         private readonly ClientDiagnostics _elasticSanClientClientDiagnostics;
-        private readonly ElasticSanRestOperations _elasticSanClientRestClient;
+        private readonly ElasticSanClient _elasticSanClientRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ElasticSan
         {
             TryGetApiVersion(ResourceType, out string elasticSanVolumeApiVersion);
             _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeApiVersion ?? "2025-09-01");
+            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeApiVersion ?? "2026-05-01-preview");
             _elasticSanClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _elasticSanClientRestClient = new ElasticSanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _elasticSanClientRestClient = new ElasticSanClient(_elasticSanClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanVolumeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2026-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2026-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2026-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2026-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2026-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,8 +181,13 @@ namespace Azure.ResourceManager.ElasticSan
             scope.Start();
             try
             {
-                var response = await _elasticSanClientRestClient.RestoreVolumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeResourceOperationSource(Client), _elasticSanClientClientDiagnostics, Pipeline, _elasticSanClientRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSanClientRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeResourceOperationSource(Client), _elasticSanClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -207,7 +212,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01-preview</description>
+        /// <description>2026-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,8 +225,13 @@ namespace Azure.ResourceManager.ElasticSan
             scope.Start();
             try
             {
-                var response = _elasticSanClientRestClient.RestoreVolume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeResourceOperationSource(Client), _elasticSanClientClientDiagnostics, Pipeline, _elasticSanClientRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSanClientRestClient.CreateRestoreVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                var operation = new ElasticSanArmOperation<ElasticSanVolumeResource>(new ElasticSanVolumeResourceOperationSource(Client), _elasticSanClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

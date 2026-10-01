@@ -46,5 +46,36 @@ namespace Azure.ResourceManager.ElasticSan.Tests
             Assert.IsNull(patch.ManagedByResourceId);
             Assert.IsEmpty(patch.ManagedBy);
         }
+
+        [Test]
+        public void ModelFactoryVolumeDataPreservesManagedByResourceId()
+        {
+            ElasticSanVolumeData data = ArmElasticSanModelFactory.ElasticSanVolumeData(null, null, default, null, null, null, 100, null, ElasticSanProvisioningState.Succeeded, ManagedById);
+
+            Assert.AreEqual(ManagedById, data.ManagedByResourceId);
+            Assert.AreEqual(1, data.ManagedBy.Count);
+            Assert.AreEqual(ElasticSanProvisioningState.Succeeded, data.ProvisioningState);
+
+            data = ArmElasticSanModelFactory.ElasticSanVolumeData(null, null, default, null, null, null, 100, null, ManagedById, ElasticSanProvisioningState.Succeeded);
+
+            Assert.AreEqual(ManagedById, data.ManagedByResourceId);
+            Assert.AreEqual(1, data.ManagedBy.Count);
+            Assert.AreEqual(ElasticSanProvisioningState.Succeeded, data.ProvisioningState);
+        }
+
+        [Test]
+        public void ModelFactoryVolumePatchPreservesManagedByResourceId()
+        {
+            ElasticSanVolumePatch patch = ArmElasticSanModelFactory.ElasticSanVolumePatch(10, ManagedById);
+
+            Assert.AreEqual(10, patch.SizeGiB);
+            Assert.AreEqual(ManagedById, patch.ManagedByResourceId);
+            Assert.AreEqual(1, patch.ManagedBy.Count);
+
+            patch = ArmElasticSanModelFactory.ElasticSanVolumePatch(10, (ResourceIdentifier)null);
+
+            Assert.IsNull(patch.ManagedByResourceId);
+            Assert.IsEmpty(patch.ManagedBy);
+        }
     }
 }

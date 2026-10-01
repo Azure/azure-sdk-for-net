@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
                 if (value != null)
                 {
-                    ManagedBy.Add(new ManagedByResources
+                    ManagedBy.Add(new ElasticSanManagedByInfo
                     {
                         ResourceIds = { value }
                     });

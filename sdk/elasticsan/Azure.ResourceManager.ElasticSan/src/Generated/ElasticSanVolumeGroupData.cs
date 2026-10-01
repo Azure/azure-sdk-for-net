@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </summary>
-        public bool? EncryptionInTransit
+        public bool? IsEncryptionInTransitEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EncryptionInTransit;
+                return Properties is null ? default : Properties.IsEncryptionInTransitEnabled;
             }
             set
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ElasticSan
                 {
                     Properties = new VolumeGroupProperties();
                 }
-                Properties.EncryptionInTransit = value;
+                Properties.IsEncryptionInTransitEnabled = value;
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ElasticSan
         }
 
         /// <summary> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </summary>
-        public QualityOfService? QualityOfService
+        public ElasticSanQualityOfService? QualityOfService
         {
             get
             {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStartArray();
-                foreach (ManagedByResources item in ManagedBy)
+                foreach (ElasticSanManagedByInfo item in ManagedBy)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             long? sizeGiB = default;
-            IList<ManagedByResources> managedBy = default;
+            IList<ElasticSanManagedByInfo> managedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    List<ManagedByResources> array = new List<ManagedByResources>();
+                    List<ElasticSanManagedByInfo> array = new List<ElasticSanManagedByInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedByResources.DeserializeManagedByResources(item, options));
+                        array.Add(ElasticSanManagedByInfo.DeserializeElasticSanManagedByInfo(item, options));
                     }
                     managedBy = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VolumeUpdateProperties(sizeGiB, managedBy ?? new ChangeTrackingList<ManagedByResources>(), additionalBinaryDataProperties);
+            return new VolumeUpdateProperties(sizeGiB, managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>(), additionalBinaryDataProperties);
         }
     }
 }
