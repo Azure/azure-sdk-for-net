@@ -457,7 +457,11 @@ else {
         [void]$sb.AppendLine($cause)
         foreach ($field in @('response_error', 'message')) {
             $value = Get-Prop $final $field
-            if ($value) { [void]$sb.AppendLine("- **${field}:** $(Format-Cell ([string]$value))") }
+            if ($value) {
+                $summary = Format-Cell ((([string]$value).Trim() -split '\r?\n', 2)[0])
+                if ($summary.Length -gt 500) { $summary = $summary.Substring(0, 500) + '...(truncated)' }
+                [void]$sb.AppendLine("- **${field}:** $summary")
+            }
         }
         [void]$sb.AppendLine('')
         $scr = Get-Prop $final 'specChangeRequired'
@@ -476,7 +480,7 @@ else {
         elseif ($scr) { [void]$sb.AppendLine('Request a separate spec-repository change; do not edit pinned spec inputs in this repair.') }
         else { [void]$sb.AppendLine('Review the final diagnostics, attempted patches, and workflow logs. Resolve the reported cause before starting a new repair run; do not repeat the engine invocation in this run.') }
         [void]$sb.AppendLine('')
-        $br = (@($engineErrors, $remainingText, [string](Get-Prop $final 'response_error')) | Where-Object { $_ }) -join "`n"
+        $br = (@($engineErrors, $remainingText, [string](Get-Prop $final 'response_error'), [string](Get-Prop $final 'message')) | Where-Object { $_ }) -join "`n"
         if ($resultIssue -and $preRepairText) {
             $br += "`nPre-repair build output:`n$preRepairText"
         }

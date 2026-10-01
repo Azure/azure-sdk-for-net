@@ -123,6 +123,14 @@ stimuli:
               const calls = input.trajectory.events.filter(e =>
                 e.type === 'tool_call' && /azsdk_customized_code_update$/.test(e.data.toolName));
               if (calls.length !== 1) throw new Error('Expected exactly one engine invocation');
+              const beforeEngine = input.trajectory.events.slice(0, input.trajectory.events.indexOf(calls[0]));
+              if (!beforeEngine.some(e => {
+                const a = e.data?.arguments;
+                return e.type === 'tool_call' && e.data.toolName === 'grep' &&
+                  a?.pattern === 'maxIterations:' && a.glob === 'repair-config.yml' &&
+                  a.output_mode === 'content' && Array.isArray(a.paths) &&
+                  a.paths.length === 1 && a.paths[0] === 'auto-build-repair';
+              })) throw new Error('Read the skill repair configuration before invoking the engine');
               const a = calls[0].data.arguments;
               if (a.editScope !== 'CustomCode' || a.maxAttempts !== 3 ||
                   a.packagePath !== 'sdk/contoso/Azure.Contoso.Widgets' ||

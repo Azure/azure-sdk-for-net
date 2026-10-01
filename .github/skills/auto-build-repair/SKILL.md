@@ -22,10 +22,10 @@ typed `maxAttempts` parameter. If unavailable, stop and report the unsupported
 capability; do not fall back to an outer retry loop.
 
 This requires the engine change in
-[Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068).
-Keep the consumer PR draft until that change is merged and released. The
-latest-release installer alone does not prove the capability exists; do not
-invent a released minimum version.
+[Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068),
+available in [azsdk_0.6.50](https://github.com/Azure/azure-sdk-tools/releases/tag/azsdk_0.6.50).
+The latest-release installer alone does not prove the capability exists; still
+check the installed CLI or MCP tool as described above.
 
 ## Invoke once
 

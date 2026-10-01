@@ -17,6 +17,10 @@ const grader = spec.stimuli[0].graders[0].config.args[1];
 const args = { editScope: "CustomCode", maxAttempts: config.maxIterations,
   packagePath: "sdk/contoso/Azure.Contoso.Widgets", customizationRequest: "Fix CS1061 in custom code" };
 const call = (arguments_) => ({ type: "tool_call", data: { toolName: "azure-sdk-mcp-azsdk_customized_code_update", arguments: arguments_ } });
+const configRead = (overrides = {}, toolName = "grep") => ({ type: "tool_call", data: {
+  toolName, arguments: { pattern: "maxIterations:", paths: ["auto-build-repair"],
+    glob: "repair-config.yml", output_mode: "content", ...overrides },
+} });
 function grade(events) {
   vm.runInNewContext(grader, {
     require: () => ({ readFileSync: () => JSON.stringify({ trajectory: { events } }) }),
@@ -43,16 +47,38 @@ test("the hermetic eval uses the real executor, configured model, and typed loca
   ]);
   assert.equal(init.result.protocolVersion, "2024-11-05");
   assert.equal(tools.result.tools[0].inputSchema.properties.maxAttempts.type, "integer");
-  grade([call(args)]);
+  grade([configRead(), call(args)]);
   const shell = (command) => ({ type: "tool_call", data: { toolName: "powershell", arguments: { command } } });
-  grade([shell("Get-Content 'auto-build-repair\\repair-config.yml'"), call(args)]);
+  grade([shell("Get-Content 'auto-build-repair\\repair-config.yml'"), configRead(), call(args)]);
   for (const command of ["dotnet build", "git push", "echo fabricated", "cat repair-config.yml; dotnet build"]) {
-    assert.throws(() => grade([shell(command), call(args)]));
+    assert.throws(() => grade([configRead(), shell(command), call(args)]),
+      /Only reading the repair configuration is allowed/);
   }
   for (const events of [[], [call(args), call(args)], [call({ ...args, maxAttempts: "3" })],
     [call({ ...args, maxAttempts: 4 })], [call({ ...args, editScope: "All" })],
     [call({ ...args, tspProjectPath: "spec" })], [call({ ...args, customizationRequest: "" })]]) {
-    assert.throws(() => grade(events));
+    assert.throws(() => grade([configRead(), ...events]),
+      /Expected exactly one engine invocation|Invalid configured CustomCode invocation/);
+  }
+});
+test("the capability grader requires the requested config read before the engine invocation", () => {
+  grade([configRead(), call(args)]);
+  for (const events of [
+    [call(args)],
+    [call(args), configRead()],
+    [{ ...configRead(), type: "tool_result" }, call(args)],
+    [configRead({}, "view"), call(args)],
+    [configRead({ pattern: "description:" }), call(args)],
+    [configRead({ paths: ["auto-build-repair/evals"] }), call(args)],
+    [configRead({ paths: ["auto-build-repair", "unrelated"] }), call(args)],
+    [configRead({ paths: [] }), call(args)],
+    [configRead({ paths: null }), call(args)],
+    [configRead({ paths: "auto-build-repair" }), call(args)],
+    [configRead({ glob: "SKILL.md" }), call(args)],
+    [configRead({ output_mode: "files_with_matches" }), call(args)],
+    [configRead({ pattern: "description:" }), call(args), configRead()],
+  ]) {
+    assert.throws(() => grade(events), /Read the skill repair configuration before invoking the engine/);
   }
 });
 test("the capability grader requires the exact workspace package path", () => {
@@ -60,7 +86,7 @@ test("the capability grader requires the exact workspace package path", () => {
   for (const stimulus of spec.stimuli.slice(0, 3)) {
     assert.equal(stimulus.graders[0].config.args[1], grader);
   }
-  grade([call(args)]);
+  grade([configRead(), call(args)]);
   for (const packagePath of [
     "/tmp/Azure.Contoso.Widgets",
     "auto-build-repair/evals/fixtures/package",
@@ -70,7 +96,7 @@ test("the capability grader requires the exact workspace package path", () => {
     "sdk/contoso/Azure.Contoso.Widgets/../Other",
     "", null, undefined, 3, ["sdk/contoso/Azure.Contoso.Widgets"],
   ]) {
-    assert.throws(() => grade([call({ ...args, packagePath })]),
+    assert.throws(() => grade([configRead(), call({ ...args, packagePath })]),
       /Invalid configured CustomCode invocation/, `reject packagePath ${JSON.stringify(packagePath)}`);
   }
 });

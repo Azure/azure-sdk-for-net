@@ -53,9 +53,11 @@ The workflow does not edit TypeSpec or other specification inputs, move the pinn
 
 The final response is captured as `result.json`. Its `attemptsUsed` counts patch proposals reaching host validation, not tool calls, baseline checks, or JSON files. Failure comments include actual final build/generation diagnostics, attempted edits when known, the stop reason, and next-step guidance. When the final response is missing or invalid, bounded diagnostic details retain the captured stderr first, followed by available final diagnostics and labeled pre-repair build output. A missing attempt count is reported as unknown. Capability and process failures remain failed runs; only failed eligibility checks or a verified green baseline without an engine attempt use a skipped status.
 
+The failure summary uses only the first line of `response_error` and `message`, capped at 500 characters each after Markdown escaping (plus a truncation marker). Detailed engine output stays in the shared 8,000-character diagnostic block so large failure logs do not bypass the reporting limit.
+
 ## Engine release dependency
 
-This requires [Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068) to be merged and released. Keep the consumer PR draft until then. The latest-release installer is unchanged; the skill checks that CLI help advertises `--max-attempts` and fails closed if unavailable. No minimum released version is assumed.
+The engine contract from [Azure/azure-sdk-tools#17068](https://github.com/Azure/azure-sdk-tools/pull/17068) is available in [azsdk_0.6.50](https://github.com/Azure/azure-sdk-tools/releases/tag/azsdk_0.6.50), published September 30, 2026. The latest-release installer is unchanged; the skill still checks that CLI help advertises `--max-attempts` and fails closed if unavailable.
 
 The existing workflow eligibility, network/authentication, and safe-output publishing architecture are unchanged. This change does not add independent source receipts, a second validator, or a custom publisher.
 
