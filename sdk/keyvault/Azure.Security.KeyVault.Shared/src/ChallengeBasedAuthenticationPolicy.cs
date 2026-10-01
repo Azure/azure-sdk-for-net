@@ -49,6 +49,11 @@ namespace Azure.Security.KeyVault
             string authority = GetRequestAuthority(message.Request);
             if (s_challengeCache.TryGetValue(authority, out ChallengeParameters challenge))
             {
+                if (_verifyChallengeResource)
+                {
+                    VerifyChallengeResource(message.Request, challenge.Scopes[0]);
+                }
+
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
                 var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true);
                 if (async)
@@ -148,15 +153,7 @@ namespace Azure.Security.KeyVault
                 // Verify the scope domain with leading "." matches the requested host domain.
                 if (_verifyChallengeResource)
                 {
-                    if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
-                    {
-                        throw new InvalidOperationException($"The challenge contains invalid scope '{scope}'.");
-                    }
-
-                    if (!message.Request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))
-                    {
-                        throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.");
-                    }
+                    VerifyChallengeResource(message.Request, scope);
                 }
 
                 string authorization = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "authorization");
@@ -185,6 +182,19 @@ namespace Azure.Security.KeyVault
             }
 
             return true;
+        }
+
+        private static void VerifyChallengeResource(Request request, string scope)
+        {
+            if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
+            {
+                throw new InvalidOperationException($"The challenge contains invalid scope '{scope}'.");
+            }
+
+            if (!request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.");
+            }
         }
 
         /// <inheritdoc />
