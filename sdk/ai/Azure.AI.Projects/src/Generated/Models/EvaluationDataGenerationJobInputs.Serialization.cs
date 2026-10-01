@@ -5,12 +5,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for an evaluation data generation job. </summary>
-    internal partial class EvaluationDataGenerationJobInputs : DataGenerationJobInputs, IJsonModel<EvaluationDataGenerationJobInputs>
+    public partial class EvaluationDataGenerationJobInputs : DataGenerationJobInputs, IJsonModel<EvaluationDataGenerationJobInputs>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationDataGenerationJobInputs"/> for deserialization. </summary>
         internal EvaluationDataGenerationJobInputs()
@@ -19,6 +20,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected override DataGenerationJobInputs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationDataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;
@@ -89,6 +91,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected override DataGenerationJobInputs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationDataGenerationJobInputs>)this).GetFormatFromOptions(options) : options.Format;

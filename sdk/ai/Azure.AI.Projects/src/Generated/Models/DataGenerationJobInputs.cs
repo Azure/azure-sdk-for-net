@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     /// Caller-supplied inputs for a data generation job.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJobInputs"/>, <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>, and <see cref="SupervisedFineTuningDataGenerationJobInputs"/>.
     /// </summary>
-    internal abstract partial class DataGenerationJobInputs
+    public abstract partial class DataGenerationJobInputs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

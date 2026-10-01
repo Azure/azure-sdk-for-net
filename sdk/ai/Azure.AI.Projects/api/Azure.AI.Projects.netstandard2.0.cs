@@ -1100,6 +1100,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.CronTrigger CronTrigger(string expression = null, string timeZone = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Projects.CustomRoutineTrigger CustomRoutineTrigger(string provider = null, string eventName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameters = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule DailyRecurrenceSchedule(System.Collections.Generic.IEnumerable<int> hours = null) { throw null; }
+        public static Azure.AI.Projects.DataGenerationJobInputs DataGenerationJobInputs(string name = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources = null, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration = null, string scenario = null) { throw null; }
         public static Azure.AI.Projects.DataGenerationJobOptions DataGenerationJobOptions(string type = null, float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null) { throw null; }
         public static Azure.AI.Projects.DataGenerationJobOutput DataGenerationJobOutput(string type = null) { throw null; }
         public static Azure.AI.Projects.DataGenerationJobResult DataGenerationJobResult(System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobOutput> outputs = null, int generatedSamples = 0, Azure.AI.Projects.DataGenerationTokenUsage tokenUsage = null) { throw null; }
@@ -1121,6 +1122,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.EvaluationComparisonInsightRequest EvaluationComparisonInsightRequest(string evalId = null, string baselineRunId = null, System.Collections.Generic.IEnumerable<string> treatmentRunIds = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluationComparisonInsightResult EvaluationComparisonInsightResult(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvalRunResultComparison> comparisons = null, string method = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluationCredentialContent EvaluationCredentialContent(System.Uri blobUri = null) { throw null; }
+        public static Azure.AI.Projects.EvaluationDataGenerationJobInputs EvaluationDataGenerationJobInputs(string name = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources = null, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration = null, Azure.AI.Projects.EvaluationDataGenerationJobOutputTarget outputConfiguration = null) { throw null; }
         public static Azure.AI.Projects.EvaluationDataGenerationJobOutputTarget EvaluationDataGenerationJobOutputTarget(string name = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.AI.Projects.DataGenerationJobOutputWriteMode? writeMode = default(Azure.AI.Projects.DataGenerationJobOutputWriteMode?)) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluationResultSample EvaluationResultSample(string id = null, System.Collections.Generic.IDictionary<string, System.BinaryData> features = null, System.Collections.Generic.IDictionary<string, System.BinaryData> correlationInfo = null, Azure.AI.Projects.Evaluation.EvalResult evaluationResult = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EvaluationRule EvaluationRule(string id = null, string displayName = null, string description = null, Azure.AI.Projects.Evaluation.EvaluationRuleAction action = null, Azure.AI.Projects.Evaluation.EvaluationRuleFilter filter = null, Azure.AI.Projects.Evaluation.EvaluationRuleEventType eventType = default(Azure.AI.Projects.Evaluation.EvaluationRuleEventType), bool enabled = false, System.Collections.Generic.IReadOnlyDictionary<string, string> systemData = null) { throw null; }
@@ -1201,6 +1203,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.RecurrenceSchedule RecurrenceSchedule(string type = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RecurrenceTrigger RecurrenceTrigger(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string timeZone = null, int interval = 0, Azure.AI.Projects.Evaluation.RecurrenceSchedule schedule = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RedTeam RedTeam(string name = null, string displayName = null, int? turnCount = default(int?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.AttackStrategy> attackStrategies = null, bool? isSimulationOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.RiskCategory> riskCategories = null, string applicationScenario = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, string status = null, Azure.AI.Projects.Evaluation.TargetConfig target = null) { throw null; }
+        public static Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources = null, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration = null, Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget outputConfiguration = null) { throw null; }
         public static Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget ReinforcementFineTuningDataGenerationJobOutputTarget(string name = null, Azure.AI.Projects.DataGenerationJobOutputWriteMode? writeMode = default(Azure.AI.Projects.DataGenerationJobOutputWriteMode?), string mergeFileId = null) { throw null; }
         public static Azure.AI.Projects.RoutineAction RoutineAction(string type = null) { throw null; }
         public static Azure.AI.Projects.RoutineDispatchPayload RoutineDispatchPayload(string type = null) { throw null; }
@@ -1213,6 +1216,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.ScheduleTrigger ScheduleTrigger(string type = null) { throw null; }
         public static Azure.AI.Projects.SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null, int maxSamples = 0, System.Collections.Generic.IEnumerable<Azure.AI.Projects.SimpleQnAFineTuningQuestionType> questionTypes = null) { throw null; }
         public static Azure.AI.Projects.SimulationSeedDataGenerationJobOptions SimulationSeedDataGenerationJobOptions(float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null) { throw null; }
+        public static Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources = null, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration = null, Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget outputConfiguration = null) { throw null; }
         public static Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget SupervisedFineTuningDataGenerationJobOutputTarget(string name = null, Azure.AI.Projects.DataGenerationJobOutputWriteMode? writeMode = default(Azure.AI.Projects.DataGenerationJobOutputWriteMode?), string mergeFileId = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.TargetConfig TargetConfig(string type = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.TaxonomyCategory TaxonomyCategory(string id = null, string name = null, string description = null, Azure.AI.Projects.Evaluation.RiskCategory riskCategory = default(Azure.AI.Projects.Evaluation.RiskCategory), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.TaxonomySubCategory> subCategories = null, System.Collections.Generic.IDictionary<string, string> properties = null) { throw null; }
@@ -1339,6 +1343,23 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class DataGenerationJobInputs : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobInputs>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>
+    {
+        internal DataGenerationJobInputs() { }
+        public Azure.AI.Projects.DataGenerationJobOptions GenerationConfiguration { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.Projects.DataGenerationJobSource> Sources { get { throw null; } }
+        protected virtual Azure.AI.Projects.DataGenerationJobInputs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.DataGenerationJobInputs dataGenerationJobInputs) { throw null; }
+        protected virtual Azure.AI.Projects.DataGenerationJobInputs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.DataGenerationJobInputs System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobInputs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobInputs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.DataGenerationJobInputs System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobInputs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class DataGenerationJobOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DataGenerationJobOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DataGenerationJobOptions>
     {
         internal DataGenerationJobOptions() { }
@@ -1407,10 +1428,10 @@ namespace Azure.AI.Projects
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob> Cancel(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob>> CancelAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob> Create(Azure.AI.Projects.DataGenerationJob job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.OperationResult Create(bool waitUntilCompleted, Azure.AI.Projects.DataGenerationJob job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob>> CreateAsync(Azure.AI.Projects.DataGenerationJob job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.OperationResult> CreateAsync(bool waitUntilCompleted, Azure.AI.Projects.DataGenerationJob job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob> Create(Azure.AI.Projects.DataGenerationJobInputs job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.OperationResult Create(bool waitUntilCompleted, Azure.AI.Projects.DataGenerationJobInputs job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob>> CreateAsync(Azure.AI.Projects.DataGenerationJobInputs job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.Primitives.OperationResult> CreateAsync(bool waitUntilCompleted, Azure.AI.Projects.DataGenerationJobInputs job, string operationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.DataGenerationJob> Get(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1571,6 +1592,20 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.EvaluationDataGenerationJob System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EvaluationDataGenerationJobInputs : Azure.AI.Projects.DataGenerationJobInputs, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>
+    {
+        public EvaluationDataGenerationJobInputs(string name, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration) { }
+        public Azure.AI.Projects.EvaluationDataGenerationJobOutputTarget OutputConfiguration { get { throw null; } set { } }
+        protected override Azure.AI.Projects.DataGenerationJobInputs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.DataGenerationJobInputs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.EvaluationDataGenerationJobInputs System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.EvaluationDataGenerationJobInputs System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJobInputs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EvaluationDataGenerationJobOutputTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationDataGenerationJobOutputTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationDataGenerationJobOutputTarget>
     {
@@ -2232,6 +2267,20 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ReinforcementFineTuningDataGenerationJobInputs : Azure.AI.Projects.DataGenerationJobInputs, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>
+    {
+        public ReinforcementFineTuningDataGenerationJobInputs(string name, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration) { }
+        public Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget OutputConfiguration { get { throw null; } set { } }
+        protected override Azure.AI.Projects.DataGenerationJobInputs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.DataGenerationJobInputs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ReinforcementFineTuningDataGenerationJobOutputTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget>
     {
         public ReinforcementFineTuningDataGenerationJobOutputTarget(string name) { }
@@ -2562,6 +2611,20 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.SupervisedFineTuningDataGenerationJob System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SupervisedFineTuningDataGenerationJobInputs : Azure.AI.Projects.DataGenerationJobInputs, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>
+    {
+        public SupervisedFineTuningDataGenerationJobInputs(string name, System.Collections.Generic.IEnumerable<Azure.AI.Projects.DataGenerationJobSource> sources, Azure.AI.Projects.DataGenerationJobOptions generationConfiguration) { }
+        public Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget OutputConfiguration { get { throw null; } set { } }
+        protected override Azure.AI.Projects.DataGenerationJobInputs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.DataGenerationJobInputs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SupervisedFineTuningDataGenerationJobOutputTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget>
     {

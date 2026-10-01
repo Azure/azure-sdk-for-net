@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for an evaluation data generation job. </summary>
-    internal partial class EvaluationDataGenerationJobInputs : DataGenerationJobInputs
+    public partial class EvaluationDataGenerationJobInputs : DataGenerationJobInputs
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationDataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>

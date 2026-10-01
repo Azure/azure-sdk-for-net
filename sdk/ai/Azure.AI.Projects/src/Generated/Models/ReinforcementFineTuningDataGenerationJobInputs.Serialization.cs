@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
-    internal partial class ReinforcementFineTuningDataGenerationJobInputs : DataGenerationJobInputs, IJsonModel<ReinforcementFineTuningDataGenerationJobInputs>
+    public partial class ReinforcementFineTuningDataGenerationJobInputs : DataGenerationJobInputs, IJsonModel<ReinforcementFineTuningDataGenerationJobInputs>
     {
         /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobInputs"/> for deserialization. </summary>
         internal ReinforcementFineTuningDataGenerationJobInputs()

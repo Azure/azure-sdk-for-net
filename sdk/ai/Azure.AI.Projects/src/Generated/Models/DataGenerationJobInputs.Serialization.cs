@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJobInputs"/>, <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>, and <see cref="SupervisedFineTuningDataGenerationJobInputs"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobInputs))]
-    internal abstract partial class DataGenerationJobInputs : IJsonModel<DataGenerationJobInputs>
+    public abstract partial class DataGenerationJobInputs : IJsonModel<DataGenerationJobInputs>
     {
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobInputs"/> for deserialization. </summary>
         internal DataGenerationJobInputs()

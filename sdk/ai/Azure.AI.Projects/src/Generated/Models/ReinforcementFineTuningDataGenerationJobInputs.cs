@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
     [Experimental("AAIP001")]
-    internal partial class ReinforcementFineTuningDataGenerationJobInputs : DataGenerationJobInputs
+    public partial class ReinforcementFineTuningDataGenerationJobInputs : DataGenerationJobInputs
     {
         /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>

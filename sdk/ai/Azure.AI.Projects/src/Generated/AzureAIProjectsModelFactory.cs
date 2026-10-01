@@ -2748,6 +2748,83 @@ namespace Azure.AI.Projects
             return new ReinforcementFineTuningDataGenerationJobOutputTarget(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// Caller-supplied inputs for a data generation job.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationDataGenerationJobInputs"/>, <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/>, and <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/>.
+        /// </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, string scenario = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new UnknownDataGenerationJobInputs(name, sources.ToList(), generationConfiguration, new DataGenerationJobScenario(scenario), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-supplied inputs for an evaluation data generation job. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="outputConfiguration"> Optional dataset output configuration for the generated evaluation data. </param>
+        /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluationDataGenerationJobInputs EvaluationDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, EvaluationDataGenerationJobOutputTarget outputConfiguration = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new EvaluationDataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                generationConfiguration,
+                DataGenerationJobScenario.Evaluation,
+                additionalBinaryDataProperties: null,
+                outputConfiguration);
+        }
+
+        /// <summary> Caller-supplied inputs for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="outputConfiguration"> Optional file output configuration for the generated supervised fine-tuning data. </param>
+        /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, SupervisedFineTuningDataGenerationJobOutputTarget outputConfiguration = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new SupervisedFineTuningDataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                generationConfiguration,
+                DataGenerationJobScenario.SupervisedFinetuningPreview,
+                additionalBinaryDataProperties: null,
+                outputConfiguration);
+        }
+
+        /// <summary> Caller-supplied inputs for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+        /// <param name="name"> The display name of the data generation job. </param>
+        /// <param name="sources"> The sources used for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
+        /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, ReinforcementFineTuningDataGenerationJobOutputTarget outputConfiguration = default)
+        {
+            sources ??= new ChangeTrackingList<DataGenerationJobSource>();
+
+            return new ReinforcementFineTuningDataGenerationJobInputs(
+                name,
+                sources.ToList(),
+                generationConfiguration,
+                DataGenerationJobScenario.ReinforcementFinetuningPreview,
+                additionalBinaryDataProperties: null,
+                outputConfiguration);
+        }
+
         /// <summary> Evaluation rule action for continuous evaluation. </summary>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>

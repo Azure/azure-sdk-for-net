@@ -24,6 +24,7 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP001")] public partial class AgentDataGenerationJobSource { }
 [Experimental("AAIP001")] public partial class AgentEvaluatorGenerationJobSource { }
 [Experimental("AAIP001")] public abstract partial class DataGenerationJob { }
+[Experimental("AAIP001")] public abstract partial class DataGenerationJobInputs { }
 [Experimental("AAIP001")] public abstract partial class DataGenerationJobOptions { }
 [Experimental("AAIP001")] public abstract partial class DataGenerationJobOutput { }
 [Experimental("AAIP001")] public readonly partial struct DataGenerationJobOutputWriteMode { }

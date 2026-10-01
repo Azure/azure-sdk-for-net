@@ -88,7 +88,7 @@ public partial class AgentAdministrationClient
         };
         _endpoint = endpoint;
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
-            new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly),
+            new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
             new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
@@ -1121,17 +1121,53 @@ public partial class AgentAdministrationClient
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
     }
 
-    /// <summary> Gets the client for voice agent conversations. </summary>
+    /// <summary> Gets the client for the voice Agent. </summary>
     [Experimental("AAIP001")]
     public virtual AgentEndpointConversations GetAgentEndpointConversations()
     {
         return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 
-    /// <summary> Gets the agent telephony sub-client. </summary>
+    /// <summary>
+    /// Gets the AgentTelephony sub-client.
+    /// </summary>
     [Experimental("AAIP001")]
     public virtual AgentTelephony GetAgentTelephony()
     {
         return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+    }
+
+    /// <summary>
+    /// Generates and creates an agent from kind-specific high-level inputs.
+    /// The generated definition remains fully editable through the standard agent versioning operations.
+    /// </summary>
+    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
+    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    {
+        return GenerateAgent(
+            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
+            cancellationToken: cancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Generates and creates an agent from kind-specific high-level inputs.
+    /// The generated definition remains fully editable through the standard agent versioning operations.
+    /// </summary>
+    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    {
+        return await GenerateAgentAsync(
+            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
     }
 }

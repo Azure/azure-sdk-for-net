@@ -164,7 +164,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJob is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJob))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJob is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJobInputs))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJobInputs is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJobOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJobOptions))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJobOptions is experimental and may change in future versions.
