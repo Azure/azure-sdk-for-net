@@ -187,7 +187,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceAgentAvatarIceServer(urls, username, credential, additionalBinaryDataProperties);
+            return new VoiceAgentAvatarIceServer(urls ?? new ChangeTrackingList<Uri>(), username, credential, additionalBinaryDataProperties);
         }
     }
 }

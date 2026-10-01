@@ -154,7 +154,7 @@ namespace Azure.AI.ContentSafety
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnalyzeImageResult(categoriesAnalysis, additionalBinaryDataProperties);
+            return new AnalyzeImageResult(categoriesAnalysis ?? new ChangeTrackingList<ImageCategoriesAnalysis>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -167,7 +167,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PagedResultWithNextLinkRoutine(data, nextLink, additionalBinaryDataProperties);
+            return new PagedResultWithNextLinkRoutine(data ?? new ChangeTrackingList<ProjectsRoutine>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
