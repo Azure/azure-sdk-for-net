@@ -16,6 +16,7 @@
 ### Bugs Fixed
 
 - Fixed `GetPolicy` throwing instead of returning a null policy when the requested attestation type has no policy configured.
+- `AttestationToken.ExpirationTime`, `NotBeforeTime`, and `IssuedAtTime` no longer truncate fractional seconds in the token's `exp`, `nbf`, and `iat` claims.
 
 ### Other Changes
 
