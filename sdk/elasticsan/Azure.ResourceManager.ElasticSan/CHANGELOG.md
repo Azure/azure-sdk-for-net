@@ -5,7 +5,7 @@
 ### Features Added
 
 - Upgraded api-version to `2026-05-01-preview`.
-    - Added Elastic SAN V2 support: `ElasticSanData.Version` (`ElasticSanVersion`), new SKUs `ElasticSanSkuName.ElasticSanLrs` and `ElasticSanSkuName.ElasticSanZrs`, and settable `TotalIops`, `TotalMbps` and `TotalSizeTiB` on `ElasticSanData` and `ElasticSanPatch`.
+    - Added Elastic SAN V2 support: `ElasticSanData.Version` (`ElasticSanVersion`), new SKU `ElasticSanSkuName.ElasticSanLrs`, and settable `TotalIops`, `TotalMbps` and `TotalSizeTiB` on `ElasticSanData` and `ElasticSanPatch`.
     - Added `TotalReservedIops`, `TotalReservedMBps` and `UsedCapacityGiB` to `ElasticSanData`.
     - Added `QualityOfService` (`ElasticSanQualityOfService`), `ReservedIops`, `ReservedMBps` and `IsEncryptionInTransitEnabled` to `ElasticSanVolumeGroupData`, and `ReservedIops`/`ReservedMBps` to `ElasticSanVolumeGroupPatch`.
     - Added `ElasticSanStorageTargetType.DirectAttach`.

@@ -81,6 +81,26 @@ namespace Azure.ResourceManager.ElasticSan.Tests
         }
 
         [Test]
+        public void SnapshotDataCreationInfoConstructorSerializesSourceId()
+        {
+            ResourceIdentifier volumeId = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.ElasticSan/elasticSans/san/volumegroups/vg/volumes/vol");
+
+            ElasticSanSnapshotData data = new(new SnapshotCreationInfo(volumeId));
+
+            Assert.AreEqual(volumeId, data.CreationDataSourceId);
+            string json = ModelReaderWriter.Write(data).ToString();
+            StringAssert.Contains("\"creationData\"", json);
+            StringAssert.Contains(volumeId.ToString(), json);
+
+            ElasticSanSnapshotData deserialized = ModelReaderWriter.Read<ElasticSanSnapshotData>(BinaryData.FromString(json));
+            Assert.AreEqual(volumeId, deserialized.CreationDataSourceId);
+
+            ResourceIdentifier otherVolumeId = new(volumeId.Parent + "/volumes/other");
+            data.CreationDataSourceId = otherVolumeId;
+            StringAssert.Contains(otherVolumeId.ToString(), ModelReaderWriter.Write(data).ToString());
+        }
+
+        [Test]
         public void VolumeGroupDataDeleteRetentionPolicyRoundTripsThroughWire()
         {
             ElasticSanVolumeGroupData data = new()

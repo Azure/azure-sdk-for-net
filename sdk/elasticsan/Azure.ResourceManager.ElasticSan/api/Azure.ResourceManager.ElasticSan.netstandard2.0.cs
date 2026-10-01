@@ -857,7 +857,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private readonly int _dummyPrimitive;
         public ElasticSanSkuName(string value) { throw null; }
         public static Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName ElasticSanLrs { get { throw null; } }
-        public static Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName ElasticSanZrs { get { throw null; } }
         public static Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName PremiumLrs { get { throw null; } }
         public static Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName PremiumZrs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuName other) { throw null; }

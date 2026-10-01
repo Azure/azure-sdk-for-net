@@ -9,8 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
@@ -100,12 +103,33 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             var preBackup = (await volumeGroup.PreBackupVolumeAsync(WaitUntil.Completed, volumeNameList)).Value;
             Assert.AreEqual(preBackup.ValidationStatus, "Success");
 
-            DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(
-                new ResourceIdentifier[] {
-                    new ResourceIdentifier(
-                        "/subscriptions/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/resourceGroups/resourcegroup/providers/Microsoft.Compute/snapshots/disksnapshotid") });
-            var preRestore = (await volumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList)).Value;
-            Assert.AreEqual(preRestore.ValidationStatus, "Success");
+            // preRestore validates that the disk snapshots exist, so create a real one in the SAN's resource group and region.
+            ResourceGroupResource resourceGroup = await GetResourceGroupAsync(ResourceGroupName);
+            AzureLocation location = (await resourceGroup.GetElasticSans().GetAsync(ElasticSanName)).Value.Data.Location;
+            ManagedDiskData diskData = new ManagedDiskData(location)
+            {
+                CreationData = new DiskCreationData(DiskCreateOption.Empty),
+                DiskSizeGB = 100,
+            };
+            ManagedDiskResource disk = (await resourceGroup.GetManagedDisks().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testdisk-"), diskData)).Value;
+            SnapshotData diskSnapshotData = new SnapshotData(location)
+            {
+                CreationData = new DiskCreationData(DiskCreateOption.Copy) { SourceResourceId = disk.Id },
+                Incremental = false,
+            };
+            SnapshotResource diskSnapshot = (await resourceGroup.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testdisksnapshot-"), diskSnapshotData)).Value;
+
+            try
+            {
+                DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(new ResourceIdentifier[] { diskSnapshot.Id });
+                var preRestore = (await volumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList)).Value;
+                Assert.AreEqual(preRestore.ValidationStatus, "Success");
+            }
+            finally
+            {
+                await diskSnapshot.DeleteAsync(WaitUntil.Completed);
+                await disk.DeleteAsync(WaitUntil.Completed);
+            }
 
             await volumeGroup.DeleteAsync(WaitUntil.Completed);
         }
