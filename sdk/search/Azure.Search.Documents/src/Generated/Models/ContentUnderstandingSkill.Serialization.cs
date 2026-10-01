@@ -95,6 +95,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("chunkingProperties"u8);
                 writer.WriteObjectValue(ChunkingProperties, options);
             }
+            if (Optional.IsDefined(ModelName))
+            {
+                writer.WritePropertyName("modelName"u8);
+                writer.WriteStringValue(ModelName);
+            }
+            if (Optional.IsDefined(ModelDeployment))
+            {
+                writer.WritePropertyName("modelDeployment"u8);
+                writer.WriteStringValue(ModelDeployment);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -131,6 +141,8 @@ namespace Azure.Search.Documents.Indexes.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<ContentUnderstandingSkillExtractionOptions> extractionOptions = default;
             ContentUnderstandingSkillChunkingProperties chunkingProperties = default;
+            string modelName = default;
+            string modelDeployment = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("@odata.type"u8))
@@ -197,6 +209,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     chunkingProperties = ContentUnderstandingSkillChunkingProperties.DeserializeContentUnderstandingSkillChunkingProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("modelName"u8))
+                {
+                    modelName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modelDeployment"u8))
+                {
+                    modelDeployment = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -211,7 +233,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputs,
                 additionalBinaryDataProperties,
                 extractionOptions ?? new ChangeTrackingList<ContentUnderstandingSkillExtractionOptions>(),
-                chunkingProperties);
+                chunkingProperties,
+                modelName,
+                modelDeployment);
         }
     }
 }

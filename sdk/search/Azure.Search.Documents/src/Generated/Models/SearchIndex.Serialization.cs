@@ -210,11 +210,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("permissionFilterOption"u8);
                 writer.WriteStringValue(PermissionFilterOption.Value.ToString());
             }
-            if (Optional.IsDefined(PurviewEnabled))
-            {
-                writer.WritePropertyName("purviewEnabled"u8);
-                writer.WriteBooleanValue(PurviewEnabled.Value);
-            }
             if (Optional.IsDefined(SharePointConnectorAppRegistration))
             {
                 writer.WritePropertyName("sharePointConnectorAppRegistration"u8);
@@ -290,7 +285,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticSearch semanticSearch = default;
             VectorSearch vectorSearch = default;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool? purviewEnabled = default;
             SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default;
             IList<SearchField> fields = default;
             string etag = default;
@@ -469,16 +463,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("purviewEnabled"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        purviewEnabled = null;
-                        continue;
-                    }
-                    purviewEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("sharePointConnectorAppRegistration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -525,7 +509,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 semanticSearch,
                 vectorSearch,
                 permissionFilterOption,
-                purviewEnabled,
                 sharePointConnectorAppRegistration,
                 fields,
                 etag,

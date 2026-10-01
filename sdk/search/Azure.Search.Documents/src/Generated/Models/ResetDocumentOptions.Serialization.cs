@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -57,16 +56,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResetDocumentOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="resetDocumentOptions"> The <see cref="ResetDocumentOptions"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ResetDocumentOptions resetDocumentOptions)
-        {
-            if (resetDocumentOptions == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(resetDocumentOptions, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResetDocumentOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -102,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsCollectionDefined(DataSourceDocumentIds))
             {
-                writer.WritePropertyName("datasourceDocumentIds"u8);
+                writer.WritePropertyName("DataSourceDocumentIds"u8);
                 writer.WriteStartArray();
                 foreach (string item in DataSourceDocumentIds)
                 {
@@ -183,7 +172,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     documentKeys = array;
                     continue;
                 }
-                if (prop.NameEquals("datasourceDocumentIds"u8))
+                if (prop.NameEquals("DataSourceDocumentIds"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

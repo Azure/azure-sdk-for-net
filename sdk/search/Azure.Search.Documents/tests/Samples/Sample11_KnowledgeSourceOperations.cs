@@ -65,6 +65,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             new SearchIndexFieldReference("hotelName"),
                         },
 
+#if AZURE_SEARCH_PREVIEW
                         // Guide query planning toward useful filters and boosts.
                         QueryHints = new SearchIndexKnowledgeSourceQueryHints
                         {
@@ -86,6 +87,7 @@ namespace Azure.Search.Documents.Tests.Samples
                                 }
                             }
                         }
+#endif
                     })
                 {
                     Description = "Hotels search index knowledge source"
@@ -97,8 +99,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 Assert.AreEqual(testSourceName, createdSource.Name);
                 Assert.IsTrue(createdSource is SearchIndexKnowledgeSource);
+#if AZURE_SEARCH_PREVIEW
                 Assert.AreEqual(1, searchIndexSource.SearchIndexParameters.QueryHints.Filters.Count);
                 Assert.AreEqual(1, searchIndexSource.SearchIndexParameters.QueryHints.Boosts.Count);
+#endif
             }
             finally
             {
@@ -111,7 +115,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [LiveOnly]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
         public async Task CreatePrivateBlobKnowledgeSourceAndInspectAnalyzer()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if AZURE_SEARCH_PREVIEW || SNIPPET
+
 using System;
 using System.Linq;
 using System.Threading;
@@ -265,3 +267,4 @@ namespace Azure.Search.Documents.Tests.Samples
         }
     }
 }
+#endif

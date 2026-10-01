@@ -78,8 +78,10 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     Description = "Knowledge base for hotel information"
                 };
+#if AZURE_SEARCH_PREVIEW
                 knowledgeBase.Tags.Add("environment", "sample");
                 knowledgeBase.Tags.Add("owner", "search-team");
+#endif
 
                 // Add an Azure OpenAI model for query planning
                 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
@@ -106,8 +108,10 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 Assert.AreEqual(testBaseName, createdBase.Name);
                 Assert.AreEqual(1, createdBase.KnowledgeSources.Count);
+#if AZURE_SEARCH_PREVIEW
                 Assert.IsTrue(string.Equals("sample", createdBase.Tags["environment"]));
                 Assert.IsTrue(string.Equals("search-team", createdBase.Tags["owner"]));
+#endif
             }
             finally
             {
@@ -153,10 +157,12 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 Console.WriteLine($"    - {sourceRef.Name}");
             }
+#if AZURE_SEARCH_PREVIEW
             foreach (KeyValuePair<string, string> tag in knowledgeBase.Tags)
             {
                 Console.WriteLine($"  Tag: {tag.Key} = {tag.Value}");
             }
+#endif
             #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Get
 
             Assert.AreEqual(resources.KnowledgeBaseName, knowledgeBase.Name);
@@ -215,16 +221,23 @@ namespace Azure.Search.Documents.Tests.Samples
 
             // Update its description and application metadata.
             knowledgeBase.Description = "Updated description for hotel knowledge base";
+#if AZURE_SEARCH_PREVIEW
             knowledgeBase.Tags.Add("lifecycle", "updated");
+#endif
 
             KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
             Console.WriteLine($"Updated knowledge base '{updatedBase.Name}': {updatedBase.Description}");
+#if AZURE_SEARCH_PREVIEW
             Console.WriteLine($"  Lifecycle tag: {updatedBase.Tags["lifecycle"]}");
+#endif
             #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Update
 
             Assert.AreEqual("Updated description for hotel knowledge base", updatedBase.Description);
             KnowledgeBase persistedBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
+#if AZURE_SEARCH_PREVIEW
             Assert.AreEqual("updated", persistedBase.Tags["lifecycle"]);
+#endif
+            Assert.AreEqual(updatedBase.Description, persistedBase.Description);
         }
 
         [Test]

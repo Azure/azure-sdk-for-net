@@ -952,28 +952,6 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateUploadKnowledgeSourceFileRequest(string sourceName, string contentDisposition, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/knowledgesources('", false);
-            uri.AppendPath(sourceName, true);
-            uri.AppendPath("')/files", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/octet-stream");
-            request.Headers.SetValue("Content-Disposition", contentDisposition);
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
         internal HttpMessage CreateUploadKnowledgeSourceFileMultipartRequest(string sourceName, RequestContent content, string contentType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -1059,7 +1037,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteKnowledgeSourceFileRequest(string fileId, string sourceName, RequestContext context)
+        internal HttpMessage CreateDeleteKnowledgeSourceFileRequest(string sourceName, string fileId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1083,7 +1061,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateUpdateKnowledgeSourceFileRequest(string fileId, string sourceName, RequestContent content, string contentType, RequestContext context)
+        internal HttpMessage CreateUpdateKnowledgeSourceFileRequest(string sourceName, string fileId, RequestContent content, string contentType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -62,17 +62,6 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         /// <value>String values from <see cref="Models.PermissionFilter">PermissionFilter</see>.</value>
         public string PermissionFilter { get; set; }
-
-        /// <summary>
-        /// A value indicating whether the field should be used for sensitivity label ID filtering.
-        /// This enables document-level filtering based on Microsoft Purview sensitivity label IDs.
-        /// </summary>
-        public bool? SensitivityLabelId { get; set; }
-
-        /// <summary>
-        /// A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document.
-        /// </summary>
-        public bool? SensitivityLabelName { get; set; }
         // search-preview:2026-05-01-preview }
 
         /// <inheritdoc/>
@@ -103,16 +92,6 @@ namespace Azure.Search.Documents.Indexes
             if (PermissionFilter != null)
             {
                 field.PermissionFilter = PermissionFilter;
-            }
-
-            if (SensitivityLabelId.HasValue)
-            {
-                field.SensitivityLabelId = SensitivityLabelId;
-            }
-
-            if (SensitivityLabelName.HasValue)
-            {
-                field.SensitivityLabelName = SensitivityLabelName;
             }
             // search-preview:2026-05-01-preview }
         }

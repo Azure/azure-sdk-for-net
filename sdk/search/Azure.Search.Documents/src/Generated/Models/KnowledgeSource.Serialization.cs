@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobKnowledgeSource"/>, <see cref="FabricDataAgentKnowledgeSource"/>, <see cref="FabricOntologyKnowledgeSource"/>, <see cref="FileKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedSqlKnowledgeSource"/>, <see cref="McpServerKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, and <see cref="WorkIQKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureBlobKnowledgeSource"/>, <see cref="FileKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedSqlKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/>, and <see cref="WebKnowledgeSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSource))]
     public abstract partial class KnowledgeSource : IJsonModel<KnowledgeSource>
@@ -110,11 +110,6 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ResultsProcessing))
-            {
-                writer.WritePropertyName("resultsProcessing"u8);
-                writer.WriteStringValue(ResultsProcessing.Value.ToString());
-            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -173,10 +168,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     case "azureBlob":
                         return AzureBlobKnowledgeSource.DeserializeAzureBlobKnowledgeSource(element, options);
-                    case "fabricDataAgent":
-                        return FabricDataAgentKnowledgeSource.DeserializeFabricDataAgentKnowledgeSource(element, options);
-                    case "fabricOntology":
-                        return FabricOntologyKnowledgeSource.DeserializeFabricOntologyKnowledgeSource(element, options);
                     case "file":
                         return FileKnowledgeSource.DeserializeFileKnowledgeSource(element, options);
                     case "indexedOneLake":
@@ -185,16 +176,10 @@ namespace Azure.Search.Documents.Indexes.Models
                         return IndexedSharePointKnowledgeSource.DeserializeIndexedSharePointKnowledgeSource(element, options);
                     case "indexedSql":
                         return IndexedSqlKnowledgeSource.DeserializeIndexedSqlKnowledgeSource(element, options);
-                    case "mcpServer":
-                        return McpServerKnowledgeSource.DeserializeMcpServerKnowledgeSource(element, options);
-                    case "remoteSharePoint":
-                        return RemoteSharePointKnowledgeSource.DeserializeRemoteSharePointKnowledgeSource(element, options);
                     case "searchIndex":
                         return SearchIndexKnowledgeSource.DeserializeSearchIndexKnowledgeSource(element, options);
                     case "web":
                         return WebKnowledgeSource.DeserializeWebKnowledgeSource(element, options);
-                    case "workIQ":
-                        return WorkIQKnowledgeSource.DeserializeWorkIQKnowledgeSource(element, options);
                 }
             }
             return UnknownKnowledgeSource.DeserializeUnknownKnowledgeSource(element, options);

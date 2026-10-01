@@ -42,8 +42,6 @@ KnowledgeBase knowledgeBase = new KnowledgeBase(
 {
     Description = "Knowledge base for hotel information"
 };
-knowledgeBase.Tags.Add("environment", "sample");
-knowledgeBase.Tags.Add("owner", "search-team");
 
 // Add an Azure OpenAI model for query planning
 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
@@ -82,10 +80,6 @@ foreach (KnowledgeSourceReference sourceRef in knowledgeBase.KnowledgeSources)
 {
     Console.WriteLine($"    - {sourceRef.Name}");
 }
-foreach (KeyValuePair<string, string> tag in knowledgeBase.Tags)
-{
-    Console.WriteLine($"  Tag: {tag.Key} = {tag.Value}");
-}
 ```
 
 ## List Knowledge Bases
@@ -123,11 +117,9 @@ KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeB
 
 // Update its description and application metadata.
 knowledgeBase.Description = "Updated description for hotel knowledge base";
-knowledgeBase.Tags.Add("lifecycle", "updated");
 
 KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
 Console.WriteLine($"Updated knowledge base '{updatedBase.Name}': {updatedBase.Description}");
-Console.WriteLine($"  Lifecycle tag: {updatedBase.Tags["lifecycle"]}");
 ```
 
 ## Delete a Knowledge Base
