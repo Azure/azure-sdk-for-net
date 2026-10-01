@@ -1,5 +1,15 @@
 # Release History
 
+## 4.9.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.9.1 (2026-09-02)
 
 ### Bugs Fixed
