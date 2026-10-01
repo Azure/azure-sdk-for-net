@@ -21,7 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
 [TestFixture]
 [NonParallelizable]
-public class CredentialCompositionVerificationTests
+public class CredentialCompositionTests
 {
     private readonly Dictionary<string, string?> _previousEnvironment = new();
 
@@ -32,7 +32,7 @@ public class CredentialCompositionVerificationTests
         {
             ["FOUNDRY_HOSTING_ENVIRONMENT"] = "Production",
             ["FOUNDRY_PROJECT_ENDPOINT"] = "https://example.com/project",
-            ["FOUNDRY_AGENT_NAME"] = "credential-verification",
+            ["FOUNDRY_AGENT_NAME"] = "credential-composition",
             ["FOUNDRY_AGENT_VERSION"] = "1",
         })
         {
@@ -324,7 +324,7 @@ public class CredentialCompositionVerificationTests
         return credential;
     }
 
-    public sealed class ProbeCredential : TokenCredential
+    private sealed class ProbeCredential : TokenCredential
     {
         public int TokenCalls { get; private set; }
 
