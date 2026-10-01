@@ -42,6 +42,10 @@ jobs:
 
   variables:
   - template: /eng/pipelines/templates/variables/globals.yml
+  - name: ToolsRepo
+    value: $(Pipeline.Workspace)/tools
+  - name: LanguageRepo
+    value: $(Pipeline.Workspace)/lang
   - name: ApiReviewRepositoryFullName
     value: ${{ parameters.sourceRepositoryFullName }}
   - name: ApiReviewSourceDir
@@ -50,8 +54,16 @@ jobs:
     value: ${{ parameters.toolingDir }}
   - ${{ each variable in parameters.variables }}:
     - ${{ variable }}
-
   steps:
+  - checkout: self
+    path: tools
+    fetchDepth: 1
+    sparseCheckoutDirectories: eng
+  - checkout: ${{ variables.LanguageRepository }}
+    path: lang
+    fetchDepth: 1
+    sparseCheckoutDirectories: eng
+
   - ${{ if ne(parameters.sourceCheckoutDir, '') }}:
     - bash: |
         set -Eeuo pipefail
