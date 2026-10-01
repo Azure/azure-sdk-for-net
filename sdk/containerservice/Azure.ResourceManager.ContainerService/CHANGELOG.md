@@ -6,16 +6,6 @@
 
 - Upgraded api-version to 2026-07-01.
 
-## 1.8.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.8.0-beta.1 (2026-09-02)
 
 ### Features Added
