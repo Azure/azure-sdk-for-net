@@ -136,17 +136,16 @@ namespace Azure.Security.KeyVault
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
-                // Get the scope from the cache
-                s_challengeCache.TryGetValue(authority, out challenge);
-                scope = challenge.Scopes[0];
+                // A claims challenge can arrive before caching or after cache eviction.
+                if (s_challengeCache.TryGetValue(authority, out challenge))
+                {
+                    scope = challenge.Scopes[0];
+                }
             }
 
             if (scope is null)
             {
-                if (s_challengeCache.TryGetValue(authority, out challenge))
-                {
-                    return false;
-                }
+                return false;
             }
             else
             {
