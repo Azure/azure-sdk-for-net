@@ -100,9 +100,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        public void LatestServiceVersionIsNewPreview()
+        public void DefaultServiceVersionIsLatestGa()
         {
-            Assert.AreEqual("2026-07-31-preview", new ConfidentialLedgerClientOptions().Version);
+            Assert.AreEqual("2026-02-23", new ConfidentialLedgerClientOptions().Version);
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                                 waitForCommitQuerySent = req.Uri.Query.Contains("waitForCommit=true");
                                 var committed = new MockResponse(200);
                                 committed.AddHeader("x-ms-ccf-transaction-id", transactionId);
-                                committed.SetContent(@"{""collectionId"":""subledger:0""}");
+                                committed.SetContent(@"{""collectionId"":""subledger:0"",""state"":""Committed""}");
                                 return committed;
                             }),
                     },
@@ -191,6 +191,50 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.IsFalse(waitForCommitQuerySent, "The waitForCommit query parameter should not be sent by default.");
             Assert.IsTrue(statusEndpointCalled, "The transaction status endpoint should be polled when waitForCommit is not set.");
+            Assert.IsTrue(operation.HasCompleted);
+        }
+
+        [Test]
+        public async Task PostLedgerEntryWithWaitForCommitFallsBackToPollingWhenBodyNotCommitted()
+        {
+            // Simulates an API version or service build that does not honor waitForCommit: it ignores
+            // the query parameter and returns a normal local-commit 200 whose body does not report
+            // "state": "Committed". The client must not assume the transaction is globally committed;
+            // it must fall back to polling the transaction status endpoint.
+            bool statusEndpointCalled = false;
+
+            var client = InstrumentClient(
+                new ConfidentialLedgerClient(
+                    new("https://client.name"),
+                    new MockCredential(),
+                    ledgerOptions: new ConfidentialLedgerClientOptions
+                    {
+                        Retry = { Delay = TimeSpan.Zero, MaxRetries = 0 },
+                        Transport = new MockTransport(
+                            req =>
+                            {
+                                if (req.Uri.Path.Contains($"transactions/{transactionId}/status"))
+                                {
+                                    statusEndpointCalled = true;
+                                    var status = new MockResponse(200);
+                                    status.SetContent(@"{""state"":""Committed"",""transactionId"":""1234""}");
+                                    return status;
+                                }
+
+                                var accepted = new MockResponse(200);
+                                accepted.AddHeader("x-ms-ccf-transaction-id", transactionId);
+                                accepted.SetContent(@"{""collectionId"":""subledger:0"",""state"":""Pending""}");
+                                return accepted;
+                            }),
+                    },
+                    certificateClientOptions: CreateCertificateClientOptions()));
+
+            var operation = await client.PostLedgerEntryAsync(
+                WaitUntil.Completed,
+                RequestContent.Create(new { contents = "test" }),
+                waitForCommit: true);
+
+            Assert.IsTrue(statusEndpointCalled, "The status endpoint must be polled when the waitForCommit response body does not report a committed state.");
             Assert.IsTrue(operation.HasCompleted);
         }
 

@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
+- Improved authentication challenge resource validation.
+
 ### Other Changes
 
 ## 4.9.0-beta.3 (2026-09-27)
