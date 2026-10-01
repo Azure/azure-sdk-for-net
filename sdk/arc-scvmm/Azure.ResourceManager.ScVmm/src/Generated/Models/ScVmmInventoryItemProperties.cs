@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     /// <summary>
     /// Defines the resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/>, and <see cref="VirtualMachineInventoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/>, and <see cref="VirtualNetworkInventoryItem"/>.
     /// </summary>
     public abstract partial class ScVmmInventoryItemProperties
     {

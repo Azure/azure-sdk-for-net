@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Azure.AI.AgentServer.Optimization</RootNamespace>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.1</Version>
     <Description>.NET client SDK for the Azure AI Agent Optimization API — includes TypeSpec-generated REST client and convenience config loader.</Description>
     <PackageTags>Microsoft Azure AI Agent Server Optimization</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

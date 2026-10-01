@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/Specs.Azure.Tcgc.ClientInit.Both.csproj" />
+  <Project Path="tests/Specs.Azure.Tcgc.ClientInit.Both.Tests.csproj" />
 </Solution>

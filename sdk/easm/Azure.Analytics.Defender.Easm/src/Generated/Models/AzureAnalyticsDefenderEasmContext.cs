@@ -64,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm
     [ModelReaderWriterBuildable(typeof(DomainAssetResource))]
     [ModelReaderWriterBuildable(typeof(EasmPolicy))]
     [ModelReaderWriterBuildable(typeof(ErrorDetail))]
-    [ModelReaderWriterBuildable(typeof(ErrorResponse))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
     [ModelReaderWriterBuildable(typeof(GuidPair))]
     [ModelReaderWriterBuildable(typeof(HostAsset))]
     [ModelReaderWriterBuildable(typeof(HostAssetResource))]

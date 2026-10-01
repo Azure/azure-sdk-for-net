@@ -366,6 +366,7 @@ namespace Azure.Identity
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,
                 IsForceRefreshEnabled = options.IsForceRefreshEnabled,
+                EnableMtlsProofOfPossession = options.EnableMtlsProofOfPossession,
             };
 
             // ManagedIdentityIdKind/ManagedIdentityId (new config properties) take priority

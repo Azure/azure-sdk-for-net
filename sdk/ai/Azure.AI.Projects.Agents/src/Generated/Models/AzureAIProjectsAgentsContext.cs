@@ -80,32 +80,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentOptimizationUserConversationSimulationEvaluationSet))]
     [ModelReaderWriterBuildable(typeof(AgentOptimizationUserConversationSimulationInlineDataSource))]
     [ModelReaderWriterBuildable(typeof(AgentReference))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultAgentOptimizationCandidate is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentOptimizationCandidate))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultAgentOptimizationCandidate is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultAgentOptimizationJob is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultAgentOptimizationJob))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultAgentOptimizationJob is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultRealtimeConversationItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultRealtimeConversationItem))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultRealtimeConversationItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkillVersion is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultSkillVersion))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultSkillVersion is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyBindingListItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultTelephonyBindingListItem))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyBindingListItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyCallSummary is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultTelephonyCallSummary))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultTelephonyCallSummary is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxObject))]
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultToolboxVersionObject))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceConversation is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceConversation))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceConversation is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResult is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultVoiceResult))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsPagedResultVoiceResult is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentsSkill))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentsSkill is experimental and may change in future versions.
@@ -134,10 +108,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ContainerSkill))]
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
-    [ModelReaderWriterBuildable(typeof(CreateSessionRequest))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateSkillVersionRequest is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(CreateSkillVersionRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateSkillVersionRequest is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateTeamsPhoneExtensibilityTelephonyBindingContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTeamsPhoneExtensibilityTelephonyBindingContent is experimental and may change in future versions.
@@ -147,7 +117,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTelephonyCallJobContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateTelephonyCallJobContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTelephonyCallJobContent is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(CreateToolboxVersionRequest))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateTwilioTelephonyBindingContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.CreateTwilioTelephonyBindingContent is experimental and may change in future versions.
@@ -184,8 +153,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ManagedAgentIdentityBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(McpProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(MCPToolboxTool))]
-    [ModelReaderWriterBuildable(typeof(MisalignmentErrorDetailsResource))]
-    [ModelReaderWriterBuildable(typeof(MisalignmentSteer))]
     [ModelReaderWriterBuildable(typeof(ModelSamplingParams))]
     [ModelReaderWriterBuildable(typeof(OpenApiAuthenticationDetails))]
     [ModelReaderWriterBuildable(typeof(OpenApiFunctionDefinition))]
@@ -237,9 +204,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReminderPreviewToolboxTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ReminderPreviewToolboxTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ReplaceTelephonyTransferTargetsRequest is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ReplaceTelephonyTransferTargetsRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ReplaceTelephonyTransferTargetsRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponsesProtocolConfiguration))]
     [ModelReaderWriterBuildable(typeof(SessionConfiguration))]
     [ModelReaderWriterBuildable(typeof(SessionDirectoryEntry))]
@@ -344,72 +308,13 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ToolboxVersions))]
     [ModelReaderWriterBuildable(typeof(ToolConfig))]
     [ModelReaderWriterBuildable(typeof(ToolSearchToolboxTool))]
-    [ModelReaderWriterBuildable(typeof(TransferTelephonyCallRequest))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.TwilioTelephonyBinding is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TwilioTelephonyBinding))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.TwilioTelephonyBinding is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TwilioTelephonyBindingListItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.TwilioTelephonyBindingListItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownAgentBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentDefinition))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentEndpointAuthorizationScheme))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentHarness is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownAgentHarness))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentHarness is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationCandidateOutput))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationConfigurationBase))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationEvaluationSet))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationMutation))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationTargetCompletionDataSource))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationTargetConfiguration))]
-    [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationUserConversationSimulationDataSource))]
-    [ModelReaderWriterBuildable(typeof(UnknownContainerSkill))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownCreateTelephonyBindingContent is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownCreateTelephonyBindingContent))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownCreateTelephonyBindingContent is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownEvaluationVoiceModelConfiguration))]
-    [ModelReaderWriterBuildable(typeof(UnknownOptimizationContext))]
-    [ModelReaderWriterBuildable(typeof(UnknownTelemetryEndpoint))]
-    [ModelReaderWriterBuildable(typeof(UnknownTelemetryEndpointAuthentication))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyBinding is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownTelephonyBinding))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyBinding is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyBindingListItem is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownTelephonyBindingListItem))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyBindingListItem is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyOutboundRetryPolicy is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownTelephonyOutboundRetryPolicy))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyOutboundRetryPolicy is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyTransferDestination is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownTelephonyTransferDestination))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownTelephonyTransferDestination is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownToolboxShellEnvironment))]
-    [ModelReaderWriterBuildable(typeof(UnknownToolboxShellNetworkPolicy))]
-    [ModelReaderWriterBuildable(typeof(UnknownToolboxSkill))]
-    [ModelReaderWriterBuildable(typeof(UnknownToolboxTool))]
-    [ModelReaderWriterBuildable(typeof(UnknownUserConversationSimulationInterruptionConfiguration))]
-    [ModelReaderWriterBuildable(typeof(UnknownVersionIndicator))]
-    [ModelReaderWriterBuildable(typeof(UnknownVersionSelectionRule))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentGreetingConfig is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownVoiceAgentGreetingConfig))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentGreetingConfig is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentInterimResponseConfig is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownVoiceAgentInterimResponseConfig))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentInterimResponseConfig is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentSystemTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownVoiceAgentSystemTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentSystemTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentTool is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownVoiceAgentTool))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentTurnDetectionConfig is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownVoiceAgentTurnDetectionConfig))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceAgentTurnDetectionConfig is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceConversationEngine is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UnknownVoiceConversationEngine))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownVoiceConversationEngine is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(UpdateSkillRequest))]
     [ModelReaderWriterBuildable(typeof(UpdateToolboxRequest))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationAudioEffectsConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationConfiguration))]
@@ -433,9 +338,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentAvatarConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentAvatarConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentAvatarConfig is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentAvatarIceServer is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(VoiceAgentAvatarIceServer))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentAvatarIceServer is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentAvatarScene is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentAvatarScene))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentAvatarScene is experimental and may change in future versions.
@@ -502,9 +404,6 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentServerVadTurnDetection))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSessionAvatarConfig is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(VoiceAgentSessionAvatarConfig))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentSessionAvatarConfig is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(VoiceAgentStaticInterimResponseConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig is experimental and may change in future versions.
