@@ -25,6 +25,31 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public SecretClient Client { get; }
 
         [Test]
+        public async Task DisableChallengeResourceVerification_True_AllowsMismatchedChallengeResource()
+        {
+            Uri vaultUri = new($"https://verification-disabled-{IsAsync}.vault.azure.net");
+            var challenge = new MockResponse(401);
+            challenge.AddHeader("WWW-Authenticate",
+                "Bearer authorization=\"https://login.microsoftonline.com/common\", resource=\"https://attacker.example\"");
+            var success = new MockResponse(200).WithJson(
+                $@"{{""value"":""v"",""id"":""{vaultUri}secrets/x/1""}}");
+
+            var transport = new MockTransport(challenge, success);
+            var options = new SecretClientOptions
+            {
+                Transport = transport,
+                DisableChallengeResourceVerification = true,
+            };
+            SecretClient client = InstrumentClient(new SecretClient(vaultUri, new MockCredential(), options));
+
+            await client.GetSecretAsync("x");
+
+            Assert.AreEqual(2, transport.Requests.Count);
+            Assert.IsTrue(transport.Requests[1].Headers.TryGetValue("Authorization", out string authorization));
+            StringAssert.StartsWith("Bearer", authorization);
+        }
+
+        [Test]
         public void SetArgumentValidation()
         {
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.SetSecretAsync(null, "value"));
