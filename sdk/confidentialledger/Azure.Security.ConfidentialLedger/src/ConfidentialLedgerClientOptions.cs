@@ -9,7 +9,7 @@ namespace Azure.Security.ConfidentialLedger
     /// <summary> Client options for ConfidentialLedger library clients. </summary>
     public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2026_07_31_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_02_23;
         internal string Version { get; }
 
         /// <summary>
@@ -101,7 +101,14 @@ namespace Azure.Security.ConfidentialLedger
         }
 
         /// <summary> Initializes new instance of ConfidentialLedgerClientOptions. </summary>
+        // AZC0010: the default ServiceVersion is intentionally pinned to the latest GA release
+        // (V2026_02_23) rather than the newer preview (V2026_07_31_Preview). Preview API versions and
+        // the preview-only features they enable (e.g. waitForCommit) must be opted into explicitly so
+        // that clients which leave the version unspecified are not silently moved onto a preview
+        // contract.
+#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public ConfidentialLedgerClientOptions(ServiceVersion version = LatestVersion)
+#pragma warning restore AZC0010
         {
             Version = version switch
             {

@@ -247,10 +247,11 @@ namespace Azure.Security.ConfidentialLedger
                 }
                 var response = Pipeline.ProcessMessage(message, context);
 
-                if (waitForCommit && response.Status == 200)
+                if (waitForCommit && response.Status == 200 && IsGloballyCommitted(response))
                 {
-                    // The service held the response until the transaction was globally committed,
-                    // so the operation is already complete and no status polling is required.
+                    // The service held the response until the transaction was globally committed
+                    // (the body reports "state": "Committed"), so the operation is already complete
+                    // and no status polling is required.
                     response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
                     return new PostLedgerEntryOperation(transactionId, response);
                 }
@@ -333,10 +334,11 @@ namespace Azure.Security.ConfidentialLedger
                 }
                 var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
 
-                if (waitForCommit && response.Status == 200)
+                if (waitForCommit && response.Status == 200 && IsGloballyCommitted(response))
                 {
-                    // The service held the response until the transaction was globally committed,
-                    // so the operation is already complete and no status polling is required.
+                    // The service held the response until the transaction was globally committed
+                    // (the body reports "state": "Committed"), so the operation is already complete
+                    // and no status polling is required.
                     response.Headers.TryGetValue(ConfidentialLedgerConstants.TransactionIdHeaderName, out string transactionId);
                     return new PostLedgerEntryOperation(transactionId, response);
                 }
@@ -408,6 +410,33 @@ namespace Azure.Security.ConfidentialLedger
             }
 
             return null;
+        }
+
+        // When waitForCommit=true, a plain HTTP 200 is not by itself proof that the entry was
+        // globally committed: an API version (or service build) that does not support waitForCommit
+        // simply ignores the query parameter and returns the normal local-commit 200 with a body
+        // whose "state" is still "Pending". Only treat the operation as already-completed when the
+        // body explicitly reports "state": "Committed"; otherwise fall back to normal status polling.
+        private static bool IsGloballyCommitted(Response response)
+        {
+            try
+            {
+                if (response.Content == null || response.Content.ToMemory().Length == 0)
+                {
+                    return false;
+                }
+
+                using JsonDocument document = JsonDocument.Parse(response.Content);
+                return document.RootElement.ValueKind == JsonValueKind.Object
+                    && document.RootElement.TryGetProperty("state", out JsonElement state)
+                    && state.ValueKind == JsonValueKind.String
+                    && string.Equals(state.GetString(), "Committed", StringComparison.Ordinal);
+            }
+            catch (JsonException)
+            {
+                // Body wasn't JSON or didn't contain a usable "state"; treat as not-yet-committed.
+                return false;
+            }
         }
 
         /// <summary> Gets the ledger entry at the specified transaction id. </summary>
