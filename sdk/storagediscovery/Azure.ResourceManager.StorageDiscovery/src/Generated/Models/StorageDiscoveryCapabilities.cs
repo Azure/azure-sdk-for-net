@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryCapabilities"/>. </summary>
-        /// <param name="azureBlobStorage"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureBlobStorage"/> is null. </exception>
-        public StorageDiscoveryCapabilities(AzureBlobStorageCapability azureBlobStorage)
+        /// <param name="azureBlobStorageCapabilities"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="azureBlobStorageCapabilities"/> is null. </exception>
+        public StorageDiscoveryCapabilities(AzureBlobStorageCapability azureBlobStorageCapabilities)
         {
-            Argument.AssertNotNull(azureBlobStorage, nameof(azureBlobStorage));
+            Argument.AssertNotNull(azureBlobStorageCapabilities, nameof(azureBlobStorageCapabilities));
 
-            AzureBlobStorage = azureBlobStorage;
+            AzureBlobStorageCapabilities = azureBlobStorageCapabilities;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryCapabilities"/>. </summary>
-        /// <param name="azureBlobStorage"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
+        /// <param name="azureBlobStorageCapabilities"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryCapabilities(AzureBlobStorageCapability azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryCapabilities(AzureBlobStorageCapability azureBlobStorageCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AzureBlobStorage = azureBlobStorage;
+            AzureBlobStorageCapabilities = azureBlobStorageCapabilities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure Blob Storage capability configuration for the storage discovery workspace. </summary>
-        public AzureBlobStorageCapability AzureBlobStorage { get; set; }
+        public AzureBlobStorageCapability AzureBlobStorageCapabilities { get; set; }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             {
                 throw new FormatException($"The model {nameof(StorageDiscoveryCapabilitiesUpdate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AzureBlobStorage))
+            if (Optional.IsDefined(AzureBlobStorageCapabilities))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage, options);
+                writer.WriteObjectValue(AzureBlobStorageCapabilities, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             {
                 return null;
             }
-            AzureBlobStorageCapabilityPatch azureBlobStorage = default;
+            AzureBlobStorageCapabilityPatch azureBlobStorageCapabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = AzureBlobStorageCapabilityPatch.DeserializeAzureBlobStorageCapabilityPatch(prop.Value, options);
+                    azureBlobStorageCapabilities = AzureBlobStorageCapabilityPatch.DeserializeAzureBlobStorageCapabilityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StorageDiscoveryCapabilitiesUpdate(azureBlobStorage, additionalBinaryDataProperties);
+            return new StorageDiscoveryCapabilitiesUpdate(azureBlobStorageCapabilities, additionalBinaryDataProperties);
         }
     }
 }
