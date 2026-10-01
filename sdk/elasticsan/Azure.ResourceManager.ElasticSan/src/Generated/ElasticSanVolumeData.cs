@@ -95,29 +95,25 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
+        /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
+        public IList<ManagedByResources> ManagedBy
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                return Properties.ManagedBy;
+            }
+        }
+
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState
         {
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagedByResourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VolumeProperties();
-                }
-                Properties.ManagedByResourceId = value;
             }
         }
     }

@@ -94,6 +94,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("autoScaleProperties"u8);
                 writer.WriteObjectValue(AutoScaleProperties, options);
             }
+            if (Optional.IsDefined(TotalIops))
+            {
+                writer.WritePropertyName("totalIops"u8);
+                writer.WriteNumberValue(TotalIops.Value);
+            }
+            if (Optional.IsDefined(TotalMBps))
+            {
+                writer.WritePropertyName("totalMBps"u8);
+                writer.WriteNumberValue(TotalMBps.Value);
+            }
+            if (Optional.IsDefined(TotalSizeTiB))
+            {
+                writer.WritePropertyName("totalSizeTiB"u8);
+                writer.WriteNumberValue(TotalSizeTiB.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +155,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             long? extendedCapacitySizeTiB = default;
             ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
             AutoScaleProperties autoScaleProperties = default;
+            long? totalIops = default;
+            long? totalMBps = default;
+            long? totalSizeTiB = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +197,47 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     autoScaleProperties = AutoScaleProperties.DeserializeAutoScaleProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("totalIops"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalIops = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("totalMBps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalMBps = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("totalSizeTiB"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    totalSizeTiB = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticSanUpdateProperties(baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, autoScaleProperties, additionalBinaryDataProperties);
+            return new ElasticSanUpdateProperties(
+                baseSizeTiB,
+                extendedCapacitySizeTiB,
+                publicNetworkAccess,
+                autoScaleProperties,
+                totalIops,
+                totalMBps,
+                totalSizeTiB,
+                additionalBinaryDataProperties);
         }
     }
 }

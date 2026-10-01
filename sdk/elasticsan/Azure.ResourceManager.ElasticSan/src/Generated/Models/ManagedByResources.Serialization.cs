@@ -14,52 +14,52 @@ using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> The location info. </summary>
-    public partial class ElasticSanSkuLocationInfo : IJsonModel<ElasticSanSkuLocationInfo>
+    /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
+    public partial class ManagedByResources : IJsonModel<ManagedByResources>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticSanSkuLocationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedByResources PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedByResources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeElasticSanSkuLocationInfo(document.RootElement, options);
+                        return DeserializeManagedByResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuLocationInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedByResources)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedByResources>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuLocationInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedByResources)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ElasticSanSkuLocationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedByResources>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticSanSkuLocationInfo IPersistableModel<ElasticSanSkuLocationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedByResources IPersistableModel<ManagedByResources>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ElasticSanSkuLocationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedByResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ElasticSanSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedByResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,21 +70,26 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedByResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanSkuLocationInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedByResources)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("zones"u8);
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsCollectionDefined(ResourceIds))
+            {
+                writer.WritePropertyName("resourceIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in Zones)
+                foreach (ResourceIdentifier item in ResourceIds)
                 {
                     if (item == null)
                     {
@@ -92,16 +97,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         continue;
                     }
                     writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
-            {
-                writer.WritePropertyName("zoneDetails"u8);
-                writer.WriteStartArray();
-                foreach (SkuZoneDetails item in ZoneDetails)
-                {
-                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,51 +119,56 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ElasticSanSkuLocationInfo IJsonModel<ElasticSanSkuLocationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedByResources IJsonModel<ManagedByResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ElasticSanSkuLocationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedByResources JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedByResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanSkuLocationInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedByResources)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticSanSkuLocationInfo(document.RootElement, options);
+            return DeserializeManagedByResources(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ElasticSanSkuLocationInfo DeserializeElasticSanSkuLocationInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedByResources DeserializeManagedByResources(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AzureLocation? location = default;
-            IReadOnlyList<string> zones = default;
-            IReadOnlyList<SkuZoneDetails> zoneDetails = default;
+            string clientId = default;
+            int? version = default;
+            IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("location"u8))
+                if (prop.NameEquals("clientId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
+                    clientId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("zones"u8))
+                if (prop.NameEquals("version"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    version = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("resourceIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -177,24 +177,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
-                    zones = array;
-                    continue;
-                }
-                if (prop.NameEquals("zoneDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<SkuZoneDetails> array = new List<SkuZoneDetails>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(SkuZoneDetails.DeserializeSkuZoneDetails(item, options));
-                    }
-                    zoneDetails = array;
+                    resourceIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +188,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticSanSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<SkuZoneDetails>(), additionalBinaryDataProperties);
+            return new ManagedByResources(clientId, version, resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

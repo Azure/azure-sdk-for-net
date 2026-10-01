@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public VolumeProperties(long sizeGiB)
         {
             SizeGiB = sizeGiB;
+            ManagedBy = new ChangeTrackingList<ManagedByResources>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/>. </summary>
@@ -29,10 +30,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="creationData"> State of the operation on the resource. </param>
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="storageTarget"> Storage target information. </param>
-        /// <param name="managedBy"> Parent resource information. </param>
+        /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeProperties(Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, ManagedByInfo managedBy, ElasticSanProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeProperties(Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, IList<ManagedByResources> managedBy, ElasticSanProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VolumeId = volumeId;
             CreationData = creationData;
@@ -55,27 +56,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Storage target information. </summary>
         public IscsiTargetInfo StorageTarget { get; }
 
-        /// <summary> Parent resource information. </summary>
-        internal ManagedByInfo ManagedBy { get; set; }
+        /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
+        public IList<ManagedByResources> ManagedBy { get; } = new ChangeTrackingList<ManagedByResources>();
 
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState { get; }
-
-        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
-        public ResourceIdentifier ManagedByResourceId
-        {
-            get
-            {
-                return ManagedBy is null ? default : ManagedBy.ResourceId;
-            }
-            set
-            {
-                if (ManagedBy is null)
-                {
-                    ManagedBy = new ManagedByInfo();
-                }
-                ManagedBy.ResourceId = value;
-            }
-        }
     }
 }

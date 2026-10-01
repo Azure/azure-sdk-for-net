@@ -79,10 +79,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("sizeGiB"u8);
                 writer.WriteNumberValue(SizeGiB.Value);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (Optional.IsCollectionDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
-                writer.WriteObjectValue(ManagedBy, options);
+                writer.WriteStartArray();
+                foreach (ManagedByResources item in ManagedBy)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +132,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             long? sizeGiB = default;
-            ManagedByInfo managedBy = default;
+            IList<ManagedByResources> managedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +151,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    managedBy = ManagedByInfo.DeserializeManagedByInfo(prop.Value, options);
+                    List<ManagedByResources> array = new List<ManagedByResources>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedByResources.DeserializeManagedByResources(item, options));
+                    }
+                    managedBy = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +164,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VolumeUpdateProperties(sizeGiB, managedBy, additionalBinaryDataProperties);
+            return new VolumeUpdateProperties(sizeGiB, managedBy ?? new ChangeTrackingList<ManagedByResources>(), additionalBinaryDataProperties);
         }
     }
 }
