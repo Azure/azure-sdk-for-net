@@ -513,6 +513,82 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
+        public void CertificateTrustStore_RefreshesRotatedCertificateFromIdentityService()
+        {
+            var identityResponse = new MockResponse(200);
+            identityResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 original = ConfidentialLedgerCertificateClient.ParseCertificate(identityResponse);
+            var rotatedResponse = new MockResponse(200);
+            rotatedResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 rotated = ConfidentialLedgerCertificateClient.ParseCertificate(rotatedResponse);
+
+            int refreshCount = 0;
+            var store = new ConfidentialLedgerCertificateTrustStore(
+                verifyConnection: true,
+                certificateRefresher: _ =>
+                {
+                    refreshCount++;
+                    return rotated;
+                });
+            store.Trust("ledger-a", original, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            // The ledger rotated its identity certificate: validation re-queries the identity service and
+            // accepts the connection once the refreshed certificate is pinned.
+            Assert.IsTrue(store.Validate("ledger-a", rotated));
+            Assert.AreEqual(1, refreshCount);
+
+            // The refreshed certificate is now pinned, so subsequent handshakes validate without refreshing.
+            Assert.IsTrue(store.Validate("ledger-a", rotated));
+            Assert.AreEqual(1, refreshCount);
+        }
+
+        [Test]
+        public void CertificateTrustStore_ThrottlesRefreshForPersistentMismatch()
+        {
+            var identityResponse = new MockResponse(200);
+            identityResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 legitimate = ConfidentialLedgerCertificateClient.ParseCertificate(identityResponse);
+            var mismatchResponse = new MockResponse(200);
+            mismatchResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 mismatch = ConfidentialLedgerCertificateClient.ParseCertificate(mismatchResponse);
+
+            int refreshCount = 0;
+            var store = new ConfidentialLedgerCertificateTrustStore(
+                verifyConnection: true,
+                // The identity service keeps returning the legitimate certificate, so the mismatched one
+                // presented during the handshake never validates.
+                certificateRefresher: _ =>
+                {
+                    refreshCount++;
+                    return legitimate;
+                })
+            {
+                RefreshCooldown = TimeSpan.FromMinutes(5),
+            };
+            store.Trust("ledger-a", legitimate, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            Assert.IsFalse(store.Validate("ledger-a", mismatch));
+            Assert.IsFalse(store.Validate("ledger-a", mismatch));
+            Assert.AreEqual(1, refreshCount, "A persistently mismatched certificate must not refresh on every handshake.");
+        }
+
+        [Test]
+        public void CertificateTrustStore_DoesNotRefreshWithoutResolver()
+        {
+            var identityResponse = new MockResponse(200);
+            identityResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{LedgerTlsCert}"" }}");
+            using X509Certificate2 original = ConfidentialLedgerCertificateClient.ParseCertificate(identityResponse);
+            var rotatedResponse = new MockResponse(200);
+            rotatedResponse.SetContent($@"{{ ""ledgerTlsCertificate"": ""{AlternateLedgerTlsCert}"" }}");
+            using X509Certificate2 rotated = ConfidentialLedgerCertificateClient.ParseCertificate(rotatedResponse);
+
+            var store = new ConfidentialLedgerCertificateTrustStore(verifyConnection: true);
+            store.Trust("ledger-a", original, new Uri("https://ledger-a.confidential-ledger.azure.com"));
+
+            Assert.IsFalse(store.Validate("ledger-a", rotated), "Without a refresher the store must reject a rotated certificate.");
+        }
+
+        [Test]
         public async Task Failover_NonUserCancellationSucceeds()
         {
             var transport = new MockTransport(req =>

@@ -115,22 +115,28 @@ namespace Azure.Security.ConfidentialLedger
             {
                 var actualCertificateClientOptions = certificateClientOptions ?? new ConfidentialLedgerCertificateClientOptions();
                 X509Certificate2 serviceCert = identityServiceCert ?? GetIdentityServerTlsCert(ledgerEndpoint, actualCertificateClientOptions, ledgerOptions: actualOptions).Cert;
-                var trustStore = new ConfidentialLedgerCertificateTrustStore(actualOptions.VerifyConnection);
-                trustStore.Trust(GetLedgerId(ledgerEndpoint), serviceCert);
+
+                // Resolves a ledger's current identity TLS certificate from the independently trusted identity
+                // service. Used both to look up failover ledger certificates and to refresh a pinned certificate
+                // after the ledger rotates it. A fresh ConfidentialLedgerCertificateClient is created per call.
+                Uri identityServiceEndpoint = actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint);
+                Func<Uri, X509Certificate2> identityCertResolver = endpoint => GetIdentityServerTlsCert(
+                    endpoint,
+                    actualCertificateClientOptions,
+                    new ConfidentialLedgerCertificateClient(identityServiceEndpoint, actualCertificateClientOptions)).Cert;
+
+                var trustStore = new ConfidentialLedgerCertificateTrustStore(actualOptions.VerifyConnection, identityCertResolver);
+                trustStore.Trust(GetLedgerId(ledgerEndpoint), serviceCert, ledgerEndpoint);
                 transportOptions = CreateTransportOptions(trustStore, clientCertificate, GetLedgerId(ledgerEndpoint));
 
                 // Discovery and certificate lookup use normal public-PKI validation, never the ledger
                 // pipeline whose transport is pinned to a specific CCF network certificate.
                 HttpPipeline discoveryPipeline = HttpPipelineBuilder.Build(actualOptions);
-                Uri identityServiceEndpoint = actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint);
                 _failoverService = new ConfidentialLedgerFailoverService(
                     discoveryPipeline,
                     identityServiceEndpoint,
                     trustStore,
-                    endpoint => GetIdentityServerTlsCert(
-                        endpoint,
-                        actualCertificateClientOptions,
-                        new ConfidentialLedgerCertificateClient(identityServiceEndpoint, actualCertificateClientOptions)).Cert,
+                    identityCertResolver,
                     endpoint => CreateEndpointPipeline(actualOptions, trustStore, clientCertificate, endpoint),
                     actualOptions.Failover);
                 perRetryPolicies = new HttpPipelinePolicy[]

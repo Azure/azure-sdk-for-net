@@ -1,5 +1,17 @@
 # Release History
 
+## 2.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed TLS validation failing after a ledger rotates its identity certificate. When the certificate presented during the TLS handshake no longer chains to the pinned certificate, the client now re-queries the independently trusted Identity Service for that ledger's current certificate, replaces the pin, and re-validates. The refresh is throttled per ledger so a persistently mismatched certificate cannot force an Identity Service lookup on every handshake, and a man-in-the-middle certificate is still rejected because it cannot chain to the Identity Service's current certificate.
+
+### Other Changes
+
 ## 2.0.0-beta.5 (2026-09-30)
 
 ### Features Added
