@@ -4,7 +4,7 @@
 // LIVE basic conversation tests for Voice Agent realtime streaming -- mirrors the pattern used by
 // sdk/voicelive/Azure.AI.VoiceLive/tests/LiveTests/BasicConversationTests.cs, adapted to
 // ProjectsRealtimeSessionClient's realtime protocol surface. Covers a simple text turn and the
-// interop between a persisted realtime session and the BetaVoiceAgentsConversations REST surface.
+// interop between a persisted realtime session and the AgentEndpointConversations REST surface.
 
 using System;
 using System.ClientModel;
@@ -146,7 +146,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
 
     // -----------------------------------------------------------------------
     // Verifies: a session started with Store = true produces a conversation
-    // that becomes retrievable through the BetaVoiceAgentsConversations REST
+    // that becomes retrievable through the AgentEndpointConversations REST
     // surface once the session closes.
     // -----------------------------------------------------------------------
     [Test]
@@ -181,7 +181,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
 
         Assert.That(conversationId, Is.Not.Null.And.Not.Empty, "Expected the response.done event to report a conversation ID when Store = true.");
 
-        Azure.AI.Projects.Agents.BetaVoiceAgentsConversations conversationsClient = client.AgentAdministrationClient.GetBetaVoiceAgentEndpointConversations();
+        Azure.AI.Projects.Agents.AgentEndpointConversations conversationsClient = client.AgentAdministrationClient.GetAgentEndpointConversations();
 
         System.ClientModel.ClientResult<Azure.AI.Projects.Agents.VoiceConversation> getConversationResult = await conversationsClient.GetAgentConversationAsync(
             CONVERSATION_AGENT_NAME,

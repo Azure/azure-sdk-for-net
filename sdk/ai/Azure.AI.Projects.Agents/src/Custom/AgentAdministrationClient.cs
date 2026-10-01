@@ -62,9 +62,9 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     [Experimental("AAIP001")]
-    private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
+    private AgentEndpointConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
-    private BetaVoiceAgentsTelephony _cachedAgentTelephony;
+    private AgentTelephony _cachedAgentTelephony;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -1123,18 +1123,18 @@ public partial class AgentAdministrationClient
 
     /// <summary> Gets the client for the voice Agent. </summary>
     [Experimental("AAIP001")]
-    public virtual BetaVoiceAgentsConversations GetBetaVoiceAgentEndpointConversations()
+    public virtual AgentEndpointConversations GetAgentEndpointConversations()
     {
-        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new BetaVoiceAgentsConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 
     /// <summary>
     /// Gets the AgentTelephony sub-client.
     /// </summary>
     [Experimental("AAIP001")]
-    public virtual BetaVoiceAgentsTelephony GetBetaVoiceAgentTelephony()
+    public virtual AgentTelephony GetAgentTelephony()
     {
-        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 
     /// <summary>

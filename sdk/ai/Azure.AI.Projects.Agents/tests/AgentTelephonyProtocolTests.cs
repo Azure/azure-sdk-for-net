@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Azure.AI.Projects.Agents.Tests;
 
 /// <summary>
-/// Mocked protocol-level tests for the <see cref="BetaVoiceAgentsTelephony"/> REST surface: verify
+/// Mocked protocol-level tests for the <see cref="AgentTelephony"/> REST surface: verify
 /// each method builds the expected HTTP method and URL path, using a
 /// <see cref="MockPipelineTransport"/> that captures the outgoing request and returns a canned
 /// response -- no live or recorded service dependency.
@@ -34,15 +34,15 @@ public class AgentTelephonyProtocolTests
 
     private static BinaryContent FakeJsonContent => BinaryContent.Create(BinaryData.FromString("{}"));
 
-    private static (BetaVoiceAgentsTelephony Client, MockPipelineTransport Transport) CreateClient()
+    private static (AgentTelephony Client, MockPipelineTransport Transport) CreateClient()
     {
         MockPipelineTransport transport = new(_ => new MockPipelineResponse(200).WithContent("{}")) { ExpectSyncPipeline = false };
         AgentAdministrationClientOptions options = new() { Transport = transport };
         AgentAdministrationClient agentsClient = new(new Uri(FakeEndpoint), new FakeTokenProvider(), options);
-        return (agentsClient.GetBetaVoiceAgentTelephony(), transport);
+        return (agentsClient.GetAgentTelephony(), transport);
     }
 
-    private static readonly (string Name, Func<BetaVoiceAgentsTelephony, Task<ClientResult>> Invoke, string ExpectedMethod, string ExpectedPathSuffix, string ExpectedIfMatch, string ExpectedContentType)[] s_cases = new (string, Func<BetaVoiceAgentsTelephony, Task<ClientResult>>, string, string, string, string)[]
+    private static readonly (string Name, Func<AgentTelephony, Task<ClientResult>> Invoke, string ExpectedMethod, string ExpectedPathSuffix, string ExpectedIfMatch, string ExpectedContentType)[] s_cases = new (string, Func<AgentTelephony, Task<ClientResult>>, string, string, string, string)[]
     {
         ("CreateTelephonyBinding", c => c.CreateTelephonyBindingAsync("fake-agent", FakeJsonContent, foundryFeatures: null, options: new RequestOptions()), "POST", "/agents/fake-agent/telephony/bindings", null, null),
         ("GetTelephonyBinding", c => c.GetTelephonyBindingAsync("fake-agent", "fake-binding", null, new RequestOptions()), "GET", "/agents/fake-agent/telephony/bindings/fake-binding", null, null),
@@ -60,7 +60,7 @@ public class AgentTelephonyProtocolTests
 
     private static IEnumerable<TestCaseData> Cases()
     {
-        foreach ((string name, Func<BetaVoiceAgentsTelephony, Task<ClientResult>> invoke, string expectedMethod, string expectedPathSuffix, string expectedIfMatch, string expectedContentType) in s_cases)
+        foreach ((string name, Func<AgentTelephony, Task<ClientResult>> invoke, string expectedMethod, string expectedPathSuffix, string expectedIfMatch, string expectedContentType) in s_cases)
         {
             yield return new TestCaseData(invoke, expectedMethod, expectedPathSuffix, expectedIfMatch, expectedContentType).SetName($"TelephonyRequestProtocol_{name}");
         }
@@ -68,13 +68,13 @@ public class AgentTelephonyProtocolTests
 
     [TestCaseSource(nameof(Cases))]
     public async Task TelephonyMethodBuildsExpectedRequest(
-        Func<BetaVoiceAgentsTelephony, Task<ClientResult>> invoke,
+        Func<AgentTelephony, Task<ClientResult>> invoke,
         string expectedMethod,
         string expectedPathSuffix,
         string expectedIfMatch,
         string expectedContentType)
     {
-        (BetaVoiceAgentsTelephony client, MockPipelineTransport transport) = CreateClient();
+        (AgentTelephony client, MockPipelineTransport transport) = CreateClient();
 
         try
         {

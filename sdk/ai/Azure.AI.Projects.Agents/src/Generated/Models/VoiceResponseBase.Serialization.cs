@@ -6,7 +6,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
@@ -80,7 +79,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteObjectValue<RealtimeResponseStatus?>(Status.Value, options);
             }
             if (Optional.IsDefined(StatusDetails))
             {
@@ -96,9 +95,9 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("output_modalities"u8);
                 writer.WriteStartArray();
-                foreach (VoiceResponseBaseOutputModality item in OutputModalities)
+                foreach (RealtimeOutputModality item in OutputModalities)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,10 +156,10 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             VoiceResponseBaseObject? @object = default;
-            VoiceResponseBaseStatus? status = default;
+            RealtimeResponseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
-            IList<VoiceResponseBaseOutputModality> outputModalities = default;
+            IList<RealtimeOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,7 +179,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToVoiceResponseBaseStatus();
+                    status = ModelReaderWriter.Read<RealtimeResponseStatus?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -207,10 +206,10 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    List<VoiceResponseBaseOutputModality> array = new List<VoiceResponseBaseOutputModality>();
+                    List<RealtimeOutputModality> array = new List<RealtimeOutputModality>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToVoiceResponseBaseOutputModality());
+                        array.Add(ModelReaderWriter.Read<RealtimeOutputModality>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
                     }
                     outputModalities = array;
                     continue;
@@ -234,7 +233,7 @@ namespace Azure.AI.Projects.Agents
                 status,
                 statusDetails,
                 usage,
-                outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
+                outputModalities ?? new ChangeTrackingList<RealtimeOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties);
         }

@@ -1,6 +1,6 @@
 # Sample for managing Agent Optimization Jobs in Azure.AI.Projects.Agents
 
-The Agent optimization Job is optimizing Agent parameters: model, skills, system prompt or tool description. In this example we will show how to run the Agent optimization and list optimized candidates scores and parameters.
+An agent optimization job can propose changes to the model, instructions, skills and function tool descriptions. This example starts with a prompt agent that gives deliberately poor answers, runs an optimization job, and reads its candidate summary.
 
 To use Agents Optimization, the `AAIP001` warning needs to be ignored.
 
@@ -8,7 +8,7 @@ To use Agents Optimization, the `AAIP001` warning needs to be ignored.
 #pragma warning disable AAIP001
 ```
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps. In this example we will need two models, so that we can optimize the model used by an Agent.
+1. Create an agent client and read the environment variables. This example uses two model deployments so the optimizer can compare target models.
 
 ```C# Snippet:Sample_CreateClient_AgentsOptimizationCandidates
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -46,140 +46,98 @@ ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
-3. Create an optimization criterion based on the groundedness.
+3. Choose an evaluator to score the agent responses. Evaluators are configured on the job rather than on individual test cases.
 
-```C# Snippet:Sample_OptimizationCriterion_AgentsOptimizationCandidates
-private readonly AgentOptimizationDatasetCriterion _criterion = new(
-    name: "Groundedness",
-    instruction: """
-    You are a Groundedness Evaluator.
-
-    Your task is to evaluate how well the given response is grounded in the provided ground truth.  
-    Groundedness means the response’s statements are factually supported by the ground truth.  
-    Evaluate factual alignment only — ignore grammar, fluency, or completeness.
-
-    ---
-
-    ### Input:
-    Query:
-    {{query}}
-
-    Response:
-    {{response}}
-
-    Ground Truth:
-    {{ground_truth}}
-
-    ---
-
-    ### Scoring Scale (1–5):
-    5 → Fully grounded. All claims supported by ground truth.  
-    4 → Mostly grounded. Minor unsupported details.  
-    3 → Partially grounded. About half the claims supported.  
-    2 → Mostly ungrounded. Only a few details supported.  
-    1 → Not grounded. Almost all information unsupported.
-
-    ---
-
-    ### Output Format (JSON):
-    {
-        "result": <integer from 1 to 5>,
-        "reason": "<brief explanation for the score>"
-    }
-    """
-);
+```C# Snippet:Sample_OptimizationEvaluator_AgentsOptimizationCandidates
+private static AgentOptimizationEvaluator GetEvaluator() =>
+    new(name: "builtin.meteor_score");
 ```
 
-4. Create a toy data set. Please note that we are asking Agent to return the string as an answer, it is needed because evaluation works only on text values.
+4. Create inline training and validation evaluation sets with expected answers.
 
 ```C# Snippet:Sample_Dataset_AgentsOptimizationCandidates
-private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+private static AgentOptimizationTargetCompletionEvaluationSet GetDataset(int start, int itemNumber)
 {
-    List<AgentOptimizationDatasetItem> items = [];
+    List<AgentOptimizationTargetCompletionTestCase> items = [];
     for (int i = start; i < start + itemNumber; i++)
     {
-        items.Add(new AgentOptimizationDatasetItem()
+        items.Add(new AgentOptimizationTargetCompletionTestCase(
+            query: $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.")
         {
-            Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
-            GroundTruth = $"The answer is {(42 + i * 2)}",
-            Criteria = { _criterion }
+            GroundTruth = $"The answer is {(42 + i * 2)}"
         });
     }
-    return new(items);
+    return new(new AgentOptimizationTargetCompletionInlineDataSource(items));
 }
 ```
 
-5. Create and submit the optimization job. We define models for different purposes:
-  - `OptimizationModel` - reads the Agent evaluation result and reason and creates the improved target description: system prompt, tool description or skill.
-  - `EvalModel` - used for Agent evaluation.
-  - `model_search_space` - the models considered during Agent optimization.
-  - `model` - the model used by Hosted Agent, for Declarative Agent, the model from definition is being used. For more information about optimizing Hosted Agents please see the [document](https://learn.microsoft.com/azure/foundry/agents/how-to/make-agent-optimizer-ready).
-In his example we will try to optimize all four: model, system prompt, tool description and a skill.
-**Note:** For optimization of declarative Agent, the `OptimizationConfig` is optional; `system_prompt`, `tools` and `model` parameters are automatically detected. `skills` optimization is only available for Hosted Agents. Here we provide `OptimizationConfig` for demonstration purposes only.
+5. Create and submit the optimization job. `OptimizationModelConfiguration` chooses the model that proposes changes, while `EvaluationModel` supplies a model for evaluation. The evaluation configuration holds the training and validation sets and evaluator. `AgentOptimizationSpace` selects all four attributes and the alternative models. The target configuration pins the registered agent version. The typed baseline supplies the prompt, model, skill and function tool used as starting values for the search.
+
+```C# Snippet:Sample_OptimizationBaseline_AgentsOptimizationCandidates
+private static AgentOptimizationBaselineAgentConfiguration GetBaselineConfiguration(string modelDeploymentName) =>
+    new()
+    {
+        SystemPrompt = "You are a prompt agent, who always give wrong answers.",
+        CurrentModel = modelDeploymentName,
+        Skills =
+        {
+            new AgentOptimizationSkill("add two numbers", "Adds two numbers")
+            {
+                Body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
+            }
+        },
+        Tools =
+        {
+            new ChatCompletionTool(new FunctionObject("sum_numbers")
+            {
+                Description = "Sum two numbers",
+                Parameters = new FunctionParameters
+                {
+                    AdditionalProperties =
+                    {
+                        ["type"] = BinaryData.FromObjectAsJson("object"),
+                        ["properties"] = BinaryData.FromObjectAsJson(new
+                        {
+                            First = new { type = "number", description = "First addend" },
+                            Second = new { type = "number", description = "Second addend" }
+                        }),
+                        ["required"] = BinaryData.FromObjectAsJson(new[] { "First", "Second" }),
+                        ["additionalProperties"] = BinaryData.FromObjectAsJson(false)
+                    }
+                }
+            })
+        }
+    };
+```
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Sync
-AgentOptimizationJob job = new()
-{
-    Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+AgentOptimizationJob job = new(
+    optimizationModelConfiguration: new AgentOptimizationModelConfiguration(modelDeploymentName),
+    optimizationConfiguration: new AgentOptimizationConfiguration(
+        evaluationConfiguration: new AgentOptimizationEvaluationConfiguration(
+            trainingSet: GetDataset(0, 7),
+            evaluators: [GetEvaluator()],
+            evaluationModel: new EvaluationModelConfiguration(modelDeploymentName))
         {
-            AgentVersion = agentVersion.Version
+            ValidationSet = GetDataset(7, 3)
         },
-        trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-    )
-    {
-        ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
+        candidateSearchConfiguration: new AgentOptimizationCandidateSearchConfiguration
         {
-            OptimizationModel = modelDeploymentName,
-            EvalModel = modelDeploymentName,
-            MaxCandidates = 3,
-            OptimizationConfig =
-            {
-                {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
-                {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
-                {"skills", BinaryData.FromObjectAsJson(new[]
-                    {new {
-                        name = "add two numbers",
-                        description = "Adds two numbers",
-                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
-                    }}
-                )},
-                {"tools",  BinaryData.FromObjectAsJson(new[]{
-                    new
-                    {
-                        type = "function",
-                        function = new
-                        {
-                            name = "sum_numbers",
-                            description = "Sum two numbers",
-                            parameters = new
-                            {
-                                type = "object",
-                                properties = new
-                                {
-                                    First = new
-                                    {
-                                        type = "number",
-                                        description = "First addend"
-                                    },
-                                    Second = new
-                                    {
-                                        type = "number",
-                                        description = "Second addend"
-                                    }
-                                },
-                                required = new[] { "First", "Second"},
-                                additionalProperties = false
-                            }
-                        }
-                    }
-                })}
-            }
-        }
+            MaxCandidates = 3
+        },
+        agentOptimizationSpace: new AgentOptimizationSpace
+        {
+            TargetAttributes = { TargetAttribute.Instructions, TargetAttribute.Model, TargetAttribute.Skills, TargetAttribute.Tools },
+            ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+        })
+    {
+        BaselineAgentConfiguration = GetBaselineConfiguration(modelDeploymentName)
+    })
+{
+    TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(agentVersion.Name)
+    {
+        Version = agentVersion.Version
     }
 };
 AgentOptimizationJob submittedJob = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
@@ -188,68 +146,32 @@ Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-AgentOptimizationJob job = new()
-{
-    Inputs = new(
-        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
+AgentOptimizationJob job = new(
+    optimizationModelConfiguration: new AgentOptimizationModelConfiguration(modelDeploymentName),
+    optimizationConfiguration: new AgentOptimizationConfiguration(
+        evaluationConfiguration: new AgentOptimizationEvaluationConfiguration(
+            trainingSet: GetDataset(0, 7),
+            evaluators: [GetEvaluator()],
+            evaluationModel: new EvaluationModelConfiguration(modelDeploymentName))
         {
-            AgentVersion = agentVersion.Version
+            ValidationSet = GetDataset(7, 3)
         },
-        trainDataset: GetDataset(0, 7),
-        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
-    )
-    {
-        ValidationDataset = GetDataset(7, 3),
-        Options = new AgentOptimizationOptions()
+        candidateSearchConfiguration: new AgentOptimizationCandidateSearchConfiguration
         {
-            OptimizationModel = modelDeploymentName,
-            EvalModel = modelDeploymentName,
-            MaxCandidates = 3,
-            OptimizationConfig =
-            {
-                // Start from bad prompt.
-                {"system_prompt", BinaryData.FromString(JsonSerializer.Serialize("You are a prompt agent, who always give wrong answers.")) },
-                {"model_search_space",  BinaryData.FromObjectAsJson(new[] {modelDeploymentName, anotherModelDeploymentName})},
-                {"model", BinaryData.FromString(JsonSerializer.Serialize(modelDeploymentName)) },
-                {"skills", BinaryData.FromObjectAsJson(new[]
-                    {new {
-                        name = "add two numbers",
-                        description = "Adds two numbers",
-                        body = "When asked calculate the sum of two numbers. Use echo $((<first> + <second>)) in bash and (<first> + <second>) in PowerShell."
-                    }}
-                )},
-                {"tools",  BinaryData.FromObjectAsJson(new[]{
-                    new
-                    {
-                        type = "function",
-                        function = new
-                        {
-                            name = "sum_numbers",
-                            description = "Sum two numbers",
-                            parameters = new
-                            {
-                                type = "object",
-                                properties = new
-                                {
-                                    First = new
-                                    {
-                                        type = "number",
-                                        description = "First addend"
-                                    },
-                                    Second = new
-                                    {
-                                        type = "number",
-                                        description = "Second addend"
-                                    }
-                                },
-                                required = new[] { "First", "Second"},
-                                additionalProperties = false
-                            }
-                        }
-                    }
-                })}
-            }
-        }
+            MaxCandidates = 3
+        },
+        agentOptimizationSpace: new AgentOptimizationSpace
+        {
+            TargetAttributes = { TargetAttribute.Instructions, TargetAttribute.Model, TargetAttribute.Skills, TargetAttribute.Tools },
+            ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
+        })
+    {
+        BaselineAgentConfiguration = GetBaselineConfiguration(modelDeploymentName)
+    })
+{
+    TargetConfiguration = new AgentOptimizationFoundryAgentTargetConfiguration(agentVersion.Name)
+    {
+        Version = agentVersion.Version
     }
 };
 AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
@@ -302,30 +224,27 @@ if (submittedJob.Status == AgentsJobStatus.Failed)
 }
 ```
 
-7. List all optimized candidates along with their scores, also list the changes (mutations) in the candidates.
+7. Read the job's candidate summary to see the baseline and selected candidate IDs, their scores when available, and how many candidates completed. Individual candidate mutations are not available through the public agent client in this release.
 
-```C# Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
-{
-    Console.WriteLine("======================================================");
-    Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
-    if (candidate.Mutations.Count == 0)
-    {
-        Console.WriteLine("<No mutations, baseline>");
-    }
-    else
-    {
-        Console.WriteLine("Mutations:");
-        foreach (KeyValuePair<string, BinaryData> mutation in candidate.Mutations)
-        {
-            Console.WriteLine($"    {mutation.Key}: {mutation.Value}");
-        }
-    }
-    Console.WriteLine("======================================================");
-}
+Synchronous sample:
+```C# Snippet:Sample_OptimizationResult_AgentsOptimizationCandidates_Sync
+AgentOptimizationResultCandidateSummary summary = submittedJob.Result?.CandidateSummary
+    ?? throw new InvalidOperationException($"Job {submittedJob.Id} did not return a candidate summary.");
+Console.WriteLine($"Baseline candidate: {summary.BaselineId} (score: {summary.BaselineScore})");
+Console.WriteLine($"Best candidate: {summary.BestId} (score: {summary.BestScore})");
+Console.WriteLine($"Completed candidates: {summary.CompletedCandidateCount}");
 ```
 
-9. Finally, remove the jobs we created and the Agent.
+Asynchronous sample:
+```C# Snippet:Sample_OptimizationResult_AgentsOptimizationCandidates_Async
+AgentOptimizationResultCandidateSummary summary = submittedJob.Result?.CandidateSummary
+    ?? throw new InvalidOperationException($"Job {submittedJob.Id} did not return a candidate summary.");
+Console.WriteLine($"Baseline candidate: {summary.BaselineId} (score: {summary.BaselineScore})");
+Console.WriteLine($"Best candidate: {summary.BestId} (score: {summary.BestScore})");
+Console.WriteLine($"Completed candidates: {summary.CompletedCandidateCount}");
+```
+
+8. Finally, remove the job and the agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_Delete_AgentsOptimizationCandidates_Sync

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Azure.AI.Projects.Agents
@@ -24,8 +25,11 @@ namespace Azure.AI.Projects.Agents
         };
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
+        private AgentEndpointConversations _cachedAgentEndpointConversations;
+        private AgentTelephony _cachedAgentTelephony;
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
+        private AgentOptimizationJobCandidates _cachedAgentOptimizationJobCandidates;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -82,6 +86,20 @@ namespace Azure.AI.Projects.Agents
             return Volatile.Read(ref _cachedAgentAdministrationClient) ?? Interlocked.CompareExchange(ref _cachedAgentAdministrationClient, new AgentAdministrationClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentAdministrationClient;
         }
 
+        /// <summary> Initializes a new instance of AgentEndpointConversations. </summary>
+        [Experimental("AAIP001")]
+        public virtual AgentEndpointConversations GetAgentEndpointConversationsClient()
+        {
+            return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        }
+
+        /// <summary> Initializes a new instance of AgentTelephony. </summary>
+        [Experimental("AAIP001")]
+        public virtual AgentTelephony GetAgentTelephonyClient()
+        {
+            return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+        }
+
         /// <summary> Initializes a new instance of AgentToolboxes. </summary>
         public virtual AgentToolboxes GetAgentToolboxesClient()
         {
@@ -92,6 +110,12 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentSessionFiles GetAgentSessionFilesClient()
         {
             return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationJobCandidates. </summary>
+        public virtual AgentOptimizationJobCandidates GetAgentOptimizationJobCandidatesClient()
+        {
+            return Volatile.Read(ref _cachedAgentOptimizationJobCandidates) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobCandidates, new AgentOptimizationJobCandidates(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobCandidates;
         }
     }
 }

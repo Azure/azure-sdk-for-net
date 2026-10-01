@@ -10,7 +10,10 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Represents a target specifying an Azure AI model for operations requiring model selection. </summary>
+    /// <summary>
+    /// A target that identifies an Azure AI model.
+    /// See [evaluate administrator-connected models](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluate-admin-connected-models?tabs=python).
+    /// </summary>
     public partial class AzureAIModelTarget : EvaluationTarget, IJsonModel<AzureAIModelTarget>
     {
         /// <param name="data"> The data to parse. </param>

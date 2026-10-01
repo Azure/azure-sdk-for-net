@@ -6,9 +6,15 @@
 
 ### Breaking Changes
 
+- Data-generation job creation now accepts `DataGenerationJobInputs` instead of a `DataGenerationJob` response. Construct a scenario-specific request such as `EvaluationDataGenerationJobInputs` and set its `OutputConfiguration` with an `EvaluationDataGenerationJobOutputTarget`. Returned jobs now expose `Name`, `Sources`, and `GenerationConfiguration` directly instead of `Inputs`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample Updates
+
+- Updated the existing data-generation job sample to use evaluation request inputs and the scenario-specific output target.
 
 ## 3.0.0-beta.3 (2026-09-16)
 

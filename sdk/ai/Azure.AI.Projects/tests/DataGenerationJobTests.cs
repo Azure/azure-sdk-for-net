@@ -5,8 +5,10 @@
 #pragma warning disable OPENAI001 // Type is for evaluation purposes only
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -32,10 +34,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
-        DataGenerationJob job = new()
-        {
-            Inputs = GetInputs($"{INPUT_PREFIX}00")
-        };
+        DataGenerationJobInputs job = GetInputs($"{INPUT_PREFIX}00");
         // Create and get
         DataGenerationJob runningJob = await projectClient.DataGenerationJobs.CreateAsync(job);
         while (runningJob.Status != ProjectsJobStatus.Failed && runningJob.Status != ProjectsJobStatus.Succeeded)
@@ -49,10 +48,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         DatasetDataGenerationJobOutput dataOutput = runningJob.Result.Outputs[0] as DatasetDataGenerationJobOutput;
         Assert.That(dataOutput.Name, Is.EqualTo(DATASET_NAME));
         // Cancel
-        job = new()
-        {
-            Inputs = GetInputs($"{INPUT_PREFIX}01", 1000)
-        };
+        job = GetInputs($"{INPUT_PREFIX}01", 1000);
         DataGenerationJob jobToCancel = await projectClient.DataGenerationJobs.CreateAsync(job);
         jobToCancel = await projectClient.DataGenerationJobs.CancelAsync(jobToCancel.Id);
         while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
@@ -79,63 +75,78 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         AIProjectClient projectClient = GetTestProjectClient();
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
-            DataGenerationJob job = new()
-            {
-                Inputs = GetInputs($"{INPUT_PREFIX}0{i}")
-            };
+            DataGenerationJobInputs job = GetInputs($"{INPUT_PREFIX}0{i}");
             await projectClient.DataGenerationJobs.CreateAsync(job);
         }
-        List<DataGenerationJob> records = await projectClient.DataGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
+        List<DataGenerationJob> records = await projectClient.DataGenerationJobs.GetAllAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<DataGenerationJob> forward = await projectClient.DataGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
+        List<DataGenerationJob> forward = await projectClient.DataGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         //// Two limits:
-        forward = await projectClient.DataGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
+        forward = await projectClient.DataGenerationJobs.GetAllAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         // Go backwards.
-        List<DataGenerationJob> backwards = await projectClient.DataGenerationJobs.GetAllAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
+        List<DataGenerationJob> backwards = await projectClient.DataGenerationJobs.GetAllAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await projectClient.DataGenerationJobs.GetAllAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).Where(x => x.Inputs.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
+        backwards = await projectClient.DataGenerationJobs.GetAllAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(INPUT_PREFIX)).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
     #region Helpers
-    private DataGenerationJobInputs GetInputs(string name, int samples = 16)
+    [Test]
+    public void EvaluationInputsSerializeAsRequestBody()
     {
-        DataGenerationJobOutputOptions outputOptions = new()
+        DataGenerationJobInputs inputs = GetInputs($"{INPUT_PREFIX}serialization", modelName: "test-model");
+        BinaryData body = ModelReaderWriter.Write(inputs, new ModelReaderWriterOptions("W"));
+        using JsonDocument document = JsonDocument.Parse(body.ToString());
+        JsonElement root = document.RootElement;
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(root.GetProperty("scenario").GetString(), Is.EqualTo("evaluation"));
+            Assert.That(root.GetProperty("name").GetString(), Is.EqualTo(inputs.Name));
+            Assert.That(root.GetProperty("sources").GetArrayLength(), Is.EqualTo(1));
+            Assert.That(root.GetProperty("generation_configuration").ValueKind, Is.EqualTo(JsonValueKind.Object));
+            Assert.That(root.GetProperty("output_configuration").GetProperty("name").GetString(), Is.EqualTo(DATASET_NAME));
+            Assert.That(root.TryGetProperty("inputs", out _), Is.False);
+            Assert.That(root.TryGetProperty("id", out _), Is.False);
+        });
+    }
+
+    private EvaluationDataGenerationJobInputs GetInputs(string name, int samples = 16, string modelName = null)
+    {
+        EvaluationDataGenerationJobOutputTarget outputConfiguration = new()
         {
             Name = DATASET_NAME,
             Description = "QnA pairs generated from the Contoso refund policy prompt.",
         };
-        outputOptions.Tags["sample"] = DATASET_NAME;
-        DataGenerationJobInputs inputs = new(
-                name: name,
-                sources: [new PromptDataGenerationJobSource(prompt: "Contoso offers a full refund within 30 days of purchase for any product " +
-                        "returned in its original condition. After 30 days, store credit may be " +
-                        "issued at the discretion of customer support. Digital goods are " +
-                        "non-refundable once downloaded."){
-                    Description = "Contoso refund policy"
-                }],
-                options: new SimpleQnADataGenerationJobOptions(maxSamples: samples)
-                {
-                    ModelOptions = new(TestEnvironment.FOUNDRY_MODEL_NAME)
-                },
-                scenario: DataGenerationJobScenario.Evaluation
-            )
+        outputConfiguration.Tags["sample"] = DATASET_NAME;
+        return new EvaluationDataGenerationJobInputs(
+            name: name,
+            sources: [new PromptDataGenerationJobSource(prompt: "Contoso offers a full refund within 30 days of purchase for any product " +
+                    "returned in its original condition. After 30 days, store credit may be " +
+                    "issued at the discretion of customer support. Digital goods are " +
+                    "non-refundable once downloaded.")
+            {
+                Description = "Contoso refund policy"
+            }],
+            generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: samples)
+            {
+                ModelOptions = new(modelName ?? TestEnvironment.FOUNDRY_MODEL_NAME)
+            })
         {
-            OutputOptions = outputOptions
+            OutputConfiguration = outputConfiguration
         };
-        return inputs;
     }
     #endregion
     #region Cleanup
@@ -150,7 +161,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
         List<DataGenerationJob> dataGenerations = await projectClient.DataGenerationJobs.GetAllAsync().ToListAsync();
         foreach (DataGenerationJob job in dataGenerations)
         {
-            if (job.Inputs.Name.StartsWith(INPUT_PREFIX))
+            if (job.Name.StartsWith(INPUT_PREFIX))
             {
                 await projectClient.DataGenerationJobs.DeleteAsync(job.Id);
             }

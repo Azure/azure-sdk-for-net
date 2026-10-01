@@ -7,7 +7,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -84,7 +83,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStartArray();
                 foreach (CallableToolAllowedCaller item in AllowedCallers)
                 {
-                    writer.WriteStringValue(item.ToSerialString());
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +170,7 @@ namespace Azure.AI.Projects.Agents
                     List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                        array.Add(new CallableToolAllowedCaller(item.GetString()));
                     }
                     allowedCallers = array;
                     continue;

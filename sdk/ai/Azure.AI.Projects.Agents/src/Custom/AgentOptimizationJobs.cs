@@ -11,10 +11,6 @@ using System.Threading.Tasks;
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
-[CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentsJobStatus?), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentsJobStatus?), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentOptimizationJobs
 {
     /// <summary> Create an optimization job. Returns 201 with the queued job. Honours `Operation-Id` for idempotent retry. </summary>
@@ -43,7 +39,6 @@ public partial class AgentOptimizationJobs
         return Create(
             waitUntilCompleted: waitUntilCompleted,
             content: job,
-            foundryFeatures: default(string),
             operationId: operationId,
             options: cancellationToken.ToRequestOptions()
         );
@@ -75,7 +70,6 @@ public partial class AgentOptimizationJobs
         return await CreateAsync(
             waitUntilCompleted: waitUntilCompleted,
             content: job,
-            foundryFeatures: default(string),
             operationId: operationId,
             options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
@@ -89,11 +83,11 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<AgentOptimizationJob> Get(string jobId, CancellationToken cancellationToken = default)
     {
-        return Get(
+        ClientResult result = Get(
             jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         );
+        return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Get an optimization job by id. Returns 202 while in progress, 200 when terminal. </summary>
@@ -104,11 +98,11 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<AgentOptimizationJob>> GetAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        return await GetAsync(
+        ClientResult result = await GetAsync(
             jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
+        return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
     }
 
     /// <summary> List optimization jobs. Supports cursor pagination and optional status / agent_name filters. </summary>
@@ -134,14 +128,13 @@ public partial class AgentOptimizationJobs
     /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentOptimizationJobListItem> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentOptimizationJob> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
     {
         status ??= new AgentsJobStatus("undefined");
-        return new InternalOpenAICollectionResultOfT<AgentOptimizationJobListItem>(
+        return new InternalOpenAICollectionResultOfT<AgentOptimizationJob>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAllRequest(
-                    foundryFeatures: default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
@@ -149,7 +142,7 @@ public partial class AgentOptimizationJobs
                     status: string.Equals(localCollectionOptions.Filters[0], "undefined") ? null : localCollectionOptions.Filters[0],
                     agentName: localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentOptimizationJobListItem>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentOptimizationJob>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [status.ToString(), agentName]),
             cancellationToken.ToRequestOptions());
     }
@@ -177,14 +170,13 @@ public partial class AgentOptimizationJobs
     /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentOptimizationJobListItem> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentOptimizationJob> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
     {
         status ??= new AgentsJobStatus("undefined");
-        return new InternalOpenAIAsyncCollectionResultOfT<AgentOptimizationJobListItem>(
+        return new InternalOpenAIAsyncCollectionResultOfT<AgentOptimizationJob>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetAllRequest(
-                    foundryFeatures: default,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
@@ -192,7 +184,7 @@ public partial class AgentOptimizationJobs
                     status: string.Equals(localCollectionOptions.Filters[0], "undefined") ? null : localCollectionOptions.Filters[0],
                     agentName: localCollectionOptions.Filters.Count > 1 ? localCollectionOptions.Filters[1] : null,
                     options: localRequestOptions),
-            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentOptimizationJobListItem>(e, o),
+            dataItemDeserializer: (e, o) => CustomSerializationHelpers.DeserializeProjectOpenAIType<AgentOptimizationJob>(e, o),
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [status.ToString(), agentName]),
             cancellationToken.ToRequestOptions());
     }
@@ -205,11 +197,11 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<AgentOptimizationJob> Cancel(string jobId, CancellationToken cancellationToken = default)
     {
-        return Cancel(
+        ClientResult result = Cancel(
             jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         );
+        return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Request cancellation. Idempotent on terminal states. </summary>
@@ -220,11 +212,11 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<AgentOptimizationJob>> CancelAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        return await CancelAsync(
+        ClientResult result = await CancelAsync(
             jobId: jobId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
+            options: cancellationToken.ToRequestOptions()
         ).ConfigureAwait(false);
+        return ClientResult.FromValue((AgentOptimizationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
@@ -235,7 +227,7 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
     {
-        return Delete(jobId: jobId, foundryFeatures: default, cancellationToken: cancellationToken);
+        return Delete(jobId: jobId, options: cancellationToken.ToRequestOptions());
     }
 
     /// <summary> Delete the job and its candidate artifacts. Cancels first if non-terminal. </summary>
@@ -246,6 +238,6 @@ public partial class AgentOptimizationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        return await DeleteAsync(jobId: jobId, foundryFeatures: default, cancellationToken: cancellationToken).ConfigureAwait(false);
+        return await DeleteAsync(jobId: jobId, options: cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 }

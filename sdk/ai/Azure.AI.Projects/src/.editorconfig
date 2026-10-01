@@ -1,0 +1,11 @@
+# Generated GA serializers must handle preview variants without making their public base
+# types experimental. Keep preview diagnostics active in handwritten code and for SDK users.
+[Generated/Models/{SimpleQnADataGenerationJobOptions.cs,SimpleQnADataGenerationJobOptions.Serialization.cs,DataGenerationJob.Serialization.cs,DataGenerationJobInputs.Serialization.cs,DataGenerationJobOptions.Serialization.cs,DataGenerationJobOutput.Serialization.cs,EvaluatorDefinition.Serialization.cs}]
+dotnet_diagnostic.AAIP001.severity = none
+
+# Generated implementations of GA hierarchies also refer to experimental base and derived models.
+[Generated/Models/{AgentsPagedResultEvaluatorGenerationJob*,DataGenerationJobInputs,EvaluationDataGenerationJob*,PagedEvaluatorVersion*,UnknownDataGenerationJob*,UnknownEvaluatorDefinition*,UnknownEvaluatorGenerationJobSource*}.cs]
+dotnet_diagnostic.AAIP001.severity = none
+
+[Generated/CollectionResults/{EvaluatorGenerationJobsGetAll*,ProjectEvaluatorsGetLatestVersions*,ProjectEvaluatorsGetVersions*}.cs]
+dotnet_diagnostic.AAIP001.severity = none

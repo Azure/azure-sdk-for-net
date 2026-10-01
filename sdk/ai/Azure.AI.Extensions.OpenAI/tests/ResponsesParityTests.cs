@@ -585,7 +585,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
 
         AutomaticCodeInterpreterToolContainerConfiguration configuration = CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(fileIds: ["file_123"]);
         configuration.NetworkPolicy = networkPolicy;
-        configuration.MemoryLimit = ContainerMemoryLimit.Max4GB;
+        configuration.MemoryLimit = global::OpenAI.Containers.ContainerMemoryLimit.Max4GB;
 
         CodeInterpreterToolContainer container = new CodeInterpreterToolContainer(configuration);
 

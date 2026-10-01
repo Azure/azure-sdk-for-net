@@ -891,7 +891,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCall"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
+        [Experimental("AAIP002")]
         public static BrowserAutomationToolCall BrowserAutomationToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string arguments = default, ToolCallStatus status = default)
         {
             return new BrowserAutomationToolCall(
@@ -914,7 +914,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="output"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolCallOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
+        [Experimental("AAIP002")]
         public static BrowserAutomationToolCallOutput BrowserAutomationToolCallOutput(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ToolCallStatus status = default)
         {
             return new BrowserAutomationToolCallOutput(

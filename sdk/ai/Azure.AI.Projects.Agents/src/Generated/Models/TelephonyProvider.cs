@@ -13,8 +13,8 @@ namespace Azure.AI.Projects.Agents
     public readonly partial struct TelephonyProvider : IEquatable<TelephonyProvider>
     {
         private readonly string _value;
-        /// <summary> Microsoft Teams Phone Extension. </summary>
-        private const string TeamsPhoneExtensionValue = "teams_phone_extension";
+        /// <summary> Microsoft Teams Phone extensibility. </summary>
+        private const string TeamsPhoneExtensibilityValue = "teams_phone_extensibility";
         /// <summary> Twilio Programmable Voice. </summary>
         private const string TwilioValue = "twilio";
 
@@ -28,8 +28,8 @@ namespace Azure.AI.Projects.Agents
             _value = value;
         }
 
-        /// <summary> Microsoft Teams Phone Extension. </summary>
-        public static TelephonyProvider TeamsPhoneExtension { get; } = new TelephonyProvider(TeamsPhoneExtensionValue);
+        /// <summary> Microsoft Teams Phone extensibility. </summary>
+        public static TelephonyProvider TeamsPhoneExtensibility { get; } = new TelephonyProvider(TeamsPhoneExtensibilityValue);
 
         /// <summary> Twilio Programmable Voice. </summary>
         public static TelephonyProvider Twilio { get; } = new TelephonyProvider(TwilioValue);

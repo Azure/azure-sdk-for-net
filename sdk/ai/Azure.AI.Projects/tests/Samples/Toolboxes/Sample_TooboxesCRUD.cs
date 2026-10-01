@@ -12,6 +12,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples;
+#pragma warning disable AAIP001
 
 public class Sample_Toolboxes_CRUD : SamplesBase
 {

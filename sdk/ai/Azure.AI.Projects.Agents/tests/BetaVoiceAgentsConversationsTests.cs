@@ -40,7 +40,7 @@ public class BetaVoiceAgentsConversationsTests : AgentsTestBase
         return CONVERSATIONS_AGENT_NAME;
     }
 
-    // The BetaVoiceAgentsConversations surface only reads history that a realtime session persisted
+    // The AgentEndpointConversations surface only reads history that a realtime session persisted
     // (see LiveTests\ProjectsRealtimeConversationTests.PersistedConversationIsRetrievableAfterSession
     // for the corresponding write path); a freshly created agent has no realtime session history, so
     // this is the only conversation-history scenario coverable without a live realtime connection.
@@ -48,7 +48,7 @@ public class BetaVoiceAgentsConversationsTests : AgentsTestBase
     public async Task TestGetAgentConversationsReturnsEmptyForNewAgent()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsConversations conversationsClient = agentsClient.GetBetaVoiceAgentEndpointConversations();
+        AgentEndpointConversations conversationsClient = agentsClient.GetAgentEndpointConversations();
         string agentName = await EnsureConversationsAgentAsync(agentsClient);
 
         List<VoiceConversation> conversations = await conversationsClient
@@ -63,7 +63,7 @@ public class BetaVoiceAgentsConversationsTests : AgentsTestBase
     public async Task TestGetAgentConversationThrowsForUnknownConversation()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsConversations conversationsClient = agentsClient.GetBetaVoiceAgentEndpointConversations();
+        AgentEndpointConversations conversationsClient = agentsClient.GetAgentEndpointConversations();
         string agentName = await EnsureConversationsAgentAsync(agentsClient);
 
         // The service's conversation-id format validator rejects an arbitrary fake id -- including
@@ -89,7 +89,7 @@ public class BetaVoiceAgentsConversationsTests : AgentsTestBase
     public async Task TestConversationSubResourcesThrowForUnknownIds()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        BetaVoiceAgentsConversations conversationsClient = agentsClient.GetBetaVoiceAgentEndpointConversations();
+        AgentEndpointConversations conversationsClient = agentsClient.GetAgentEndpointConversations();
         string agentName = await EnsureConversationsAgentAsync(agentsClient);
         // See comment on TestGetAgentConversationThrowsForUnknownConversation: the service's id
         // format validator rejects these before a not-found check is reached, so only a generic
