@@ -5,6 +5,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.IO;
+using System.Text.Json;
 
 #pragma warning disable SCME0001
 
@@ -38,8 +40,20 @@ internal static partial class JsonPatchExtensions
         }
         else
         {
-            patch.Set(jsonPath, value);
+            // Use encoded JSON so replacing an existing nested string patch keeps
+            // its quotes and escaping, rather than treating the value as raw JSON.
+            patch.Set(jsonPath, SerializeJsonString(value));
         }
+    }
+
+    internal static BinaryData SerializeJsonString(string value)
+    {
+        using MemoryStream stream = new();
+        using (Utf8JsonWriter writer = new(stream))
+        {
+            writer.WriteStringValue(value);
+        }
+        return BinaryData.FromBytes(stream.ToArray());
     }
 
     public static void SetOrClearEx<T>(

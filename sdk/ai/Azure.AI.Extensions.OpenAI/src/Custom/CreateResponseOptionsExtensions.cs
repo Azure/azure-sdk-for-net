@@ -26,6 +26,28 @@ namespace Azure.AI.Extensions.OpenAI;
 [Experimental("AAIP001")]
 public static partial class CreateResponseOptionsExtensions
 {
+    // Keep the preview's compiled accessor entry points without introducing a
+    // second set of extension properties competing with the restored GA container.
+    /// <summary> Gets the response's agent using the preview accessor entry point. </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.CompilerServices.SpecialName]
+    public static AgentReference get_Agent(CreateResponseOptions options) => options.Agent;
+
+    /// <summary> Sets the response's agent using the preview accessor entry point. </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.CompilerServices.SpecialName]
+    public static void set_Agent(CreateResponseOptions options, AgentReference value) => options.Agent = value;
+
+    /// <summary> Gets the conversation using the preview accessor entry point. </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.CompilerServices.SpecialName]
+    public static string get_AgentConversationId(CreateResponseOptions options) => options.AgentConversationId;
+
+    /// <summary> Sets the conversation using the preview accessor entry point. </summary>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [System.Runtime.CompilerServices.SpecialName]
+    public static void set_AgentConversationId(CreateResponseOptions options, string value) => options.AgentConversationId = value;
+
     extension(CreateResponseOptions options)
     {
         /// <summary> Session used to get the response. </summary>
@@ -36,20 +58,5 @@ public static partial class CreateResponseOptionsExtensions
             set => options.Patch.SetOrClearEx("$.agent_session_id"u8, "$.agent_session_id"u8, value);
         }
 
-        /// <summary> Gets or sets the agent associated with the response options. </summary>
-        [Experimental("SCME0001")]
-        public AgentReference Agent
-        {
-            get => options.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
-            set => options.Patch.SetOrClearEx("$.agent_reference"u8, "$.agent_reference"u8, value);
-        }
-
-        /// <summary> Gets or sets the agent conversation ID associated with the response options. </summary>
-        [Experimental("SCME0001")]
-        public string AgentConversationId
-        {
-            get => options.Patch.GetStringEx("$.conversation.id"u8);
-            set => options.Patch.SetOrClearEx("$.conversation.id"u8, "$.conversation"u8, value);
-        }
     }
 }

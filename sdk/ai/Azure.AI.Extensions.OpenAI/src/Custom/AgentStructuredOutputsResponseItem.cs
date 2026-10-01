@@ -26,6 +26,7 @@ public partial class AgentStructuredOutputsResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AgentStructuredOutputsResponseItem(string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.StructuredOutputs)
     {
+        Id = id;
         Output = output;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;
     }
@@ -44,6 +45,7 @@ public partial class AgentStructuredOutputsResponseItem
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal AgentStructuredOutputsResponseItem(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        Id = id;
         this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         Output = output;
         _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -30,10 +30,12 @@ public static partial class ResponseItemExtensions
 
         /// <summary> Gets the agent associated with the response result. </summary>
         [Experimental("SCME0001")]
-        public AgentReference AgentReference => response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
+        public AgentReference AgentReference => response is AgentResponseItem legacy
+            ? legacy.AgentReference : response.Patch.GetJsonModelEx<AgentReference>("$.agent_reference"u8);
 
         /// <summary> Gets the agent conversation ID associated with the response result. </summary>
         [Experimental("SCME0001")]
-        public string ResponseId => response.Patch.GetStringEx("$.response_id"u8);
+        public string ResponseId => response is AgentResponseItem legacy
+            ? legacy.ResponseId : response.Patch.GetStringEx("$.response_id"u8);
     }
 }

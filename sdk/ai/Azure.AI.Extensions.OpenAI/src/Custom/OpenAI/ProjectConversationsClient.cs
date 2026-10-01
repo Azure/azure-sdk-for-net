@@ -41,7 +41,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="options"> The options used to create the conversation. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created project conversation. </returns>
-    public virtual ClientResult<ConversationResource> CreateProjectConversation(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ConversationResource> CreateProjectConversationResource(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
@@ -63,7 +63,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="options"> The options used to create the conversation. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The created project conversation. </returns>
-    public virtual async Task<ClientResult<ConversationResource>> CreateProjectConversationAsync(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ConversationResource>> CreateProjectConversationResourceAsync(ConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
         using var scope = OpenTelemetryResponseScope.StartCreateConversation(_endpoint, agentName: null);
@@ -106,7 +106,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project conversations. </returns>
     /// <exception cref="ClientResultException"> The service returned a non-success status code. </exception>
-    public virtual CollectionResult<ConversationResource> GetProjectConversations(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<ConversationResource> GetProjectConversationResources(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         string agentNameToUse = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null;
         string agentIdToUse = string.IsNullOrEmpty(agent?.Version) ? null : $"{agent?.Name}:{agent?.Version}";
@@ -152,7 +152,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project conversations. </returns>
     /// <exception cref="ClientResultException"> The service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<ConversationResource> GetProjectConversationsAsync(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ConversationResource> GetProjectConversationResourcesAsync(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         string agentNameToUse = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null;
         string agentIdToUse = string.IsNullOrEmpty(agent?.Version) ? null : $"{agent?.Name}:{agent?.Version}";
@@ -177,7 +177,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="conversationId"> The ID of the conversation to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The requested conversation. </returns>
-    public virtual ClientResult<ConversationResource> GetProjectConversation(string conversationId, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ConversationResource> GetProjectConversationResource(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         return base.GetConversation(conversationId, cancellationToken);
@@ -187,7 +187,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="conversationId"> The ID of the conversation to retrieve. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The requested conversation. </returns>
-    public virtual async Task<ClientResult<ConversationResource>> GetProjectConversationAsync(string conversationId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ConversationResource>> GetProjectConversationResourceAsync(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         return await base.GetConversationAsync(conversationId, cancellationToken).ConfigureAwait(false);
@@ -203,7 +203,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project conversation items. </returns>
-    public virtual CollectionResult<ResponseItem> GetProjectConversationItems(
+    public virtual CollectionResult<ResponseItem> GetProjectResponseItems(
         string conversationId,
         ResponseItemKind? itemKind = null,
         int? limit = null,
@@ -240,7 +240,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project conversation items. </returns>
-    public virtual AsyncCollectionResult<ResponseItem> GetProjectConversationItemsAsync(
+    public virtual AsyncCollectionResult<ResponseItem> GetProjectResponseItemsAsync(
         string conversationId,
         ResponseItemKind? itemKind = null,
         int? limit = null,
@@ -273,7 +273,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The requested project conversation item. </returns>
-    public virtual ClientResult<ResponseItem> GetProjectConversationItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ResponseItem> GetProjectResponseItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = GetConversationItem(conversationId, itemId, include, cancellationToken.ToRequestOptions());
         return protocolResult.ToAgentClientResult<ResponseItem>();
@@ -285,7 +285,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The requested project conversation item. </returns>
-    public virtual async Task<ClientResult<ResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ResponseItem>> GetProjectResponseItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = await GetConversationItemAsync(conversationId, itemId, include, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return protocolResult.ToAgentClientResult<ResponseItem>();
@@ -348,7 +348,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="options"> The options containing the conversation updates. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The updated conversation. </returns>
-    public virtual ClientResult<ConversationResource> UpdateProjectConversation(string conversationId, ConversationUpdateOptions options, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ConversationResource> UpdateProjectConversationResource(string conversationId, ConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         return base.UpdateConversation(conversationId, options, cancellationToken);
@@ -359,7 +359,7 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="options"> The options containing the conversation updates. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The updated conversation. </returns>
-    public virtual async Task<ClientResult<ConversationResource>> UpdateProjectConversationAsync(string conversationId, ConversationUpdateOptions options, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ConversationResource>> UpdateProjectConversationResourceAsync(string conversationId, ConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
         return await base.UpdateConversationAsync(conversationId, options, cancellationToken).ConfigureAwait(false);

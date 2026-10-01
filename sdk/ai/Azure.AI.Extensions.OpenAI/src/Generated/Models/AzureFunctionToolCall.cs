@@ -5,13 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An Azure Function tool call. </summary>
     [Experimental("AAIP002")]
-    public partial class AzureFunctionToolCall : ResponseItem
+    public partial class AzureFunctionToolCall : AgentResponseItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

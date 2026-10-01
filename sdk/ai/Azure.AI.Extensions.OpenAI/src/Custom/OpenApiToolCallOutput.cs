@@ -22,6 +22,7 @@ public partial class OpenApiToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal OpenApiToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.OpenApiCallOutput)
     {
+        Id = id;
         CallId = callId;
         Name = name;
         Output = output;
@@ -49,6 +50,7 @@ public partial class OpenApiToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal OpenApiToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, string name, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        Id = id;
         this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Name = name;

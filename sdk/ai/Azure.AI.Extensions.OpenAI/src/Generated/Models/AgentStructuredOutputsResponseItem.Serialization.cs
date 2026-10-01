@@ -4,32 +4,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-    public partial class AgentStructuredOutputsResponseItem : ResponseItem, IJsonModel<AgentStructuredOutputsResponseItem>
+    public partial class AgentStructuredOutputsResponseItem : AgentResponseItem, IJsonModel<AgentStructuredOutputsResponseItem>
     {
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentStructuredOutputsResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeAgentStructuredOutputsResponseItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AgentStructuredOutputsResponseItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -101,77 +82,5 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AgentStructuredOutputsResponseItem IJsonModel<AgentStructuredOutputsResponseItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AgentStructuredOutputsResponseItem)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentStructuredOutputsResponseItem>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AgentStructuredOutputsResponseItem)} does not support reading '{format}' format.");
-            }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentStructuredOutputsResponseItem(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentStructuredOutputsResponseItem DeserializeAgentStructuredOutputsResponseItem(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            ResponseItemKind @type = "structured_outputs";
-            string id = default;
-            AgentReference agentReference = default;
-            string responseId = default;
-            BinaryData output = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = new ResponseItemKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("agent_reference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("response_id"u8))
-                {
-                    responseId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("output"u8))
-                {
-                    output = prop.Value.GetUtf8Bytes();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
-                }
-            }
-            return new AgentStructuredOutputsResponseItem(
-                @type,
-                id,
-                agentReference,
-                responseId,
-                output,
-                additionalBinaryDataProperties);
-        }
     }
 }

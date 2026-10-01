@@ -30,6 +30,7 @@ public partial class BrowserAutomationToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BrowserAutomationToolCallOutput(string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(ResponseItemKind.BrowserAutomationPreviewCallOutput)
     {
+        Id = id;
         CallId = callId;
         Output = output;
         Status = status;
@@ -55,6 +56,7 @@ public partial class BrowserAutomationToolCallOutput
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     internal BrowserAutomationToolCallOutput(ResponseItemKind @type, string id, AgentReference agentReference, string responseId, string callId, BinaryData output, ToolCallStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
     {
+        Id = id;
         this.ApplyAgentAttribution(agentReference, responseId, additionalBinaryDataProperties);
         CallId = callId;
         Output = output;

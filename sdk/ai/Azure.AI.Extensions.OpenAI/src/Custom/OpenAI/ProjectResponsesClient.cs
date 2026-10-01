@@ -127,7 +127,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     { }
 
     internal ProjectResponsesClient(ClientPipeline pipeline, ProjectResponsesClientOptions options, AgentReference defaultAgent, string defaultConversationId)
-        : base(pipeline, options)
+        : base(pipeline, options?.ToNativeOptions())
     {
         if (defaultAgent?.Name?.ToLowerInvariant()?.StartsWith("model:") == true)
         {

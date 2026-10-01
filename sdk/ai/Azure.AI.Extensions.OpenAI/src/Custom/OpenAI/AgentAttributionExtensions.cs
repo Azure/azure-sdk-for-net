@@ -42,6 +42,13 @@ internal static class AgentAttributionExtensions
             return;
         }
 
+        if (item is AgentResponseItem legacy)
+        {
+            legacy.AgentReference = agentReference;
+            legacy.ResponseId = responseId;
+            return;
+        }
+
         if (agentReference is not null)
         {
             BinaryData serialized = ModelReaderWriter.Write(agentReference, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
@@ -57,18 +64,8 @@ internal static class AgentAttributionExtensions
             item.Patch.SetOrClearEx("$.response_id"u8, "$.response_id"u8, responseId);
             if (additionalBinaryDataProperties is not null)
             {
-                additionalBinaryDataProperties[ResponseIdProperty] = SerializeJsonString(responseId);
+                additionalBinaryDataProperties[ResponseIdProperty] = JsonPatchExtensions.SerializeJsonString(responseId);
             }
         }
-    }
-
-    private static BinaryData SerializeJsonString(string value)
-    {
-        using MemoryStream stream = new();
-        using (Utf8JsonWriter writer = new(stream))
-        {
-            writer.WriteStringValue(value);
-        }
-        return BinaryData.FromBytes(stream.ToArray());
     }
 }

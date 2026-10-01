@@ -53,7 +53,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_Async
         ConversationResource conversation
-            = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+            = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResourceAsync();
         #endregion
 
         #region Snippet:Sample_CreateSimpleResponse_Async
@@ -106,7 +106,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateConversation_Sync
         ConversationResource conversation
-            = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+            = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationResource();
         #endregion
 
         #region Snippet:Sample_CreateSimpleResponse_Sync
