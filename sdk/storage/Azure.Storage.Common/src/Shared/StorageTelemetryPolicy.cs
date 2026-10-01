@@ -47,11 +47,15 @@ namespace Azure.Storage
         private static void ApplyAzFeatures(HttpMessage message, AzFeatures azFeatures)
         {
             string azFeatureString = Serialize(azFeatures);
-            if (message.Request.Headers.TryGetValue(HttpHeader.Names.UserAgent, out string userAgent) && !userAgent.Contains(azFeatureString))
+            if (message.Request.Headers.TryGetValue(HttpHeader.Names.UserAgent, out string userAgent))
             {
-                message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, TransformUserAgent(userAgent, azFeatureString));
+                if (!userAgent.Contains(azFeatureString))
+                {
+                    message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, TransformUserAgent(userAgent, azFeatureString));
+                }
+                // else: already contains the identifier, no-op
             }
-            else // no user agent string present, just set the feature string as the whole user agent
+            else
             {
                 message.Request.Headers.SetValue(HttpHeader.Names.UserAgent, azFeatureString);
             }

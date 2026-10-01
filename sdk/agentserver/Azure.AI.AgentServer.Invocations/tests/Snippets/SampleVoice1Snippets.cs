@@ -65,14 +65,18 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 CancellationToken cancellationToken)
             {
                 var responseId = VoiceIds.CreateResponseId();
-                var generationCancellation =
-                    CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                var generation = new Generation(message.ItemId, generationCancellation);
+                var generationCancellation = new CancellationTokenSource();
+                var generation = new Generation(
+                    responseId,
+                    message.ItemId,
+                    generationCancellation,
+                    session.StartTurn(VoiceTurnOrigin.User, inputCount: 1));
                 if (!_generations.TryAdd(responseId, generation) ||
                     !_inputGenerations.TryAdd(message.ItemId, responseId))
                 {
                     _generations.TryRemove(responseId, out _);
                     generationCancellation.Dispose();
+                    generation.Turn.Dispose();
                     throw new InvalidOperationException("Could not register the Voice response.");
                 }
 
@@ -81,15 +85,27 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 {
                     await session.SendAsync(
                         new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
-                        generationCancellation.Token);
+                        cancellationToken);
+                    generation.MarkResponseOpened();
+                }
+                catch (OperationCanceledException exception)
+                    when (exception.CancellationToken == cancellationToken &&
+                        cancellationToken.IsCancellationRequested)
+                {
+                    generation.SelectResult(VoiceTurnOutcome.Cancelled);
+                    generation.CompleteSelected();
+                    RemoveGeneration(responseId);
+                    throw;
                 }
                 catch
                 {
+                    generation.SelectResult(VoiceTurnOutcome.TransportError);
+                    generation.CompleteSelected();
                     RemoveGeneration(responseId);
                     throw;
                 }
 
-                _ = SendResponseAsync(
+                generation.Work = SendResponseAsync(
                     session,
                     responseId,
                     input,
@@ -101,7 +117,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 VoiceBargeInEvent bargeIn,
                 CancellationToken cancellationToken)
             {
-                CancelGeneration(bargeIn.ResponseId);
+                CancelGeneration(bargeIn.ResponseId, VoiceTurnOutcome.Cancelled);
                 return Task.CompletedTask;
             }
 
@@ -110,7 +126,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 VoiceResponseCancelledEvent cancelled,
                 CancellationToken cancellationToken)
             {
-                CancelGeneration(cancelled.ResponseId);
+                CancelGeneration(cancelled.ResponseId, VoiceTurnOutcome.Cancelled);
                 return Task.CompletedTask;
             }
 
@@ -121,7 +137,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             {
                 if (timeout.ResponseId is not null)
                 {
-                    CancelGeneration(timeout.ResponseId);
+                    CancelGeneration(timeout.ResponseId, VoiceTurnOutcome.Timeout);
                 }
                 else if (timeout.ItemIds is not null)
                 {
@@ -129,7 +145,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     {
                         if (_inputGenerations.TryGetValue(inputItemId, out var responseId))
                         {
-                            CancelGeneration(responseId);
+                            CancelGeneration(responseId, VoiceTurnOutcome.Timeout);
                         }
                     }
                 }
@@ -141,12 +157,12 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 VoiceSessionEndEvent end,
                 CancellationToken cancellationToken)
             {
-                CancelAllGenerations();
+                CancelAllGenerations(VoiceTurnOutcome.Cancelled);
                 return Task.CompletedTask;
             }
 
             protected override void OnConnectionTerminating(VoiceSession session) =>
-                CancelAllGenerations();
+                CancelAllGenerations(VoiceTurnOutcome.TransportError);
 
             protected virtual Task<string> GenerateAnswerAsync(
                 string input,
@@ -163,13 +179,19 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 var itemId = VoiceIds.CreateItemId();
                 try
                 {
-                    var answer = await GenerateAnswerAsync(input, cancellationToken);
+                    string answer;
+                    using (generation.Turn.Activate())
+                    {
+                        answer = await GenerateAnswerAsync(input, cancellationToken);
+                    }
                     await session.SendAsync(
                         new VoiceResponseOutputTextDoneMessage(responseId, itemId, answer),
                         cancellationToken);
+                    generation.MarkOutputCompleted();
                     await session.SendAsync(
                         new VoiceResponseDoneMessage(responseId),
                         cancellationToken);
+                    generation.SelectResult(VoiceTurnOutcome.Response);
                 }
                 catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
                 {
@@ -177,6 +199,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 }
                 catch (Exception exception)
                 {
+                    generation.SelectResult(VoiceTurnOutcome.Error);
                     _logger.LogError(exception, "Voice response {ResponseId} failed", responseId);
                     try
                     {
@@ -197,16 +220,18 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 }
                 finally
                 {
+                    generation.CompleteSelected();
                     RemoveGeneration(responseId);
                 }
             }
 
-            private void CancelGeneration(string responseId)
+            private void CancelGeneration(string responseId, VoiceTurnOutcome outcome)
             {
                 if (_generations.TryRemove(responseId, out var generation))
                 {
                     _inputGenerations.TryRemove(generation.InputItemId, out _);
-                    _ = CancelAndDisposeAsync(generation.Cancellation);
+                    generation.SelectResult(outcome);
+                    _ = CancelAndDisposeAsync(generation);
                 }
             }
 
@@ -215,37 +240,107 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 if (_generations.TryRemove(responseId, out var generation))
                 {
                     _inputGenerations.TryRemove(generation.InputItemId, out _);
-                    generation.Cancellation.Dispose();
+                    generation.Dispose();
                 }
             }
 
-            private void CancelAllGenerations()
+            private void CancelAllGenerations(VoiceTurnOutcome outcome)
             {
                 foreach (var responseId in _generations.Keys)
                 {
-                    CancelGeneration(responseId);
+                    CancelGeneration(responseId, outcome);
                 }
             }
 
-            private async Task CancelAndDisposeAsync(CancellationTokenSource cancellation)
+            private async Task CancelAndDisposeAsync(Generation generation)
             {
                 try
                 {
-                    await cancellation.CancelAsync();
+                    await generation.Cancellation.CancelAsync();
                 }
                 catch (Exception exception)
                 {
                     _logger.LogError(exception, "Voice response cancellation failed");
                 }
+                try
+                {
+                    if (generation.Work is not null)
+                    {
+                        await generation.Work;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    _logger.LogError(exception, "Voice response work failed during cancellation");
+                }
                 finally
                 {
-                    cancellation.Dispose();
+                    generation.CompleteSelected();
+                    generation.Dispose();
                 }
             }
 
-            private sealed record Generation(
-                string InputItemId,
-                CancellationTokenSource Cancellation);
+            private sealed class Generation
+            {
+                private VoiceTurnResult? _selectedResult;
+                private Task? _work;
+                private int _outputItemCount;
+                private int _responseOpened;
+
+                public Generation(
+                    string responseId,
+                    string inputItemId,
+                    CancellationTokenSource cancellation,
+                    VoiceTurnTrace turn)
+                {
+                    ResponseId = responseId;
+                    InputItemId = inputItemId;
+                    Cancellation = cancellation;
+                    Turn = turn;
+                }
+
+                public string ResponseId { get; }
+
+                public string InputItemId { get; }
+
+                public CancellationTokenSource Cancellation { get; }
+
+                public VoiceTurnTrace Turn { get; }
+
+                public Task? Work
+                {
+                    get => Volatile.Read(ref _work);
+                    set => Volatile.Write(ref _work, value);
+                }
+
+                public void MarkResponseOpened() => Volatile.Write(ref _responseOpened, 1);
+
+                public void MarkOutputCompleted() => Interlocked.Increment(ref _outputItemCount);
+
+                public void SelectResult(VoiceTurnOutcome outcome) =>
+                    Interlocked.CompareExchange(
+                        ref _selectedResult,
+                        new VoiceTurnResult(
+                            outcome,
+                            Volatile.Read(ref _outputItemCount),
+                            Volatile.Read(ref _responseOpened) != 0 ? ResponseId : null),
+                        null);
+
+                public void CompleteSelected()
+                {
+                    if (Volatile.Read(ref _selectedResult) is { } result)
+                    {
+                        Turn.Complete(result);
+                    }
+                }
+
+                public void Dispose()
+                {
+                    CompleteSelected();
+                    Cancellation.Dispose();
+                    Turn.Dispose();
+                }
+            }
         }
 
         #endregion

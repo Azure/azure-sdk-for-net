@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return AdditionalContext.Priority;
+                return AdditionalContext is null ? default : AdditionalContext.Priority;
             }
         }
 

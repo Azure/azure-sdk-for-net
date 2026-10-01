@@ -83,6 +83,37 @@ public class ResponsesServerHostExtensionsTests
     }
 
     [Test]
+    public void AgentHostBuilder_HostedRegistration_UsesSettingsPath()
+    {
+        try
+        {
+            SetHostedEnvironment();
+            AgentHostBuilder builder = AgentHost.CreateBuilder();
+            builder.Configuration["ResponsesServer:Endpoint"] =
+                "https://configured.example.com/api/projects/project";
+            builder.Configuration["ResponsesServer:Credential:CredentialSource"] =
+                "ManagedIdentityCredential";
+            builder.Configuration["ResponsesServer:DefaultModel"] = "from-settings";
+
+            Assert.DoesNotThrow(() =>
+                builder.AddResponses<TestHandler>(options => options.DefaultModel = "from-code"));
+
+            using ServiceProvider provider = builder.Services.BuildServiceProvider();
+            Assert.That(provider.GetRequiredService<ResponsesProvider>(),
+                Is.InstanceOf<FoundryStorageProvider>());
+            Assert.That(provider.GetRequiredService<TaskHostEnvironment>().Credential,
+                Is.Not.Null);
+            Assert.That(
+                provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value.DefaultModel,
+                Is.EqualTo("from-code"));
+        }
+        finally
+        {
+            ClearHostedEnvironment();
+        }
+    }
+
+    [Test]
     public void RegistersResponsesServices_Locally()
     {
         var builder = NewBuilder(new Dictionary<string, string?>());
@@ -119,9 +150,26 @@ public class ResponsesServerHostExtensionsTests
         });
     }
 
+    [Test]
+    public void Settings_BindCore_AcceptsUnlimitedHistory()
+    {
+        var config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Sec:DefaultFetchHistoryCount"] = "-1",
+            })
+            .Build();
+
+        var settings = new ResponsesServerSettings();
+        settings.Bind(config.GetSection("Sec"));
+
+        Assert.That(settings.DefaultFetchHistoryCount, Is.EqualTo(-1));
+    }
+
     [TestCase("Endpoint", "not an endpoint")]
     [TestCase("DefaultFetchHistoryCount", "zero")]
     [TestCase("DefaultFetchHistoryCount", "0")]
+    [TestCase("DefaultFetchHistoryCount", "-2")]
     [TestCase("ResilientBackground", "sometimes")]
     [TestCase("SteerableConversations", "sometimes")]
     public void Settings_BindCore_RejectsMalformedValues(string key, string value)

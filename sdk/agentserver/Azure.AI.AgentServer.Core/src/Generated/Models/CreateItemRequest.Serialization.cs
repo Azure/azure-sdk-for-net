@@ -179,7 +179,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     value = dictionary;
@@ -208,7 +208,7 @@ namespace Azure.AI.AgentServer.Core.Storage
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CreateItemRequest(key, value, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

@@ -46,7 +46,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 {
                     yield break;
                 }
-                ManagedIdentityMetadataPagedResponse result = (ManagedIdentityMetadataPagedResponse)response;
+                ManagedIdentityMetadataPagedResult result = (ManagedIdentityMetadataPagedResult)response;
                 nextPage = result.NextLink;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)

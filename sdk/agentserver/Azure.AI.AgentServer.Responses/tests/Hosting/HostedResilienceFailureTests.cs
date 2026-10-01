@@ -13,7 +13,6 @@ using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -69,7 +68,9 @@ public class HostedResilienceFailureTests
         Assert.That(
             provider.GetRequiredService<TaskHostEnvironment>().Credential,
             Is.SameAs(credential));
-        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
+        Assert.That(
+            ((FoundryStorageProvider)provider.GetRequiredService<ResponsesProvider>()).Pipeline,
+            Is.Not.Null);
     }
 
     [Test]
@@ -100,7 +101,9 @@ public class HostedResilienceFailureTests
         Assert.That(
             provider.GetRequiredService<TaskHostEnvironment>().Credential,
             Is.SameAs(credential));
-        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
+        Assert.That(
+            ((FoundryStorageProvider)provider.GetRequiredService<ResponsesProvider>()).Pipeline,
+            Is.Not.Null);
     }
 
     [Test]

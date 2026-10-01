@@ -1,24 +1,24 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-08-24 19:40:11 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-09-29 17:59:36 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
 
 ```
-@typespec/http-client-csharp (alpha.20260824.4)
-  └─ @azure-typespec/http-client-csharp (alpha.20260824.1)
-       └─ @azure-typespec/http-client-csharp-mgmt (alpha.20260824.2)
-            └─ @azure-typespec/http-client-csharp-provisioning (alpha.20260824.1)
+@typespec/http-client-csharp (alpha.20260928.4)
+  └─ @azure-typespec/http-client-csharp (alpha.20260925.4)
+       └─ @azure-typespec/http-client-csharp-mgmt (alpha.20260928.7)
+            └─ @azure-typespec/http-client-csharp-provisioning (alpha.20260917.1)
 ```
 
 ## Emitter Versions
 
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
-| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | 1.0.0-alpha.20260824.4 | 1.0.0-alpha.20260824.4 | [58bf2c4](https://github.com/microsoft/typespec/commit/58bf2c4b2dba2524455ab4dde9980bd728bb2926) |
-| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | 1.0.0-alpha.20260819.3 | 1.0.0-alpha.20260824.1 | [b77d431](https://github.com/Azure/azure-sdk-for-net/commit/b77d43115c7ebe317d6e736c77cd81ae9a735ee1) |
-| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260820.2 | 1.0.0-alpha.20260824.2 | [d84ccb7](https://github.com/Azure/azure-sdk-for-net/commit/d84ccb7c940cba3ac9d146e53732f3d89c39f144) |
+| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | 1.0.0-alpha.20260929.2 | 1.0.0-alpha.20260928.4 | [d6395c5](https://github.com/microsoft/typespec/commit/d6395c5bac7c10dff070c8811d533028062e083a) |
+| `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | 1.0.0-alpha.20260922.2 | 1.0.0-alpha.20260925.4 | [ffb6586](https://github.com/Azure/azure-sdk-for-net/commit/ffb65862ee8ed5cbf9faef723d64ebba3e2696ef) |
+| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20260907.1 | 1.0.0-alpha.20260928.7 | [3bf9924](https://github.com/Azure/azure-sdk-for-net/commit/3bf9924f124b4d430da03d119798ed3c4de0226f) |
 
 ## Source Files
 

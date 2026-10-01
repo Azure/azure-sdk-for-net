@@ -168,13 +168,12 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
         Action onDestroy,
         string taskId)
     {
-        if (Backing != AgentEventStreamBackingKind.FileBackedReplay
-            || !FileBackedReplayEventStream.Exists(id, StorageDirectory!))
+        if (Backing != AgentEventStreamBackingKind.FileBackedReplay)
         {
             return null;
         }
 
-        return new FileBackedReplayEventStream(
+        return FileBackedReplayEventStream.OpenExisting(
             id,
             StorageDirectory!,
             Ttl!.Value,

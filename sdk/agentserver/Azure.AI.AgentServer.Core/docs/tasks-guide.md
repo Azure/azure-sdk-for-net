@@ -250,6 +250,17 @@ await chat.DeleteAsync(chatId);
   converge to the same run; for a **multi-turn** task the `TaskId` identifies the chain,
   and a concurrent start on an in-flight chain either queues as the next turn (steerable)
   or throws a `ResilientTaskException` with `ErrorCode.Conflict` (non-steerable).
+  Starts within the same task engine coordinate initial creation before applying those
+  rules, so two simultaneous first inputs cannot compete to create the same record or
+  accidentally receive the same multi-turn handle. Unrelated task ids do not wait for
+  each other. Cancelling a caller waiting for startup does not cancel the initiating
+  caller; a failed startup is surfaced to its waiters without accepting their inputs.
+  This coordination is in-process: a duplicate creation by another task engine remains
+  a `ResilientTaskException` with `ErrorCode.Conflict`, not automatic cross-host steering.
+  Finishing a turn uses the same write gate as accepting steering: an input accepted
+  before suspension is drained rather than erased. If suspension commits first, a
+  waiting start is re-evaluated with its original input id, precondition, and cancellation
+  token. Slow closure of the old input's stream does not block or detach the resumed run.
 - **`InputId`** — the resilient name of one input within the task. Used for idempotent
   retries and for the last-input-id precondition (§4.8, §6.6).
   - One-shot: defaults to the `TaskId` (one run, one input — the 1:1 invariant).
@@ -264,6 +275,15 @@ await chat.DeleteAsync(chatId);
     replay history.
 
   `IfLastInputId` requires an explicit `InputId` to be set alongside it.
+
+The accepted chain head is not necessarily the executing input. Accepting a queued
+input advances `last_input_id` atomically with its durable append, while
+`TaskContext.InputId` and `TaskRun.InputId` retain the identity of their own input.
+Promotion and cancellation do not rewind the accepted head. The framework persists
+the current or last executing identity separately as `active_input_id`, so recovery,
+active-run lookup, and stream cleanup do not mistake a queued input for its producer.
+Older .NET records with aligned queued input IDs are migrated when needed; identifiers
+that older writers never recorded cannot be reconstructed from input values.
 
 ### 4.2 Entry mode
 
@@ -535,6 +555,27 @@ A multi-turn chain stays alive between turns; ending it is explicit. Call
 any in-flight turn, resolves queued callers as cancelled, and removes the record.
 It is idempotent — a no-op if the chain is already gone.
 
+Cancellation and storage deletion are separate. Cancellation is requested before storage deletion;
+if the storage delete fails or is cancelled, the error propagates without restoring
+already-cancelled results. Recoverable streams remain open.
+
+Deletion-caused stream closure requires both confirmed deletion (including an
+already-absent response) and producer unwind. Queued inputs that never execute can
+close after confirmation; a running producer retains its opportunity to finish
+writing before its stream closes. `DeleteAsync` does not wait for that producer,
+and an uncooperative handler's `Completion` can remain pending. Exceptions from
+cancellation callbacks are logged rather than blocking the storage delete.
+
+The engine rejects new starts for the same task while its deletion operation is
+pending. After a failed attempt, an explicit retry can remove the surviving record
+and close its existing current and queued streams without deleting replay history
+or materializing unused streams. The engine retains in-memory cleanup references after
+a failed or uncertain delete acknowledgement, so a retry that finds the record already
+absent can still finalize the captured streams. Closure dependencies are per input:
+an unrelated newer turn does not delay an older input, but another producer of the same
+input must also unwind. This coordination does not make the task-store transition and
+stream closure crash-atomic.
+
 ---
 
 ## 5. Reference
@@ -800,10 +841,18 @@ you last observed it. If another input landed first, the call fails with a
 `ResilientTaskException` (`ErrorCode.PreconditionFailed`), whose `ActualLastInputId` tells you the
 current head so you can retry against it.
 
+The head includes inputs that have been accepted but have not executed yet. If A is
+running and B has been queued, the next conditional input names B, not A. Cancelling B
+does not erase the fact that it was accepted. If no head is recorded at all, the
+framework accepts the input and seeds the head instead of asserting an unknown
+predecessor, matching the Python task API.
+
 Pair it with an explicit `InputId` for the turn you are appending: `IfLastInputId` is
 the *precondition* (the head you expect) and `InputId` is the *new* input's id (the
-head you are advancing to). Setting both makes the compare-and-swap unambiguous and
-lets a safe retry reuse the same `InputId` idempotently.
+head you are advancing to). If an earlier attempt committed before its acknowledgement
+was lost, retrying against the old head can report a precondition failure. Reconcile
+the input through application state rather than assuming an error means it was not
+accepted.
 
 ```csharp
 await chat.StartAsync("next",

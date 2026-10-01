@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             IotOperationsOperationalMode? requestDiskPersistence = default;
             IList<DataflowOperationProperties> operations = default;
             IotOperationsProvisioningState? provisioningState = default;
+            DataflowStatus status = default;
             ResourceHealthState? healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,6 +199,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     provisioningState = new IotOperationsProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = DataflowStatus.DeserializeDataflowStatus(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("healthState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -204,7 +219,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IotOperationsDataflowProperties(
@@ -212,6 +227,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 requestDiskPersistence,
                 operations,
                 provisioningState,
+                status,
                 healthState,
                 additionalBinaryDataProperties);
         }

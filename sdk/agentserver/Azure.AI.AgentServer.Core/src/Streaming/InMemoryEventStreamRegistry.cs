@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming.Backings;
@@ -25,6 +27,7 @@ internal sealed class InMemoryEventStreamRegistry :
     private readonly object _gate = new();
     private readonly Dictionary<string, AgentEventStream> _streams = new(StringComparer.Ordinal);
     private readonly Dictionary<string, string> _taskOwners = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, AgentEventStream> _orphanCloseRetries = new(StringComparer.Ordinal);
     private readonly AgentEventStreamOptions _options;
     private readonly ILogger _logger;
     private readonly Timer? _sweepTimer;
@@ -216,6 +219,131 @@ internal sealed class InMemoryEventStreamRegistry :
             _taskOwners[inputId] = taskId;
             return new ValueTask<AgentEventStream?>(created);
         }
+    }
+
+    public async Task<int> CloseOrphanTaskStreamsAsync(
+        Func<string, string, ValueTask<bool>> shouldClose,
+        CancellationToken cancellationToken = default)
+    {
+        string? directory = _options.Configuration.StorageDirectory;
+        if (directory is null || !Directory.Exists(directory))
+        {
+            // Non-persistent backing: streams do not survive a restart, so there are no orphans.
+            return 0;
+        }
+
+        int failures = 0;
+
+        // Complete closes that failed on a prior pass. Their terminal marker is already readable on
+        // disk, so the IsFileTerminated peek below would skip them before the retry is reached;
+        // re-close the cached instance directly. The backing self-repairs its unacknowledged tail
+        // (rollback + re-append + re-flush), so a transient durability-flush failure is actually
+        // completed and published rather than left half-closed behind a readable-but-unpublished
+        // marker. This runs only at cold start, so no in-process producer can be closed here.
+        if (_orphanCloseRetries.Count > 0)
+        {
+            foreach (KeyValuePair<string, AgentEventStream> pending in _orphanCloseRetries.ToArray())
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                try
+                {
+                    await pending.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
+                    _orphanCloseRetries.Remove(pending.Key);
+                }
+                catch (OperationCanceledException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    failures++;
+                    _logger.LogWarning(ex, "Orphan-stream sweep close retry failed for {Input}.", pending.Key);
+                }
+            }
+        }
+
+        foreach (string jsonl in Directory.EnumerateFiles(directory, "*.jsonl"))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            try
+            {
+                string stem = Path.GetFileNameWithoutExtension(jsonl);
+
+                // Only a verbatim (self-mapping) stem is the original input id; a hash-encoded stem
+                // cannot be inverted, so it is left untouched.
+                if (!FileBackedReplayEventStream.IsSelfMappingStem(stem))
+                {
+                    continue;
+                }
+
+                // Establish ownership BEFORE reading any history: a standalone (non-task) stream has
+                // no owner sidecar and is skipped without touching the — potentially large — log body.
+                string ownerPath = Path.Combine(directory, stem + ".owner");
+                if (!File.Exists(ownerPath))
+                {
+                    continue;
+                }
+
+                string taskId = File.ReadAllText(ownerPath, Encoding.UTF8).Trim();
+                if (taskId.Length == 0)
+                {
+                    continue;
+                }
+
+                string inputId = stem;
+
+                // Streams attempted-and-failed on a prior pass are owned by the retry block above;
+                // skip them here so a single pass never attempts the same close twice.
+                if (_orphanCloseRetries.ContainsKey(inputId))
+                {
+                    continue;
+                }
+
+                // Skip streams that are already closed. The terminal check reads only the file's
+                // tail, so a large retired log is not loaded in full just to confirm it needs no
+                // recovery, and the sweep never bursts open every historical retired stream.
+                if (FileBackedReplayEventStream.IsFileTerminated(jsonl))
+                {
+                    continue;
+                }
+
+                if (!await shouldClose(taskId, inputId).ConfigureAwait(false))
+                {
+                    continue;
+                }
+
+                AgentEventStream? stream = await GetTaskStreamAsync(taskId, inputId, cancellationToken).ConfigureAwait(false);
+                if (stream is not null)
+                {
+                    try
+                    {
+                        await stream.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        _orphanCloseRetries.Remove(inputId);
+                    }
+                    catch (Exception)
+                    {
+                        // Remember the touched instance so a later pass completes its close directly,
+                        // bypassing the peek (which now sees the readable-but-unpublished marker).
+                        _orphanCloseRetries[inputId] = stream;
+                        throw;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // A live writer still holding the lock, an unreadable entry, or a transient error must
+                // not abort the rest of the sweep; skip this file, count it, and let the caller retry.
+                failures++;
+                _logger.LogWarning(ex, "Orphan-stream sweep skipped {File}.", jsonl);
+            }
+        }
+
+        return failures;
     }
 
     public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default)

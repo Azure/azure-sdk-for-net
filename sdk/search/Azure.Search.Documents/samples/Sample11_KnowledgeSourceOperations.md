@@ -7,6 +7,7 @@ For more information, see the [agentic retrieval documentation](https://learn.mi
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_Namespaces
+using System.IO;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -35,6 +36,28 @@ SearchIndexKnowledgeSource searchIndexSource = new SearchIndexKnowledgeSource(
         {
             new SearchIndexFieldReference("hotelId"),
             new SearchIndexFieldReference("hotelName"),
+        },
+
+        // Guide query planning toward useful filters and boosts.
+        QueryHints = new SearchIndexKnowledgeSourceQueryHints
+        {
+            Filters =
+            {
+                new SearchIndexKnowledgeSourceFilterHint(
+                    "category",
+                    new[] { "Luxury", "Budget" })
+                {
+                    FilterInstructions = "Use this field when the user specifies a hotel category."
+                }
+            },
+            Boosts =
+            {
+                new SearchIndexKnowledgeSourceFieldValueBoost("category", 2.0)
+                {
+                    FieldValues = { "Luxury" },
+                    BoostInstructions = "Boost luxury hotels when premium amenities are requested."
+                }
+            }
         }
     })
 {
@@ -43,6 +66,91 @@ SearchIndexKnowledgeSource searchIndexSource = new SearchIndexKnowledgeSource(
 
 KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(searchIndexSource);
 Console.WriteLine($"Created knowledge source '{createdSource.Name}'");
+```
+
+## Create a Private Blob Knowledge Source and Inspect Its Analyzer
+
+This live-only scenario requires a supported indexed Blob source, private connectivity from the Search service to its dependencies, an attached AI Services resource, and an embedding deployment. `NetworkAccessMode.Private` is a create-time ingestion setting. With minimal extraction and AI Services attached, the service detects language and selects an analyzer on the generated index; analyzer selection is not a query-time option. Services must define and test their unsupported-language fallback behavior separately.
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample11_KnowledgeSource_PrivateBlob
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+AzureKeyCredential credential = new AzureKeyCredential(
+    Environment.GetEnvironmentVariable("SEARCH_API_KEY"));
+SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
+
+string knowledgeSourceName = "my-private-blob-source";
+string storageConnectionString = Environment.GetEnvironmentVariable("STORAGE_CONNECTION_STRING");
+string containerName = Environment.GetEnvironmentVariable("STORAGE_CONTAINER_NAME");
+string aiServicesEndpoint = Environment.GetEnvironmentVariable("AI_SERVICES_ENDPOINT");
+string aiServicesKey = Environment.GetEnvironmentVariable("AI_SERVICES_KEY");
+string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
+string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
+
+KnowledgeSourceIngestionParameters ingestion = new KnowledgeSourceIngestionParameters
+{
+    // Private is a create-time setting for supported indexed sources.
+    NetworkAccessMode = KnowledgeSourceNetworkAccessMode.Private,
+    ContentExtractionMode = KnowledgeSourceContentExtractionMode.Minimal,
+    AiServices = new AIServices(new Uri(aiServicesEndpoint))
+    {
+        ApiKey = aiServicesKey
+    },
+    EmbeddingModel = new KnowledgeSourceAzureOpenAIVectorizer
+    {
+        AzureOpenAIParameters = new AzureOpenAIVectorizerParameters
+        {
+            ResourceUri = new Uri(openAIEndpoint),
+            ApiKey = openAIKey,
+            DeploymentName = "text-embedding-3-large",
+            ModelName = "text-embedding-3-large"
+        }
+    }
+};
+
+AzureBlobKnowledgeSource blobSource = new AzureBlobKnowledgeSource(
+    knowledgeSourceName,
+    new AzureBlobKnowledgeSourceParameters(storageConnectionString, containerName)
+    {
+        IngestionParameters = ingestion
+    });
+
+await indexClient.CreateKnowledgeSourceAsync(blobSource);
+
+// Wait for the service to report the generated index. Creation is asynchronous.
+AzureBlobKnowledgeSource persisted = null;
+for (int attempt = 0; attempt < 12; attempt++)
+{
+    persisted = (AzureBlobKnowledgeSource)await indexClient.GetKnowledgeSourceAsync(knowledgeSourceName);
+    if (persisted.AzureBlobParameters.CreatedResources?.AdditionalProperties.ContainsKey("index") == true)
+    {
+        break;
+    }
+    await Task.Delay(TimeSpan.FromSeconds(5));
+}
+
+KnowledgeSourceStatus status = await indexClient.GetKnowledgeSourceStatusAsync(knowledgeSourceName);
+
+Console.WriteLine($"Synchronization status: {status.SynchronizationStatus}");
+if (persisted?.AzureBlobParameters.CreatedResources is null)
+{
+    throw new InvalidOperationException("The service did not report generated resources.");
+}
+foreach (KeyValuePair<string, string> resource in persisted.AzureBlobParameters.CreatedResources.AdditionalProperties)
+{
+    Console.WriteLine($"Generated {resource.Key}: {resource.Value}");
+}
+
+if (!persisted.AzureBlobParameters.CreatedResources.AdditionalProperties.TryGetValue(
+    "index",
+    out string generatedIndexName))
+{
+    throw new InvalidOperationException("The service did not report a generated index.");
+}
+
+SearchIndex generatedIndex = await indexClient.GetIndexAsync(generatedIndexName);
+SearchField microsoftAnalyzerField = generatedIndex.Fields.FirstOrDefault(
+    field => field.AnalyzerName == LexicalAnalyzerName.EnMicrosoft);
+Console.WriteLine($"Service-selected analyzer: {microsoftAnalyzerField?.AnalyzerName}");
 ```
 
 ## Create a Web Knowledge Source
@@ -108,11 +216,18 @@ AzureKeyCredential credential = new AzureKeyCredential(
 
 SearchIndexClient indexClient = new SearchIndexClient(endpoint, credential);
 
-// List all knowledge sources
-await foreach (KnowledgeSource source in indexClient.GetKnowledgeSourcesAsync())
+// Request small pages and let AsyncPageable follow opaque continuation
+// state internally. Do not parse or modify continuation tokens.
+HashSet<string> sourceNames = new HashSet<string>();
+await foreach (KnowledgeSource source in indexClient.GetKnowledgeSourcesAsync(pageSize: 1))
 {
+    if (!sourceNames.Add(source.Name))
+    {
+        throw new InvalidDataException($"Duplicate knowledge source '{source.Name}' was returned.");
+    }
     Console.WriteLine($"Knowledge source: {source.Name} ({source.GetType().Name})");
 }
+Console.WriteLine($"Listed {sourceNames.Count} unique knowledge sources.");
 ```
 
 ## Update a Knowledge Source

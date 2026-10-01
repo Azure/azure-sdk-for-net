@@ -78,7 +78,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedGeoBackupRegions;
+                return Properties is null ? default : Properties.SupportedGeoBackupRegions;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedFlexibleServerEditions;
+                return Properties is null ? default : Properties.SupportedFlexibleServerEditions;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedServerVersions;
+                return Properties is null ? default : Properties.SupportedServerVersions;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.MySql
         {
             get
             {
-                return Properties.SupportedFeatures;
+                return Properties is null ? default : Properties.SupportedFeatures;
             }
         }
 

@@ -1,16 +1,17 @@
 # Release History
 
-## 1.4.0 (Unreleased)
+## 1.5.0 (2026-09-09)
+
+### Features Added
+
+- Upgraded the service API version to `2026-08-01`.
+- Added support for retrieving the iSCSI mount scripts of an instant item recovery operation via the new `InstantItemRecoveryOperationResult` API, including the `InstantItemRecoveryTarget` and `ClientScriptForConnect` models.
+
+## 1.4.0 (2026-08-26)
 
 ### Features Added
 
 - Upgraded the service API version to `2026-07-01`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.4.0-beta.1 (2026-05-07)
 

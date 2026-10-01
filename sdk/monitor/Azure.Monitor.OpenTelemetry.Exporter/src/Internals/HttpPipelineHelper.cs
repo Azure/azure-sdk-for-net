@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 : default;
         }
 
-        internal static bool TryGetTrackResponse(HttpMessage message, [NotNullWhen(true)] out TrackResponse? trackResponse)
+        internal static bool TryGetTrackResponse(HttpMessage message, [NotNullWhen(true)] out TrackResult? trackResponse)
         {
             if (message.Response.ContentStream == null)
             {
@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             using (JsonDocument document = JsonDocument.Parse(message.Response.ContentStream, default))
             {
-                var value = TrackResponse.DeserializeTrackResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+                var value = TrackResult.DeserializeTrackResult(document.RootElement, ModelSerializationExtensions.WireOptions);
                 trackResponse = Response.FromValue(value, message.Response);
                 return true;
             }
@@ -137,11 +137,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <summary>
         /// Parse a PartialSuccess response from ingestion.
         /// </summary>
-        /// <param name="trackResponse"><see cref="TrackResponse"/> is the parsed response from ingestion.</param>
+        /// <param name="trackResponse"><see cref="TrackResult"/> is the parsed response from ingestion.</param>
         /// <param name="content"><see cref="RequestContent"/> that was sent to ingestion.</param>
         /// <param name="successCounter">Counter of successfully sent telemetry.</param>
         /// <returns>Telemetry that will be tried.</returns>
-        private static (byte[]? PartialContent, TelemetrySchemaTypeCounter? SuccessCounter, TelemetrySchemaTypeCounter? RetryCounter, TelemetrySchemaTypeCounter? DroppedCounter) ProcessPartialSuccessWithCounting(TrackResponse trackResponse, RequestContent? content, TelemetrySchemaTypeCounter? successCounter)
+        private static (byte[]? PartialContent, TelemetrySchemaTypeCounter? SuccessCounter, TelemetrySchemaTypeCounter? RetryCounter, TelemetrySchemaTypeCounter? DroppedCounter) ProcessPartialSuccessWithCounting(TrackResult trackResponse, RequestContent? content, TelemetrySchemaTypeCounter? successCounter)
         {
             if (content == null || !TryGetRequestContent(content, out var requestContent))
             {
@@ -373,7 +373,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, NetworkSdkStatsManager? networkSdkStatsManager)
         {
-            if (!TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
+            if (!TryGetTrackResponse(httpMessage, out TrackResult? trackResponse))
             {
                 return;
             }
@@ -413,7 +413,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var (partialContent, successCounter, retryCounter, droppedCounter) = ProcessPartialSuccessWithCounting(trackResponse, httpMessage.Request.Content, telemetrySchemaTypeCounter);
 
-            if (successCounter != null)
+            // Partial-success counting synthesizes its own counters, so a caller that opted out of
+            // customer SDK stats by passing none would otherwise still publish them.
+            var trackCustomerStats = telemetrySchemaTypeCounter != null;
+
+            if (trackCustomerStats && successCounter != null)
             {
                 CustomerSdkStatsHelper.TrackSuccess(successCounter);
             }
@@ -424,11 +428,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 result.PartialSuccessHandled = true;
 
                 // No retry possible - track everything else as dropped
-                if (retryCounter != null)
+                if (trackCustomerStats && retryCounter != null)
                 {
                     CustomerSdkStatsHelper.TrackDropped(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success - no retry");
                 }
-                if (droppedCounter != null)
+                if (trackCustomerStats && droppedCounter != null)
                 {
                     CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
                 }
@@ -449,18 +453,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             result.SavedToStorage = result.WillRetry;
             result.PartialSuccessHandled = result.WillRetry;
 
-            if (result.WillRetry && retryCounter != null)
+            if (trackCustomerStats && retryCounter != null)
             {
-                CustomerSdkStatsHelper.TrackRetry(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success");
-            }
-            else if (retryCounter != null)
-            {
-                // Storage failed - track as dropped due to storage issues
-                CustomerSdkStatsHelper.TrackDropped(retryCounter, (int)DropCode.ClientPersistenceIssue, "Storage failure");
+                if (result.WillRetry)
+                {
+                    CustomerSdkStatsHelper.TrackRetry(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success");
+                }
+                else
+                {
+                    // Storage failed - track as dropped due to storage issues
+                    CustomerSdkStatsHelper.TrackDropped(retryCounter, (int)DropCode.ClientPersistenceIssue, "Storage failure");
+                }
             }
 
             // Track non-retriable errors as dropped
-            if (droppedCounter != null)
+            if (trackCustomerStats && droppedCounter != null)
             {
                 CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
             }

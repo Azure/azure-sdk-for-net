@@ -147,7 +147,7 @@ namespace Azure.AI.Discovery.Tests
                 string operationId = await StartIndexingOperationIdAsync(client);
                 while (DateTimeOffset.UtcNow < overallDeadline)
                 {
-                    KnowledgeBaseOperationResponse op = await client.GetOperationStatusAsync(KbName, operationId);
+                    KnowledgeBaseOperationResult op = await client.GetOperationStatusAsync(KbName, operationId);
                     opStatus = op.Status.ToString().ToLowerInvariant();
                     if (terminal.Contains(opStatus))
                     {
@@ -220,7 +220,7 @@ namespace Azure.AI.Discovery.Tests
             KnowledgeBases client = CreateKnowledgeBasesClient();
             string operationId = await StartIndexingOperationIdAsync(client);
 
-            KnowledgeBaseOperationResponse status = await client.GetOperationStatusAsync(KbName, operationId);
+            KnowledgeBaseOperationResult status = await client.GetOperationStatusAsync(KbName, operationId);
 
             Assert.That(status, Is.Not.Null);
             Assert.That(status.Id, Is.Not.Null);

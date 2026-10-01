@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Kusto
         /// <param name="resourceVersion"> The resource API version. </param>
         public KustoReadWriteDatabase(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign(KustoKind.ReadWrite);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -127,8 +128,8 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets the SuspensionStartOn. </summary>
-        public BicepValue<DateTimeOffset> SuspensionStartOn
+        /// <summary> Gets the SuspensionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> SuspensionStartsOn
         {
             get
             {
@@ -136,7 +137,7 @@ namespace Azure.Provisioning.Kusto
                 {
                     Properties = new ReadWriteDatabaseProperties();
                 }
-                return Properties.SuspensionStartOn;
+                return Properties.SuspensionStartsOn;
             }
         }
 
@@ -144,7 +145,6 @@ namespace Azure.Provisioning.Kusto
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "ReadWrite");
             _properties = DefineModelProperty<ReadWriteDatabaseProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

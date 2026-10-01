@@ -207,6 +207,10 @@ ResponsesServer.Run<MyHandler>(args);
 
 This creates a Kestrel host with OpenTelemetry, health checks, identity headers, and the Responses protocol endpoints — all in one line.
 
+In hosted Foundry environments, this path binds the Foundry credential, project endpoint, and
+response options from the `ResponsesServer` configuration section. The same bound identity and
+endpoint are used for response storage and resilient-task storage.
+
 ### With Options / Builder Pattern
 
 For agents that need to configure services or host options before startup, use the builder pattern:

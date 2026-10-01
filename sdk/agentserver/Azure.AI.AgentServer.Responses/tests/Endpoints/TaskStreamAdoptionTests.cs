@@ -99,6 +99,11 @@ public sealed class TaskStreamAdoptionTests
             return _taskInner.GetOrCreateTaskStreamAsync(taskId, inputId, cancellationToken);
         }
 
+        public Task<int> CloseOrphanTaskStreamsAsync(
+            Func<string, string, ValueTask<bool>> shouldClose,
+            CancellationToken cancellationToken = default)
+            => _taskInner.CloseOrphanTaskStreamsAsync(shouldClose, cancellationToken);
+
         public void Dispose() => _provider.Dispose();
     }
 }

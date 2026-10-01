@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="SyntheticReplacementPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskPolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="SyntheticReplacementPolicyType"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBaseRedactionPolicy))]
     public abstract partial class BaseRedactionPolicy : IJsonModel<BaseRedactionPolicy>
@@ -151,12 +151,12 @@ namespace Azure.AI.Language.Text
                 {
                     case "characterMask":
                         return CharacterMaskPolicyType.DeserializeCharacterMaskPolicyType(element, options);
-                    case "syntheticReplacement":
-                        return SyntheticReplacementPolicyType.DeserializeSyntheticReplacementPolicyType(element, options);
-                    case "noMask":
-                        return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
                     case "entityMask":
                         return EntityMaskPolicyType.DeserializeEntityMaskPolicyType(element, options);
+                    case "noMask":
+                        return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
+                    case "syntheticReplacement":
+                        return SyntheticReplacementPolicyType.DeserializeSyntheticReplacementPolicyType(element, options);
                 }
             }
             return UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);

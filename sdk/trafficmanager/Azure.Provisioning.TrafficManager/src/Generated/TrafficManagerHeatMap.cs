@@ -77,21 +77,21 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.Endpoints;
+                return Properties is null ? default : Properties.Endpoints;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.TrafficFlows;
+                return Properties is null ? default : Properties.TrafficFlows;
             }
         }
 

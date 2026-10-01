@@ -15,9 +15,15 @@ namespace Azure.Generator.Management.Primitives
     {
         private const string ReadmeTemplateResourceName = "Azure.Generator.Management.Assets.README.md.template";
         private const string PackageNamePlaceholder = "{packageName}";
+        private const string SharedSourceLinkBase = "Shared/Core";
 
         protected override IReadOnlyList<CSharpProjectCompileInclude> BuildCompileIncludes()
-            => Array.Empty<CSharpProjectCompileInclude>();
+            =>
+            [
+                new CSharpProjectCompileInclude(
+                    GetCompileInclude("ExperimentalAttribute.cs"),
+                    SharedSourceLinkBase)
+            ];
 
         /// <summary>
         /// Gets the content for the solution file. When generating into an SDK package

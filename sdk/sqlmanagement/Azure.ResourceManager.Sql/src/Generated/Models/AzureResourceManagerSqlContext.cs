@@ -123,6 +123,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(EndpointCertificateListResult))]
     [ModelReaderWriterBuildable(typeof(EndpointCertificateProperties))]
     [ModelReaderWriterBuildable(typeof(EndpointCertificateResource))]
+    [ModelReaderWriterBuildable(typeof(EndpointTrustedRootCertificateInfo))]
     [ModelReaderWriterBuildable(typeof(ExtendedDatabaseBlobAuditingPolicyData))]
     [ModelReaderWriterBuildable(typeof(ExtendedDatabaseBlobAuditingPolicyListResult))]
     [ModelReaderWriterBuildable(typeof(ExtendedDatabaseBlobAuditingPolicyProperties))]

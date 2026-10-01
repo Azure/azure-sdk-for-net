@@ -110,13 +110,52 @@ public class CredentialSettingsIsolationTests
             Is.EqualTo(ambientKind is "keyed" or "both" ? 1 : 0));
 
         using ServiceProvider provider = services.BuildServiceProvider(validateScopes: true);
-        Assert.That(provider.GetRequiredService<HttpPipeline>(), Is.Not.Null);
+        var responsesProvider =
+            (FoundryStorageProvider)provider.GetRequiredService<ResponsesProvider>();
+        Assert.That(responsesProvider.Pipeline, Is.Not.Null);
+        Assert.That(provider.GetService<HttpPipeline>(), Is.Null,
+            "The credential-bound response pipeline must remain private to FoundryStorageProvider.");
         Assert.That(provider.GetRequiredService<ITaskStore>(), Is.InstanceOf<HostedTaskStore>());
         var environment = provider.GetRequiredService<TaskHostEnvironment>();
         Assert.That(environment.Credential, Is.SameAs(credential));
         Assert.That(environment.Endpoint, Is.EqualTo(endpoint));
         Assert.That(keyedCalls, Is.Zero);
         Assert.That(unkeyedCalls, Is.Zero);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void ExplicitHostedSettingsIgnoreAmbientHttpPipeline(bool ambientFirst)
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+        var credential = new ProbeCredential();
+        var endpoint = new Uri("https://configured.example/project");
+        var storage = new ResponsesHostedStorage(
+            credential,
+            endpoint,
+            ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
+                endpoint,
+                isDevelopment: false));
+        HttpPipeline ambientPipeline = HttpPipelineBuilder.Build(new FoundryStorageClientOptions());
+
+        if (ambientFirst)
+        {
+            services.AddSingleton(ambientPipeline);
+        }
+
+        services.AddResponsesServerCore(o => o.ResilientBackground = true, storage);
+
+        if (!ambientFirst)
+        {
+            services.AddSingleton(ambientPipeline);
+        }
+
+        using ServiceProvider provider = services.BuildServiceProvider(validateScopes: true);
+        var responsesProvider =
+            (FoundryStorageProvider)provider.GetRequiredService<ResponsesProvider>();
+
+        Assert.That(responsesProvider.Pipeline, Is.Not.SameAs(ambientPipeline));
     }
 
     private sealed class ProbeCredential : TokenCredential

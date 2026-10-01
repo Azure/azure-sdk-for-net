@@ -39,8 +39,9 @@ public class ResponsesServerSettings : ClientSettings
 
     /// <summary>
     /// Gets or sets the maximum number of conversation history items fetched by
-    /// <see cref="ResponseContext.GetHistoryAsync"/>. Replaces the
-    /// <c>DEFAULT_FETCH_HISTORY_ITEM_COUNT</c> environment variable. Default: 100.
+    /// <see cref="ResponseContext.GetHistoryAsync"/>, or <c>-1</c> to fetch all available
+    /// history. Replaces the <c>DEFAULT_FETCH_HISTORY_ITEM_COUNT</c> environment variable.
+    /// Default: <c>-1</c>.
     /// </summary>
     public int DefaultFetchHistoryCount { get; set; } = ResponsesServerOptions.DefaultFetchHistoryCountValue;
 
@@ -96,13 +97,13 @@ public class ResponsesServerSettings : ClientSettings
                 NumberStyles.Integer,
                 CultureInfo.InvariantCulture,
                 out int fetchCount)
-                || fetchCount <= 0)
+                || (fetchCount != -1 && fetchCount <= 0))
             {
                 throw InvalidConfiguration(
                     section,
                     "DefaultFetchHistoryCount",
                     fetchCountValue,
-                    "a positive integer");
+                    "-1 (unlimited) or a positive integer");
             }
 
             DefaultFetchHistoryCount = fetchCount;

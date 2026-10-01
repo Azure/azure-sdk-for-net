@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> The AutoExportJobUpdateProperties. </summary>
+    /// <summary> Properties for updating an auto export job. </summary>
     internal partial class AutoExportJobUpdateProperties : IJsonModel<AutoExportJobUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AutoExportJobUpdateProperties(adminStatus, additionalBinaryDataProperties);

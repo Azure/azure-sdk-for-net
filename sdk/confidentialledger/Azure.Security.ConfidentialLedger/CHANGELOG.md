@@ -1,14 +1,17 @@
 # Release History
 
-## 2.0.0-beta.4 (Unreleased)
+## 2.0.0-beta.5 (2026-09-30)
 
 ### Features Added
 
-### Breaking Changes
+- Added support for the `2026-07-31-preview` service API version (now the default `ServiceVersion`).
+- Added a `waitForCommit` parameter to `PostLedgerEntry`/`PostLedgerEntryAsync`. When set to `true`, the service holds the response until the transaction is globally committed and the returned `Operation` is already completed, so no additional status polling is required.
 
-### Bugs Fixed
+## 2.0.0-beta.4 (2026-09-18)
 
-### Other Changes
+### Features Added
+
+- Added `ConfidentialLedgerClientOptions.ServiceVersion.V2026_02_23` for the "2026-02-23" API version. This is now the default service version used by `ConfidentialLedgerClientOptions()` and by configuration-based (`ConfidentialLedgerClientSettings`) construction, replacing `V2024_12_09_Preview`. Transaction writes (`PostLedgerEntry`/`PostLedgerEntryAsync`, `CreateLedgerEntry`/`CreateLedgerEntryAsync`) and `GetReceipt`/`GetReceiptAsync` now send `api-version=2026-02-23` unless an earlier `ServiceVersion` is explicitly selected.
 
 ## 2.0.0-beta.3 (2026-08-17)
 
@@ -41,7 +44,6 @@
 
 ### Features Added
 
-- Added support for stable API version 2026-02-23.
 - Added opt-in support for the Azure Confidential Ledger Gateway via `ConfidentialLedgerClientOptions.UseLedgerGateway`. When enabled:
   - The SDK skips the per-ledger CCF identity-service TLS bootstrap. The gateway uses publicly-rooted certificates, so the OS trust store is sufficient.
   - `ConfidentialLedgerClient.PostLedgerEntry` accepts an HTTP 202 response and returns an operation whose `Id` is the gateway-assigned `operationId` (read from the `x-ms-webfe-operation-id` response header, with a fallback to the response body). The operation transparently polls `GET /app/operations/{operationId}` and surfaces the underlying CCF transaction once committed.

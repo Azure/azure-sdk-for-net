@@ -61,8 +61,7 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
 
                 // Persist before mutating in-memory state so a disk failure does not leave
                 // an event that subscribers can see but that never reached durable storage. On
-                // emit-and-close, persist the event and terminal marker as one durable unit so a
-                // crash cannot leave the event without its terminal sentinel.
+                // emit-and-close, persist both the event and terminal marker before publication.
                 if (close)
                 {
                     PersistEmitAndClose(item, now);
@@ -107,9 +106,9 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
                 double now = Now();
                 if (_state == StreamState.Active)
                 {
+                    PersistClose();
                     _state = StreamState.Closed;
                     _closeTime = now;
-                    PersistClose();
                     _hub.CompleteAll();
                 }
 

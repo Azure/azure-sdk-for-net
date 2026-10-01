@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<string> _name;
         private SystemData _systemData;
         private BicepValue<AzureLocation> _location;
+        private BicepValue<DataConnectionKind> _kind;
         private ResourceReference<KustoDatabase> _parent;
 
         /// <summary> Creates a new KustoDataConnection. </summary>
@@ -82,6 +83,16 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
+        /// <summary> Kind of the endpoint for the data connection. </summary>
+        internal BicepValue<DataConnectionKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
+        }
+
         /// <summary> Gets or sets the Parent. </summary>
         public KustoDatabase Parent
         {
@@ -105,6 +116,7 @@ namespace Azure.Provisioning.Kusto
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _kind = DefineProperty<DataConnectionKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _parent = DefineResource<KustoDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

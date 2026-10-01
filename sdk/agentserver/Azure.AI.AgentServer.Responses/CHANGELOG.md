@@ -27,6 +27,16 @@
   `IsClientCancelled` are now get-only virtual passthroughs over the `Shutdown` /
   `ClientCancellation` tokens; the settable `IsShutdownRequested` was removed.
 
+### Bugs Fixed
+
+- Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
+  automatic truncation of conversation history. Positive limits remain supported.
+- Hosted `ResponsesServer.Run` and `AgentHostBuilder.AddResponses` now bind through the
+  `ResponsesServer` settings section instead of routing through the local-only service-collection
+  registration path.
+- The Foundry response-storage HTTP pipeline is now private to its provider, preventing unrelated
+  ambient pipeline registrations from replacing the configured credential-bound pipeline.
+
 ### Other Changes
 
 - Registered the Responses event-stream backing as a protocol default so an explicit

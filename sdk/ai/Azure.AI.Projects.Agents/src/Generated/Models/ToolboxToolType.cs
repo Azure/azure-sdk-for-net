@@ -33,9 +33,11 @@ namespace Azure.AI.Projects.Agents
         ToolboxSearch,
         /// <summary> ToolboxSearchPreview. </summary>
         ToolboxSearchPreview,
-        /// <summary> WebIqPreview. </summary>
-        WebIqPreview,
         /// <summary> A2a. </summary>
-        A2a
+        A2a,
+        /// <summary> Shell. </summary>
+        Shell,
+        /// <summary> WebIqPreview. </summary>
+        WebIqPreview
     }
 }

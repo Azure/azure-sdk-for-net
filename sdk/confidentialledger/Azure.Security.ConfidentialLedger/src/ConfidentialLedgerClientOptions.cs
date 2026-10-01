@@ -9,7 +9,7 @@ namespace Azure.Security.ConfidentialLedger
     /// <summary> Client options for ConfidentialLedger library clients. </summary>
     public partial class ConfidentialLedgerClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_09_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_07_31_Preview;
         internal string Version { get; }
 
         /// <summary>
@@ -94,6 +94,10 @@ namespace Azure.Security.ConfidentialLedger
             V2024_08_22_Preview = 3,
             /// <summary> Service version "2024-12-09-preview". </summary>
             V2024_12_09_Preview = 4,
+            /// <summary> Service version "2026-02-23". </summary>
+            V2026_02_23 = 5,
+            /// <summary> Service version "2026-07-31-preview". </summary>
+            V2026_07_31_Preview = 6,
         }
 
         /// <summary> Initializes new instance of ConfidentialLedgerClientOptions. </summary>
@@ -105,6 +109,8 @@ namespace Azure.Security.ConfidentialLedger
                 ServiceVersion.V2024_01_26_Preview => "2024-01-26-preview",
                 ServiceVersion.V2024_08_22_Preview => "2024-08-22-preview",
                 ServiceVersion.V2024_12_09_Preview => "2024-12-09-preview",
+                ServiceVersion.V2026_02_23 => "2026-02-23",
+                ServiceVersion.V2026_07_31_Preview => "2026-07-31-preview",
                 _ => throw new NotSupportedException()
             };
         }

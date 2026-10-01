@@ -605,8 +605,8 @@ namespace Azure.Provisioning.ContainerService
     public partial class ContainerServiceTimeSpan : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerServiceTimeSpan() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ContainerServiceTrustedAccessRoleBinding : Azure.Provisioning.Primitives.ProvisionableResource

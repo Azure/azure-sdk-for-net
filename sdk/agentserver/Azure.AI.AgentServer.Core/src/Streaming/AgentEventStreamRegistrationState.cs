@@ -31,38 +31,41 @@ internal sealed class AgentEventStreamRegistrationState
             return new AgentEventStreamOptions();
         }
 
-        MaterializedRequest[] materialized = _requests
-            .Select(request => new MaterializedRequest(
-                request.Source,
-                request.Priority,
-                request.ConfigurationFactory(serviceProvider)))
-            .Where(request => request.Configuration is not null)
-            .ToArray();
-        if (materialized.Length == 0)
+        foreach (AgentEventStreamRegistrationPriority selectedPriority in
+            _requests.Select(request => request.Priority).Distinct().OrderByDescending(priority => priority))
         {
-            return new AgentEventStreamOptions();
+            MaterializedRequest[] selected = _requests
+                .Where(request => request.Priority == selectedPriority)
+                .Select(request => new MaterializedRequest(
+                    request.Source,
+                    request.Priority,
+                    request.ConfigurationFactory(serviceProvider)))
+                .Where(request => request.Configuration is not null)
+                .ToArray();
+            if (selected.Length == 0)
+            {
+                continue;
+            }
+
+            MaterializedRequest first = selected[0];
+            MaterializedRequest? conflict =
+                selected.FirstOrDefault(request =>
+                    !request.Configuration!.Equals(first.Configuration));
+
+            if (conflict is not null)
+            {
+                throw new InvalidOperationException(
+                    $"Conflicting AgentEventStream backing selections at " +
+                    $"'{FormatPriority(selectedPriority)}' precedence: " +
+                    $"'{first.Source}' requested {first.Configuration}, while " +
+                    $"'{conflict.Source}' requested {conflict.Configuration}. " +
+                    "Configure one explicit application backing to override protocol defaults.");
+            }
+
+            return new AgentEventStreamOptions(first.Configuration!);
         }
 
-        AgentEventStreamRegistrationPriority selectedPriority =
-            materialized.Max(request => request.Priority);
-        MaterializedRequest[] selected =
-            materialized.Where(request => request.Priority == selectedPriority).ToArray();
-        MaterializedRequest first = selected[0];
-        MaterializedRequest? conflict =
-            selected.FirstOrDefault(request =>
-                !request.Configuration!.Equals(first.Configuration));
-
-        if (conflict is not null)
-        {
-            throw new InvalidOperationException(
-                $"Conflicting AgentEventStream backing selections at " +
-                $"'{FormatPriority(selectedPriority)}' precedence: " +
-                $"'{first.Source}' requested {first.Configuration}, while " +
-                $"'{conflict.Source}' requested {conflict.Configuration}. " +
-                "Configure one explicit application backing to override protocol defaults.");
-        }
-
-        return new AgentEventStreamOptions(first.Configuration!);
+        return new AgentEventStreamOptions();
     }
 
     private static string FormatPriority(AgentEventStreamRegistrationPriority priority)

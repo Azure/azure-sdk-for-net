@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<ResourceIdentifier> _managedIdentityResourceId;
         private BicepValue<Guid> _managedIdentityObjectId;
         private BicepValue<KustoDatabaseRouting> _databaseRouting;
-        private BicepValue<DateTimeOffset> _retrievalStartOn;
+        private BicepValue<DateTimeOffset> _retrievalStartsOn;
 
         /// <summary> Creates a new EventHubConnectionProperties. </summary>
         public EventHubConnectionProperties()
@@ -188,18 +188,18 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets or sets the RetrievalStartOn. </summary>
-        public BicepValue<DateTimeOffset> RetrievalStartOn
+        /// <summary> Gets or sets the RetrievalStartsOn. </summary>
+        public BicepValue<DateTimeOffset> RetrievalStartsOn
         {
             get
             {
                 Initialize();
-                return _retrievalStartOn;
+                return _retrievalStartsOn;
             }
             set
             {
                 Initialize();
-                _retrievalStartOn.Assign(value);
+                _retrievalStartsOn.Assign(value);
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.Provisioning.Kusto
             _managedIdentityResourceId = DefineProperty<ResourceIdentifier>(nameof(ManagedIdentityResourceId), new string[] { "managedIdentityResourceId" });
             _managedIdentityObjectId = DefineProperty<Guid>(nameof(ManagedIdentityObjectId), new string[] { "managedIdentityObjectId" }, isOutput: true);
             _databaseRouting = DefineProperty<KustoDatabaseRouting>(nameof(DatabaseRouting), new string[] { "databaseRouting" });
-            _retrievalStartOn = DefineProperty<DateTimeOffset>(nameof(RetrievalStartOn), new string[] { "retrievalStartDate" }, format: "O");
+            _retrievalStartsOn = DefineProperty<DateTimeOffset>(nameof(RetrievalStartsOn), new string[] { "retrievalStartDate" }, format: "O");
             DefineAdditionalProperties();
         }
 

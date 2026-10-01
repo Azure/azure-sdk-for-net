@@ -116,16 +116,14 @@ public static class ResponsesServerServiceCollectionExtensions
             // published into the container and no ambient DefaultAzureCredential is created.
             TokenCredential credential = hostedStorage.Credential;
 
-            // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
-            // This automatically provides: retry, request ID, user-agent telemetry,
-            // distributed tracing, logging, and token caching.
-            // The ServerVersionPolicy prepends the composed server version (from all
-            // registered protocols and developer segments) to the User-Agent header.
-            // The FoundryStorageLoggingPolicy is added as a per-retry policy so each
-            // attempt (including retries) is logged with correlation headers.
-            services.TryAddSingleton(sp =>
+            Uri storageBaseUri = hostedStorage.StorageBaseUri;
+            services.TryAddSingleton<ResponsesProvider>(sp =>
             {
-                var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageLoggingPolicy>();
+                // Keep this credential-bound pipeline private to response storage. An unrelated
+                // ambient HttpPipeline registration must not replace it and split response-storage
+                // identity from the credential used by hosted task storage.
+                var logger = sp.GetRequiredService<ILoggerFactory>()
+                    .CreateLogger<FoundryStorageLoggingPolicy>();
                 var options = new FoundryStorageClientOptions();
 
                 var registry = sp.GetService<ServerVersionRegistry>();
@@ -136,15 +134,9 @@ public static class ResponsesServerServiceCollectionExtensions
 
                 options.AddPolicy(new FoundryStorageLoggingPolicy(logger), HttpPipelinePosition.PerRetry);
 
-                return HttpPipelineBuilder.Build(
+                HttpPipeline pipeline = HttpPipelineBuilder.Build(
                     options,
                     new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
-            });
-
-            Uri storageBaseUri = hostedStorage.StorageBaseUri;
-            services.TryAddSingleton<ResponsesProvider>(sp =>
-            {
-                var pipeline = sp.GetRequiredService<HttpPipeline>();
                 return new FoundryStorageProvider(pipeline, storageBaseUri);
             });
         }

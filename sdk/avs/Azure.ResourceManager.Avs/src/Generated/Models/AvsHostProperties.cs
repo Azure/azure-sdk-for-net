@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -24,6 +25,7 @@ namespace Azure.ResourceManager.Avs.Models
         private protected AvsHostProperties(HostKind kind)
         {
             Kind = kind;
+            Licenses = new ChangeTrackingList<HostLicense>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsHostProperties"/>. </summary>
@@ -34,8 +36,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
+        /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IList<HostLicense> licenses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.Avs.Models
             Fqdn = fqdn;
             Maintenance = maintenance;
             FaultDomain = faultDomain;
+            Licenses = licenses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -67,5 +71,8 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Gets the FaultDomain. </summary>
         public string FaultDomain { get; }
+
+        /// <summary> The licenses assigned to the host. </summary>
+        public IList<HostLicense> Licenses { get; }
     }
 }

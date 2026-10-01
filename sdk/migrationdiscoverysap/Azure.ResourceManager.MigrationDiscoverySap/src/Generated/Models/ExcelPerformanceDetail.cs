@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public partial class ExcelPerformanceDetail : PerformanceDetail
     {
         /// <summary> Initializes a new instance of <see cref="ExcelPerformanceDetail"/>. </summary>
-        internal ExcelPerformanceDetail()
+        internal ExcelPerformanceDetail() : base(SapDiscoveryDataSource.Excel)
         {
-            DataSource = SapDiscoveryDataSource.Excel;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExcelPerformanceDetail"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
         /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
-        internal ExcelPerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, serializedAdditionalRawData)
+        internal ExcelPerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, additionalBinaryDataProperties)
         {
             MaxCpuLoad = maxCpuLoad;
             TotalSourceDbSizeGB = totalSourceDbSizeGB;
-            DataSource = dataSource;
         }
 
         /// <summary> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </summary>
         public int? MaxCpuLoad { get; }
+
         /// <summary> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </summary>
         public int? TotalSourceDbSizeGB { get; }
     }

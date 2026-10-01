@@ -1,5 +1,25 @@
 # Release History
 
+## 1.18.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.18.0-beta.1 (2026-09-20)
+
+### Features Added
+
+- Upgraded api-version to 2026-01-01.
+
+### Other Changes
+
+- Added strongly-typed `BastionHostPatch` overloads to `BastionHostResource.Update` and `UpdateAsync`.
+
 ## 1.17.0 (2026-08-21)
 
 ### Features Added

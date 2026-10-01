@@ -89,7 +89,7 @@ namespace Azure.Provisioning.ContainerRegistry
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<ContainerRegistryTokenCertificateName>(nameof(Name), new string[] { "name" });
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiry" });
+            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiry" }, format: "O");
             _thumbprint = DefineProperty<string>(nameof(Thumbprint), new string[] { "thumbprint" });
             _encodedPemCertificate = DefineProperty<string>(nameof(EncodedPemCertificate), new string[] { "encodedPemCertificate" });
             DefineAdditionalProperties();
