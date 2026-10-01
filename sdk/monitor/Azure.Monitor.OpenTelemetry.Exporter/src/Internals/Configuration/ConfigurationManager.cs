@@ -13,8 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
     {
         // OneSettings state is shared by all Azure Monitor exporters in the process.
         private static readonly ConfigurationManager s_instance = new();
-        private readonly object _callbacksLock = new();
-        private readonly List<Func<IReadOnlyDictionary<string, string>, Task>> _callbacks = new();
+        private CallbackRegistration[] _callbacks = Array.Empty<CallbackRegistration>();
         private int _initialized;
 
         private ConfigurationManager()
@@ -35,31 +34,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
         {
             Argument.AssertNotNull(callback, nameof(callback));
 
-            lock (_callbacksLock)
-            {
-                _callbacks.Add(callback);
-            }
+            var registration = new CallbackRegistration(this, callback);
+            var spin = new SpinWait();
 
-            return new CallbackRegistration(this, callback);
+            while (true)
+            {
+                CallbackRegistration[] current = Volatile.Read(ref _callbacks);
+                var updated = new CallbackRegistration[current.Length + 1];
+                Array.Copy(current, updated, current.Length);
+                updated[current.Length] = registration;
+
+                if (ReferenceEquals(
+                    Interlocked.CompareExchange(ref _callbacks, updated, current),
+                    current))
+                {
+                    return registration;
+                }
+
+                spin.SpinOnce();
+            }
         }
 
         internal async Task NotifyCallbacksAsync(IReadOnlyDictionary<string, string> settings)
         {
             Argument.AssertNotNull(settings, nameof(settings));
 
-            Func<IReadOnlyDictionary<string, string>, Task>[] callbacks;
-            lock (_callbacksLock)
-            {
-                // Invoke outside the lock so callbacks can safely register or unregister.
-                callbacks = _callbacks.ToArray();
-            }
+            CallbackRegistration[] callbacks = Volatile.Read(ref _callbacks);
 
             // Await each callback before invoking the next callback for this notification.
-            foreach (Func<IReadOnlyDictionary<string, string>, Task> callback in callbacks)
+            foreach (CallbackRegistration registration in callbacks)
             {
                 try
                 {
-                    await callback(settings).ConfigureAwait(false);
+                    await registration.InvokeAsync(settings).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {
@@ -74,11 +81,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
             return Task.FromResult(OneSettingsConstants.DefaultRefreshInterval);
         }
 
-        private void UnregisterCallback(Func<IReadOnlyDictionary<string, string>, Task> callback)
+        private void UnregisterCallback(CallbackRegistration registration)
         {
-            lock (_callbacksLock)
+            var spin = new SpinWait();
+
+            while (true)
             {
-                _callbacks.Remove(callback);
+                CallbackRegistration[] current = Volatile.Read(ref _callbacks);
+                int index = Array.IndexOf(current, registration);
+                if (index < 0)
+                {
+                    return;
+                }
+
+                var updated = new CallbackRegistration[current.Length - 1];
+                Array.Copy(current, 0, updated, 0, index);
+                Array.Copy(current, index + 1, updated, index, current.Length - index - 1);
+
+                if (ReferenceEquals(
+                    Interlocked.CompareExchange(ref _callbacks, updated, current),
+                    current))
+                {
+                    return;
+                }
+
+                spin.SpinOnce();
             }
         }
 
@@ -95,13 +122,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Configuration
                 _callback = callback;
             }
 
+            internal Task InvokeAsync(IReadOnlyDictionary<string, string> settings)
+            {
+                Func<IReadOnlyDictionary<string, string>, Task>? callback = Volatile.Read(ref _callback);
+                return callback?.Invoke(settings) ?? Task.CompletedTask;
+            }
+
             public void Dispose()
             {
-                Func<IReadOnlyDictionary<string, string>, Task>? callback =
-                    Interlocked.Exchange(ref _callback, null);
-                if (callback != null)
+                if (Interlocked.Exchange(ref _callback, null) != null)
                 {
-                    _manager.UnregisterCallback(callback);
+                    _manager.UnregisterCallback(this);
                 }
             }
         }
