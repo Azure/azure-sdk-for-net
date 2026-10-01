@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -147,6 +148,22 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual(2, transport.Requests.Count);
             Assert.IsTrue(transport.Requests[1].Headers.TryGetValue("Authorization", out string authorization));
             StringAssert.StartsWith("Bearer", authorization);
+        }
+
+        private sealed class HttpPipelineSynchronousPolicyForTest : HttpPipelineSynchronousPolicy
+        {
+            private readonly Action<HttpMessage> _onSend;
+
+            public HttpPipelineSynchronousPolicyForTest(Action<HttpMessage> onSend)
+            {
+                _onSend = onSend;
+            }
+
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                _onSend(message);
+                base.OnSendingRequest(message);
+            }
         }
 
         [Test]

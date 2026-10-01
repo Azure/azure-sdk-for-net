@@ -300,6 +300,39 @@ namespace Azure.Security.KeyVault.Tests
             }
         }
 
+        [Test]
+        public async Task ClaimsChallengeWithoutCachedScopeSurfacesUnauthorized([Values(false, true)] bool evictInFlight)
+        {
+            int tokenRequests = 0;
+            MockCredential credential = new() { GetTokenCallback = (_, _) => tokenRequests++ };
+            ChallengeBasedAuthenticationPolicy policy = new(credential, false);
+            MockResponse claimsChallenge = new MockResponse(401).WithHeader(
+                "WWW-Authenticate",
+                $"Bearer authorization=\"{Authorization}\", error=\"insufficient_claims\", claims=\"e30=\"");
+            Response response;
+            MockTransport transport;
+
+            if (evictInFlight)
+            {
+                await SeedChallengeAsync(s_vaultUri, ValidScope);
+                transport = CreateMockTransport();
+                Task<Response> pending = Task.Run(() => SendGetRequest(transport, policy, uri: s_vaultUri));
+                await transport.RequestGate.WaitForSignal();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
+                transport.RequestGate.Release(claimsChallenge);
+                response = await pending;
+            }
+            else
+            {
+                transport = CreateMockTransport(claimsChallenge);
+                response = await SendGetRequest(transport, policy, uri: s_vaultUri);
+            }
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(tokenRequests, Is.EqualTo(evictInFlight ? 1 : 0));
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
+        }
+
         private async Task SeedChallengeAsync(Uri uri, string scope, bool useScope = true)
         {
             string acquiredScope = null;

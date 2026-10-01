@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 
+- Fixed handling of claims challenges when the authentication challenge cache is empty or cleared while a request is in flight.
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
 - Improved authentication challenge resource validation.
 
