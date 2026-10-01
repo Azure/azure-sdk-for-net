@@ -76,41 +76,38 @@ Sandbox file, volume file, and content package upload convenience methods accept
 
 ### Create and delete a sandbox
 
-```C#
-using Azure;
-using Azure.Containers.Apps.Sandbox;
-using Azure.Containers.Apps.Sandbox.Models;
-using Azure.Identity;
+The following example also uses types from `Azure.Containers.Apps.Sandbox.Models`.
 
-SandboxGroupClient sandboxGroupClient = new SandboxGroupClient(
+```C# Snippet:Azure_Containers_Apps_Sandbox_CreateAndDeleteAsync
+var sandboxGroup = new SandboxGroupClient(
     new Uri("<sandbox-group-endpoint>"),
     "<subscription-id>",
     "<resource-group-name>",
     "<sandbox-group-name>",
     new DefaultAzureCredential());
-
-SandboxesClient sandboxesClient = sandboxGroupClient.GetSandboxesClient();
+SandboxesClient sandboxes = sandboxGroup.GetSandboxesClient();
 CreateSandboxContent content = new CreateSandboxContent
 {
     SourcesRef = new SandboxSource
     {
-        DiskImage = new SandboxSourceDiskImage
-        {
-            Name = "ubuntu",
-            IsPublic = true
-        }
+        DiskImage = new SandboxSourceDiskImage { Name = "ubuntu", IsPublic = true }
     },
     Resources = new SandboxResources("1000m", "2048Mi")
 };
-content.Labels.Add("environment", "development");
 
-Response<SandboxProperties> createResponse =
-    await sandboxesClient.CreateSandboxAsync(content);
-
-Console.WriteLine($"Created sandbox: {createResponse.Value.Id}");
-
-await sandboxesClient.DeleteAsync(createResponse.Value.Id);
+SandboxProperties created = (await sandboxes.CreateSandboxAsync(content)).Value;
+try
+{
+    SandboxProperties current = (await sandboxes.GetPropertiesAsync(created.Id)).Value;
+    Console.WriteLine($"Sandbox {current.Id}: {current.State}");
+}
+finally
+{
+    await sandboxes.DeleteAsync(created.Id);
+}
 ```
+
+For synchronous usage and more details, see the [samples](samples/README.md).
 
 ### List sandboxes
 
