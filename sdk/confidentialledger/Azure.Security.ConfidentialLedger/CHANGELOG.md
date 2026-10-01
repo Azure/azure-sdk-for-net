@@ -1,14 +1,15 @@
 # Release History
 
-## 2.0.0-beta.5 (Unreleased)
+## 2.0.0-beta.5 (2026-09-30)
 
 ### Features Added
 
-### Breaking Changes
+- Added support for the `2026-07-31-preview` service API version, selectable via `ConfidentialLedgerClientOptions.ServiceVersion.V2026_07_31_Preview`. The default `ServiceVersion` remains the latest GA version `V2026_02_23`, so clients that leave the version unspecified are unaffected; preview features such as `waitForCommit` require explicitly opting in to the preview version.
+- Added a `waitForCommit` parameter to `PostLedgerEntry`/`PostLedgerEntryAsync`. When set to `true`, the service holds the response until the transaction is globally committed and the returned `Operation` is already completed, so no additional status polling is required. The operation is only treated as already-completed when the response body confirms `"state": "Committed"`; against an API version or service build that does not support `waitForCommit`, the client falls back to normal status polling.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed retryable transport exceptions being swallowed for writes and reads that are not eligible for failover, including archived-collection history queries. These operations now preserve the original transport exception instead of throwing "Response was not set, make sure SendAsync was called".
 
 ## 2.0.0-beta.4 (2026-09-18)
 

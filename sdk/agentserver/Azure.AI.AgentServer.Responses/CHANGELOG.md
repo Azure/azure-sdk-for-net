@@ -6,6 +6,11 @@
 - Changed the default history fetch limit from 100 to `-1` (unlimited), avoiding
   automatic truncation of conversation history. Positive limits remain supported.
 
+### Other Changes
+
+- Registered the Responses event-stream backing as a protocol default so an explicit
+  application selection takes precedence regardless of registration order.
+
 ## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
