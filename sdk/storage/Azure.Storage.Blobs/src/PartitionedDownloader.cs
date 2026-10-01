@@ -56,8 +56,8 @@ namespace Azure.Storage.Blobs
         private readonly int _maxWorkerCount;
 
         /// <summary>
-        /// The size of the first range requested (which can be larger than the
-        /// other ranges).
+        /// The size of the first range requested. Defaults to the default size
+        /// of subsequent ranges.
         /// </summary>
         private readonly long _initialRangeSize;
 
@@ -118,6 +118,10 @@ namespace Azure.Storage.Blobs
                     : DefaultConcurrentTransfersCount;
             }
 
+            long defaultRangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
+                ? Constants.MaxHashRequestDownloadRange
+                : Constants.DefaultBufferSize;
+
             // Set _rangeSize
             if (transferOptions.MaximumTransferSize.HasValue
                 && transferOptions.MaximumTransferSize.Value > 0)
@@ -126,9 +130,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _rangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
-                    ? Constants.MaxHashRequestDownloadRange
-                    : Constants.DefaultBufferSize;
+                _rangeSize = defaultRangeSize;
             }
 
             // Set _initialRangeSize
@@ -139,9 +141,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                _initialRangeSize = (transferValidation?.ChecksumAlgorithm ?? StorageChecksumAlgorithm.None) != StorageChecksumAlgorithm.None
-                    ? Constants.MaxHashRequestDownloadRange
-                    : Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+                _initialRangeSize = defaultRangeSize;
             }
 
             Argument.AssertNotNull(transferValidation, nameof(transferValidation));
