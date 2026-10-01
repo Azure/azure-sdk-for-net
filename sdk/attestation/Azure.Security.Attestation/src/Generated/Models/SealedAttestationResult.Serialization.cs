@@ -14,58 +14,58 @@ using Azure;
 namespace Azure.Security.Attestation
 {
     /// <summary> The sealed result of an attestation operation. </summary>
-    internal partial class SealedAttestationResponse : IJsonModel<SealedAttestationResponse>
+    internal partial class SealedAttestationResult : IJsonModel<SealedAttestationResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SealedAttestationResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SealedAttestationResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSealedAttestationResponse(document.RootElement, options);
+                        return DeserializeSealedAttestationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SealedAttestationResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SealedAttestationResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SealedAttestationResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SealedAttestationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SealedAttestationResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SealedAttestationResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SealedAttestationResponse IPersistableModel<SealedAttestationResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SealedAttestationResult IPersistableModel<SealedAttestationResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SealedAttestationResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SealedAttestationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SealedAttestationResponse"/> from. </param>
-        public static explicit operator SealedAttestationResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SealedAttestationResult"/> from. </param>
+        public static explicit operator SealedAttestationResult(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSealedAttestationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSealedAttestationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SealedAttestationResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SealedAttestationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.Security.Attestation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SealedAttestationResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SealedAttestationResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Token))
             {
@@ -105,24 +105,24 @@ namespace Azure.Security.Attestation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SealedAttestationResponse IJsonModel<SealedAttestationResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SealedAttestationResult IJsonModel<SealedAttestationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SealedAttestationResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SealedAttestationResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SealedAttestationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SealedAttestationResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SealedAttestationResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSealedAttestationResponse(document.RootElement, options);
+            return DeserializeSealedAttestationResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SealedAttestationResponse DeserializeSealedAttestationResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static SealedAttestationResult DeserializeSealedAttestationResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.Security.Attestation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SealedAttestationResponse(token, additionalBinaryDataProperties);
+            return new SealedAttestationResult(token, additionalBinaryDataProperties);
         }
     }
 }

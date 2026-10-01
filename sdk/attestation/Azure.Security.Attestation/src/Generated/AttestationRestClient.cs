@@ -367,11 +367,11 @@ namespace Azure.Security.Attestation
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SealedAttestationResponse> AttestAzureGuest(string attestationInfo = default, CancellationToken cancellationToken = default)
+        internal virtual Response<SealedAttestationResult> AttestAzureGuest(string attestationInfo = default, CancellationToken cancellationToken = default)
         {
             AttestAzureGuestRequest spreadModel = new AttestAzureGuestRequest(attestationInfo, default);
             Response result = AttestAzureGuest(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((SealedAttestationResponse)result, result);
+            return Response.FromValue((SealedAttestationResult)result, result);
         }
 
         /// <summary>
@@ -384,11 +384,11 @@ namespace Azure.Security.Attestation
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SealedAttestationResponse>> AttestAzureGuestAsync(string attestationInfo = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<SealedAttestationResult>> AttestAzureGuestAsync(string attestationInfo = default, CancellationToken cancellationToken = default)
         {
             AttestAzureGuestRequest spreadModel = new AttestAzureGuestRequest(attestationInfo, default);
             Response result = await AttestAzureGuestAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SealedAttestationResponse)result, result);
+            return Response.FromValue((SealedAttestationResult)result, result);
         }
 
         /// <summary>

@@ -105,10 +105,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<OpenIDConfigurationResponse> Get(CancellationToken cancellationToken = default)
+        internal virtual Response<OpenIDConfigurationResult> Get(CancellationToken cancellationToken = default)
         {
             Response result = Get(cancellationToken.ToRequestContext());
-            return Response.FromValue((OpenIDConfigurationResponse)result, result);
+            return Response.FromValue((OpenIDConfigurationResult)result, result);
         }
 
         /// <summary>
@@ -117,10 +117,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<OpenIDConfigurationResponse>> GetAsync(CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<OpenIDConfigurationResult>> GetAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((OpenIDConfigurationResponse)result, result);
+            return Response.FromValue((OpenIDConfigurationResult)result, result);
         }
     }
 }

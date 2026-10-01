@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.Security.Attestation
 {
     /// <summary> The sealed result of an attestation operation. </summary>
-    internal partial class SealedAttestationResponse
+    internal partial class SealedAttestationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SealedAttestationResponse"/>. </summary>
-        internal SealedAttestationResponse()
+        /// <summary> Initializes a new instance of <see cref="SealedAttestationResult"/>. </summary>
+        internal SealedAttestationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SealedAttestationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SealedAttestationResult"/>. </summary>
         /// <param name="token">
         /// A sealed RFC 7519 JSON Web Token, the body of which is an AttestationResult
         /// object.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SealedAttestationResponse(string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SealedAttestationResult(string token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

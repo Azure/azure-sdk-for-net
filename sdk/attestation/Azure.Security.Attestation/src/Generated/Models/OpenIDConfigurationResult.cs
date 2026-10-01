@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.Security.Attestation
 {
     /// <summary> The response to the OpenID metadata description document API. </summary>
-    internal partial class OpenIDConfigurationResponse
+    internal partial class OpenIDConfigurationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OpenIDConfigurationResponse"/>. </summary>
-        internal OpenIDConfigurationResponse()
+        /// <summary> Initializes a new instance of <see cref="OpenIDConfigurationResult"/>. </summary>
+        internal OpenIDConfigurationResult()
         {
             ResponseTypesSupported = new ChangeTrackingList<string>();
             IdTokenSigningAlgValuesSupported = new ChangeTrackingList<string>();
             ClaimsSupported = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenIDConfigurationResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OpenIDConfigurationResult"/>. </summary>
         /// <param name="responseTypesSupported"> Types supported in the OpenID metadata API. </param>
         /// <param name="idTokenSigningAlgValuesSupported"> List of the supported signing algorithms. </param>
         /// <param name="revocationEndpoint"> Revocation endpoint. </param>
@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation
         /// <param name="jwksUri"> The URI to retrieve the signing keys. </param>
         /// <param name="claimsSupported"> Set of claims supported by the OpenID metadata endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenIDConfigurationResponse(IList<string> responseTypesSupported, IList<string> idTokenSigningAlgValuesSupported, string revocationEndpoint, string issuer, string jwksUri, IList<string> claimsSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenIDConfigurationResult(IList<string> responseTypesSupported, IList<string> idTokenSigningAlgValuesSupported, string revocationEndpoint, string issuer, string jwksUri, IList<string> claimsSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResponseTypesSupported = responseTypesSupported;
             IdTokenSigningAlgValuesSupported = idTokenSigningAlgValuesSupported;
