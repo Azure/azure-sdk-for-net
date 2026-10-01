@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -50,18 +48,9 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FooResourceGetPropertiesAsync0CollectionResultOfT as an enumerable collection. </returns>
-        public override IAsyncEnumerable<Page<FooProperties>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<FooProperties>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            return AsPagesAsync(continuationToken, pageSizeHint, _context?.CancellationToken ?? default);
-        }
-
-        /// <summary> Gets the pages of FooResourceGetPropertiesAsync0CollectionResultOfT as an asynchronous enumerable collection. </summary>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async IAsyncEnumerable<Page<FooProperties>> AsPagesAsync(string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
-        {
-            Response response = await GetNextResponseAsync(pageSizeHint, null, cancellationToken).ConfigureAwait(false);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
@@ -73,15 +62,14 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink, CancellationToken cancellationToken)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetPropertiesRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context, cancellationToken).ConfigureAwait(false);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

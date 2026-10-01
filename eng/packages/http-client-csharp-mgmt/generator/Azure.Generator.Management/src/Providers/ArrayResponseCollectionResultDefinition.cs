@@ -6,10 +6,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -51,8 +49,6 @@ namespace Azure.Generator.Management.Providers
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
-        private static readonly ParameterProvider CancellationTokenParameter =
-            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken));
 
         public ArrayResponseCollectionResultDefinition(
             ClientProvider restClient,
@@ -157,9 +153,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            return _isAsync
-                ? [BuildAsPagesMethod(), BuildAsPagesAsyncMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()]
-                : [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()];
+            return [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()];
         }
 
         private MethodProvider BuildAsPagesMethod()
@@ -167,43 +161,24 @@ namespace Azure.Generator.Management.Providers
             var signature = new MethodSignature(
                 "AsPages",
                 $"Gets the pages of {Name} as an enumerable collection.",
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                _isAsync
+                    ? MethodSignatureModifiers.Async | MethodSignatureModifiers.Public | MethodSignatureModifiers.Override
+                    : MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
                 _isAsync
                     ? new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemType))
                     : new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemType)),
                 $"The pages of {Name} as an enumerable collection.",
                 [ContinuationTokenParameter, PageSizeHintParameter]);
 
-            return new MethodProvider(signature, _isAsync
-                ? [Return(This.Invoke("AsPagesAsync", [ContinuationTokenParameter, PageSizeHintParameter,
-                    _contextField.NullConditional().Property(nameof(RequestContext.CancellationToken)).NullCoalesce(Default)]))]
-                : BuildAsPagesMethodBody(), this);
+            return new MethodProvider(signature, BuildAsPagesMethodBody(), this);
         }
 
-        private MethodProvider BuildAsPagesAsyncMethod()
-        {
-            var cancellationTokenParameter = new ParameterProvider(
-                CancellationTokenParameter.Name,
-                CancellationTokenParameter.Description,
-                CancellationTokenParameter.Type,
-                attributes: [new AttributeStatement(typeof(EnumeratorCancellationAttribute))]);
-            var signature = new MethodSignature(
-                "AsPagesAsync",
-                $"Gets the pages of {Name} as an asynchronous enumerable collection.",
-                MethodSignatureModifiers.Private | MethodSignatureModifiers.Async,
-                new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemType)),
-                null,
-                [ContinuationTokenParameter, PageSizeHintParameter, cancellationTokenParameter]);
-            return new MethodProvider(signature, BuildAsPagesMethodBody(cancellationTokenParameter), this);
-        }
-
-        private MethodBodyStatement[] BuildAsPagesMethodBody(ParameterProvider? cancellationTokenParameter = null)
+        private MethodBodyStatement[] BuildAsPagesMethodBody()
         {
             var statements = new List<MethodBodyStatement>
             {
                 Declare("response", new CSharpType(typeof(Response), isNullable: true),
-                    This.Invoke(_isAsync ? "GetNextResponseAsync" : "GetNextResponse",
-                        _isAsync ? [PageSizeHintParameter, Null, cancellationTokenParameter!] : [PageSizeHintParameter, Null], _isAsync),
+                    This.Invoke(_isAsync ? "GetNextResponseAsync" : "GetNextResponse", [PageSizeHintParameter, Null], _isAsync),
                     out var responseVariable),
                 new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() },
                 Declare("result", new CSharpType(typeof(IReadOnlyList<>), _itemType),
@@ -233,7 +208,7 @@ namespace Azure.Generator.Management.Providers
                 modifiers,
                 returnType,
                 null,
-                _isAsync ? [PageSizeHintParameter, nextLinkParameter, CancellationTokenParameter] : [PageSizeHintParameter, nextLinkParameter]);
+                [PageSizeHintParameter, nextLinkParameter]);
 
             return new MethodProvider(signature, BuildGetNextResponseMethodBody(), this);
         }
@@ -274,7 +249,7 @@ namespace Azure.Generator.Management.Providers
             {
                 Return(_clientField.Property("Pipeline").Invoke(
                     _isAsync ? "ProcessMessageAsync" : "ProcessMessage",
-                    _isAsync ? [messageVariable, _contextField, CancellationTokenParameter] : [messageVariable, _contextField],
+                    [messageVariable, _contextField],
                     _isAsync))
             };
 
