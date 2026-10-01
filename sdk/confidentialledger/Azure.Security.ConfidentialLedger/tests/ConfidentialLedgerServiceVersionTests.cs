@@ -16,7 +16,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
 {
     /// <summary>
     /// Unit tests covering service-version selection: that the latest GA "2026-02-23" is the client
-    /// default (leaving the version unspecified sends "api-version=2026-02-23"), that explicitly
+    /// default for the public parameterless constructor (leaving the version unspecified sends
+    /// "api-version=2026-02-23"), that the experimental configuration constructor defaults to the
+    /// newest "2026-07-31-preview" api-version, that explicitly
     /// selecting the "2026-07-31-preview" version sends "api-version=2026-07-31-preview" on the wire
     /// for transaction writes and receipt reads, and that
     /// <see cref="TransactionReceipt.ApplicationClaims"/> (and the claim kinds it can contain)
@@ -75,6 +77,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
+        // The experimental IConfigurationSection constructor is emitter-generated and always
+        // defaults to the newest api-version ("2026-07-31-preview"); unlike the public
+        // parameterless default, this internal DI/config path is not pinned to GA.
         public async Task ConfigurationDefault_SendsExactApiVersionQueryParameter()
         {
             string capturedQuery = null;
@@ -92,7 +97,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             await client.GetReceiptAsync("1.1", new RequestContext());
 
-            Assert.AreEqual("?api-version=2026-02-23", capturedQuery);
+            Assert.AreEqual("?api-version=2026-07-31-preview", capturedQuery);
         }
 
         private static string ExpectedApiVersion(ServiceVersion? version) =>
