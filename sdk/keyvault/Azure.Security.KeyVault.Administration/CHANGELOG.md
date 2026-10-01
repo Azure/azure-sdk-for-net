@@ -1,5 +1,15 @@
 # Release History
 
+## 4.8.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.8.1 (2026-09-02)
 
 ### Bugs Fixed
