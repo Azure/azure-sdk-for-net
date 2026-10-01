@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI.Responses;
+using System.ComponentModel;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -19,7 +19,6 @@ public partial class HostedAgentDefinition
         Argument.AssertNotNull(cpu, nameof(cpu));
         Argument.AssertNotNull(memory, nameof(memory));
 
-        Tools = new ChangeTrackingList<ResponseTool>();
         Versions = new ChangeTrackingList<ProtocolVersionRecord>();
         Cpu = cpu;
         Memory = memory;
@@ -44,5 +43,6 @@ public partial class HostedAgentDefinition
     /// <summary>
     /// The property, retained for back compatibility, not used.
     /// </summary>
-    public IList<ResponseTool> Tools { get; }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public IList<ProjectsAgentTool> Tools { get; } = new ChangeTrackingList<ProjectsAgentTool>();
 }

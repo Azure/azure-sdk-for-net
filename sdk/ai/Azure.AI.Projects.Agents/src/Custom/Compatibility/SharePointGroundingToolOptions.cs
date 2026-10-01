@@ -1,0 +1,43 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace Azure.AI.Projects.Agents
+{
+    /// <summary> The sharepoint grounding tool parameters. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class SharePointGroundingToolOptions
+    {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolOptions"/>. </summary>
+        public SharePointGroundingToolOptions()
+        {
+            ProjectConnections = new ChangeTrackingList<ToolProjectConnection>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharePointGroundingToolOptions"/>. </summary>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharePointGroundingToolOptions(IList<ToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            ProjectConnections = projectConnections;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary>
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </summary>
+        public IList<ToolProjectConnection> ProjectConnections { get; }
+    }
+}

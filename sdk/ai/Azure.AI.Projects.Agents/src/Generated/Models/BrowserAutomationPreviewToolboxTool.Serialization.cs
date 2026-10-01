@@ -111,7 +111,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BrowserAutomationToolOptions toolParameters = default;
+            Extensions.OpenAI.BrowserAutomationToolOptions toolParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -152,7 +152,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    toolParameters = ModelReaderWriter.Read<BrowserAutomationToolOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+                    toolParameters = ModelReaderWriter.Read<Extensions.OpenAI.BrowserAutomationToolOptions>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

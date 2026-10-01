@@ -4,6 +4,9 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
 
 **Note:** This package is dedicated to performing CRUD operations on Agents and can be used to enable telemetry.
 
+For the compatibility prototype, see [Using legacy and shared agent tool models together](samples/Sample_LegacyModels.md),
+including the fully qualified names needed when both namespaces are imported.
+
 [Product documentation][product_doc]
 | [Samples][samples]
 | [API reference documentation][api_ref_docs]

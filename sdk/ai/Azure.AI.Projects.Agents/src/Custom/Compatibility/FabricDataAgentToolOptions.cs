@@ -1,0 +1,43 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace Azure.AI.Projects.Agents
+{
+    /// <summary> The fabric data agent tool parameters. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class FabricDataAgentToolOptions
+    {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolOptions"/>. </summary>
+        public FabricDataAgentToolOptions()
+        {
+            ProjectConnections = new ChangeTrackingList<ToolProjectConnection>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolOptions"/>. </summary>
+        /// <param name="projectConnections">
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FabricDataAgentToolOptions(IList<ToolProjectConnection> projectConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            ProjectConnections = projectConnections;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary>
+        /// The project connections attached to this tool. There can be a maximum of 1 connection
+        /// resource attached to the tool.
+        /// </summary>
+        public IList<ToolProjectConnection> ProjectConnections { get; }
+    }
+}

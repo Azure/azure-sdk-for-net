@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="OpenApiToolboxTool"/>. </summary>
         /// <param name="functionDefinition"> The openapi function definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionDefinition"/> is null. </exception>
-        public OpenApiToolboxTool(OpenApiFunctionDefinition functionDefinition) : base(ToolboxToolType.Openapi)
+        public OpenApiToolboxTool(Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition) : base(ToolboxToolType.Openapi)
         {
             Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
 
@@ -32,12 +32,12 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="functionDefinition"> The openapi function definition. </param>
-        internal OpenApiToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition functionDefinition) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal OpenApiToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, Extensions.OpenAI.OpenApiFunctionDefinition functionDefinition) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             FunctionDefinition = functionDefinition;
         }
 
         /// <summary> The openapi function definition. </summary>
-        public OpenApiFunctionDefinition FunctionDefinition { get; set; }
+        public Extensions.OpenAI.OpenApiFunctionDefinition FunctionDefinition { get; set; }
     }
 }

@@ -1,0 +1,36 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace Azure.AI.Projects.Agents
+{
+    /// <summary> Memory search options. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class MemorySearchToolOptions
+    {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="MemorySearchToolOptions"/>. </summary>
+        public MemorySearchToolOptions()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MemorySearchToolOptions"/>. </summary>
+        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MemorySearchToolOptions(int? maxMemories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            MaxMemories = maxMemories;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Maximum number of memory items to return. </summary>
+        public int? MaxMemories { get; set; }
+    }
+}

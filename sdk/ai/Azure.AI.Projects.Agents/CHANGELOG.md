@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Prototyped a hidden compatibility surface for the 2.0 tool models, factories, and conversions. Legacy types are marked `EditorBrowsable(Never)`; applications importing both the legacy and shared-model namespaces must qualify overlapping type names.
+- Added `WebSearchTool.SearchConfiguration` for the shared model while restoring the legacy type of `CustomSearchConfiguration`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
