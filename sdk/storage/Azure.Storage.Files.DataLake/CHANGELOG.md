@@ -7,6 +7,11 @@
 - Added support for scheduling file deletion with `DataLakeFileClient.Upload` and `UploadAsync`.
 
 ### Breaking Changes
+- Changed the default value of `StorageTransferOptions.InitialTransferSize` used by partitioned uploads and downloads when it is not set by the caller. It now matches the default size of subsequent chunks instead of 256 MB:
+  - Downloads (`DataLakeFileClient.ReadTo`/`ReadToAsync`): the first range request now defaults to 4 MB, the same as subsequent ranges. Previously, it was 256 MB when no transfer checksum was used.
+  - Uploads (`DataLakeFileClient.Upload`/`UploadAsync`): a file is now uploaded in a single Append and Flush only if its content is smaller than the default block size (4 MB, or 8 MB for content of 100 MB or more). Previously, content smaller than 256 MB was uploaded in a single append.
+  - This means uploads and downloads may be partitioned more often.
+  - Explicitly set `InitialTransferSize` and `MaximumTransferSize` values are still respected. To restore the previous behavior, set `StorageTransferOptions.InitialTransferSize` to 256 MB.
 
 ### Bugs Fixed
 
