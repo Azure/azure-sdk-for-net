@@ -435,9 +435,7 @@
         "agentic",
         "dapr",
         "grpc",
-        "proto",
-        "rootfs",
-        "upserts"
+        "proto"
       ]
     },
     {
