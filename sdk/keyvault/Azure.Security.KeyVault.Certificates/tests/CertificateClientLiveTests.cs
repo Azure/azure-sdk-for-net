@@ -37,10 +37,12 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         private static readonly TimeSpan DefaultCertificateOperationTimeout = TimeSpan.FromMinutes(5);
 
         private static MethodInfo s_clearCacheMethod;
+        private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
 
         public CertificateClientLiveTests(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            _serviceVersion = serviceVersion;
             // TODO: https://github.com/Azure/azure-sdk-for-net/issues/11634
             CompareBodies = false;
         }
@@ -1144,6 +1146,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 { "tag2", "value2" }
             };
 
+            if (_serviceVersion < CertificateClientOptions.ServiceVersion.V7_6)
+            {
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await client.StartCreateCertificateAsync(
+                        certName,
+                        policy,
+                        enabled: true,
+                        tags: tags,
+                        preserveCertificateOrder: preserveOrder));
+                Assert.AreEqual(400, exception.Status);
+                Assert.AreEqual("BadParameter", exception.ErrorCode);
+                StringAssert.Contains("Preserve Certificate Order option is only supported", exception.Message);
+                return;
+            }
+
             CertificateOperation operation = await client.StartCreateCertificateAsync(
                 certName,
                 policy,
@@ -1179,6 +1196,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 },
                 PreserveCertificateOrder = preserveOrder
             };
+
+            if (_serviceVersion < CertificateClientOptions.ServiceVersion.V7_6)
+            {
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await client.ImportCertificateAsync(importOptions));
+                Assert.AreEqual(400, exception.Status);
+                Assert.AreEqual("BadParameter", exception.ErrorCode);
+                StringAssert.Contains("Preserve Certificate Order option is only supported", exception.Message);
+                return;
+            }
 
             KeyVaultCertificateWithPolicy cert =  await client.ImportCertificateAsync(importOptions);
 
