@@ -10,6 +10,7 @@
 
 - Restored public `SearchIndexerClient` create-or-update parameters for controlling indexer cache reset and reprocessing behavior.
 - Added `TokenCredential` overloads to `SearchClientBuilderExtensions` so clients can be registered with credentials such as `DefaultAzureCredential`. ([#63072](https://github.com/Azure/azure-sdk-for-net/issues/63072))
+- Client builder extensions are now generated under the existing `SearchClientBuilderExtensions` name. `DocumentsClientBuilderExtensions` is retained and hidden for backward compatibility.
 
 ## 12.1.0-beta.2 (2026-08-27)
 
