@@ -22,12 +22,15 @@ namespace Azure.Security.ConfidentialLedger
     /// against the certificate registered for that endpoint's ledger id, so adding a failover ledger
     /// does not widen the trust accepted for any other endpoint.
     /// <para>
-    /// A CCF network periodically rotates its identity TLS certificate. When the certificate presented
-    /// during the TLS handshake no longer chains to the pinned certificate, the store re-queries the
-    /// (independently trusted) identity service for that ledger, replaces the pin with the freshly
-    /// retrieved certificate, and re-validates once. Refreshing from the same trusted source that
-    /// produced the original pin keeps validation strict: a man-in-the-middle certificate still fails
-    /// because it cannot chain to the identity service's current certificate.
+    /// A ledger's service identity certificate is stable and changes only in rare events, such as disaster
+    /// recovery or replacing the ledger instance behind the same DNS name. The pinned certificate is therefore
+    /// reused for every handshake, and the identity service is queried only when server authentication fails:
+    /// when the certificate presented during the TLS handshake no longer chains to the pinned certificate, the
+    /// store re-queries the (independently trusted) identity service for that ledger, replaces the pin with the
+    /// freshly retrieved certificate, and re-validates once. This lets a long-lived client recover without a
+    /// process restart. Refreshing from the same trusted source that produced the original pin keeps validation
+    /// strict: a man-in-the-middle certificate still fails because it cannot chain to the identity service's
+    /// current certificate.
     /// </para>
     /// </remarks>
     internal sealed class ConfidentialLedgerCertificateTrustStore
@@ -72,7 +75,7 @@ namespace Azure.Security.ConfidentialLedger
         /// <param name="certificate"> The pinned identity TLS certificate. </param>
         /// <param name="endpoint">
         /// The ledger endpoint, recorded so the certificate can later be refreshed from the identity
-        /// service if the ledger rotates it. When <c>null</c>, refresh is unavailable for this ledger.
+        /// service if the ledger's service identity changes. When <c>null</c>, refresh is unavailable for this ledger.
         /// </param>
         public void Trust(string ledgerId, X509Certificate2 certificate, Uri endpoint = null)
         {
@@ -97,9 +100,12 @@ namespace Azure.Security.ConfidentialLedger
         /// connection verification is disabled the callback always succeeds.
         /// </summary>
         /// <remarks>
-        /// If the presented certificate does not chain to the currently pinned certificate, the ledger may
-        /// have rotated its identity certificate. In that case the store performs a single throttled refresh
-        /// from the independently trusted identity service and re-validates against the refreshed certificate.
+        /// The pinned certificate is used for every handshake. The identity service is queried only when server
+        /// authentication fails, meaning the presented certificate does not chain to the pinned certificate. That
+        /// happens when the ledger's service identity changed, for example after disaster recovery or when a new
+        /// ledger instance replaced the old one behind the same DNS name. In that case the store performs a single
+        /// throttled refresh from the independently trusted identity service and re-validates against the
+        /// refreshed certificate.
         /// </remarks>
         public bool Validate(string ledgerId, X509Certificate2 presented)
         {
@@ -116,8 +122,9 @@ namespace Azure.Security.ConfidentialLedger
                 return true;
             }
 
-            // The pinned certificate did not match. The ledger's identity certificate may have rotated, so
-            // refresh it from the independently trusted identity service and re-validate once.
+            // Server authentication failed against the pinned certificate. The ledger's service identity may have
+            // changed (for example after disaster recovery), so refresh it from the independently trusted identity
+            // service and re-validate once.
             return TryRefreshAndValidate(ledgerId, presented);
         }
 

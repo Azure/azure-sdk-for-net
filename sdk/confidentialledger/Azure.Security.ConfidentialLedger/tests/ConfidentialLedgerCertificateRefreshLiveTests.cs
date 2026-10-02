@@ -24,7 +24,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
     /// These tests deliberately bypass the test proxy: the proxy terminates TLS itself, so the SDK's
     /// server-certificate validation callback would never observe the ledger's real certificate. The client
     /// is pinned to a freshly generated self-signed certificate, which simulates a stale pin left behind
-    /// after the ledger rotates its identity certificate.
+    /// after the ledger's service identity changes (for example after disaster recovery).
     /// </remarks>
     public class ConfidentialLedgerCertificateRefreshLiveTests : LiveTestBase<ConfidentialLedgerEnvironment>
     {

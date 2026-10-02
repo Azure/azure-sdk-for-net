@@ -118,7 +118,7 @@ namespace Azure.Security.ConfidentialLedger
 
                 // Resolves a ledger's current identity TLS certificate from the independently trusted identity
                 // service. Used both to look up failover ledger certificates and to refresh a pinned certificate
-                // after the ledger rotates it. A fresh ConfidentialLedgerCertificateClient is created per call.
+                // after the ledger's service identity changes. A fresh ConfidentialLedgerCertificateClient is created per call.
                 Uri identityServiceEndpoint = actualOptions.CertificateEndpoint ?? new Uri(Default_Certificate_Endpoint);
                 Func<Uri, X509Certificate2> identityCertResolver = endpoint => GetIdentityServerTlsCert(
                     endpoint,
