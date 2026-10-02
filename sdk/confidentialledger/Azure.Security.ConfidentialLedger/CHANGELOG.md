@@ -1,5 +1,17 @@
 # Release History
 
+## 2.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed long-lived clients failing TLS validation after a ledger's service identity certificate changes, for example after disaster recovery or after a new ledger instance replaces the old one behind the same DNS name. Previously the certificate was fetched only when the client was constructed, so the application had to be restarted. The pinned certificate is still used for every handshake; only when server authentication fails because the presented certificate no longer chains to the pinned certificate does the client re-query the independently trusted Identity Service for that ledger's current certificate, replace the pin, and re-validate. The refresh is throttled per ledger so a persistently mismatched certificate cannot force an Identity Service lookup on every handshake, and a man-in-the-middle certificate is still rejected because it cannot chain to the Identity Service's current certificate.
+
+### Other Changes
+
 ## 2.0.0-beta.5 (2026-09-30)
 
 ### Features Added
