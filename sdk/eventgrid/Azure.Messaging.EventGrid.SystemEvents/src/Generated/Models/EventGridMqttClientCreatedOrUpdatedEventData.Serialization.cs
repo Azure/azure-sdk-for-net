@@ -221,7 +221,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 state,
                 createdOn,
                 updatedOn,
-                attributes);
+                attributes ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class EventGridMqttClientCreatedOrUpdatedEventDataConverter : JsonConverter<EventGridMqttClientCreatedOrUpdatedEventData>
