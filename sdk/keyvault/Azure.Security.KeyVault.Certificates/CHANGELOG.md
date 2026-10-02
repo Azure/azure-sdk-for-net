@@ -2,17 +2,11 @@
 
 ## 4.9.2 (2026-10-02)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed handling of claims challenges when the authentication challenge cache is empty or cleared while a request is in flight.
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
 - Improved authentication challenge resource validation.
-
-### Other Changes
 
 ## 4.9.1 (2026-09-02)
 
