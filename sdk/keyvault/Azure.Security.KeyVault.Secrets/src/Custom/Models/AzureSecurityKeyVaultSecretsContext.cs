@@ -6,16 +6,7 @@ using Azure.Security.KeyVault.Secrets.Models;
 
 namespace Azure.Security.KeyVault.Secrets
 {
-    [ModelReaderWriterBuildable(typeof(BackupSecretResult))]
-    [ModelReaderWriterBuildable(typeof(DeletedSecretBundle))]
-    [ModelReaderWriterBuildable(typeof(DeletedSecretItem))]
-    [ModelReaderWriterBuildable(typeof(DeletedSecretListResult))]
-    [ModelReaderWriterBuildable(typeof(SecretAttributesBundle))]
     [ModelReaderWriterBuildable(typeof(SecretBundle))]
-    [ModelReaderWriterBuildable(typeof(SecretItem))]
-    [ModelReaderWriterBuildable(typeof(SecretListResult))]
-    [ModelReaderWriterBuildable(typeof(SecretRestoreParameters))]
-    [ModelReaderWriterBuildable(typeof(SecretSetParameters))]
     public partial class AzureSecurityKeyVaultSecretsContext
     {
     }

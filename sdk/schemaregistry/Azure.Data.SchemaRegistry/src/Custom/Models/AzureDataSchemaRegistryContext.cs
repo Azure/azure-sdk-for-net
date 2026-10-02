@@ -7,7 +7,6 @@ using Azure.Data.SchemaRegistry.Models;
 namespace Azure.Data.SchemaRegistry
 {
     [ModelReaderWriterBuildable(typeof(SchemaGroups))]
-    [ModelReaderWriterBuildable(typeof(SchemaVersions))]
     public partial class AzureDataSchemaRegistryContext
     {
     }
