@@ -143,6 +143,9 @@ function Install-Standalone-Tool (
 
         if ($Package -eq "azsdk") {
             try {
+                . (Join-Path $PSScriptRoot "PSModule-Helpers.ps1")
+                Install-ModuleIfNotInstalled "Az.Storage" "4.3.0" | Import-Module
+
                 $anonCtx = New-AzStorageContext -StorageAccountName "azuresdkartifacts" -Anonymous
 
                 $Version = Get-AzStorageBlob `
