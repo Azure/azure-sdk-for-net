@@ -35,14 +35,6 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        public static void VerifyParallelismGreaterThanOne(int parallelism)
-        {
-            if (parallelism <= 1)
-            {
-                throw new ArgumentException("Parallel must be greater than 1 for parallel download.", nameof(parallelism));
-            }
-        }
-
         public static void VerifyNoExtraData(int extraDataLength)
         {
             if (extraDataLength > 0)
