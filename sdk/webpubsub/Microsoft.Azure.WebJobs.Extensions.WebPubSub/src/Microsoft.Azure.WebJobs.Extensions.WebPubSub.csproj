@@ -28,6 +28,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- TODO: Change to a PackageReference before release since we only want to depend on the already GA'ed version of WebPubSub.
+               Change back after release for development if required. -->
+    <!-- <ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
+    <!-- <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" /> -->
+
     <PackageReference Include="Azure.Messaging.WebPubSub" />
     <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
   </ItemGroup>
