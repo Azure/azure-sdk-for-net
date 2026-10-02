@@ -472,7 +472,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 id,
                 description,
                 stacVersion,
-                links,
+                links ?? new ChangeTrackingList<StacLink>(),
                 title,
                 kind,
                 assets ?? new ChangeTrackingDictionary<string, StacAsset>(),
