@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
-        /// <param name="capabilitiesAzureBlobStorage"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
+        /// <param name="azureBlobStorageCapabilities"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspaceProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, AzureBlobStorageCapability capabilitiesAzureBlobStorage, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState)
+        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, AzureBlobStorageCapability azureBlobStorageCapabilities, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState)
         {
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
                 description,
-                capabilitiesAzureBlobStorage is null ? default : new StorageDiscoveryCapabilities(capabilitiesAzureBlobStorage, default),
+                azureBlobStorageCapabilities is null ? default : new StorageDiscoveryCapabilities(azureBlobStorageCapabilities, default),
                 (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
                 provisioningState,
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
-        /// <param name="capabilitiesAzureBlobStorage"> The Azure Blob Storage capability configuration to update. </param>
+        /// <param name="azureBlobStorageCapabilities"> The Azure Blob Storage capability configuration to update. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, AzureBlobStorageCapabilityPatch capabilitiesAzureBlobStorage)
+        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, AzureBlobStorageCapabilityPatch azureBlobStorageCapabilities)
         {
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 description,
                 (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
-                capabilitiesAzureBlobStorage is null ? default : new StorageDiscoveryCapabilitiesUpdate(capabilitiesAzureBlobStorage, default),
+                azureBlobStorageCapabilities is null ? default : new StorageDiscoveryCapabilitiesUpdate(azureBlobStorageCapabilities, default),
                 default);
         }
 

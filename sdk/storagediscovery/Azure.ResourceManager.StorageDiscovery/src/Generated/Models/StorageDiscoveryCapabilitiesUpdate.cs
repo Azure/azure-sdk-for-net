@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryCapabilitiesUpdate"/>. </summary>
-        /// <param name="azureBlobStorage"> The Azure Blob Storage capability configuration to update. </param>
+        /// <param name="azureBlobStorageCapabilities"> The Azure Blob Storage capability configuration to update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryCapabilitiesUpdate(AzureBlobStorageCapabilityPatch azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryCapabilitiesUpdate(AzureBlobStorageCapabilityPatch azureBlobStorageCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AzureBlobStorage = azureBlobStorage;
+            AzureBlobStorageCapabilities = azureBlobStorageCapabilities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure Blob Storage capability configuration to update. </summary>
-        public AzureBlobStorageCapabilityPatch AzureBlobStorage { get; set; }
+        public AzureBlobStorageCapabilityPatch AzureBlobStorageCapabilities { get; set; }
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 throw new FormatException($"The model {nameof(StorageDiscoveryCapabilities)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("azureBlobStorage"u8);
-            writer.WriteObjectValue(AzureBlobStorage, options);
+            writer.WriteObjectValue(AzureBlobStorageCapabilities, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             {
                 return null;
             }
-            AzureBlobStorageCapability azureBlobStorage = default;
+            AzureBlobStorageCapability azureBlobStorageCapabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("azureBlobStorage"u8))
                 {
-                    azureBlobStorage = AzureBlobStorageCapability.DeserializeAzureBlobStorageCapability(prop.Value, options);
+                    azureBlobStorageCapabilities = AzureBlobStorageCapability.DeserializeAzureBlobStorageCapability(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageDiscoveryCapabilities(azureBlobStorage, additionalBinaryDataProperties);
+            return new StorageDiscoveryCapabilities(azureBlobStorageCapabilities, additionalBinaryDataProperties);
         }
     }
 }

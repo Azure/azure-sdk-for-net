@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         public StorageDiscoveryProvisioningState? ProvisioningState { get; }
 
         /// <summary> The Azure Blob Storage capability configuration for the storage discovery workspace. </summary>
-        public AzureBlobStorageCapability CapabilitiesAzureBlobStorage
+        public AzureBlobStorageCapability AzureBlobStorageCapabilities
         {
             get
             {
-                return Capabilities is null ? default : Capabilities.AzureBlobStorage;
+                return Capabilities is null ? default : Capabilities.AzureBlobStorageCapabilities;
             }
             set
             {

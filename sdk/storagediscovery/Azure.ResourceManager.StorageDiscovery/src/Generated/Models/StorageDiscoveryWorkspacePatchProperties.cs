@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         internal StorageDiscoveryCapabilitiesUpdate Capabilities { get; set; }
 
         /// <summary> The Azure Blob Storage capability configuration to update. </summary>
-        public AzureBlobStorageCapabilityPatch CapabilitiesAzureBlobStorage
+        public AzureBlobStorageCapabilityPatch AzureBlobStorageCapabilities
         {
             get
             {
-                return Capabilities is null ? default : Capabilities.AzureBlobStorage;
+                return Capabilities is null ? default : Capabilities.AzureBlobStorageCapabilities;
             }
             set
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 {
                     Capabilities = new StorageDiscoveryCapabilitiesUpdate();
                 }
-                Capabilities.AzureBlobStorage = value;
+                Capabilities.AzureBlobStorageCapabilities = value;
             }
         }
     }
