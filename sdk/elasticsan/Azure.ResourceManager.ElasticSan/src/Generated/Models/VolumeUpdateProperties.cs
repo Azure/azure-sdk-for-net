@@ -11,7 +11,6 @@ using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Volume response properties. </summary>
     internal partial class VolumeUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -13,7 +13,6 @@ using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Volume response properties. </summary>
     internal partial class VolumeUpdateProperties : IJsonModel<VolumeUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -147,16 +146,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (prop.NameEquals("managedBy"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ElasticSanManagedByInfo> array = new List<ElasticSanManagedByInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ElasticSanManagedByInfo.DeserializeElasticSanManagedByInfo(item, options));
-                    }
-                    managedBy = array;
+                    DeserializeManagedBy(prop, ref managedBy);
                     continue;
                 }
                 if (options.Format != "W")

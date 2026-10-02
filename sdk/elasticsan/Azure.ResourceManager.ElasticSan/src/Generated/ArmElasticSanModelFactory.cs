@@ -18,35 +18,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmElasticSanModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
-        /// <param name="creationData"> State of the operation on the resource. </param>
-        /// <param name="sizeGiB"> Volume size. </param>
-        /// <param name="storageTarget"> Storage target information. </param>
-        /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
-        /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
-        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, IEnumerable<ElasticSanManagedByInfo> managedBy, ElasticSanProvisioningState? provisioningState)
-        {
-            return new ElasticSanVolumeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                new VolumeProperties(
-                    volumeId,
-                    creationData,
-                    sizeGiB,
-                    storageTarget,
-                    (managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>()).ToList(),
-                    provisioningState,
-                    default),
-                default);
-        }
-
         /// <summary> Data source used when creating the volume. </summary>
         /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
         /// <param name="sourceId"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
@@ -215,14 +186,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 totalMbps,
                 totalSizeTiB,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="sizeGiB"> Volume size. </param>
-        /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
-        /// <returns> A new <see cref="Models.ElasticSanVolumePatch"/> instance for mocking. </returns>
-        public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB, IEnumerable<ElasticSanManagedByInfo> managedBy)
-        {
-            return new ElasticSanVolumePatch(sizeGiB is null && managedBy is null ? default : new VolumeUpdateProperties(sizeGiB, (managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>()).ToList(), default), default);
         }
 
         /// <summary> object to hold array of volume names. </summary>

@@ -19,6 +19,9 @@
 ### Bugs Fixed
 
 - Fixed `ElasticSanVolumeResource.RestoreVolume` so it uses the resource's API version instead of always sending `2024-07-01-preview`.
+- `ElasticSanVolumeData` and `ElasticSanVolumePatch` now deserialize both the legacy `managedBy` object (`{ "resourceId": "..." }`) and the new array shape, so responses from older API versions and models persisted by earlier library versions continue to load.
+- Fixed `ElasticSanVolumeCollection.GetAll` and `ElasticSanVolumeGroupCollection.GetAll` so the `accessSoftDeletedResources` filter is also sent on continuation pages.
+- Fixed `ElasticSanVolumeGroupData.DeleteRetentionPolicy`, `ElasticSanVolumeGroupPatch.DeleteRetentionPolicy` and `ElasticSanSnapshotData.CreationDataSourceId`, which were not serialized or populated from service responses.
 
 ### Other Changes
 

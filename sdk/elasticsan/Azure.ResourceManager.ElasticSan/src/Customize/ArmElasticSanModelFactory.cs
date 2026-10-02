@@ -43,6 +43,54 @@ namespace Azure.ResourceManager.ElasticSan.Models
             return ElasticSanData(id, name, resourceType, systemData, tags, location, sku, availabilityZones, provisioningState, baseSizeTiB.GetValueOrDefault(), extendedCapacitySizeTiB.GetValueOrDefault(), totalVolumeSizeGiB, volumeGroupCount, totalIops, totalMbps, totalSizeTiB, privateEndpointConnections, publicNetworkAccess, scaleUpProperties);
         }
 
+        /// <summary> Response for Volume request. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
+        /// <param name="creationData"> State of the operation on the resource. </param>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="storageTarget"> Storage target information. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <remarks>
+        /// This overload intentionally omits the ManagedBy collection. A parameter of that type would be
+        /// indistinguishable from the <c>managedByResourceId</c> parameter of the compatibility overloads below
+        /// whenever a caller passes an untyped <see langword="null"/>. Add entries to
+        /// <see cref="ElasticSan.ElasticSanVolumeData.ManagedBy"/> on the returned instance instead.
+        /// </remarks>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
+        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, ElasticSanProvisioningState? provisioningState)
+        {
+            return new ElasticSanVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new VolumeProperties(
+                    volumeId,
+                    creationData,
+                    sizeGiB,
+                    storageTarget,
+                    new ChangeTrackingList<ElasticSanManagedByInfo>(),
+                    provisioningState,
+                    null),
+                null);
+        }
+
+        /// <summary> Response for Volume request. </summary>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <remarks>
+        /// This overload intentionally omits the ManagedBy collection. See
+        /// <see cref="ElasticSanVolumeData(ResourceIdentifier, string, ResourceType, SystemData, Guid?, ElasticSanVolumeDataSourceInfo, long, IscsiTargetInfo, ElasticSanProvisioningState?)"/>.
+        /// Add entries to <see cref="Models.ElasticSanVolumePatch.ManagedBy"/> on the returned instance instead.
+        /// </remarks>
+        /// <returns> A new <see cref="Models.ElasticSanVolumePatch"/> instance for mocking. </returns>
+        public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB)
+        {
+            return new ElasticSanVolumePatch(sizeGiB is null ? default : new VolumeUpdateProperties(sizeGiB, new ChangeTrackingList<ElasticSanManagedByInfo>(), null), null);
+        }
+
         // Backward-compat: previous versions exposed a single managedByResourceId. Translate it into a single ManagedBy entry
         // so existing callers still get the requested manager on the returned model.
         /// <summary> Response for Volume request. </summary>
@@ -60,7 +108,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? volumeId = default, ElasticSanVolumeDataSourceInfo creationData = default, long sizeGiB = 0L, IscsiTargetInfo storageTarget = default, ElasticSanProvisioningState? provisioningState = default, ResourceIdentifier managedByResourceId = default)
         {
-            return ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, ToManagedByList(managedByResourceId), provisioningState);
+            ElasticSanVolumeData data = ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, provisioningState);
+            AddManagedBy(data.ManagedBy, managedByResourceId);
+            return data;
         }
 
         /// <summary> Response for Volume request. </summary>
@@ -78,7 +128,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? volumeId = default, ElasticSanVolumeDataSourceInfo creationData = default, long sizeGiB = 0L, IscsiTargetInfo storageTarget = default, ResourceIdentifier managedByResourceId = default, ElasticSanProvisioningState? provisioningState = default)
         {
-            return ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, ToManagedByList(managedByResourceId), provisioningState);
+            ElasticSanVolumeData data = ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, provisioningState);
+            AddManagedBy(data.ManagedBy, managedByResourceId);
+            return data;
         }
 
         /// <summary> Response for Volume request. </summary>
@@ -88,13 +140,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB = default, ResourceIdentifier managedByResourceId = default)
         {
-            return ElasticSanVolumePatch(sizeGiB, ToManagedByList(managedByResourceId));
+            ElasticSanVolumePatch patch = ElasticSanVolumePatch(sizeGiB);
+            AddManagedBy(patch.ManagedBy, managedByResourceId);
+            return patch;
         }
 
-        private static IEnumerable<ElasticSanManagedByInfo> ToManagedByList(ResourceIdentifier managedByResourceId)
-            => managedByResourceId is null
-                ? null
-                : new[] { ElasticSanManagedByInfo(resourceIds: new[] { managedByResourceId }) };
+        private static void AddManagedBy(IList<ElasticSanManagedByInfo> managedBy, ResourceIdentifier managedByResourceId)
+        {
+            if (managedByResourceId != null)
+            {
+                managedBy.Add(ElasticSanManagedByInfo(resourceIds: new[] { managedByResourceId }));
+            }
+        }
 
         // Workaround: The generator has a bug that when an overload is created in customized code with the same parameter list, but the nullability of some parameters is different,
         // the generator somehow treat the overload as a duplicated method, and the generated overload with different nullability will no longer be generated.

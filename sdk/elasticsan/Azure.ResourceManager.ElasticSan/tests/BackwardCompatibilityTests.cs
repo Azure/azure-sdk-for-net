@@ -74,10 +74,76 @@ namespace Azure.ResourceManager.ElasticSan.Tests
             Assert.AreEqual(ManagedById, patch.ManagedByResourceId);
             Assert.AreEqual(1, patch.ManagedBy.Count);
 
-            patch = ArmElasticSanModelFactory.ElasticSanVolumePatch(10, (ResourceIdentifier)null);
+            patch = ArmElasticSanModelFactory.ElasticSanVolumePatch(10, null);
 
+            Assert.AreEqual(10, patch.SizeGiB);
             Assert.IsNull(patch.ManagedByResourceId);
             Assert.IsEmpty(patch.ManagedBy);
+        }
+
+        [Test]
+        public void ModelFactoryOverloadsAreUnambiguousForUntypedNull()
+        {
+            ElasticSanVolumeData data = ArmElasticSanModelFactory.ElasticSanVolumeData(null, null, default, null, null, null, 100, null, null, ElasticSanProvisioningState.Succeeded);
+
+            Assert.AreEqual(100, data.SizeGiB);
+            Assert.IsNull(data.ManagedByResourceId);
+            Assert.IsEmpty(data.ManagedBy);
+            Assert.AreEqual(ElasticSanProvisioningState.Succeeded, data.ProvisioningState);
+
+            ElasticSanVolumePatch patch = ArmElasticSanModelFactory.ElasticSanVolumePatch(10, null);
+
+            Assert.AreEqual(10, patch.SizeGiB);
+            Assert.IsEmpty(patch.ManagedBy);
+        }
+
+        [Test]
+        public void ModelFactoryListBasedOverloadsProduceMutableManagedBy()
+        {
+            ElasticSanVolumeData data = ArmElasticSanModelFactory.ElasticSanVolumeData(null, null, default, null, null, null, 100, null, ElasticSanProvisioningState.Succeeded);
+
+            Assert.IsEmpty(data.ManagedBy);
+            data.ManagedBy.Add(ArmElasticSanModelFactory.ElasticSanManagedByInfo(resourceIds: new[] { ManagedById }));
+            Assert.AreEqual(ManagedById, data.ManagedByResourceId);
+
+            ElasticSanVolumePatch patch = ArmElasticSanModelFactory.ElasticSanVolumePatch(10);
+
+            Assert.AreEqual(10, patch.SizeGiB);
+            Assert.IsEmpty(patch.ManagedBy);
+            patch.ManagedBy.Add(ArmElasticSanModelFactory.ElasticSanManagedByInfo(resourceIds: new[] { ManagedById }));
+            Assert.AreEqual(ManagedById, patch.ManagedByResourceId);
+        }
+
+        [Test]
+        public void VolumeDataAcceptsLegacyAndCurrentManagedByShapes()
+        {
+            ElasticSanVolumeData legacy = ModelReaderWriter.Read<ElasticSanVolumeData>(BinaryData.FromString(
+                $"{{\"properties\":{{\"sizeGiB\":100,\"managedBy\":{{\"resourceId\":\"{ManagedById}\"}}}}}}"));
+
+            Assert.AreEqual(1, legacy.ManagedBy.Count);
+            Assert.AreEqual(ManagedById, legacy.ManagedByResourceId);
+
+            ElasticSanVolumeData current = ModelReaderWriter.Read<ElasticSanVolumeData>(BinaryData.FromString(
+                $"{{\"properties\":{{\"sizeGiB\":100,\"managedBy\":[{{\"resourceIds\":[\"{ManagedById}\"]}}]}}}}"));
+
+            Assert.AreEqual(1, current.ManagedBy.Count);
+            Assert.AreEqual(ManagedById, current.ManagedByResourceId);
+        }
+
+        [Test]
+        public void VolumePatchAcceptsLegacyAndCurrentManagedByShapes()
+        {
+            ElasticSanVolumePatch legacy = ModelReaderWriter.Read<ElasticSanVolumePatch>(BinaryData.FromString(
+                $"{{\"properties\":{{\"sizeGiB\":100,\"managedBy\":{{\"resourceId\":\"{ManagedById}\"}}}}}}"));
+
+            Assert.AreEqual(1, legacy.ManagedBy.Count);
+            Assert.AreEqual(ManagedById, legacy.ManagedByResourceId);
+
+            ElasticSanVolumePatch current = ModelReaderWriter.Read<ElasticSanVolumePatch>(BinaryData.FromString(
+                $"{{\"properties\":{{\"sizeGiB\":100,\"managedBy\":[{{\"resourceIds\":[\"{ManagedById}\"]}}]}}}}"));
+
+            Assert.AreEqual(1, current.ManagedBy.Count);
+            Assert.AreEqual(ManagedById, current.ManagedByResourceId);
         }
 
         [Test]

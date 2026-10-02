@@ -112,22 +112,27 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 DiskSizeGB = 100,
             };
             ManagedDiskResource disk = (await resourceGroup.GetManagedDisks().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testdisk-"), diskData)).Value;
-            SnapshotData diskSnapshotData = new SnapshotData(location)
-            {
-                CreationData = new DiskCreationData(DiskCreateOption.Copy) { SourceResourceId = disk.Id },
-                Incremental = false,
-            };
-            SnapshotResource diskSnapshot = (await resourceGroup.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testdisksnapshot-"), diskSnapshotData)).Value;
-
             try
             {
-                DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(new ResourceIdentifier[] { diskSnapshot.Id });
-                var preRestore = (await volumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList)).Value;
-                Assert.AreEqual(preRestore.ValidationStatus, "Success");
+                SnapshotData diskSnapshotData = new SnapshotData(location)
+                {
+                    CreationData = new DiskCreationData(DiskCreateOption.Copy) { SourceResourceId = disk.Id },
+                    Incremental = false,
+                };
+                SnapshotResource diskSnapshot = (await resourceGroup.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testdisksnapshot-"), diskSnapshotData)).Value;
+                try
+                {
+                    DiskSnapshotListContent diskSnapshotList = new DiskSnapshotListContent(new ResourceIdentifier[] { diskSnapshot.Id });
+                    var preRestore = (await volumeGroup.PreRestoreVolumeAsync(WaitUntil.Completed, diskSnapshotList)).Value;
+                    Assert.AreEqual(preRestore.ValidationStatus, "Success");
+                }
+                finally
+                {
+                    await diskSnapshot.DeleteAsync(WaitUntil.Completed);
+                }
             }
             finally
             {
-                await diskSnapshot.DeleteAsync(WaitUntil.Completed);
                 await disk.DeleteAsync(WaitUntil.Completed);
             }
 
