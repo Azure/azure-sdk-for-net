@@ -88,7 +88,7 @@ namespace Azure.Security.KeyVault.Tests
             Uri uri = new("https://example.com");
 
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await SendGetRequest(transport, policy, uri: uri));
-            Assert.That(ex.Message, Is.EqualTo("The challenge contains invalid scope 'invalid-uri/.default'."));
+            Assert.That(ex.Message, Is.EqualTo("The challenge contains an invalid scope."));
         }
 
         // Regression test: a single ChallengeBasedAuthenticationPolicy instance must not reuse a challenge
