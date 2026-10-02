@@ -199,7 +199,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BatchNodeRemoveOptions(nodeIds, resizeTimeout, nodeDeallocationOption, additionalBinaryDataProperties);
+            return new BatchNodeRemoveOptions(nodeIds ?? new ChangeTrackingList<string>(), resizeTimeout, nodeDeallocationOption, additionalBinaryDataProperties);
         }
     }
 }
