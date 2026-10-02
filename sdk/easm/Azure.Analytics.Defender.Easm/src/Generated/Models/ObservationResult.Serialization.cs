@@ -196,7 +196,7 @@ namespace Azure.Analytics.Defender.Easm
             }
             return new ObservationResult(
                 name,
-                types,
+                types ?? new ChangeTrackingList<ObservationType>(),
                 priority,
                 cvssScoreV2,
                 cvssScoreV3,
