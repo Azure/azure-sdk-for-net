@@ -7,6 +7,7 @@ using System.Net;
 using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -60,6 +61,61 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.AreEqual(1, identityRequests.Count, "A refreshed pin must be reused without another lookup.");
+        }
+
+        [Test]
+        public async Task StalePinnedCertificateRecoversLedgerWriteAndCommitPolling()
+        {
+            // Cert A: the identity certificate the client pinned before the ledger's service identity changed.
+            using X509Certificate2 certA = CreateSelfSignedCertificate();
+            var identityRequests = new IdentityRequestCounter();
+            var certificateClientOptions = new ConfidentialLedgerCertificateClientOptions();
+            certificateClientOptions.AddPolicy(identityRequests, HttpPipelinePosition.PerCall);
+
+            // Mirror the customer's configuration: the GA service version and SDK retries disabled, so the write
+            // and the commit polling must succeed on their first attempt instead of being rescued by a retry.
+            var ledgerOptions = new ConfidentialLedgerClientOptions(ConfidentialLedgerClientOptions.ServiceVersion.V2026_02_23)
+            {
+                CertificateEndpoint = TestEnvironment.ConfidentialLedgerIdentityUrl,
+            };
+            ledgerOptions.Retry.MaxRetries = 0;
+
+            var client = new ConfidentialLedgerClient(
+                TestEnvironment.ConfidentialLedgerUrl,
+                credential: TestEnvironment.Credential,
+                certificateClientOptions: certificateClientOptions,
+                ledgerOptions: ledgerOptions,
+                identityServiceCert: certA);
+
+            string contents = $"certificate-refresh-{Guid.NewGuid():N}";
+            using RequestContent content = RequestContent.Create(new { contents });
+
+            // The ledger presents its current certificate (Cert B), which does not chain to Cert A. The write's TLS
+            // handshake must refresh the pin from the Identity Service instead of failing.
+            Operation operation = await client.PostLedgerEntryAsync(
+                WaitUntil.Started,
+                content,
+                collectionId: null,
+                context: new RequestContext());
+
+            Assert.IsNotNull(operation.Id, "The ledger write must return a transaction id.");
+            Assert.AreEqual(1, identityRequests.Count, "The stale pin must trigger exactly one Identity Service refresh.");
+
+            // Commit-status polling reuses the refreshed pin, so it needs no further Identity Service lookups.
+            Response completion = await operation.WaitForCompletionResponseAsync(CancellationToken.None);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, completion.Status);
+            Assert.IsTrue(operation.HasCompleted);
+
+            Response status = await client.GetTransactionStatusAsync(operation.Id, new RequestContext());
+            using (JsonDocument document = JsonDocument.Parse(status.Content))
+            {
+                Assert.AreEqual("Committed", document.RootElement.GetProperty("state").GetString());
+            }
+            Assert.AreEqual(1, identityRequests.Count, "A refreshed pin must be reused for commit polling without another lookup.");
+
+            TestContext.Progress.WriteLine(
+                $"Committed transaction {operation.Id} with a stale pinned certificate after {identityRequests.Count} Identity Service refresh.");
         }
 
         [Test]
