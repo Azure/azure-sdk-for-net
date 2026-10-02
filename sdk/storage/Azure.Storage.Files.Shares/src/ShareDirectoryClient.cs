@@ -3859,6 +3859,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     // erase parameters unrelated to container
                     DirectoryOrFilePath = null,
+                    FileId = null,
                     Snapshot = null,
                 };
 
@@ -3879,6 +3880,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>A new <see cref="ShareFileClient"/> instance.</returns>
         protected internal virtual ShareDirectoryClient GetParentDirectoryClientCore()
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, "GetParentDirectoryClient");
             if (_parentShareDirectoryClient == null)
             {
                 ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)

@@ -149,7 +149,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // The share is still known, so these remain available.
             Assert.AreEqual("share", fileClient.ShareName);
             Assert.IsFalse(fileClient.CanGenerateSasUri);
-            Assert.IsNotNull(fileClient.GetParentShareClient());
+            Assert.AreEqual(ShareUriString, fileClient.GetParentShareClient().Uri.AbsoluteUri);
         }
 
         [RecordedTest]
@@ -159,6 +159,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Assert.Throws<InvalidOperationException>(() => directoryClient.GetFileClient("file"));
             Assert.Throws<InvalidOperationException>(() => directoryClient.GetSubdirectoryClient("subdirectory"));
+            Assert.Throws<InvalidOperationException>(() => directoryClient.GetParentDirectoryClient());
             Assert.Throws<InvalidOperationException>(
                 () => directoryClient.GenerateSasUri(ShareFileSasPermissions.Read, Recording.UtcNow.AddDays(1)));
 
@@ -169,6 +170,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             Assert.AreEqual("share", directoryClient.ShareName);
             Assert.IsFalse(directoryClient.CanGenerateSasUri);
+            Assert.AreEqual(ShareUriString, directoryClient.GetParentShareClient().Uri.AbsoluteUri);
         }
 
         [RecordedTest]
@@ -180,6 +182,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.DeleteAsync());
             Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.ExistsAsync());
             Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.DownloadAsync());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.OpenReadAsync());
             Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.GetRangeListAsync());
             Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.SetMetadataAsync(default));
             Assert.ThrowsAsync<InvalidOperationException>(async () => await fileClient.RenameAsync("destination"));
@@ -477,6 +480,23 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 await leaseClient.ReleaseAsync();
             }
+        }
+
+        [RecordedTest]
+        public void LeaseOperations_ByFileId_Throws()
+        {
+            ShareLeaseClient leaseClient = GetFileIdFileClient().GetShareLeaseClient();
+
+            Assert.Throws<InvalidOperationException>(() => leaseClient.Acquire());
+            Assert.Throws<InvalidOperationException>(() => leaseClient.Release());
+            Assert.Throws<InvalidOperationException>(() => leaseClient.Change(Guid.NewGuid().ToString()));
+            Assert.Throws<InvalidOperationException>(() => leaseClient.Break());
+            Assert.Throws<InvalidOperationException>(() => leaseClient.Renew());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await leaseClient.AcquireAsync());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await leaseClient.ReleaseAsync());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await leaseClient.ChangeAsync(Guid.NewGuid().ToString()));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await leaseClient.BreakAsync());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await leaseClient.RenewAsync());
         }
 
         [RecordedTest]

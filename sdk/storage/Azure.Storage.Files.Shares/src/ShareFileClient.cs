@@ -3205,6 +3205,7 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
 #pragma warning restore CA1801
         {
+            ShareErrors.AssertNotFileIdAddressed(IsFileIdAddressed, nameof(OpenRead));
             DownloadTransferValidationOptions validaitonOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
 
             DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(OpenRead)}");
@@ -8527,6 +8528,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     // erase parameters unrelated to container
                     DirectoryOrFilePath = null,
+                    FileId = null,
                     Snapshot = null,
                 };
 
