@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataExplorer"/>. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
         /// <param name="database"> Database name. </param>
-        /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </param>
+        /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net (Azure Public) or &lt;cluster&gt;.&lt;region&gt;.kusto.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.<i>\.</i>\.kusto\.(windows\.net|usgovcloudapi\.net)`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authentication"/>, <paramref name="database"/> or <paramref name="host"/> is null. </exception>
         public DataflowEndpointDataExplorer(DataflowEndpointDataExplorerAuthentication authentication, string database, string host)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="DataflowEndpointDataExplorer"/>. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
         /// <param name="database"> Database name. </param>
-        /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </param>
+        /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net (Azure Public) or &lt;cluster&gt;.&lt;region&gt;.kusto.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.<i>\.</i>\.kusto\.(windows\.net|usgovcloudapi\.net)`. </param>
         /// <param name="batching"> Azure Data Explorer endpoint batching configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DataflowEndpointDataExplorer(DataflowEndpointDataExplorerAuthentication authentication, string database, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Database name. </summary>
         public string Database { get; set; }
 
-        /// <summary> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </summary>
+        /// <summary> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net (Azure Public) or &lt;cluster&gt;.&lt;region&gt;.kusto.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.<i>\.</i>\.kusto\.(windows\.net|usgovcloudapi\.net)`. </summary>
         public string Host { get; set; }
 
         /// <summary> Azure Data Explorer endpoint batching configuration. </summary>

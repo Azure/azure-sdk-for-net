@@ -18,16 +18,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertManagerIssuerRef"/>. </summary>
-        /// <param name="group"> group of issuer. </param>
         /// <param name="kind"> kind of issuer (Issuer or ClusterIssuer). </param>
         /// <param name="name"> name of issuer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="group"/> or <paramref name="name"/> is null. </exception>
-        public CertManagerIssuerRef(string @group, CertManagerIssuerKind kind, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public CertManagerIssuerRef(CertManagerIssuerKind kind, string name)
         {
-            Argument.AssertNotNull(@group, nameof(@group));
             Argument.AssertNotNull(name, nameof(name));
 
-            Group = @group;
             Kind = kind;
             Name = name;
         }
@@ -43,6 +40,15 @@ namespace Azure.ResourceManager.IotOperations.Models
             Kind = kind;
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertManagerIssuerRef"/>. </summary>
+        /// <param name="group"> group of issuer. </param>
+        /// <param name="kind"> kind of issuer (Issuer or ClusterIssuer). </param>
+        /// <param name="name"> name of issuer. </param>
+        public CertManagerIssuerRef(string @group, CertManagerIssuerKind kind, string name) : this(kind, name)
+        {
+            Group = @group;
         }
 
         /// <summary> group of issuer. </summary>

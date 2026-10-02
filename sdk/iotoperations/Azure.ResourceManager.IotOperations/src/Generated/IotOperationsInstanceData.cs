@@ -40,12 +40,14 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The billing SKU for the AIO Instance. Defaults to Standard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotOperationsInstanceProperties properties, IotOperationsExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal IotOperationsInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotOperationsInstanceProperties properties, IotOperationsExtendedLocation extendedLocation, ManagedServiceIdentity identity, InstanceSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
             Identity = identity;
+            Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +59,21 @@ namespace Azure.ResourceManager.IotOperations
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The billing SKU for the AIO Instance. Defaults to Standard. </summary>
+        internal InstanceSku Sku { get; set; }
+
+        /// <summary> The name of the SKU. Determines the billing meter applied to this instance. </summary>
+        public InstanceSkuName? SkuName
+        {
+            get
+            {
+                return Sku is null ? (InstanceSkuName?)default : Sku.Name;
+            }
+            set
+            {
+                Sku = value.HasValue ? new InstanceSku(value.Value) : default;
+            }
+        }
     }
 }

@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(OutputSchemaSettings))
+            {
+                writer.WritePropertyName("outputSchemaSettings"u8);
+                writer.WriteObjectValue(OutputSchemaSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             string endpointRef = default;
             string dataDestination = default;
             IList<DataflowGraphDestinationHeaderAction> headers = default;
+            DataflowGraphDestinationSchemaSettings outputSchemaSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,12 +171,21 @@ namespace Azure.ResourceManager.IotOperations.Models
                     headers = array;
                     continue;
                 }
+                if (prop.NameEquals("outputSchemaSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputSchemaSettings = DataflowGraphDestinationSchemaSettings.DeserializeDataflowGraphDestinationSchemaSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataflowGraphDestinationNodeSettings(endpointRef, dataDestination, headers ?? new ChangeTrackingList<DataflowGraphDestinationHeaderAction>(), additionalBinaryDataProperties);
+            return new DataflowGraphDestinationNodeSettings(endpointRef, dataDestination, headers ?? new ChangeTrackingList<DataflowGraphDestinationHeaderAction>(), outputSchemaSettings, additionalBinaryDataProperties);
         }
     }
 }
