@@ -194,7 +194,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 message,
                 target,
                 innererror,
-                details,
+                details ?? new ChangeTrackingList<AcsRouterCommunicationError>(),
                 additionalBinaryDataProperties);
         }
     }

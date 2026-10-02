@@ -158,7 +158,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KnowledgeBaseMessage(role, content, additionalBinaryDataProperties);
+            return new KnowledgeBaseMessage(role, content ?? new ChangeTrackingList<KnowledgeBaseMessageContent>(), additionalBinaryDataProperties);
         }
     }
 }

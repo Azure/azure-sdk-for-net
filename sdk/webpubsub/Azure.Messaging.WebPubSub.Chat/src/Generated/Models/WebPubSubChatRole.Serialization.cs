@@ -191,7 +191,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WebPubSubChatRole(name, permissions, etag, additionalBinaryDataProperties);
+            return new WebPubSubChatRole(name, permissions ?? new ChangeTrackingList<ChatPermission>(), etag, additionalBinaryDataProperties);
         }
     }
 }
