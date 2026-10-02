@@ -6,6 +6,7 @@ using Azure.Security.KeyVault.Secrets.Models;
 
 namespace Azure.Security.KeyVault.Secrets
 {
+    // TODO: Remove this buildable model once https://github.com/Azure/azure-sdk-for-net/issues/63576 is fixed.
     [ModelReaderWriterBuildable(typeof(SecretBundle))]
     public partial class AzureSecurityKeyVaultSecretsContext
     {
