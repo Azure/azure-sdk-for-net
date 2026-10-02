@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
@@ -38,8 +39,9 @@ namespace Azure.ResourceManager.Relay.Models
         /// The service defaults to 1.2 when the property is omitted.
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </param>
+        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNamespaceProperties(string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayNamespaceProperties(string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Relay.Models
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             MinimumTlsVersion = minimumTlsVersion;
+            ClusterArmId = clusterArmId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -84,5 +87,8 @@ namespace Azure.ResourceManager.Relay.Models
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </summary>
         public RelayTlsVersion? MinimumTlsVersion { get; set; }
+
+        /// <summary> Cluster ARM ID of the Namespace. </summary>
+        public ResourceIdentifier ClusterArmId { get; set; }
     }
 }
