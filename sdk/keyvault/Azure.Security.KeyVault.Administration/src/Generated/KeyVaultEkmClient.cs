@@ -7,10 +7,12 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -358,6 +360,280 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 using HttpMessage message = CreateDeleteEkmConnectionRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The External Key Manager (EKM) gets an existing EKM proxy private endpoint. This operation requires ekm/read permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peName"> The name of the private endpoint to get. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetEkmPrivateEndpoint(string peName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEkmPrivateEndpointRequest(peName, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The External Key Manager (EKM) gets an existing EKM proxy private endpoint. This operation requires ekm/read permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="peName"> The name of the private endpoint to get. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetEkmPrivateEndpointAsync(string peName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEkmPrivateEndpointRequest(peName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The External Key Manager (EKM) creates a private endpoint to the EKM proxy Private Link Service. A pool may have up to two private endpoints. This operation requires ekm/write permission. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peName"> The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Operation<BinaryData> CreateEkmPrivateEndpoint(WaitUntil waitUntil, string peName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.CreateEkmPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateEkmPrivateEndpointRequest(peName, content, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultEkmClient.CreateEkmPrivateEndpoint", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The External Key Manager (EKM) creates a private endpoint to the EKM proxy Private Link Service. A pool may have up to two private endpoints. This operation requires ekm/write permission. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peName"> The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> CreateEkmPrivateEndpointAsync(WaitUntil waitUntil, string peName, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.CreateEkmPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateEkmPrivateEndpointRequest(peName, content, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultEkmClient.CreateEkmPrivateEndpoint", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The External Key Manager (EKM) creates a private endpoint to the EKM proxy Private Link Service. A pool may have up to two private endpoints. This operation requires ekm/write permission. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peName"> The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens. </param>
+        /// <param name="parameters"> The parameters to create the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<KeyVaultEkmPrivateEndpointOperation> CreateEkmPrivateEndpoint(WaitUntil waitUntil, string peName, EkmPrivateEndpointCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = CreateEkmPrivateEndpoint(waitUntil, peName, parameters, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => (KeyVaultEkmPrivateEndpointOperation)response, ClientDiagnostics, "KeyVaultEkmClient.CreateEkmPrivateEndpoint");
+        }
+
+        /// <summary> The External Key Manager (EKM) creates a private endpoint to the EKM proxy Private Link Service. A pool may have up to two private endpoints. This operation requires ekm/write permission. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peName"> The name of the private endpoint. Must be 1-24 characters, start and end with an alphanumeric character, and contain only alphanumeric characters and hyphens. </param>
+        /// <param name="parameters"> The parameters to create the private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<KeyVaultEkmPrivateEndpointOperation>> CreateEkmPrivateEndpointAsync(WaitUntil waitUntil, string peName, EkmPrivateEndpointCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await CreateEkmPrivateEndpointAsync(waitUntil, peName, parameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (KeyVaultEkmPrivateEndpointOperation)response, ClientDiagnostics, "KeyVaultEkmClient.CreateEkmPrivateEndpoint");
+        }
+
+        /// <summary> The External Key Manager (EKM) deletes an existing EKM proxy private endpoint. The operation is rejected while an EKM connection still references the private endpoint. This operation requires ekm/write permission. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peName"> The name of the private endpoint to delete. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Operation<BinaryData> DeleteEkmPrivateEndpoint(WaitUntil waitUntil, string peName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.DeleteEkmPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteEkmPrivateEndpointRequest(peName, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "KeyVaultEkmClient.DeleteEkmPrivateEndpoint", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The External Key Manager (EKM) deletes an existing EKM proxy private endpoint. The operation is rejected while an EKM connection still references the private endpoint. This operation requires ekm/write permission. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="peName"> The name of the private endpoint to delete. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Operation<BinaryData>> DeleteEkmPrivateEndpointAsync(WaitUntil waitUntil, string peName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.DeleteEkmPrivateEndpoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteEkmPrivateEndpointRequest(peName, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "KeyVaultEkmClient.DeleteEkmPrivateEndpoint", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The External Key Manager (EKM) lists all EKM proxy private endpoints on the pool. This operation requires ekm/read permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetEkmPrivateEndpoints(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmPrivateEndpoints");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEkmPrivateEndpointsRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The External Key Manager (EKM) lists all EKM proxy private endpoints on the pool. This operation requires ekm/read permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetEkmPrivateEndpointsAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmPrivateEndpoints");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEkmPrivateEndpointsRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The External Key Manager (EKM) private endpoint operation status. Returns the status of a private endpoint create or delete operation. This operation requires ekm/read permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The identifier of the private endpoint operation. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetEkmPrivateEndpointOperationStatus(string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmPrivateEndpointOperationStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEkmPrivateEndpointOperationStatusRequest(operationId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The External Key Manager (EKM) private endpoint operation status. Returns the status of a private endpoint create or delete operation. This operation requires ekm/read permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="operationId"> The identifier of the private endpoint operation. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetEkmPrivateEndpointOperationStatusAsync(string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KeyVaultEkmClient.GetEkmPrivateEndpointOperationStatus");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetEkmPrivateEndpointOperationStatusRequest(operationId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

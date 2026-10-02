@@ -2,16 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Azure.Security.KeyVault.Administration.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
+    // The EKM proxy pool allows at most two private endpoints; concurrent fixture instances would race for that quota.
+    [NonParallelizable]
     public class KeyVaultEkmClientLiveTests : EkmTestBase
     {
+        private string _privateEndpointName;
+
         public KeyVaultEkmClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record to re-record */)
         {
@@ -20,6 +26,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 Value = "[\"AA==\"]"
             });
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..host") { Value = "ekm.contoso.com" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..privateLinkServiceId") { Value = "fake-private-link-service-id" });
         }
 
         [RecordedTest]
@@ -57,24 +64,79 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(deleted.GetRawResponse().Status, Is.EqualTo(200));
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview)]
+        public async Task EkmPrivateEndpointLifecycle()
+        {
+            string privateLinkServiceAlias = TestEnvironment.EkmPrivateLinkServiceId
+                ?? throw new IgnoreException("EKM_PRIVATE_LINK_SERVICE_ID is not defined.");
+
+            _privateEndpointName = Recording.GenerateId("ekm-pe-", 24);
+
+            // --- Create ---
+            Operation<KeyVaultEkmPrivateEndpointOperation> createOperation = await Client.CreateEkmPrivateEndpointAsync(
+                WaitUntil.Completed, _privateEndpointName, privateLinkServiceAlias, requestMessage: "Please approve this connection");
+            Assert.That(createOperation.HasValue, Is.True);
+            Assert.That(createOperation.Value.PrivateEndpointName, Is.EqualTo(_privateEndpointName));
+            Assert.That(createOperation.Value.OperationType, Is.EqualTo(KeyVaultEkmPrivateEndpointOperationType.Create));
+            Assert.That(createOperation.Value.Status, Is.EqualTo(KeyVaultEkmPrivateEndpointOperationStatus.Succeeded));
+
+            // --- Get ---
+            Response<KeyVaultEkmPrivateEndpoint> got = await Client.GetEkmPrivateEndpointAsync(_privateEndpointName);
+            Assert.That(got.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(got.Value.Name, Is.EqualTo(_privateEndpointName));
+            Assert.That(got.Value.ProvisioningState, Is.Not.Null);
+            Assert.That(got.Value.Properties?.PrivateLinkServiceAlias, Is.EqualTo(privateLinkServiceAlias));
+            Assert.That(got.Value.PrivateLinkServiceConnectionState?.Status, Is.Not.Null);
+
+            // --- List ---
+            Response<IReadOnlyList<KeyVaultEkmPrivateEndpoint>> list = await Client.GetEkmPrivateEndpointsAsync();
+            Assert.That(list.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(list.Value.Any(pe => pe.Name == _privateEndpointName), Is.True);
+
+            // --- Delete ---
+            Operation<KeyVaultEkmPrivateEndpointOperation> deleteOperation = await Client.DeleteEkmPrivateEndpointAsync(WaitUntil.Completed, _privateEndpointName);
+            Assert.That(deleteOperation.HasValue, Is.True);
+            Assert.That(deleteOperation.Value.PrivateEndpointName, Is.EqualTo(_privateEndpointName));
+            Assert.That(deleteOperation.Value.OperationType, Is.EqualTo(KeyVaultEkmPrivateEndpointOperationType.Delete));
+            Assert.That(deleteOperation.Value.Status, Is.EqualTo(KeyVaultEkmPrivateEndpointOperationStatus.Succeeded));
+
+            // --- Get operation status by job ID ---
+            Assert.That(deleteOperation.Value.JobId, Is.Not.Null.And.Not.Empty);
+
+            Response<KeyVaultEkmPrivateEndpointOperation> status = await Client.GetEkmPrivateEndpointOperationStatusAsync(deleteOperation.Value.JobId);
+            Assert.That(status.GetRawResponse().Status, Is.EqualTo(200));
+            Assert.That(status.Value.JobId, Is.EqualTo(deleteOperation.Value.JobId));
+            Assert.That(status.Value.Status, Is.EqualTo(KeyVaultEkmPrivateEndpointOperationStatus.Succeeded));
+
+            _privateEndpointName = null;
+        }
+
         [TearDown]
-        public async Task EnsureConnectionDeleted()
+        public async Task EnsureCleanedUp()
         {
             if (Mode == RecordedTestMode.Playback || Client is null)
             {
                 return;
             }
 
-            try
+            using (Recording.DisableRecording())
             {
-                using (Recording.DisableRecording())
+                // The connection must go first; the service rejects deleting a private endpoint still referenced by it.
+                await TryAsync(() => Client.DeleteEkmConnectionAsync());
+
+                if (_privateEndpointName is not null)
                 {
-                    await Client.DeleteEkmConnectionAsync();
+                    await TryAsync(() => Client.DeleteEkmPrivateEndpointAsync(WaitUntil.Completed, _privateEndpointName));
                 }
             }
-            catch (RequestFailedException ex) when (ex.Status == 404)
+
+            _privateEndpointName = null;
+
+            // Best-effort cleanup; never fail teardown.
+            static async Task TryAsync(Func<Task> action)
             {
-                // Already Deleted
+                try { await action(); } catch { }
             }
         }
 
