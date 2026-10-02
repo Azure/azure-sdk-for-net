@@ -24,6 +24,7 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
 - Require an API spec PR link or a TypeSpec project path before creating or updating a plan.
 - Validate that the spec PR repository matches the requested API release type before creation.
 - Release plan tools accept **either** a Release Plan ID or an Azure DevOps work item ID — pass whichever the user provides. Each tool resolves the value automatically (trying it as a Release Plan ID first, then as a work item ID), so you do not need to call `azure-sdk-mcp:azsdk_get_release_plan` first just to translate one ID into the other.
+- Create/update accept optional `specCommitSha`; when passing it to update, supply the explicit Azure DevOps `workItemId`.
 - Always relay schedule-risk `warnings` and `next_steps` returned by release plan tools. For each past-due plan, show its Release Plan ID and dashboard link, then present both choices: update its target release month or abandon it and record the reason in the dashboard.
 
 ## MCP Tools
@@ -58,15 +59,12 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
 3. **Gather Info** — Collect required details from the user. See [details](references/release-plan-details.md):
    - Target release month/year (format: "Month YYYY", e.g. "June 2026"). Do NOT use formats like "2026-06" or "06/2026" — these are invalid.
    - API release type: Value must be one of the following: "Private Preview", "Public Preview", or "GA"
-   - SDK release type: Value must be "beta" or "stable" — always ask the user explicitly
    - Spec PR URL (optional)
    - Service Tree ID (GUID) — optional if previously created
    - Product Tree ID (GUID) — optional if previously created
-4. **Create** — Run `azure-sdk-mcp:azsdk_create_release_plan` with the collected parameters including `sdkReleaseType`. Use `forceCreateReleasePlan: true` only if an existing release plan was found for a different API release type.
+4. **Create** — Run `azure-sdk-mcp:azsdk_create_release_plan` with the collected parameters. Use `forceCreateReleasePlan: true` only if an existing release plan was found for a different API release type.
 5. **Namespace** — For first management plane releases, link namespace approval issue using `azure-sdk-mcp:azsdk_link_namespace_approval_issue`.
 
-> **IMPORTANT**: Do NOT default the API release type value as the SDK release type. These are separate fields — always ask the user explicitly for the SDK release type.
->
 > **IMPORTANT**: Do NOT update an existing release plan to change its API release type. If a release plan exists for a different API release type, force-create a new one instead.
 
 **Tool**: `azure-sdk-mcp:azsdk_create_release_plan`
