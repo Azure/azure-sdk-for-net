@@ -1,5 +1,5 @@
 directory: specification/applink/AppLink.Management
-commit: f86e435a0cc921f0a4371f6b0ad3fe3197f2ab6d
+commit: 33cc5cb4363a72ebc01187aa0c100e6e7c77eeb3
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
