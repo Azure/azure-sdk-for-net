@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Kusto
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="KustoDataConnectionData"/>. </summary>
+        public KustoDataConnectionData() : this(default)
+        {
+        }
+
         /// <summary> Resource location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
