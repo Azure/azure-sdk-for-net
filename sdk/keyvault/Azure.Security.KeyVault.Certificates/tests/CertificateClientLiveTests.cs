@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
@@ -1076,25 +1077,32 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             string.Equals(a.Policy.IssuerName, b.Policy.IssuerName) &&
             string.Equals(a.Policy.CertificateType, b.Policy.CertificateType);
 
-        public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
+        public CryptographyClient GetCryptographyClient(Uri keyId)
+        {
+            CryptographyClientOptions options = new CryptographyClientOptions
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
+                },
+            };
+            if (Mode == RecordedTestMode.Playback)
+            {
+                options.AddPolicy(new CertificatePlaybackTimePolicy(DateTimeOffset.UtcNow), HttpPipelinePosition.PerCall);
+            }
+
+            return InstrumentClient(
                 new CryptographyClient(
                     keyId,
                     TestEnvironment.Credential,
-                    InstrumentClientOptions(
-                        new CryptographyClientOptions
-                        {
-                            Diagnostics =
-                            {
-                                IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
-                                LoggedHeaderNames =
-                                {
-                                    "x-ms-request-id",
-                                },
-                            },
-                        }
-                    )
+                    InstrumentClientOptions(options)
                 )
             );
+        }
 
         private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
             // OpenSSL-based implementations do not support P256K.
