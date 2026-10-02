@@ -148,7 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TextWeights(weights, additionalBinaryDataProperties);
+            return new TextWeights(weights ?? new ChangeTrackingDictionary<string, double>(), additionalBinaryDataProperties);
         }
     }
 }
