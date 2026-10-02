@@ -1,3 +1,5 @@
+# cspell:ignore devcert
+
 parameters:
   - name: SDKType
     type: string
@@ -131,12 +133,19 @@ jobs:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
             Restore: true
 
+        - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+          parameters:
+            npmrcPath: $(Agent.BuildDirectory)/azurite/.npmrc
+            CustomCondition: and(succeeded(), contains(variables['ProjectNames'], 'storage'))
+
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
               &"$(Build.SourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
             }
           displayName: Install Azurite If Necessary
-          condition: ne(variables['ProjectNames'], '')
+          condition: and(succeeded(), ne(variables['ProjectNames'], ''))
+          env:
+            NPM_CONFIG_USERCONFIG: $(Agent.BuildDirectory)/azurite/.npmrc
 
       # ProjectListOverrideFile is set by the customization within dependency.tests.yml
       # OR it is set by the PR built to target a set of packages outside of a single target service directory.
