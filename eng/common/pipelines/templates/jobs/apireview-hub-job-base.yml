@@ -13,6 +13,8 @@ parameters:
   - name: imageOverride
     type: string
     default: 'ubuntu-24.04'
+  - name: languageRepoResource
+    type: string
   - name: variables
     type: object
     default: []
@@ -59,7 +61,7 @@ jobs:
     path: tools
     fetchDepth: 1
     sparseCheckoutDirectories: eng
-  - checkout: ${{ variables.LanguageRepoResource }}
+  - checkout: ${{ parameters.languageRepoResource }}
     path: lang
     fetchDepth: 1
     sparseCheckoutDirectories: eng
