@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </summary>
-        public long? TotalMBps
+        public long? TotalMbps
         {
             get
             {
-                return Properties is null ? default : Properties.TotalMBps;
+                return Properties is null ? default : Properties.TotalMbps;
             }
             set
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 {
                     Properties = new ElasticSanUpdateProperties();
                 }
-                Properties.TotalMBps = value;
+                Properties.TotalMbps = value;
             }
         }
 

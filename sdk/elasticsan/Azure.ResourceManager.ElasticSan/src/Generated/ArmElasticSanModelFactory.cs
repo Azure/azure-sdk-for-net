@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
-        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, IEnumerable<ManagedByResources> managedBy, ElasticSanProvisioningState? provisioningState)
+        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, IEnumerable<ElasticSanManagedByInfo> managedBy, ElasticSanProvisioningState? provisioningState)
         {
             return new ElasticSanVolumeData(
                 id,
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     creationData,
                     sizeGiB,
                     storageTarget,
-                    (managedBy ?? new ChangeTrackingList<ManagedByResources>()).ToList(),
+                    (managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>()).ToList(),
                     provisioningState,
                     default),
                 default);
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="clientId"> ClientId of the application managing the resource. </param>
         /// <param name="version"> Version number to keep track of resources using the Volume. </param>
         /// <param name="resourceIds"> ARM Resource IDs of the resources managing the volume. </param>
-        /// <returns> A new <see cref="Models.ManagedByResources"/> instance for mocking. </returns>
-        public static ManagedByResources ManagedByResources(string clientId = default, int? version = default, IEnumerable<ResourceIdentifier> resourceIds = default)
+        /// <returns> A new <see cref="Models.ElasticSanManagedByInfo"/> instance for mocking. </returns>
+        public static ElasticSanManagedByInfo ElasticSanManagedByInfo(string clientId = default, int? version = default, IEnumerable<ResourceIdentifier> resourceIds = default)
         {
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new ManagedByResources(clientId, version, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new ElasticSanManagedByInfo(clientId, version, (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -197,22 +197,22 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. Supported only for ElasticSanVersion V2. </param>
-        /// <param name="totalMBps"> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </param>
+        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. Supported only for ElasticSanVersion V2. </param>
         /// <param name="scaleUpProperties"> Scale up settings on Elastic San Appliance. </param>
         /// <param name="tags"> Update tags. </param>
         /// <returns> A new <see cref="Models.ElasticSanPatch"/> instance for mocking. </returns>
-        public static ElasticSanPatch ElasticSanPatch(long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, long? totalIops, long? totalMBps, long? totalSizeTiB, ElasticSanScaleUpProperties scaleUpProperties = default, IDictionary<string, string> tags = default)
+        public static ElasticSanPatch ElasticSanPatch(long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, long? totalIops, long? totalMbps, long? totalSizeTiB, ElasticSanScaleUpProperties scaleUpProperties = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticSanPatch(baseSizeTiB is null && extendedCapacitySizeTiB is null && publicNetworkAccess is null && scaleUpProperties is null && totalIops is null && totalMBps is null && totalSizeTiB is null ? default : new ElasticSanUpdateProperties(
+            return new ElasticSanPatch(baseSizeTiB is null && extendedCapacitySizeTiB is null && publicNetworkAccess is null && scaleUpProperties is null && totalIops is null && totalMbps is null && totalSizeTiB is null ? default : new ElasticSanUpdateProperties(
                 baseSizeTiB,
                 extendedCapacitySizeTiB,
                 publicNetworkAccess,
                 scaleUpProperties is null ? default : new AutoScaleProperties(scaleUpProperties, default),
                 totalIops,
-                totalMBps,
+                totalMbps,
                 totalSizeTiB,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
         /// <returns> A new <see cref="Models.ElasticSanVolumePatch"/> instance for mocking. </returns>
-        public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB, IEnumerable<ManagedByResources> managedBy)
+        public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB, IEnumerable<ElasticSanManagedByInfo> managedBy)
         {
-            return new ElasticSanVolumePatch(sizeGiB is null && managedBy is null ? default : new VolumeUpdateProperties(sizeGiB, (managedBy ?? new ChangeTrackingList<ManagedByResources>()).ToList(), default), default);
+            return new ElasticSanVolumePatch(sizeGiB is null && managedBy is null ? default : new VolumeUpdateProperties(sizeGiB, (managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>()).ToList(), default), default);
         }
 
         /// <summary> object to hold array of volume names. </summary>
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
-        /// <param name="encryptionInTransit"> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </param>
+        /// <param name="isEncryptionInTransitEnabled"> A boolean indicating whether or not Encryption in Transit is enabled, supported only for ISCSI protocol. </param>
         /// <param name="reservedIops"> Reserved IOPS allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </param>
         /// <param name="reservedMBps"> Reserved MBps allocated for this volume group, applicable for QualityOfService PerformanceCritical only. </param>
         /// <param name="qualityOfService"> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </param>
         /// <param name="deleteRetentionPolicy"> The retention policy for the soft deleted volume group and its associated resources. </param>
         /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
-        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, bool? encryptionInTransit, int? reservedIops, int? reservedMBps = default, QualityOfService? qualityOfService = default, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default)
+        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, ElasticSanStorageTargetType? protocolType, ElasticSanEncryptionType? encryption, ElasticSanEncryptionProperties encryptionProperties, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, bool? enforceDataIntegrityCheckForIscsi, bool? isEncryptionInTransitEnabled, int? reservedIops, int? reservedMBps = default, ElasticSanQualityOfService? qualityOfService = default, ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default)
         {
             return new ElasticSanVolumeGroupData(
                 id,
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 resourceType,
                 systemData,
                 identity,
-                provisioningState is null && protocolType is null && encryption is null && encryptionProperties is null && virtualNetworkRules is null && privateEndpointConnections is null && enforceDataIntegrityCheckForIscsi is null && encryptionInTransit is null && reservedIops is null && reservedMBps is null && qualityOfService is null && deleteRetentionPolicy is null ? default : new VolumeGroupProperties(
+                provisioningState is null && protocolType is null && encryption is null && encryptionProperties is null && virtualNetworkRules is null && privateEndpointConnections is null && enforceDataIntegrityCheckForIscsi is null && isEncryptionInTransitEnabled is null && reservedIops is null && reservedMBps is null && qualityOfService is null && deleteRetentionPolicy is null ? default : new VolumeGroupProperties(
                     provisioningState,
                     protocolType,
                     encryption,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     virtualNetworkRules is null ? default : new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
                     (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
                     enforceDataIntegrityCheckForIscsi,
-                    encryptionInTransit,
+                    isEncryptionInTransitEnabled,
                     reservedIops,
                     reservedMBps,
                     qualityOfService,
@@ -451,24 +451,24 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="zones"> The zones. </param>
         /// <param name="zoneDetails"> Details of capabilities available in each zone. </param>
         /// <returns> A new <see cref="Models.ElasticSanSkuLocationInfo"/> instance for mocking. </returns>
-        public static ElasticSanSkuLocationInfo ElasticSanSkuLocationInfo(AzureLocation? location, IEnumerable<string> zones, IEnumerable<SkuZoneDetails> zoneDetails)
+        public static ElasticSanSkuLocationInfo ElasticSanSkuLocationInfo(AzureLocation? location, IEnumerable<string> zones, IEnumerable<ElasticSanSkuZoneDetails> zoneDetails)
         {
             zones ??= new ChangeTrackingList<string>();
-            zoneDetails ??= new ChangeTrackingList<SkuZoneDetails>();
+            zoneDetails ??= new ChangeTrackingList<ElasticSanSkuZoneDetails>();
 
-            return new ElasticSanSkuLocationInfo(location, (zones ?? new ChangeTrackingList<string>()).ToList(), (zoneDetails ?? new ChangeTrackingList<SkuZoneDetails>()).ToList(), default);
+            return new ElasticSanSkuLocationInfo(location, (zones ?? new ChangeTrackingList<string>()).ToList(), (zoneDetails ?? new ChangeTrackingList<ElasticSanSkuZoneDetails>()).ToList(), default);
         }
 
         /// <summary> Details of capabilities available in each zone. </summary>
         /// <param name="name"> The zone(s). </param>
         /// <param name="capabilities"> The capabilities supported in the zone(s). </param>
-        /// <returns> A new <see cref="Models.SkuZoneDetails"/> instance for mocking. </returns>
-        public static SkuZoneDetails SkuZoneDetails(IEnumerable<string> name = default, IEnumerable<ElasticSanSkuCapability> capabilities = default)
+        /// <returns> A new <see cref="Models.ElasticSanSkuZoneDetails"/> instance for mocking. </returns>
+        public static ElasticSanSkuZoneDetails ElasticSanSkuZoneDetails(IEnumerable<string> name = default, IEnumerable<ElasticSanSkuCapability> capabilities = default)
         {
             name ??= new ChangeTrackingList<string>();
             capabilities ??= new ChangeTrackingList<ElasticSanSkuCapability>();
 
-            return new SkuZoneDetails((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>()).ToList(), default);
+            return new ElasticSanSkuZoneDetails((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>()).ToList(), default);
         }
 
         /// <summary> The capability information in the specified SKU. </summary>

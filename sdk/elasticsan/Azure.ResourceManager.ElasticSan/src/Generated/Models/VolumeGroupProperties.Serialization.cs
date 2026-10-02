@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
                 writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
-            if (Optional.IsDefined(EncryptionInTransit))
+            if (Optional.IsDefined(IsEncryptionInTransitEnabled))
             {
                 writer.WritePropertyName("encryptionInTransit"u8);
-                writer.WriteBooleanValue(EncryptionInTransit.Value);
+                writer.WriteBooleanValue(IsEncryptionInTransitEnabled.Value);
             }
             if (Optional.IsDefined(ReservedIops))
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanNetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
-            bool? encryptionInTransit = default;
+            bool? isEncryptionInTransitEnabled = default;
             int? reservedIops = default;
             int? reservedMBps = default;
-            QualityOfService? qualityOfService = default;
+            ElasticSanQualityOfService? qualityOfService = default;
             ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    encryptionInTransit = prop.Value.GetBoolean();
+                    isEncryptionInTransitEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reservedIops"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    qualityOfService = new QualityOfService(prop.Value.GetString());
+                    qualityOfService = new ElasticSanQualityOfService(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deleteRetentionPolicy"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 networkAcls,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 enforceDataIntegrityCheckForIscsi,
-                encryptionInTransit,
+                isEncryptionInTransitEnabled,
                 reservedIops,
                 reservedMBps,
                 qualityOfService,

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
-        public IList<ManagedByResources> ManagedBy
+        public IList<ElasticSanManagedByInfo> ManagedBy
         {
             get
             {

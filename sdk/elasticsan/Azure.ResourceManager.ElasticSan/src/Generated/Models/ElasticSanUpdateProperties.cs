@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="autoScaleProperties"> Auto Scale Properties for Elastic San Appliance. </param>
         /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. Supported only for ElasticSanVersion V2. </param>
-        /// <param name="totalMBps"> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </param>
+        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </param>
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. Supported only for ElasticSanVersion V2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanUpdateProperties(long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, long? totalIops, long? totalMBps, long? totalSizeTiB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSanUpdateProperties(long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, long? totalIops, long? totalMbps, long? totalSizeTiB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
             PublicNetworkAccess = publicNetworkAccess;
             AutoScaleProperties = autoScaleProperties;
             TotalIops = totalIops;
-            TotalMBps = totalMBps;
+            TotalMbps = totalMbps;
             TotalSizeTiB = totalSizeTiB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? TotalIops { get; set; }
 
         /// <summary> Total Provisioned MBps Elastic San appliance. Supported only for ElasticSanVersion V2. </summary>
-        public long? TotalMBps { get; set; }
+        public long? TotalMbps { get; set; }
 
         /// <summary> Total size of the Elastic San appliance in TB. Supported only for ElasticSanVersion V2. </summary>
         public long? TotalSizeTiB { get; set; }

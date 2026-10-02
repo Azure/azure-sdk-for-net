@@ -12,7 +12,7 @@ using Azure.ResourceManager.ElasticSan;
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Quality of Service tier for the volume group, applicable for ElasticSanVersion V2 only. </summary>
-    public readonly partial struct QualityOfService : IEquatable<QualityOfService>
+    public readonly partial struct ElasticSanQualityOfService : IEquatable<ElasticSanQualityOfService>
     {
         private readonly string _value;
         /// <summary> General purpose tier. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Performance critical tier. </summary>
         private const string PerformanceCriticalValue = "PerformanceCritical";
 
-        /// <summary> Initializes a new instance of <see cref="QualityOfService"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticSanQualityOfService"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public QualityOfService(string value)
+        public ElasticSanQualityOfService(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         /// <summary> General purpose tier. </summary>
-        public static QualityOfService GeneralPurpose { get; } = new QualityOfService(GeneralPurposeValue);
+        public static ElasticSanQualityOfService GeneralPurpose { get; } = new ElasticSanQualityOfService(GeneralPurposeValue);
 
         /// <summary> Performance critical tier. </summary>
-        public static QualityOfService PerformanceCritical { get; } = new QualityOfService(PerformanceCriticalValue);
+        public static ElasticSanQualityOfService PerformanceCritical { get; } = new ElasticSanQualityOfService(PerformanceCriticalValue);
 
-        /// <summary> Determines if two <see cref="QualityOfService"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ElasticSanQualityOfService"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(QualityOfService left, QualityOfService right) => left.Equals(right);
+        public static bool operator ==(ElasticSanQualityOfService left, ElasticSanQualityOfService right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="QualityOfService"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ElasticSanQualityOfService"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(QualityOfService left, QualityOfService right) => !left.Equals(right);
+        public static bool operator !=(ElasticSanQualityOfService left, ElasticSanQualityOfService right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="QualityOfService"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ElasticSanQualityOfService"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QualityOfService(string value) => new QualityOfService(value);
+        public static implicit operator ElasticSanQualityOfService(string value) => new ElasticSanQualityOfService(value);
 
-        /// <summary> Converts a string to a <see cref="QualityOfService"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ElasticSanQualityOfService"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator QualityOfService?(string value) => value == null ? null : new QualityOfService(value);
+        public static implicit operator ElasticSanQualityOfService?(string value) => value == null ? null : new ElasticSanQualityOfService(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is QualityOfService other && Equals(other);
+        public override bool Equals(object obj) => obj is ElasticSanQualityOfService other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(QualityOfService other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ElasticSanQualityOfService other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

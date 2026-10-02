@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public VolumeProperties(long sizeGiB)
         {
             SizeGiB = sizeGiB;
-            ManagedBy = new ChangeTrackingList<ManagedByResources>();
+            ManagedBy = new ChangeTrackingList<ElasticSanManagedByInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeProperties"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeProperties(Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, IList<ManagedByResources> managedBy, ElasticSanProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeProperties(Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, IList<ElasticSanManagedByInfo> managedBy, ElasticSanProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VolumeId = volumeId;
             CreationData = creationData;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public IscsiTargetInfo StorageTarget { get; }
 
         /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
-        public IList<ManagedByResources> ManagedBy { get; } = new ChangeTrackingList<ManagedByResources>();
+        public IList<ElasticSanManagedByInfo> ManagedBy { get; } = new ChangeTrackingList<ElasticSanManagedByInfo>();
 
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState { get; }

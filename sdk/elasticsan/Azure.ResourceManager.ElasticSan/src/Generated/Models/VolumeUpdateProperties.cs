@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of <see cref="VolumeUpdateProperties"/>. </summary>
         public VolumeUpdateProperties()
         {
-            ManagedBy = new ChangeTrackingList<ManagedByResources>();
+            ManagedBy = new ChangeTrackingList<ElasticSanManagedByInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeUpdateProperties"/>. </summary>
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="managedBy"> Information about Azure services owning the ElasticSan volume resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeUpdateProperties(long? sizeGiB, IList<ManagedByResources> managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeUpdateProperties(long? sizeGiB, IList<ElasticSanManagedByInfo> managedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SizeGiB = sizeGiB;
             ManagedBy = managedBy;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? SizeGiB { get; set; }
 
         /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
-        public IList<ManagedByResources> ManagedBy { get; } = new ChangeTrackingList<ManagedByResources>();
+        public IList<ElasticSanManagedByInfo> ManagedBy { get; } = new ChangeTrackingList<ElasticSanManagedByInfo>();
     }
 }

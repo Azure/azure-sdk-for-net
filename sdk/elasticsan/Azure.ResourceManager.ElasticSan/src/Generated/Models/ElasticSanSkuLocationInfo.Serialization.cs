@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
-                foreach (SkuZoneDetails item in ZoneDetails)
+                foreach (ElasticSanSkuZoneDetails item in ZoneDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
-            IReadOnlyList<SkuZoneDetails> zoneDetails = default;
+            IReadOnlyList<ElasticSanSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    List<SkuZoneDetails> array = new List<SkuZoneDetails>();
+                    List<ElasticSanSkuZoneDetails> array = new List<ElasticSanSkuZoneDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SkuZoneDetails.DeserializeSkuZoneDetails(item, options));
+                        array.Add(ElasticSanSkuZoneDetails.DeserializeElasticSanSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ElasticSanSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<SkuZoneDetails>(), additionalBinaryDataProperties);
+            return new ElasticSanSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<ElasticSanSkuZoneDetails>(), additionalBinaryDataProperties);
         }
     }
 }

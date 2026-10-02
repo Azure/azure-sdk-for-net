@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("totalIops"u8);
                 writer.WriteNumberValue(TotalIops.Value);
             }
-            if (Optional.IsDefined(TotalMBps))
+            if (Optional.IsDefined(TotalMbps))
             {
                 writer.WritePropertyName("totalMBps"u8);
-                writer.WriteNumberValue(TotalMBps.Value);
+                writer.WriteNumberValue(TotalMbps.Value);
             }
             if (Optional.IsDefined(TotalSizeTiB))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
             AutoScaleProperties autoScaleProperties = default;
             long? totalIops = default;
-            long? totalMBps = default;
+            long? totalMbps = default;
             long? totalSizeTiB = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    totalMBps = prop.Value.GetInt64();
+                    totalMbps = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("totalSizeTiB"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 publicNetworkAccess,
                 autoScaleProperties,
                 totalIops,
-                totalMBps,
+                totalMbps,
                 totalSizeTiB,
                 additionalBinaryDataProperties);
         }
