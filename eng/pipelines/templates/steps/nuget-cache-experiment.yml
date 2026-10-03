@@ -1,0 +1,13 @@
+parameters:
+  - name: CacheLabel
+    type: string
+  - name: ServiceDirectory
+    type: string
+
+steps:
+  - task: Cache@2
+    inputs:
+      key: '"nuget-experiment-v1" | "$(Agent.OS)" | "$(Agent.OSArchitecture)" | "${{ parameters.CacheLabel }}" | "${{ parameters.ServiceDirectory }}" | global.json | NuGet.Config | .config/dotnet-tools.json | eng/centralpackagemanagement/**/*.props | Directory.Build.props | Directory.Build.targets | eng/Directory.Build.Common.props | eng/Directory.Build.Common.targets'
+      path: $(NUGET_PACKAGES)
+      cacheHitVar: NUGET_EXPERIMENT_CACHE_HIT
+    displayName: Restore NuGet experiment cache
