@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// Defines the organization in which the pool will be used.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsGitHubOrganizationProfile"/> and <see cref="DevOpsAzureOrganizationProfile"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsAzureOrganizationProfile"/> and <see cref="DevOpsGitHubOrganizationProfile"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDevOpsOrganizationProfile))]
     public abstract partial class DevOpsOrganizationProfile : IJsonModel<DevOpsOrganizationProfile>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "GitHub":
-                        return DevOpsGitHubOrganizationProfile.DeserializeDevOpsGitHubOrganizationProfile(element, options);
                     case "AzureDevOps":
                         return DevOpsAzureOrganizationProfile.DeserializeDevOpsAzureOrganizationProfile(element, options);
+                    case "GitHub":
+                        return DevOpsGitHubOrganizationProfile.DeserializeDevOpsGitHubOrganizationProfile(element, options);
                 }
             }
             return UnknownDevOpsOrganizationProfile.DeserializeUnknownDevOpsOrganizationProfile(element, options);

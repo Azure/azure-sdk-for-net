@@ -312,8 +312,8 @@ function Remove-WormStorageAccounts() {
     throw "The -GroupPrefix parameter must not be empty"
   }
 
-  if ($CheckPrefix -and $CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-'))) {
-    throw "In CI contexts with -CheckPrefix enabled, -GroupPrefix must start with 'rg-' or 'SSS3PT_rg-'"
+  if ($CheckPrefix -and $CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_'))) {
+    throw "In CI contexts with -CheckPrefix enabled, -GroupPrefix must start with 'rg-' or 'SSS3PT_'"
   }
 
 
@@ -336,13 +336,18 @@ function Remove-StorageSyncServices() {
   [CmdletBinding(SupportsShouldProcess = $True)]
   param(
     [string]$GroupPrefix,
-    [switch]$CI
+    [switch]$CI,
+    [bool]$CheckPrefix = $true
   )
 
   $ErrorActionPreference = 'Stop'
 
-  if (!$groupPrefix -or ($CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_rg-')))) {
-    throw "The -GroupPrefix parameter must not be empty, or must start with 'rg-' or 'SSS3PT_rg-' in CI contexts"
+  if (!$GroupPrefix) {
+    throw "The -GroupPrefix parameter must not be empty"
+  }
+
+  if ($CheckPrefix -and $CI -and (!$GroupPrefix.StartsWith('rg-') -and !$GroupPrefix.StartsWith('SSS3PT_'))) {
+    throw "In CI contexts with -CheckPrefix enabled, -GroupPrefix must start with 'rg-' or 'SSS3PT_'"
   }
 
   $groups = Get-AzResourceGroup | Where-Object { $_.ResourceGroupName.StartsWith($GroupPrefix) } | Where-Object { $_.ProvisioningState -ne 'Deleting' }

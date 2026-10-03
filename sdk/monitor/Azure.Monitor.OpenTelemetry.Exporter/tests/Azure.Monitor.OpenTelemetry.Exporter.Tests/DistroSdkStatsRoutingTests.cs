@@ -235,6 +235,82 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain("https://https://", statsbeat._statsbeat_ConnectionString);
         }
 
+        // The distro changes only the destination. Envelopes must keep the SDK statistics
+        // instrumentation key the legacy endpoint receives - never a placeholder, and never
+        // the customer's own key, which is carried separately as the cikey dimension.
+        private const string DistinctCustomerIkey = "11111111-2222-3333-4444-555555555555";
+
+        public static TheoryData<string, string> ConfigUrlIkeyCases => new()
+        {
+            { "westus", StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU },
+            { "westeurope", StatsbeatConstants.Statsbeat_InstrumentationKey_EU },
+            { "foo", StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU },
+        };
+
+        [Theory]
+        [MemberData(nameof(ConfigUrlIkeyCases))]
+        public async Task DistroSwitchOn_ConfigReturnsUrl_UsesSdkStatsInstrumentationKey(string region, string expectedIkey)
+        {
+            var handler = new StubHandler(_ => OkJson("{\"ver\":1,\"enabled\":true,\"url\":\"data.example.invalid\"}"));
+            var vars = ConnectionStringParser.GetValues(
+                $"InstrumentationKey={DistinctCustomerIkey};IngestionEndpoint=https://{region}.in.applicationinsights.azure.com/");
+
+            using var statsbeat = new AzureMonitorStatsbeat(vars, new MockPlatform(), handler);
+            await AwaitInitAsync(statsbeat);
+
+            Assert.Equal(
+                $"InstrumentationKey={expectedIkey};IngestionEndpoint=https://data.example.invalid/",
+                statsbeat._statsbeat_ConnectionString);
+
+            var exporterVars = ConnectionStringParser.GetValues(statsbeat._statsbeat_ConnectionString!);
+            Assert.Equal(expectedIkey, exporterVars.InstrumentationKey);
+            Assert.NotEqual(DistinctCustomerIkey, exporterVars.InstrumentationKey);
+            Assert.NotEqual("00000000-0000-0000-0000-000000000000", exporterVars.InstrumentationKey);
+        }
+
+        [Theory]
+        [InlineData("bare.host.invalid")]
+        [InlineData("bare.host.invalid/")]
+        [InlineData("https://bare.host.invalid")]
+        [InlineData("https://bare.host.invalid/")]
+        public void BuildConnectionStringFromHost_KeepsInstrumentationKey(string host)
+        {
+            Assert.Equal(
+                "InstrumentationKey=" + StatsbeatConstants.Statsbeat_InstrumentationKey_EU + ";IngestionEndpoint=https://bare.host.invalid/",
+                AzureMonitorStatsbeat.BuildConnectionStringFromHost(host, StatsbeatConstants.Statsbeat_InstrumentationKey_EU));
+        }
+
+        /// <summary>
+        /// Literals rather than references, so regrouping the constants cannot silently change
+        /// which resource SDK statistics are attributed to.
+        /// </summary>
+        [Fact]
+        public void SdkStatsInstrumentationKeysAreUnchanged()
+        {
+            Assert.Equal("c4a29126-a7cb-47e5-b348-11414998b11e", StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU);
+            Assert.Equal("7dc56bab-3c0c-4e9f-9ebb-d1acadee8d0f", StatsbeatConstants.Statsbeat_InstrumentationKey_EU);
+            Assert.Equal(
+                "InstrumentationKey=c4a29126-a7cb-47e5-b348-11414998b11e;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/",
+                StatsbeatConstants.Statsbeat_ConnectionString_NonEU);
+            Assert.Equal(
+                "InstrumentationKey=7dc56bab-3c0c-4e9f-9ebb-d1acadee8d0f;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/",
+                StatsbeatConstants.Statsbeat_ConnectionString_EU);
+        }
+
+        [Theory]
+        [MemberData(nameof(ConfigUrlIkeyCases))]
+        public void GetSdkStatsInstrumentationKey_MatchesConfigUrlRegion(string region, string expectedIkey)
+        {
+            var ingestionEndpoint = $"https://{region}.in.applicationinsights.azure.com/";
+
+            Assert.Equal(expectedIkey, AzureMonitorStatsbeat.GetSdkStatsInstrumentationKey(ingestionEndpoint));
+
+            var expectedConfigUrl = expectedIkey == StatsbeatConstants.Statsbeat_InstrumentationKey_EU
+                ? StatsbeatConstants.SdkStatsConfigUrl_EU
+                : StatsbeatConstants.SdkStatsConfigUrl_NonEU;
+            Assert.Equal(expectedConfigUrl, AzureMonitorStatsbeat.GetSdkStatsConfigUrl(ingestionEndpoint));
+        }
+
         [Fact]
         public async Task DistroSwitchOn_RemoteDisabled_DoesNotBuildMeterProvider()
         {

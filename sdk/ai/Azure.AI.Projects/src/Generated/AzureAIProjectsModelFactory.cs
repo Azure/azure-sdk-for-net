@@ -730,13 +730,13 @@ namespace Azure.AI.Projects
             return new UpdateModelVersionOptions(description, tags, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The CreateAsyncResponse. </summary>
+        /// <summary> The CreateAsyncResult. </summary>
         /// <param name="location"> URL to poll for operation status. </param>
         /// <param name="operationResult"> URL to the operation result, or null if the operation is still in progress. </param>
-        /// <returns> A new <see cref="Projects.CreateAsyncResponse"/> instance for mocking. </returns>
-        public static CreateAsyncResponse CreateAsyncResponse(Uri location = default, Uri operationResult = default)
+        /// <returns> A new <see cref="Projects.CreateAsyncResult"/> instance for mocking. </returns>
+        public static CreateAsyncResult CreateAsyncResult(Uri location = default, Uri operationResult = default)
         {
-            return new CreateAsyncResponse(location, operationResult, additionalBinaryDataProperties: null);
+            return new CreateAsyncResult(location, operationResult, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a request for a pending upload of a model version. </summary>

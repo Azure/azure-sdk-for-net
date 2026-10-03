@@ -36,6 +36,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOracleLinkedService"/>. </summary>
+        /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Only used for Version 1.0. </param>
+        public AmazonRdsForOracleLinkedService(DataFactoryElement<string> connectionString) : this()
+        {
+            ConnectionString = connectionString;
+        }
+
         /// <summary> AmazonRdsForOracle database linked service properties. </summary>
         internal AmazonRdsForLinkedServiceTypeProperties TypeProperties { get; set; }
 

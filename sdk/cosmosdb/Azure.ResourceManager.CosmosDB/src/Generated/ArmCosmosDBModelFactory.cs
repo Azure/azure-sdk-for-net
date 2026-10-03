@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// The object representing the policy for taking backups on an account.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PeriodicModeBackupPolicy"/> and <see cref="Models.ContinuousModeBackupPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContinuousModeBackupPolicy"/> and <see cref="Models.PeriodicModeBackupPolicy"/>.
         /// </summary>
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// Base copy job properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CassandraRUToCassandraRUCopyJobProperties"/>, <see cref="Models.BlobToCassandraRUCopyJobProperties"/>, <see cref="Models.CassandraRUToBlobCopyJobProperties"/>, <see cref="Models.MongoRUToMongoRUCopyJobProperties"/>, <see cref="Models.MongoRUToMongoVCoreCopyJobProperties"/>, and <see cref="Models.NoSqlRUToNoSqlRUCopyJobProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BlobToCassandraRUCopyJobProperties"/>, <see cref="Models.CassandraRUToBlobCopyJobProperties"/>, <see cref="Models.CassandraRUToCassandraRUCopyJobProperties"/>, <see cref="Models.MongoRUToMongoRUCopyJobProperties"/>, <see cref="Models.MongoRUToMongoVCoreCopyJobProperties"/>, and <see cref="Models.NoSqlRUToNoSqlRUCopyJobProperties"/>.
         /// </summary>
         /// <param name="jobType"> Copy Job Type. </param>
         /// <returns> A new <see cref="Models.CosmosDBCopyJobBaseProperties"/> instance for mocking. </returns>
@@ -3375,7 +3375,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// Base class for all DataTransfer source/sink
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BaseCosmosDataTransferDataSourceSink"/>, <see cref="Models.CosmosCassandraDataTransferDataSourceSink"/>, <see cref="Models.CosmosMongoDataTransferDataSourceSink"/>, <see cref="Models.CosmosMongoVCoreDataTransferDataSourceSink"/>, <see cref="Models.CosmosSqlDataTransferDataSourceSink"/>, and <see cref="Models.AzureBlobDataTransferDataSourceSink"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureBlobDataTransferDataSourceSink"/>, <see cref="Models.BaseCosmosDataTransferDataSourceSink"/>, <see cref="Models.CosmosCassandraDataTransferDataSourceSink"/>, <see cref="Models.CosmosMongoDataTransferDataSourceSink"/>, <see cref="Models.CosmosMongoVCoreDataTransferDataSourceSink"/>, and <see cref="Models.CosmosSqlDataTransferDataSourceSink"/>.
         /// </summary>
         /// <param name="component"></param>
         /// <returns> A new <see cref="Models.DataTransferDataSourceSink"/> instance for mocking. </returns>
@@ -5026,7 +5026,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// Services response resource.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceProperties"/>, <see cref="Models.SqlDedicatedGatewayServiceProperties"/>, <see cref="Models.GraphApiComputeServiceProperties"/>, and <see cref="Models.MaterializedViewsBuilderServiceProperties"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceProperties"/>, <see cref="Models.GraphApiComputeServiceProperties"/>, <see cref="Models.MaterializedViewsBuilderServiceProperties"/>, and <see cref="Models.SqlDedicatedGatewayServiceProperties"/>.
         /// </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
@@ -5208,7 +5208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary>
         /// Properties in ServiceResourceCreateUpdateParameters.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="Models.GraphApiComputeServiceResourceCreateUpdateProperties"/>, and <see cref="Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="Models.GraphApiComputeServiceResourceCreateUpdateProperties"/>, <see cref="Models.MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>, and <see cref="Models.SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>.
         /// </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
@@ -5487,6 +5487,50 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBFleetspaceAccountConfiguration CosmosDBFleetspaceAccountConfiguration(ResourceIdentifier resourceId = default, AzureLocation? armLocation = default)
         {
             return new CosmosDBFleetspaceAccountConfiguration(resourceId, armLocation, default);
+        }
+
+        /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
+        /// <param name="address"> The node's IP address. </param>
+        /// <param name="state"> The state of the node in Cassandra ring. </param>
+        /// <param name="status"></param>
+        /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
+        /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
+        /// <param name="tokens"> List of tokens this node covers. </param>
+        /// <param name="size"></param>
+        /// <param name="hostId"> The network ID of the node. </param>
+        /// <param name="rack"> The rack this node is part of. </param>
+        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="diskUsedKB"> The amount of disk used, in kB, of the directory /var/lib/cassandra. </param>
+        /// <param name="diskFreeKB"> The amount of disk free, in kB, of the directory /var/lib/cassandra. </param>
+        /// <param name="memoryUsedKB"> Used memory (calculated as total - free - buffers - cache), in kB. </param>
+        /// <param name="memoryBuffersAndCachedKB"> Memory used by kernel buffers (Buffers in /proc/meminfo) and page cache and slabs (Cached and SReclaimable in /proc/meminfo), in kB. </param>
+        /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
+        /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
+        /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
+        /// <returns> A new <see cref="Models.CassandraClusterDataCenterNodeItem"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IEnumerable<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        {
+            return new CassandraClusterDataCenterNodeItem(
+                address,
+                state,
+                status,
+                cassandraProcessStatus,
+                load,
+                (tokens ?? new ChangeTrackingList<string>()).ToList(),
+                size,
+                hostId,
+                rack,
+                timestamp,
+                diskUsedKB,
+                diskFreeKB,
+                memoryUsedKB,
+                memoryBuffersAndCachedKB,
+                memoryFreeKB,
+                memoryTotalKB,
+                cpuUsage,
+                default,
+                default);
         }
 
         /// <summary> An Azure Cosmos DB database account. </summary>

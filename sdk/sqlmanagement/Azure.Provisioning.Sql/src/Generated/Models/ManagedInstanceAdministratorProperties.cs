@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _login;
         private BicepValue<Guid> _sid;
         private BicepValue<Guid> _tenantId;
+        private BicepValue<ManagedInstanceAdministratorPrincipalType> _principalType;
 
         /// <summary> Creates a new ManagedInstanceAdministratorProperties. </summary>
         public ManagedInstanceAdministratorProperties()
@@ -84,6 +85,21 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets or sets the PrincipalType. </summary>
+        public BicepValue<ManagedInstanceAdministratorPrincipalType> PrincipalType
+        {
+            get
+            {
+                Initialize();
+                return _principalType;
+            }
+            set
+            {
+                Initialize();
+                _principalType.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ManagedInstanceAdministratorProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -92,6 +108,7 @@ namespace Azure.Provisioning.Sql
             _login = DefineProperty<string>(nameof(Login), new string[] { "login" }, isRequired: true);
             _sid = DefineProperty<Guid>(nameof(Sid), new string[] { "sid" }, isRequired: true);
             _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
+            _principalType = DefineProperty<ManagedInstanceAdministratorPrincipalType>(nameof(PrincipalType), new string[] { "principalType" });
             DefineAdditionalProperties();
         }
 

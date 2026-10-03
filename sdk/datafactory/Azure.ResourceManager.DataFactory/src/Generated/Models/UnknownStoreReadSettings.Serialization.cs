@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new UnknownStoreReadSettings(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
         }

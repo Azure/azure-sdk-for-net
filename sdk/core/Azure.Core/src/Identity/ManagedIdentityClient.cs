@@ -82,7 +82,7 @@ namespace Azure.Identity
 
             MSAL.ManagedIdentitySource availableSource;
             bool isKeyGuardAvailable = false;
-            bool requiresManagedIdentityCapabilities = context.IsProofOfPossessionEnabled && !_options.DisableMtlsProofOfPossession;
+            bool requiresManagedIdentityCapabilities = context.IsProofOfPossessionEnabled && _options.EnableMtlsProofOfPossession;
             if (requiresManagedIdentityCapabilities)
             {
                 MSAL.ManagedIdentityCapabilities capabilities;

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Base copy job properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CassandraRUToCassandraRUCopyJobProperties"/>, <see cref="BlobToCassandraRUCopyJobProperties"/>, <see cref="CassandraRUToBlobCopyJobProperties"/>, <see cref="MongoRUToMongoRUCopyJobProperties"/>, <see cref="MongoRUToMongoVCoreCopyJobProperties"/>, and <see cref="NoSqlRUToNoSqlRUCopyJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BlobToCassandraRUCopyJobProperties"/>, <see cref="CassandraRUToBlobCopyJobProperties"/>, <see cref="CassandraRUToCassandraRUCopyJobProperties"/>, <see cref="MongoRUToMongoRUCopyJobProperties"/>, <see cref="MongoRUToMongoVCoreCopyJobProperties"/>, and <see cref="NoSqlRUToNoSqlRUCopyJobProperties"/>.
     /// </summary>
     public abstract partial class CosmosDBCopyJobBaseProperties
     {

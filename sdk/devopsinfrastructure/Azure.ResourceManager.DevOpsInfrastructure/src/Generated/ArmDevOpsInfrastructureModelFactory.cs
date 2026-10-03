@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary>
         /// Defines the organization in which the pool will be used.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsGitHubOrganizationProfile"/> and <see cref="Models.DevOpsAzureOrganizationProfile"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsAzureOrganizationProfile"/> and <see cref="Models.DevOpsGitHubOrganizationProfile"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DevOpsOrganizationProfile. </param>
         /// <returns> A new <see cref="Models.DevOpsOrganizationProfile"/> instance for mocking. </returns>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary>
         /// The agent profile of the machines in the pool.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsStatelessAgentProfile"/> and <see cref="Models.DevOpsStateful"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsStateful"/> and <see cref="Models.DevOpsStatelessAgentProfile"/>.
         /// </summary>
         /// <param name="kind"> Discriminator property for DevOpsPoolAgentProfile. </param>
         /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary>
         /// Determines how the stand-by scheme should be provided.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManualResourcePredictionsProfile"/> and <see cref="Models.AutomaticResourcePredictionsProfile"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AutomaticResourcePredictionsProfile"/> and <see cref="Models.ManualResourcePredictionsProfile"/>.
         /// </summary>
         /// <param name="kind"> Determines how the stand-by scheme should be provided. </param>
         /// <returns> A new <see cref="Models.ResourcePredictionsProfile"/> instance for mocking. </returns>
