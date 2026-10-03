@@ -6,6 +6,7 @@
         <Configuration>
           <Format>cobertura</Format>
           <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
+          <ExcludeByFile></ExcludeByFile>
           <IncludeTestAssembly>false</IncludeTestAssembly>
           <SingleHit>false</SingleHit>
           <SkipAutoProps>true</SkipAutoProps>
