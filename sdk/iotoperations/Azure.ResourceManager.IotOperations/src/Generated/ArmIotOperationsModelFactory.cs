@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     public static partial class ArmIotOperationsModelFactory
     {
 
-        /// <summary> A Instance resource is a logical container for a set of child resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -29,8 +28,9 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="skuName"> The name of the SKU. Determines the billing meter applied to this instance. </param>
         /// <returns> A new <see cref="IotOperations.IotOperationsInstanceData"/> instance for mocking. </returns>
-        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotOperationsInstanceProperties properties, IotOperationsExtendedLocation extendedLocation, ManagedServiceIdentity identity, InstanceSkuName? skuName)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 properties,
                 extendedLocation,
                 identity,
+                skuName is null ? default : new InstanceSku(skuName.GetValueOrDefault(), default),
                 default);
         }
 
@@ -1117,7 +1118,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Azure Data Explorer endpoint properties. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
         /// <param name="database"> Database name. </param>
-        /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </param>
+        /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net (Azure Public) or &lt;cluster&gt;.&lt;region&gt;.kusto.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.<i>\.</i>\.kusto\.(windows\.net|usgovcloudapi\.net)`. </param>
         /// <param name="batching"> Azure Data Explorer endpoint batching configuration. </param>
         /// <returns> A new <see cref="Models.DataflowEndpointDataExplorer"/> instance for mocking. </returns>
         public static DataflowEndpointDataExplorer DataflowEndpointDataExplorer(DataflowEndpointDataExplorerAuthentication authentication = default, string database = default, string host = default, IotOperationsBatchingConfig batching = default)
@@ -1155,7 +1156,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Azure Data Lake endpoint properties. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
-        /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </param>
+        /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net (Azure Public) or &lt;account&gt;.blob.core.usgovcloudapi.net (Azure US Government). This will be validated by the regex `.*\.blob\.core\.(windows\.net|usgovcloudapi\.net)`. </param>
         /// <param name="batching"> Azure Data Lake endpoint batching configuration. </param>
         /// <returns> A new <see cref="Models.DataflowEndpointDataLakeStorage"/> instance for mocking. </returns>
         public static DataflowEndpointDataLakeStorage DataflowEndpointDataLakeStorage(DataflowEndpointDataLakeStorageAuthentication authentication = default, string host = default, IotOperationsBatchingConfig batching = default)
@@ -1177,7 +1178,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="authentication"> Authentication configuration. NOTE - only one authentication property is allowed per entry. </param>
         /// <param name="names"> Names of the workspace and lakehouse. </param>
         /// <param name="oneLakePathType"> Type of location of the data in the workspace. Can be either tables or files. </param>
-        /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </param>
+        /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com (Azure Public) or https://&lt;host&gt;.fabric.microsoft.us (Azure US Government). This will be validated by the regex `.*\.fabric\.microsoft\.(com|us)`. </param>
         /// <param name="batching"> Batching configuration. </param>
         /// <returns> A new <see cref="Models.DataflowEndpointFabricOneLake"/> instance for mocking. </returns>
         public static DataflowEndpointFabricOneLake DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication = default, DataflowEndpointFabricOneLakeNames names = default, DataflowEndpointFabricPathType oneLakePathType = default, string host = default, IotOperationsBatchingConfig batching = default)
@@ -1503,12 +1504,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="endpointRef"> The name of the DataflowEndpoint resource . </param>
         /// <param name="dataDestination"> Data destination at the endpoint. </param>
         /// <param name="headers"> Headers for the output data. </param>
+        /// <param name="outputSchemaSettings"> Output schema settings. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationNodeSettings"/> instance for mocking. </returns>
-        public static DataflowGraphDestinationNodeSettings DataflowGraphDestinationNodeSettings(string endpointRef = default, string dataDestination = default, IEnumerable<DataflowGraphDestinationHeaderAction> headers = default)
+        public static DataflowGraphDestinationNodeSettings DataflowGraphDestinationNodeSettings(string endpointRef, string dataDestination, IEnumerable<DataflowGraphDestinationHeaderAction> headers, DataflowGraphDestinationSchemaSettings outputSchemaSettings)
         {
             headers ??= new ChangeTrackingList<DataflowGraphDestinationHeaderAction>();
 
-            return new DataflowGraphDestinationNodeSettings(endpointRef, dataDestination, (headers ?? new ChangeTrackingList<DataflowGraphDestinationHeaderAction>()).ToList(), default);
+            return new DataflowGraphDestinationNodeSettings(endpointRef, dataDestination, (headers ?? new ChangeTrackingList<DataflowGraphDestinationHeaderAction>()).ToList(), outputSchemaSettings, default);
         }
 
         /// <summary>
@@ -1546,6 +1548,15 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static DataflowGraphDestinationAddOrReplaceHeaderAction DataflowGraphDestinationAddOrReplaceHeaderAction(string key = default, string value = default)
         {
             return new DataflowGraphDestinationAddOrReplaceHeaderAction(default, default, key, value);
+        }
+
+        /// <summary> DataflowGraph destination node output schema settings. </summary>
+        /// <param name="serializationFormat"> The format of the output data. </param>
+        /// <param name="schemaRef"> Reference to the schema that describes the output of the transformation. </param>
+        /// <returns> A new <see cref="Models.DataflowGraphDestinationSchemaSettings"/> instance for mocking. </returns>
+        public static DataflowGraphDestinationSchemaSettings DataflowGraphDestinationSchemaSettings(DataflowGraphDestinationSchemaSerializationFormat serializationFormat = default, string schemaRef = default)
+        {
+            return new DataflowGraphDestinationSchemaSettings(serializationFormat, schemaRef, default);
         }
 
         /// <param name="from"> Information about the source node. </param>
@@ -2273,6 +2284,45 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default,
                 default,
                 default);
+        }
+
+        /// <summary> A Instance resource is a logical container for a set of child resources. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Edge location of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="IotOperations.IotOperationsInstanceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        {
+            return new IotOperationsInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                identity,
+                default,
+                default);
+        }
+
+        /// <summary> DataflowGraph destination node settings. </summary>
+        /// <param name="endpointRef"> The name of the DataflowEndpoint resource . </param>
+        /// <param name="dataDestination"> Data destination at the endpoint. </param>
+        /// <param name="headers"> Headers for the output data. </param>
+        /// <returns> A new <see cref="Models.DataflowGraphDestinationNodeSettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataflowGraphDestinationNodeSettings DataflowGraphDestinationNodeSettings(string endpointRef = default, string dataDestination = default, IEnumerable<DataflowGraphDestinationHeaderAction> headers = default)
+        {
+            return new DataflowGraphDestinationNodeSettings(endpointRef, dataDestination, (headers ?? new ChangeTrackingList<DataflowGraphDestinationHeaderAction>()).ToList(), default, default);
         }
 
         /// <summary> Broker Resource properties. </summary>

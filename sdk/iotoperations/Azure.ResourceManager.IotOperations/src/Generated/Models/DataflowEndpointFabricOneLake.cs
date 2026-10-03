@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="authentication"> Authentication configuration. NOTE - only one authentication property is allowed per entry. </param>
         /// <param name="names"> Names of the workspace and lakehouse. </param>
         /// <param name="oneLakePathType"> Type of location of the data in the workspace. Can be either tables or files. </param>
-        /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </param>
+        /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com (Azure Public) or https://&lt;host&gt;.fabric.microsoft.us (Azure US Government). This will be validated by the regex `.*\.fabric\.microsoft\.(com|us)`. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authentication"/>, <paramref name="names"/> or <paramref name="host"/> is null. </exception>
         public DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication, DataflowEndpointFabricOneLakeNames names, DataflowEndpointFabricPathType oneLakePathType, string host)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="authentication"> Authentication configuration. NOTE - only one authentication property is allowed per entry. </param>
         /// <param name="names"> Names of the workspace and lakehouse. </param>
         /// <param name="oneLakePathType"> Type of location of the data in the workspace. Can be either tables or files. </param>
-        /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </param>
+        /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com (Azure Public) or https://&lt;host&gt;.fabric.microsoft.us (Azure US Government). This will be validated by the regex `.*\.fabric\.microsoft\.(com|us)`. </param>
         /// <param name="batching"> Batching configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication, DataflowEndpointFabricOneLakeNames names, DataflowEndpointFabricPathType oneLakePathType, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Type of location of the data in the workspace. Can be either tables or files. </summary>
         public DataflowEndpointFabricPathType OneLakePathType { get; set; }
 
-        /// <summary> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </summary>
+        /// <summary> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com (Azure Public) or https://&lt;host&gt;.fabric.microsoft.us (Azure US Government). This will be validated by the regex `.*\.fabric\.microsoft\.(com|us)`. </summary>
         public string Host { get; set; }
 
         /// <summary> Batching configuration. </summary>
