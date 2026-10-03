@@ -86,8 +86,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             writer.WritePropertyName("marketplace"u8);
             writer.WriteObjectValue(Marketplace, options);
-            writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue(User, options);
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteObjectValue(User, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -154,6 +157,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (prop.NameEquals("user"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     user = PureStorageUserDetails.DeserializePureStorageUserDetails(prop.Value, options);
                     continue;
                 }
