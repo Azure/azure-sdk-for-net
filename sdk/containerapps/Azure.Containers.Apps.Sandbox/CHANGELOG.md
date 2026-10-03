@@ -10,6 +10,7 @@
 - Added resource clients for identifier-scoped operations and create/list responses with service data.
 - Exposed sandbox group identifiers and the full ARM resource ID as read-only properties on `SandboxGroupClient`.
 - Added streaming convenience methods for sandbox files, volume files, and content package uploads. Upload streams remain caller-owned, and downloaded file streams must be disposed by the caller.
+- Added interactive exec sessions with dedicated WebSocket start requests and process streams over WebSocket, and unbuffered HTTP log streaming.
 
 ### Breaking Changes
 
