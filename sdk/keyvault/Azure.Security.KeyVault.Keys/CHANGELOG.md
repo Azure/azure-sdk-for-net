@@ -3,6 +3,11 @@
 ## 4.11.0-beta.5 (Unreleased)
 
 ### Features Added
+- Added support for Algorithm Key Pair (AKP) keys, such as ML-DSA post-quantum keys:
+  - Added the `KeyType.Akp` and `KeyType.AkpHsm` key types.
+  - Added the `AkpAlgorithm` type listing the supported AKP algorithms.
+  - Added the `CreateAkpKeyOptions` model and the new `CreateAkpKey` and `CreateAkpKeyAsync` methods in `KeyClient`.
+  - Added the `Algorithm` and `Pub` properties to `JsonWebKey`.
 
 ### Breaking Changes
 
@@ -12,6 +17,7 @@
 - Improved authentication challenge resource validation.
 
 ### Other Changes
+- The default service version is now `2026-07-01-preview`.
 
 ## 4.11.0-beta.4 (2026-09-27)
 
