@@ -8,7 +8,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="value">The expression being indexed.</param>
 /// <param name="index">The index expression.</param>
-public class IndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
+public partial class IndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
 {
     /// <summary>
     /// Gets the expression being indexed.
@@ -18,8 +18,12 @@ public class IndexExpression(BicepExpression value, BicepExpression index) : Bic
     /// Gets the index expression.
     /// </summary>
     public BicepExpression Index { get; } = index;
+    /// <summary>
+    /// Gets or sets a value indicating whether the index is relative to the end of the array.
+    /// </summary>
+    public bool FromEnd { get; set; }
     internal override BicepWriter Write(BicepWriter writer) =>
-        writer.Append(Value).Append('[').Append(Index).Append(']');
+        writer.Append(Value).Append('[').AppendIf(FromEnd, w => w.Append('^')).Append(Index).Append(']');
 }
 
 /// <summary>
@@ -27,7 +31,7 @@ public class IndexExpression(BicepExpression value, BicepExpression index) : Bic
 /// </summary>
 /// <param name="value">The expression being indexed.</param>
 /// <param name="index">The index expression.</param>
-public class SafeIndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
+public partial class SafeIndexExpression(BicepExpression value, BicepExpression index) : BicepExpression
 {
     /// <summary>
     /// Gets the expression being indexed.
@@ -37,6 +41,10 @@ public class SafeIndexExpression(BicepExpression value, BicepExpression index) :
     /// Gets the index expression.
     /// </summary>
     public BicepExpression Index { get; } = index;
+    /// <summary>
+    /// Gets or sets a value indicating whether the index is relative to the end of the array.
+    /// </summary>
+    public bool FromEnd { get; set; }
     internal override BicepWriter Write(BicepWriter writer) =>
-        writer.Append(Value).Append("[?").Append(Index).Append(']');
+        writer.Append(Value).Append("[?").AppendIf(FromEnd, w => w.Append('^')).Append(Index).Append(']');
 }

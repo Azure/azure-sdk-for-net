@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Expressions;
 /// <param name="name">The output name.</param>
 /// <param name="type">The output type expression.</param>
 /// <param name="value">The output value expression.</param>
-public class OutputStatement(string name, BicepExpression type, BicepExpression value) : BicepStatement
+public partial class OutputStatement(string name, BicepExpression type, BicepExpression value) : BicepStatement
 {
     /// <summary>
     /// Gets the output name.
