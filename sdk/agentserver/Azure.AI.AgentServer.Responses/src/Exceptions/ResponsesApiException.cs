@@ -6,15 +6,16 @@ using Azure.AI.AgentServer.Responses.Models;
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
-/// Exception that wraps a fully-formed <see cref="Models.Error"/> model and an HTTP status code.
+/// Exception that wraps a fully-formed <see cref="Error"/> model and an HTTP status code.
 /// Thrown when code needs to surface a structured API error that serializes directly
 /// to <see cref="ApiErrorResponse"/>. Maps to the specified <see cref="StatusCode"/>.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class ResponsesApiException : Exception
 {
     /// <summary>
     /// Initializes a new instance of <see cref="ResponsesApiException"/> with an
-    /// <see cref="Models.Error"/> model and HTTP status code.
+    /// <see cref="Error"/> model and HTTP status code.
     /// </summary>
     /// <param name="error">The structured error to return in the API response body.</param>
     /// <param name="statusCode">The HTTP status code to return.</param>
@@ -27,7 +28,7 @@ public class ResponsesApiException : Exception
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponsesApiException"/> with an
-    /// <see cref="Models.Error"/> model, HTTP status code, and inner exception.
+    /// <see cref="Error"/> model, HTTP status code, and inner exception.
     /// </summary>
     /// <param name="error">The structured error to return in the API response body.</param>
     /// <param name="statusCode">The HTTP status code to return.</param>

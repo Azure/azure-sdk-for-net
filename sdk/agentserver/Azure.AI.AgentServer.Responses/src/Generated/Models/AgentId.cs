@@ -6,7 +6,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -19,12 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="AgentId"/>. </summary>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="version"> The version identifier of the agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
-        public AgentId(string name, string version)
+        internal AgentId(string name, string version)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(version, nameof(version));
-
             Name = name;
             Version = version;
         }
@@ -46,9 +41,9 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Type { get; } = "agent_id";
 
         /// <summary> The name of the agent. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The version identifier of the agent. </summary>
-        public string Version { get; set; }
+        public string Version { get; }
     }
 }

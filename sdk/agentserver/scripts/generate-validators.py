@@ -1143,7 +1143,16 @@ def generate_create_response_validator(
             schema = content.get("schema", {})
             # anyOf with two identical branches — use the first
             if "anyOf" in schema and len(schema["anyOf"]) > 0:
-                post_schema = schema["anyOf"][0]
+                schema = schema["anyOf"][0]
+            # The body may be a direct $ref (e.g. once CreateResponse is mapped to an
+            # externally-owned model) rather than an inline object schema.
+            if "$ref" in schema:
+                resolved = all_schemas.get(resolve_ref(schema["$ref"]))
+                if resolved is not None:
+                    post_schema = resolved
+                    break
+            elif schema:
+                post_schema = schema
                 break
 
     if post_schema is None:

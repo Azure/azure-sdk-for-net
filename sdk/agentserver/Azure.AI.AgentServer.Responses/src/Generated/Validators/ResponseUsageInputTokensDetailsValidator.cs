@@ -36,8 +36,6 @@ internal static partial class ResponseUsageInputTokensDetailsValidator
             errors.Add(new ValidationError("$.cached_tokens", "Required property 'cached_tokens' is missing"));
         else
         {
-            if (cachedTokensProp.ValueKind != JsonValueKind.Number)
-                errors.Add(new ValidationError("$.cached_tokens", $"Expected integer, got {cachedTokensProp.ValueKind}"));
         }
 
         ValidateCustom(element, errors);

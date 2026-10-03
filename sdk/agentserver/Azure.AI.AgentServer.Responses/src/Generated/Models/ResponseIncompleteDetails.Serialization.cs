@@ -120,7 +120,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            ResponseIncompleteDetailsReason? reason = default;
+            CreateResponseResponseIncompleteDetailsReason? reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     {
                         continue;
                     }
-                    reason = prop.Value.GetString().ToResponseIncompleteDetailsReason();
+                    reason = prop.Value.GetString().ToCreateResponseResponseIncompleteDetailsReason();
                     continue;
                 }
                 if (options.Format != "W")

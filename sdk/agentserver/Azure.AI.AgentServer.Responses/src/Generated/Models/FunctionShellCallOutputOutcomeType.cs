@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct FunctionShellCallOutputOutcomeType : IEquatable<FunctionShellCallOutputOutcomeType>
+    internal readonly partial struct FunctionShellCallOutputOutcomeType : IEquatable<FunctionShellCallOutputOutcomeType>
     {
         private readonly string _value;
         private const string TimeoutValue = "timeout";

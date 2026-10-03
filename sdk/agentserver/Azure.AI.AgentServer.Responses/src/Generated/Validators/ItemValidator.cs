@@ -98,7 +98,6 @@ internal static partial class ItemValidator
         "mcp_approval_response" => MCPApprovalResponseValidator.Validate(element),
         "mcp_call" => ItemMcpToolCallValidator.Validate(element),
         "mcp_list_tools" => ItemMcpListToolsValidator.Validate(element),
-        "memory_search_call" => MemorySearchToolCallItemParamValidator.Validate(element),
         "message" => ItemMessageValidator.Validate(element),
         "output_message" => ItemOutputMessageValidator.Validate(element),
         "reasoning" => ItemReasoningItemValidator.Validate(element),

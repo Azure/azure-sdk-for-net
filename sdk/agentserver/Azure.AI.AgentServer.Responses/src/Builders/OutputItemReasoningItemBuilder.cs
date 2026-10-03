@@ -12,6 +12,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Child summary builders are auto-tracked so <see cref="EmitDone"/> can build
 /// the final reasoning item from their accumulated state.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReasoningItem>
 {
     private long _summaryIndex;
@@ -40,10 +41,11 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this reasoning item.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var item = new OutputItemReasoningItem(
-            id: _itemId,
-            summary: Array.Empty<SummaryTextContent>());
-        item.Status = ItemReasoningItemStatus.InProgress;
+        var item = new OutputItemReasoningItem(Array.Empty<ReasoningSummaryPart>())
+        {
+            Id = _itemId,
+            Status = ReasoningStatus.InProgress,
+        };
         return EmitAdded(item);
     }
 
@@ -112,7 +114,7 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
     /// <returns>A <see cref="ResponseOutputItemDoneEvent"/> for this reasoning item.</returns>
     public virtual ResponseOutputItemDoneEvent EmitDone()
     {
-        var completedSummaries = new List<SummaryTextContent>();
+        var completedSummaries = new List<ReasoningSummaryPart>();
         for (int i = 0; i < _summaryBuilders.Count; i++)
         {
             var builder = _summaryBuilders[i];
@@ -124,14 +126,14 @@ public class OutputItemReasoningItemBuilder : OutputItemBuilder<OutputItemReason
                 ]);
             }
 
-            completedSummaries.Add(new SummaryTextContent(
-                text: builder.FinalText));
+            completedSummaries.Add(new ReasoningSummaryTextPart(builder.FinalText));
         }
 
-        var item = new OutputItemReasoningItem(
-            id: _itemId,
-            summary: completedSummaries);
-        item.Status = ItemReasoningItemStatus.Completed;
+        var item = new OutputItemReasoningItem(completedSummaries)
+        {
+            Id = _itemId,
+            Status = ReasoningStatus.Completed,
+        };
         return EmitDone(item);
     }
 }

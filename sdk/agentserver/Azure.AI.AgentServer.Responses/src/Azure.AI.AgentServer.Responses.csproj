@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- AAIP002: this package's own experimental gate. OPENAI001: the System.ClientModel model-reader
+         source generator emits a reference to OpenAI.OpenAIContext that cannot be attribute-stamped.
+         The public surface stays gated behind AAIP002. -->
+    <NoWarn>$(NoWarn);AAIP002;OPENAI001;OPENAICUA001</NoWarn>
     <!-- Server-side ASP.NET Core library — no netstandard2.0 support needed. -->
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -19,10 +23,12 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="OpenAI" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
+    <ProjectReference Include="..\..\..\ai\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj" />
   </ItemGroup>
 
   <!-- Exclude TypeSpec compilation output (used only for copy to Generated/) -->

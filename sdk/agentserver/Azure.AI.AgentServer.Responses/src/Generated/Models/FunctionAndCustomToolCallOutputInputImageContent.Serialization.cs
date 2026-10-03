@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Input image. </summary>
-    public partial class FunctionAndCustomToolCallOutputInputImageContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputImageContent>
+    internal partial class FunctionAndCustomToolCallOutputInputImageContent : FunctionAndCustomToolCallOutput, IJsonModel<FunctionAndCustomToolCallOutputInputImageContent>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputImageContent"/> for deserialization. </summary>
         internal FunctionAndCustomToolCallOutputInputImageContent()

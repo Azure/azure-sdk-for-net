@@ -13,6 +13,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// Child content builders are auto-tracked so <see cref="EmitDone"/> can build
 /// the final message from their accumulated state.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
 {
     private long _contentIndex;
@@ -41,10 +42,9 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
     /// <returns>A <see cref="ResponseOutputItemAddedEvent"/> for this message.</returns>
     public virtual ResponseOutputItemAddedEvent EmitAdded()
     {
-        var message = new OutputItemMessage(
-            id: _itemId,
-            status: MessageStatus.InProgress,
-            content: Array.Empty<MessageContent>());
+        var message = ResponseItem.CreateAssistantMessageItem(Array.Empty<ResponseContentPart>());
+        message.Id = _itemId;
+        message.Status = MessageStatus.InProgress;
         return EmitAdded(message);
     }
 
@@ -195,7 +195,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
             ]);
         }
 
-        var completedContents = new List<MessageContent>();
+        var completedContents = new List<ResponseContentPart>();
         for (int i = 0; i < _contentBuilders.Count; i++)
         {
             object builder = _contentBuilders[i];
@@ -209,10 +209,7 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
                     ]);
                 }
 
-                completedContents.Add(new MessageContentOutputTextContent(
-                    text: tc.FinalText!,
-                    annotations: tc.Annotations,
-                    logprobs: Array.Empty<LogProb>()));
+                completedContents.Add(ResponseContentPart.CreateOutputTextPart(tc.FinalText!, tc.Annotations));
             }
             else if (builder is RefusalContentBuilder rc)
             {
@@ -224,15 +221,13 @@ public class OutputItemMessageBuilder : OutputItemBuilder<OutputItemMessage>
                     ]);
                 }
 
-                completedContents.Add(new MessageContentRefusalContent(
-                    refusal: rc.FinalRefusal!));
+                completedContents.Add(ResponseContentPart.CreateRefusalPart(rc.FinalRefusal!));
             }
         }
 
-        var message = new OutputItemMessage(
-            id: _itemId,
-            status: MessageStatus.Completed,
-            content: completedContents);
+        var message = ResponseItem.CreateAssistantMessageItem(completedContents);
+        message.Id = _itemId;
+        message.Status = MessageStatus.Completed;
         return EmitDone(message);
     }
 }

@@ -80,8 +80,8 @@ public class OutputItemReasoningItemBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemReasoningItemStatus.InProgress));
-        Assert.That(item.Summary, Is.Empty);
+        Assert.That(item.Status, Is.EqualTo(ReasoningStatus.InProgress));
+        Assert.That(item.SummaryParts, Is.Empty);
     }
 
     [Test]
@@ -146,7 +146,7 @@ public class OutputItemReasoningItemBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemReasoningItemStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ReasoningStatus.Completed));
     }
 
     [Test]
@@ -168,9 +168,9 @@ public class OutputItemReasoningItemBuilderTests
 
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
-        Assert.That(item.Summary.Count, Is.EqualTo(2));
-        Assert.That(item.Summary[0].Text, Is.EqualTo("First summary"));
-        Assert.That(item.Summary[1].Text, Is.EqualTo("Second summary"));
+        Assert.That(item.SummaryParts.Count, Is.EqualTo(2));
+        Assert.That(item.SummaryParts[0].Text, Is.EqualTo("First summary"));
+        Assert.That(item.SummaryParts[1].Text, Is.EqualTo("Second summary"));
     }
 
     [Test]
@@ -181,7 +181,7 @@ public class OutputItemReasoningItemBuilderTests
         builder.EmitAdded();
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
-        Assert.That(item.Summary, Is.Empty);
+        Assert.That(item.SummaryParts, Is.Empty);
     }
 
     // ── Sequence numbers ──────────────────────────────────────

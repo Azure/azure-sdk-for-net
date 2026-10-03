@@ -49,9 +49,9 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         stream.InternalMetadata["k"] = "v";
 
         Assert.That(stream.Response.Metadata, Is.Not.Null);
-        Assert.That(stream.Response.Metadata!.AdditionalProperties.ContainsKey("_internal_metadata"), Is.True);
+        Assert.That(stream.Response.Metadata!.ContainsKey("_internal_metadata"), Is.True);
 
-        var json = stream.Response.Metadata.AdditionalProperties["_internal_metadata"];
+        var json = stream.Response.Metadata["_internal_metadata"];
         using var doc = JsonDocument.Parse(json);
         Assert.That(doc.RootElement.GetProperty("k").GetString(), Is.EqualTo("v"));
     }
@@ -65,7 +65,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         stream.InternalMetadata["b"] = "2";
         stream.InternalMetadata["a"] = "updated";
 
-        var json = stream.Response.Metadata!.AdditionalProperties["_internal_metadata"];
+        var json = stream.Response.Metadata!["_internal_metadata"];
         using var doc = JsonDocument.Parse(json);
         Assert.Multiple(() =>
         {
@@ -80,7 +80,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         var request = new CreateResponse
         {
             Model = "test-model",
-            Metadata = new Metadata { AdditionalProperties = { ["user"] = "keep" } },
+            Metadata = { ["user"] = "keep" },
         };
         var stream = new ResponseEventStream(new StubContext("resp_user"), request);
 
@@ -88,8 +88,8 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
 
         Assert.Multiple(() =>
         {
-            Assert.That(stream.Response.Metadata!.AdditionalProperties["user"], Is.EqualTo("keep"));
-            Assert.That(stream.Response.Metadata!.AdditionalProperties.ContainsKey("_internal_metadata"), Is.True);
+            Assert.That(stream.Response.Metadata!["user"], Is.EqualTo("keep"));
+            Assert.That(stream.Response.Metadata!.ContainsKey("_internal_metadata"), Is.True);
         });
     }
 
@@ -101,7 +101,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
 
         var snapshot = stream.Response.Snapshot();
 
-        var json = snapshot.Metadata!.AdditionalProperties["_internal_metadata"];
+        var json = snapshot.Metadata!["_internal_metadata"];
         using var doc = JsonDocument.Parse(json);
         Assert.That(doc.RootElement.GetProperty("trace").GetString(), Is.EqualTo("abc"));
     }
@@ -115,7 +115,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
 
         stream.InternalMetadata.Remove("a");
 
-        var json = stream.Response.Metadata!.AdditionalProperties["_internal_metadata"];
+        var json = stream.Response.Metadata!["_internal_metadata"];
         using var doc = JsonDocument.Parse(json);
         Assert.Multiple(() =>
         {
@@ -133,7 +133,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         stream.InternalMetadata.Clear();
 
         var meta = stream.Response.Metadata;
-        Assert.That(meta is null || !meta.AdditionalProperties.ContainsKey("_internal_metadata"), Is.True);
+        Assert.That(meta is null || !meta.ContainsKey("_internal_metadata"), Is.True);
     }
 
     [Test]
@@ -162,12 +162,12 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
         var snapshot = stream.Response.Snapshot();
 
         var provider = new FileResponsesProvider(_root);
-        await provider.CreateResponseAsync(new CreateResponseRequest(snapshot, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(snapshot, null, null), PlatformContext.Empty);
         var retrieved = await provider.GetResponseAsync("resp_file_rt", PlatformContext.Empty);
 
         Assert.That(retrieved.Metadata, Is.Not.Null);
-        Assert.That(retrieved.Metadata!.AdditionalProperties.ContainsKey("_internal_metadata"), Is.True);
-        using var doc = JsonDocument.Parse(retrieved.Metadata.AdditionalProperties["_internal_metadata"]);
+        Assert.That(retrieved.Metadata!.ContainsKey("_internal_metadata"), Is.True);
+        using var doc = JsonDocument.Parse(retrieved.Metadata["_internal_metadata"]);
         Assert.That(doc.RootElement.GetProperty("k").GetString(), Is.EqualTo("v"));
     }
 
@@ -176,7 +176,7 @@ public class ResponseEventStreamInternalMetadataTests : IDisposable
     {
         var stream = NewStream("resp_egress");
         stream.InternalMetadata["secret"] = "value";
-        stream.Response.Metadata!.AdditionalProperties["user"] = "keep";
+        stream.Response.Metadata!["user"] = "keep";
 
         // Serialize the response the way an egress path would, then strip.
         var data = System.ClientModel.Primitives.ModelReaderWriter.Write(

@@ -38,6 +38,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// drains attached subscribers and ends SSE replay.
 /// </para>
 /// </remarks>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
 {
     private readonly AgentEventStream _stream;
@@ -84,7 +85,7 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
             _hasCreated = true;
         }
 
-        value.SequenceNumber = _nextSequenceNumber++;
+        value.SequenceNumber = (int)_nextSequenceNumber++;
         return _stream.EmitAsync(ResponseWireStreamCodec.ToWireItem(value, SharedJsonOptions.Instance));
     }
 

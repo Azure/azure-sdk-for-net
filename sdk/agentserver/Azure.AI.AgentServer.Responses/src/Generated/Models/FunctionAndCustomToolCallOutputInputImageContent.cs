@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Input image. </summary>
-    public partial class FunctionAndCustomToolCallOutputInputImageContent : FunctionAndCustomToolCallOutput
+    internal partial class FunctionAndCustomToolCallOutputInputImageContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>. </summary>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>

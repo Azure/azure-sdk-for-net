@@ -82,7 +82,16 @@ internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
         }
         catch (MissingMethodException)
         {
-            // Fall through to standard deserialization
+            // Fall through to the ModelReaderWriter path below.
+        }
+
+        // Models that expose no accessible parameterless constructor — notably the
+        // OpenAI.Responses types this package consumes — are materialized through
+        // ModelReaderWriter, which knows how to build them.
+        var raw = BinaryData.FromString(jsonDoc.RootElement.GetRawText());
+        if (ModelJson.Read(raw, typeToConvert, ModelReaderWriterOptions.Json) is T model2)
+        {
+            return model2;
         }
 
         return JsonSerializer.Deserialize<T>(jsonDoc.RootElement, options);

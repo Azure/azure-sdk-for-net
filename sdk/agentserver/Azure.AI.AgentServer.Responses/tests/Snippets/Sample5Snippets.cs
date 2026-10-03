@@ -66,8 +66,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                         var lastMessage = history.OfType<OutputItemMessage>().LastOrDefault();
                         var lastText = lastMessage?.Content
-                            .OfType<MessageContentOutputTextContent>()
-                            .FirstOrDefault()?.Text ?? "(none)";
+                            .FirstOrDefault(c => c.Kind == ResponseContentPartKind.OutputText)?.Text ?? "(none)";
 
                         return $"[Turn {turnNumber}] Building on our previous discussion " +
                                $"(last answer: \"{lastText[..Math.Min(50, lastText.Length)]}...\"), " +

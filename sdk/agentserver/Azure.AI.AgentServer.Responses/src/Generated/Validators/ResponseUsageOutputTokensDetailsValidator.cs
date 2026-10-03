@@ -36,8 +36,6 @@ internal static partial class ResponseUsageOutputTokensDetailsValidator
             errors.Add(new ValidationError("$.reasoning_tokens", "Required property 'reasoning_tokens' is missing"));
         else
         {
-            if (reasoningTokensProp.ValueKind != JsonValueKind.Number)
-                errors.Add(new ValidationError("$.reasoning_tokens", $"Expected integer, got {reasoningTokensProp.ValueKind}"));
         }
 
         ValidateCustom(element, errors);

@@ -36,6 +36,6 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> The unique ID of the conversation. </summary>
-        public string Id { get; set; }
+        public string Id { get; }
     }
 }

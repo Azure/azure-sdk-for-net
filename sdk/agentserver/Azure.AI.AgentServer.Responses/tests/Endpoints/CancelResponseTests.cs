@@ -81,8 +81,8 @@ public class CancelResponseTests : IDisposable
         TaskCompletionSource tcs,
         [EnumeratorCancellation] CancellationToken ct)
     {
-        var response = new Models.ResponseObject(ctx.ResponseId, "test");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
 
         var cancelled = false;
         try
@@ -97,7 +97,7 @@ public class CancelResponseTests : IDisposable
         if (cancelled)
         {
             response.SetIncomplete();
-            yield return new ResponseIncompleteEvent(0, response);
+            yield return new ResponseIncompleteEvent { SequenceNumber = (int)(0), Response = response };
         }
     }
 
