@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string ExadataX9MValue = "Exadata.X9M";
         /// <summary> Exadata X11M shape. </summary>
         private const string ExadataX11MValue = "Exadata.X11M";
+        /// <summary> Exadata X11M shape. </summary>
+        private const string ExadataX11MVValue = "Exadata.X11MV";
         /// <summary> Exadata DB on Exascale Infrastructure shape. </summary>
         private const string ExadbXSValue = "ExaDbXS";
 
@@ -37,6 +39,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Exadata X11M shape. </summary>
         public static OracleDatabaseSystemShape ExadataX11M { get; } = new OracleDatabaseSystemShape(ExadataX11MValue);
+
+        /// <summary> Exadata X11M shape. </summary>
+        public static OracleDatabaseSystemShape ExadataX11MV { get; } = new OracleDatabaseSystemShape(ExadataX11MVValue);
 
         /// <summary> Exadata DB on Exascale Infrastructure shape. </summary>
         public static OracleDatabaseSystemShape ExadbXS { get; } = new OracleDatabaseSystemShape(ExadbXSValue);

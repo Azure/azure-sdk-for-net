@@ -52,8 +52,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="dnsForwardingRulesUri"> Deep link to OCI console DNS Forwarding rules page. </param>
         /// <param name="dnsListeningEndpointNsgRulesUri"> Deep link to OCI console DNS Listening endpoint NSG rules. </param>
         /// <param name="dnsForwardingEndpointNsgRulesUri"> Deep link to OCI console DNS Forwarding endpoint NSG rules. </param>
+        /// <param name="proximityPlacementGroup"> Proximity placement group settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OracleNetworkAnchorProperties(string resourceAnchorId, OracleDatabaseProvisioningState? provisioningState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, string cidrBlock, string ociVcnId, string ociVcnDnsLabel, string ociSubnetId, string ociBackupCidrBlock, bool? isOracleToAzureDnsZoneSyncEnabled, bool? isOracleDnsListeningEndpointEnabled, bool? isOracleDnsForwardingEndpointEnabled, IList<NetworkAnchorDnsForwardingRule> dnsForwardingRules, string dnsListeningEndpointAllowedCidrs, string dnsListeningEndpointIPAddress, string dnsForwardingEndpointIPAddress, Uri dnsForwardingRulesUri, Uri dnsListeningEndpointNsgRulesUri, Uri dnsForwardingEndpointNsgRulesUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OracleNetworkAnchorProperties(string resourceAnchorId, OracleDatabaseProvisioningState? provisioningState, ResourceIdentifier vnetId, ResourceIdentifier subnetId, string cidrBlock, string ociVcnId, string ociVcnDnsLabel, string ociSubnetId, string ociBackupCidrBlock, bool? isOracleToAzureDnsZoneSyncEnabled, bool? isOracleDnsListeningEndpointEnabled, bool? isOracleDnsForwardingEndpointEnabled, IList<NetworkAnchorDnsForwardingRule> dnsForwardingRules, string dnsListeningEndpointAllowedCidrs, string dnsListeningEndpointIPAddress, string dnsForwardingEndpointIPAddress, Uri dnsForwardingRulesUri, Uri dnsListeningEndpointNsgRulesUri, Uri dnsForwardingEndpointNsgRulesUri, ProximityPlacementGroup proximityPlacementGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceAnchorId = resourceAnchorId;
             ProvisioningState = provisioningState;
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DnsForwardingRulesUri = dnsForwardingRulesUri;
             DnsListeningEndpointNsgRulesUri = dnsListeningEndpointNsgRulesUri;
             DnsForwardingEndpointNsgRulesUri = dnsForwardingEndpointNsgRulesUri;
+            ProximityPlacementGroup = proximityPlacementGroup;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -133,5 +135,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Deep link to OCI console DNS Forwarding endpoint NSG rules. </summary>
         public Uri DnsForwardingEndpointNsgRulesUri { get; }
+
+        /// <summary> Proximity placement group settings. </summary>
+        public ProximityPlacementGroup ProximityPlacementGroup { get; set; }
     }
 }

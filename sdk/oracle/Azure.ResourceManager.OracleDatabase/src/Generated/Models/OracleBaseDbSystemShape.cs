@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private readonly string _value;
         /// <summary> Vm Standard X86. </summary>
         private const string VmStandardX86Value = "VM.Standard.x86";
+        /// <summary> Vm Standard X86. </summary>
+        private const string VMBaseDBX86Value = "VM.BaseDB.x86";
 
         /// <summary> Initializes a new instance of <see cref="OracleBaseDbSystemShape"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Vm Standard X86. </summary>
         public static OracleBaseDbSystemShape VmStandardX86 { get; } = new OracleBaseDbSystemShape(VmStandardX86Value);
+
+        /// <summary> Vm Standard X86. </summary>
+        public static OracleBaseDbSystemShape VMBaseDBX86 { get; } = new OracleBaseDbSystemShape(VMBaseDBX86Value);
 
         /// <summary> Determines if two <see cref="OracleBaseDbSystemShape"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

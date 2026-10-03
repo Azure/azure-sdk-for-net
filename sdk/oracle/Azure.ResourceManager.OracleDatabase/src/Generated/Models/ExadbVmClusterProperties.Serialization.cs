@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WriteStringValue(GiVersion);
             }
             writer.WritePropertyName("hostname"u8);
-            writer.WriteStringValue(Hostname);
+            writer.WriteStringValue(HostnameV2);
             if (Optional.IsDefined(LicenseModel))
             {
                 writer.WritePropertyName("licenseModel"u8);
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("lifecycleDetails"u8);
                 writer.WriteStringValue(LifecycleDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanDnsName))
+            if (options.Format != "W" && Optional.IsDefined(ScanDnsNameV2))
             {
                 writer.WritePropertyName("scanDnsName"u8);
-                writer.WriteStringValue(ScanDnsName);
+                writer.WriteStringValue(ScanDnsNameV2);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ScanIPIds))
             {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string gridImageOcid = default;
             GridImageType? gridImageType = default;
             string giVersion = default;
-            string hostname = default;
+            string hostnameV2 = default;
             OracleLicenseModel? licenseModel = default;
             int? memorySizeInGbs = default;
             int nodeCount = default;
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int totalEcpuCount = default;
             ExadbVmClusterStorageDetails vmFileSystem = default;
             string lifecycleDetails = default;
-            string scanDnsName = default;
+            string scanDnsNameV2 = default;
             IReadOnlyList<string> scanIPIds = default;
             string scanDnsRecordId = default;
             ExadbVmClusterStorageDetails snapshotFileSystemStorage = default;
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("hostname"u8))
                 {
-                    hostname = prop.Value.GetString();
+                    hostnameV2 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("licenseModel"u8))
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (prop.NameEquals("scanDnsName"u8))
                 {
-                    scanDnsName = prop.Value.GetString();
+                    scanDnsNameV2 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("scanIpIds"u8))
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 gridImageOcid,
                 gridImageType,
                 giVersion,
-                hostname,
+                hostnameV2,
                 licenseModel,
                 memorySizeInGbs,
                 nodeCount,
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 totalEcpuCount,
                 vmFileSystem,
                 lifecycleDetails,
-                scanDnsName,
+                scanDnsNameV2,
                 scanIPIds ?? new ChangeTrackingList<string>(),
                 scanDnsRecordId,
                 snapshotFileSystemStorage,

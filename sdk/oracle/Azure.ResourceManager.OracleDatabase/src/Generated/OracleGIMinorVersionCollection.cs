@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(OracleGIMinorVersionResource.ResourceType, out string oracleGIMinorVersionApiVersion);
             _giMinorVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleGIMinorVersionResource.ResourceType.Namespace, Diagnostics);
-            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIMinorVersionApiVersion ?? "2025-09-01");
+            _giMinorVersionsRestClient = new GiMinorVersions(_giMinorVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleGIMinorVersionApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,15 +167,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shape"> If provided, filters the results to the set of GI minor versions supported for the given shape. </param>
+        /// <param name="isGiVersionForProvisioning"> If true, filters the results to GI minor versions supported during VM cluster provisioning. </param>
+        /// <param name="sortOrder"> Sort order for the returned GI minor versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(GIMinorVersionShapeFamily? shapeFamily = default, string zone = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(GIMinorVersionShapeFamily? shapeFamily = default, string zone = default, string shape = default, bool? isGiVersionForProvisioning = default, GiMinorVersionSortOrder? sortOrder = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -187,6 +191,9 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.Name,
                 shapeFamily?.ToString(),
                 zone,
+                shape,
+                isGiVersionForProvisioning,
+                sortOrder?.ToString(),
                 context,
                 "OracleGIMinorVersionCollection.GetAll"), data => new OracleGIMinorVersionResource(Client, data));
         }
@@ -204,15 +211,18 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shape"> If provided, filters the results to the set of GI minor versions supported for the given shape. </param>
+        /// <param name="isGiVersionForProvisioning"> If true, filters the results to GI minor versions supported during VM cluster provisioning. </param>
+        /// <param name="sortOrder"> Sort order for the returned GI minor versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleGIMinorVersionResource> GetAll(GIMinorVersionShapeFamily? shapeFamily = default, string zone = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleGIMinorVersionResource> GetAll(GIMinorVersionShapeFamily? shapeFamily = default, string zone = default, string shape = default, bool? isGiVersionForProvisioning = default, GiMinorVersionSortOrder? sortOrder = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -225,6 +235,9 @@ namespace Azure.ResourceManager.OracleDatabase
                 Id.Name,
                 shapeFamily?.ToString(),
                 zone,
+                shape,
+                isGiVersionForProvisioning,
+                sortOrder?.ToString(),
                 context,
                 "OracleGIMinorVersionCollection.GetAll"), data => new OracleGIMinorVersionResource(Client, data));
         }
@@ -242,7 +255,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,7 +312,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +369,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +430,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -480,5 +493,39 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// List GiMinorVersion resources by GiVersion
+        ///             Request Path./subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions.Operation Id.GiMinorVersions_ListByParent.Default Api Version.2025-09-01.
+        /// </summary>
+        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<OracleGIMinorVersionResource> GetAllAsync(GIMinorVersionShapeFamily? shapeFamily, string zone, CancellationToken cancellationToken)
+        {
+            return GetAllAsync(shapeFamily: shapeFamily, zone: zone, shape: default, isGiVersionForProvisioning: default, sortOrder: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// List GiMinorVersion resources by GiVersion
+        ///             Request Path./subscriptions/{subscriptionId}/providers/Oracle.Database/locations/{location}/giVersions/{giversionname}/giMinorVersions.Operation Id.GiMinorVersions_ListByParent.Default Api Version.2025-09-01.
+        /// </summary>
+        /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
+        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OracleGIMinorVersionResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<OracleGIMinorVersionResource> GetAll(GIMinorVersionShapeFamily? shapeFamily, string zone, CancellationToken cancellationToken)
+        {
+            return GetAll(shapeFamily: shapeFamily, zone: zone, shape: default, isGiVersionForProvisioning: default, sortOrder: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
