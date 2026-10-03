@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Terraform.Models
         private protected CommonExportProperties(CommonExportType @type)
         {
             Type = @type;
+            IncludeExtensions = new ChangeTrackingList<AzureExtensionResourceType>();
             AzureResourcesToExclude = new ChangeTrackingList<string>();
             TerraformResourcesToExclude = new ChangeTrackingList<string>();
         }
@@ -34,18 +35,20 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </param>
+        /// <param name="includeExtensions"> Include extension resource types directly associated to the resources exported. </param>
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommonExportProperties(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommonExportProperties(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, IList<AzureExtensionResourceType> includeExtensions, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             TargetProvider = targetProvider;
             IsOutputFullPropertiesEnabled = isOutputFullPropertiesEnabled;
             IsMaskSensitiveEnabled = isMaskSensitiveEnabled;
             IncludeRoleAssignment = includeRoleAssignment;
+            IncludeExtensions = includeExtensions;
             IncludeManagedResource = includeManagedResource;
             AzureResourcesToExclude = azureResourcesToExclude;
             TerraformResourcesToExclude = terraformResourcesToExclude;
@@ -64,8 +67,11 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </summary>
         public bool? IsMaskSensitiveEnabled { get; set; }
 
-        /// <summary> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </summary>
+        /// <summary> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </summary>
         public bool? IncludeRoleAssignment { get; set; }
+
+        /// <summary> Include extension resource types directly associated to the resources exported. </summary>
+        public IList<AzureExtensionResourceType> IncludeExtensions { get; }
 
         /// <summary> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </summary>
         public bool? IncludeManagedResource { get; set; }
