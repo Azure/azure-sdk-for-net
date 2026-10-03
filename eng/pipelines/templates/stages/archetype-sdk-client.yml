@@ -54,6 +54,9 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: EnableTestRuntimeTrimming
+    type: boolean
+    default: false
   - name: PublicFeed
     type: string
     default: 'Nuget.org'
@@ -102,6 +105,7 @@ extends:
               BuildSnippets: ${{ parameters.BuildSnippets }}
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+              EnableTestRuntimeTrimming: ${{ parameters.EnableTestRuntimeTrimming }}
               MatrixConfigs:
                 - ${{ each config in parameters.MatrixConfigs }}:
                     - ${{ config }}

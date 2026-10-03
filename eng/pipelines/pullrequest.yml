@@ -39,5 +39,6 @@ extends:
     ${{ else }}:
       ServiceDirectory: ${{ parameters.Service }}
     BuildSnippets: true
+    EnableTestRuntimeTrimming: true
     ExcludePaths:
       - eng/packages/http-client-csharp/
