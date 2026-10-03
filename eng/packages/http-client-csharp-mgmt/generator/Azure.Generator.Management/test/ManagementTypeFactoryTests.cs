@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
@@ -8,6 +9,8 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +73,104 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
             Assert.That(result, Is.Null);
+        }
+
+        [TestCase(typeof(ResourceData))]
+        [TestCase(typeof(TrackedResourceData))]
+        public void InheritableSystemTypesCanBeResolvedByClrType(System.Type frameworkType)
+        {
+            Assert.That(
+                KnownManagementTypes.TryGetInheritableSystemType(new CSharpType(frameworkType), out var knownType),
+                Is.True);
+            Assert.That(knownType!.FrameworkType, Is.EqualTo(frameworkType));
+            Assert.That(frameworkType.IsAbstract, Is.True,
+                "Known ARM data bases are abstract marker classes without abstract members");
+        }
+
+        [Test]
+        public void KnownLastContractTrackedResourceDataCreatesMappedProvider()
+        {
+            var currentBase = InputFactory.Model(
+                "CurrentResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("tags", new InputDictionaryType("tags", InputPrimitiveType.String, InputPrimitiveType.String)),
+                    InputFactory.Property("location", InputPrimitiveType.String)
+                ]);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var previousBase = provider.LastContractView!.BaseType!;
+            Assert.That(
+                KnownManagementTypes.TryGetInheritableSystemType(previousBase, out _),
+                Is.True,
+                $"Expected '{previousBase.FullyQualifiedName}' to resolve as a known inheritable management type");
+            var mappedBase = provider.BaseModelProvider as SystemObjectModelProvider;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(provider.BaseType?.Name, Is.EqualTo(nameof(TrackedResourceData)));
+                Assert.That(mappedBase, Is.Not.Null);
+                Assert.That(mappedBase!.SystemType.FrameworkType, Is.EqualTo(typeof(TrackedResourceData)));
+                Assert.That(mappedBase.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
+                    Is.EqualTo(new[] { "id", "name", "resourceType", "systemData", "tags", "location" }));
+                Assert.That(mappedBase.Properties.Select(property => property.Name),
+                    Is.EqualTo(new[] { "Tags", "Location", "Id", "Name", "ResourceType", "SystemData" }));
+            });
+        }
+
+        [Test]
+        public void KnownLastContractResourceDataCreatesMappedProvider()
+        {
+            var currentBase = InputFactory.Model(
+                "CurrentResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true)
+                ]);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var mappedBase = provider.BaseModelProvider as SystemObjectModelProvider;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(provider.BaseType?.Name, Is.EqualTo(nameof(ResourceData)));
+                Assert.That(mappedBase, Is.Not.Null);
+                Assert.That(mappedBase!.SystemType.FrameworkType, Is.EqualTo(typeof(ResourceData)));
+                Assert.That(mappedBase.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
+                    Is.EqualTo(new[] { "id", "name", "resourceType", "systemData" }));
+                Assert.That(mappedBase.Properties.Select(property => property.Name),
+                    Is.EqualTo(new[] { "Id", "Name", "ResourceType", "SystemData" }));
+            });
+        }
+
+        [Test]
+        public void UnknownLastContractBaseIsNotMapped()
+        {
+            var currentBase = InputFactory.Model("CurrentResource", properties: []);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            Assert.That(provider.BaseType?.Name, Is.EqualTo("CurrentResource"));
         }
 
         [Test]
