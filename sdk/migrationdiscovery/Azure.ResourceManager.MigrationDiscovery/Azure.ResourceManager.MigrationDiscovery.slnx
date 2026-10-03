@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.MigrationDiscovery.csproj" />
+  <Project Path="tests/Azure.ResourceManager.MigrationDiscovery.Tests.csproj" />
+</Solution>

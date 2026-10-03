@@ -1,0 +1,6 @@
+directory: specification/migrate/resource-manager/Microsoft.OffAzure/OffAzure
+commit: 854caced56cb16c95544eb0074fdedf3a80d437d
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng\azure-typespec-http-client-csharp-mgmt-emitter-package.json
