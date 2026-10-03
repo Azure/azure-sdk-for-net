@@ -15,80 +15,156 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> The object representing a firmware analysis binary hardening result resource. </summary>
     public partial class BinaryHardeningResult : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="binaryHardeningId"> ID for the binary hardening result. </param>
-        /// <param name="securityHardeningFeatures"> The security hardening features of the binary. </param>
-        /// <param name="executableArchitecture"> The architecture of the binary being reported on. </param>
-        /// <param name="filePath"> The path to the binary in the firmware. </param>
-        /// <param name="executableClass"> The executable class to indicate 32 or 64 bit. </param>
-        /// <param name="runpath"> The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime. </param>
-        /// <param name="rpath"> The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string binaryHardeningId, BinaryHardeningFeatures securityHardeningFeatures, string executableArchitecture, string filePath, ExecutableClass? executableClass, string runpath, string rpath, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        public BinaryHardeningResult()
         {
-            BinaryHardeningId = binaryHardeningId;
-            SecurityHardeningFeatures = securityHardeningFeatures;
-            ExecutableArchitecture = executableArchitecture;
-            FilePath = filePath;
-            ExecutableClass = executableClass;
-            Runpath = runpath;
-            Rpath = rpath;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BinaryHardeningResult"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BinaryHardeningResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryHardeningResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal BinaryHardeningResultProperties Properties { get; set; }
+
         /// <summary> ID for the binary hardening result. </summary>
-        public string BinaryHardeningId { get; set; }
+        public string BinaryHardeningId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BinaryHardeningId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.BinaryHardeningId = value;
+            }
+        }
+
         /// <summary> The security hardening features of the binary. </summary>
-        public BinaryHardeningFeatures SecurityHardeningFeatures { get; set; }
+        public BinaryHardeningFeatures SecurityHardeningFeatures
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityHardeningFeatures;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.SecurityHardeningFeatures = value;
+            }
+        }
+
         /// <summary> The architecture of the binary being reported on. </summary>
-        public string ExecutableArchitecture { get; set; }
+        public string ExecutableArchitecture
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutableArchitecture;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.ExecutableArchitecture = value;
+            }
+        }
+
         /// <summary> The path to the binary in the firmware. </summary>
-        public string FilePath { get; set; }
+        public string FilePath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilePath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.FilePath = value;
+            }
+        }
+
         /// <summary> The executable class to indicate 32 or 64 bit. </summary>
-        public ExecutableClass? ExecutableClass { get; set; }
+        public ExecutableClass? ExecutableClass
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExecutableClass;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.ExecutableClass = value;
+            }
+        }
+
         /// <summary> The runpath property of the uploaded binary, which is a method of specifying additional paths to load objects at runtime. </summary>
-        public string Runpath { get; set; }
+        public string Runpath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Runpath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.Runpath = value;
+            }
+        }
+
         /// <summary> The rpath property of the uploaded binary, which is a deprecated method of specifying additional paths to load objects at runtime. </summary>
-        public string Rpath { get; set; }
+        public string Rpath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Rpath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BinaryHardeningResultProperties();
+                }
+                Properties.Rpath = value;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

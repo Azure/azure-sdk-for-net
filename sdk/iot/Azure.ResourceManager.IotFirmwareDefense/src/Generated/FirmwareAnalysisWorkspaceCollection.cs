@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// </summary>
     public partial class FirmwareAnalysisWorkspaceCollection : ArmCollection, IEnumerable<FirmwareAnalysisWorkspaceResource>, IAsyncEnumerable<FirmwareAnalysisWorkspaceResource>
     {
-        private readonly ClientDiagnostics _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics;
-        private readonly WorkspacesRestOperations _firmwareAnalysisWorkspaceWorkspacesRestClient;
+        private readonly ClientDiagnostics _workspacesClientDiagnostics;
+        private readonly Workspaces _workspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="FirmwareAnalysisWorkspaceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FirmwareAnalysisWorkspaceCollection for mocking. </summary>
         protected FirmwareAnalysisWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FirmwareAnalysisWorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirmwareAnalysisWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareAnalysisWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FirmwareAnalysisWorkspaceResource.ResourceType, out string firmwareAnalysisWorkspaceWorkspacesApiVersion);
-            _firmwareAnalysisWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisWorkspaceWorkspacesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(FirmwareAnalysisWorkspaceResource.ResourceType, out string firmwareAnalysisWorkspaceApiVersion);
+            _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", FirmwareAnalysisWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisWorkspaceApiVersion ?? "2026-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The operation to create or update a firmware analysis workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="data"> Parameters when creating a firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<FirmwareAnalysisWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, FirmwareAnalysisWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, FirmwareAnalysisWorkspaceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirmwareAnalysisWorkspaceData> response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource> operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// The operation to create or update a firmware analysis workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="data"> Parameters when creating a firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<FirmwareAnalysisWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, FirmwareAnalysisWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data, cancellationToken);
-                var uri = _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, FirmwareAnalysisWorkspaceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirmwareAnalysisWorkspaceData> response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource> operation = new IotFirmwareDefenseArmOperation<FirmwareAnalysisWorkspaceResource>(Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Get firmware analysis workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<FirmwareAnalysisWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Get");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirmwareAnalysisWorkspaceData> response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Get firmware analysis workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<FirmwareAnalysisWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Get");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirmwareAnalysisWorkspaceData> response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Lists all of the firmware analysis workspaces in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirmwareAnalysisWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareAnalysisWorkspaceResource(Client, FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(e)), _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics, Pipeline, "FirmwareAnalysisWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetByResourceGroupAsyncCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirmwareAnalysisWorkspaceCollection.GetAll"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="FirmwareAnalysisWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirmwareAnalysisWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareAnalysisWorkspaceWorkspacesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareAnalysisWorkspaceResource(Client, FirmwareAnalysisWorkspaceData.DeserializeFirmwareAnalysisWorkspaceData(e)), _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics, Pipeline, "FirmwareAnalysisWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FirmwareAnalysisWorkspaceData, FirmwareAnalysisWorkspaceResource>(new WorkspacesGetByResourceGroupCollectionResultOfT(_workspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FirmwareAnalysisWorkspaceCollection.GetAll"), data => new FirmwareAnalysisWorkspaceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Exists");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FirmwareAnalysisWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirmwareAnalysisWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Exists");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FirmwareAnalysisWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirmwareAnalysisWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<FirmwareAnalysisWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<FirmwareAnalysisWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirmwareAnalysisWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FirmwareAnalysisWorkspaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the firmware analysis workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<FirmwareAnalysisWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _firmwareAnalysisWorkspaceWorkspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.GetIfExists");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("FirmwareAnalysisWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspacesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<FirmwareAnalysisWorkspaceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(FirmwareAnalysisWorkspaceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((FirmwareAnalysisWorkspaceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<FirmwareAnalysisWorkspaceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirmwareAnalysisWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<FirmwareAnalysisWorkspaceResource> IAsyncEnumerable<FirmwareAnalysisWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

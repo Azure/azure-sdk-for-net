@@ -6,48 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A Class representing a FirmwareAnalysisSummary along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirmwareAnalysisSummaryResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetFirmwareAnalysisSummaryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotFirmwareResource"/> using the GetFirmwareAnalysisSummary method.
+    /// A class representing a FirmwareAnalysisSummary along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirmwareAnalysisSummaryResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotFirmwareResource"/> using the GetFirmwareAnalysisSummaries method.
     /// </summary>
     public partial class FirmwareAnalysisSummaryResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="FirmwareAnalysisSummaryResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="firmwareId"> The firmwareId. </param>
-        /// <param name="summaryType"> The summaryType. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _firmwareAnalysisSummarySummariesClientDiagnostics;
-        private readonly SummariesRestOperations _firmwareAnalysisSummarySummariesRestClient;
+        private readonly ClientDiagnostics _summariesClientDiagnostics;
+        private readonly Summaries _summariesRestClient;
         private readonly FirmwareAnalysisSummaryData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces/firmwares/summaries";
 
-        /// <summary> Initializes a new instance of the <see cref="FirmwareAnalysisSummaryResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of FirmwareAnalysisSummaryResource for mocking. </summary>
         protected FirmwareAnalysisSummaryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FirmwareAnalysisSummaryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisSummaryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirmwareAnalysisSummaryResource(ArmClient client, FirmwareAnalysisSummaryData data) : this(client, data.Id)
@@ -56,71 +44,94 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FirmwareAnalysisSummaryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisSummaryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FirmwareAnalysisSummaryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _firmwareAnalysisSummarySummariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string firmwareAnalysisSummarySummariesApiVersion);
-            _firmwareAnalysisSummarySummariesRestClient = new SummariesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisSummarySummariesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string firmwareAnalysisSummaryApiVersion);
+            _summariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _summariesRestClient = new Summaries(_summariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisSummaryApiVersion ?? "2026-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual FirmwareAnalysisSummaryData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="firmwareId"> The firmwareId. </param>
+        /// <param name="summaryType"> The summaryType. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get an analysis result summary of a firmware by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Summaries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Summaries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FirmwareAnalysisSummaryResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<FirmwareAnalysisSummaryResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryResource.Get");
+            using DiagnosticScope scope = _summariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryResource.Get");
             scope.Start();
             try
             {
-                var response = await _firmwareAnalysisSummarySummariesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _summariesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<FirmwareAnalysisSummaryData> response = Response.FromValue(FirmwareAnalysisSummaryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirmwareAnalysisSummaryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,41 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Get an analysis result summary of a firmware by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Summaries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Summaries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirmwareAnalysisSummaryResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="FirmwareAnalysisSummaryResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<FirmwareAnalysisSummaryResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _firmwareAnalysisSummarySummariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryResource.Get");
+            using DiagnosticScope scope = _summariesClientDiagnostics.CreateScope("FirmwareAnalysisSummaryResource.Get");
             scope.Start();
             try
             {
-                var response = _firmwareAnalysisSummarySummariesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _summariesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<FirmwareAnalysisSummaryData> response = Response.FromValue(FirmwareAnalysisSummaryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new FirmwareAnalysisSummaryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A Class representing an UsageMetric along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="UsageMetricResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetUsageMetricResource method.
-    /// Otherwise you can get one from its parent resource <see cref="FirmwareAnalysisWorkspaceResource"/> using the GetUsageMetric method.
+    /// A class representing a UsageMetric along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="UsageMetricResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FirmwareAnalysisWorkspaceResource"/> using the GetUsageMetrics method.
     /// </summary>
     public partial class UsageMetricResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="UsageMetricResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/usageMetrics/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _usageMetricClientDiagnostics;
-        private readonly UsageMetricsRestOperations _usageMetricRestClient;
+        private readonly ClientDiagnostics _usageMetricsClientDiagnostics;
+        private readonly UsageMetrics _usageMetricsRestClient;
         private readonly UsageMetricData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.IoTFirmwareDefense/workspaces/usageMetrics";
 
-        /// <summary> Initializes a new instance of the <see cref="UsageMetricResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of UsageMetricResource for mocking. </summary>
         protected UsageMetricResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="UsageMetricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageMetricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal UsageMetricResource(ArmClient client, UsageMetricData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="UsageMetricResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageMetricResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal UsageMetricResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _usageMetricClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string usageMetricApiVersion);
-            _usageMetricRestClient = new UsageMetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, usageMetricApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _usageMetricsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _usageMetricsRestClient = new UsageMetrics(_usageMetricsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, usageMetricApiVersion ?? "2026-06-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual UsageMetricData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="name"> The name. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string name)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/usageMetrics/{name}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets monthly usage information for a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/usageMetrics/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/usageMetrics/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UsageMetrics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsageMetrics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="UsageMetricResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="UsageMetricResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<UsageMetricResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _usageMetricClientDiagnostics.CreateScope("UsageMetricResource.Get");
+            using DiagnosticScope scope = _usageMetricsClientDiagnostics.CreateScope("UsageMetricResource.Get");
             scope.Start();
             try
             {
-                var response = await _usageMetricRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _usageMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<UsageMetricData> response = Response.FromValue(UsageMetricData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new UsageMetricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// Gets monthly usage information for a workspace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/usageMetrics/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/usageMetrics/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UsageMetrics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> UsageMetrics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="UsageMetricResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="UsageMetricResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<UsageMetricResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _usageMetricClientDiagnostics.CreateScope("UsageMetricResource.Get");
+            using DiagnosticScope scope = _usageMetricsClientDiagnostics.CreateScope("UsageMetricResource.Get");
             scope.Start();
             try
             {
-                var response = _usageMetricRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _usageMetricsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<UsageMetricData> response = Response.FromValue(UsageMetricData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new UsageMetricResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

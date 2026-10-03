@@ -1523,10 +1523,13 @@
       ]
     },
     {
-      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
+      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*",
       "words": [
+        "cisa",
         "cves",
+        "cwes",
         "diffie",
+        "epss",
         "iotfirmwaredefense",
         "ocsp",
         "relro",

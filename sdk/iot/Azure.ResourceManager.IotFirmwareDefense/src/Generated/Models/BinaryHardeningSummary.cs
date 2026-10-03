@@ -14,22 +14,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public partial class BinaryHardeningSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
-        public BinaryHardeningSummary()
+        public BinaryHardeningSummary() : base(FirmwareAnalysisSummaryType.BinaryHardening)
         {
-            SummaryType = FirmwareAnalysisSummaryType.BinaryHardening;
         }
 
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalFiles"> Total number of binaries that were analyzed. </param>
         /// <param name="notExecutableStackCount"> Total number of analyzed files that were found to have a nonexecutable stack. </param>
         /// <param name="positionIndependentExecutableCount"> Total number of analyzed files that were compiled to be a position independent executable. </param>
         /// <param name="relocationReadOnlyCount"> Total number of analyzed files that have enabled relocation read-only protections. </param>
         /// <param name="stackCanaryCount"> Total number of analyzed files that have stack canaries enabled. </param>
         /// <param name="strippedBinaryCount"> Total number of analyzed files that have debug symbols stripped. </param>
-        internal BinaryHardeningSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalFiles, long? notExecutableStackCount, long? positionIndependentExecutableCount, long? relocationReadOnlyCount, long? stackCanaryCount, long? strippedBinaryCount) : base(summaryType, provisioningState, serializedAdditionalRawData)
+        internal BinaryHardeningSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalFiles, long? notExecutableStackCount, long? positionIndependentExecutableCount, long? relocationReadOnlyCount, long? stackCanaryCount, long? strippedBinaryCount) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalFiles = totalFiles;
             NotExecutableStackCount = notExecutableStackCount;
@@ -37,19 +36,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             RelocationReadOnlyCount = relocationReadOnlyCount;
             StackCanaryCount = stackCanaryCount;
             StrippedBinaryCount = strippedBinaryCount;
-            SummaryType = summaryType;
         }
 
         /// <summary> Total number of binaries that were analyzed. </summary>
         public long? TotalFiles { get; set; }
+
         /// <summary> Total number of analyzed files that were found to have a nonexecutable stack. </summary>
         public long? NotExecutableStackCount { get; set; }
+
         /// <summary> Total number of analyzed files that were compiled to be a position independent executable. </summary>
         public long? PositionIndependentExecutableCount { get; set; }
+
         /// <summary> Total number of analyzed files that have enabled relocation read-only protections. </summary>
         public long? RelocationReadOnlyCount { get; set; }
+
         /// <summary> Total number of analyzed files that have stack canaries enabled. </summary>
         public long? StackCanaryCount { get; set; }
+
         /// <summary> Total number of analyzed files that have debug symbols stripped. </summary>
         public long? StrippedBinaryCount { get; set; }
     }
