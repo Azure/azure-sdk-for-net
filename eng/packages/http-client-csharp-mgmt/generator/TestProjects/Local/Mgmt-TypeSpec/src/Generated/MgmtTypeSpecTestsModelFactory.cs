@@ -1948,6 +1948,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
+        /// <param name="resourceValues"> Required collection values. </param>
+        /// <returns> A new <see cref="Models.NestedFlattenedCollectionContent"/> instance for mocking. </returns>
+        public static NestedFlattenedCollectionContent NestedFlattenedCollectionContent(IEnumerable<NestedFlattenedCollectionItem> resourceValues = default)
+        {
+            return new NestedFlattenedCollectionContent(resourceValues is null ? default : new NestedFlattenedCollectionProperties(new NestedFlattenedCollectionResource((resourceValues ?? new ChangeTrackingList<NestedFlattenedCollectionItem>()).ToList(), default), default), default);
+        }
+
+        /// <summary> Collection item. </summary>
+        /// <param name="id"> Item identifier. </param>
+        /// <returns> A new <see cref="Models.NestedFlattenedCollectionItem"/> instance for mocking. </returns>
+        public static NestedFlattenedCollectionItem NestedFlattenedCollectionItem(string id = default)
+        {
+            return new NestedFlattenedCollectionItem(id, default);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

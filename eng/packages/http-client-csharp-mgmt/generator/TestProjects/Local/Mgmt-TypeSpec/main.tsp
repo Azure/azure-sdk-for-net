@@ -36,6 +36,7 @@ import "./entityresource.tsp";
 import "./sharedparamrepro.tsp";
 import "./discriminatedextensionresource.tsp";
 import "./inherited-flatten-grandparent.tsp";
+import "./nested-flattened-collection.tsp";
 import "./basetype-cycle-proxy-resource.tsp";
 import "./routedoperations.tsp";
 import "./solutions.tsp";

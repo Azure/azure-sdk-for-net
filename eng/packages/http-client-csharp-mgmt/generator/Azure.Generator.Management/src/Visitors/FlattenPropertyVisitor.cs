@@ -385,22 +385,8 @@ namespace Azure.Generator.Management.Visitors
 
                 if (nameMatchIndex >= 0)
                 {
-                    // Found a name match - use that flattened property
-                    var (flattenedProperty, _) = flattenedProperties[nameMatchIndex];
-                    var propertyParameter = flattenedProperty.AsParameter;
-                    var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
-                        ? updatedParameter
-                        : propertyParameter);
-
-                    // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
-                    // update the parameter type to match the constructor parameter type for now
-                    parameter.Update(type: parameter.Type.InputType);
-
-                    parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
-                        ? parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault))
-                        : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
-
-                    usedFlattenedPropertyIndices.Add(nameMatchIndex);
+                    // Found a name match - use that flattened property.
+                    AddMatchedParameter(nameMatchIndex, constructorParameterType, useInputType: true);
                 }
                 else
                 {
@@ -423,19 +409,7 @@ namespace Azure.Generator.Management.Visitors
 
                     if (typeMatchIndex >= 0)
                     {
-                        var (flattenedProperty, _) = flattenedProperties[typeMatchIndex];
-                        var propertyParameter = flattenedProperty.AsParameter;
-                        var parameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
-                            ? updatedParameter
-                            : propertyParameter);
-
-                        // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly
-                        // update the parameter type to match the constructor parameter type for now
-                        parameters.Add(parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable
-                            ? parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault))
-                            : NeedNullCoalesce(parameter) ? parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList() : parameter);
-
-                        usedFlattenedPropertyIndices.Add(typeMatchIndex);
+                        AddMatchedParameter(typeMatchIndex, constructorParameterType, useInputType: false);
                     }
                     else
                     {
@@ -513,11 +487,55 @@ namespace Azure.Generator.Management.Visitors
                 return additionalPropertyIndex;
             }
 
+            void AddMatchedParameter(int flattenedPropertyIndex, CSharpType constructorParameterType, bool useInputType)
+            {
+                var flattenedProperty = flattenedProperties[flattenedPropertyIndex].FlattenedProperty;
+                var propertyParameter = flattenedProperty.AsParameter;
+                var parameter = parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter)
+                    ? updatedParameter
+                    : propertyParameter;
+
+                if (useInputType)
+                {
+                    // TODO: Ideally we could just call parameter.ToPublicInputParameter() to build the input type parameter, which is not working properly.
+                    parameter.Update(type: parameter.Type.InputType);
+                }
+
+                parameters.Add(BuildConstructorArgument(parameter, constructorParameterType));
+                usedFlattenedPropertyIndices.Add(flattenedPropertyIndex);
+            }
+
+            ValueExpression BuildConstructorArgument(ParameterProvider parameter, CSharpType constructorParameterType)
+            {
+                if (parameter.Type.IsValueType && parameter.Type.IsNullable && !constructorParameterType.IsNullable)
+                {
+                    return parameter.Invoke(nameof(Nullable<int>.GetValueOrDefault));
+                }
+
+                if (NeedNullCoalesce(parameter))
+                {
+                    return parameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(parameter.Type.Arguments))).ToList();
+                }
+
+                if (NeedsListMaterialization(parameter, constructorParameterType))
+                {
+                    return parameter.ToList();
+                }
+
+                return parameter;
+            }
+
             bool NeedNullCoalesce(ParameterProvider parameter)
                 => (!publicConstructor || parameter.Type.IsNullable) && IsNonReadOnlyMemoryList(parameter);
 
-            bool IsNonReadOnlyMemoryList(ParameterProvider parameter) =>
-                parameter.Type is { IsList: true, IsReadOnlyMemory: false };
+            static bool NeedsListMaterialization(ParameterProvider parameter, CSharpType constructorParameterType)
+                => parameter.Type.IsFrameworkType
+                    && parameter.Type.FrameworkType == typeof(IEnumerable<>)
+                    && constructorParameterType.IsFrameworkType
+                    && constructorParameterType.FrameworkType == typeof(IList<>);
+
+            static bool IsNonReadOnlyMemoryList(ParameterProvider parameter)
+                => parameter.Type is { IsList: true, IsReadOnlyMemory: false };
         }
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
