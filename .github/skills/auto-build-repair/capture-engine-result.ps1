@@ -109,19 +109,24 @@ try {
     if ($success.GetBoolean() -ne ($engineExit -eq 0)) {
         throw 'The engine response success value contradicts its process exit code.'
     }
+    $status = [System.Text.Json.JsonElement]::new()
+    $errorValue = [System.Text.Json.JsonElement]::new()
+    $expectedStatus = if ($success.GetBoolean()) { 'Succeeded' } else { 'Failed' }
+    if ($root.TryGetProperty('operation_status', [ref]$status) -and
+        $status.ValueKind -ne [System.Text.Json.JsonValueKind]::Null -and
+        ($status.ValueKind -ne [System.Text.Json.JsonValueKind]::String -or $status.GetString() -cne $expectedStatus)) {
+        throw "The engine response operation_status must be null or '$expectedStatus' for its outcome."
+    }
+    if ($root.TryGetProperty('response_error', [ref]$errorValue) -and
+        $errorValue.ValueKind -notin @([System.Text.Json.JsonValueKind]::Null, [System.Text.Json.JsonValueKind]::String)) {
+        throw 'The engine response response_error must be null or a string.'
+    }
     if ($success.GetBoolean()) {
         if ($response.Stream -ne 'stdout') {
             throw 'A successful engine response must be on stdout.'
         }
-        $status = [System.Text.Json.JsonElement]::new()
-        $errorValue = [System.Text.Json.JsonElement]::new()
-        if (($root.TryGetProperty('operation_status', [ref]$status) -and
-                $status.ValueKind -ne [System.Text.Json.JsonValueKind]::Null -and
-                ($status.ValueKind -ne [System.Text.Json.JsonValueKind]::String -or $status.GetString() -cne 'Succeeded')) -or
-            ($root.TryGetProperty('response_error', [ref]$errorValue) -and
-                $errorValue.ValueKind -ne [System.Text.Json.JsonValueKind]::Null -and
-                ($errorValue.ValueKind -ne [System.Text.Json.JsonValueKind]::String -or $errorValue.GetString().Length -gt 0))) {
-            throw 'The engine success response contains a failure status or error.'
+        if ($errorValue.ValueKind -eq [System.Text.Json.JsonValueKind]::String -and $errorValue.GetString().Length -gt 0) {
+            throw 'The engine success response contains an error.'
         }
     }
     [System.IO.File]::WriteAllText($resultPath, $response.Text)

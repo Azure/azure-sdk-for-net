@@ -106,6 +106,36 @@ try {
     }
     $zero = '{"success":true,"attemptsUsed":0}'
     Test-Capture 'zero-attempts' $zero '' -expectedExit 0 -expectedResult $zero | Out-Null
+    foreach ($outcome in @('true', 'false')) {
+        $engineExit = if ($outcome -eq 'true') { 0 } else { 1 }
+        foreach ($fields in @('', ',"operation_status":null,"response_error":null', ',"response_error":""')) {
+            $response = "{`"success`":$outcome,`"attemptsUsed`":0$fields}"
+            $stdout = if ($outcome -eq 'true') { $response } else { '' }
+            $stderr = if ($outcome -eq 'false') { $response } else { '' }
+            Test-Capture "optional-fields-$outcome-$($fields.Length)" $stdout $stderr `
+                -engineExit $engineExit -expectedExit $engineExit -expectedResult $response | Out-Null
+        }
+        $invalidFields = @(
+            @{ operation_status = 'true' },
+            @{ operation_status = '1' },
+            @{ operation_status = '[]' },
+            @{ operation_status = '{}' },
+            @{ operation_status = '""' },
+            @{ operation_status = '"Pending"' },
+            @{ operation_status = $(if ($outcome -eq 'true') { '"Failed"' } else { '"Succeeded"' }) },
+            @{ response_error = 'true' },
+            @{ response_error = '1' },
+            @{ response_error = '[]' },
+            @{ response_error = '{}' }
+        )
+        for ($index = 0; $index -lt $invalidFields.Count; $index++) {
+            $field = @($invalidFields[$index].GetEnumerator())[0]
+            $response = "{`"success`":$outcome,`"attemptsUsed`":0,`"$($field.Key)`":$($field.Value)}"
+            $stdout = if ($outcome -eq 'true') { $response } else { '' }
+            $stderr = if ($outcome -eq 'false') { $response } else { '' }
+            Test-Capture "invalid-$outcome-$($field.Key)-$index" $stdout $stderr -engineExit $engineExit | Out-Null
+        }
+    }
     foreach ($case in @(
         @{ name = 'missing-response'; stdout = ''; stderr = $npmErrors },
         @{ name = 'malformed'; stdout = '{"success":true,}'; stderr = '' },
