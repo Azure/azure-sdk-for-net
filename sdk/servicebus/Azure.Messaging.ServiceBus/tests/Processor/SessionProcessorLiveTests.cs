@@ -1475,36 +1475,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     try
                     {
-                        if (eventArgs.Exception is TestException)
-                        {
-                            if (errorSource == ServiceBusErrorSource.Abandon)
-                            {
-                                if (sessionErrorEventCt == 1)
-                                {
-                                    Assert.AreEqual(ServiceBusErrorSource.Abandon, eventArgs.ErrorSource);
-                                }
-                                else
-                                {
-                                    Assert.AreEqual(ServiceBusErrorSource.ProcessMessageCallback, eventArgs.ErrorSource);
-                                }
-                            }
-                            else
-                            {
-                                Assert.AreEqual(errorSource, eventArgs.ErrorSource);
-                            }
-                            Interlocked.Increment(ref sessionErrorEventCt);
-                        }
-                        else if ((eventArgs.Exception is ServiceBusException sbException) &&
-                            (sbException.Reason == ServiceBusFailureReason.SessionLockLost ||
-                                sbException.Reason == ServiceBusFailureReason.SessionCannotBeLocked))
-                        {
-                            Interlocked.Increment(ref sessionErrorEventCt);
-                            Assert.AreEqual(errorSource, eventArgs.ErrorSource);
-                        }
-                        else
-                        {
-                            Assert.Fail(eventArgs.Exception.ToString());
-                        }
+                        AssertExpectedErrorSource(errorSource, sessionErrorEventCt, eventArgs);
+                        Interlocked.Increment(ref sessionErrorEventCt);
                         if (errorSource != ServiceBusErrorSource.Abandon ||
                             sessionErrorEventCt == 2)
                         {
@@ -1589,6 +1561,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 {
                     Assert.AreEqual(1, sessionErrorEventCt);
                 }
+            }
+        }
+
+        internal static void AssertExpectedErrorSource(
+            ServiceBusErrorSource errorSource,
+            int errorEventCount,
+            ProcessErrorEventArgs eventArgs)
+        {
+            if (errorSource == ServiceBusErrorSource.Abandon)
+            {
+                Assert.AreEqual(
+                    errorEventCount == 1
+                        ? ServiceBusErrorSource.Abandon
+                        : ServiceBusErrorSource.ProcessMessageCallback,
+                    eventArgs.ErrorSource);
+            }
+            else
+            {
+                Assert.AreEqual(errorSource, eventArgs.ErrorSource);
             }
         }
 
