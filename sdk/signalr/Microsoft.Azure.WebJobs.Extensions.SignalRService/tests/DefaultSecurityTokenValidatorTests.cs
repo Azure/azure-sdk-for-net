@@ -61,14 +61,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             Assert.Equal(expectedStatus, securityTokenResult.Status);
         }
 
+        [Fact]
+        public void ValidateToken_ValidToken_ReturnsTokenExpiration()
+        {
+            var tokenString = GenerateJwtToken(IssuerToken, "issuer", "audience", DateTime.UtcNow.AddMinutes(10));
+            var expectedExpiresOn = new DateTimeOffset(new JwtSecurityTokenHandler().ReadJwtToken(tokenString).ValidTo);
+            var ctx = new DefaultHttpContext();
+            ctx.Request.Headers.Append("Authorization", new StringValues($"Bearer {tokenString}"));
+            var securityTokenValidator = new DefaultSecurityTokenValidator(parameters =>
+            {
+                parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
+                parameters.RequireSignedTokens = true;
+                parameters.ValidateIssuerSigningKey = true;
+                parameters.ValidateLifetime = true;
+                parameters.ValidIssuer = "issuer";
+                parameters.ValidAudience = "audience";
+            });
+
+            var result = securityTokenValidator.ValidateToken(ctx.Request);
+
+            Assert.Equal(SecurityTokenStatus.Valid, result.Status);
+            Assert.NotNull(result.ExpiresOn);
+            Assert.Equal(expectedExpiresOn, result.ExpiresOn);
+        }
+
         public static string GenerateJwtToken(string secretKey, string issuer, string audience, int expireMinutes)
+        {
+            return GenerateJwtToken(secretKey, issuer, audience, DateTime.UtcNow.AddMinutes(expireMinutes));
+        }
+
+        public static string GenerateJwtToken(string secretKey, string issuer, string audience, DateTime expiresOn)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
-                expires: DateTime.Now.AddMinutes(expireMinutes),
+                expires: expiresOn,
                 signingCredentials: credentials
             );
 

@@ -71,6 +71,36 @@ SignalR client
 
 Please follow the [Azure SignalR Connection Info input binding tutorial](https://learn.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-input?tabs=csharp) to learn more about SignalR Connection Info input binding.
 
+### Authentication refresh
+
+Authentication refresh lets a refresh-aware SignalR client update a live connection's application authentication deadline and claims without reconnecting. Opt in during negotiate and expose a sibling refresh endpoint that returns `SignalRConnectionInfo`:
+
+```C# Snippet:AuthenticationRefresh
+[FunctionName("Negotiate")]
+public static SignalRConnectionInfo Negotiate(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/negotiate")] HttpRequest req,
+    [SignalRConnectionInfo(
+        HubName = "chat",
+        UserId = "{headers.x-ms-client-principal-id}",
+        EnableAuthenticationRefresh = true,
+        CloseOnAuthenticationExpiration = true,
+        TokenLifetimeSeconds = 3600)] SignalRConnectionInfo connectionInfo)
+{
+    return connectionInfo;
+}
+
+[FunctionName("Refresh")]
+public static SignalRConnectionInfo Refresh(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "chat/refresh")] HttpRequest req,
+    [SignalRRefresh(
+        HubName = "chat",
+        ConnectionToken = "{query.id}",
+        TokenLifetimeSeconds = 3600)] SignalRConnectionInfo connectionInfo)
+{
+    return connectionInfo;
+}
+```
+
 ### SignalR output binding
 
 `SignalR` output binding allows :
@@ -87,6 +117,7 @@ Please follow the [Azure SignalR trigger](https://learn.microsoft.com/azure/azur
 
 ## Supported scenarios
 - Negotiate for a SignalR client.
+- Refresh authentication for a live SignalR client connection.
 - Manage group like add/remove a single user/connection in a group.
 - Send messages to a single user/connection, to a group, to all users/connections.
 - Use multiple Azure SignalR Service instances for resiliency and disaster recovery in Azure Functions. See details in [Multiple Azure SignalR Service Instances Support in Azure Functions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/docs/sharding.md).

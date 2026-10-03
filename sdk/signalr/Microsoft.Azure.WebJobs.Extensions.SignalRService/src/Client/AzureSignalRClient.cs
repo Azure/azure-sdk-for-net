@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.SignalR;
@@ -21,12 +22,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         public const string AzureSignalRUserPrefix = "asrs.u.";
 
+        // Todo: Move this list to a common place.
         private static readonly string[] SystemClaims =
         {
             "aud", // Audience claim, used by service to make sure token is matched with target resource.
             "exp", // Expiration time claims. A token is valid only before its expiration time.
             "iat", // Issued At claim. Added by default. It is not validated by service.
-            "nbf"  // Not Before claim. Added by default. It is not validated by service.
+            "nbf", // Not Before claim. Added by default. It is not validated by service.
+            "iss",
+            "actort",
+            "acr",
+            "azp",
+            "c_hash",
+            "jti",
+            "nonce",
         };
 
         private readonly ServiceHubContext _serviceHubContext;
@@ -36,25 +45,121 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             _serviceHubContext = serviceHubContext;
         }
 
-        public Task<SignalRConnectionInfo> GetClientConnectionInfoAsync(string userId, string idToken, string[] claimTypeList, HttpContext httpContext)
+        public Task<SignalRConnectionInfo> GetClientConnectionInfoAsync(
+            string userId,
+            string idToken,
+            string[] claimTypeList,
+            HttpContext httpContext,
+            bool enableAuthenticationRefresh = false,
+            int tokenLifetimeSeconds = 0,
+            DateTimeOffset? authenticationExpiresOn = null,
+            bool closeOnAuthenticationExpiration = false,
+            CancellationToken cancellationToken = default)
         {
             var customerClaims = GetCustomClaims(idToken, claimTypeList);
-            return GetClientConnectionInfoAsync(userId, customerClaims, httpContext);
+            return GetClientConnectionInfoAsync(
+                userId,
+                customerClaims,
+                httpContext,
+                enableAuthenticationRefresh,
+                tokenLifetimeSeconds,
+                authenticationExpiresOn,
+                closeOnAuthenticationExpiration,
+                cancellationToken);
         }
 
-        public async Task<SignalRConnectionInfo> GetClientConnectionInfoAsync(string userId, IList<Claim> claims, HttpContext httpContext)
+        public async Task<SignalRConnectionInfo> GetClientConnectionInfoAsync(
+            string userId,
+            IList<Claim> claims,
+            HttpContext httpContext,
+            bool enableAuthenticationRefresh = false,
+            int tokenLifetimeSeconds = 0,
+            DateTimeOffset? authenticationExpiresOn = null,
+            bool closeOnAuthenticationExpiration = false,
+            CancellationToken cancellationToken = default)
         {
-            var negotiateResponse = await _serviceHubContext.NegotiateAsync(new NegotiationOptions()
+            var lifetimeSeconds = tokenLifetimeSeconds > 0
+                ? tokenLifetimeSeconds
+                : Constants.DefaultAccessTokenLifetimeSeconds;
+            var negotiationOptions = new NegotiationOptions()
             {
                 UserId = userId,
                 Claims = BuildJwtClaims(claims, AzureSignalRUserPrefix).ToList(),
-                HttpContext = httpContext
-            }).ConfigureAwait(false);
+                HttpContext = httpContext,
+                TokenLifetime = TimeSpan.FromSeconds(lifetimeSeconds),
+                AuthenticationExpiresOn = authenticationExpiresOn,
+                EnableAuthenticationRefresh = enableAuthenticationRefresh,
+                CloseOnAuthenticationExpiration = closeOnAuthenticationExpiration,
+            };
+
+            if (!enableAuthenticationRefresh)
+            {
+                var response = await _serviceHubContext.NegotiateAsync(negotiationOptions, cancellationToken).ConfigureAwait(false);
+                return new SignalRConnectionInfo
+                {
+                    Url = response.Url,
+                    AccessToken = response.AccessToken,
+                };
+            }
+
+            var negotiateResult = await _serviceHubContext.NegotiateWithTokenLifetimeAsync(negotiationOptions, cancellationToken).ConfigureAwait(false);
             return new SignalRConnectionInfo
             {
-                Url = negotiateResponse.Url,
-                AccessToken = negotiateResponse.AccessToken
+                Url = negotiateResult.Url,
+                AccessToken = negotiateResult.AccessToken,
+                TokenLifetimeSeconds = negotiateResult.TokenLifetimeSeconds
             };
+        }
+
+        /// <summary>
+        /// Refreshes the authentication expiration and application claims of a live client connection without reconnecting.
+        /// Returns a refreshed access token for the client.
+        /// Wraps the Management SDK's <c>RefreshConnectionAuthenticationAsync</c>.
+        /// </summary>
+        public async Task<SignalRConnectionInfo> RefreshConnectionInfoAsync(
+            string connectionToken,
+            DateTimeOffset? authenticationExpiresOn,
+            IList<Claim> claims,
+            int tokenLifetimeSeconds,
+            CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(connectionToken))
+            {
+                throw new ArgumentException($"{nameof(connectionToken)} cannot be null or empty");
+            }
+
+            var lifetimeSeconds = tokenLifetimeSeconds > 0
+                ? tokenLifetimeSeconds
+                : Constants.DefaultAccessTokenLifetimeSeconds;
+            var result = await _serviceHubContext.RefreshConnectionAuthenticationAsync(
+                connectionToken,
+                new RefreshConnectionAuthenticationOptions
+                {
+                    AuthenticationExpiresOn = authenticationExpiresOn,
+                    Claims = claims == null ? null : BuildJwtClaims(claims, AzureSignalRUserPrefix).ToList(),
+                    TokenLifetime = TimeSpan.FromSeconds(lifetimeSeconds),
+                },
+                cancellationToken).ConfigureAwait(false);
+            return new SignalRConnectionInfo
+            {
+                AccessToken = result.AccessToken,
+                TokenLifetimeSeconds = result.TokenLifetimeSeconds
+            };
+        }
+
+        /// <summary>
+        /// Reads the current application claim set of a live client connection.
+        /// Wraps the Management SDK's <c>GetConnectionClaimsAsync</c>.
+        /// </summary>
+        public async Task<IList<Claim>> GetConnectionClaimsAsync(string connectionToken)
+        {
+            if (string.IsNullOrEmpty(connectionToken))
+            {
+                throw new ArgumentException($"{nameof(connectionToken)} cannot be null or empty");
+            }
+
+            var result = await _serviceHubContext.GetConnectionClaimsAsync(connectionToken).ConfigureAwait(false);
+            return result.Claims == null ? new List<Claim>() : result.Claims.ToList();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Breaking change")]
