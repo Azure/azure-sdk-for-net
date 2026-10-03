@@ -15,12 +15,18 @@ namespace Azure.ResourceManager.Relationships
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ContainsRelationship))]
+    [ModelReaderWriterBuildable(typeof(ContainsRelationshipListResult))]
+    [ModelReaderWriterBuildable(typeof(ContainsRelationshipProperties))]
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipData))]
+    [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipListResult))]
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipProperties))]
     [ModelReaderWriterBuildable(typeof(DependencyOfRelationshipResource))]
     [ModelReaderWriterBuildable(typeof(RelationshipMetadata))]
     [ModelReaderWriterBuildable(typeof(RelationshipOriginInformation))]
+    [ModelReaderWriterBuildable(typeof(ServiceGroupDependencyOfRelationshipResource))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipData))]
+    [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipListResult))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupMemberRelationshipResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

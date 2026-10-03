@@ -80,24 +80,24 @@ namespace Azure.ResourceManager.Relationships.Models
             {
                 throw new FormatException($"The model {nameof(ServiceGroupMemberRelationshipProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            writer.WritePropertyName("sourceId"u8);
+            writer.WriteStringValue(SourceId);
+            if (options.Format != "W" && Optional.IsDefined(TargetId))
             {
-                writer.WritePropertyName("sourceId"u8);
-                writer.WriteStringValue(SourceId);
+                writer.WritePropertyName("targetId"u8);
+                writer.WriteStringValue(TargetId);
             }
-            writer.WritePropertyName("targetId"u8);
-            writer.WriteStringValue(TargetId);
-            if (Optional.IsDefined(TargetTenant))
+            if (Optional.IsDefined(SourceTenant))
             {
-                writer.WritePropertyName("targetTenant"u8);
-                writer.WriteStringValue(TargetTenant);
+                writer.WritePropertyName("sourceTenant"u8);
+                writer.WriteStringValue(SourceTenant);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(OriginInformation))
             {
                 writer.WritePropertyName("originInformation"u8);
                 writer.WriteObjectValue(OriginInformation, options);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata, options);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Relationships.Models
             }
             ResourceIdentifier sourceId = default;
             ResourceIdentifier targetId = default;
-            string targetTenant = default;
+            string sourceTenant = default;
             RelationshipOriginInformation originInformation = default;
             RelationshipMetadata metadata = default;
             RelationshipProvisioningState? provisioningState = default;
@@ -165,21 +165,33 @@ namespace Azure.ResourceManager.Relationships.Models
                 }
                 if (prop.NameEquals("targetId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     targetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("targetTenant"u8))
+                if (prop.NameEquals("sourceTenant"u8))
                 {
-                    targetTenant = prop.Value.GetString();
+                    sourceTenant = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("originInformation"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     originInformation = RelationshipOriginInformation.DeserializeRelationshipOriginInformation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     metadata = RelationshipMetadata.DeserializeRelationshipMetadata(prop.Value, options);
                     continue;
                 }
@@ -200,7 +212,7 @@ namespace Azure.ResourceManager.Relationships.Models
             return new ServiceGroupMemberRelationshipProperties(
                 sourceId,
                 targetId,
-                targetTenant,
+                sourceTenant,
                 originInformation,
                 metadata,
                 provisioningState,
