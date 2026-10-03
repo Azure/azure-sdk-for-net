@@ -51,8 +51,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="containerName"> The name of the cosmos DB sql container in the cosmos DB database. </param>
         /// <param name="partitionKeyName"> The name of the partition key associated with this cosmos DB sql container if one exists. This is an optional parameter. </param>
         /// <param name="partitionKeyTemplate"> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </param>
+        /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingCosmosDBSqlApiProperties(string name, string id, string subscriptionId, string resourceGroup, Uri endpointUri, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string primaryKey, string secondaryKey, string databaseName, string containerName, string partitionKeyName, string partitionKeyTemplate, MessagePayloadFormat? messagePayloadFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.IotHub.Models
             ContainerName = containerName;
             PartitionKeyName = partitionKeyName;
             PartitionKeyTemplate = partitionKeyTemplate;
+            MessagePayloadFormat = messagePayloadFormat;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -108,6 +110,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> The template for generating a synthetic partition key value for use with this cosmos DB sql container. The template must include at least one of the following placeholders: {iothub}, {deviceid}, {DD}, {MM}, and {YYYY}. Any one placeholder may be specified at most once, but order and non-placeholder components are arbitrary. This parameter is only required if PartitionKeyName is specified. </summary>
         public string PartitionKeyTemplate { get; set; }
+
+        /// <summary> The format of the message payload delivered to this endpoint. </summary>
+        public MessagePayloadFormat? MessagePayloadFormat { get; set; }
 
         /// <summary> The user assigned identity. </summary>
         public ResourceIdentifier UserAssignedIdentity

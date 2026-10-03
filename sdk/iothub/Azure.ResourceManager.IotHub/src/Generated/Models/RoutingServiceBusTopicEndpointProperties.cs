@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types.  The name need not be the same as the actual topic name. </param>
         /// <param name="subscriptionId"> The subscription identifier of the service bus topic endpoint. </param>
         /// <param name="resourceGroup"> The name of the resource group of the service bus topic endpoint. </param>
+        /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingServiceBusTopicEndpointProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingServiceBusTopicEndpointProperties(Guid? id, string connectionString, string endpoint, string entityPath, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, MessagePayloadFormat? messagePayloadFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Name = name;
             SubscriptionId = subscriptionId;
             ResourceGroup = resourceGroup;
+            MessagePayloadFormat = messagePayloadFormat;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -79,6 +81,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> The name of the resource group of the service bus topic endpoint. </summary>
         public string ResourceGroup { get; set; }
+
+        /// <summary> The format of the message payload delivered to this endpoint. </summary>
+        public MessagePayloadFormat? MessagePayloadFormat { get; set; }
 
         /// <summary> The user assigned identity. </summary>
         public ResourceIdentifier UserAssignedIdentity

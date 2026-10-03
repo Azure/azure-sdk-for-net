@@ -44,8 +44,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="workspaceId"> The unique GUID of the target Microsoft Fabric workspace for the event stream endpoint. </param>
         /// <param name="eventStreamId"> The unique GUID of the target event stream under the workspace. </param>
         /// <param name="sourceId"> The unique GUID of the custom source for the event stream. </param>
+        /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingEventStreamProperties(string name, string id, string endpointUri, string entityPath, EventStreamAuthenticationType? authenticationType, ManagedIdentity identity, string workspaceId, string eventStreamId, string sourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingEventStreamProperties(string name, string id, string endpointUri, string entityPath, EventStreamAuthenticationType? authenticationType, ManagedIdentity identity, string workspaceId, string eventStreamId, string sourceId, MessagePayloadFormat? messagePayloadFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
             WorkspaceId = workspaceId;
             EventStreamId = eventStreamId;
             SourceId = sourceId;
+            MessagePayloadFormat = messagePayloadFormat;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -85,6 +87,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> The unique GUID of the custom source for the event stream. </summary>
         public string SourceId { get; set; }
+
+        /// <summary> The format of the message payload delivered to this endpoint. </summary>
+        public MessagePayloadFormat? MessagePayloadFormat { get; set; }
 
         /// <summary> The user assigned identity. </summary>
         public ResourceIdentifier UserAssignedIdentity
