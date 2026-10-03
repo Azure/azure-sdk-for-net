@@ -183,7 +183,7 @@ namespace Azure.Analytics.Defender.Easm
                 removed,
                 added,
                 difference,
-                kindSummaries,
+                kindSummaries ?? new ChangeTrackingList<DeltaTypeResult>(),
                 additionalBinaryDataProperties);
         }
     }
