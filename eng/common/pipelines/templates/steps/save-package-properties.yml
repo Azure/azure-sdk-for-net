@@ -70,13 +70,30 @@ steps:
         workingDirectory: '${{ parameters.WorkingDirectory }}'
 
   - ${{ else }}:
+      # Split into two variants gated by a runtime condition on the SetDevVersion
+      # pipeline variable. This avoids passing a parenthesized $env: expression in
+      # 'arguments:', which the ADO agent argument sanitizer flags (aka.ms/ado/75787).
+      # Exactly one variant runs, preserving the original
+      # -AddDevVersion:($env:SETDEVVERSION -eq 'true') behavior.
       - task: Powershell@2
         displayName: Save package properties
+        condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'))
         inputs:
           filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
           arguments: >
             -ServiceDirectory '${{parameters.ServiceDirectory}}'
             -OutDirectory '${{ parameters.PackageInfoDirectory }}'
-            -AddDevVersion:($env:SETDEVVERSION -eq 'true')
+          pwsh: true
+          workingDirectory: '${{ parameters.WorkingDirectory }}'
+
+      - task: Powershell@2
+        displayName: Save package properties (with dev version)
+        condition: and(succeeded(), eq(variables['SetDevVersion'], 'true'))
+        inputs:
+          filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory '${{parameters.ServiceDirectory}}'
+            -OutDirectory '${{ parameters.PackageInfoDirectory }}'
+            -AddDevVersion
           pwsh: true
           workingDirectory: '${{ parameters.WorkingDirectory }}'
