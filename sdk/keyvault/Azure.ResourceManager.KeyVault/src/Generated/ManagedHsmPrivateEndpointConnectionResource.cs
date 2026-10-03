@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(ResourceType, out string managedHsmPrivateEndpointConnectionApiVersion);
             _mhsmPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", ResourceType.Namespace, Diagnostics);
-            _mhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnections(_mhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionApiVersion ?? "2026-02-01");
+            _mhsmPrivateEndpointConnectionsRestClient = new MhsmPrivateEndpointConnections(_mhsmPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedHsmPrivateEndpointConnectionApiVersion ?? "2026-05-15");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-02-01. </description>
+        /// <description> 2026-05-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             ManagedHsmSkuFamily family = default;
-            ManagedHsmSkuName name = default;
+            Models.ManagedHsmSkuName name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
