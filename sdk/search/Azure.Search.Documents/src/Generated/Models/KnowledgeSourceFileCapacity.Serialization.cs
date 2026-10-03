@@ -13,52 +13,52 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The query parameters to configure hybrid search behaviors. </summary>
-    public partial class HybridSearch : IJsonModel<HybridSearch>
+    /// <summary> File upload capacity for a File knowledge source. </summary>
+    public partial class KnowledgeSourceFileCapacity : IJsonModel<KnowledgeSourceFileCapacity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HybridSearch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceFileCapacity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileCapacity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHybridSearch(document.RootElement, options);
+                        return DeserializeKnowledgeSourceFileCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridSearch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceFileCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileCapacity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HybridSearch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KnowledgeSourceFileCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HybridSearch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KnowledgeSourceFileCapacity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridSearch IPersistableModel<HybridSearch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KnowledgeSourceFileCapacity IPersistableModel<KnowledgeSourceFileCapacity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HybridSearch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KnowledgeSourceFileCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HybridSearch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KnowledgeSourceFileCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridSearch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceFileCapacity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MaxTextRecallSize))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("maxTextRecallSize"u8);
-                writer.WriteNumberValue(MaxTextRecallSize.Value);
+                writer.WritePropertyName("maxFileCount"u8);
+                writer.WriteNumberValue(MaxFileCount);
             }
-            if (Optional.IsDefined(CountAndFacetMode))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("countAndFacetMode"u8);
-                writer.WriteStringValue(CountAndFacetMode.Value.ToString());
+                writer.WritePropertyName("remainingFileCount"u8);
+                writer.WriteNumberValue(RemainingFileCount);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("maxFileSizeBytes"u8);
+                writer.WriteNumberValue(MaxFileSizeBytes);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +108,48 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HybridSearch IJsonModel<HybridSearch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KnowledgeSourceFileCapacity IJsonModel<KnowledgeSourceFileCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HybridSearch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KnowledgeSourceFileCapacity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HybridSearch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeSourceFileCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridSearch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KnowledgeSourceFileCapacity)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHybridSearch(document.RootElement, options);
+            return DeserializeKnowledgeSourceFileCapacity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HybridSearch DeserializeHybridSearch(JsonElement element, ModelReaderWriterOptions options)
+        internal static KnowledgeSourceFileCapacity DeserializeKnowledgeSourceFileCapacity(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? maxTextRecallSize = default;
-            HybridCountAndFacetMode? countAndFacetMode = default;
+            int maxFileCount = default;
+            int remainingFileCount = default;
+            long maxFileSizeBytes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("maxTextRecallSize"u8))
+                if (prop.NameEquals("maxFileCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxTextRecallSize = prop.Value.GetInt32();
+                    maxFileCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("countAndFacetMode"u8))
+                if (prop.NameEquals("remainingFileCount"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    countAndFacetMode = new HybridCountAndFacetMode(prop.Value.GetString());
+                    remainingFileCount = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxFileSizeBytes"u8))
+                {
+                    maxFileSizeBytes = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +157,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new HybridSearch(maxTextRecallSize, countAndFacetMode, additionalBinaryDataProperties);
+            return new KnowledgeSourceFileCapacity(maxFileCount, remainingFileCount, maxFileSizeBytes, additionalBinaryDataProperties);
         }
     }
 }

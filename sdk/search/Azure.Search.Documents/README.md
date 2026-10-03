@@ -33,6 +33,10 @@ Use the Azure.Search.Documents client library to:
 
 ## Getting started
 
+This version of the library uses the `2026-10-01` GA service API by default. To
+select an earlier supported GA API, set `SearchClientOptions.ServiceVersion`
+when constructing `SearchClientOptions`.
+
 ### Install the package
 
 Install the Azure AI Search client library for .NET with [NuGet][nuget]:

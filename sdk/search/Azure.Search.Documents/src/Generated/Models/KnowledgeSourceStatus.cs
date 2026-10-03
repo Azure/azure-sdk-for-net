@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -31,8 +32,9 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="currentSynchronizationState"> Current synchronization state that spans multiple indexer runs. </param>
         /// <param name="lastSynchronizationState"> Details of the last completed synchronization. Null on first sync. </param>
         /// <param name="statistics"> Statistical information about the knowledge source synchronization history. Null on first sync. </param>
+        /// <param name="fileCapacity"> File upload capacity for a File knowledge source. Omitted for other knowledge source kinds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceStatus(KnowledgeSourceKind? kind, KnowledgeSourceSynchronizationStatus synchronizationStatus, string synchronizationInterval, SynchronizationState currentSynchronizationState, CompletedSynchronizationState lastSynchronizationState, KnowledgeSourceStatistics statistics, KnowledgeSourceFileCapacity fileCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             SynchronizationStatus = synchronizationStatus;
@@ -40,6 +42,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             CurrentSynchronizationState = currentSynchronizationState;
             LastSynchronizationState = lastSynchronizationState;
             Statistics = statistics;
+            FileCapacity = fileCapacity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +63,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Statistical information about the knowledge source synchronization history. Null on first sync. </summary>
         public KnowledgeSourceStatistics Statistics { get; set; }
+
+        /// <summary> File upload capacity for a File knowledge source. Omitted for other knowledge source kinds. </summary>
+        public KnowledgeSourceFileCapacity FileCapacity { get; }
     }
 }

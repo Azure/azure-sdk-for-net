@@ -339,6 +339,28 @@ namespace Azure.Search.Documents.Tests.Models
         }
 
         [Test]
+        public void MoreLikeThisSurvivesCloning()
+        {
+            SearchOptions options = new();
+            Assert.IsNull(options.MoreLikeThis);
+            options.MoreLikeThis = "hotel-1";
+
+            Assert.AreEqual(options.MoreLikeThis, options.Clone().MoreLikeThis);
+        }
+
+        [Test]
+        public void MoreLikeThisSurvivesContinuationTokenRoundtrip()
+        {
+            SearchOptions options = new() { MoreLikeThis = "hotel-1" };
+            string token = SearchContinuationToken.Serialize(
+                new Uri("https://fake-search.search.windows.net/indexes/hotels/docs/search"),
+                options);
+
+            Assert.AreEqual(options.MoreLikeThis, SearchContinuationToken.Deserialize(token).MoreLikeThis);
+            Assert.AreEqual(options.MoreLikeThis, new SearchOptions(token).MoreLikeThis);
+        }
+
+        [Test]
         public void VectorSearchOption()
         {
             SearchOptions searchOptions = new();

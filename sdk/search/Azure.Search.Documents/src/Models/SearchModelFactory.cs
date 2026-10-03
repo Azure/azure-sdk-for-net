@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Models
             int failedItemCount,
             string initialTrackingState,
             string finalTrackingState) =>
-            new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
+            new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, statusDetail: null, mode: null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
+            return new IndexerExecutionResult(status, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
@@ -202,7 +202,7 @@ namespace Azure.Search.Documents.Models
             IndexerExecutionResult lastResult,
             IReadOnlyList<IndexerExecutionResult> executionHistory,
             SearchIndexerLimits limits) =>
-            new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory, limits, currentState: null, additionalBinaryDataProperties: null);
+            new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory, limits, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
@@ -215,7 +215,7 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory?.ToList(), limits, currentState: null, additionalBinaryDataProperties: null);
+            return new SearchIndexerStatus(default, status, runtime: null, lastResult, executionHistory?.ToList(), limits, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
@@ -236,7 +236,6 @@ namespace Azure.Search.Documents.Models
                 lastResult,
                 executionHistory?.ToList(),
                 limits,
-                currentState: null,
                 additionalBinaryDataProperties: null);
         }
 
@@ -290,7 +289,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter dataSourceCounter,
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, vectorIndexSizeCounter: null, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, vectorIndexSizeCounter: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -310,7 +309,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter,
             SearchResourceCounter skillsetCounter) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter: null, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter: null, additionalBinaryDataProperties: null);
 
         // <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -332,7 +331,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter synonymMapCounter = null,
             SearchResourceCounter skillsetCounter = null,
             SearchResourceCounter vectorIndexSizeCounter = null) =>
-            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -348,7 +347,7 @@ namespace Azure.Search.Documents.Models
         int? maxComplexCollectionFieldsPerIndex = null,
         int? maxComplexObjectsInCollectionsPerDocument = null,
         long? maxStoragePerIndexInBytes = null) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, null, additionalBinaryDataProperties: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, maxCumulativeIndexerRuntimeSeconds: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -362,7 +361,7 @@ namespace Azure.Search.Documents.Models
         int? maxFieldNestingDepthPerIndex,
         int? maxComplexCollectionFieldsPerIndex,
         int? maxComplexObjectsInCollectionsPerDocument) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, maxVectorIndexSizePerIndexInBytes: null, additionalBinaryDataProperties: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -406,6 +405,7 @@ namespace Azure.Search.Documents.Models
             string queryPlusText) =>
             new AutocompleteItem(text, queryPlusText, additionalBinaryDataProperties: null);
 
+        /* Preview facet metrics are not supported by the GA API.
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="avg"> The resulting total avg for the facet when an avg metric is requested. </param>
@@ -430,6 +430,7 @@ namespace Azure.Search.Documents.Models
 
             return new FacetResult(count, avg, min, max, sum, cardinality, facets, additionalProperties.ToBinaryDataDictionary());
         }
+        */
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
@@ -456,7 +457,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties.ToBinaryDataDictionary());
+            return new FacetResult(count, additionalProperties.ToBinaryDataDictionary());
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>
@@ -552,7 +553,7 @@ namespace Azure.Search.Documents.Models
             normalizers ??= new List<LexicalNormalizer>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndex(name, description, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, purviewEnabled: null, sharePointConnectorAppRegistration: null, fields, etag, additionalBinaryDataProperties);
+            return new SearchIndex(name, description, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, sharePointConnectorAppRegistration: null, fields, etag, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>
@@ -599,7 +600,7 @@ namespace Azure.Search.Documents.Models
             outputFieldMappings ??= new List<FieldMapping>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, cache: null, additionalBinaryDataProperties);
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings, outputFieldMappings, isDisabled, etag, encryptionKey, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of SynonymMap. </summary>
@@ -621,7 +622,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
         {
-            return new DocumentDebugInfo(semantic: null, vectors, innerHits: null, additionalBinaryDataProperties: null);
+            return new DocumentDebugInfo(vectors, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of QueryAnswerResult. </summary>
@@ -643,7 +644,7 @@ namespace Azure.Search.Documents.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
+            return new FacetResult(count, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of VectorQuery. </summary>
@@ -656,7 +657,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
         {
-            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
+            return new UnknownVectorQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, kind, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of KnowledgeSource. </summary>
@@ -668,7 +669,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
         {
-            return KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
+            return new UnknownKnowledgeSource(name, description, kind, eTag, encryptionKey, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -96,7 +96,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="queryWorkIQSourceAuthorization"> User assertion token for a customer-owned Entra app registration configured on a Work IQ knowledge source. Used for on-behalf-of authentication to the Work IQ API. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the request or stream enumeration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -112,15 +111,13 @@ namespace Azure.Search.Documents.KnowledgeBases
         public virtual async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
                 KnowledgeBaseRetrievalRequest retrievalRequest,
                 string querySourceAuthorization = default,
-                string queryWorkIQSourceAuthorization = default,
                 [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
             AsyncStreamingResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
-                retrievalRequest,
+                RequestContent.Create(retrievalRequest),
                 querySourceAuthorization,
-                queryWorkIQSourceAuthorization,
                 cancellationToken.ToRequestContext()).ConfigureAwait(false);
 
             await using (((IAsyncDisposable)result).ConfigureAwait(false))

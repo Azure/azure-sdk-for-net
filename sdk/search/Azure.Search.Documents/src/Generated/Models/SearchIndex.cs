@@ -33,12 +33,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
-        /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
         /// <param name="sharePointConnectorAppRegistration"> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. If provided, the applicationId and federatedCredentialId properties are required. </param>
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndex(string name, string description, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IList<SearchField> fields, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -56,7 +55,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticSearch = semanticSearch;
             VectorSearch = vectorSearch;
             PermissionFilterOption = permissionFilterOption;
-            PurviewEnabled = purviewEnabled;
             SharePointConnectorAppRegistration = sharePointConnectorAppRegistration;
             _fields = fields;
             _etag = etag;
@@ -110,9 +108,6 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
         public SearchIndexPermissionFilterOption? PermissionFilterOption { get; set; }
-
-        /// <summary> A value indicating whether Purview is enabled for the index. </summary>
-        public bool? PurviewEnabled { get; set; }
 
         /// <summary> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. If provided, the applicationId and federatedCredentialId properties are required. </summary>
         public SharePointConnectorAppRegistration SharePointConnectorAppRegistration { get; set; }

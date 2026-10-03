@@ -30,12 +30,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
-        /// <param name="logicalReasoningEffort"> The logical reasoning effort requested by the customer. This is distinct from `retrievalReasoningEffort`, which reports the reasoning effort used for billing. </param>
-        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalReasoningEffort logicalReasoningEffort) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             ReasoningTokens = reasoningTokens;
             RetrievalReasoningEffort = retrievalReasoningEffort;
-            LogicalReasoningEffort = logicalReasoningEffort;
         }
 
         /// <summary> The number of input tokens for agentic reasoning. </summary>
@@ -43,8 +41,5 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The retrieval reasoning effort configuration. </summary>
         public KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get; }
-
-        /// <summary> The logical reasoning effort requested by the customer. This is distinct from `retrievalReasoningEffort`, which reports the reasoning effort used for billing. </summary>
-        public KnowledgeRetrievalReasoningEffort LogicalReasoningEffort { get; }
     }
 }

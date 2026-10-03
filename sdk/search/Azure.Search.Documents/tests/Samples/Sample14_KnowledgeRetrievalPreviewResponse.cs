@@ -18,7 +18,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_10_01)]
     public partial class KnowledgeRetrievalPreviewResponse : SearchTestBase
     {
         public KnowledgeRetrievalPreviewResponse(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -26,6 +26,7 @@ namespace Azure.Search.Documents.Tests.Samples
         {
         }
 
+#if AZURE_SEARCH_PREVIEW || SNIPPET
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task RetrieveWithPreviewResponseFeatures()
@@ -127,6 +128,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Assert.IsNotNull(retrievalResponse.Response);
         }
 
+#endif
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task RetrieveWithExtractiveDataMode()
@@ -188,6 +190,7 @@ namespace Azure.Search.Documents.Tests.Samples
             Assert.IsNotNull(retrievalResponse);
         }
 
+#if AZURE_SEARCH_PREVIEW || SNIPPET
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task OverridePerSourceRetrievalBehavior()
@@ -350,6 +353,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
             }
         }
+
+#endif
 
         [Test]
         public async Task ReadSearchOwnedCitationUrls()

@@ -36,10 +36,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extractionOptions"> Controls the cardinality of the content extracted from the document by the skill. </param>
         /// <param name="chunkingProperties"> Controls the cardinality for chunking the content. </param>
-        internal ContentUnderstandingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        /// <param name="modelName"> The name of the chat-completion model used for image description. Must be provided together with modelDeployment. </param>
+        /// <param name="modelDeployment"> The deployment name of the chat-completion model used for image description. Must be provided together with modelName. </param>
+        internal ContentUnderstandingSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ContentUnderstandingSkillExtractionOptions> extractionOptions, ContentUnderstandingSkillChunkingProperties chunkingProperties, string modelName, string modelDeployment) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             ExtractionOptions = extractionOptions;
             ChunkingProperties = chunkingProperties;
+            ModelName = modelName;
+            ModelDeployment = modelDeployment;
         }
 
         /// <summary> Controls the cardinality of the content extracted from the document by the skill. </summary>
@@ -47,5 +51,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Controls the cardinality for chunking the content. </summary>
         public ContentUnderstandingSkillChunkingProperties ChunkingProperties { get; set; }
+
+        /// <summary> The name of the chat-completion model used for image description. Must be provided together with modelDeployment. </summary>
+        public string ModelName { get; set; }
+
+        /// <summary> The deployment name of the chat-completion model used for image description. Must be provided together with modelName. </summary>
+        public string ModelDeployment { get; set; }
     }
 }

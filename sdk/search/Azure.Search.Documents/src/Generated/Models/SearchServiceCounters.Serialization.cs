@@ -97,10 +97,6 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteObjectValue(SkillsetCounter, options);
             writer.WritePropertyName("vectorIndexSize"u8);
             writer.WriteObjectValue(VectorIndexSizeCounter, options);
-            writer.WritePropertyName("knowledgeBasesCount"u8);
-            writer.WriteObjectValue(KnowledgeBaseCounter, options);
-            writer.WritePropertyName("knowledgeSourcesCount"u8);
-            writer.WriteObjectValue(KnowledgeSourceCounter, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,8 +148,6 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchResourceCounter synonymMapCounter = default;
             SearchResourceCounter skillsetCounter = default;
             SearchResourceCounter vectorIndexSizeCounter = default;
-            SearchResourceCounter knowledgeBaseCounter = default;
-            SearchResourceCounter knowledgeSourceCounter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,16 +196,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorIndexSizeCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("knowledgeBasesCount"u8))
-                {
-                    knowledgeBaseCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("knowledgeSourcesCount"u8))
-                {
-                    knowledgeSourceCounter = SearchResourceCounter.DeserializeSearchResourceCounter(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -227,8 +211,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 synonymMapCounter,
                 skillsetCounter,
                 vectorIndexSizeCounter,
-                knowledgeBaseCounter,
-                knowledgeSourceCounter,
                 additionalBinaryDataProperties);
         }
     }

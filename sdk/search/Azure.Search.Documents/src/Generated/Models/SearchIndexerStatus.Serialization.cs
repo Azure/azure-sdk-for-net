@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
                 writer.WriteObjectValue(Runtime, options);
@@ -116,11 +116,6 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("limits"u8);
                 writer.WriteObjectValue(Limits, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CurrentState))
-            {
-                writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -170,7 +165,6 @@ namespace Azure.Search.Documents.Indexes.Models
             IndexerExecutionResult lastResult = default;
             IReadOnlyList<IndexerExecutionResult> executionHistory = default;
             SearchIndexerLimits limits = default;
-            IndexerState currentState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,6 +180,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("runtime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     runtime = IndexerRuntime.DeserializeIndexerRuntime(prop.Value, options);
                     continue;
                 }
@@ -213,15 +211,6 @@ namespace Azure.Search.Documents.Indexes.Models
                     limits = SearchIndexerLimits.DeserializeSearchIndexerLimits(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("currentState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    currentState = IndexerState.DeserializeIndexerState(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -234,7 +223,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 lastResult,
                 executionHistory,
                 limits,
-                currentState,
                 additionalBinaryDataProperties);
         }
     }

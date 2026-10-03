@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -115,6 +116,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(FileCapacity))
+            {
+                writer.WritePropertyName("fileCapacity"u8);
+                writer.WriteObjectValue(FileCapacity, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -163,6 +169,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             SynchronizationState currentSynchronizationState = default;
             CompletedSynchronizationState lastSynchronizationState = default;
             KnowledgeSourceStatistics statistics = default;
+            KnowledgeSourceFileCapacity fileCapacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,6 +227,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     statistics = KnowledgeSourceStatistics.DeserializeKnowledgeSourceStatistics(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("fileCapacity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileCapacity = KnowledgeSourceFileCapacity.DeserializeKnowledgeSourceFileCapacity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -232,6 +248,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 currentSynchronizationState,
                 lastSynchronizationState,
                 statistics,
+                fileCapacity,
                 additionalBinaryDataProperties);
         }
     }

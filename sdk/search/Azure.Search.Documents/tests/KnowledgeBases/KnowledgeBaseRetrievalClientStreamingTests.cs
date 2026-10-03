@@ -1,4 +1,3 @@
-# if AZURE_SEARCH_PREVIEW
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -45,8 +44,7 @@ namespace Azure.Search.Documents.Tests
 
             await using AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(
                 requestContent,
-                querySourceAuthorization: "query-auth",
-                queryWorkIQSourceAuthorization: "work-iq-auth");
+                querySourceAuthorization: "query-auth");
 
             Assert.That(result.Status, Is.EqualTo(200));
             Assert.That(result.Headers.TryGetValue("x-ms-request-id", out string requestId), Is.True);
@@ -60,8 +58,7 @@ namespace Azure.Search.Documents.Tests
             Assert.That(accept, Is.EqualTo("text/event-stream"));
             Assert.That(request.Headers.TryGetValue("x-ms-query-source-authorization", out string queryAuth), Is.True);
             Assert.That(queryAuth, Is.EqualTo("query-auth"));
-            Assert.That(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqAuth), Is.True);
-            Assert.That(workIqAuth, Is.EqualTo("work-iq-auth"));
+            Assert.That(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out _), Is.False);
 
             List<SseItem<BinaryData>> items = new();
             await foreach (SseItem<BinaryData> item in result)
@@ -588,4 +585,3 @@ namespace Azure.Search.Documents.Tests
         }
     }
 }
-# endif

@@ -172,8 +172,8 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
-        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Not supported by the GA API. Must be null.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -190,13 +190,15 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));
+            if (ignoreCacheResetRequirements.HasValue || disableCacheReprocessingChangeDetection.HasValue)
+            {
+                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
+            }
 
             return CreateOrUpdateIndexer(
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: ignoreCacheResetRequirements,
-                disableCacheReprocessingChangeDetection,
                 cancellationToken);
         }
 
@@ -238,8 +240,8 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
-        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Not supported by the GA API. Must be null.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
@@ -256,13 +258,15 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(indexer, nameof(indexer));
+            if (ignoreCacheResetRequirements.HasValue || disableCacheReprocessingChangeDetection.HasValue)
+            {
+                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
+            }
 
             return await CreateOrUpdateIndexerAsync(
                 indexer?.Name,
                 indexer,
                 onlyIfUnchanged ? new MatchConditions { IfMatch = indexer?.ETag } : null,
-                skipIndexerResetRequirementForCache: ignoreCacheResetRequirements,
-                disableCacheReprocessingChangeDetection,
                 cancellationToken).ConfigureAwait(false);
         }
 
