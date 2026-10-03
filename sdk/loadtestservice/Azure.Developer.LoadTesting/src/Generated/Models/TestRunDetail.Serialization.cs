@@ -175,7 +175,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TestRunDetail(status, configurationId, properties, additionalBinaryDataProperties);
+            return new TestRunDetail(status, configurationId, properties ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }
