@@ -17,3 +17,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.AppNetwork
       safeName: AzureResourceManagerAppNetwork
+    - name: Azure.Provisioning.AppNetwork
+      safeName: AzureProvisioningAppNetwork
