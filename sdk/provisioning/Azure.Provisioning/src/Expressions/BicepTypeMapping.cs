@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Globalization;
 using System.Net;
 using System.Reflection;
@@ -39,6 +40,7 @@ internal static class BicepTypeMapping
         type == typeof(ResourceIdentifier) ? "string" :
         type == typeof(ResourceType) ? "string" :
         type == typeof(AzureLocation) ? "string" :
+        type == typeof(ResponseError) ? "object" :
         typeof(Enum).IsAssignableFrom(type) ? "string" :
         typeof(System.Collections.IDictionary).IsAssignableFrom(type) ? "object" :
         typeof(System.Collections.IEnumerable).IsAssignableFrom(type) ? "array" :
@@ -109,6 +111,7 @@ internal static class BicepTypeMapping
             ResourceIdentifier i => BicepSyntax.Value(ToLiteralString(i, format)),
             AzureLocation azureLocation => BicepSyntax.Value(ToLiteralString(azureLocation, format)),
             ResourceType rt => BicepSyntax.Value(ToLiteralString(rt, format)),
+            ResponseError error => BicepFunction.ParseJson(BicepSyntax.Value(ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json, AzureCoreContext.Default).ToString())).Compile(),
             Enum e => BicepSyntax.Value(ToLiteralString(e, format)),
             ValueType ee => BicepSyntax.Value(ToLiteralString(ee, format)),
             _ => throw new InvalidOperationException($"Cannot convert {value} to a Bicep expression.")
