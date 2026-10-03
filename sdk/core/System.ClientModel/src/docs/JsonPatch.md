@@ -83,6 +83,33 @@ BinaryData json = jp.GetJson("$.x.y");
 Console.WriteLine(json); // [null,null,{"z":5}]
 ```
 
+### ContainsValue and Contains
+
+`ContainsValue` checks whether a value can be read at a path. It uses the same resolution as the
+`Get` methods, including getter propagators, the original JSON, nested values, and appended array
+items. JSON null counts as a value; missing paths and removed values do not. Root (`$`) resolution
+is unchanged: it checks a stored root override and does not invoke the getter propagator.
+
+```c#
+JsonPatch jp = new("{\"name\":\"value\"}"u8.ToArray());
+Console.WriteLine(jp.ContainsValue("$.name"u8)); // True
+Console.WriteLine(jp.Contains("$.name"u8));      // False: no stored override
+
+jp.Remove("$.name"u8);
+Console.WriteLine(jp.ContainsValue("$.name"u8)); // False
+Console.WriteLine(jp.Contains("$.name"u8));      // True: stored removal
+```
+
+`Contains(path)` is a stored-entry check used by model serializers, not a readable-value check.
+It includes removal entries, excludes append-only entries, and does not consult getter propagators.
+The `Contains(prefix, property)` serializer overload also checks stored entries, but includes appends.
+These checks must not be replaced with `ContainsValue` when deciding whether to serialize a model
+property: a getter can resolve values owned by a child model or CLR collection that the enclosing
+patch's `WriteTo` does not emit. Skipping those properties would lose data.
+
+Use `ContainsValue` when checking for values supplied by a getter propagator. Neither existence
+query changes what `WriteTo` emits.
+
 ### Remove
 
 Remove deletes a path from the payload which is distinct from setting something to null.
