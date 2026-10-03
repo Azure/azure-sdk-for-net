@@ -189,7 +189,7 @@ namespace Azure.IoT.DeviceUpdate
                 moduleId,
                 state,
                 digitalTwinModelId,
-                healthChecks,
+                healthChecks ?? new ChangeTrackingList<HealthCheck>(),
                 additionalBinaryDataProperties);
         }
     }

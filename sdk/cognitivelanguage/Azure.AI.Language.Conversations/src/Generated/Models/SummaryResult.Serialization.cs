@@ -188,7 +188,7 @@ namespace Azure.AI.Language.Conversations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SummaryResult(conversations, errors, statistics, modelVersion, additionalBinaryDataProperties);
+            return new SummaryResult(conversations ?? new ChangeTrackingList<ConversationsSummaryResult>(), errors ?? new ChangeTrackingList<DocumentError>(), statistics, modelVersion, additionalBinaryDataProperties);
         }
     }
 }
