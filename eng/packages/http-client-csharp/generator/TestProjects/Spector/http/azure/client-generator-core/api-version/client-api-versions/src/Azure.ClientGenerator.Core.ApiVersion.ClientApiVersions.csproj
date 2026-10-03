@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions client library for developing .NET applications with rich experience.</Description>
+    <Description>The Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions</PackageTags>
