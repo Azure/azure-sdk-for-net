@@ -78,6 +78,8 @@
 
 ### Other Changes
 
+- Added internal groundwork for future OneSettings dynamic configuration. This does not change exporter behavior.
+
 - Updated OpenTelemetry dependencies to 1.18.0 and `OpenTelemetry.PersistentStorage.FileSystem` to 1.1.1.
   ([#62698](https://github.com/Azure/azure-sdk-for-net/pull/62698))
 
