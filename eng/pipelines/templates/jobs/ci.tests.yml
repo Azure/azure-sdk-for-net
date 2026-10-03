@@ -26,11 +26,15 @@ parameters:
     default: ''
   - name: OSName
     type: string
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
 
 jobs:
   - job:
     displayName: "Test"
-    dependsOn: ${{ parameters.DependsOn }}
+    ${{ if ne(parameters.DependsOn, '') }}:
+      dependsOn: ${{ parameters.DependsOn }}
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true), ne(${{ parameters.Matrix }}, '{}'))
     strategy:
@@ -54,19 +58,23 @@ jobs:
         ServiceDirectory: '*'
       ${{ else }}:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      # Non-validation jobs use the normal checkout. Singleton validation creates and cleans its
+      # own detached sparse worktree inside Invoke-SparseCheckoutValidation.ps1.
+      TestSourcesDirectory: $(Build.SourcesDirectory)
 
     templateContext:
       outputs:
-        - output: pipelineArtifact
-          targetPath: $(Build.ArtifactStagingDirectory)/test.binlog
-          artifactName: binlog_$(Agent.JobName)
-          condition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
-          sbomEnabled: false
-        - output: pipelineArtifact
-          targetPath: $(Build.SourcesDirectory)/artifacts
-          artifactName: artifacts_$(Agent.JobName)
-          condition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
-          sbomEnabled: false
+        - ${{ if eq(parameters.EnableTestCheckoutNarrowing, false) }}:
+          - output: pipelineArtifact
+            targetPath: $(Build.ArtifactStagingDirectory)/test.binlog
+            artifactName: binlog_$(Agent.JobName)
+            condition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
+            sbomEnabled: false
+          - output: pipelineArtifact
+            targetPath: $(TestSourcesDirectory)/artifacts
+            artifactName: artifacts_$(Agent.JobName)
+            condition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
+            sbomEnabled: false
         # See eng/pipelines/templates/steps/upload-dumps.yml for corresponding file copy step
         - output: pipelineArtifact
           targetPath: '$(Build.ArtifactStagingDirectory)/dumps.zip'
@@ -79,11 +87,82 @@ jobs:
           artifactName: "LLM Artifacts - $(System.JobName) - $(System.JobAttempt)"
           condition: eq(variables['uploadLlmArtifacts'], 'true')
           sbomEnabled: false
+        - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+          - output: pipelineArtifact
+            targetPath: '$(Build.ArtifactStagingDirectory)/sparse-checkout'
+            artifactName: sparse_checkout_$(Agent.JobName)_$(System.JobAttempt)
+            condition: always()
+            sbomEnabled: false
 
     steps:
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        # Keep one complete, shallow orchestration checkout. The test itself runs only from the
+        # detached sparse worktree reused across clean singleton artifact cases.
+        - checkout: self
+          fetchDepth: 1
+          fetchTags: false
+
       - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
-      
-      - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
+
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        - pwsh: |
+            $directory = '$(Build.ArtifactStagingDirectory)/sparse-checkout'
+            New-Item -ItemType Directory -Path $directory -Force | Out-Null
+            [ordered]@{
+              schemaVersion = 1
+              sourceCommit = '$(Build.SourceVersion)'
+              projectNames = '$(ProjectNames)'
+              matrix = '$(Agent.JobName)'
+              host = '${{ parameters.OSName }}'
+              targetFramework = '$(TestTargetFramework)'
+              buildConfiguration = '$(BuildConfiguration)'
+            } | ConvertTo-Json -Depth 10 |
+              Set-Content -LiteralPath "$directory/job.json" -Encoding utf8
+          displayName: Initialize sparse-checkout evidence
+
+        - task: DownloadPipelineArtifact@2
+          displayName: Download MSBuild test checkout graph
+          inputs:
+            artifact: TestCheckoutGraph
+            path: $(Agent.TempDirectory)/SparseValidationInputs/Graph
+
+        # Keep the original, unbatched PackageInfo files outside the disposable worktree. Matrix
+        # scheduling may combine names, but every validation case receives exactly one file.
+        - task: DownloadPipelineArtifact@2
+          displayName: Download singleton PackageInfo inputs
+          inputs:
+            artifact: TestPackagesArtifact
+            path: $(Agent.TempDirectory)/SparseValidationInputs/PackageInfo
+
+        - pwsh: |
+            $directory = '$(Agent.TempDirectory)/SparseValidationInputs/Graph'
+            $graphs = @(Get-ChildItem -LiteralPath $directory -Filter checkout-graph.json `
+              -File -Recurse -ErrorAction Stop)
+            if ($graphs.Count -ne 1) {
+              throw "Expected exactly one checkout-graph.json in '$directory', found $($graphs.Count)."
+            }
+
+            & '$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/New-PipelineValidationInputs.ps1' `
+              -RepoRoot '$(Build.SourcesDirectory)' `
+              -InputRoot '$(Agent.TempDirectory)/SparseValidationInputs' `
+              -PackageInfoDirectory '$(Agent.TempDirectory)/SparseValidationInputs/PackageInfo' `
+              -CheckoutGraphPath $graphs[0].FullName `
+              -ArtifactNames '$(ProjectNames)' `
+              -SourceCommit '$(Build.SourceVersion)' `
+              -TargetHost '${{ parameters.OSName }}' `
+              -MatrixName '$(Agent.JobName)' `
+              -TargetFramework '$(TestTargetFramework)' `
+              -BuildConfiguration '$(BuildConfiguration)' `
+              -AdditionalTestArguments $env:CASE_ADDITIONAL_TEST_ARGUMENTS `
+              -AdditionalTestFilters $env:CASE_ADDITIONAL_TEST_FILTERS `
+              -CollectCoverage $env:CASE_COLLECT_COVERAGE
+          displayName: Expand matrix batch into singleton validation cases
+          env:
+            CASE_ADDITIONAL_TEST_ARGUMENTS: $(AdditionalTestArguments)
+            CASE_ADDITIONAL_TEST_FILTERS: $(AdditionalTestFilters)
+            CASE_COLLECT_COVERAGE: $(CollectCoverage)
+
+      - ${{ if and(eq(parameters.EnableTestCheckoutNarrowing, false), not(contains(variables['Build.DefinitionName'], '-pr - '))) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
             # we only need to checkout all sdk directories for All PR builds OR the
@@ -104,21 +183,22 @@ jobs:
           inputs:
             artifact: DependencyTestProjectReferences
             patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
-            path: $(Build.SourcesDirectory)
-      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+            path: $(TestSourcesDirectory)
+      - ${{ if and(eq(parameters.EnableTestCheckoutNarrowing, false), eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - task: DownloadPipelineArtifact@2
           inputs:
             artifact: TestPackagesArtifact
-            path: $(Build.SourcesDirectory)/PackageInfo
+            path: $(TestSourcesDirectory)/PackageInfo
 
-      - pwsh: |
-          $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
-        displayName: 'Language Specific Certificate Trust'
+      - ${{ if eq(parameters.EnableTestCheckoutNarrowing, false) }}:
+        - pwsh: |
+            & "$(TestSourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1"
+          displayName: 'Language Specific Certificate Trust'
 
-      - pwsh: |
-          Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
-          Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
-        displayName: 'Configure Kestrel Environment Variables'
+        - pwsh: |
+            Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(TestSourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
+            Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
+          displayName: 'Configure Kestrel Environment Variables'
 
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
@@ -133,60 +213,85 @@ jobs:
           NuGetCacheKey: Test
 
       # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
-      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+      - ${{ if and(eq(parameters.EnableTestCheckoutNarrowing, false), eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
-            PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            PackageInfo: '$(TestSourcesDirectory)/PackageInfo'
             Restore: true
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
-              &"$(Build.SourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
+              & "$(TestSourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
             }
           displayName: Install Azurite If Necessary
           condition: ne(variables['ProjectNames'], '')
 
-      # ProjectListOverrideFile is set by the customization within dependency.tests.yml
-      # OR it is set by the PR built to target a set of packages outside of a single target service directory.
-      # if it is unset, then we are in a traditional service directory build.
-      - pwsh: |
-          if ($env:PROJECTLISTOVERRIDEFILE) {
-            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)/sdk/**/coverage.cobertura.xml"
-          }
-          else
-          {
-            # we aren't running in net - pullrequest, so we need to ensure the value is set to empty string
-            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile]"
-            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)/sdk/$(ServiceDirectory)/**/coverage.cobertura.xml"
-          }
-        displayName: Set variable for the project list file and coverage directory
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        - pwsh: |
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.ArtifactStagingDirectory)/sparse-checkout/cases/**/coverage.cobertura.xml"
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFileFilter]+*"
+          displayName: Set singleton validation coverage paths
+      - ${{ else }}:
+        # ProjectListOverrideFile is set by dependency.tests.yml or by an auto-PR package batch.
+        - pwsh: |
+            if ($env:PROJECTLISTOVERRIDEFILE) {
+              Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(TestSourcesDirectory)/sdk/**/coverage.cobertura.xml"
+            }
+            else
+            {
+              Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile]"
+              Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(TestSourcesDirectory)/sdk/$(ServiceDirectory)/**/coverage.cobertura.xml"
+            }
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFileFilter]+$(TestSourcesDirectory)/sdk/$(ServiceDirectory)/**"
+          displayName: Set variable for the project list file and coverage directory
 
-      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
-        parameters:
-          LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
+      - ${{ if eq(parameters.EnableTestCheckoutNarrowing, false) }}:
+        - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+          parameters:
+            LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - pwsh: |
-          dotnet tool restore
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        - pwsh: |
+            # Bound one hung singleton while the containing hosted job retains its 360-minute budget.
+            & '$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/Invoke-SparseCheckoutValidation.ps1' `
+              -RepoRoot '$(Build.SourcesDirectory)' `
+              -InputRoot '$(Agent.TempDirectory)/SparseValidationInputs' `
+              -ResultsRoot '$(Build.ArtifactStagingDirectory)/sparse-checkout' `
+              -TargetHost '${{ parameters.OSName }}' `
+              -WorktreeRoot '$(Agent.TempDirectory)/sv-$(System.JobAttempt)' `
+              -NuGetPackages '$(NUGET_PACKAGES)' `
+              -CacheRoot '$(Agent.TempDirectory)/sparse-validation-cache' `
+              -FailureMode Continue `
+              -PreserveCurrentEnvironment `
+              -TestTimeoutInMinutes 60
+          displayName: "Validate singleton sparse closures ($(TestTargetFramework))"
+      - ${{ else }}:
+        - pwsh: |
+            dotnet tool restore
+          workingDirectory: $(TestSourcesDirectory)
 
-      - pwsh: >
-          ./eng/scripts/runwithdevopslogging.ps1
-          dotnet test eng/service.proj
-          --filter '"(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"'
-          --framework $(TestTargetFramework)
-          --logger '"trx;LogFileName=$(TestTargetFramework).trx"' --logger:'"console;verbosity=normal"'
-          --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=$(ServiceDirectory)
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
-          /p:RunApiCompat=false /p:InheritDocEnabled=false
-          /p:Configuration=$(BuildConfiguration)
-          /p:CollectCoverage=$(CollectCoverage)
-          /p:EnableSourceLink=false
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
-          /p:EnableOverrideExclusions=true
-          $(AdditionalTestArguments)
-          $(DiagnosticArguments)
-        displayName: "Build & Test ($(TestTargetFramework))"
+        - pwsh: >
+            ./eng/scripts/runwithdevopslogging.ps1
+            dotnet test eng/service.proj
+            --filter '"(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"'
+            --framework $(TestTargetFramework)
+            --logger '"trx;LogFileName=$(TestTargetFramework).trx"' --logger:'"console;verbosity=normal"'
+            --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=$(ServiceDirectory)
+            /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
+            /p:RunApiCompat=false /p:InheritDocEnabled=false
+            /p:Configuration=$(BuildConfiguration)
+            /p:CollectCoverage=$(CollectCoverage)
+            /p:EnableSourceLink=false
+            /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+            /p:EnableOverrideExclusions=true
+            $(AdditionalTestArguments)
+            $(DiagnosticArguments)
+          displayName: "Build & Test ($(TestTargetFramework))"
+          workingDirectory: $(TestSourcesDirectory)
+          env:
+            BUILD_SOURCESDIRECTORY: $(TestSourcesDirectory)
 
       - task: PublishTestResults@2
         condition: always()
@@ -196,10 +301,27 @@ jobs:
           testRunTitle: "${{ parameters.OSName }} $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+          ${{ if parameters.EnableTestCheckoutNarrowing }}:
+            searchFolder: $(Build.ArtifactStagingDirectory)/sparse-checkout
+          ${{ else }}:
+            searchFolder: $(TestSourcesDirectory)
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
+        parameters:
+          ${{ if parameters.EnableTestCheckoutNarrowing }}:
+            SearchDirectory: $(Build.ArtifactStagingDirectory)/sparse-checkout
+            CopyFiles: true
+          ${{ else }}:
+            SearchDirectory: $(TestSourcesDirectory)
       - template: /eng/common/pipelines/templates/steps/upload-llm-artifacts.yml
         parameters:
           TestResultsGlob: '$(TestTargetFramework)*.trx'
+          ${{ if parameters.EnableTestCheckoutNarrowing }}:
+            SearchFolder: $(Build.ArtifactStagingDirectory)/sparse-checkout
+            SourcesDirectory: $(Build.ArtifactStagingDirectory)/sparse-checkout
+            CopyFiles: true
+          ${{ else }}:
+            SearchFolder: $(TestSourcesDirectory)
+            SourcesDirectory: $(TestSourcesDirectory)
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
@@ -207,10 +329,27 @@ jobs:
           reports: $(CodeCoverageFilePattern)
           targetdir: $(Build.ArtifactStagingDirectory)/coverage
           reporttypes: Cobertura
-          filefilters: +$(Build.SourcesDirectory)/sdk/$(ServiceDirectory)/**
+          filefilters: $(CodeCoverageFileFilter)
           verbosity: Verbose
       - task: PublishCodeCoverageResults@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Publish Code Coverage Reports
         inputs:
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
+
+      - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+        - pwsh: |
+            $directory = '$(Build.ArtifactStagingDirectory)/sparse-checkout'
+            New-Item -ItemType Directory -Path $directory -Force | Out-Null
+            [ordered]@{
+              schemaVersion = 1
+              sourceCommit = '$(Build.SourceVersion)'
+              projectNames = '$(ProjectNames)'
+              matrix = '$(Agent.JobName)'
+              jobStatus = '$(Agent.JobStatus)'
+              singletonCases = @('$(ProjectNames)' -split ',').Count
+              completedAtUtc = [DateTime]::UtcNow.ToString('o')
+            } | ConvertTo-Json -Depth 10 |
+              Set-Content -LiteralPath "$directory/job-result.json" -Encoding utf8
+          displayName: Record sparse-checkout job result
+          condition: always()

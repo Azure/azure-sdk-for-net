@@ -21,9 +21,19 @@ parameters:
   - name: PublishArtifact
     type: boolean
     default: true
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
+  - name: UseRepositorySourceGraph
+    type: boolean
+    default: true
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=AZURESDK_USE_REPOSITORY_SOURCE_GRAPH;]${{ parameters.UseRepositorySourceGraph }}"
+    displayName: Select repository dependency authority
 
   # ForceDirect removes indirect packages before matrix generation, so avoid calculating them.
   - ${{ if eq(parameters.ForceDirect, true) }}:
@@ -31,11 +41,30 @@ steps:
         Write-Host "##vso[task.setvariable variable=AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION;]true"
       displayName: Skip dependent package calculation (direct packages only)
 
+  # Ask Language-Settings.ps1 to make its dependency graph reusable by sparse checkout.
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURESDK_BUILD_SPARSE_CHECKOUT_GRAPH;]true"
+      displayName: Enable reusable repository graph
+
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
       ServiceDirectory: ${{parameters.ServiceDirectory}}
       PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
       ExcludePaths: ${{ parameters.ExcludePaths }}
+
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        # This is a repository-wide validation campaign, not change-impact selection. Rebuild the
+        # test matrix from every shipping PackageInfo so CI runners cover every singleton artifact.
+        $directory = "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing"
+        Remove-Item -LiteralPath $directory -Recurse -Force -ErrorAction SilentlyContinue
+        & "$(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1" `
+          -OutDirectory $directory
+        if ($LASTEXITCODE -ne 0) {
+          throw "Repository-wide PackageInfo discovery failed with exit code $LASTEXITCODE."
+        }
+      displayName: Select all singleton test artifacts
 
   # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
   # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
@@ -45,6 +74,95 @@ steps:
       Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
         | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
     displayName: Copy ArtifactInfo from Publishing Directory
+
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        # Language-Settings.ps1 writes its reverse-dependency graph to this service.proj default.
+        # Reuse it when present; ForceDirect and empty-change passes intentionally do not create it.
+        $graphDirectory = "$(Build.SourcesDirectory)/artifacts/obj/RepositoryProjectGraph"
+        $graphPath = "$graphDirectory/repository-project-graph.reader.json"
+        $checkoutGraphDirectory = "$(Build.ArtifactStagingDirectory)/TestCheckoutGraph"
+        $checkoutGraphPath = "$checkoutGraphDirectory/checkout-graph.json"
+        New-Item -ItemType Directory -Path $checkoutGraphDirectory -Force | Out-Null
+
+        function New-SparseCheckoutProjection {
+          dotnet msbuild /nologo /nr:false /v:minimal `
+            /t:CreateSparseCheckoutGraph `
+            "$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj" `
+            /p:SparseCheckoutPackageInfoDirectory="$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            /p:SparseCheckoutRepoRoot="$(Build.SourcesDirectory)" `
+            /p:SparseCheckoutSourceGraphPath="$graphPath" `
+            /p:SparseCheckoutOutputPath="$checkoutGraphPath" `
+            /p:SparseCheckoutSourceCommit="$(Build.SourceVersion)"
+          if ($LASTEXITCODE -ne 0) {
+            throw "Sparse checkout projection failed with exit code $LASTEXITCODE."
+          }
+        }
+
+        function Add-UnownedTestProjectArtifacts {
+          & "$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/Add-UnownedTestProjects.ps1" `
+            -SourceGraphPath $graphPath `
+            -PackageInfoDirectories @( `
+              "$(Build.ArtifactStagingDirectory)/PackageInfo", `
+              "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing") `
+            -CoverageOutputPath "$checkoutGraphDirectory/test-project-coverage.json" `
+            -RepoRoot "$(Build.SourcesDirectory)" `
+            -DefaultMatrixConfigPath "$(Build.SourcesDirectory)/eng/pipelines/templates/stages/platform-matrix.json" `
+            -GeneratedMatrixDirectory "$(Build.SourcesDirectory)/artifacts/obj/RepositoryProjectGraph/SparseCheckoutValidationMatrices"
+        }
+
+        try {
+          $reusedGraph = $false
+          if (Test-Path -LiteralPath $graphPath) {
+            try {
+              # Projection validates commit provenance, Debug input coverage, NuGet
+              # completeness, and schema policy before accepting the reusable artifact.
+              Add-UnownedTestProjectArtifacts
+              New-SparseCheckoutProjection
+              $reusedGraph = $true
+              Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=reused'
+            }
+            catch {
+              Write-Warning "The canonical repository graph cannot be reused: $_"
+              Remove-Item -LiteralPath $checkoutGraphPath -Force -ErrorAction SilentlyContinue
+            }
+          }
+
+          if (-not $reusedGraph) {
+            # ForceDirect and other passes without dependency analysis still construct one graph.
+            dotnet msbuild /m /nr:false /nologo /tl:off `
+              /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
+              /p:RepositoryProjectGraphReaderPath="$graphPath" `
+              /p:SkipServiceProjectImports=true `
+              /p:IncludeRepositoryProjectGraphInputCheckoutRoots=true `
+              /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false `
+              /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false
+            if ($LASTEXITCODE -ne 0) {
+              throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
+            }
+
+            Add-UnownedTestProjectArtifacts
+            New-SparseCheckoutProjection
+            Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=generated'
+          }
+          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=available'
+        }
+        catch {
+          $reason = $_.Exception.Message -replace "`r?`n", ' '
+          Write-Host "##vso[task.logissue type=error]Sparse checkout graph is required for fail-closed PR validation: $reason"
+          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=failed'
+          throw
+        }
+
+        Copy-Item ./eng/scripts/Resolve-SparseCheckoutPaths.ps1 `
+          "$checkoutGraphDirectory/Resolve-SparseCheckoutPaths.ps1"
+      displayName: Build ProjectGraph test checkout graph
+
+    - ${{ if eq(parameters.PublishArtifact, true) }}:
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          ArtifactName: TestCheckoutGraph
+          ArtifactPath: $(Build.ArtifactStagingDirectory)/TestCheckoutGraph
 
   - ${{ if eq(parameters.PublishArtifact, true) }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
@@ -121,10 +239,11 @@ steps:
           eng/scripts/Apply-WeightedBatching.ps1 `
             -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
             -WeightsFile $weightsFile `
-            -Target 240
+            -Target 240 `
+            -PreserveCIMatrixConfigs
 
-          # PackageInfo entries now represent weighted buckets. Slower macOS runs one
-          # bucket per job, while Linux and Windows amortize setup over three buckets.
+          # PackageInfo entries now represent matrix-compatible weighted buckets. Test jobs expand
+          # each bucket back into clean singleton closures; grouping controls only runner scheduling.
           Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobLinux]3"
           Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobWindows]3"
           Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobMac]1"

@@ -767,7 +767,13 @@ function GenerateMatrixForConfig {
         [Parameter(Mandatory = $false)][array] $Replace,
         [Parameter(Mandatory = $false)][Array] $NonSparseParameters = @()
     )
-    $matrixFile = Join-Path $PSScriptRoot ".." ".." ".." ".." $ConfigPath
+    # Generated validation matrices can be on a different Windows drive from the repository.
+    # Keep rooted paths intact; committed matrix paths continue to resolve from the repo root.
+    $matrixFile = if ([System.IO.Path]::IsPathRooted($ConfigPath)) {
+        $ConfigPath
+    } else {
+        Join-Path $PSScriptRoot ".." ".." ".." ".." $ConfigPath
+    }
 
     $resolvedMatrixFile = Resolve-Path $matrixFile
 
