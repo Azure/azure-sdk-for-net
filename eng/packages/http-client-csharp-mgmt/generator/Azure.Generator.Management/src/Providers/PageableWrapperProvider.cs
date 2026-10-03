@@ -7,6 +7,8 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -85,10 +87,10 @@ namespace Azure.Generator.Management.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            return [BuildAsPagesMethod()];
+            return _isAsync ? [BuildAsPagesMethod(), BuildAsPagesMethod(true)] : [BuildAsPagesMethod()];
         }
 
-        private MethodProvider BuildAsPagesMethod()
+        private MethodProvider BuildAsPagesMethod(bool isIterator = false)
         {
             // Create the return type based on async flag
             var pageUType = new CSharpType(typeof(Page<>), _uType);
@@ -109,26 +111,41 @@ namespace Azure.Generator.Management.Providers
 
             // Create the method signature with appropriate modifiers
             var modifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Override;
-            if (_isAsync)
+            if (isIterator)
             {
-                modifiers |= MethodSignatureModifiers.Async;
+                modifiers = MethodSignatureModifiers.Private | MethodSignatureModifiers.Async;
             }
 
+            var cancellationTokenParam = new ParameterProvider(
+                "cancellationToken",
+                $"The cancellation token to use.",
+                typeof(CancellationToken),
+                attributes: [new AttributeStatement(typeof(EnumeratorCancellationAttribute))]);
             var sourceTypeName = _isAsync ? _asyncPageableT.Name : _pageableT.Name;
             var signature = new MethodSignature(
-                Name: "AsPages",
+                Name: isIterator ? "AsPagesAsync" : "AsPages",
                 Description: $"Converts the pages from {sourceTypeName} to {pageUType.Name}.",
                 Modifiers: modifiers,
                 ReturnType: returnType,
                 ReturnDescription: $"An enumerable of pages containing converted items of type {_uType.Name}.",
-                Parameters: new[] { continuationTokenParam, pageSizeHintParam });
+                Parameters: isIterator
+                    ? [continuationTokenParam, pageSizeHintParam, cancellationTokenParam]
+                    : [continuationTokenParam, pageSizeHintParam]);
+
+            if (_isAsync && !isIterator)
+            {
+                return new MethodProvider(signature,
+                    Return(This.Invoke("AsPagesAsync", [continuationTokenParam, pageSizeHintParam, Default])), this);
+            }
 
             // Build the method body using foreach and yield return pattern
             var pageType = new CSharpType(typeof(Page<>), _tType);
             var asPagesInvocation = _sourceField.Invoke("AsPages", [continuationTokenParam, pageSizeHintParam]);
             var pages = _isAsync
                 // we can't write ConfigureAwait for a non-async invoke, this is a workaround
-                ? asPagesInvocation.Invoke(nameof(TaskAsyncEnumerableExtensions.ConfigureAwait), [False], null, false, false, extensionType: typeof(TaskAsyncEnumerableExtensions))
+                ? asPagesInvocation
+                    .Invoke(nameof(TaskAsyncEnumerableExtensions.WithCancellation), [cancellationTokenParam], null, false, false, extensionType: typeof(TaskAsyncEnumerableExtensions))
+                    .Invoke(nameof(TaskAsyncEnumerableExtensions.ConfigureAwait), [False], null, false, false)
                 : asPagesInvocation;
             var foreachStatement = new ForEachStatement(
                 pageType,
