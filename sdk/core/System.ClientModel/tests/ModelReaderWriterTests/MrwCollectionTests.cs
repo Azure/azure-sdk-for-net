@@ -25,6 +25,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
         protected virtual bool IsRoundTripOrderDeterministic => true;
 
+        protected virtual IJsonModel<TElement>? Proxy => null;
+
         protected override string GetJsonFolderName()
         {
             var className = GetType().Name;
@@ -53,6 +55,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             }
 
             var options = new ModelReaderWriterOptions(format);
+            if (Proxy is not null)
+            {
+                options.AddProxy(Proxy);
+            }
 
             Assert.AreEqual(typeof(TCollection), Instance!.GetType());
 

@@ -338,7 +338,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.arr"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.arr"u8))
+                { }
             });
         }
 
@@ -947,7 +948,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.arr"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.arr"u8))
+                { }
             });
         }
 
@@ -957,7 +959,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"obj\":{\"a\":1}}"u8.ToArray());
             Assert.Throws<InvalidOperationException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.obj"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.obj"u8))
+                { }
             });
         }
 
@@ -967,7 +970,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"x\":42}"u8.ToArray());
             Assert.Throws<InvalidOperationException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.x"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.x"u8))
+                { }
             });
         }
 
@@ -977,7 +981,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"x\":null}"u8.ToArray());
             Assert.Throws<InvalidOperationException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.x"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.x"u8))
+                { }
             });
         }
 
@@ -987,7 +992,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"x\":1}"u8.ToArray());
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.nonexistent"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.nonexistent"u8))
+                { }
             });
         }
 
@@ -998,7 +1004,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Remove("$"u8);
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$"u8))
+                { }
             });
         }
 
@@ -1009,7 +1016,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             jp.Remove("$.arr"u8);
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$.arr"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$.arr"u8))
+                { }
             });
         }
 
@@ -1019,7 +1027,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("{\"a\":1}"u8.ToArray());
             Assert.Throws<InvalidOperationException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$"u8))
+                { }
             });
         }
 
@@ -1029,7 +1038,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new("42"u8.ToArray());
             Assert.Throws<InvalidOperationException>(() =>
             {
-                foreach (var _ in jp.EnumerateArray("$"u8)) { }
+                foreach (var _ in jp.EnumerateArray("$"u8))
+                { }
             });
         }
 
