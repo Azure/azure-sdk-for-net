@@ -79,7 +79,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguages"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(IEnumerable<string> targetLanguages, IEnumerable<string> content, Guid clientTraceId = default, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
@@ -90,7 +90,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="options">The client translation options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<TranslatedTextItem>>> TranslateAsync(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
         {
@@ -158,7 +158,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguages"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(IEnumerable<string> targetLanguages, IEnumerable<string> content, Guid clientTraceId = default, string sourceLanguage = null, TextType? textType = null, string category = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, bool? includeAlignment = null, bool? includeSentenceLength = null, string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = null, CancellationToken cancellationToken = default)
         {
@@ -169,7 +169,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="options">The client translation options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"><paramref name="options"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<TranslatedTextItem>> Translate(TextTranslationTranslateOptions options, CancellationToken cancellationToken = default)
         {
@@ -180,7 +180,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<TransliteratedText>>> TransliterateAsync(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
         {
@@ -191,7 +191,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="options">The configuration options for the transliterate call. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<TransliteratedText>> Transliterate(TextTranslationTransliterateOptions options, CancellationToken cancellationToken = default)
         {
@@ -211,7 +211,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(IEnumerable<string> content, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
@@ -231,7 +231,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<BreakSentenceItem>>> FindSentenceBoundariesAsync(string text, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
@@ -251,7 +251,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(IEnumerable<string> content, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
@@ -271,7 +271,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<BreakSentenceItem>> FindSentenceBoundaries(string text, Guid clientTraceId = default, string language = null, string script = null, CancellationToken cancellationToken = default)
         {
@@ -291,7 +291,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="words"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, IEnumerable<string> words, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -311,7 +311,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="word"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string @from, string to, string word, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -331,7 +331,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="words"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, IEnumerable<string> words, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -351,7 +351,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="word"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<DictionaryLookupItem>> LookupDictionaryEntries(string @from, string to, string word, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -371,7 +371,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, IEnumerable<InputTextWithTranslation> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -391,7 +391,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<IReadOnlyList<DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string @from, string to, InputTextWithTranslation content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -411,7 +411,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, IEnumerable<InputTextWithTranslation> content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
@@ -431,7 +431,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="clientTraceId"> A client-generated GUID to uniquely identify the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="from"/>, <paramref name="to"/> or <paramref name="content"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
+        [Obsolete("This method is obsolete and will be removed in a future release.", error: true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyList<DictionaryExampleItem>> LookupDictionaryExamples(string @from, string to, InputTextWithTranslation content, Guid clientTraceId = default, CancellationToken cancellationToken = default)
         {
