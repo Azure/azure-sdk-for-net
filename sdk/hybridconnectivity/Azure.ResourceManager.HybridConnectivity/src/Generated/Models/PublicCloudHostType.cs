@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         private readonly string _value;
         /// <summary> AWS state. </summary>
         private const string AwsValue = "AWS";
+        /// <summary> GCP state. </summary>
+        private const string GcpValue = "GCP";
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudHostType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> AWS state. </summary>
         public static PublicCloudHostType Aws { get; } = new PublicCloudHostType(AwsValue);
+
+        /// <summary> GCP state. </summary>
+        public static PublicCloudHostType Gcp { get; } = new PublicCloudHostType(GcpValue);
 
         /// <summary> Determines if two <see cref="PublicCloudHostType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
