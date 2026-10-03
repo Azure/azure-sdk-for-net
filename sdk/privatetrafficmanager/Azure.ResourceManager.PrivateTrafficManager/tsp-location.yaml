@@ -1,0 +1,6 @@
+directory: specification/privatetrafficmanager/resource-manager/Microsoft.Network/PrivateTrafficManager
+commit: 7bfd5c2abf4c7c9b9ed3698bfae75a7e3cefb024
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
