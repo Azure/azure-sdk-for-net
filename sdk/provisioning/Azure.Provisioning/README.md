@@ -140,6 +140,14 @@ ProvisioningParameter parameter = new(nameof(parameter), typeof(object));
 BicepDictionary<string> dynamicTags = parameter;
 ```
 
+#### Free-form JSON and Bicep values
+
+Properties typed as `BicepValue<BinaryData>` accept free-form JSON or an
+explicitly tagged raw Bicep expression. See
+[BinaryData provisioning values](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/provisioning/Azure.Provisioning/docs/BinaryDataValues.md)
+for supported media types, executable examples, validation behavior, and
+security guidance.
+
 #### Working with Azure Resources
 
 **`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualNetwork`, `WebSite`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
@@ -476,4 +484,3 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-
