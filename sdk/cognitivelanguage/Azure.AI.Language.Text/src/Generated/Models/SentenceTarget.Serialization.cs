@@ -192,7 +192,7 @@ namespace Azure.AI.Language.Text
                 offset,
                 length,
                 text,
-                relations,
+                relations ?? new ChangeTrackingList<TargetRelation>(),
                 additionalBinaryDataProperties);
         }
     }
