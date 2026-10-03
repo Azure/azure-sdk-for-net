@@ -194,10 +194,40 @@ function Invoke-TestResultsQueries {
       }
     }
     catch {
+      $errorDetails = [System.Collections.Generic.List[string]]@($_.Exception.Message)
+      $response = $_.Exception.Response
+      if ($response) {
+        $errorDetails.Add("HTTP status: $([int]$response.StatusCode) $($response.ReasonPhrase)")
+
+        foreach ($headerName in @("X-TFS-Session", "X-VSS-E2EID", "ActivityId")) {
+          if ($response.Headers.Contains($headerName)) {
+            $headerValue = ($response.Headers.GetValues($headerName) -join ",")
+            $errorDetails.Add("${headerName}: $headerValue")
+          }
+        }
+
+        $responseBody = $_.ErrorDetails.Message
+        if ([string]::IsNullOrWhiteSpace($responseBody) -and $response.Content) {
+          try {
+            $responseBody = $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+          }
+          catch {
+            $errorDetails.Add("Response body could not be read: $($_.Exception.Message)")
+          }
+        }
+        if (-not [string]::IsNullOrWhiteSpace($responseBody)) {
+          $responseBody = $responseBody -replace "\s+", " "
+          if ($responseBody.Length -gt 2000) {
+            $responseBody = $responseBody.Substring(0, 2000) + "..."
+          }
+          $errorDetails.Add("Response body: $responseBody")
+        }
+      }
+
       [PSCustomObject]@{
         Batch = $query.Batch
         Rows  = @()
-        Error = $_.Exception.Message
+        Error = $errorDetails -join "; "
       }
     }
   } -ThrottleLimit $ThrottleLimit)

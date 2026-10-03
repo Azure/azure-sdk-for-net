@@ -95,8 +95,7 @@ steps:
         $directPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $false }).Count
         $indirectPackageCount = @($packageInfos | Where-Object { $_.IncludedForValidation -eq $true }).Count
         if ($directPackageCount -le 1 -and $indirectPackageCount -le 1) {
-          Write-Host "Runtime-weighted batching is unnecessary for $directPackageCount direct and $indirectPackageCount indirect package(s). Using count-based batching."
-          return
+          Write-Host "Runtime-weighted batching is unnecessary for $directPackageCount direct and $indirectPackageCount indirect package(s), but this diagnostic run will query Analytics."
         }
 
         try {
@@ -111,6 +110,24 @@ steps:
           Remove-Item $weightsFile -Force -ErrorAction SilentlyContinue
         }
       displayName: Query test assembly runtimes for balanced batching
+      condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
+      env:
+        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+    - pwsh: |
+        $connection = Invoke-RestMethod `
+          -Uri "$(System.CollectionUri)_apis/connectionData?connectOptions=1&lastChangeId=-1&lastChangeId64=-1&api-version=7.1-preview.1" `
+          -Headers @{ Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN" }
+
+        $identity = $connection.authenticatedUser
+        Write-Host "System.AccessToken identity: $($identity.providerDisplayName)"
+        Write-Host "Identity ID: $($identity.id)"
+        Write-Host "Subject descriptor: $($identity.subjectDescriptor)"
+        Write-Host "Project: $(System.TeamProject) ($(System.TeamProjectId))"
+        Write-Host "Pipeline: $(Build.DefinitionName) ($(System.DefinitionId))"
+        Write-Host "##vso[task.logissue type=error]Intentionally failing after logging the System.AccessToken identity."
+        exit 1
+      displayName: Identify System.AccessToken caller and fail
       condition: and(succeededOrFailed(), eq(variables['Build.Reason'], 'PullRequest'))
       env:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
