@@ -4,13 +4,18 @@
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Utilities;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 
 namespace Azure.Generator.Management
@@ -54,25 +59,269 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
         private readonly HashSet<string> _collectionResultNames = new(StringComparer.Ordinal);
+        private readonly Dictionary<(ClientProvider Client, InputOperation Operation, bool HasItemType, bool IsAsync), string> _regularCollectionResultNames = new();
+        private readonly Dictionary<TypeProvider, string> _regularCollectionResultProviderNames = new();
+        private HashSet<string>? _customReferencedCollectionResults;
+        private readonly Dictionary<string, HashSet<(string Namespace, string? OriginalName)>> _preservedCollectionResultNames = new(StringComparer.Ordinal);
+        private HashSet<(string Namespace, string Name)>? _originalCollectionResultNames;
 
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
 
         // Keep collection-result names compact, adding a numeric suffix only when two methods
         // would otherwise produce the same helper type name.
-        internal string GetUniqueCollectionResultName(string baseName)
+        internal string GetUniqueCollectionResultName(string baseName) =>
+            AllocateCollectionResultName(baseName, null, null, "CollectionResultOfT");
+
+        internal string GetArrayCollectionResultName(string baseName, string @namespace) =>
+            AllocateCollectionResultName(baseName, @namespace, candidate => $"{candidate}CollectionResultOfT", "CollectionResultOfT");
+
+        private string AllocateCollectionResultName(string baseName, string? @namespace, Func<string, string>? originalName, string suffix)
         {
-            if (_collectionResultNames.Add(baseName))
+            ReservePreservedCollectionResultNames();
+            var candidate = baseName;
+            var number = 0;
+            while (_collectionResultNames.Contains(candidate) || !CanClaimPreservedName($"{candidate}{suffix}", @namespace, originalName?.Invoke(candidate)))
             {
-                return baseName;
+                candidate = $"{baseName}{number++}";
             }
 
-            var suffix = 0;
-            while (!_collectionResultNames.Add($"{baseName}{suffix}"))
+            _collectionResultNames.Add(candidate);
+            return candidate;
+        }
+
+        private bool CanClaimPreservedName(string name, string? @namespace, string? originalName)
+        {
+            if (!_preservedCollectionResultNames.TryGetValue(name, out var owners))
             {
-                suffix++;
+                return true;
             }
 
-            return $"{baseName}{suffix}";
+            foreach (var owner in owners)
+            {
+                if (@namespace != owner.Namespace || originalName is null)
+                {
+                    return false;
+                }
+
+                if (owner.OriginalName is not null)
+                {
+                    if (owner.OriginalName != originalName &&
+                        (owner.OriginalName != name || OriginalCollectionResultNames.Contains((owner.Namespace, owner.OriginalName))))
+                    {
+                        // A mapping of an upstream operation name belongs only to that operation.
+                        // A mapping of a previously emitted compact identity belongs to the helper
+                        // whose next allocation reproduces that identity.
+                        return false;
+                    }
+                }
+                else if (name != originalName && OriginalCollectionResultNames.Contains((owner.Namespace, name)))
+                {
+                    // An operation-based identity belongs to that operation, not to another helper
+                    // whose compact item-based name happens to match it.
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private HashSet<(string Namespace, string Name)> OriginalCollectionResultNames
+        {
+            get
+            {
+                if (_originalCollectionResultNames is not null)
+                {
+                    return _originalCollectionResultNames;
+                }
+
+                _originalCollectionResultNames = new();
+                var clients = new Queue<InputClient>(ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients);
+                var visited = new HashSet<InputClient>();
+                while (clients.TryDequeue(out var inputClient))
+                {
+                    if (!visited.Add(inputClient))
+                    {
+                        continue;
+                    }
+                    foreach (var child in inputClient.Children)
+                    {
+                        clients.Enqueue(child);
+                    }
+                    var client = ManagementClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+                    if (client is null)
+                    {
+                        continue;
+                    }
+                    foreach (var method in inputClient.Methods.Where(method => method is InputPagingServiceMethod or InputLongRunningPagingServiceMethod))
+                    {
+                        foreach (var operationName in new[] { method.Operation.Name, method.Operation.OriginalName }.OfType<string>())
+                        {
+                            var prefix = $"{client.Name}{operationName.ToIdentifierName()}";
+                            foreach (var suffix in new[] { "CollectionResult", "CollectionResultOfT", "AsyncCollectionResult", "AsyncCollectionResultOfT" })
+                            {
+                                _originalCollectionResultNames.Add((client.Type.Namespace, $"{prefix}{suffix}"));
+                            }
+                        }
+                    }
+                }
+                return _originalCollectionResultNames;
+            }
+        }
+
+        internal string GetRegularCollectionResultName(ClientProvider client, InputOperation operation, CSharpType? itemType, bool isAsync, string originalName, string? customizedName = null)
+        {
+            var key = (client, operation, itemType is not null, isAsync);
+            if (!_regularCollectionResultNames.TryGetValue(key, out var name))
+            {
+                // Item names avoid repeating long REST client and operation names. A helper may be rebuilt
+                // for different back-compat providers, so reserve a name once per operation and result shape.
+                var suffix = $"CollectionResult{(itemType is null ? "" : "OfT")}";
+                if (customizedName is not null)
+                {
+                    name = customizedName;
+                    var preservedSuffix = name.EndsWith("CollectionResultOfT", StringComparison.Ordinal) ? "CollectionResultOfT" : "CollectionResult";
+                    if (name.EndsWith(preservedSuffix, StringComparison.Ordinal))
+                    {
+                        _collectionResultNames.Add(name[..^preservedSuffix.Length]);
+                    }
+                }
+                else
+                {
+                    var baseName = $"{itemType?.Name ?? nameof(BinaryData)}{(isAsync ? "Async" : "")}";
+                    name = $"{AllocateCollectionResultName(baseName, client.Type.Namespace, _ => originalName, suffix)}{suffix}";
+                }
+                _regularCollectionResultNames.Add(key, name);
+            }
+
+            return name;
+        }
+
+        internal bool IsCollectionResultReferencedByCustomization(TypeProvider helper)
+        {
+            // Existing hand-written code may construct a generated helper without declaring a partial
+            // customization. Keep those identities too, rather than breaking package customizations.
+            ReservePreservedCollectionResultNames();
+            return _customReferencedCollectionResults!.Contains(helper.Name);
+        }
+
+        private void ReservePreservedCollectionResultNames()
+        {
+            if (_customReferencedCollectionResults is not null)
+            {
+                return;
+            }
+
+            _customReferencedCollectionResults = new HashSet<string>(StringComparer.Ordinal);
+            var customization = ManagementClientGenerator.Instance.SourceInputModel.Customization;
+            if (customization is null)
+            {
+                return;
+            }
+
+            // Reserve the whole customization inventory before either regular or array helpers allocate
+            // a compact name. Otherwise an earlier operation can claim a later preserved identity and
+            // even bind that operation's partial customization when its provider is renamed.
+            foreach (var tree in customization.SyntaxTrees)
+            {
+                var model = customization.GetSemanticModel(tree);
+                foreach (var node in tree.GetRoot().DescendantNodes())
+                {
+                    if (node is TypeDeclarationSyntax declaration && model.GetDeclaredSymbol(declaration) is INamedTypeSymbol type)
+                    {
+                        var originalName = type.GetAttributes()
+                            .FirstOrDefault(attribute => attribute.AttributeClass?.Name == "CodeGenTypeAttribute")?
+                            .ConstructorArguments.FirstOrDefault().Value as string;
+                        var @namespace = type.ContainingNamespace.ToDisplayString();
+                        ReserveCollectionResultName(type.Name, @namespace, originalName);
+                        if (originalName is not null)
+                        {
+                            // Update(name: ...) resolves this lookup key as well as the declared alias.
+                            ReserveCollectionResultName(originalName, @namespace, originalName);
+                        }
+                    }
+                    else if (node is IdentifierNameSyntax identifier && IsCollectionResultName(identifier.Identifier.ValueText))
+                    {
+                        var referencedType = model.GetSymbolInfo(identifier).Symbol as INamedTypeSymbol;
+                        var qualifiedNamespace = identifier.Parent is QualifiedNameSyntax qualified && qualified.Right == identifier
+                            ? model.GetSymbolInfo(qualified.Left).Symbol as INamespaceSymbol : null;
+                        var container = identifier.Ancestors().OfType<TypeDeclarationSyntax>().FirstOrDefault();
+                        var @namespace = referencedType is { TypeKind: not TypeKind.Error } ? referencedType.ContainingNamespace.ToDisplayString()
+                            : qualifiedNamespace is not null ? qualifiedNamespace.ToDisplayString()
+                            : container is not null && model.GetDeclaredSymbol(container) is INamedTypeSymbol containingType
+                                ? containingType.ContainingNamespace.ToDisplayString() : "";
+                        if (ReserveCollectionResultName(identifier.Identifier.ValueText, @namespace, null))
+                        {
+                            _customReferencedCollectionResults.Add(identifier.Identifier.ValueText);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static bool IsCollectionResultName(string name) =>
+            name.EndsWith("CollectionResultOfT", StringComparison.Ordinal) || name.EndsWith("CollectionResult", StringComparison.Ordinal);
+
+        private bool ReserveCollectionResultName(string name, string @namespace, string? originalName)
+        {
+            if (!IsCollectionResultName(name))
+            {
+                return false;
+            }
+
+            if (!_preservedCollectionResultNames.TryGetValue(name, out var owners))
+            {
+                owners = new();
+                _preservedCollectionResultNames.Add(name, owners);
+            }
+            owners.Add((@namespace, originalName));
+            return true;
+        }
+
+        internal void RegisterRegularCollectionResultName(TypeProvider helper, string name)
+        {
+            _regularCollectionResultProviderNames.Add(helper, name);
+            ApplyRegularCollectionResultName(helper);
+        }
+
+        internal void ApplyRegularCollectionResultName(TypeProvider helper)
+        {
+            if (_regularCollectionResultProviderNames.TryGetValue(helper, out var name))
+            {
+                // Upstream visitors reset collection-result providers. Restore the allocated identity
+                // before the management visitors and reference analysis consume the rebuilt provider.
+                var oldName = helper.Name;
+                helper.Update(name: name);
+                var resolvedName = helper.Name;
+                helper.Update(relativeFilePath: Path.Combine("src", "Generated", "CollectionResults", $"{resolvedName}.cs"));
+                if (oldName != resolvedName)
+                {
+                    foreach (var method in helper.Methods)
+                    {
+                        RenameHelperInDocs(method.XmlDocs.Summary, oldName, resolvedName);
+                        RenameHelperInDocs(method.XmlDocs.Returns, oldName, resolvedName);
+                    }
+                }
+            }
+        }
+
+        private static void RenameHelperInDocs(XmlDocStatement? docs, string oldName, string name)
+        {
+            if (docs is null)
+            {
+                return;
+            }
+
+            foreach (var line in docs.Lines)
+            {
+                var arguments = line.GetArguments();
+                for (var i = 0; i < arguments.Length; i++)
+                {
+                    if (arguments[i] is string text)
+                    {
+                        arguments[i] = text.Replace(oldName, name, StringComparison.Ordinal);
+                    }
+                }
+            }
         }
 
         internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
