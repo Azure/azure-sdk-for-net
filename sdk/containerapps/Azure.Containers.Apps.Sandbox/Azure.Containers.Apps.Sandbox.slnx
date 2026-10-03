@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../../core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj" />
+  <Project Path="src/Azure.Containers.Apps.Sandbox.csproj" />
+  <Project Path="tests/Azure.Containers.Apps.Sandbox.Tests.csproj" />
+</Solution>

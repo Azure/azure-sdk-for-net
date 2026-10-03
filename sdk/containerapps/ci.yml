@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/containerapps/ci.yml
+    - sdk/containerapps/test-resources.json
+    - sdk/containerapps/Azure.Containers.Apps.Sandbox
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: client
+    ServiceDirectory: containerapps
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Containers.Apps.Sandbox
+      safeName: AzureContainersAppsSandbox
