@@ -36,14 +36,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="vendor"> The vendor of Commvault Storage. </param>
         /// <param name="class"> The class of Commvault Storage. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="complianceLockStatus"> The compliance lock status of the storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultStorageProperties(AzureLocation location, CommvaultStorageType storageType, CommvaultVendor vendor, CommvaultStorageClassType @class, ResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultStorageProperties(AzureLocation location, CommvaultStorageType storageType, CommvaultVendor vendor, CommvaultStorageClassType @class, ResourceProvisioningState? provisioningState, ComplianceLockStatus? complianceLockStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             StorageType = storageType;
             Vendor = vendor;
             Class = @class;
             ProvisioningState = provisioningState;
+            ComplianceLockStatus = complianceLockStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -61,5 +63,8 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Provisioning state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The compliance lock status of the storage. </summary>
+        public ComplianceLockStatus? ComplianceLockStatus { get; }
     }
 }

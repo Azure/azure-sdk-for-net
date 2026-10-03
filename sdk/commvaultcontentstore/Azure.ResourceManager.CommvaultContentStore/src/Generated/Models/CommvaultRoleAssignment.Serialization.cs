@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     /// <summary> A role assignment mapping a Commvault role to one or more Entra entities (users or groups). </summary>
     public partial class CommvaultRoleAssignment : IJsonModel<CommvaultRoleAssignment>
     {
+        /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/> for deserialization. </summary>
+        internal CommvaultRoleAssignment()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CommvaultRoleAssignment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -74,21 +79,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 throw new FormatException($"The model {nameof(CommvaultRoleAssignment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RoleName))
+            writer.WritePropertyName("roleName"u8);
+            writer.WriteStringValue(RoleName.ToString());
+            writer.WritePropertyName("entities"u8);
+            writer.WriteStartArray();
+            foreach (CommvaultEntityInfo item in Entities)
             {
-                writer.WritePropertyName("roleName"u8);
-                writer.WriteStringValue(RoleName.Value.ToString());
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsCollectionDefined(Entities))
-            {
-                writer.WritePropertyName("entities"u8);
-                writer.WriteStartArray();
-                foreach (CommvaultEntityInfo item in Entities)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -131,26 +130,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            CommvaultRoleName? roleName = default;
+            CommvaultRoleName roleName = default;
             IList<CommvaultEntityInfo> entities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("roleName"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     roleName = new CommvaultRoleName(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("entities"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<CommvaultEntityInfo> array = new List<CommvaultEntityInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -164,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultRoleAssignment(roleName, entities ?? new ChangeTrackingList<CommvaultEntityInfo>(), additionalBinaryDataProperties);
+            return new CommvaultRoleAssignment(roleName, entities, additionalBinaryDataProperties);
         }
     }
 }

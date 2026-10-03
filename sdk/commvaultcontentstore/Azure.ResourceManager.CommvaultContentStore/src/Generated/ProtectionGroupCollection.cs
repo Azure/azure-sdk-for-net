@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         {
             TryGetApiVersion(ProtectionGroupResource.ResourceType, out string protectionGroupApiVersion);
             _protectionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CommvaultContentStore", ProtectionGroupResource.ResourceType.Namespace, Diagnostics);
-            _protectionGroupsRestClient = new ProtectionGroups(_protectionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectionGroupApiVersion ?? "2026-07-03-preview");
+            _protectionGroupsRestClient = new ProtectionGroups(_protectionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, protectionGroupApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-03-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
