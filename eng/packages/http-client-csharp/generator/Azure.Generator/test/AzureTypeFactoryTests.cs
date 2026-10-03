@@ -362,6 +362,8 @@ namespace Azure.Generator.Tests
 
         [TestCase(typeof(ETag), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
         [TestCase(typeof(ETag), true, ExpectedResult = "writer.WriteValue(value.Value.ToString());\n")]
+        [TestCase(typeof(ResourceIdentifier), false, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
+        [TestCase(typeof(ResourceIdentifier), true, ExpectedResult = "writer.WriteValue(value.ToString());\n")]
         public string ValidateXmlSerializationStatement(Type type, bool isNullable)
         {
             CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
@@ -377,6 +379,8 @@ namespace Azure.Generator.Tests
 
         [TestCase(typeof(ETag), false, ExpectedResult = "new global::Azure.ETag(element.Value)")]
         [TestCase(typeof(ETag), true, ExpectedResult = "new global::Azure.ETag(element.Value)")]
+        [TestCase(typeof(ResourceIdentifier), false, ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.Value)")]
+        [TestCase(typeof(ResourceIdentifier), true, ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.Value)")]
         public string ValidateXmlDeserializationExpression(Type type, bool isNullable)
         {
             CSharpType valueType = new CSharpType(type).WithNullable(isNullable);
