@@ -24,23 +24,21 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="description"> Description of target. </param>
         /// <param name="displayName"> Display name of target. </param>
         /// <param name="contextId"> ArmId of Context. </param>
-        /// <param name="targetSpecification"> target spec. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="hierarchyLevel"> Hierarchy Level. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="displayName"/>, <paramref name="contextId"/>, <paramref name="targetSpecification"/>, <paramref name="capabilities"/> or <paramref name="hierarchyLevel"/> is null. </exception>
-        public EdgeTargetProperties(string description, string displayName, ResourceIdentifier contextId, IDictionary<string, BinaryData> targetSpecification, IEnumerable<string> capabilities, string hierarchyLevel)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="displayName"/>, <paramref name="contextId"/>, <paramref name="capabilities"/> or <paramref name="hierarchyLevel"/> is null. </exception>
+        public EdgeTargetProperties(string description, string displayName, ResourceIdentifier contextId, IEnumerable<string> capabilities, string hierarchyLevel)
         {
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(contextId, nameof(contextId));
-            Argument.AssertNotNull(targetSpecification, nameof(targetSpecification));
             Argument.AssertNotNull(capabilities, nameof(capabilities));
             Argument.AssertNotNull(hierarchyLevel, nameof(hierarchyLevel));
 
             Description = description;
             DisplayName = displayName;
             ContextId = contextId;
-            TargetSpecification = targetSpecification;
+            TargetSpecification = new ChangeTrackingDictionary<string, BinaryData>();
             Capabilities = capabilities.ToList();
             HierarchyLevel = hierarchyLevel;
         }

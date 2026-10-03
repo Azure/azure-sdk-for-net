@@ -37,6 +37,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         private const string ExternalValidationFailedValue = "ExternalValidationFailed";
         /// <summary> Solution Instance is staging the images. </summary>
         private const string StagingValue = "Staging";
+        /// <summary> State is not applicable. </summary>
+        private const string NotApplicableValue = "NotApplicable";
 
         /// <summary> Initializes a new instance of <see cref="SolutionInstanceState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Solution Instance is staging the images. </summary>
         public static SolutionInstanceState Staging { get; } = new SolutionInstanceState(StagingValue);
+
+        /// <summary> State is not applicable. </summary>
+        public static SolutionInstanceState NotApplicable { get; } = new SolutionInstanceState(NotApplicableValue);
 
         /// <summary> Determines if two <see cref="SolutionInstanceState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

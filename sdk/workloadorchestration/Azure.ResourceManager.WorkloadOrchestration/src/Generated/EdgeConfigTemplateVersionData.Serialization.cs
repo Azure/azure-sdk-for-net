@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EdgeConfigTemplateVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="edgeConfigTemplateVersionData"> The <see cref="EdgeConfigTemplateVersionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EdgeConfigTemplateVersionData edgeConfigTemplateVersionData)
+        {
+            if (edgeConfigTemplateVersionData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(edgeConfigTemplateVersionData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeConfigTemplateVersionData"/> from. </param>
         internal static EdgeConfigTemplateVersionData FromResponse(Response response)
         {

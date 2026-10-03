@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         private Diagnostics _diagnosticsRestClient;
         private ClientDiagnostics _contextsClientDiagnostics;
         private Contexts _contextsRestClient;
+        private ClientDiagnostics _solutionDeploymentsClientDiagnostics;
+        private SolutionDeployments _solutionDeploymentsRestClient;
 
         /// <summary> Initializes a new instance of MockableWorkloadOrchestrationSubscriptionResource for mocking. </summary>
         protected MockableWorkloadOrchestrationSubscriptionResource()
@@ -46,27 +48,31 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
 
         private ClientDiagnostics SchemasClientDiagnostics => _schemasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schemas SchemasRestClient => _schemasRestClient ??= new Schemas(SchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private Schemas SchemasRestClient => _schemasRestClient ??= new Schemas(SchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics TargetsClientDiagnostics => _targetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Targets TargetsRestClient => _targetsRestClient ??= new Targets(TargetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private Targets TargetsRestClient => _targetsRestClient ??= new Targets(TargetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics SolutionTemplatesClientDiagnostics => _solutionTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTemplates SolutionTemplatesRestClient => _solutionTemplatesRestClient ??= new SolutionTemplates(SolutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private SolutionTemplates SolutionTemplatesRestClient => _solutionTemplatesRestClient ??= new SolutionTemplates(SolutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics ConfigTemplatesClientDiagnostics => _configTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigTemplates ConfigTemplatesRestClient => _configTemplatesRestClient ??= new ConfigTemplates(ConfigTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private ConfigTemplates ConfigTemplatesRestClient => _configTemplatesRestClient ??= new ConfigTemplates(ConfigTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics DiagnosticsClientDiagnostics => _diagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Diagnostics DiagnosticsRestClient => _diagnosticsRestClient ??= new Diagnostics(DiagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private Diagnostics DiagnosticsRestClient => _diagnosticsRestClient ??= new Diagnostics(DiagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics ContextsClientDiagnostics => _contextsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Contexts ContextsRestClient => _contextsRestClient ??= new Contexts(ContextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
+        private Contexts ContextsRestClient => _contextsRestClient ??= new Contexts(ContextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+
+        private ClientDiagnostics SolutionDeploymentsClientDiagnostics => _solutionDeploymentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SolutionDeployments SolutionDeploymentsRestClient => _solutionDeploymentsRestClient ??= new SolutionDeployments(SolutionDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// List by subscription
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +115,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +143,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,7 +199,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +227,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +255,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,7 +283,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +311,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +339,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +367,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +395,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,6 +408,62 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetBySubscriptionCollectionResultOfT(ContextsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetEdgeContexts"), data => new EdgeContextResource(Client, data));
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/solutionDeployments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionDeployments_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SolutionDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SolutionDeploymentResource> GetSolutionDeploymentsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentsGetBySubscriptionAsyncCollectionResultOfT(SolutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments"), data => new SolutionDeploymentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List by subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Edge/solutionDeployments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SolutionDeployments_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SolutionDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SolutionDeploymentResource> GetSolutionDeployments(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SolutionDeploymentData, SolutionDeploymentResource>(new SolutionDeploymentsGetBySubscriptionCollectionResultOfT(SolutionDeploymentsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableWorkloadOrchestrationSubscriptionResource.GetSolutionDeployments"), data => new SolutionDeploymentResource(Client, data));
         }
     }
 }

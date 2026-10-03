@@ -14,7 +14,7 @@ using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
-    /// <summary> The type used for update operations of the Diagnostic. </summary>
+    /// <summary> The updatable properties of the Diagnostic. </summary>
     public partial class EdgeDiagnosticPatch : IJsonModel<EdgeDiagnosticPatch>
     {
         /// <param name="data"> The data to parse. </param>
