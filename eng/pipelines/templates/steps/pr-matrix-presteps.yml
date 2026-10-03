@@ -21,6 +21,9 @@ parameters:
   - name: PublishArtifact
     type: boolean
     default: true
+  - name: EnableTestCheckoutNarrowing
+    type: boolean
+    default: false
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
@@ -30,6 +33,12 @@ steps:
     - pwsh: |
         Write-Host "##vso[task.setvariable variable=AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION;]true"
       displayName: Skip dependent package calculation (direct packages only)
+
+  # Ask Language-Settings.ps1 to make its dependency graph reusable by sparse checkout.
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURESDK_BUILD_SPARSE_CHECKOUT_GRAPH;]true"
+      displayName: Enable reusable repository graph
 
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
@@ -45,6 +54,33 @@ steps:
       Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
         | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo/$($_.Name)" -Force
     displayName: Copy ArtifactInfo from Publishing Directory
+
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        $checkoutGraphDirectory = "$(Build.ArtifactStagingDirectory)/TestCheckoutGraph"
+        $result = & "$(Build.SourcesDirectory)/eng/scripts/Prepare-TestCheckoutGraph.ps1" `
+          -RepoRoot "$(Build.SourcesDirectory)" `
+          -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+          -OutputDirectory $checkoutGraphDirectory `
+          -SourceCommit "$(Build.SourceVersion)"
+
+        if ($result.ReuseFailureReason) {
+          Write-Warning "The canonical repository graph could not be reused: $($result.ReuseFailureReason)"
+        }
+        if ($result.RepositoryGraphResult) {
+          Write-Host "REPOSITORY_PROJECT_GRAPH_RESULT=$($result.RepositoryGraphResult)"
+        }
+        if ($result.FailureReason) {
+          Write-Host "##vso[task.logissue type=warning]Sparse checkout graph is unavailable: $($result.FailureReason) Tests will use a full checkout."
+        }
+        Write-Host "SPARSE_CHECKOUT_GRAPH_RESULT=$($result.CheckoutGraphResult)"
+      displayName: Build ProjectGraph test checkout graph
+
+    - ${{ if eq(parameters.PublishArtifact, true) }}:
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          ArtifactName: TestCheckoutGraph
+          ArtifactPath: $(Build.ArtifactStagingDirectory)/TestCheckoutGraph
 
   - ${{ if eq(parameters.PublishArtifact, true) }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
