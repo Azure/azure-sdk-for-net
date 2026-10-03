@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan.Value.ToString());
             }
+            if (Optional.IsDefined(ProtectionLevel))
+            {
+                writer.WritePropertyName("protectionLevel"u8);
+                writer.WriteStringValue(ProtectionLevel.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(LastPlanModifiedDate))
             {
                 writer.WritePropertyName("lastPlanModifiedDate"u8);
@@ -183,6 +188,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             OperationalInsightsTableRestoredLogs restoredLogs = default;
             OperationalInsightsTableResultStatistics resultStatistics = default;
             OperationalInsightsTablePlan? plan = default;
+            TableProtectionLevelEnum? protectionLevel = default;
             string lastPlanModifiedDate = default;
             OperationalInsightsSchema schema = default;
             OperationalInsightsTableProvisioningState? provisioningState = default;
@@ -254,6 +260,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     plan = new OperationalInsightsTablePlan(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("protectionLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectionLevel = new TableProtectionLevelEnum(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("lastPlanModifiedDate"u8))
                 {
                     lastPlanModifiedDate = prop.Value.GetString();
@@ -308,6 +323,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 restoredLogs,
                 resultStatistics,
                 plan,
+                protectionLevel,
                 lastPlanModifiedDate,
                 schema,
                 provisioningState,

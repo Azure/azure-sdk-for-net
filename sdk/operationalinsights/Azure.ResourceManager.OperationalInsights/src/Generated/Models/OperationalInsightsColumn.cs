@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="name"> Column name. </param>
         /// <param name="columnType"> Column data type. </param>
         /// <param name="dataTypeHint"> Column data type logical hint. </param>
-        /// <param name="displayName"> Column display name. </param>
+        /// <param name="displayName"> Column display name. Can be set at creation time; after creation, updates must either match column name or set to null/empty. If not provided, defaults to column name. </param>
         /// <param name="description"> Column description. </param>
         /// <param name="isDefaultDisplay"> Is displayed by default. </param>
         /// <param name="isHidden"> Is column hidden. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         [WirePath("dataTypeHint")]
         public OperationalInsightsColumnDataTypeHint? DataTypeHint { get; set; }
 
-        /// <summary> Column display name. </summary>
+        /// <summary> Column display name. Can be set at creation time; after creation, updates must either match column name or set to null/empty. If not provided, defaults to column name. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
 
