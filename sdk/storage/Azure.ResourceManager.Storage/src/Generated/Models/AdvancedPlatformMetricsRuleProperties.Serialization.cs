@@ -91,6 +91,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
+            if (Optional.IsCollectionDefined(MetricsToEmit))
+            {
+                writer.WritePropertyName("metricsToEmit"u8);
+                writer.WriteStartArray();
+                foreach (MetricsEmitted item in MetricsToEmit)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(MetricsEmitted))
             {
                 writer.WritePropertyName("metricsEmitted"u8);
@@ -148,6 +158,7 @@ namespace Azure.ResourceManager.Storage.Models
             AdvancedPlatformMetricsRuleType? ruleType = default;
             bool isEnabled = default;
             DateTimeOffset? lastModifiedOn = default;
+            IList<MetricsEmitted> metricsToEmit = default;
             IReadOnlyList<MetricsEmitted> metricsEmitted = default;
             AdvancedPlatformMetricsRuleConfig ruleConfig = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,6 +185,20 @@ namespace Azure.ResourceManager.Storage.Models
                         continue;
                     }
                     lastModifiedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("metricsToEmit"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MetricsEmitted> array = new List<MetricsEmitted>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new MetricsEmitted(item.GetString()));
+                    }
+                    metricsToEmit = array;
                     continue;
                 }
                 if (prop.NameEquals("metricsEmitted"u8))
@@ -204,6 +229,7 @@ namespace Azure.ResourceManager.Storage.Models
                 ruleType,
                 isEnabled,
                 lastModifiedOn,
+                metricsToEmit ?? new ChangeTrackingList<MetricsEmitted>(),
                 metricsEmitted ?? new ChangeTrackingList<MetricsEmitted>(),
                 ruleConfig,
                 additionalBinaryDataProperties);

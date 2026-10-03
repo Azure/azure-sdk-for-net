@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
             Subscriptions = new ChangeTrackingList<SubResource>();
             NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
+            ServiceTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NspAccessRuleProperties"/>. </summary>
@@ -33,14 +34,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
+        /// <param name="serviceTags"> Service Tags for inbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IList<string> serviceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
             Subscriptions = subscriptions;
             NetworkSecurityPerimeters = networkSecurityPerimeters;
             FullyQualifiedDomainNames = fullyQualifiedDomainNames;
+            ServiceTags = serviceTags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,5 +66,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> FQDN for outbound rules. </summary>
         [WirePath("fullyQualifiedDomainNames")]
         public IReadOnlyList<string> FullyQualifiedDomainNames { get; }
+
+        /// <summary> Service Tags for inbound rules. </summary>
+        [WirePath("serviceTags")]
+        public IList<string> ServiceTags { get; }
     }
 }
