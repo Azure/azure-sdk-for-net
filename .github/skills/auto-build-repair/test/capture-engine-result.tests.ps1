@@ -41,6 +41,7 @@ $failed = @'
 }
 '@
 $npmErrors = "[npm-tsp-client] npm error code E403`n[npm-tsp-client] npm error 403 Forbidden`n"
+$upgradeWarning = 'A new version of azsdk is available. Run azsdk upgrade to update.'
 
 function Test-Capture(
     [string]$name,
@@ -94,6 +95,10 @@ function Test-Capture(
 try {
     Test-Capture 'success-stdout' $success 'warning' -expectedExit 0 -expectedResult $success | Out-Null
     Test-Capture 'failed-stderr-after-npm' '' "$npmErrors$failed" -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stderr-trailing-log' '' "$failed`n$upgradeWarning" -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stderr-prefix-and-suffix' '' "$npmErrors$failed`n$upgradeWarning" -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stderr-trailing-json-log' '' "$failed`n{`"message`":`"$upgradeWarning`"}" -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stderr-trailing-warning-crlf' '' "$failed`r`n$upgradeWarning`r`n" -engineExit 7 -expectedExit 7 -expectedResult $failed | Out-Null
     Test-Capture 'failed-stdout' $failed $npmErrors -engineExit 1 -expectedResult $failed | Out-Null
     Test-Capture 'failure-exit-seven' '' $failed -engineExit 7 -expectedExit 7 -expectedResult $failed | Out-Null
     Test-Capture 'whitespace' " `r`n$success`r`n " '' -expectedExit 0 -expectedResult $success | Out-Null
@@ -147,7 +152,10 @@ try {
         @{ name = 'two-stderr-responses'; stdout = ''; stderr = "$failed`n$failed"; engineExit = '1' },
         @{ name = 'both-stream-responses'; stdout = $success; stderr = $failed },
         @{ name = 'trailing-log'; stdout = "$success`ntrailing"; stderr = '' },
-        @{ name = 'stderr-trailing-log'; stdout = ''; stderr = "$failed`ntrailing"; engineExit = '1' },
+        @{ name = 'failed-stdout-trailing-log'; stdout = "$failed`n$upgradeWarning"; stderr = ''; engineExit = '1' },
+        @{ name = 'stderr-trailing-second-response'; stdout = ''; stderr = "$failed`n$upgradeWarning`n$failed"; engineExit = '1' },
+        @{ name = 'stderr-trailing-malformed-response'; stdout = ''; stderr = "$failed`n$upgradeWarning`n{`"success`":false,}"; engineExit = '1' },
+        @{ name = 'stderr-trailing-unterminated-response'; stdout = ''; stderr = "$failed`n$upgradeWarning`n{`"success`":false"; engineExit = '1' },
         @{ name = 'stdout-log-prefix'; stdout = "diagnostic`n$success"; stderr = '' },
         @{ name = 'stderr-response-and-stdout-log'; stdout = 'diagnostic'; stderr = $failed; engineExit = '1' },
         @{ name = 'success-on-stderr'; stdout = ''; stderr = $success },
@@ -179,7 +187,7 @@ try {
         Test-Capture @case | Out-Null
     }
 
-    $failedDirectory = Join-Path $tmp 'failed-stderr-after-npm'
+    $failedDirectory = Join-Path $tmp 'stderr-prefix-and-suffix'
     $reportPath = Join-Path $tmp 'report.md'
     & pwsh -NoProfile -File $EmitterPath -ResultsDir $failedDirectory `
         -EngineErrorsFile (Join-Path $failedDirectory 'engine-errors.txt') `
@@ -189,6 +197,7 @@ try {
     $report = Get-Content -Raw $reportPath
     Assert ($report -match 'PatchesFailed' -and $report -match 'npm error E403') 'report retains the actual engine failure and regeneration error'
     Assert ($report -match '2 of 3') 'report shows the actual 2 of 3 attempts'
+    Assert ($report.Contains($upgradeWarning)) 'report preserves trailing upgrade diagnostics'
     Assert ($report -notmatch 'MalformedEngineResult|Unknown of 3') 'report no longer misclassifies failed stderr JSON'
     Assert ($report -match '"status":"failed"' -and $report -match 'changes are not eligible for publication') `
         'captured failed response remains ineligible for publication'

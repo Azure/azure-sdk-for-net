@@ -5,7 +5,8 @@
 
 .DESCRIPTION
   Reads the raw engine-stdout.txt, engine-stderr.txt, and engine-exit-code.txt from
-  one invocation. Failed azsdk responses can be written to stderr after diagnostics.
+  one invocation. Failed azsdk responses can be written to stderr between diagnostics,
+  including upgrade notifications emitted after the command response.
   Preserves both streams, writes the original response to result.json only when
   unambiguous and consistent with the process outcome, and returns the engine exit code.
 #>
@@ -88,10 +89,11 @@ try {
         throw "Expected one final engine response; found $($responses.Count)."
     }
     $response = $responses[0]
-    if (-not [string]::IsNullOrWhiteSpace($response.Suffix) -or
-        ($response.Stream -eq 'stdout' -and -not [string]::IsNullOrWhiteSpace($response.Prefix)) -or
+    if (($response.Stream -eq 'stdout' -and
+            (-not [string]::IsNullOrWhiteSpace($response.Prefix) -or
+             -not [string]::IsNullOrWhiteSpace($response.Suffix))) -or
         ($response.Stream -eq 'stderr' -and -not [string]::IsNullOrWhiteSpace($stdout))) {
-        throw 'The engine response is not the single terminal response on its output stream.'
+        throw 'The engine response is not isolated on its expected output stream.'
     }
     $root = $response.Root
     $success = [System.Text.Json.JsonElement]::new()
