@@ -1,17 +1,16 @@
 # Release History
 
-## 4.9.0-beta.4 (Unreleased)
+## 4.9.0-beta.4 (2026-09-30)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added External Key Manager (EKM) proxy private endpoint support to `KeyVaultEkmClient`, including `CreateEkmPrivateEndpoint`, `GetEkmPrivateEndpoint`, `GetEkmPrivateEndpoints`, `DeleteEkmPrivateEndpoint`, and `GetEkmPrivateEndpointOperationStatus` operations.
+- Added `KeyVaultEkmConnectivityMode` to `KeyVaultEkmConnection` to route an EKM connection through an EKM proxy private endpoint.
 
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
 - Improved authentication challenge resource validation.
 
 ### Other Changes
+- The default service version is now `2026-07-01-preview`.
 
 ## 4.9.0-beta.3 (2026-09-27)
 
