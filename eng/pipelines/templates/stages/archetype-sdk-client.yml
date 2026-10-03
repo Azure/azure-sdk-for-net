@@ -94,6 +94,7 @@ extends:
             parameters:
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              ExcludePaths: ${{ parameters.ExcludePaths }}
               Artifacts: ${{ parameters.Artifacts }}
               ${{ if eq(parameters.ServiceDirectory, 'template') }}:
                 TestPipeline: true
