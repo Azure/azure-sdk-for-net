@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.Compute.Models
         private const string EncryptedWithPmkValue = "EncryptedWithPmk";
         private const string EncryptedWithCmkValue = "EncryptedWithCmk";
         private const string NonPersistedTPMValue = "NonPersistedTPM";
+        /// <summary> Confidential VM Encryption Type which should be used for encrypting the data disks with customer managed keys. This Encryption type should only be used for data disks, and should not be used for OS disk encryption. When this encryption type is used for data disk encryption.Subscriptions need to be enrolled for Confidential VM with data encryption through following AFEC - Microsoft.Compute/ConfidentialVMDataDiskEncryptionPreview. </summary>
+        private const string DataDiskEncryptedWithCmkValue = "DataDiskEncryptedWithCmk";
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialVmEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -41,6 +43,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Gets the NonPersistedTPM. </summary>
         public static ConfidentialVmEncryptionType NonPersistedTPM { get; } = new ConfidentialVmEncryptionType(NonPersistedTPMValue);
+
+        /// <summary> Confidential VM Encryption Type which should be used for encrypting the data disks with customer managed keys. This Encryption type should only be used for data disks, and should not be used for OS disk encryption. When this encryption type is used for data disk encryption.Subscriptions need to be enrolled for Confidential VM with data encryption through following AFEC - Microsoft.Compute/ConfidentialVMDataDiskEncryptionPreview. </summary>
+        public static ConfidentialVmEncryptionType DataDiskEncryptedWithCmk { get; } = new ConfidentialVmEncryptionType(DataDiskEncryptedWithCmkValue);
 
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.18.0 (Unreleased)
 
 ### Features Added
 

@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string galleryName, string galleryImageName, string galleryImageVersionName, bool? bypassSoftDelete, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -150,6 +150,10 @@ namespace Azure.ResourceManager.Compute
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (bypassSoftDelete != null)
+            {
+                uri.AppendQuery("bypassSoftDelete", TypeFormatters.ConvertToString(bypassSoftDelete), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

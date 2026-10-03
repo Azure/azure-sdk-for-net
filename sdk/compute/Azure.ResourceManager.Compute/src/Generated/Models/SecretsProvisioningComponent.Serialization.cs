@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
-    public partial class SoftDeletePolicy : IJsonModel<SoftDeletePolicy>
+    /// <summary> Describes a component involved in secrets provisioning. </summary>
+    public partial class SecretsProvisioningComponent : IJsonModel<SecretsProvisioningComponent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SoftDeletePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SecretsProvisioningComponent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SoftDeletePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsProvisioningComponent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSoftDeletePolicy(document.RootElement, options);
+                        return DeserializeSecretsProvisioningComponent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftDeletePolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretsProvisioningComponent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SoftDeletePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsProvisioningComponent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SoftDeletePolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretsProvisioningComponent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SoftDeletePolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecretsProvisioningComponent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SoftDeletePolicy IPersistableModel<SoftDeletePolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SecretsProvisioningComponent IPersistableModel<SecretsProvisioningComponent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SoftDeletePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecretsProvisioningComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SoftDeletePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecretsProvisioningComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SoftDeletePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsProvisioningComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftDeletePolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretsProvisioningComponent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsSoftDeleteEnabled))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("isSoftDeleteEnabled"u8);
-                writer.WriteBooleanValue(IsSoftDeleteEnabled.Value);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(RetentionPeriodInDays))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("retentionPeriodInDays"u8);
-                writer.WriteNumberValue(RetentionPeriodInDays.Value);
-            }
-            if (Optional.IsDefined(GracePeriodInDays))
-            {
-                writer.WritePropertyName("gracePeriodInDays"u8);
-                writer.WriteNumberValue(GracePeriodInDays.Value);
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,60 +103,46 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SoftDeletePolicy IJsonModel<SoftDeletePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SecretsProvisioningComponent IJsonModel<SecretsProvisioningComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SoftDeletePolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SecretsProvisioningComponent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SoftDeletePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretsProvisioningComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftDeletePolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretsProvisioningComponent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSoftDeletePolicy(document.RootElement, options);
+            return DeserializeSecretsProvisioningComponent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SoftDeletePolicy DeserializeSoftDeletePolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecretsProvisioningComponent DeserializeSecretsProvisioningComponent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isSoftDeleteEnabled = default;
-            int? retentionPeriodInDays = default;
-            int? gracePeriodInDays = default;
+            SecretsProvisioningComponentName? name = default;
+            string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("isSoftDeleteEnabled"u8))
+                if (prop.NameEquals("name"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSoftDeleteEnabled = prop.Value.GetBoolean();
+                    name = new SecretsProvisioningComponentName(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("retentionPeriodInDays"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retentionPeriodInDays = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("gracePeriodInDays"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gracePeriodInDays = prop.Value.GetInt32();
+                    version = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SoftDeletePolicy(isSoftDeleteEnabled, retentionPeriodInDays, gracePeriodInDays, additionalBinaryDataProperties);
+            return new SecretsProvisioningComponent(name, version, additionalBinaryDataProperties);
         }
     }
 }

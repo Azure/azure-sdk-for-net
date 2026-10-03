@@ -5,22 +5,12 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
-    // Backward compatibility: the previously shipped patch model exposed the soft-delete restore flag as Restore.
-    // Keep the generated IsRestoreEnabled name for consistency and redirect the old name to it.
-    public partial class GalleryImageVersionPatch
+    public partial class GalleryImageVersionData
     {
-        /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
-        [Obsolete("Use IsRestoreEnabled instead.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? Restore
-        {
-            get => IsRestoreEnabled;
-            set => IsRestoreEnabled = value;
-        }
-
         /// <summary> The UEFI settings of a gallery image version. </summary>
         [Obsolete("Use SecurityProfile instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
