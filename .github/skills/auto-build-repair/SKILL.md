@@ -58,6 +58,17 @@ directory. Do not manufacture responses, diagnostics, or build evidence. If the
 process fails, retain its actual output/error for the failure report; do not
 substitute an earlier successful result.
 
+For CLI invocations, record stdout as `engine-stdout.txt`, stderr as
+`engine-stderr.txt`, and the process exit code as `engine-exit-code.txt`. Run
+[capture-engine-result.ps1](capture-engine-result.ps1) with `-ResultsDir` and
+`-MaxIterations` to capture the actual response. azsdk can write failed JSON to
+stderr after process diagnostics; redirecting stdout alone loses that response.
+The helper preserves both raw streams, consolidates `engine-errors.txt`, removes
+stale results, and rejects missing, malformed, ambiguous, or contradictory
+responses. Its exit code retains the engine failure; capture never authorizes
+publishing a failed repair. Do not merge diagnostics into JSON or manually
+reconstruct a response.
+
 ## Scope and stopping
 
 Only the selected package's custom code may be patched. Only the generator may
