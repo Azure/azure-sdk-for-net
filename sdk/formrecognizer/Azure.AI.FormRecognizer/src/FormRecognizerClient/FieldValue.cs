@@ -260,7 +260,7 @@ namespace Azure.AI.FormRecognizer.Models
             if (!_fieldValue.ValueNumber.HasValue)
             {
                 // Workaround for receipts that was never deleted and got shipped in 3.0.0 GA so we need to maintain
-                if (float.TryParse(_fieldValue.Text.TrimStart('$'), out float parsedFloat))
+                if (float.TryParse(_fieldValue.Text.TrimStart('$', '£'), out float parsedFloat))
                 {
                     return parsedFloat;
                 }
