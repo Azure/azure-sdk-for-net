@@ -21,9 +21,15 @@ parameters:
   - name: PublishArtifact
     type: boolean
     default: true
+  - name: CacheKey
+    type: string
+    default: ''
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+    parameters:
+      NuGetCacheKey: ${{ parameters.CacheKey }}
+      EnableNuGetCache: ${{ ne(parameters.CacheKey, '') }}
 
   # ForceDirect removes indirect packages before matrix generation, so avoid calculating them.
   - ${{ if eq(parameters.ForceDirect, true) }}:
