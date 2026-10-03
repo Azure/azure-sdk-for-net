@@ -1,5 +1,8 @@
 trigger: none
 
+pr:
+  autoCancel: false
+
 variables:
 - template: /eng/pipelines/templates/variables/image.yml
 
