@@ -20,6 +20,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public TypeAPolyDevice() : base("TypeA")
         {
 
+            Properties = new TypeAPolyDeviceProperties();
         }
 
         /// <summary> Initializes a new instance of <see cref="TypeAPolyDevice"/>. </summary>
