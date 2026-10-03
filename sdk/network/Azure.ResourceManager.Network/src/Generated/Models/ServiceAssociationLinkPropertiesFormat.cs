@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinkPropertiesFormat"/>. </summary>
-        internal ServiceAssociationLinkPropertiesFormat()
+        public ServiceAssociationLinkPropertiesFormat()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinkPropertiesFormat"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAssociationLinkPropertiesFormat(string linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<string> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAssociationLinkPropertiesFormat(ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkedResourceType = linkedResourceType;
             Link = link;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type of the linked resource. </summary>
         [WirePath("linkedResourceType")]
-        public string LinkedResourceType { get; }
+        public ResourceType? LinkedResourceType { get; set; }
 
         /// <summary> Link to the external resource. </summary>
         [WirePath("link")]
-        public ResourceIdentifier Link { get; }
+        public ResourceIdentifier Link { get; set; }
 
         /// <summary> The provisioning state of the service association link resource. </summary>
         [WirePath("provisioningState")]
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> If true, the resource can be deleted. </summary>
         [WirePath("allowDelete")]
-        public bool? AllowDelete { get; }
+        public bool? AllowDelete { get; set; }
 
         /// <summary> A list of locations. </summary>
         [WirePath("locations")]
-        public IList<string> Locations { get; } = new ChangeTrackingList<string>();
+        public IList<AzureLocation> Locations { get; } = new ChangeTrackingList<AzureLocation>();
     }
 }

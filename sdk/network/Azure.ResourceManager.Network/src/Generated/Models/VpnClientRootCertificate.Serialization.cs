@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             VpnClientRootCertificatePropertiesFormat properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -166,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 additionalBinaryDataProperties,
                 name,
-                @type,
+                resourceType,
                 properties,
                 eTag);
         }

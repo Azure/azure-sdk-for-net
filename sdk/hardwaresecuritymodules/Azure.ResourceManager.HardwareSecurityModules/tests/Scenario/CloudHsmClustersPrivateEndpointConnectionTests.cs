@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.PrivateLinkServiceConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.PrivateLinkServiceConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
             Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
             Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
 
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpoint);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.PrivateLinkServiceConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.PrivateLinkServiceConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
             Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
             Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
         }
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
 
             Assert.IsTrue(privateEndpointConnections.Count == 1);
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.PrivateLinkServiceConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.PrivateLinkServiceConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
             Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
             Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
         }

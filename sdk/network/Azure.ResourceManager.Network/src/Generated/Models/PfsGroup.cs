@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> PFS14. </summary>
         private const string Pfs14Value = "PFS14";
         /// <summary> PFSMM. </summary>
-        private const string PFSMMValue = "PFSMM";
+        private const string PfsValue = "PFSMM";
 
         /// <summary> Initializes a new instance of <see cref="PfsGroup"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
         public static PfsGroup Pfs14 { get; } = new PfsGroup(Pfs14Value);
 
         /// <summary> PFSMM. </summary>
-        public static PfsGroup PFSMM { get; } = new PfsGroup(PFSMMValue);
+        public static PfsGroup Pfs { get; } = new PfsGroup(PfsValue);
 
         /// <summary> Determines if two <see cref="PfsGroup"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Properties of the virtual network peering. </summary>
     internal partial class VirtualNetworkPeeringPropertiesFormat : IJsonModel<VirtualNetworkPeeringPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RemoteVirtualNetwork))
             {
                 writer.WritePropertyName("remoteVirtualNetwork"u8);
-                writer.WriteObjectValue(RemoteVirtualNetwork, options);
+                ((IJsonModel<WritableSubResource>)RemoteVirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(LocalAddressSpace))
             {
@@ -154,10 +155,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (Optional.IsDefined(PeerCompleteVnets))
+            if (Optional.IsDefined(AreCompleteVnetsPeered))
             {
                 writer.WritePropertyName("peerCompleteVnets"u8);
-                writer.WriteBooleanValue(PeerCompleteVnets.Value);
+                writer.WriteBooleanValue(AreCompleteVnetsPeered.Value);
             }
             if (Optional.IsDefined(EnableOnlyIPv6Peering))
             {
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? allowForwardedTraffic = default;
             bool? allowGatewayTransit = default;
             bool? useRemoteGateways = default;
-            NetworkSubResource remoteVirtualNetwork = default;
+            WritableSubResource remoteVirtualNetwork = default;
             VirtualNetworkAddressSpace localAddressSpace = default;
             VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default;
             VirtualNetworkAddressSpace remoteAddressSpace = default;
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             bool? doNotVerifyRemoteGateways = default;
             Guid? resourceGuid = default;
-            bool? peerCompleteVnets = default;
+            bool? areCompleteVnetsPeered = default;
             bool? enableOnlyIPv6Peering = default;
             IList<string> localSubnetNames = default;
             IList<string> remoteSubnetNames = default;
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    remoteVirtualNetwork = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
+                    remoteVirtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("localAddressSpace"u8))
@@ -409,7 +410,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    peerCompleteVnets = prop.Value.GetBoolean();
+                    areCompleteVnetsPeered = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableOnlyIPv6Peering"u8))
@@ -485,7 +486,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 doNotVerifyRemoteGateways,
                 resourceGuid,
-                peerCompleteVnets,
+                areCompleteVnetsPeered,
                 enableOnlyIPv6Peering,
                 localSubnetNames ?? new ChangeTrackingList<string>(),
                 remoteSubnetNames ?? new ChangeTrackingList<string>(),

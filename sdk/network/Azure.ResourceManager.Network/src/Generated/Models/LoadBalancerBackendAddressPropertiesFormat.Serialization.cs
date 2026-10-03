@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
-                writer.WriteStringValue(LoadBalancerFrontendIPConfiguration);
+                writer.WriteObjectValue(LoadBalancerFrontendIPConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
             {
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource subnet = default;
             string ipAddress = default;
             NetworkSubResource networkInterfaceIPConfiguration = default;
-            ResourceIdentifier loadBalancerFrontendIPConfiguration = default;
+            NetworkSubResource loadBalancerFrontendIPConfiguration = default;
             IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
             LoadBalancerBackendAddressAdminState? adminState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    loadBalancerFrontendIPConfiguration = new ResourceIdentifier(prop.Value.GetString());
+                    loadBalancerFrontendIPConfiguration = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("inboundNatRulesPortMapping"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of the virtual network gateway, if configured. </param>
-        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkGatewayPropertiesFormat properties, ExtendedLocation extendedLocation, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkGatewayPropertiesFormat properties, ExtendedLocation extendedLocation, ETag? eTag, ManagedServiceIdentity identity) : base(id, name, resourceType, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
@@ -232,6 +232,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
                 Properties.DisableIPSecReplayProtection = value;
+            }
+        }
+
+        /// <summary> The reference to the LocalNetworkGateway resource which represents local network site having default routes. Assign Null value in case of removing existing default site setting. </summary>
+        [WirePath("properties.gatewayDefaultSite")]
+        public WritableSubResource GatewayDefaultSite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayDefaultSite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayPropertiesFormat();
+                }
+                Properties.GatewayDefaultSite = value;
             }
         }
 
@@ -496,24 +514,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new VirtualNetworkGatewayPropertiesFormat();
                 }
                 Properties.AutoScaleBounds = value;
-            }
-        }
-
-        /// <summary> Resource ID. </summary>
-        [WirePath("properties.gatewayDefaultSite.id")]
-        public ResourceIdentifier GatewayDefaultSiteId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.GatewayDefaultSiteId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualNetworkGatewayPropertiesFormat();
-                }
-                Properties.GatewayDefaultSiteId = value;
             }
         }
     }

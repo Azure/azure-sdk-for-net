@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the express route connection. </param>
-        internal ExpressRouteConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ExpressRouteConnectionProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
+        internal ExpressRouteConnectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ExpressRouteConnectionProperties properties) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
         }
@@ -42,24 +42,6 @@ namespace Azure.ResourceManager.Network
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> The ExpressRoute circuit peering. </summary>
-        [WirePath("properties.expressRouteCircuitPeering")]
-        public ResourceIdentifier ExpressRouteCircuitPeering
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpressRouteCircuitPeering;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteConnectionProperties();
-                }
-                Properties.ExpressRouteCircuitPeering = value;
             }
         }
 
@@ -150,6 +132,24 @@ namespace Azure.ResourceManager.Network
                     Properties = new ExpressRouteConnectionProperties();
                 }
                 Properties.EnablePrivateLinkFastPath = value;
+            }
+        }
+
+        /// <summary> The ID of the ExpressRoute circuit peering. </summary>
+        [WirePath("properties.expressRouteCircuitPeering.id")]
+        public ResourceIdentifier ExpressRouteCircuitPeeringId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitPeeringId = value;
             }
         }
     }

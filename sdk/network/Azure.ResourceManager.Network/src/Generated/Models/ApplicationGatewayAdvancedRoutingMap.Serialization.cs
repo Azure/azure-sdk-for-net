@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(ResourceType.Value);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayAdvancedRoutingMapPropertiesFormat properties = default;
             string name = default;
             string eTag = default;
-            string @type = default;
+            ResourceType? resourceType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +179,7 @@ namespace Azure.ResourceManager.Network.Models
                 properties,
                 name,
                 eTag,
-                @type);
+                resourceType);
         }
     }
 }

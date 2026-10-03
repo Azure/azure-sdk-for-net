@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrivateEndpointVNetPolicies))
+            if (Optional.IsDefined(PrivateEndpointVnetPolicy))
             {
                 writer.WritePropertyName("privateEndpointVNetPolicies"u8);
-                writer.WriteStringValue(PrivateEndpointVNetPolicies.Value.ToString());
+                writer.WriteStringValue(PrivateEndpointVnetPolicy.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultPublicNatGateway))
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkEncryption encryption = default;
             IList<NetworkSubResource> ipAllocations = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
-            PrivateEndpointVnetPolicy? privateEndpointVNetPolicies = default;
+            PrivateEndpointVnetPolicy? privateEndpointVnetPolicy = default;
             NetworkSubResource defaultPublicNatGateway = default;
             VirtualNetworkAddressSpace summarizedGatewayPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    privateEndpointVNetPolicies = new PrivateEndpointVnetPolicy(prop.Value.GetString());
+                    privateEndpointVnetPolicy = new PrivateEndpointVnetPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("defaultPublicNatGateway"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network.Models
                 encryption,
                 ipAllocations ?? new ChangeTrackingList<NetworkSubResource>(),
                 flowLogs ?? new ChangeTrackingList<FlowLogData>(),
-                privateEndpointVNetPolicies,
+                privateEndpointVnetPolicy,
                 defaultPublicNatGateway,
                 summarizedGatewayPrefixes,
                 additionalBinaryDataProperties);
