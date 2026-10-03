@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
             (var vnetId, var subnetId) = await CreateVirtualNetworkAsync();
-            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+            var dnsResolverData = new DnsResolverData(
                 location: this.DefaultLocation,
                 virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
             _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();
 
-            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(
                 location: this.DefaultLocation,
                 subnet: new WritableSubResource { Id = new ResourceIdentifier(subnetId) });
 
