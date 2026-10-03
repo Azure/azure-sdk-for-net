@@ -240,7 +240,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="EndpointResource"/> objects. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
@@ -258,7 +258,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -278,7 +278,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="endpointName"> The name of the EndpointResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -316,7 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="SelfHelpResource"/> objects. </returns>
         public static SelfHelpResourceCollection GetSelfHelpResources(this ArmClient client, ResourceIdentifier scope)
@@ -334,7 +334,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -354,7 +354,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="selfHelpName"> The name of the SelfHelpResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -428,7 +428,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="HciVmInstanceResource"/> object. </returns>
         public static HciVmInstanceResource GetHciVmInstance(this ArmClient client, ResourceIdentifier scope)
@@ -482,7 +482,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Management/managementGroups/subscriptions". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="SubscriptionQuotaAllocationsListResource"/> objects. </returns>
         public static SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(this ArmClient client, ResourceIdentifier scope)
@@ -500,7 +500,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Management/managementGroups/subscriptions". </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
@@ -522,7 +522,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Management/managementGroups/subscriptions". </param>
         /// <param name="groupQuotaName"> The GroupQuota name. The name should be unique for the provided context tenantId/MgId. </param>
         /// <param name="resourceProviderName"> The resource provider name, such as - Microsoft.Compute. Currently only Microsoft.Compute resource provider supports this API. </param>
         /// <param name="location"> The name of the Azure region. </param>
@@ -688,7 +688,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="TargetResource"/> objects. </returns>
         public static TargetCollection GetTargets(this ArmClient client, ResourceIdentifier scope)
@@ -706,7 +706,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -726,7 +726,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="targetName"> String that represents a Target resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -800,7 +800,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Management/serviceGroups". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="ServiceGroupSiteResource"/> objects. </returns>
         public static ServiceGroupSiteCollection GetServiceGroupSites(this ArmClient client, ResourceIdentifier scope)
@@ -818,7 +818,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Management/serviceGroups". </param>
         /// <param name="siteName"> The name of the ServiceGroupSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -838,7 +838,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Management/serviceGroups". </param>
         /// <param name="siteName"> The name of the ServiceGroupSite. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -912,7 +912,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="VmConfigurationAssignmentResource"/> objects. </returns>
         public static VmConfigurationAssignmentCollection GetVmConfigurationAssignments(this ArmClient client, ResourceIdentifier scope)
@@ -930,7 +930,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="vmConfigAssignmentName"> The name of the VmConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -950,7 +950,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="vmConfigAssignmentName"> The name of the VmConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -988,7 +988,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="HcrpConfigurationAssignmentResource"/> objects. </returns>
         public static HcrpConfigurationAssignmentCollection GetHcrpConfigurationAssignments(this ArmClient client, ResourceIdentifier scope)
@@ -1006,7 +1006,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="hcrpConfigAssignmentName"> The name of the HcrpConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1026,7 +1026,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="hcrpConfigAssignmentName"> The name of the HcrpConfigurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1082,7 +1082,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Compute/virtualMachines". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="PolicyVmAssignmentResource"/> objects. </returns>
         public static PolicyVmAssignmentCollection GetPolicyVmAssignments(this ArmClient client, ResourceIdentifier scope)
@@ -1100,7 +1100,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Compute/virtualMachines". </param>
         /// <param name="policyAssignmentName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1120,7 +1120,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.Compute/virtualMachines". </param>
         /// <param name="policyAssignmentName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1158,7 +1158,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.HybridCompute/machines". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="PolicyArcAssignmentResource"/> objects. </returns>
         public static PolicyArcAssignmentCollection GetPolicyArcAssignments(this ArmClient client, ResourceIdentifier scope)
@@ -1176,7 +1176,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.HybridCompute/machines". </param>
         /// <param name="policyAssignmentName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1196,7 +1196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope must be a resource id of type "Microsoft.HybridCompute/machines". </param>
         /// <param name="policyAssignmentName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1324,7 +1324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a collection of <see cref="PolyDeviceResource"/> objects. </returns>
         public static PolyDeviceCollection GetPolyDevices(this ArmClient client, ResourceIdentifier scope)
@@ -1342,7 +1342,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="deviceName"> The name of the PolyDevice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1362,7 +1362,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope of the resource collection to get. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="deviceName"> The name of the PolyDevice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1544,7 +1544,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1563,7 +1563,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1582,7 +1582,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="scopeFilter"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1601,7 +1601,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="scopeFilter"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
@@ -1620,7 +1620,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
@@ -1639,7 +1639,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. The scope can be any valid Azure resource id, e.g. a subscription ("/subscriptions/{subscriptionId}"), a resource group ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"), a management group ("/providers/Microsoft.Management/managementGroups/{managementGroupId}"), or a specific Azure resource ("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}"). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
