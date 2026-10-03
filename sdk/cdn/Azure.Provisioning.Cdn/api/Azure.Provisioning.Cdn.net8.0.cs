@@ -832,6 +832,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Cdn.FrontDoorOrigin FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -854,6 +855,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.BicepValue<int> TrafficRestorationTimeInMinutes { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Cdn.FrontDoorOriginGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
@@ -897,6 +899,7 @@ namespace Azure.Provisioning.Cdn
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Cdn.FrontDoorRoute FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2025_06_01;
