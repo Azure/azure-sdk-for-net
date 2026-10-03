@@ -81,36 +81,43 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             writer.WritePropertyName("signalId"u8);
             writer.WriteStringValue(SignalId);
-            if (Optional.IsDefined(MetricNamespace))
+            if (Optional.IsDefined(DisplayName))
             {
-                writer.WritePropertyName("metricNamespace"u8);
-                writer.WriteStringValue(MetricNamespace);
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(MetricName))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("metricName"u8);
-                writer.WriteStringValue(MetricName);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AggregationType))
+            if (Optional.IsCollectionDefined(ApplicableResourceTypes))
             {
-                writer.WritePropertyName("aggregationType"u8);
-                writer.WriteStringValue(AggregationType.Value.ToString());
+                writer.WritePropertyName("applicableResourceTypes"u8);
+                writer.WriteStartArray();
+                foreach (string item in ApplicableResourceTypes)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Unit))
+            if (Optional.IsDefined(RefreshInterval))
             {
-                writer.WritePropertyName("unit"u8);
-                writer.WriteStringValue(Unit);
+                writer.WritePropertyName("refreshInterval"u8);
+                writer.WriteStringValue(RefreshInterval.Value.ToString());
             }
-            if (Optional.IsDefined(TimeGrain))
+            if (Optional.IsDefined(DataUnit))
             {
-                writer.WritePropertyName("timeGrain"u8);
-                writer.WriteStringValue(TimeGrain);
+                writer.WritePropertyName("dataUnit"u8);
+                writer.WriteStringValue(DataUnit);
             }
-            if (Optional.IsDefined(DimensionFilter))
-            {
-                writer.WritePropertyName("dimensionFilter"u8);
-                writer.WriteStringValue(DimensionFilter);
-            }
+            writer.WritePropertyName("configuration"u8);
+            writer.WriteObjectValue(Configuration, options);
             if (Optional.IsDefined(EvaluationRules))
             {
                 writer.WritePropertyName("evaluationRules"u8);
@@ -159,12 +166,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 return null;
             }
             string signalId = default;
-            string metricNamespace = default;
-            string metricName = default;
-            MetricAggregationType? aggregationType = default;
-            string unit = default;
-            string timeGrain = default;
-            string dimensionFilter = default;
+            string displayName = default;
+            string description = default;
+            IList<string> applicableResourceTypes = default;
+            EntitySignalRefreshInterval? refreshInterval = default;
+            string dataUnit = default;
+            SignalRecommendationConfiguration configuration = default;
             EntitySignalEvaluationRule evaluationRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,38 +181,54 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     signalId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("metricNamespace"u8))
+                if (prop.NameEquals("displayName"u8))
                 {
-                    metricNamespace = prop.Value.GetString();
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("metricName"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    metricName = prop.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("aggregationType"u8))
+                if (prop.NameEquals("applicableResourceTypes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    aggregationType = new MetricAggregationType(prop.Value.GetString());
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    applicableResourceTypes = array;
                     continue;
                 }
-                if (prop.NameEquals("unit"u8))
+                if (prop.NameEquals("refreshInterval"u8))
                 {
-                    unit = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshInterval = new EntitySignalRefreshInterval(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("timeGrain"u8))
+                if (prop.NameEquals("dataUnit"u8))
                 {
-                    timeGrain = prop.Value.GetString();
+                    dataUnit = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dimensionFilter"u8))
+                if (prop.NameEquals("configuration"u8))
                 {
-                    dimensionFilter = prop.Value.GetString();
+                    configuration = SignalRecommendationConfiguration.DeserializeSignalRecommendationConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("evaluationRules"u8))
@@ -224,12 +247,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             return new SignalConfiguration(
                 signalId,
-                metricNamespace,
-                metricName,
-                aggregationType,
-                unit,
-                timeGrain,
-                dimensionFilter,
+                displayName,
+                description,
+                applicableResourceTypes ?? new ChangeTrackingList<string>(),
+                refreshInterval,
+                dataUnit,
+                configuration,
                 evaluationRules,
                 additionalBinaryDataProperties);
         }
