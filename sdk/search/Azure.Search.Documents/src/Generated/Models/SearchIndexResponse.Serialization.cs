@@ -202,10 +202,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("permissionFilterOption"u8);
                 writer.WriteStringValue(PermissionFilterOption.Value.ToString());
             }
-            if (Optional.IsDefined(PurviewEnabled))
+            if (Optional.IsDefined(SharePointConnectorAppRegistration))
             {
-                writer.WritePropertyName("purviewEnabled"u8);
-                writer.WriteBooleanValue(PurviewEnabled.Value);
+                writer.WritePropertyName("sharePointConnectorAppRegistration"u8);
+                writer.WriteObjectValue(SharePointConnectorAppRegistration, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -271,7 +271,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SemanticSearch semanticSearch = default;
             VectorSearch vectorSearch = default;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
-            bool? purviewEnabled = default;
+            SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -462,14 +462,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     permissionFilterOption = new SearchIndexPermissionFilterOption(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("purviewEnabled"u8))
+                if (prop.NameEquals("sharePointConnectorAppRegistration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        purviewEnabled = null;
                         continue;
                     }
-                    purviewEnabled = prop.Value.GetBoolean();
+                    sharePointConnectorAppRegistration = SharePointConnectorAppRegistration.DeserializeSharePointConnectorAppRegistration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -504,7 +503,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 semanticSearch,
                 vectorSearch,
                 permissionFilterOption,
-                purviewEnabled,
+                sharePointConnectorAppRegistration,
                 eTag,
                 additionalBinaryDataProperties);
         }

@@ -2557,130 +2557,6 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// [Protocol Method] Uploads a file to a File knowledge source for processing and indexing.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceName"> The name of the knowledge source. </param>
-        /// <param name="contentDisposition">
-        /// The Content-Disposition header specifying the filename of the uploaded file.
-        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
-        /// For example: `attachment; filename="installation-guide.pdf"`.
-        /// </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response UploadKnowledgeSourceFile(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Uploads a file to a File knowledge source for processing and indexing.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceName"> The name of the knowledge source. </param>
-        /// <param name="contentDisposition">
-        /// The Content-Disposition header specifying the filename of the uploaded file.
-        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
-        /// For example: `attachment; filename="installation-guide.pdf"`.
-        /// </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
-        /// <param name="sourceName"> The name of the knowledge source. </param>
-        /// <param name="contentDisposition">
-        /// The Content-Disposition header specifying the filename of the uploaded file.
-        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
-        /// For example: `attachment; filename="installation-guide.pdf"`.
-        /// </param>
-        /// <param name="file"> The file content to upload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-            Argument.AssertNotNull(@file, nameof(@file));
-
-            Response result = UploadKnowledgeSourceFile(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSourceFile)result, result);
-        }
-
-        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
-        /// <param name="sourceName"> The name of the knowledge source. </param>
-        /// <param name="contentDisposition">
-        /// The Content-Disposition header specifying the filename of the uploaded file.
-        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
-        /// For example: `attachment; filename="installation-guide.pdf"`.
-        /// </param>
-        /// <param name="file"> The file content to upload. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-            Argument.AssertNotNull(@file, nameof(@file));
-
-            Response result = await UploadKnowledgeSourceFileAsync(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSourceFile)result, result);
-        }
-
-        /// <summary>
         /// [Protocol Method] Uploads a file to a File knowledge source using multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes.
         /// <list type="bullet">
         /// <item>
@@ -2914,23 +2790,23 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, RequestContext context)
+        public virtual Response DeleteKnowledgeSourceFile(string sourceName, string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(sourceName, fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2948,23 +2824,23 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContext context)
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string sourceName, string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(sourceName, fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2975,33 +2851,33 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        public virtual Response DeleteKnowledgeSourceFile(string sourceName, string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            return DeleteKnowledgeSourceFile(fileId, sourceName, cancellationToken.ToRequestContext());
+            return DeleteKnowledgeSourceFile(sourceName, fileId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string sourceName, string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            return await DeleteKnowledgeSourceFileAsync(fileId, sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteKnowledgeSourceFileAsync(sourceName, fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3012,27 +2888,27 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateKnowledgeSourceFile(string fileId, string sourceName, RequestContent content, string contentType, RequestContext context = null)
+        public virtual Response UpdateKnowledgeSourceFile(string sourceName, string fileId, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UpdateKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNull(content, nameof(content));
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
-                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(fileId, sourceName, content, contentType, context);
+                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(sourceName, fileId, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3050,27 +2926,27 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<Response> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UpdateKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNull(content, nameof(content));
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
-                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(fileId, sourceName, content, contentType, context);
+                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(sourceName, fileId, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3081,44 +2957,44 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response<KnowledgeSourceFile> UpdateKnowledgeSourceFile(string fileId, string sourceName, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeSourceFile> UpdateKnowledgeSourceFile(string sourceName, string fileId, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(body, nameof(body));
 
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
-            Response result = UpdateKnowledgeSourceFile(fileId, sourceName, requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            Response result = UpdateKnowledgeSourceFile(sourceName, fileId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
             return Response.FromValue((KnowledgeSourceFile)result, result);
         }
 
         /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response<KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string fileId, string sourceName, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(body, nameof(body));
 
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
-            Response result = await UpdateKnowledgeSourceFileAsync(fileId, sourceName, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await UpdateKnowledgeSourceFileAsync(sourceName, fileId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeSourceFile)result, result);
         }
 

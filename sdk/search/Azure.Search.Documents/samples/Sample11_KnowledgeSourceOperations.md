@@ -38,27 +38,6 @@ SearchIndexKnowledgeSource searchIndexSource = new SearchIndexKnowledgeSource(
             new SearchIndexFieldReference("hotelName"),
         },
 
-        // Guide query planning toward useful filters and boosts.
-        QueryHints = new SearchIndexKnowledgeSourceQueryHints
-        {
-            Filters =
-            {
-                new SearchIndexKnowledgeSourceFilterHint(
-                    "category",
-                    new[] { "Luxury", "Budget" })
-                {
-                    FilterInstructions = "Use this field when the user specifies a hotel category."
-                }
-            },
-            Boosts =
-            {
-                new SearchIndexKnowledgeSourceFieldValueBoost("category", 2.0)
-                {
-                    FieldValues = { "Luxury" },
-                    BoostInstructions = "Boost luxury hotels when premium amenities are requested."
-                }
-            }
-        }
     })
 {
     Description = "Hotels search index knowledge source"

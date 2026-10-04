@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreCacheResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
+        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
@@ -72,13 +72,16 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (ignoreCacheResetRequirements.HasValue)
+            {
+                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
+            }
 
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = dataSourceConnection?.ETag } : null;
             return CreateOrUpdateDataSourceConnection(
                 dataSourceConnection?.Name,
                 dataSourceConnection,
                 matchConditions,
-                skipIndexerResetRequirementForCache: ignoreCacheResetRequirements,
                 cancellationToken);
         }
 
@@ -119,7 +122,7 @@ namespace Azure.Search.Documents.Indexes
         /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexerDataSourceConnection.ETag"/> does not match the current service version;
         /// otherwise, the current service version will be overwritten.
         /// </param>
-        /// <param name="ignoreCacheResetRequirements"><c>True</c> if the cache reset requirements should be ignored.</param>
+        /// <param name="ignoreCacheResetRequirements">Not supported by the GA API. Must be null.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexerDataSourceConnection"/> that was created.
@@ -135,13 +138,16 @@ namespace Azure.Search.Documents.Indexes
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(dataSourceConnection, nameof(dataSourceConnection));
+            if (ignoreCacheResetRequirements.HasValue)
+            {
+                throw new NotSupportedException("Indexer cache options are not supported by the GA API.");
+            }
 
             MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = dataSourceConnection?.ETag } : null;
             return await CreateOrUpdateDataSourceConnectionAsync(
                 dataSourceConnection?.Name,
                 dataSourceConnection,
                 matchConditions,
-                skipIndexerResetRequirementForCache: ignoreCacheResetRequirements,
                 cancellationToken).ConfigureAwait(false);
         }
 

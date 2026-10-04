@@ -1,5 +1,19 @@
 # Release History
 
+## 12.1.0 (Unreleased)
+
+### Features Added
+
+- Added support for the `2026-10-01` service version, which is now the default.
+- Added `SearchOptions.MoreLikeThis` to search for documents similar to an existing document.
+- Added `KnowledgeSourceFileCapacity` and `KnowledgeSourceStatus.FileCapacity` for file upload capacity information.
+
+### Breaking Changes
+
+> These changes are relative to the previous preview release, `12.1.0-beta.3`.
+
+- Removed support for the `2026-08-01-preview` service version and preview-only features that are not available in the `2026-10-01` GA API.
+
 ## 12.1.0-beta.3 (2026-09-14)
 
 ### Breaking Changes

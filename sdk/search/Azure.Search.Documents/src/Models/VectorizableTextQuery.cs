@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// search-preview:2026-05-01-preview (entire customization)
+/* Query rewrites are not supported by the GA API.
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -35,3 +35,4 @@ namespace Azure.Search.Documents.Models
         }
     }
 }
+*/

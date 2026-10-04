@@ -158,6 +158,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
+            if (Optional.IsDefined(RefreshAllAcls))
+            {
+                writer.WritePropertyName("refreshAllAcls"u8);
+                writer.WriteBooleanValue(RefreshAllAcls.Value);
+            }
             if (Optional.IsDefined(_queryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);

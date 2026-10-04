@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -140,12 +140,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             long? count = default;
-            double? avg = default;
-            double? min = default;
-            double? max = default;
-            double? sum = default;
-            long? cardinality = default;
-            IReadOnlyDictionary<string, IList<FacetResult>> facets = default;
+
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,6 +153,7 @@ namespace Azure.Search.Documents.Models
                     count = prop.Value.GetInt64();
                     continue;
                 }
+                /* Preview facet metrics are retained as additional properties in GA.
                 if (prop.NameEquals("avg"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -222,6 +218,7 @@ namespace Azure.Search.Documents.Models
                     facets = nestedFacets;
                     continue;
                 }
+                */
                 if (options.Format != "W")
                 {
                     additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -229,12 +226,6 @@ namespace Azure.Search.Documents.Models
             }
             return new FacetResult(
                 count,
-                avg,
-                min,
-                max,
-                sum,
-                cardinality,
-                facets,
                 additionalProperties);
         }
     }

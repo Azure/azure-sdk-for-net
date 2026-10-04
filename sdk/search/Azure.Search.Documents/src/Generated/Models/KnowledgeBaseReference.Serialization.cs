@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBaseFileReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedSqlReference"/>, <see cref="KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBaseWebReference"/>, and <see cref="KnowledgeBaseWorkIQReference"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBaseFileReference"/>, <see cref="KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBaseIndexedSqlReference"/>, <see cref="KnowledgeBaseSearchIndexReference"/>, and <see cref="KnowledgeBaseWebReference"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeBaseReference))]
     public abstract partial class KnowledgeBaseReference : IJsonModel<KnowledgeBaseReference>
@@ -164,10 +164,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 {
                     case "azureBlob":
                         return KnowledgeBaseAzureBlobReference.DeserializeKnowledgeBaseAzureBlobReference(element, options);
-                    case "fabricDataAgent":
-                        return KnowledgeBaseFabricDataAgentReference.DeserializeKnowledgeBaseFabricDataAgentReference(element, options);
-                    case "fabricOntology":
-                        return KnowledgeBaseFabricOntologyReference.DeserializeKnowledgeBaseFabricOntologyReference(element, options);
                     case "file":
                         return KnowledgeBaseFileReference.DeserializeKnowledgeBaseFileReference(element, options);
                     case "indexedOneLake":
@@ -176,16 +172,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return KnowledgeBaseIndexedSharePointReference.DeserializeKnowledgeBaseIndexedSharePointReference(element, options);
                     case "indexedSql":
                         return KnowledgeBaseIndexedSqlReference.DeserializeKnowledgeBaseIndexedSqlReference(element, options);
-                    case "mcpServer":
-                        return KnowledgeBaseMcpServerReference.DeserializeKnowledgeBaseMcpServerReference(element, options);
-                    case "remoteSharePoint":
-                        return KnowledgeBaseRemoteSharePointReference.DeserializeKnowledgeBaseRemoteSharePointReference(element, options);
                     case "searchIndex":
                         return KnowledgeBaseSearchIndexReference.DeserializeKnowledgeBaseSearchIndexReference(element, options);
                     case "web":
                         return KnowledgeBaseWebReference.DeserializeKnowledgeBaseWebReference(element, options);
-                    case "workIQ":
-                        return KnowledgeBaseWorkIQReference.DeserializeKnowledgeBaseWorkIQReference(element, options);
                 }
             }
             return UnknownKnowledgeBaseReference.DeserializeUnknownKnowledgeBaseReference(element, options);
