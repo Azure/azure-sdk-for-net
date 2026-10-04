@@ -244,7 +244,7 @@ app.MapResponsesServer();
 ```csharp
 builder.Services.AddResponsesServer(options =>
 {
-    options.DefaultFetchHistoryCount = 50; // Limit history resolution (default: 100)
+    options.DefaultFetchHistoryCount = 50; // Limit history resolution (default: -1, unlimited)
 });
 
 // Configure in-memory provider TTLs separately
@@ -575,7 +575,10 @@ var history = await context.GetHistoryAsync(ct);
 
 - **Two-step resolution**: First resolves history item IDs via `ResponsesProvider.GetHistoryItemIdsAsync`, then fetches actual items via `GetItemsAsync`.
 - **Ascending order** — items are returned oldest-first (ascending by position).
-- **Configurable limit** — controlled by `ResponsesServerOptions.DefaultFetchHistoryCount` (default: 100).
+- **Configurable limit** — controlled by `ResponsesServerOptions.DefaultFetchHistoryCount`
+  (default: `-1`, unlimited). Positive values retain only the newest items.
+- Unlimited history avoids item-count truncation, but does not manage model context
+  windows or summarize long conversations.
 - **Lazy singleton** — computed once and cached, like `GetInputItemsAsync`.
 
 ### Client Headers — `ClientHeaders`
@@ -1471,7 +1474,7 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 | Option | Type | Default | Description |
 |---|---|---|---|
 | `DefaultModel` | `string?` | `null` | Default model when `model` is omitted from `CreateResponse`. Falls back to `""` if null |
-| `DefaultFetchHistoryCount` | `int` | `100` | Maximum number of history items to resolve when `GetHistoryAsync()` is called. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
+| `DefaultFetchHistoryCount` | `int` | `-1` | Maximum number of history items to resolve when `GetHistoryAsync()` is called; `-1` fetches all history. Controls the `limit` parameter passed to `ResponsesProvider.GetHistoryItemIdsAsync` |
 | `ResilientBackground` | `bool` | `false` | Opts background responses into crash-recoverable re-invocation when `store=true` and `background=true` |
 | `SteerableConversations` | `bool` | `false` | Allows a new turn to queue behind an active conversation and drain as a steered turn |
 | `ResponseAcceptor` | delegate | `null` | Optional hook for customizing the `queued` response returned to a POST that was queued behind an active steerable conversation |

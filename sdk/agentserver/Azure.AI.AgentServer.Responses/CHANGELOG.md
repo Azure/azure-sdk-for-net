@@ -36,6 +36,8 @@
   registration path.
 - The Foundry response-storage HTTP pipeline is now private to its provider, preventing unrelated
   ambient pipeline registrations from replacing the configured credential-bound pipeline.
+- Task-bound SSE relays now observe durable task completion failures, emit the existing SSE error
+  event instead of hanging, and leave the underlying stream open for recovery.
 
 ### Other Changes
 

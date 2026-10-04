@@ -3,6 +3,7 @@
 
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Core;
@@ -643,7 +644,9 @@ internal sealed class ResponseEndpointHandler
         ResponseExecution execution,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var enumerator = stream.Subscribe().WithCancellation(cancellationToken).ConfigureAwait(false).GetAsyncEnumerator();
+        using var relayCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var enumerator = stream.Subscribe().GetAsyncEnumerator(relayCts.Token);
+        Task? executionTask = execution.ExecutionTask;
         var createdSeen = false;
         try
         {
@@ -651,7 +654,66 @@ internal sealed class ResponseEndpointHandler
             {
                 try
                 {
-                    if (!await enumerator.MoveNextAsync())
+                    ValueTask<bool> moveNext = enumerator.MoveNextAsync();
+                    bool hasNext;
+                    if (moveNext.IsCompletedSuccessfully)
+                    {
+                        // Prefer already-buffered events even if task completion faulted concurrently.
+                        // Once the buffer is drained, the next pending read observes the fault below.
+                        hasNext = moveNext.Result;
+                    }
+                    else
+                    {
+                        Task<bool> moveNextTask = moveNext.AsTask();
+                        if (executionTask is not null && !executionTask.IsCompletedSuccessfully)
+                        {
+                            Task completed = await Task.WhenAny(moveNextTask, executionTask);
+                            if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted)
+                            {
+                                Exception failure;
+                                try
+                                {
+                                    await executionTask;
+                                    throw new InvalidOperationException(
+                                        "A faulted task unexpectedly completed successfully.");
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Preserve the original Phase-1 storage/handler error rather
+                                    // than replacing it with Core's task-fault wrapper.
+                                    failure = !createdSeen && execution.PreCreatedRelayFailure is not null
+                                        ? execution.PreCreatedRelayFailure
+                                        : ex;
+                                }
+
+                                // Core intentionally leaves the task stream open when its durable
+                                // completed/suspended transition fails so a later process can recover
+                                // it. Observe the task fault here to end only this HTTP subscription;
+                                // SseResult converts the exception to the existing SSE error event.
+                                //
+                                // Cancel and await the pending relay read before disposing its
+                                // enumerator. This cancellation is subscription-local: the Core stream
+                                // remains open and writable for recovery.
+                                relayCts.Cancel();
+                                try
+                                {
+                                    await moveNextTask;
+                                }
+                                catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
+                                {
+                                    // Expected: cancellation releases the pending subscription read.
+                                }
+
+                                ExceptionDispatchInfo.Capture(failure).Throw();
+                            }
+                        }
+
+                        // Successful task completion must not truncate buffered events. Core closes
+                        // the transport after the durable terminal transition, so continue until EOF.
+                        hasNext = await moveNextTask;
+                    }
+
+                    if (!hasNext)
                     {
                         break;
                     }
