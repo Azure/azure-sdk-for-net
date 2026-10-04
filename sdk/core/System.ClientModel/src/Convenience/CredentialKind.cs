@@ -21,4 +21,9 @@ public enum CredentialKind
     /// Represents a connection using Token Credential.
     /// </summary>
     TokenCredential = 2,
+
+    /// <summary>
+    /// Represents a connection using Authentication Token Provider.
+    /// </summary>
+    AuthenticationTokenProvider = 3,
 }
