@@ -36,13 +36,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </summary>
         public virtual string KnowledgeBaseName => _knowledgeBaseName;
 
-        /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
-        [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
-        }
-
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient. </summary>
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -68,26 +61,6 @@ namespace Azure.Search.Documents.KnowledgeBases
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Response Retrieve(RequestContent content, RequestContext context) =>
-            Retrieve(content, querySourceAuthorization: null, context: context);
-
-        /// <summary>
-        /// KnowledgeBase retrieves relevant data from backing stores.
-        /// </summary>
-        /// <param name="content">The content to send as the body of the request.</param>
-        /// <param name="context">The request context.</param>
-        /// <returns>The response returned from the service.</returns>
-        [ForwardsClientCalls]
-        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
-            RetrieveAsync(content, querySourceAuthorization: null, context: context);
 
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
