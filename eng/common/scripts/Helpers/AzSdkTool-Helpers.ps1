@@ -142,16 +142,19 @@ function Install-Standalone-Tool (
         $found = $false
 
         if ($Package -eq "azsdk") {
+            $StorageAccount = "azuresdkartifacts"
+            $Container = "public-azsdk-cli"
             try {
-                . (Join-Path $PSScriptRoot "PSModule-Helpers.ps1")
-                Install-ModuleIfNotInstalled "Az.Storage" "4.3.0" | Import-Module
-
-                $anonCtx = New-AzStorageContext -StorageAccountName "azuresdkartifacts" -Anonymous
-
-                $Version = Get-AzStorageBlob `
-                    -Context $anonCtx `
-                    -MaxCount 100000 `
-                    -Container "public-azsdk-cli" `
+                $Version = (`
+                        [xml](`
+                            [string](
+                                Invoke-RestMethod `
+                                    -Uri "https://${StorageAccount}.blob.core.windows.net/${Container}?restype=container&comp=list&maxresults=100000" `
+                                    -Method Get`
+                            ) -replace "`u{FEFF}", "" `
+                        )`
+                    ).EnumerationResults.Blobs `
+                    | Select-Object -ExpandProperty Blob `
                     | Select-Object -ExpandProperty Name `
                     | Select-String -Pattern "^${Package}_(?<Version>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))/" `
                     | %{ [semver]$_.Matches.Captures.Groups["Version"].Value } `
@@ -162,13 +165,13 @@ function Install-Standalone-Tool (
 
                 if ($Version) {
                     $tag = "${Package}_${Version}"
-                    $downloadUrlPrefix = "https://azuresdkartifacts.blob.core.windows.net/public-azsdk-cli"
+                    $downloadUrlPrefix = "https://${StorageAccount}.blob.core.windows.net/${Container}"
                     $found = $true
-                    Write-Host "Found the latest version of $Package $Version from azuresdkartifacts"
+                    Write-Host "Found the latest version of ${Package} ${Version} from ${StorageAccount}/${Container}"
                 }
             }
             catch {
-                Write-Host "Failed to get latest version from azuresdkartifacts: $_"
+                Write-Host "Failed to get latest version from ${StorageAccount}/${Container}: $_"
             }
         }
 
