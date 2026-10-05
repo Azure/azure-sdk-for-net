@@ -183,6 +183,32 @@ namespace Azure.Security.Attestation.Tests
             Assert.AreEqual("ABCDEF", result.CertificateThumbprint);
         }
 
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        public void ModifyPolicyManagementCertificateRejectsNullArguments(bool add, bool async)
+        {
+            var captured = new List<CapturedRequest>();
+            using RSA rsa = RSA.Create(2048);
+            using X509Certificate2 certificate = CreateSelfSignedCertificate(rsa);
+            var client = new AttestationAdministrationClient(new Uri(Endpoint), new MockCredential(), Options(captured, TokenResponse("{}")));
+            var signingKey = new AttestationTokenSigningKey(rsa, certificate);
+
+            Assert.AreEqual("existingSigningKey", ModifyPolicyManagementCertificate(client, add, async, certificate, null).ParamName);
+            Assert.AreEqual(add ? "newSigningCertificate" : "certificateToRemove", ModifyPolicyManagementCertificate(client, add, async, null, signingKey).ParamName);
+            Assert.IsEmpty(captured);
+        }
+
+        private static ArgumentNullException ModifyPolicyManagementCertificate(AttestationAdministrationClient client, bool add, bool async, X509Certificate2 certificate, AttestationTokenSigningKey signingKey)
+            => (add, async) switch
+            {
+                (true, false) => Assert.Throws<ArgumentNullException>(() => client.AddPolicyManagementCertificate(certificate, signingKey)),
+                (true, true) => Assert.ThrowsAsync<ArgumentNullException>(() => client.AddPolicyManagementCertificateAsync(certificate, signingKey)),
+                (false, false) => Assert.Throws<ArgumentNullException>(() => client.RemovePolicyManagementCertificate(certificate, signingKey)),
+                _ => Assert.ThrowsAsync<ArgumentNullException>(() => client.RemovePolicyManagementCertificateAsync(certificate, signingKey)),
+            };
+
         [Test]
         public void GetPolicyManagementCertificates()
         {

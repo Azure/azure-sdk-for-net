@@ -612,7 +612,7 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
+        /// Removes one of the attestation policy management certificates.
         /// </summary>
         /// <param name="certificateToRemove">The certificate to remove.</param>
         /// <param name="existingSigningKey">An existing key corresponding to the existing certificate.</param>
@@ -623,6 +623,9 @@ namespace Azure.Security.Attestation
             AttestationTokenSigningKey existingSigningKey,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(existingSigningKey, nameof(existingSigningKey));
+            Argument.AssertNotNull(certificateToRemove, nameof(certificateToRemove));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(RemovePolicyManagementCertificate)}");
             scope.Start();
             try
@@ -663,6 +666,9 @@ namespace Azure.Security.Attestation
             AttestationTokenSigningKey existingSigningKey,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(existingSigningKey, nameof(existingSigningKey));
+            Argument.AssertNotNull(certificateToRemove, nameof(certificateToRemove));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationAdministrationClient)}.{nameof(RemovePolicyManagementCertificate)}");
             scope.Start();
             try
