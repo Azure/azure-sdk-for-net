@@ -526,6 +526,30 @@ public class FoundryStateStoreTests
     }
 
     [Test]
+    public void ListKeys_RejectsNullResponse()
+    {
+        FoundryStateStore store = MakeStore(new MockTransport(Json(200, "null")), name: "checkpoints");
+
+        FoundryStorageApiException exception = Assert.ThrowsAsync<FoundryStorageApiException>(
+            async () => await store.ListKeysAsync())!;
+
+        Assert.That(exception.Status, Is.EqualTo(200));
+        Assert.That(exception.Message, Does.Contain("empty or unparseable response body"));
+    }
+
+    [Test]
+    public void Get_RejectsNullResponse()
+    {
+        FoundryStateStore store = MakeStore(new MockTransport(Json(200, "null")), name: "checkpoints");
+
+        FoundryStorageApiException exception = Assert.ThrowsAsync<FoundryStorageApiException>(
+            async () => await store.GetAsync())!;
+
+        Assert.That(exception.Status, Is.EqualTo(200));
+        Assert.That(exception.Message, Does.Contain("empty or unparseable response body"));
+    }
+
+    [Test]
     public void EmptyItemKey_IsRejected()
     {
         FoundryStateStore store = MakeStore(new MockTransport(Json(200, "{}")), name: "checkpoints");
