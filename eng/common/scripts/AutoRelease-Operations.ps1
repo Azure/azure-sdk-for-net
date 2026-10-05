@@ -9,10 +9,10 @@
 #
 # Applies the shared auto-release selection policy:
 #   1. Look up the pull requests associated with the commit.
-#   2. Keep only pull requests merged into the target branch.
-#   3. Select the most recently merged one.
-#   4. Re-fetch that pull request by number to read its authoritative merge state and labels.
-#   5. Require it to be merged into the target branch and to carry the auto-release label.
+#   2. Re-fetch each distinct PR to read its authoritative merge state, commit, target branch and labels.
+#   3. Keep only PRs merged into the target branch at the exact build commit.
+#   4. Require exactly one exact match; ambiguous results are not eligible.
+#   5. Require the auto-release label on that PR; labels never break an identity tie.
 #
 # Returns a result object:
 #   PullRequest    : the selected PR object, or $null
@@ -41,34 +41,39 @@ function Get-GitHubAutoReleasePullRequestForCommit {
     SkipReason        = ""
   }
 
-  $associatedPullRequests = @(Get-GitHubPullRequestsForCommit -RepoId $RepoId -CommitSha $CommitSha -AuthToken $AuthToken)
-
-  $mergedToTarget = @(
-    $associatedPullRequests |
-      Where-Object { $_.merged_at -and $_.base.ref -eq $TargetBranch }
+  # Invoke-RestMethod can emit a JSON array as one pipeline object; enumerate its records first.
+  $associatedPullRequests = @(
+    Get-GitHubPullRequestsForCommit -RepoId $RepoId -CommitSha $CommitSha -AuthToken $AuthToken |
+      ForEach-Object { $_ }
   )
 
-  if ($mergedToTarget.Count -eq 0) {
-    $result.SkipReason = "No merged pull request targeting '$TargetBranch' was associated with commit '$CommitSha'."
+  # A commit can be contained in several PRs without being the merge commit of all of them.
+  # The association payload can also lag, so only canonical PR records decide the match.
+  $exactMatches = @()
+  foreach ($number in @($associatedPullRequests | Select-Object -ExpandProperty number -Unique)) {
+    $pullRequest = Get-GitHubPullRequest -RepoId $RepoId -PullRequestNumber $number -AuthToken $AuthToken
+    if ($null -eq $pullRequest) {
+      $result.SkipReason = "Could not verify associated pull request #${number}; no pull request was selected."
+      return $result
+    }
+    if ($pullRequest.merged_at -and $pullRequest.base.ref -eq $TargetBranch -and $pullRequest.merge_commit_sha -eq $CommitSha) {
+      $exactMatches += $pullRequest
+    }
+  }
+
+  if ($exactMatches.Count -eq 0) {
+    $result.SkipReason = "No merged pull request targeting '$TargetBranch' matches the build's merge commit '$CommitSha'."
     return $result
   }
 
-  $selectedPullRequest = $mergedToTarget |
-    Sort-Object { [datetime]$_.merged_at } -Descending |
-    Select-Object -First 1
+  if ($exactMatches.Count -ne 1) {
+    $result.SkipReason = "Multiple merged pull requests match the build's merge commit '$CommitSha': $($exactMatches.number -join ', '). No pull request was selected."
+    return $result
+  }
 
-  $result.PullRequestNumber = $selectedPullRequest.number
-
-  # Re-fetch the pull request by number to read its authoritative state. The commit -> pulls payload is
-  # a secondary representation whose labels and merge state can lag the canonical pull request, so
-  # eligibility (merge target + required label) is decided against this authoritative payload.
-  $pullRequest = Get-GitHubPullRequest -RepoId $RepoId -PullRequestNumber $selectedPullRequest.number -AuthToken $AuthToken
+  $pullRequest = $exactMatches[0]
   $result.PullRequest = $pullRequest
-
-  if (-not $pullRequest.merged_at -or $pullRequest.base.ref -ne $TargetBranch) {
-    $result.SkipReason = "Pull request #$($pullRequest.number) is not merged into '$TargetBranch'."
-    return $result
-  }
+  $result.PullRequestNumber = $pullRequest.number
 
   $labels = @($pullRequest.labels | ForEach-Object { $_.name })
   if ($RequiredLabel -notin $labels) {
