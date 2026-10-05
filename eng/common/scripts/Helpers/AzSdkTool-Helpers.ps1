@@ -1,5 +1,6 @@
 Set-StrictMode -Version 4
 
+# Temporary comment to trigger CI pipeline
 function Get-SystemArchitecture {
     $unameOutput = uname -m
     switch ($unameOutput) {
