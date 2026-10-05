@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    /// <summary> Volume response properties. </summary>
-    internal partial class VolumeUpdateProperties : IJsonModel<VolumeUpdateProperties>
+    /// <summary> Information about Azure services owning the ElasticSan volume resource. </summary>
+    public partial class ElasticSanManagedByInfo : IJsonModel<ElasticSanManagedByInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ElasticSanManagedByInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVolumeUpdateProperties(document.RootElement, options);
+                        return DeserializeElasticSanManagedByInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanManagedByInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanManagedByInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VolumeUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ElasticSanManagedByInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeUpdateProperties IPersistableModel<VolumeUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ElasticSanManagedByInfo IPersistableModel<ElasticSanManagedByInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VolumeUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ElasticSanManagedByInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VolumeUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ElasticSanManagedByInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,23 +70,33 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanManagedByInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SizeGiB))
+            if (Optional.IsDefined(ClientId))
             {
-                writer.WritePropertyName("sizeGiB"u8);
-                writer.WriteNumberValue(SizeGiB.Value);
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsCollectionDefined(ManagedBy))
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("managedBy"u8);
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (Optional.IsCollectionDefined(ResourceIds))
+            {
+                writer.WritePropertyName("resourceIds"u8);
                 writer.WriteStartArray();
-                foreach (ElasticSanManagedByInfo item in ManagedBy)
+                foreach (ResourceIdentifier item in ResourceIds)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -108,55 +119,68 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeUpdateProperties IJsonModel<VolumeUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ElasticSanManagedByInfo IJsonModel<ElasticSanManagedByInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ElasticSanManagedByInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ElasticSanManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanManagedByInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumeUpdateProperties(document.RootElement, options);
+            return DeserializeElasticSanManagedByInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VolumeUpdateProperties DeserializeVolumeUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ElasticSanManagedByInfo DeserializeElasticSanManagedByInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            long? sizeGiB = default;
-            IList<ElasticSanManagedByInfo> managedBy = default;
+            string clientId = default;
+            int? version = default;
+            IList<ResourceIdentifier> resourceIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("sizeGiB"u8))
+                if (prop.NameEquals("clientId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sizeGiB = prop.Value.GetInt64();
+                    clientId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("managedBy"u8))
+                if (prop.NameEquals("version"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ElasticSanManagedByInfo> array = new List<ElasticSanManagedByInfo>();
+                    version = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("resourceIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanManagedByInfo.DeserializeElasticSanManagedByInfo(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
-                    managedBy = array;
+                    resourceIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +188,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VolumeUpdateProperties(sizeGiB, managedBy ?? new ChangeTrackingList<ElasticSanManagedByInfo>(), additionalBinaryDataProperties);
+            return new ElasticSanManagedByInfo(clientId, version, resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, string deleteSnapshots, string forceDelete, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string volumeName, string deleteSnapshots, string forceDelete, string deleteType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -147,6 +147,10 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (deleteType != null)
+            {
+                uri.AppendQuery("deleteType", deleteType, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        internal HttpMessage CreateGetByVolumeGroupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, RequestContext context)
+        internal HttpMessage CreateGetByVolumeGroupRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string accessSoftDeletedResources, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -185,11 +189,15 @@ namespace Azure.ResourceManager.ElasticSan
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            if (accessSoftDeletedResources != null)
+            {
+                request.Headers.SetValue("x-ms-access-soft-deleted-resources", accessSoftDeletedResources);
+            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByVolumeGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, RequestContext context)
+        internal HttpMessage CreateNextGetByVolumeGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, string accessSoftDeletedResources, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
