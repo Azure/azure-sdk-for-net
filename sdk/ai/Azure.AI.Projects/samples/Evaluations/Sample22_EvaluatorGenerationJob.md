@@ -16,7 +16,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
-2. Create the Agent, which will be used for generation of evaluator inputs. We create `EvaluatorGenerationJob` using the Agent, it will generate the new version of built in **coherence** evaluator using the supplied model.
+2. Create the Agent and construct `EvaluatorGenerationInputs` from it. Submitting these inputs generates a new version of the built-in **coherence** evaluator using the supplied model.
 
 **Note:** In this example the same model is used for both data generation and evaluation for demonstration purposes only. Please use different models in production scenarios.
 
@@ -30,14 +30,11 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
     agentName: "evalAgent",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-EvaluatorGenerationJob job = new()
-{
-    Inputs = new EvaluatorGenerationInputs(
-        sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-        model: modelDeploymentName,
-        evaluatorName: "coherence"
-    )
-};
+EvaluatorGenerationInputs job = new(
+    sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+    model: modelDeploymentName,
+    evaluatorName: "coherence"
+);
 ```
 
 Asynchronous sample:
@@ -50,14 +47,11 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     agentName: "evalAgent",
     options: new(agentDefinition));
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-EvaluatorGenerationJob job = new()
-{
-    Inputs = new EvaluatorGenerationInputs(
-        sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-        model: modelDeploymentName,
-        evaluatorName: "coherence"
-    )
-};
+EvaluatorGenerationInputs job = new(
+    sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+    model: modelDeploymentName,
+    evaluatorName: "coherence"
+);
 ```
 
 3. Start the evaluator generation job.
@@ -110,14 +104,11 @@ Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {ru
 
 Synchronous sample:
 ```C# Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Sync
-job = new()
-{
-    Inputs = new EvaluatorGenerationInputs(
-        sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-        model: modelDeploymentName,
-        evaluatorName: "violence"
-    )
-};
+job = new(
+    sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+    model: modelDeploymentName,
+    evaluatorName: "violence"
+);
 EvaluatorGenerationJob jobToCancel = projectClient.EvaluatorGenerationJobs.Create(job);
 jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);
 while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
@@ -135,14 +126,11 @@ Console.WriteLine($"The job {jobToCancel.Id} was canceled.");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Async
-job = new()
-{
-    Inputs = new EvaluatorGenerationInputs(
-        sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-        model: modelDeploymentName,
-        evaluatorName: "violence"
-    )
-};
+job = new(
+    sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+    model: modelDeploymentName,
+    evaluatorName: "violence"
+);
 EvaluatorGenerationJob jobToCancel = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
 jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
 while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)

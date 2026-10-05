@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> File output target for a supervised fine-tuning data generation job. This is a preview feature. </summary>
-    public partial class SupervisedFineTuningDataGenerationJobOutputTarget : IJsonModel<SupervisedFineTuningDataGenerationJobOutputTarget>
+    /// <summary> File output configuration for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+    public partial class ReinforcementFineTuningDataGenerationJobOutputConfiguration : IJsonModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputTarget"/> for deserialization. </summary>
-        internal SupervisedFineTuningDataGenerationJobOutputTarget()
+        /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobOutputConfiguration"/> for deserialization. </summary>
+        internal ReinforcementFineTuningDataGenerationJobOutputConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SupervisedFineTuningDataGenerationJobOutputTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ReinforcementFineTuningDataGenerationJobOutputConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSupervisedFineTuningDataGenerationJobOutputTarget(document.RootElement, options);
+                        return DeserializeReinforcementFineTuningDataGenerationJobOutputConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupervisedFineTuningDataGenerationJobOutputTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReinforcementFineTuningDataGenerationJobOutputConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SupervisedFineTuningDataGenerationJobOutputTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReinforcementFineTuningDataGenerationJobOutputConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SupervisedFineTuningDataGenerationJobOutputTarget IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReinforcementFineTuningDataGenerationJobOutputConfiguration IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SupervisedFineTuningDataGenerationJobOutputTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupervisedFineTuningDataGenerationJobOutputTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReinforcementFineTuningDataGenerationJobOutputConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -106,24 +106,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SupervisedFineTuningDataGenerationJobOutputTarget IJsonModel<SupervisedFineTuningDataGenerationJobOutputTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReinforcementFineTuningDataGenerationJobOutputConfiguration IJsonModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SupervisedFineTuningDataGenerationJobOutputTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ReinforcementFineTuningDataGenerationJobOutputConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SupervisedFineTuningDataGenerationJobOutputTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReinforcementFineTuningDataGenerationJobOutputConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupervisedFineTuningDataGenerationJobOutputTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReinforcementFineTuningDataGenerationJobOutputConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSupervisedFineTuningDataGenerationJobOutputTarget(document.RootElement, options);
+            return DeserializeReinforcementFineTuningDataGenerationJobOutputConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SupervisedFineTuningDataGenerationJobOutputTarget DeserializeSupervisedFineTuningDataGenerationJobOutputTarget(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReinforcementFineTuningDataGenerationJobOutputConfiguration DeserializeReinforcementFineTuningDataGenerationJobOutputConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SupervisedFineTuningDataGenerationJobOutputTarget(name, writeMode, mergeFileId, additionalBinaryDataProperties);
+            return new ReinforcementFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties);
         }
     }
 }

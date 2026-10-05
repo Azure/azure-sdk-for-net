@@ -13,7 +13,7 @@ AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredentia
 2. In our scenario, we will generate 16 questions and answer pairs based on the provided prompt and will save them into the data set named "dataset-generation-eval-sample".
 
 ```C# Snippet:Sample_UploadFile_DataGenerationJob
-EvaluationDataGenerationJobOutputTarget outputConfiguration = new()
+EvaluationDataGenerationJobOutputConfiguration outputConfiguration = new()
 {
     Name = "dataset-generation-eval-sample",
     Description = "QnA pairs generated from the Contoso refund policy prompt.",
@@ -28,7 +28,7 @@ EvaluationDataGenerationJobInputs job = new(
     {
         Description = "Contoso refund policy"
     }],
-    generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 16)
+    generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 16)
     {
         ModelOptions = new(modelDeploymentName)
     })
@@ -108,7 +108,7 @@ job = new(
     {
         Description = "Zawa refund policy"
     }],
-    generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
+    generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 1000)
     {
         ModelOptions = new(modelDeploymentName)
     })
@@ -145,7 +145,7 @@ job = new(
     {
         Description = "Zawa refund policy"
     }],
-    generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
+    generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 1000)
     {
         ModelOptions = new(modelDeploymentName)
     })

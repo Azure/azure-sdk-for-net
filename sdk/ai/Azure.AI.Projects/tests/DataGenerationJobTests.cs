@@ -125,7 +125,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
 
     private EvaluationDataGenerationJobInputs GetInputs(string name, int samples = 16, string modelName = null)
     {
-        EvaluationDataGenerationJobOutputTarget outputConfiguration = new()
+        EvaluationDataGenerationJobOutputConfiguration outputConfiguration = new()
         {
             Name = DATASET_NAME,
             Description = "QnA pairs generated from the Contoso refund policy prompt.",
@@ -140,7 +140,7 @@ public class DataGenerationJobTests : ProjectsClientTestBase
             {
                 Description = "Contoso refund policy"
             }],
-            generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: samples)
+            generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: samples)
             {
                 ModelOptions = new(modelName ?? TestEnvironment.FOUNDRY_MODEL_NAME)
             })

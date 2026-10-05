@@ -21,7 +21,7 @@ namespace Azure.AI.Projects
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, result, status, error, name, sources, generationConfiguration, scenario != default ? scenario : "unknown", createdOn, finishedOn, additionalBinaryDataProperties)
+        internal UnknownDataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, result, status, error, name, sources, generationConfiguration, scenario != default ? scenario : "unknown", createdOn, finishedOn, additionalBinaryDataProperties)
         {
         }
     }

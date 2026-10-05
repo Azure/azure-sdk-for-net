@@ -38,14 +38,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-        EvaluatorGenerationJob job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-                model: modelDeploymentName,
-                evaluatorName: "coherence"
-            )
-        };
+        EvaluatorGenerationInputs job = new(
+            sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+            model: modelDeploymentName,
+            evaluatorName: "coherence"
+        );
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Async
         EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
@@ -65,14 +62,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
         #endregion
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Async
-        job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-                model: modelDeploymentName,
-                evaluatorName: "violence"
-            )
-        };
+        job = new(
+            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+            model: modelDeploymentName,
+            evaluatorName: "violence"
+        );
         EvaluatorGenerationJob jobToCancel = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
         while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)
@@ -123,14 +117,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
             agentName: "evalAgent",
             options: new(agentDefinition));
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
-        EvaluatorGenerationJob job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-                model: modelDeploymentName,
-                evaluatorName: "coherence"
-            )
-        };
+        EvaluatorGenerationInputs job = new(
+            sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+            model: modelDeploymentName,
+            evaluatorName: "coherence"
+        );
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Sync
         EvaluatorGenerationJob runningJob = projectClient.EvaluatorGenerationJobs.Create(job);
@@ -150,14 +141,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
         #endregion
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Sync
-        job = new()
-        {
-            Inputs = new EvaluatorGenerationInputs(
-                sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-                model: modelDeploymentName,
-                evaluatorName: "violence"
-            )
-        };
+        job = new(
+            sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
+            model: modelDeploymentName,
+            evaluatorName: "violence"
+        );
         EvaluatorGenerationJob jobToCancel = projectClient.EvaluatorGenerationJobs.Create(job);
         jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);
         while (jobToCancel.Status != ProjectsJobStatus.Failed && jobToCancel.Status != ProjectsJobStatus.Succeeded && jobToCancel.Status != ProjectsJobStatus.Cancelled)

@@ -7,25 +7,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The options for a data generation job with SimpleQnA type. </summary>
-    public partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions
+    /// <summary> The configuration for a data generation job with SimpleQnA type. </summary>
+    public partial class SimpleQnADataGenerationJobConfiguration : DataGenerationJobConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobConfiguration"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
-        public SimpleQnADataGenerationJobOptions(int maxSamples) : base(DataGenerationJobKind.SimpleQna)
+        public SimpleQnADataGenerationJobConfiguration(int maxSamples) : base(DataGenerationJobKind.SimpleQna)
         {
             MaxSamples = maxSamples;
             QuestionTypes = new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobConfiguration"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
-        internal SimpleQnADataGenerationJobOptions(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int maxSamples, IList<SimpleQnAFineTuningQuestionType> questionTypes) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal SimpleQnADataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int maxSamples, IList<SimpleQnAFineTuningQuestionType> questionTypes) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             MaxSamples = maxSamples;
             QuestionTypes = questionTypes;

@@ -6,15 +6,20 @@
 
 ### Breaking Changes
 
-- Data-generation job creation now accepts `DataGenerationJobInputs` instead of a `DataGenerationJob` response. Construct a scenario-specific request such as `EvaluationDataGenerationJobInputs` and set its `OutputConfiguration` with an `EvaluationDataGenerationJobOutputTarget`. Returned jobs now expose `Name`, `Sources`, and `GenerationConfiguration` directly instead of `Inputs`.
+- Data-generation job creation now accepts `DataGenerationJobInputs` instead of a `DataGenerationJob` response. Construct a scenario-specific request such as `EvaluationDataGenerationJobInputs` and set its `OutputConfiguration` with an `EvaluationDataGenerationJobOutputConfiguration`. Returned jobs now expose `Name`, `Sources`, and `GenerationConfiguration` directly instead of `Inputs`.
+- `DataGenerationJobOptions` and its scenario-specific option models (such as `SimpleQnADataGenerationJobOptions`) have been renamed to `DataGenerationJobConfiguration` and corresponding `*Configuration` models. The evaluation and fine-tuning `*OutputTarget` models have likewise been renamed to `*OutputConfiguration`.
+- Evaluator-generation job creation now accepts `EvaluatorGenerationInputs` instead of an `EvaluatorGenerationJob` response. Returned jobs expose `Sources`, `Model`, `EvaluatorName`, `EvaluatorDisplayName`, and `EvaluatorDescription` directly instead of `Inputs`.
 
 ### Bugs Fixed
+
+- Removed the retired `AgentsOptimization=V2Preview` opt-in from the default `Foundry-Features` header. Agent optimization no longer requires this preview feature flag.
 
 ### Other Changes
 
 ### Sample Updates
 
-- Updated the existing data-generation job sample to use evaluation request inputs and the scenario-specific output target.
+- Updated the data-generation job sample to use evaluation request inputs and the scenario-specific output configuration.
+- Updated the evaluator-generation job sample to create jobs from request inputs.
 
 ## 3.0.0-beta.3 (2026-09-16)
 

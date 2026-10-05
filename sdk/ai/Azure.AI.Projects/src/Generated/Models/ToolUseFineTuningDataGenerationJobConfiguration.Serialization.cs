@@ -9,52 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The options for a data generation job with Traces type. </summary>
-    public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<TracesDataGenerationJobOptions>
+    /// <summary> The configuration for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
+    public partial class ToolUseFineTuningDataGenerationJobConfiguration : DataGenerationJobConfiguration, IJsonModel<ToolUseFineTuningDataGenerationJobConfiguration>
     {
+        /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/> for deserialization. </summary>
+        internal ToolUseFineTuningDataGenerationJobConfiguration()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataGenerationJobOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataGenerationJobConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTracesDataGenerationJobOptions(document.RootElement, options);
+                        return DeserializeToolUseFineTuningDataGenerationJobConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TracesDataGenerationJobOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TracesDataGenerationJobOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TracesDataGenerationJobOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TracesDataGenerationJobOptions IPersistableModel<TracesDataGenerationJobOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => (TracesDataGenerationJobOptions)PersistableModelCreateCore(data, options);
+        ToolUseFineTuningDataGenerationJobConfiguration IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolUseFineTuningDataGenerationJobConfiguration)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TracesDataGenerationJobOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TracesDataGenerationJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ToolUseFineTuningDataGenerationJobConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -65,44 +70,36 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TracesDataGenerationJobOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MaxSamples))
-            {
-                writer.WritePropertyName("max_samples"u8);
-                writer.WriteNumberValue(MaxSamples.Value);
-            }
-            if (Optional.IsDefined(RedactPrivateContent))
-            {
-                writer.WritePropertyName("redact_private_content"u8);
-                writer.WriteBooleanValue(RedactPrivateContent.Value);
-            }
+            writer.WritePropertyName("max_samples"u8);
+            writer.WriteNumberValue(MaxSamples);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TracesDataGenerationJobOptions IJsonModel<TracesDataGenerationJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TracesDataGenerationJobOptions)JsonModelCreateCore(ref reader, options);
+        ToolUseFineTuningDataGenerationJobConfiguration IJsonModel<ToolUseFineTuningDataGenerationJobConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ToolUseFineTuningDataGenerationJobConfiguration)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataGenerationJobOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataGenerationJobConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TracesDataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolUseFineTuningDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TracesDataGenerationJobOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTracesDataGenerationJobOptions(document.RootElement, options);
+            return DeserializeToolUseFineTuningDataGenerationJobConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TracesDataGenerationJobOptions DeserializeTracesDataGenerationJobOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static ToolUseFineTuningDataGenerationJobConfiguration DeserializeToolUseFineTuningDataGenerationJobConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,8 +109,7 @@ namespace Azure.AI.Projects
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            int? maxSamples = default;
-            bool? redactPrivateContent = default;
+            int maxSamples = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -141,20 +137,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("max_samples"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     maxSamples = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("redact_private_content"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    redactPrivateContent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -162,13 +145,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TracesDataGenerationJobOptions(
-                @type,
-                trainSplit,
-                modelOptions,
-                additionalBinaryDataProperties,
-                maxSamples,
-                redactPrivateContent);
+            return new ToolUseFineTuningDataGenerationJobConfiguration(@type, trainSplit, modelOptions, additionalBinaryDataProperties, maxSamples);
         }
     }
 }

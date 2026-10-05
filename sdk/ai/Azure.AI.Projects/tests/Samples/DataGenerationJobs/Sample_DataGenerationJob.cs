@@ -28,7 +28,7 @@ public class Sample_DataGenerationJob : SamplesBase
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
         #endregion
         #region Snippet:Sample_UploadFile_DataGenerationJob
-        EvaluationDataGenerationJobOutputTarget outputConfiguration = new()
+        EvaluationDataGenerationJobOutputConfiguration outputConfiguration = new()
         {
             Name = "dataset-generation-eval-sample",
             Description = "QnA pairs generated from the Contoso refund policy prompt.",
@@ -43,7 +43,7 @@ public class Sample_DataGenerationJob : SamplesBase
             {
                 Description = "Contoso refund policy"
             }],
-            generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 16)
+            generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 16)
             {
                 ModelOptions = new(modelDeploymentName)
             })
@@ -86,7 +86,7 @@ public class Sample_DataGenerationJob : SamplesBase
             {
                 Description = "Zawa refund policy"
             }],
-            generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
+            generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 1000)
             {
                 ModelOptions = new(modelDeploymentName)
             })
@@ -133,7 +133,7 @@ public class Sample_DataGenerationJob : SamplesBase
         AIProjectClientOptions opts = new();
         opts.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
         AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential(), options: opts);
-        EvaluationDataGenerationJobOutputTarget outputConfiguration = new()
+        EvaluationDataGenerationJobOutputConfiguration outputConfiguration = new()
         {
             Name = "dataset-generation-eval-sample",
             Description = "QnA pairs generated from the Contoso refund policy prompt.",
@@ -148,7 +148,7 @@ public class Sample_DataGenerationJob : SamplesBase
             {
                 Description = "Contoso refund policy"
             }],
-            generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 16)
+            generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 16)
             {
                 ModelOptions = new(modelDeploymentName)
             })
@@ -190,7 +190,7 @@ public class Sample_DataGenerationJob : SamplesBase
             {
                 Description = "Zawa refund policy"
             }],
-            generationConfiguration: new SimpleQnADataGenerationJobOptions(maxSamples: 1000)
+            generationConfiguration: new SimpleQnADataGenerationJobConfiguration(maxSamples: 1000)
             {
                 ModelOptions = new(modelDeploymentName)
             })

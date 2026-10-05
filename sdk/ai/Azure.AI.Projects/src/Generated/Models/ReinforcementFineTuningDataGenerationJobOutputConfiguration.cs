@@ -8,29 +8,29 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> File output target for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+    /// <summary> File output configuration for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
     [Experimental("AAIP001")]
-    public partial class ReinforcementFineTuningDataGenerationJobOutputTarget
+    public partial class ReinforcementFineTuningDataGenerationJobOutputConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobOutputTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ReinforcementFineTuningDataGenerationJobOutputTarget(string name)
+        public ReinforcementFineTuningDataGenerationJobOutputConfiguration(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobOutputTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReinforcementFineTuningDataGenerationJobOutputTarget(string name, DataGenerationJobOutputWriteMode? writeMode, string mergeFileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReinforcementFineTuningDataGenerationJobOutputConfiguration(string name, DataGenerationJobOutputWriteMode? writeMode, string mergeFileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             WriteMode = writeMode;

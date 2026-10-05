@@ -114,12 +114,12 @@ namespace Azure.AI.Projects
             FoundryOpenAIError error = default;
             string name = default;
             IList<DataGenerationJobSource> sources = default;
-            DataGenerationJobOptions generationConfiguration = default;
+            DataGenerationJobConfiguration generationConfiguration = default;
             DataGenerationJobScenario scenario = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset? finishedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ReinforcementFineTuningDataGenerationJobOutputTarget outputConfiguration = default;
+            ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -167,7 +167,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("generation_configuration"u8))
                 {
-                    generationConfiguration = DataGenerationJobOptions.DeserializeDataGenerationJobOptions(prop.Value, options);
+                    generationConfiguration = DataGenerationJobConfiguration.DeserializeDataGenerationJobConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scenario"u8))
@@ -195,7 +195,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    outputConfiguration = ReinforcementFineTuningDataGenerationJobOutputTarget.DeserializeReinforcementFineTuningDataGenerationJobOutputTarget(prop.Value, options);
+                    outputConfiguration = ReinforcementFineTuningDataGenerationJobOutputConfiguration.DeserializeReinforcementFineTuningDataGenerationJobOutputConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

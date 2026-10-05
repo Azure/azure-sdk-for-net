@@ -31,7 +31,7 @@ namespace Azure.AI.Projects
         /// <param name="severity"> Advisory severity. Initial values: `warning`. </param>
         /// <param name="message"> Human-readable message suitable for direct SDK/CLI/UI display. Must not include raw prompt, instruction, dataset, or trace text. </param>
         /// <param name="source"> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </param>
-        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
+        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RubricGenerationInputQualityWarning(RubricGenerationInputQualityWarningCode code, RubricGenerationInputQualityWarningSeverity severity, string message, RubricGenerationInputQualityWarningSource source, int? sourceIndex, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects
         /// <summary> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </summary>
         public RubricGenerationInputQualityWarningSource Source { get; }
 
-        /// <summary> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </summary>
+        /// <summary> Zero-based index into `EvaluatorGenerationJob.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </summary>
         public int? SourceIndex { get; }
     }
 }

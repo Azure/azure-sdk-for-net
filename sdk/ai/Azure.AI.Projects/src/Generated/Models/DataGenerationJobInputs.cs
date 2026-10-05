@@ -22,7 +22,7 @@ namespace Azure.AI.Projects
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        private protected DataGenerationJobInputs(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario)
+        private protected DataGenerationJobInputs(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario)
         {
             Name = name;
             Sources = sources.ToList();
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Sources = sources;
@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
         public IList<DataGenerationJobSource> Sources { get; }
 
         /// <summary> The generation configuration for the data generation job. </summary>
-        public DataGenerationJobOptions GenerationConfiguration { get; }
+        public DataGenerationJobConfiguration GenerationConfiguration { get; }
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
         internal DataGenerationJobScenario Scenario { get; set; }

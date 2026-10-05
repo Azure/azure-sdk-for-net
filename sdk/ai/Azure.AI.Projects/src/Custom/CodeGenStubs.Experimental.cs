@@ -25,7 +25,7 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP001")] public partial class AgentEvaluatorGenerationJobSource { }
 [Experimental("AAIP001")] public abstract partial class DataGenerationJob { }
 [Experimental("AAIP001")] public abstract partial class DataGenerationJobInputs { }
-[Experimental("AAIP001")] public abstract partial class DataGenerationJobOptions { }
+[Experimental("AAIP001")] public abstract partial class DataGenerationJobConfiguration { }
 [Experimental("AAIP001")] public abstract partial class DataGenerationJobOutput { }
 [Experimental("AAIP001")] public readonly partial struct DataGenerationJobOutputWriteMode { }
 [Experimental("AAIP001")] public partial class DataGenerationJobResult { }
@@ -45,8 +45,8 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP001")] public readonly partial struct RubricGenerationInputQualityWarningCode { }
 [Experimental("AAIP001")] public readonly partial struct RubricGenerationInputQualityWarningSeverity { }
 [Experimental("AAIP001")] public readonly partial struct RubricGenerationInputQualityWarningSource { }
-[Experimental("AAIP001")] public partial class SimpleQnADataGenerationJobOptions { }
-[Experimental("AAIP001")] public partial class SimulationSeedDataGenerationJobOptions { }
-[Experimental("AAIP001")] public partial class TracesDataGenerationJobOptions { }
+[Experimental("AAIP001")] public partial class SimpleQnADataGenerationJobConfiguration { }
+[Experimental("AAIP001")] public partial class SimulationSeedDataGenerationJobConfiguration { }
+[Experimental("AAIP001")] public partial class TracesDataGenerationJobConfiguration { }
 [Experimental("AAIP001")] public partial class TracesDataGenerationJobSource { }
 [Experimental("AAIP001")] public partial class TracesEvaluatorGenerationJobSource { }

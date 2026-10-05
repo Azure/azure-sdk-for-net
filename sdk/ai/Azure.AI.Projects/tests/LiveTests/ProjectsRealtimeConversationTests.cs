@@ -71,10 +71,11 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
                 Instructions = "Respond briefly and helpfully.",
             };
             definition.OutputModalities.Add(Azure.AI.Projects.Agents.VoiceOutputModality.Text);
-            await agentsClient.CreateAgentVersionAsync(
+            Azure.AI.Projects.Agents.ProjectsAgentVersion version = await agentsClient.CreateAgentVersionAsync(
                 CONVERSATION_AGENT_NAME,
                 new Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions(definition),
                 cancellationToken: cancellationToken);
+            TrackCreatedVoiceAgent(CONVERSATION_AGENT_NAME, version);
         }
     }
 
@@ -100,10 +101,11 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
                 },
             };
             definition.OutputModalities.Add(Azure.AI.Projects.Agents.VoiceOutputModality.Audio);
-            await agentsClient.CreateAgentVersionAsync(
+            Azure.AI.Projects.Agents.ProjectsAgentVersion version = await agentsClient.CreateAgentVersionAsync(
                 AUDIO_CONVERSATION_AGENT_NAME,
                 new Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions(definition),
                 cancellationToken: cancellationToken);
+            TrackCreatedVoiceAgent(AUDIO_CONVERSATION_AGENT_NAME, version);
         }
     }
 

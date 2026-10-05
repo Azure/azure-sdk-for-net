@@ -113,10 +113,10 @@ namespace Azure.AI.Projects
             }
             string name = default;
             IList<DataGenerationJobSource> sources = default;
-            DataGenerationJobOptions generationConfiguration = default;
+            DataGenerationJobConfiguration generationConfiguration = default;
             DataGenerationJobScenario scenario = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            EvaluationDataGenerationJobOutputTarget outputConfiguration = default;
+            EvaluationDataGenerationJobOutputConfiguration outputConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -136,7 +136,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("generation_configuration"u8))
                 {
-                    generationConfiguration = DataGenerationJobOptions.DeserializeDataGenerationJobOptions(prop.Value, options);
+                    generationConfiguration = DataGenerationJobConfiguration.DeserializeDataGenerationJobConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scenario"u8))
@@ -150,7 +150,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    outputConfiguration = EvaluationDataGenerationJobOutputTarget.DeserializeEvaluationDataGenerationJobOutputTarget(prop.Value, options);
+                    outputConfiguration = EvaluationDataGenerationJobOutputConfiguration.DeserializeEvaluationDataGenerationJobOutputConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

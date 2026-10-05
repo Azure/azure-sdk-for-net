@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Removed the retired `AgentsOptimization=V2Preview` opt-in from the default `Foundry-Features` header.
+
 ### Other Changes
 
 ## 3.0.0-beta.3 (2026-09-16)

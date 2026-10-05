@@ -22,7 +22,7 @@ namespace Azure.AI.Projects
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
-        private protected DataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario)
+        private protected DataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario)
         {
             Name = name;
             Sources = sources.ToList();
@@ -42,7 +42,7 @@ namespace Azure.AI.Projects
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Result = result;
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects
         public IList<DataGenerationJobSource> Sources { get; }
 
         /// <summary> The generation configuration for the data generation job. </summary>
-        public DataGenerationJobOptions GenerationConfiguration { get; }
+        public DataGenerationJobConfiguration GenerationConfiguration { get; }
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>
         internal DataGenerationJobScenario Scenario { get; set; }

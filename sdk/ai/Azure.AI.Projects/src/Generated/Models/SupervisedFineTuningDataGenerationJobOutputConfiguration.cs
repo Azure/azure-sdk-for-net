@@ -8,29 +8,29 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> File output target for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+    /// <summary> File output configuration for a supervised fine-tuning data generation job. This is a preview feature. </summary>
     [Experimental("AAIP001")]
-    public partial class SupervisedFineTuningDataGenerationJobOutputTarget
+    public partial class SupervisedFineTuningDataGenerationJobOutputConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SupervisedFineTuningDataGenerationJobOutputTarget(string name)
+        public SupervisedFineTuningDataGenerationJobOutputConfiguration(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupervisedFineTuningDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupervisedFineTuningDataGenerationJobOutputTarget(string name, DataGenerationJobOutputWriteMode? writeMode, string mergeFileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupervisedFineTuningDataGenerationJobOutputConfiguration(string name, DataGenerationJobOutputWriteMode? writeMode, string mergeFileId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             WriteMode = writeMode;

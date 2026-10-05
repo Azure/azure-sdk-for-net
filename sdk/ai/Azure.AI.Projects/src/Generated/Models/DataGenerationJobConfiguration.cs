@@ -8,27 +8,27 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary>
-    /// Options for managing data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobOptions"/>, <see cref="SimulationSeedDataGenerationJobOptions"/>, <see cref="ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="TracesDataGenerationJobOptions"/>.
+    /// Configuration for managing data generation jobs.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="TracesDataGenerationJobConfiguration"/>.
     /// </summary>
-    public abstract partial class DataGenerationJobOptions
+    public abstract partial class DataGenerationJobConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataGenerationJobConfiguration"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
-        private protected DataGenerationJobOptions(DataGenerationJobKind @type)
+        private protected DataGenerationJobConfiguration(DataGenerationJobKind @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataGenerationJobConfiguration"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobOptions(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             TrainSplit = trainSplit;

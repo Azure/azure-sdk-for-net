@@ -52,10 +52,10 @@ namespace Azure.AI.Projects.Evaluation
         public IList<EvaluatorGenerationJobSource> Sources { get; }
 
         /// <summary> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </summary>
-        public string Model { get; set; }
+        public string Model { get; }
 
         /// <summary> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </summary>
-        public string EvaluatorName { get; set; }
+        public string EvaluatorName { get; }
 
         /// <summary> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </summary>
         public string EvaluatorDisplayName { get; set; }

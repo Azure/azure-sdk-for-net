@@ -144,12 +144,12 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJob is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJob))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJob is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJobConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(DataGenerationJobConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJobConfiguration is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJobInputs))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJobInputs is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJobOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(DataGenerationJobOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJobOptions is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.DataGenerationJobOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(DataGenerationJobOutput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.DataGenerationJobOutput is experimental and may change in future versions.
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationCredentialContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJob))]
     [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJobInputs))]
-    [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJobOutputTarget))]
+    [ModelReaderWriterBuildable(typeof(EvaluationDataGenerationJobOutputConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationResultSample is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvaluationResultSample))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvaluationResultSample is experimental and may change in future versions.
@@ -441,9 +441,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ReinforcementFineTuningDataGenerationJobInputs))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobInputs is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ReinforcementFineTuningDataGenerationJobOutputTarget))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputTarget is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ReinforcementFineTuningDataGenerationJobOutputConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseInputTokenUsageDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseInputTokenUsageDetails))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseInputTokenUsageDetails is experimental and may change in future versions.
@@ -480,21 +480,21 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ScheduleTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ScheduleTrigger))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.ScheduleTrigger is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(SimpleQnADataGenerationJobOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.SimulationSeedDataGenerationJobOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(SimulationSeedDataGenerationJobOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.SimulationSeedDataGenerationJobOptions is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SimpleQnADataGenerationJobConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.SimulationSeedDataGenerationJobConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SimulationSeedDataGenerationJobConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.SimulationSeedDataGenerationJobConfiguration is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJob is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJob))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJob is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJobInputs))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobInputs is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJobOutputTarget))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputTarget is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SupervisedFineTuningDataGenerationJobOutputConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.TargetConfig is experimental and may change in future versions.
@@ -508,12 +508,12 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(TimerRoutineTrigger))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.TimerRoutineTrigger is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ToolDescription))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ToolUseFineTuningDataGenerationJobOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ToolUseFineTuningDataGenerationJobOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ToolUseFineTuningDataGenerationJobOptions is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.TracesDataGenerationJobOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(TracesDataGenerationJobOptions))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.TracesDataGenerationJobOptions is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.ToolUseFineTuningDataGenerationJobConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ToolUseFineTuningDataGenerationJobConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.ToolUseFineTuningDataGenerationJobConfiguration is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.TracesDataGenerationJobConfiguration is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(TracesDataGenerationJobConfiguration))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.TracesDataGenerationJobConfiguration is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.TracesDataGenerationJobSource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TracesDataGenerationJobSource))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.TracesDataGenerationJobSource is experimental and may change in future versions.

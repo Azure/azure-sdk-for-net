@@ -17,6 +17,8 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("Create", typeof(bool), typeof(EvaluatorGenerationInputs), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAsync", typeof(bool), typeof(EvaluatorGenerationInputs), typeof(string), typeof(CancellationToken))]
 [CodeGenType("EvaluatorGenerationJobs")]
 public partial class EvaluatorGenerationJobs
 {
@@ -24,12 +26,12 @@ public partial class EvaluatorGenerationJobs
     /// Creates an evaluator generation job. The service generates rubric-based evaluator
     /// definitions from the provided source materials asynchronously.
     /// </summary>
-    /// <param name="job"> The job to create. </param>
+    /// <param name="job"> The inputs for the job to create. </param>
     /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
     {
         OperationResult operation = Create(false, job, operationId, cancellationToken);
         ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
@@ -41,13 +43,13 @@ public partial class EvaluatorGenerationJobs
     /// definitions from the provided source materials asynchronously.
     /// </summary>
     /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="job"> The job to create. </param>
+    /// <param name="job"> The inputs for the job to create. </param>
     /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("SCME0006")]
-    public virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual OperationResult Create(bool waitUntilCompleted, EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(job, nameof(job));
         using BinaryContent content = job;
@@ -58,12 +60,12 @@ public partial class EvaluatorGenerationJobs
     /// Creates an evaluator generation job. The service generates rubric-based evaluator
     /// definitions from the provided source materials asynchronously.
     /// </summary>
-    /// <param name="job"> The job to create. </param>
+    /// <param name="job"> The inputs for the job to create. </param>
     /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
     {
         OperationResult operation = await CreateAsync(false, job, operationId, cancellationToken).ConfigureAwait(false);
         ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
@@ -75,13 +77,13 @@ public partial class EvaluatorGenerationJobs
     /// definitions from the provided source materials asynchronously.
     /// </summary>
     /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="job"> The job to create. </param>
+    /// <param name="job"> The inputs for the job to create. </param>
     /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="job"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("SCME0006")]
-    public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
+    public virtual async Task<OperationResult> CreateAsync(bool waitUntilCompleted, EvaluatorGenerationInputs job, string operationId = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(job, nameof(job));
         using BinaryContent content = job;

@@ -89,6 +89,7 @@ public class ProjectsRealtimeClientTests
                 "Must target the agent-scoped realtime endpoint, not OpenAI's generic /realtime endpoint.");
             Assert.That(query, Does.Contain("api-version="));
             Assert.That(foundryFeatures, Does.Contain("VoiceAgents=V1Preview"));
+            Assert.That(foundryFeatures, Does.Not.Contain("AgentsOptimization=V2Preview"));
             Assert.That(authorization, Does.StartWith("Bearer "));
             Assert.That(subProtocol, Is.EqualTo("realtime"));
         });

@@ -113,7 +113,7 @@ namespace Azure.AI.Projects
             FoundryOpenAIError error = default;
             string name = default;
             IList<DataGenerationJobSource> sources = default;
-            DataGenerationJobOptions generationConfiguration = default;
+            DataGenerationJobConfiguration generationConfiguration = default;
             DataGenerationJobScenario scenario = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset? finishedOn = default;
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("generation_configuration"u8))
                 {
-                    generationConfiguration = DataGenerationJobOptions.DeserializeDataGenerationJobOptions(prop.Value, options);
+                    generationConfiguration = DataGenerationJobConfiguration.DeserializeDataGenerationJobConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scenario"u8))

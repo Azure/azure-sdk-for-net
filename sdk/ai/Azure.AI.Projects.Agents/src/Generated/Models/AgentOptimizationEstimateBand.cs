@@ -7,16 +7,16 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A low/typical/ceiling range for an estimated quantity. Expected values may be fractional, including estimated model-call counts. </summary>
+    /// <summary> A low/typical/ceiling range for an estimated quantity. Cost values apply average per-call usage assumptions to each call-count scenario. Expected values may be fractional, including estimated model-call counts. </summary>
     public partial class AgentOptimizationEstimateBand
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationEstimateBand"/>. </summary>
-        /// <param name="low"> Lower bound. </param>
-        /// <param name="typical"> Central estimate. </param>
-        /// <param name="ceiling"> Upper bound. </param>
+        /// <param name="low"> Lower estimate based on model calls required for every run. </param>
+        /// <param name="typical"> Expected estimate based on model calls consumed by a typical run. </param>
+        /// <param name="ceiling"> Upper bound calculated from the maximum number of model calls. </param>
         internal AgentOptimizationEstimateBand(double low, double typical, double ceiling)
         {
             Low = low;
@@ -25,9 +25,9 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationEstimateBand"/>. </summary>
-        /// <param name="low"> Lower bound. </param>
-        /// <param name="typical"> Central estimate. </param>
-        /// <param name="ceiling"> Upper bound. </param>
+        /// <param name="low"> Lower estimate based on model calls required for every run. </param>
+        /// <param name="typical"> Expected estimate based on model calls consumed by a typical run. </param>
+        /// <param name="ceiling"> Upper bound calculated from the maximum number of model calls. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AgentOptimizationEstimateBand(double low, double typical, double ceiling, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,13 +37,13 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Lower bound. </summary>
+        /// <summary> Lower estimate based on model calls required for every run. </summary>
         public double Low { get; }
 
-        /// <summary> Central estimate. </summary>
+        /// <summary> Expected estimate based on model calls consumed by a typical run. </summary>
         public double Typical { get; }
 
-        /// <summary> Upper bound. </summary>
+        /// <summary> Upper bound calculated from the maximum number of model calls. </summary>
         public double Ceiling { get; }
     }
 }

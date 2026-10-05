@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added the experimental `VoiceAgentTransport` type with WebSocket and WebRTC transport values.
+
 ### Breaking Changes
 
 - `OpenAI.RealtimeClientEventType` has been removed. The affected property now uses the existing `OpenAI.Realtime.RealtimeClientCommandKind` type instead.
@@ -13,6 +15,8 @@
 
 ### Bugs Fixed
 
+- Removed the retired `AgentsOptimization=V2Preview` opt-in from the default `Foundry-Features` header. Agent optimization no longer requires this preview feature flag.
+- Fixed deserialization of persisted Voice Agent response status, output modalities, and semantic VAD eagerness values.
 - Fixed `AgentAdministrationClient.GenerateAgent`/`GenerateAgentAsync` (and the `BetaAgents` sub-client that now hosts them) being completely inaccessible: the generated `BetaAgents` type was only reachable through an internal aggregator client (`InternalProjectsClient`), so there was no public path to it at all. Added `AgentAdministrationClient.GetBetaAgentsClient()` and restored the strongly-typed `GenerateAgent(GenerateVoiceAgentRequest, ...)`/`GenerateAgentAsync(...)` overloads that previously existed directly on `AgentAdministrationClient`.
 
 - Fixed a bug where several Voice Agents-related types were incorrectly generated into the `OpenAI` namespace instead of `Azure.AI.Projects.Agents`:

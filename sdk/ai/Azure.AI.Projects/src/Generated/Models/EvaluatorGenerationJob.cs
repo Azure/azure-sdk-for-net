@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
@@ -15,29 +16,43 @@ namespace Azure.AI.Projects.Evaluation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/>. </summary>
-        public EvaluatorGenerationJob()
+        /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
+        /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
+        /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
+        internal EvaluatorGenerationJob(IEnumerable<EvaluatorGenerationJobSource> sources, string model, string evaluatorName)
         {
+            Sources = sources.ToList();
+            Model = model;
+            EvaluatorName = evaluatorName;
             InputQualityWarnings = new ChangeTrackingList<RubricGenerationInputQualityWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationJob"/>. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
-        /// <param name="inputs"> Caller-supplied inputs. </param>
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
+        /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
+        /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
+        /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
+        /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
+        /// <param name="evaluatorDescription"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedOn"> The timestamp when the job finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="usage"> Token consumption summary. Populated when the job reaches a terminal state. </param>
         /// <param name="inputQualityWarnings"> Non-fatal input-quality advisories produced by the generation pipeline. Read-only; service-generated; populated only on terminal jobs when advisories fired. Omitted when generation was clean. Cleared when a subsequent `PATCH` to the paired `EvaluatorVersion.definition` invalidates the advisories. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorGenerationJob(string id, EvaluatorGenerationInputs inputs, EvaluatorVersion result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdOn, DateTimeOffset? finishedOn, EvaluatorGenerationTokenUsage usage, IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationJob(string id, EvaluatorVersion result, ProjectsJobStatus status, FoundryOpenAIError error, IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string evaluatorDescription, DateTimeOffset createdOn, DateTimeOffset? finishedOn, EvaluatorGenerationTokenUsage usage, IReadOnlyList<RubricGenerationInputQualityWarning> inputQualityWarnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Inputs = inputs;
             Result = result;
             Status = status;
             Error = error;
+            Sources = sources;
+            Model = model;
+            EvaluatorName = evaluatorName;
+            EvaluatorDisplayName = evaluatorDisplayName;
+            EvaluatorDescription = evaluatorDescription;
             CreatedOn = createdOn;
             FinishedOn = finishedOn;
             Usage = usage;
@@ -48,14 +63,26 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Server-assigned unique identifier. </summary>
         public string Id { get; }
 
-        /// <summary> Caller-supplied inputs. </summary>
-        public EvaluatorGenerationInputs Inputs { get; set; }
-
         /// <summary> Result produced on success. </summary>
         public EvaluatorVersion Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
         public ProjectsJobStatus Status { get; }
+
+        /// <summary> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </summary>
+        public IList<EvaluatorGenerationJobSource> Sources { get; }
+
+        /// <summary> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </summary>
+        public string Model { get; }
+
+        /// <summary> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </summary>
+        public string EvaluatorName { get; }
+
+        /// <summary> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </summary>
+        public string EvaluatorDisplayName { get; }
+
+        /// <summary> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </summary>
+        public string EvaluatorDescription { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
         public DateTimeOffset CreatedOn { get; }

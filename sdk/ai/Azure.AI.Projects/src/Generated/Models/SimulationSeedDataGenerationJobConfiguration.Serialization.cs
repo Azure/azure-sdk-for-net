@@ -5,63 +5,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<DataGenerationJobOptions>
+    /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
+    public partial class SimulationSeedDataGenerationJobConfiguration : DataGenerationJobConfiguration, IJsonModel<SimulationSeedDataGenerationJobConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownDataGenerationJobOptions"/> for deserialization. </summary>
-        internal UnknownDataGenerationJobOptions()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
-        protected override DataGenerationJobOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataGenerationJobConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimulationSeedDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataGenerationJobOptions(document.RootElement, options);
+                        return DeserializeSimulationSeedDataGenerationJobConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataGenerationJobOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimulationSeedDataGenerationJobConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimulationSeedDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataGenerationJobOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimulationSeedDataGenerationJobConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataGenerationJobOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SimulationSeedDataGenerationJobConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
-        DataGenerationJobOptions IPersistableModel<DataGenerationJobOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SimulationSeedDataGenerationJobConfiguration IPersistableModel<SimulationSeedDataGenerationJobConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => (SimulationSeedDataGenerationJobConfiguration)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataGenerationJobOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SimulationSeedDataGenerationJobConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataGenerationJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SimulationSeedDataGenerationJobConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,36 +65,34 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimulationSeedDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataGenerationJobOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SimulationSeedDataGenerationJobConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
-        DataGenerationJobOptions IJsonModel<DataGenerationJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SimulationSeedDataGenerationJobConfiguration IJsonModel<SimulationSeedDataGenerationJobConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SimulationSeedDataGenerationJobConfiguration)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        [Experimental("AAIP001")]
-        protected override DataGenerationJobOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataGenerationJobConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SimulationSeedDataGenerationJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataGenerationJobOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SimulationSeedDataGenerationJobConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataGenerationJobOptions(document.RootElement, options);
+            return DeserializeSimulationSeedDataGenerationJobConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownDataGenerationJobOptions DeserializeUnknownDataGenerationJobOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static SimulationSeedDataGenerationJobConfiguration DeserializeSimulationSeedDataGenerationJobConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +132,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownDataGenerationJobOptions(@type, trainSplit, modelOptions, additionalBinaryDataProperties);
+            return new SimulationSeedDataGenerationJobConfiguration(@type, trainSplit, modelOptions, additionalBinaryDataProperties);
         }
     }
 }

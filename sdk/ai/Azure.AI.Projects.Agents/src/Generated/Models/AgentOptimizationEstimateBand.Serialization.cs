@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> A low/typical/ceiling range for an estimated quantity. Expected values may be fractional, including estimated model-call counts. </summary>
+    /// <summary> A low/typical/ceiling range for an estimated quantity. Cost values apply average per-call usage assumptions to each call-count scenario. Expected values may be fractional, including estimated model-call counts. </summary>
     public partial class AgentOptimizationEstimateBand : IJsonModel<AgentOptimizationEstimateBand>
     {
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationEstimateBand"/> for deserialization. </summary>

@@ -42,10 +42,11 @@ public class ProjectsRealtimeSessionLifecycleTests : ProjectsRealtimeLiveTestBas
                 Instructions = "You are a helpful assistant. Always answer with a very long, detailed reply.",
             };
             definition.OutputModalities.Add(Azure.AI.Projects.Agents.VoiceOutputModality.Text);
-            await agentsClient.CreateAgentVersionAsync(
+            Azure.AI.Projects.Agents.ProjectsAgentVersion version = await agentsClient.CreateAgentVersionAsync(
                 LIFECYCLE_AGENT_NAME,
                 new Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions(definition),
                 cancellationToken: cancellationToken);
+            TrackCreatedVoiceAgent(LIFECYCLE_AGENT_NAME, version);
         }
 
         return (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(LIFECYCLE_AGENT_NAME, intent: null, cancellationToken: cancellationToken);

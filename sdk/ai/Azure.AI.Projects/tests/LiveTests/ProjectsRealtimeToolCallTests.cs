@@ -61,10 +61,11 @@ public class ProjectsRealtimeToolCallTests : ProjectsRealtimeLiveTestBase
                     required = Array.Empty<string>()
                 })),
             });
-            await agentsClient.CreateAgentVersionAsync(
+            Azure.AI.Projects.Agents.ProjectsAgentVersion version = await agentsClient.CreateAgentVersionAsync(
                 TOOLCALL_AGENT_NAME,
                 new Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions(definition),
                 cancellationToken: cancellationToken);
+            TrackCreatedVoiceAgent(TOOLCALL_AGENT_NAME, version);
         }
     }
 

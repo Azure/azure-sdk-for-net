@@ -95,6 +95,7 @@ public class AgentTelephonyProtocolTests
             Assert.That(request.Uri.AbsolutePath, Does.EndWith(expectedPathSuffix));
             Assert.That(request.Headers.TryGetValue("Foundry-Features", out string foundryFeatures), Is.True);
             Assert.That(foundryFeatures, Does.Contain("VoiceAgents=V1Preview"));
+            Assert.That(foundryFeatures, Does.Not.Contain("AgentsOptimization=V2Preview"));
 
             if (expectedIfMatch is not null)
             {

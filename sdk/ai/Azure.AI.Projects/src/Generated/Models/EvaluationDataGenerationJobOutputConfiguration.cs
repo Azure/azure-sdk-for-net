@@ -7,25 +7,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Dataset output target for an evaluation data generation job. </summary>
-    public partial class EvaluationDataGenerationJobOutputTarget
+    /// <summary> Dataset output configuration for an evaluation data generation job. </summary>
+    public partial class EvaluationDataGenerationJobOutputConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationDataGenerationJobOutputTarget"/>. </summary>
-        public EvaluationDataGenerationJobOutputTarget()
+        /// <summary> Initializes a new instance of <see cref="EvaluationDataGenerationJobOutputConfiguration"/>. </summary>
+        public EvaluationDataGenerationJobOutputConfiguration()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationDataGenerationJobOutputTarget"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvaluationDataGenerationJobOutputConfiguration"/>. </summary>
         /// <param name="name"> Dataset name to assign to the output. </param>
         /// <param name="description"> Description to assign to the output dataset. </param>
         /// <param name="tags"> Tags to assign to the output dataset. </param>
         /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationDataGenerationJobOutputTarget(string name, string description, IDictionary<string, string> tags, DataGenerationJobOutputWriteMode? writeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationDataGenerationJobOutputConfiguration(string name, string description, IDictionary<string, string> tags, DataGenerationJobOutputWriteMode? writeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

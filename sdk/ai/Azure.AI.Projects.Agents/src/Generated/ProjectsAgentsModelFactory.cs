@@ -3640,10 +3640,10 @@ namespace Azure.AI.Projects.Agents
             return new AgentOptimizationStageEstimate(agent, evaluation, optimization, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A low/typical/ceiling range for an estimated quantity. Expected values may be fractional, including estimated model-call counts. </summary>
-        /// <param name="low"> Lower bound. </param>
-        /// <param name="typical"> Central estimate. </param>
-        /// <param name="ceiling"> Upper bound. </param>
+        /// <summary> A low/typical/ceiling range for an estimated quantity. Cost values apply average per-call usage assumptions to each call-count scenario. Expected values may be fractional, including estimated model-call counts. </summary>
+        /// <param name="low"> Lower estimate based on model calls required for every run. </param>
+        /// <param name="typical"> Expected estimate based on model calls consumed by a typical run. </param>
+        /// <param name="ceiling"> Upper bound calculated from the maximum number of model calls. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationEstimateBand"/> instance for mocking. </returns>
         public static AgentOptimizationEstimateBand AgentOptimizationEstimateBand(double low = default, double typical = default, double ceiling = default)
         {

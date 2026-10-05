@@ -13,6 +13,16 @@ namespace Azure.AI.Projects.Agents.Tests;
 public class AgentExperimentalMarkersTests
 {
     [Test]
+    public void VoiceAgentTransportValuesMatchWireNames()
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(VoiceAgentTransport.Websocket.ToString(), Is.EqualTo("websocket"));
+            Assert.That(VoiceAgentTransport.Webrtc.ToString(), Is.EqualTo("webrtc"));
+        });
+    }
+
+    [Test]
     public void GenerateAgentOverloadsAreExperimental()
     {
         MethodInfo[] methods = typeof(AgentAdministrationClient)
@@ -32,6 +42,7 @@ public class AgentExperimentalMarkersTests
     [TestCase(typeof(AgentOptimizationCandidate))]
     [TestCase(typeof(AgentOptimizationJob))]
     [TestCase(typeof(AgentOptimizationJobResult))]
+    [TestCase(typeof(VoiceAgentTransport))]
     [TestCase(typeof(VoiceResponseBaseObject))]
     public void PreviewTypeIsExperimental(Type type)
     {

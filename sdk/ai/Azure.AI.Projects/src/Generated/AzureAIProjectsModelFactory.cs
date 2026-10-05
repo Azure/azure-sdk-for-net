@@ -1432,7 +1432,7 @@ namespace Azure.AI.Projects
         /// <param name="severity"> Advisory severity. Initial values: `warning`. </param>
         /// <param name="message"> Human-readable message suitable for direct SDK/CLI/UI display. Must not include raw prompt, instruction, dataset, or trace text. </param>
         /// <param name="source"> Which source category the warning applies to. `aggregate` is used only for cross-source warnings. </param>
-        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.inputs.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
+        /// <param name="sourceIndex"> Zero-based index into `EvaluatorGenerationJob.sources` when the warning applies to a specific source. Omitted for aggregate warnings and for warnings not tied to one source. </param>
         /// <returns> A new <see cref="Projects.RubricGenerationInputQualityWarning"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static RubricGenerationInputQualityWarning RubricGenerationInputQualityWarning(RubricGenerationInputQualityWarningCode code = default, RubricGenerationInputQualityWarningSeverity severity = default, string message = default, RubricGenerationInputQualityWarningSource source = default, int? sourceIndex = default)
@@ -2631,17 +2631,17 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Options for managing data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.SimulationSeedDataGenerationJobOptions"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="Projects.TracesDataGenerationJobOptions"/>.
+        /// Configuration for managing data generation jobs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/>, <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="Projects.TracesDataGenerationJobConfiguration"/>.
         /// </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.DataGenerationJobConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobOptions DataGenerationJobOptions(string @type = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static DataGenerationJobConfiguration DataGenerationJobConfiguration(string @type = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new UnknownDataGenerationJobOptions(new DataGenerationJobKind(@type), trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new UnknownDataGenerationJobConfiguration(new DataGenerationJobKind(@type), trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> LLM model options for data generation jobs. </summary>
@@ -2653,18 +2653,18 @@ namespace Azure.AI.Projects
             return new DataGenerationModelOptions(model, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The options for a data generation job with SimpleQnA type. </summary>
+        /// <summary> The configuration for a data generation job with SimpleQnA type. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
-        /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
+        public static SimpleQnADataGenerationJobConfiguration SimpleQnADataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
         {
             questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
 
-            return new SimpleQnADataGenerationJobOptions(
+            return new SimpleQnADataGenerationJobConfiguration(
                 DataGenerationJobKind.SimpleQna,
                 trainSplit,
                 modelOptions,
@@ -2673,16 +2673,16 @@ namespace Azure.AI.Projects
                 questionTypes.ToList());
         }
 
-        /// <summary> The options for a data generation job with Traces type. </summary>
+        /// <summary> The configuration for a data generation job with Traces type. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
         /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
-        /// <returns> A new <see cref="Projects.TracesDataGenerationJobOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.TracesDataGenerationJobConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default)
+        public static TracesDataGenerationJobConfiguration TracesDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default)
         {
-            return new TracesDataGenerationJobOptions(
+            return new TracesDataGenerationJobConfiguration(
                 DataGenerationJobKind.Traces,
                 trainSplit,
                 modelOptions,
@@ -2691,61 +2691,61 @@ namespace Azure.AI.Projects
                 redactPrivateContent);
         }
 
-        /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
+        /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
-        /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SimulationSeedDataGenerationJobOptions SimulationSeedDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static SimulationSeedDataGenerationJobConfiguration SimulationSeedDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new SimulationSeedDataGenerationJobOptions(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new SimulationSeedDataGenerationJobConfiguration(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The options for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
+        /// <summary> The configuration for a data generation job with ToolUse type. This is a preview feature used only for fine-tuning scenarios. </summary>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
-        /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ToolUseFineTuningDataGenerationJobOptions ToolUseFineTuningDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
+        public static ToolUseFineTuningDataGenerationJobConfiguration ToolUseFineTuningDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
         {
-            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
+            return new ToolUseFineTuningDataGenerationJobConfiguration(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
         }
 
-        /// <summary> Dataset output target for an evaluation data generation job. </summary>
+        /// <summary> Dataset output configuration for an evaluation data generation job. </summary>
         /// <param name="name"> Dataset name to assign to the output. </param>
         /// <param name="description"> Description to assign to the output dataset. </param>
         /// <param name="tags"> Tags to assign to the output dataset. </param>
         /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
-        /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobOutputTarget"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluationDataGenerationJobOutputTarget EvaluationDataGenerationJobOutputTarget(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
+        public static EvaluationDataGenerationJobOutputConfiguration EvaluationDataGenerationJobOutputConfiguration(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EvaluationDataGenerationJobOutputTarget(name, description, tags, writeMode, additionalBinaryDataProperties: null);
+            return new EvaluationDataGenerationJobOutputConfiguration(name, description, tags, writeMode, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> File output target for a supervised fine-tuning data generation job. This is a preview feature. </summary>
+        /// <summary> File output configuration for a supervised fine-tuning data generation job. This is a preview feature. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
-        /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobOutputTarget"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SupervisedFineTuningDataGenerationJobOutputTarget SupervisedFineTuningDataGenerationJobOutputTarget(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
+        public static SupervisedFineTuningDataGenerationJobOutputConfiguration SupervisedFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
-            return new SupervisedFineTuningDataGenerationJobOutputTarget(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
+            return new SupervisedFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> File output target for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
+        /// <summary> File output configuration for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
         /// <param name="name"> Filename to assign to the generated fine-tuning file. </param>
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
-        /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobOutputTarget"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ReinforcementFineTuningDataGenerationJobOutputTarget ReinforcementFineTuningDataGenerationJobOutputTarget(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
+        public static ReinforcementFineTuningDataGenerationJobOutputConfiguration ReinforcementFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
-            return new ReinforcementFineTuningDataGenerationJobOutputTarget(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
+            return new ReinforcementFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2758,7 +2758,7 @@ namespace Azure.AI.Projects
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobInputs"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, string scenario = default)
+        public static DataGenerationJobInputs DataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, string scenario = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
 
@@ -2772,7 +2772,7 @@ namespace Azure.AI.Projects
         /// <param name="outputConfiguration"> Optional dataset output configuration for the generated evaluation data. </param>
         /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobInputs"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluationDataGenerationJobInputs EvaluationDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, EvaluationDataGenerationJobOutputTarget outputConfiguration = default)
+        public static EvaluationDataGenerationJobInputs EvaluationDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, EvaluationDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
 
@@ -2792,7 +2792,7 @@ namespace Azure.AI.Projects
         /// <param name="outputConfiguration"> Optional file output configuration for the generated supervised fine-tuning data. </param>
         /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, SupervisedFineTuningDataGenerationJobOutputTarget outputConfiguration = default)
+        public static SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, SupervisedFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
 
@@ -2812,7 +2812,7 @@ namespace Azure.AI.Projects
         /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
         /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobOptions generationConfiguration = default, ReinforcementFineTuningDataGenerationJobOutputTarget outputConfiguration = default)
+        public static ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
 

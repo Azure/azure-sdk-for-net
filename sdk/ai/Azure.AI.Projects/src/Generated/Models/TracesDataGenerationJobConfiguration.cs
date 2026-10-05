@@ -7,22 +7,22 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The options for a data generation job with Traces type. </summary>
-    public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions
+    /// <summary> The configuration for a data generation job with Traces type. </summary>
+    public partial class TracesDataGenerationJobConfiguration : DataGenerationJobConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
-        public TracesDataGenerationJobOptions() : base(DataGenerationJobKind.Traces)
+        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobConfiguration"/>. </summary>
+        public TracesDataGenerationJobConfiguration() : base(DataGenerationJobKind.Traces)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobConfiguration"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
         /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
-        internal TracesDataGenerationJobOptions(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxSamples, bool? redactPrivateContent) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxSamples, bool? redactPrivateContent) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             MaxSamples = maxSamples;
             RedactPrivateContent = redactPrivateContent;

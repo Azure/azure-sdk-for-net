@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
-        internal EvaluationDataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration) : base(name, sources, generationConfiguration, DataGenerationJobScenario.Evaluation)
+        internal EvaluationDataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration) : base(name, sources, generationConfiguration, DataGenerationJobScenario.Evaluation)
         {
         }
 
@@ -31,12 +31,12 @@ namespace Azure.AI.Projects
         /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputConfiguration"> Optional dataset output configuration for the generated evaluation data. </param>
-        internal EvaluationDataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvaluationDataGenerationJobOutputTarget outputConfiguration) : base(id, result, status, error, name, sources, generationConfiguration, scenario, createdOn, finishedOn, additionalBinaryDataProperties)
+        internal EvaluationDataGenerationJob(string id, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvaluationDataGenerationJobOutputConfiguration outputConfiguration) : base(id, result, status, error, name, sources, generationConfiguration, scenario, createdOn, finishedOn, additionalBinaryDataProperties)
         {
             OutputConfiguration = outputConfiguration;
         }
 
         /// <summary> Optional dataset output configuration for the generated evaluation data. </summary>
-        public EvaluationDataGenerationJobOutputTarget OutputConfiguration { get; }
+        public EvaluationDataGenerationJobOutputConfiguration OutputConfiguration { get; }
     }
 }

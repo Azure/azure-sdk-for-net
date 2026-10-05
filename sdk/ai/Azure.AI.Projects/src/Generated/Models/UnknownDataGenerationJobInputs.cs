@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobOptions generationConfiguration, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, sources, generationConfiguration, scenario != default ? scenario : "unknown", additionalBinaryDataProperties)
+        internal UnknownDataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, sources, generationConfiguration, scenario != default ? scenario : "unknown", additionalBinaryDataProperties)
         {
         }
     }
