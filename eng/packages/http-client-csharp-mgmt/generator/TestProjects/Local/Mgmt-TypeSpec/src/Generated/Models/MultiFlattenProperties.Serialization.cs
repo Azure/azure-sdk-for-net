@@ -183,6 +183,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("inner"u8))
             {
+                if (Inner == null)
+                {
+                    return false;
+                }
                 return Inner.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("inner"u8.Length)], out value);
             }
             return false;
@@ -200,6 +204,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("inner"u8))
             {
+                if (Inner == null)
+                {
+                    return false;
+                }
                 Inner.Patch.Set([.. "$"u8, .. local.Slice("inner"u8.Length)], value);
                 return true;
             }

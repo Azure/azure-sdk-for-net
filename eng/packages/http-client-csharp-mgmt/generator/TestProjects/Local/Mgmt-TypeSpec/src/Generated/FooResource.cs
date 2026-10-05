@@ -569,7 +569,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
                     foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
                     {
-                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                        valueResult.Add(valueResultProperty.Name, valueResultProperty.Value.GetUtf8Bytes());
                     }
                     value = valueResult;
                 }
@@ -628,7 +628,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Dictionary<string, BinaryData> valueResult = new Dictionary<string, BinaryData>();
                     foreach (JsonProperty valueResultProperty in document.RootElement.EnumerateObject())
                     {
-                        valueResult.Add(valueResultProperty.Name, BinaryData.FromString(valueResultProperty.Value.GetRawText()));
+                        valueResult.Add(valueResultProperty.Name, valueResultProperty.Value.GetUtf8Bytes());
                     }
                     value = valueResult;
                 }
@@ -771,7 +771,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT(
+            return new FooResourceGetDependenciesAsyncCollectionResultOfT(
                 _foosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -809,7 +809,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new MgmtTypeSpecFoosListDependenciesCollectionResultOfT(
+            return new FooResourceGetDependenciesCollectionResultOfT(
                 _foosRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

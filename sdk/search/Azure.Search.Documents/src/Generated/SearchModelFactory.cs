@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
-        public static FacetResult FacetResult(long? count = default, double? avg = default, double? min = default, double? max = default, double? sum = default, long? cardinality = default, IReadOnlyDictionary<string, IList<FacetResult>> facets = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static FacetResult FacetResult(long? count, double? avg, double? min, double? max, double? sum, long? cardinality, IReadOnlyDictionary<string, IList<FacetResult>> facets, IDictionary<string, BinaryData> additionalProperties)
         {
             facets ??= new ChangeTrackingDictionary<string, IList<FacetResult>>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,7 +174,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// The query parameters for vector and hybrid search queries.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizableImageBinaryQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, <see cref="Models.VectorizableTextQuery"/>, and <see cref="Models.VectorizedQuery"/>.
         /// </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
@@ -203,7 +203,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// The threshold used for vector queries.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorSimilarityThreshold"/> and <see cref="Models.SearchScoreThreshold"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SearchScoreThreshold"/> and <see cref="Models.VectorSimilarityThreshold"/>.
         /// </summary>
         /// <param name="kind"> Type of threshold. </param>
         /// <returns> A new <see cref="Models.VectorThreshold"/> instance for mocking. </returns>
@@ -364,7 +364,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
         /// <param name="innerHits"> Contains debugging information specific to vectors matched within a collection of complex types. </param>
         /// <returns> A new <see cref="Models.DocumentDebugInfo"/> instance for mocking. </returns>
-        public static DocumentDebugInfo DocumentDebugInfo(SemanticDebugInfo semantic = default, VectorsDebugInfo vectors = default, IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits = default)
+        public static DocumentDebugInfo DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors, IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits = default)
         {
             innerHits ??= new ChangeTrackingDictionary<string, IList<QueryResultDocumentInnerHit>>();
 
@@ -589,7 +589,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndex"/> instance for mocking. </returns>
-        public static SearchIndex SearchIndex(string name = default, string description = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, SearchIndexPermissionFilterOption? permissionFilterOption = default, bool? purviewEnabled = default, SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default, IEnumerable<SearchField> fields = default, string etag = default)
+        public static SearchIndex SearchIndex(string name, string description, IEnumerable<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IEnumerable<SearchSuggester> suggesters, IEnumerable<LexicalAnalyzer> analyzers, IEnumerable<LexicalTokenizer> tokenizers, IEnumerable<TokenFilter> tokenFilters, IEnumerable<CharFilter> charFilters, IEnumerable<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IEnumerable<SearchField> fields, string etag = default)
         {
             scoringProfiles ??= new ChangeTrackingList<ScoringProfile>();
             suggesters ??= new ChangeTrackingList<SearchSuggester>();
@@ -1490,7 +1490,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Contains configuration options specific to the algorithm used during indexing or querying.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.HnswAlgorithmConfiguration"/> and <see cref="Indexes.Models.ExhaustiveKnnAlgorithmConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="Indexes.Models.HnswAlgorithmConfiguration"/>.
         /// </summary>
         /// <param name="name"> The name to associate with this particular configuration. </param>
         /// <param name="kind"> Type of VectorSearchAlgorithmConfiguration. </param>
@@ -1539,7 +1539,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Specifies the vectorization method to be used during query time.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.AzureOpenAIVectorizer"/>, <see cref="Indexes.Models.WebApiVectorizer"/>, <see cref="Indexes.Models.AIServicesVisionVectorizer"/>, and <see cref="Indexes.Models.AzureMachineLearningVectorizer"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.AIServicesVisionVectorizer"/>, <see cref="Indexes.Models.AzureMachineLearningVectorizer"/>, <see cref="Indexes.Models.AzureOpenAIVectorizer"/>, and <see cref="Indexes.Models.WebApiVectorizer"/>.
         /// </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> Type of VectorSearchVectorizer. </param>
@@ -1658,7 +1658,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Contains configuration options specific to the compression method used during indexing or querying.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.ScalarQuantizationCompression"/> and <see cref="Indexes.Models.BinaryQuantizationCompression"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.BinaryQuantizationCompression"/> and <see cref="Indexes.Models.ScalarQuantizationCompression"/>.
         /// </summary>
         /// <param name="compressionName"> The name to associate with this particular configuration. </param>
         /// <param name="rescoringOptions"> Contains the options for rescoring. </param>
@@ -1894,7 +1894,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for reasoning effort.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>, and <see cref="KnowledgeBases.Models.KnowledgeRetrievalAutoReasoningEffort"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeRetrievalAutoReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>, and <see cref="KnowledgeBases.Models.KnowledgeRetrievalMinimalReasoningEffort"/>.
         /// </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort"/> instance for mocking. </returns>
@@ -1943,7 +1943,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Represents a knowledge source definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Indexes.Models.IndexedSharePointKnowledgeSource"/>, <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/>, <see cref="Indexes.Models.IndexedSqlKnowledgeSource"/>, <see cref="Indexes.Models.FileKnowledgeSource"/>, <see cref="Indexes.Models.WebKnowledgeSource"/>, <see cref="Indexes.Models.RemoteSharePointKnowledgeSource"/>, <see cref="Indexes.Models.WorkIQKnowledgeSource"/>, <see cref="Indexes.Models.McpServerKnowledgeSource"/>, <see cref="Indexes.Models.FabricDataAgentKnowledgeSource"/>, and <see cref="Indexes.Models.FabricOntologyKnowledgeSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Indexes.Models.FabricDataAgentKnowledgeSource"/>, <see cref="Indexes.Models.FabricOntologyKnowledgeSource"/>, <see cref="Indexes.Models.FileKnowledgeSource"/>, <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/>, <see cref="Indexes.Models.IndexedSharePointKnowledgeSource"/>, <see cref="Indexes.Models.IndexedSqlKnowledgeSource"/>, <see cref="Indexes.Models.McpServerKnowledgeSource"/>, <see cref="Indexes.Models.RemoteSharePointKnowledgeSource"/>, <see cref="Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Indexes.Models.WebKnowledgeSource"/>, and <see cref="Indexes.Models.WorkIQKnowledgeSource"/>.
         /// </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
@@ -2635,7 +2635,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Output parsing configuration for an MCP server tool.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.McpServerAutoOutputParsing"/>, <see cref="Indexes.Models.McpServerJsonOutputParsing"/>, <see cref="Indexes.Models.McpServerSplitOutputParsing"/>, and <see cref="Indexes.Models.McpServerNoneOutputParsing"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.McpServerAutoOutputParsing"/>, <see cref="Indexes.Models.McpServerJsonOutputParsing"/>, <see cref="Indexes.Models.McpServerNoneOutputParsing"/>, and <see cref="Indexes.Models.McpServerSplitOutputParsing"/>.
         /// </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <returns> A new <see cref="Indexes.Models.McpServerOutputParsing"/> instance for mocking. </returns>
@@ -2915,7 +2915,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="limits"> Service level general limits. </param>
         /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceStatistics"/> instance for mocking. </returns>
-        public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters = default, SearchServiceLimits limits = default, ServiceIndexersRuntime indexersRuntime = default)
+        public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime)
         {
             return new SearchServiceStatistics(counters, limits, indexersRuntime, additionalBinaryDataProperties: null);
         }
@@ -2933,7 +2933,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="knowledgeBaseCounter"> Total number of knowledge bases. </param>
         /// <param name="knowledgeSourceCounter"> Total number of knowledge sources. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
-        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter = default, SearchResourceCounter documentCounter = default, SearchResourceCounter indexCounter = default, SearchResourceCounter indexerCounter = default, SearchResourceCounter dataSourceCounter = default, SearchResourceCounter storageSizeCounter = default, SearchResourceCounter synonymMapCounter = default, SearchResourceCounter skillsetCounter = default, SearchResourceCounter vectorIndexSizeCounter = default, SearchResourceCounter knowledgeBaseCounter = default, SearchResourceCounter knowledgeSourceCounter = default)
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, SearchResourceCounter knowledgeBaseCounter = default, SearchResourceCounter knowledgeSourceCounter = default)
         {
             return new SearchServiceCounters(
                 aliasCounter,
@@ -2959,7 +2959,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
         /// <param name="maxVectorIndexSizePerIndexInBytes"> The maximum vector index size (vector memory quota) allowed per index in bytes. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
-        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = default, int? maxFieldNestingDepthPerIndex = default, int? maxComplexCollectionFieldsPerIndex = default, int? maxComplexObjectsInCollectionsPerDocument = default, long? maxStoragePerIndexInBytes = default, long? maxCumulativeIndexerRuntimeSeconds = default, long? maxVectorIndexSizePerIndexInBytes = default)
+        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds, long? maxVectorIndexSizePerIndexInBytes = default)
         {
             return new SearchServiceLimits(
                 maxFieldsPerIndex,
@@ -3071,7 +3071,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexer"/> instance for mocking. </returns>
-        public static SearchIndexer SearchIndexer(string name = default, string description = default, string dataSourceName = default, string skillsetName = default, string targetIndexName = default, IndexingSchedule schedule = default, IndexingParameters parameters = default, IEnumerable<FieldMapping> fieldMappings = default, IEnumerable<FieldMapping> outputFieldMappings = default, bool? isDisabled = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexerCache cache = default)
+        public static SearchIndexer SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IEnumerable<FieldMapping> fieldMappings, IEnumerable<FieldMapping> outputFieldMappings, bool? isDisabled, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache)
         {
             fieldMappings ??= new ChangeTrackingList<FieldMapping>();
             outputFieldMappings ??= new ChangeTrackingList<FieldMapping>();
@@ -3192,7 +3192,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
-        public static SearchIndexerStatus SearchIndexerStatus(string name = default, IndexerStatus status = default, IndexerRuntime runtime = default, IndexerExecutionResult lastResult = default, IEnumerable<IndexerExecutionResult> executionHistory = default, SearchIndexerLimits limits = default, IndexerState currentState = default)
+        public static SearchIndexerStatus SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState = default)
         {
             executionHistory ??= new ChangeTrackingList<IndexerExecutionResult>();
 
@@ -3232,7 +3232,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexerExecutionResult"/> instance for mocking. </returns>
-        public static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status = default, IndexerExecutionStatusDetail? statusDetail = default, IndexingMode? mode = default, string errorMessage = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, IEnumerable<SearchIndexerError> errors = default, IEnumerable<SearchIndexerWarning> warnings = default, int itemCount = default, int failedItemCount = default, string initialTrackingState = default, string finalTrackingState = default)
+        public static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IEnumerable<SearchIndexerError> errors, IEnumerable<SearchIndexerWarning> warnings = default, int itemCount = default, int failedItemCount = default, string initialTrackingState = default, string finalTrackingState = default)
         {
             errors ??= new ChangeTrackingList<SearchIndexerError>();
             warnings ??= new ChangeTrackingList<SearchIndexerWarning>();
@@ -3310,7 +3310,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for skills.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.ConditionalSkill"/>, <see cref="Indexes.Models.KeyPhraseExtractionSkill"/>, <see cref="Indexes.Models.OcrSkill"/>, <see cref="Indexes.Models.ImageAnalysisSkill"/>, <see cref="Indexes.Models.LanguageDetectionSkill"/>, <see cref="Indexes.Models.ShaperSkill"/>, <see cref="Indexes.Models.MergeSkill"/>, <see cref="Indexes.Models.SentimentSkill"/>, <see cref="Indexes.Models.EntityLinkingSkill"/>, <see cref="Indexes.Models.EntityRecognitionSkill"/>, <see cref="Indexes.Models.PiiDetectionSkill"/>, <see cref="Indexes.Models.SplitSkill"/>, <see cref="Indexes.Models.CustomEntityLookupSkill"/>, <see cref="Indexes.Models.TextTranslationSkill"/>, <see cref="Indexes.Models.DocumentExtractionSkill"/>, <see cref="Indexes.Models.DocumentIntelligenceLayoutSkill"/>, <see cref="Indexes.Models.WebApiSkill"/>, <see cref="Indexes.Models.AzureMachineLearningSkill"/>, <see cref="Indexes.Models.AzureOpenAIEmbeddingSkill"/>, <see cref="Indexes.Models.VisionVectorizeSkill"/>, <see cref="Indexes.Models.ContentUnderstandingSkill"/>, and <see cref="Indexes.Models.ChatCompletionSkill"/>.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.AzureMachineLearningSkill"/>, <see cref="Indexes.Models.AzureOpenAIEmbeddingSkill"/>, <see cref="Indexes.Models.ChatCompletionSkill"/>, <see cref="Indexes.Models.ConditionalSkill"/>, <see cref="Indexes.Models.ContentUnderstandingSkill"/>, <see cref="Indexes.Models.CustomEntityLookupSkill"/>, <see cref="Indexes.Models.DocumentExtractionSkill"/>, <see cref="Indexes.Models.DocumentIntelligenceLayoutSkill"/>, <see cref="Indexes.Models.EntityLinkingSkill"/>, <see cref="Indexes.Models.EntityRecognitionSkill"/>, <see cref="Indexes.Models.ImageAnalysisSkill"/>, <see cref="Indexes.Models.KeyPhraseExtractionSkill"/>, <see cref="Indexes.Models.LanguageDetectionSkill"/>, <see cref="Indexes.Models.MergeSkill"/>, <see cref="Indexes.Models.OcrSkill"/>, <see cref="Indexes.Models.PiiDetectionSkill"/>, <see cref="Indexes.Models.SentimentSkill"/>, <see cref="Indexes.Models.ShaperSkill"/>, <see cref="Indexes.Models.SplitSkill"/>, <see cref="Indexes.Models.TextTranslationSkill"/>, <see cref="Indexes.Models.VisionVectorizeSkill"/>, and <see cref="Indexes.Models.WebApiSkill"/>.
         /// </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
@@ -4425,7 +4425,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Specifies the type of the message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseMessageImageContent"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseMessageTextContent"/>.
         /// </summary>
         /// <param name="type"> The type of the message. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMessageContent"/> instance for mocking. </returns>
@@ -4479,7 +4479,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for knowledge source runtime parameters.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedSharePointKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.WorkIQKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.FabricDataAgentKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.FabricOntologyKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.McpServerKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.FileKnowledgeSourceParams"/>, and <see cref="KnowledgeBases.Models.IndexedSqlKnowledgeSourceParams"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.FabricDataAgentKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.FabricOntologyKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.FileKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedSharePointKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedSqlKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.McpServerKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/>, and <see cref="KnowledgeBases.Models.WorkIQKnowledgeSourceParams"/>.
         /// </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
@@ -4899,7 +4899,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/>, and <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricDataAgentActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/>, and <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQActivityRecord"/>.
         /// </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
@@ -5621,7 +5621,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for references.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFileReference"/>, and <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricDataAgentReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFabricOntologyReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFileReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseMcpServerReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/>, and <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQReference"/>.
         /// </summary>
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
@@ -6031,6 +6031,23 @@ namespace Azure.Search.Documents.Models
             return SearchOptions(includeTotalCount: includeTotalCount, facets: facets, filter: filter, highlightFieldsRaw: highlightFieldsRaw, highlightPostTag: highlightPostTag, highlightPreTag: highlightPreTag, minimumCoverage: minimumCoverage, orderByRaw: orderByRaw, queryType: queryType, scoringStatistics: scoringStatistics, sessionId: sessionId, scoringParameters: scoringParameters, scoringProfile: scoringProfile, debug: debug, searchText: searchText, searchFieldsRaw: searchFieldsRaw, searchMode: searchMode, queryLanguage: default, querySpeller: default, selectRaw: selectRaw, skip: skip, size: size, semanticConfigurationName: semanticConfigurationName, semanticErrorMode: semanticErrorMode, semanticMaxWaitInMilliseconds: semanticMaxWaitInMilliseconds, semanticQuery: semanticQuery, queryAnswerRaw: queryAnswerRaw, queryCaptionRaw: queryCaptionRaw, queryRewritesRaw: default, semanticFields: default, vectorQueries: vectorQueries, filterMode: filterMode, hybridSearch: default);
         }
 
+        /// <summary>
+        /// The query parameters for vector and hybrid search queries.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VectorizedQuery"/>, <see cref="Models.VectorizableTextQuery"/>, <see cref="Models.VectorizableImageUrlQuery"/>, and <see cref="Models.VectorizableImageBinaryQuery"/>.
+        /// </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
+        /// <param name="oversampling"> Oversampling factor. Minimum value is 1. It overrides the 'defaultOversampling' parameter configured in the index definition. It can be set only when 'rerankWithOriginalVectors' is true. This parameter is only permitted when a compression method is used on the underlying vector field. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. This value is used when combining the results of multiple ranking lists produced by the different vector queries and/or the results retrieved through the text query. The higher the weight, the higher the documents that matched that query will be in the final ranking. Default is 1.0 and the value needs to be a positive number larger than zero. </param>
+        /// <param name="kind"> Type of query. </param>
+        /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        {
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
+        }
+
         /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
@@ -6204,6 +6221,22 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeSourceReference KnowledgeSourceReference(string name)
         {
             return KnowledgeSourceReference(name: name, enableImageServing: default, enableFreshness: default);
+        }
+
+        /// <summary>
+        /// Represents a knowledge source definition.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/>, and <see cref="Indexes.Models.WebKnowledgeSource"/>.
+        /// </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeSource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
+        {
+            return KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
         }
 
         /// <summary> Knowledge Source targeting a search index. </summary>
@@ -6425,6 +6458,22 @@ namespace Azure.Search.Documents.Models
             return KnowledgeBaseRetrievalRequest(messages: default, intents: intents, maxRuntimeInSeconds: maxRuntimeInSeconds, maxOutputSize: default, maxOutputDocuments: default, maxOutputSizeInTokens: maxOutputSizeInTokens, retrievalReasoningEffort: default, includeActivity: includeActivity, outputMode: default, knowledgeSourceParams: knowledgeSourceParams);
         }
 
+        /// <summary>
+        /// Base type for knowledge source runtime parameters.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/>, <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/>, and <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/>.
+        /// </summary>
+        /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
+        /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
+        /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
+        /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceParams"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string kind)
+        {
+            return KnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, neverQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, resultsProcessing: default, maxOutputDocuments: default, kind: kind, enableImageServing: default);
+        }
+
         /// <summary> Specifies runtime parameters for a search index knowledge source. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
@@ -6487,6 +6536,21 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response, IEnumerable<KnowledgeBaseActivityRecord> activity, IEnumerable<KnowledgeBaseReference> references)
         {
             return KnowledgeBaseRetrievalResponse(response: response, activity: activity, references: references, responseSensitivityLabelInfo: default);
+        }
+
+        /// <summary>
+        /// Base type for activity records. Tracks execution details, timing, and errors for knowledge base operations.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> and <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/>.
+        /// </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="type"> The type of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id, string @type, int? elapsedMs, KnowledgeBaseErrorDetail error)
+        {
+            return KnowledgeBaseActivityRecord(id: id, @type: @type, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default);
         }
 
         /// <summary> Represents an LLM web summarization activity record. </summary>
@@ -6590,6 +6654,57 @@ namespace Azure.Search.Documents.Models
                 encryptionKey,
                 default,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
+        /// <param name="documentCount"> The number of documents in the index. </param>
+        /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
+        /// <returns> A new SearchIndexStatistics instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize)
+        {
+            return SearchIndexStatistics(documentCount: documentCount, storageSize: storageSize, vectorIndexSize: default);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter)
+        {
+            return SearchServiceCounters(aliasCounter: default, documentCounter: documentCounter, indexCounter: indexCounter, indexerCounter: indexerCounter, dataSourceCounter: dataSourceCounter, storageSizeCounter: storageSizeCounter, synonymMapCounter: synonymMapCounter, skillsetCounter: default, vectorIndexSizeCounter: default, knowledgeBaseCounter: default, knowledgeSourceCounter: default);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
+        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
+        /// <param name="indexCounter"> Total number of indexes. </param>
+        /// <param name="indexerCounter"> Total number of indexers. </param>
+        /// <param name="dataSourceCounter"> Total number of data sources. </param>
+        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
+        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
+        /// <param name="skillsetCounter"> Total number of skillsets. </param>
+        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter)
+        {
+            return SearchServiceCounters(aliasCounter: default, documentCounter: documentCounter, indexCounter: indexCounter, indexerCounter: indexerCounter, dataSourceCounter: dataSourceCounter, storageSizeCounter: storageSizeCounter, synonymMapCounter: synonymMapCounter, skillsetCounter: skillsetCounter, vectorIndexSizeCounter: default, knowledgeBaseCounter: default, knowledgeSourceCounter: default);
+        }
+
+        /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
+        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+        /// <returns> A new SearchServiceLimits instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument)
+        {
+            return SearchServiceLimits(maxFieldsPerIndex: maxFieldsPerIndex, maxFieldNestingDepthPerIndex: maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex: maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument: maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: default, maxCumulativeIndexerRuntimeSeconds: default, maxVectorIndexSizePerIndexInBytes: default);
         }
     }
 }

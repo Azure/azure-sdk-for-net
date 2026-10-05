@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             get
             {
-                return FeaturesRule is null ? default : FeaturesRule.RequiredFeaturesPolicy;
+                return FeaturesRule is null ? (FeaturesPolicy?)default : FeaturesRule.RequiredFeaturesPolicy;
             }
             set
             {

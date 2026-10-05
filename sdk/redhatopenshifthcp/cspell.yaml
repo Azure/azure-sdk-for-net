@@ -1,0 +1,8 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/redhatopenshifthcp/**/*.cs'
+    words:
+      - kubeconfig
+      - Kubeconfig
+      - SSDLRS

@@ -207,7 +207,7 @@ namespace Azure.AI.Projects
                         oldValue = null;
                         continue;
                     }
-                    oldValue = BinaryData.FromString(prop.Value.GetRawText());
+                    oldValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("new_value"u8))
@@ -217,12 +217,12 @@ namespace Azure.AI.Projects
                         newValue = null;
                         continue;
                     }
-                    newValue = BinaryData.FromString(prop.Value.GetRawText());
+                    newValue = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentInsightProposedFixChange(

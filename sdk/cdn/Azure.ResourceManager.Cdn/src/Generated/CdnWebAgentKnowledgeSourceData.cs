@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Cdn
         {
             get
             {
-                return Properties is null ? default : Properties.SourceType;
+                return Properties is null ? (WebAgentKnowledgeSourceType?)default : Properties.SourceType;
             }
             set
             {

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="FaultSimulation"/>. </summary>
         /// <param name="simulationId"> unique identifier for the fault simulation. </param>
         /// <param name="status"> Fault simulation status. </param>
-        /// <param name="startOn"> The start time of the fault simulation. </param>
-        /// <param name="endOn"> The end time of the fault simulation. </param>
+        /// <param name="startsOn"> The start time of the fault simulation. </param>
+        /// <param name="endsOn"> The end time of the fault simulation. </param>
         /// <param name="details"> Fault simulation details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulation(string simulationId, FaultSimulationStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, FaultSimulationDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FaultSimulation(string simulationId, FaultSimulationStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, FaultSimulationDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SimulationId = simulationId;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public FaultSimulationStatus? Status { get; }
 
         /// <summary> The start time of the fault simulation. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the fault simulation. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Fault simulation details. </summary>
         public FaultSimulationDetails Details { get; }

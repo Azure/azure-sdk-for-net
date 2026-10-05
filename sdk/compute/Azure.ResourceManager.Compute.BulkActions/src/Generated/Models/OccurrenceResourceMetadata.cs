@@ -13,17 +13,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Represents an scheduled action resource metadata. </summary>
+    /// <summary> Scheduling and status details for a resource included in a scheduled action occurrence. </summary>
     public partial class OccurrenceResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResourceMetadata"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
         internal OccurrenceResourceMetadata(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
@@ -31,17 +28,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResourceMetadata"/>. </summary>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
-        /// <param name="type"> The type of resource. </param>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
-        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
-        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
-        /// <param name="provisioningState"> The current state of the resource. </param>
-        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
+        /// <param name="name"> Read-only. The name of the association resource. </param>
+        /// <param name="id"> Read-only. The Azure resource ID of the association resource. </param>
+        /// <param name="type"> Read-only. The Azure resource type of the associated resource. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
+        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
+        /// <param name="scheduledOn"> Read-only. The UTC date and time when the operation is scheduled for this resource. </param>
+        /// <param name="provisioningState"> Read-only. The current state of the operation for this resource. </param>
+        /// <param name="errorDetails"> Read-only. Error details when the operation fails for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OccurrenceResourceMetadata(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -56,31 +50,28 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the resource. </summary>
+        /// <summary> Read-only. The name of the association resource. </summary>
         public string Name { get; }
 
-        /// <summary> The compute RP resource id of the resource in the scheduled actions scope. . </summary>
+        /// <summary> Read-only. The Azure resource ID of the association resource. </summary>
         public ResourceIdentifier Id { get; }
 
-        /// <summary> The type of resource. </summary>
+        /// <summary> Read-only. The Azure resource type of the associated resource. </summary>
         public string Type { get; }
 
-        /// <summary>
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </summary>
+        /// <summary> The Azure resource ID of the targeted virtual machine. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> The desired notification settings for the specified resource. </summary>
+        /// <summary> Notification settings that apply only to this resource. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
 
-        /// <summary> The time the occurrence is scheduled for the resource. </summary>
+        /// <summary> Read-only. The UTC date and time when the operation is scheduled for this resource. </summary>
         public DateTimeOffset ScheduledOn { get; }
 
-        /// <summary> The current state of the resource. </summary>
+        /// <summary> Read-only. The current state of the operation for this resource. </summary>
         public OccurrenceResourceProvisioningState? ProvisioningState { get; }
 
-        /// <summary> Error details for the resource. Only populated if resource is in failed state. </summary>
+        /// <summary> Read-only. Error details when the operation fails for this resource. </summary>
         public ResponseError ErrorDetails { get; }
     }
 }

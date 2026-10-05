@@ -146,6 +146,7 @@ export const hasClientNameOverrideDecorator =
 // Propagated onto InputModelType.Decorators so the management generator can read
 // per-model opt-outs (e.g. "disable-safe-flatten") that aren't consumed during
 // resource detection in the emitter.
+export const clientOption = "Azure.ClientGenerator.Core.@clientOption";
 const clientOptionRegex = "Azure\\.ClientGenerator\\.Core\\.@clientOption";
 
 // TypeSpec validation decorators for resource name constraints

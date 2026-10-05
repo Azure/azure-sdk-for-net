@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
 using System.Text;
@@ -28,6 +29,7 @@ namespace Azure.Identity
         internal string TenantId { get; }
         internal string ClientId { get; }
         internal MsalConfidentialClient Client { get; }
+        internal MsalConfidentialClient PopClient { get; }
         internal CredentialPipeline Pipeline { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
 
@@ -55,6 +57,61 @@ namespace Azure.Identity
             Client = options?.MsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, assertionCallback, options);
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+        }
+
+        internal ClientAssertionCredential(
+            string tenantId,
+            string clientId,
+            Func<CancellationToken, Task<string>> assertionCallback,
+            Func<AssertionRequestOptions, CancellationToken, Task<ClientSignedAssertion>> popAssertionCallback,
+            ClientAssertionCredentialOptions options = default)
+            : this(tenantId, clientId, assertionCallback, options)
+        {
+            if (options?.EnableMtlsProofOfPossession == true)
+            {
+                PopClient = options?.PopMsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, popAssertionCallback, options);
+            }
+        }
+
+        internal ClientAssertionCredential(
+            string tenantId,
+            string clientId,
+            TokenCredential assertionCredential,
+            string assertionScope,
+            ClientAssertionCredentialOptions options = default)
+            : this(
+                tenantId,
+                clientId,
+                cancellationToken => GetAssertionAsync(assertionCredential, assertionScope, cancellationToken),
+                (assertionOptions, cancellationToken) => GetPopAssertionAsync(assertionCredential, assertionScope, assertionOptions, cancellationToken),
+                options)
+        {
+        }
+
+        private static async Task<string> GetAssertionAsync(TokenCredential assertionCredential, string assertionScope, CancellationToken cancellationToken)
+        {
+            AccessToken assertion = await assertionCredential.GetTokenAsync(new TokenRequestContext(new[] { assertionScope }), cancellationToken).ConfigureAwait(false);
+            return assertion.Token;
+        }
+
+        internal static async Task<ClientSignedAssertion> GetPopAssertionAsync(
+            TokenCredential assertionCredential,
+            string assertionScope,
+            AssertionRequestOptions assertionOptions,
+            CancellationToken cancellationToken)
+        {
+            var tokenContext = new TokenRequestContext(
+                new[] { assertionScope },
+                parentRequestId: assertionOptions.CorrelationId.ToString(),
+                claims: assertionOptions.Claims,
+                isCaeEnabled: assertionOptions.ClientCapabilities?.Contains("CP1", StringComparer.OrdinalIgnoreCase) == true,
+                isProofOfPossessionEnabled: true);
+            AccessToken assertion = await assertionCredential.GetTokenAsync(tokenContext, cancellationToken).ConfigureAwait(false);
+            return new ClientSignedAssertion
+            {
+                Assertion = assertion.Token,
+                TokenBindingCertificate = assertion.BindingCertificate,
+            };
         }
 
         /// <summary>
@@ -92,7 +149,19 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && PopClient != null ? PopClient : Client;
+                AuthenticationResult result;
+                try
+                {
+                    result = client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                }
+                catch (MsalClientException e) when (client == PopClient && e.ErrorCode == MsalError.MtlsCertificateNotProvided)
+                {
+                    // The host could not provide a binding certificate (for example, managed identity returned a
+                    // bearer assertion because the host is not mTLS proof-of-possession capable). Fall back to a
+                    // bearer token, matching the graceful degradation of the direct managed identity flow.
+                    result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                }
 
                 return scope.Succeeded(result.ToAccessToken());
             }
@@ -117,7 +186,19 @@ namespace Azure.Identity
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && PopClient != null ? PopClient : Client;
+                AuthenticationResult result;
+                try
+                {
+                    result = await client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
+                }
+                catch (MsalClientException e) when (client == PopClient && e.ErrorCode == MsalError.MtlsCertificateNotProvided)
+                {
+                    // The host could not provide a binding certificate (for example, managed identity returned a
+                    // bearer assertion because the host is not mTLS proof-of-possession capable). Fall back to a
+                    // bearer token, matching the graceful degradation of the direct managed identity flow.
+                    result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
+                }
 
                 return scope.Succeeded(result.ToAccessToken());
             }

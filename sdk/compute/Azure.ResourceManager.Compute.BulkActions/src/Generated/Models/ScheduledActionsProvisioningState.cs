@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Provisioning state of the scheduled action resource. </summary>
+    /// <summary> The provisioning state of the scheduled action. </summary>
     public readonly partial struct ScheduledActionsProvisioningState : IEquatable<ScheduledActionsProvisioningState>
     {
         private readonly string _value;
@@ -21,8 +21,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private const string FailedValue = "Failed";
         /// <summary> Resource creation was canceled. </summary>
         private const string CanceledValue = "Canceled";
-        /// <summary> Resource is being deleted. </summary>
+        /// <summary> The scheduled action is being deleted. </summary>
         private const string DeletingValue = "Deleting";
+        /// <summary> The scheduled action is being updated. </summary>
+        private const string UpdatingValue = "Updating";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -43,8 +45,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Resource creation was canceled. </summary>
         public static ScheduledActionsProvisioningState Canceled { get; } = new ScheduledActionsProvisioningState(CanceledValue);
 
-        /// <summary> Resource is being deleted. </summary>
+        /// <summary> The scheduled action is being deleted. </summary>
         public static ScheduledActionsProvisioningState Deleting { get; } = new ScheduledActionsProvisioningState(DeletingValue);
+
+        /// <summary> The scheduled action is being updated. </summary>
+        public static ScheduledActionsProvisioningState Updating { get; } = new ScheduledActionsProvisioningState(UpdatingValue);
 
         /// <summary> Determines if two <see cref="ScheduledActionsProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ClientDiagnostics _subscriptionNetworkManagerConnectionsClientDiagnostics;
         private readonly SubscriptionNetworkManagerConnections _subscriptionNetworkManagerConnectionsRestClient;
-        private readonly SubscriptionNetworkManagerConnectionData _data;
+        private readonly NetworkManagerConnectionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagerConnections";
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="SubscriptionNetworkManagerConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionNetworkManagerConnectionResource(ArmClient client, SubscriptionNetworkManagerConnectionData data) : this(client, data.Id)
+        internal SubscriptionNetworkManagerConnectionResource(ArmClient client, NetworkManagerConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,12 +51,25 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string subscriptionNetworkManagerConnectionApiVersion);
             _subscriptionNetworkManagerConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _subscriptionNetworkManagerConnectionsRestClient = new SubscriptionNetworkManagerConnections(_subscriptionNetworkManagerConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionNetworkManagerConnectionApiVersion ?? "2025-09-01");
+            _subscriptionNetworkManagerConnectionsRestClient = new SubscriptionNetworkManagerConnections(_subscriptionNetworkManagerConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionNetworkManagerConnectionApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
+
+        /// <summary> Gets the data representing this Feature. </summary>
+        public virtual NetworkManagerConnectionData Data
+        {
+            get
+            {
+                if (!HasData)
+                {
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
+                return _data;
+            }
+        }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
@@ -90,7 +103,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -111,7 +124,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _subscriptionNetworkManagerConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -138,7 +151,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -159,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _subscriptionNetworkManagerConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -186,7 +199,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -237,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -288,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -300,7 +313,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Network manager connection to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionNetworkManagerConnectionResource>> UpdateAsync(WaitUntil waitUntil, SubscriptionNetworkManagerConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SubscriptionNetworkManagerConnectionResource>> UpdateAsync(WaitUntil waitUntil, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -312,9 +325,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SubscriptionNetworkManagerConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _subscriptionNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, NetworkManagerConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NetworkArmOperation<SubscriptionNetworkManagerConnectionResource> operation = new NetworkArmOperation<SubscriptionNetworkManagerConnectionResource>(Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -344,7 +357,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> Network manager connection to be created/updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionNetworkManagerConnectionResource> Update(WaitUntil waitUntil, SubscriptionNetworkManagerConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SubscriptionNetworkManagerConnectionResource> Update(WaitUntil waitUntil, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -368,9 +381,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, SubscriptionNetworkManagerConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _subscriptionNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, NetworkManagerConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NetworkArmOperation<SubscriptionNetworkManagerConnectionResource> operation = new NetworkArmOperation<SubscriptionNetworkManagerConnectionResource>(Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);

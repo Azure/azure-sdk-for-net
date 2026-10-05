@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Identity.Mock
 
         public ManagedIdentitySource ManagedIdentitySourceOverride { get; set; }
 
-        public override ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        public override ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context, bool isKeyGuardAvailable, CancellationToken cancellationToken)
               => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : AuthenticateAsync(async, context, cancellationToken);
     }
 }

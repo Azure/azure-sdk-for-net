@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         {
             TryGetApiVersion(ResourceType, out string keyVaultSecretProviderClassApiVersion);
             _azureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", ResourceType.Namespace, Diagnostics);
-            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2024-08-21-preview");
+            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2026-09-25-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-21-preview. </description>
+        /// <description> 2026-09-25-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

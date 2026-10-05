@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InformationProtectionPolicyProperties(lastModifiedUtc, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(), additionalBinaryDataProperties);

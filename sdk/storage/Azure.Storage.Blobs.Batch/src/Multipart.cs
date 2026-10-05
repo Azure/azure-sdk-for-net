@@ -96,6 +96,11 @@ namespace Azure.Storage.Blobs.Specialized
                 // Write the request headers
                 foreach (HttpHeader header in message.Request.Headers)
                 {
+                    if (header.Value.IndexOf('\r') >= 0 || header.Value.IndexOf('\n') >= 0)
+                    {
+                        throw BatchErrors.HeaderValueCannotContainCrlf(header.Name);
+                    }
+
                     content.Append(header.Name).Append(": ").Append(header.Value).Append(newline);
                 }
 
