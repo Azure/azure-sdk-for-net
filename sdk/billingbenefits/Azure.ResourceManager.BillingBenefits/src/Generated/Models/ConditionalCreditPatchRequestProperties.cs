@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of <see cref="ConditionalCreditPatchRequestProperties"/>. </summary>
         /// <param name="displayName"> Display name for the conditional credit. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="allowContributors"> Whether this conditional credit allows contributor billing accounts. </param>
         /// <param name="milestones"> Updated milestones list (only applicable for primary conditional credits). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConditionalCreditPatchRequestProperties(string displayName, DateTimeOffset? endOn, EnablementMode? allowContributors, IList<ConditionalCreditMilestone> milestones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConditionalCreditPatchRequestProperties(string displayName, DateTimeOffset? endsOn, EnablementMode? allowContributors, IList<ConditionalCreditMilestone> milestones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            EndOn = endOn;
+            EndsOn = endsOn;
             AllowContributors = allowContributors;
             Milestones = milestones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string DisplayName { get; set; }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Whether this conditional credit allows contributor billing accounts. </summary>
         public EnablementMode? AllowContributors { get; set; }

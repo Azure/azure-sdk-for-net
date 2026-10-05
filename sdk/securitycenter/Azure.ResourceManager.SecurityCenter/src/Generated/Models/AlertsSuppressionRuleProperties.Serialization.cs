@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateUtc"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("reason"u8);
             writer.WriteStringValue(Reason);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string alertType = default;
             DateTimeOffset? lastModifiedOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string reason = default;
             SecurityAlertsSuppressionRuleState state = default;
             string comment = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -206,13 +206,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AlertsSuppressionRuleProperties(
                 alertType,
                 lastModifiedOn,
-                expireOn,
+                expiresOn,
                 reason,
                 state,
                 comment,

@@ -24,6 +24,7 @@ namespace OpenAI
         private const string ResponseCreateValue = "response.create";
         private const string SessionUpdateValue = "session.update";
         private const string SessionAvatarConnectValue = "session.avatar.connect";
+        private const string RtcCallSdpCreateValue = "rtc.call.sdp.create";
 
         /// <summary> Initializes a new instance of <see cref="RealtimeClientEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -70,6 +71,9 @@ namespace OpenAI
 
         /// <summary> Gets the SessionAvatarConnect. </summary>
         public static RealtimeClientEventType SessionAvatarConnect { get; } = new RealtimeClientEventType(SessionAvatarConnectValue);
+
+        /// <summary> Gets the RtcCallSdpCreate. </summary>
+        public static RealtimeClientEventType RtcCallSdpCreate { get; } = new RealtimeClientEventType(RtcCallSdpCreateValue);
 
         /// <summary> Determines if two <see cref="RealtimeClientEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

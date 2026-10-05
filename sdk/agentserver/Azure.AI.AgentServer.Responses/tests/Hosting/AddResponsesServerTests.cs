@@ -32,7 +32,7 @@ public class AddResponsesServerTests
         var provider = services.BuildServiceProvider();
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
-        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(100));
+        Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(-1));
     }
 
     [Test]
@@ -49,6 +49,78 @@ public class AddResponsesServerTests
         var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
 
         Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(50));
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void AddResponsesServer_ExplicitUnlimitedLimitOverridesEnvironment()
+    {
+        var previous = Environment.GetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT");
+        try
+        {
+            Environment.SetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT", "10");
+            var services = new ServiceCollection();
+            services.AddLogging();
+            services.AddResponsesServer(options => options.DefaultFetchHistoryCount = -1);
+
+            var provider = services.BuildServiceProvider();
+            var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
+
+            Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(-1));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT", previous);
+        }
+    }
+
+    [TestCase("-1", -1)]
+    [TestCase("10", 10)]
+    [NonParallelizable]
+    public void AddResponsesServer_AppliesValidHistoryLimitFromEnvironment(string value, int expected)
+    {
+        var previous = Environment.GetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT");
+        try
+        {
+            Environment.SetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT", value);
+            var services = new ServiceCollection();
+            services.AddLogging();
+            services.AddResponsesServer();
+
+            var provider = services.BuildServiceProvider();
+            var options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
+
+            Assert.That(options.DefaultFetchHistoryCount, Is.EqualTo(expected));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT", previous);
+        }
+    }
+
+    [TestCase("0")]
+    [TestCase("-2")]
+    [TestCase("invalid")]
+    [NonParallelizable]
+    public void AddResponsesServer_RejectsInvalidHistoryLimitFromEnvironment(string value)
+    {
+        var previous = Environment.GetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT");
+        try
+        {
+            Environment.SetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT", value);
+            var services = new ServiceCollection();
+            services.AddLogging();
+            services.AddResponsesServer();
+            var provider = services.BuildServiceProvider();
+
+            Assert.That(
+                () => _ = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value,
+                Throws.InstanceOf<Exception>().With.Message.Contains("unlimited"));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("DEFAULT_FETCH_HISTORY_ITEM_COUNT", previous);
+        }
     }
 
     [Test]

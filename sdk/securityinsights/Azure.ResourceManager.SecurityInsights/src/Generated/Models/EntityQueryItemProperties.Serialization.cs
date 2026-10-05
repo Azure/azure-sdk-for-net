@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    entitiesFilter = BinaryData.FromString(prop.Value.GetRawText());
+                    entitiesFilter = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new EntityQueryItemProperties(dataTypes ?? new ChangeTrackingList<EntityQueryItemPropertiesDataTypesItem>(), inputEntityType, requiredInputFieldsSets ?? new ChangeTrackingList<IList<string>>(), entitiesFilter, additionalBinaryDataProperties);

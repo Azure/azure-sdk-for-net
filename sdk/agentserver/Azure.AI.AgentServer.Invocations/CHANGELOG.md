@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,11 @@
 
 ### Other Changes
 
-## 1.0.0-beta.6 (2026-08-12)
+- Updated the resilient research sample to use constructor-injected task handlers and
+  task-bound producer/consumer streams, while retaining registry lookup for later GET
+  replay by invocation id.
+
+## 1.0.0-beta.7 (2026-09-03)
 
 ### Features Added
 
@@ -24,6 +28,11 @@
   messages, and `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` reuse the
   existing `/invocations_ws` transport without owning application lifecycle state.
   Consumers acknowledge this preview surface with the `AAAS001` diagnostic.
+
+## 1.0.0-beta.6 (2026-08-12)
+
+### Features Added
+
 - AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
   virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
   at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`

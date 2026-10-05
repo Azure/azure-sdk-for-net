@@ -73,6 +73,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeAiDeviceOsVersion] = SemanticSlot.AiDeviceOsVersion,
             [SemanticConventions.AttributeMicrosoftSyntheticSource] = SemanticSlot.MicrosoftSyntheticSource,
             [SemanticConventions.AttributeMicrosoftUserAccountId] = SemanticSlot.MicrosoftUserAccountId,
+
+            // Claimed only when ActivityTagsProcessor is told to recognize them, which is the
+            // multi-endpoint conversion alone. Elsewhere they stay unmapped and reach custom
+            // dimensions as any other attribute would.
+            [SemanticConventions.AttributeMicrosoftInstrumentationKey] = SemanticSlot.MicrosoftInstrumentationKey,
+            [SemanticConventions.AttributeMicrosoftIngestionEndpoint] = SemanticSlot.MicrosoftIngestionEndpoint,
+            [SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole] = SemanticSlot.MicrosoftMultiEndpointCloudRole,
         };
 
         /// <remarks>

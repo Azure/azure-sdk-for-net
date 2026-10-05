@@ -16,7 +16,7 @@ namespace Azure.Communication.JobRouter
     /// QueueAndMatchMode: Used when matching worker to a job is required to be done right after job is queued.
     /// ScheduleAndSuspendMode: Used for scheduling jobs to be queued at a future time. At specified time, matching of a worker to the job will not start automatically.
     /// SuspendMode: Used when matching workers to a job needs to be suspended.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleAndSuspendMode"/>, <see cref="QueueAndMatchMode"/>, and <see cref="SuspendMode"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="QueueAndMatchMode"/>, <see cref="ScheduleAndSuspendMode"/>, and <see cref="SuspendMode"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownJobMatchingMode))]
     public abstract partial class JobMatchingMode : IJsonModel<JobMatchingMode>
@@ -127,10 +127,10 @@ namespace Azure.Communication.JobRouter
             {
                 switch (discriminator.GetString())
                 {
-                    case "scheduleAndSuspend":
-                        return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "queueAndMatch":
                         return QueueAndMatchMode.DeserializeQueueAndMatchMode(element, options);
+                    case "scheduleAndSuspend":
+                        return ScheduleAndSuspendMode.DeserializeScheduleAndSuspendMode(element, options);
                     case "suspend":
                         return SuspendMode.DeserializeSuspendMode(element, options);
                 }

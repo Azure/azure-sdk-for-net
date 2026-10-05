@@ -155,10 +155,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new WordAlterations(alterations, additionalBinaryDataProperties);
+            return new WordAlterations(alterations ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

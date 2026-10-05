@@ -159,10 +159,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentCard(version, description, skills, additionalBinaryDataProperties);
+            return new AgentCard(version, description, skills ?? new ChangeTrackingList<AgentCardSkill>(), additionalBinaryDataProperties);
         }
     }
 }

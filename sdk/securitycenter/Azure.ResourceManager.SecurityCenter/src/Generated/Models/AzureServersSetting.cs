@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SelectedProvider;
+                return Properties is null ? (ServerVulnerabilityAssessmentsAzureSettingSelectedProvider?)default : Properties.SelectedProvider;
             }
             set
             {

@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Network.Models
             ETag = eTag;
         }
 
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfiguration"/>. </summary>
+        public VirtualNetworkApplianceIPConfiguration() : this(default)
+        {
+        }
+
         /// <summary> Properties of the virtual network appliance ip configuration. </summary>
         [WirePath("properties")]
         internal VirtualNetworkApplianceIPConfigurationProperties Properties { get; }

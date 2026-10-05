@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,7 @@ using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-    internal class MockTransmitter : ITransmitter
+    internal partial class MockTransmitter : ITransmitter
     {
         public readonly IList<TelemetryItem> TelemetryItems;
 
@@ -30,6 +30,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         {
             lock (this.TelemetryItems)
             {
+                TrackAsyncCallCount++;
+
                 foreach (var telemetryItem in telemetryItems)
                 {
                     this.TelemetryItems.Add(telemetryItem);
@@ -38,6 +40,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
         }
+
+        public int TrackAsyncCallCount { get; private set; }
 
         public ValueTask TransmitFromStorage(long maxFileToTransmit, bool async, CancellationToken cancellationToken)
         {

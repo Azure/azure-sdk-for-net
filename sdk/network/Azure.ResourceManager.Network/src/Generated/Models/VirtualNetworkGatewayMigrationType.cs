@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Network.Models
         private readonly string _value;
         /// <summary> Indicates that it is a migration process from basic IP CSES to standard IP VMSS. </summary>
         private const string UpgradeDeploymentToStandardIPValue = "UpgradeDeploymentToStandardIP";
+        /// <summary> Indicates a migration process to upgrade the virtual network gateway to dual stack (IPv4 and IPv6). </summary>
+        private const string UpgradeGatewayToDualStackValue = "UpgradeGatewayToDualStack";
+        /// <summary> Indicates a migration process for the virtual network gateway's point-to-site profile. </summary>
+        private const string MigrateGatewayForPointToSiteProfileValue = "MigrateGatewayForPointToSiteProfile";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +34,12 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Indicates that it is a migration process from basic IP CSES to standard IP VMSS. </summary>
         public static VirtualNetworkGatewayMigrationType UpgradeDeploymentToStandardIP { get; } = new VirtualNetworkGatewayMigrationType(UpgradeDeploymentToStandardIPValue);
+
+        /// <summary> Indicates a migration process to upgrade the virtual network gateway to dual stack (IPv4 and IPv6). </summary>
+        public static VirtualNetworkGatewayMigrationType UpgradeGatewayToDualStack { get; } = new VirtualNetworkGatewayMigrationType(UpgradeGatewayToDualStackValue);
+
+        /// <summary> Indicates a migration process for the virtual network gateway's point-to-site profile. </summary>
+        public static VirtualNetworkGatewayMigrationType MigrateGatewayForPointToSiteProfile { get; } = new VirtualNetworkGatewayMigrationType(MigrateGatewayForPointToSiteProfileValue);
 
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayMigrationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

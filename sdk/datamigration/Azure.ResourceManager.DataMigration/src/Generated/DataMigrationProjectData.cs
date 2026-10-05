@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             get
             {
-                return Properties is null ? default : Properties.SourcePlatform;
+                return Properties is null ? (DataMigrationProjectSourcePlatform?)default : Properties.SourcePlatform;
             }
             set
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             get
             {
-                return Properties is null ? default : Properties.TargetPlatform;
+                return Properties is null ? (DataMigrationProjectTargetPlatform?)default : Properties.TargetPlatform;
             }
             set
             {

@@ -39,6 +39,7 @@ namespace Azure.AI.Projects.Agents.Tests
         public string HOSTED_AGENT_VERSION => GetRecordedVariable(nameof(HOSTED_AGENT_VERSION));
         public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
         public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
+        public string WEBIQ_CONNECTION_ID => GetRecordedVariable(nameof(WEBIQ_CONNECTION_ID));
         public string FABRIC_IQ_CONNECTION_ID => GetRecordedVariable(nameof(FABRIC_IQ_CONNECTION_ID));
         public override Dictionary<string, string> ParseEnvironmentFile()
         {

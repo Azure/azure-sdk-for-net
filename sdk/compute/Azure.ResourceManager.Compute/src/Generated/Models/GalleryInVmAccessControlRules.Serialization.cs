@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new GalleryInVmAccessControlRules(privileges ?? new ChangeTrackingList<GalleryInVmAccessControlRulesPrivilege>(), roles ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRole>(), identities ?? new ChangeTrackingList<GalleryInVmAccessControlRulesIdentity>(), roleAssignments ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRoleAssignment>(), additionalBinaryDataProperties);

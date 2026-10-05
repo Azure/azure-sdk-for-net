@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (SecurityRuleProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Access;
+                return Properties is null ? (SecurityRuleAccess?)default : Properties.Access;
             }
             set
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Priority;
+                return Properties is null ? (int?)default : Properties.Priority;
             }
             set
             {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Direction;
+                return Properties is null ? (SecurityRuleDirection?)default : Properties.Direction;
             }
             set
             {
