@@ -145,14 +145,14 @@ function Install-Standalone-Tool (
             $StorageAccount = "azuresdkartifacts"
             $Container = "public-azsdk-cli"
             try {
-                $Version = (`
-                        [xml](`
-                            [string](
+                $Version = ( `
+                        [xml]( `
+                            [string]( `
                                 Invoke-RestMethod `
                                     -Uri "https://${StorageAccount}.blob.core.windows.net/${Container}?restype=container&comp=list&maxresults=100000" `
                                     -Method Get`
                             ) -replace "`u{FEFF}", "" `
-                        )`
+                        ) `
                     ).EnumerationResults.Blobs `
                     | Select-Object -ExpandProperty Blob `
                     | Select-Object -ExpandProperty Name `
