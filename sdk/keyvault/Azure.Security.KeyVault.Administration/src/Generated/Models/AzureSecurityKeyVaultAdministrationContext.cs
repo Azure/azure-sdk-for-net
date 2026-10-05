@@ -14,11 +14,17 @@ namespace Azure.Security.KeyVault.Administration
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(EkmPrivateEndpointCreateParameters))]
+    [ModelReaderWriterBuildable(typeof(EkmPrivateEndpointListResult))]
     [ModelReaderWriterBuildable(typeof(EkmProxyClientCertificateInfo))]
     [ModelReaderWriterBuildable(typeof(EkmProxyInfo))]
     [ModelReaderWriterBuildable(typeof(FullBackupDetailsInternal))]
     [ModelReaderWriterBuildable(typeof(GetSettingsResult))]
     [ModelReaderWriterBuildable(typeof(KeyVaultEkmConnection))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultEkmPrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultEkmPrivateEndpointConnectionState))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultEkmPrivateEndpointOperation))]
+    [ModelReaderWriterBuildable(typeof(KeyVaultEkmPrivateEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultPermission))]
     [ModelReaderWriterBuildable(typeof(KeyVaultRoleAssignment))]
     [ModelReaderWriterBuildable(typeof(KeyVaultRoleAssignmentProperties))]
