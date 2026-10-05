@@ -33,6 +33,31 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.AlternateTyp
         });
 
         [SpectorTest]
+        public Task Azure_ClientGenerator_Core_AlternateType_ExternalType_putModel() => Test(async (host) =>
+        {
+            var response = await new AlternateTypeClient(host, null).GetExternalTypeClient().PutModelAsync(CreateFeature());
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_AlternateType_ExternalType_getProperty() => Test(async (host) =>
+        {
+            var response = await new AlternateTypeClient(host, null).GetExternalTypeClient().GetPropertyAsync();
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("Feature", response.Value.Feature.Type);
+            Assert.IsInstanceOf<GeoPoint>(response.Value.Feature.Geometry);
+            Assert.AreEqual("extra", response.Value.AdditionalProperty);
+        });
+
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_AlternateType_ExternalType_putProperty() => Test(async (host) =>
+        {
+            var body = new ModelWithFeatureProperty(CreateFeature(), "extra");
+            var response = await new AlternateTypeClient(host, null).GetExternalTypeClient().PutPropertyAsync(body);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [Test]
         public void FeatureWithNullGeometryIsDeserialized()
         {
             var feature = ModelReaderWriter.Read<Feature>(BinaryData.FromString(
@@ -41,5 +66,8 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.AlternateTyp
             Assert.AreEqual("Feature", feature!.Type);
             Assert.IsNull(feature.Geometry);
         }
+
+        private static Feature CreateFeature() => ModelReaderWriter.Read<Feature>(BinaryData.FromString(
+            "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-122.25,37.87]},\"properties\":{\"name\":\"A single point of interest\",\"category\":\"landmark\",\"elevation\":100},\"id\":\"feature-1\"}"))!;
     }
 }
