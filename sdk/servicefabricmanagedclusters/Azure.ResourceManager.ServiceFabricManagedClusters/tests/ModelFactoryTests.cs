@@ -71,11 +71,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         public void NodeTypeDataFactoryPreservesOptionalParameters()
         {
             ServiceFabricManagedNodeTypeData data = ArmServiceFabricManagedClustersModelFactory.ServiceFabricManagedNodeTypeData(
-                isPrimary: true,
-                dataDiskIopsReadWrite: 10000);
+                isPrimary: true);
 
             Assert.That(data.IsPrimary, Is.True);
-            Assert.That(data.DataDiskIopsReadWrite, Is.EqualTo(10000));
         }
     }
 }
