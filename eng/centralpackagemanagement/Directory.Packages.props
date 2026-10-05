@@ -116,7 +116,7 @@
     <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.1.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.21.0" />
-    <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.6.0" />
+    <PackageVersion Include="Azure.Messaging.WebPubSub" Version="1.7.0" />
     <PackageVersion Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.9.0" />
     <PackageVersion Include="Azure.Monitor.Query.Logs" Version="1.0.0" />
     <PackageVersion Include="Azure.ResourceManager" Version="1.14.0" />
@@ -187,7 +187,7 @@
 
     <!-- Other approved packages -->
     <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.7.0" />
-    <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
+    <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.6.0" />
     <PackageVersion Include="Microsoft.Identity.Client" Version="4.90.0" />
     <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.90.0" />
     <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.90.0" />
