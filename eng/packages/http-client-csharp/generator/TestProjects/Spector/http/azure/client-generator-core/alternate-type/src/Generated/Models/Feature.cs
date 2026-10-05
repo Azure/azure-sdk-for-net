@@ -7,16 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.GeoJson;
 
-namespace _Specs_.Azure.ClientGenerator.Core.AlternateType._ExternalType
+namespace Specs.Azure.ClientGenerator.Core.AlternateType._ExternalType
 {
     public partial class Feature
     {
-        public Feature(Geometry geometry, IDictionary<string, BinaryData> properties) => throw null;
+        public Feature(GeoPoint geometry, IDictionary<string, BinaryData> properties) => throw null;
 
         public string Type => throw null;
 
-        public Geometry Geometry
+        public GeoPoint Geometry
         {
             get => throw null;
             set => throw null;
