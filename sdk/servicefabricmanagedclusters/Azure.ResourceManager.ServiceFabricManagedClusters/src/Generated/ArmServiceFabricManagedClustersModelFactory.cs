@@ -1472,6 +1472,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeActionContent((nodes ?? new ChangeTrackingList<string>()).ToList(), isForced, updateType, default);
         }
 
+        /// <param name="nodes"> The name of the node to reimage. </param>
+        /// <param name="isForced"> Force the action to go through. </param>
+        /// <returns> A new <see cref="Models.ReimageAllDisksContent"/> instance for mocking. </returns>
+        public static ReimageAllDisksContent ReimageAllDisksContent(IEnumerable<string> nodes = default, bool? isForced = default)
+        {
+            nodes ??= new ChangeTrackingList<string>();
+
+            return new ReimageAllDisksContent((nodes ?? new ChangeTrackingList<string>()).ToList(), isForced, default);
+        }
+
         /// <param name="resourceType"> The type of resource the sku applies to. Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
         /// <param name="sku"> The supported SKU for a for node type. </param>
         /// <param name="capacity"> Provides information about how the node count can be scaled. </param>

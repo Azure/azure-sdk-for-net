@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(PartitionInstanceCountScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(ProxyAgentHostEndpointSettings))]
     [ModelReaderWriterBuildable(typeof(ProxyAgentSettings))]
+    [ModelReaderWriterBuildable(typeof(ReimageAllDisksContent))]
     [ModelReaderWriterBuildable(typeof(ResourceAzStatus))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestartDeployedCodePackageContent))]

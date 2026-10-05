@@ -55,5 +55,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
             Assert.That(json, Does.Contain("\"diskIOPSReadWrite\":5000"));
             Assert.That(json, Does.Contain("\"diskMBpsReadWrite\":200"));
         }
+
+        [Test]
+        public void ReimageAllDisksContentUsesExpectedWireNames()
+        {
+            var content = new ReimageAllDisksContent(new[] { "BE_0" })
+            {
+                IsForced = true,
+            };
+
+            Assert.That(ModelReaderWriter.Write(content).ToString(), Is.EqualTo("{\"nodes\":[\"BE_0\"],\"force\":true}"));
+        }
     }
 }
