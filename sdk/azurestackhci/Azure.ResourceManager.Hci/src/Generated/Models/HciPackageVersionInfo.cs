@@ -42,5 +42,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Package version. </summary>
         [WirePath("version")]
         public string Version { get; set; }
+
+        /// <summary> Last time this component was updated. </summary>
+        [WirePath("lastUpdated")]
+        public DateTimeOffset? LastUpdatedOn { get; set; }
     }
 }

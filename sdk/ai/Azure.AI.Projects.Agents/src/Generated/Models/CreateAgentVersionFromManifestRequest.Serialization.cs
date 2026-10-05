@@ -220,7 +220,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CreateAgentVersionFromManifestRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, manifestId, parameterValues, additionalBinaryDataProperties);
+            return new CreateAgentVersionFromManifestRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), description, manifestId, parameterValues ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -193,7 +193,7 @@ namespace Azure.AI.Projects.Agents
                 agent,
                 trainDataset,
                 validationDataset,
-                evaluators,
+                evaluators ?? new ChangeTrackingList<AgentOptimizationEvaluatorRef>(),
                 options0,
                 additionalBinaryDataProperties);
         }

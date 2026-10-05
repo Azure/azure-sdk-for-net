@@ -195,7 +195,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AgentsPagedResultRealtimeConversationItem(data, firstId, lastId, hasMore, additionalBinaryDataProperties);
+            return new AgentsPagedResultRealtimeConversationItem(data ?? new ChangeTrackingList<RealtimeItem>(), firstId, lastId, hasMore, additionalBinaryDataProperties);
         }
     }
 }

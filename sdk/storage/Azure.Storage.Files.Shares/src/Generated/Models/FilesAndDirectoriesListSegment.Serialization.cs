@@ -145,7 +145,7 @@ namespace Azure.Storage.Files.Shares.Models
                     continue;
                 }
             }
-            return new FilesAndDirectoriesListSegment(directoryItems, fileItems);
+            return new FilesAndDirectoriesListSegment(directoryItems ?? new ChangeTrackingList<DirectoryItem>(), fileItems ?? new ChangeTrackingList<FileItem>());
         }
 
         /// <param name="writer"> The XML writer. </param>
