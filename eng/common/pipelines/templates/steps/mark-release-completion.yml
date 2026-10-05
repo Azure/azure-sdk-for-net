@@ -2,6 +2,8 @@ parameters:
   ConfigFileDir: ''
   PackageArtifactName: ''
   SourceRootPath: $(Build.SourcesDirectory)
+  ReleasePlanId: 0
+  SdkPullRequest: ''
 
 steps:
   - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
@@ -16,6 +18,8 @@ steps:
       scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Mark-ReleasePlanCompletion.ps1
       arguments: >
         -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json' -AzsdkExePath '$(AZSDK)'
+        -ReleasePlanId '${{ parameters.ReleasePlanId }}'
+        -SdkPullRequest '${{ parameters.SdkPullRequest }}'
       workingDirectory: $(Pipeline.Workspace)
     displayName: Mark package as released
     continueOnError: true
