@@ -66,5 +66,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
             Assert.That(ModelReaderWriter.Write(content).ToString(), Is.EqualTo("{\"nodes\":[\"BE_0\"],\"force\":true}"));
         }
+
+        [Test]
+        public void NodeTypeDataFactoryPreservesOptionalParameters()
+        {
+            ServiceFabricManagedNodeTypeData data = ArmServiceFabricManagedClustersModelFactory.ServiceFabricManagedNodeTypeData(
+                isPrimary: true,
+                dataDiskIopsReadWrite: 10000);
+
+            Assert.That(data.IsPrimary, Is.True);
+            Assert.That(data.DataDiskIopsReadWrite, Is.EqualTo(10000));
+        }
     }
 }
