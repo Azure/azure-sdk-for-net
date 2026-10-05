@@ -156,7 +156,7 @@ function Install-Standalone-Tool (
                     ).EnumerationResults.Blobs `
                     | Select-Object -ExpandProperty Blob `
                     | Select-Object -ExpandProperty Name `
-                    | Select-String -Pattern "^${Package}_(?<Version>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))/" `
+                    | Select-String -Pattern "^${Package}_(?<Version>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))/$([regex]::Escape($systemDetails.file_name))$" `
                     | %{ [semver]$_.Matches.Captures.Groups["Version"].Value } `
                     | Sort-Object -Descending `
                     | Get-Unique `
