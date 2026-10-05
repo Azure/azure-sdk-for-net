@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private const string PremiumLrsValue = "Premium_LRS";
         /// <summary> Premium zone redundant storage. </summary>
         private const string PremiumZrsValue = "Premium_ZRS";
+        /// <summary> Locally redundant storage. Supported only for ElasticSanVersion V2. </summary>
+        private const string ElasticSanLrsValue = "ElasticSAN_LRS";
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Premium zone redundant storage. </summary>
         public static ElasticSanSkuName PremiumZrs { get; } = new ElasticSanSkuName(PremiumZrsValue);
+
+        /// <summary> Locally redundant storage. Supported only for ElasticSanVersion V2. </summary>
+        public static ElasticSanSkuName ElasticSanLrs { get; } = new ElasticSanSkuName(ElasticSanLrsValue);
 
         /// <summary> Determines if two <see cref="ElasticSanSkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
