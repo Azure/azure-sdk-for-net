@@ -1,5 +1,10 @@
 # Release History
 
+## 12.27.1 (2026-10-05)
+
+## Other Changes
+- Upgraded `Azure.Storage.Blobs` package dependency to 12.31.1
+
 ## 12.27.0 (2026-09-28)
 
 ### Features Added
