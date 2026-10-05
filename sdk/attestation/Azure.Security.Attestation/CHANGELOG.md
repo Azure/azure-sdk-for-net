@@ -9,8 +9,6 @@
 - Added the `AttestationType.AzureGuest`, `AttestationType.SevSnpVm`, and `AttestationType.TdxVm` values, for use with the policy management APIs. `TdxVm` requires service version `V2025_06_01`.
 - Model types now implement `IJsonModel<T>` and `IPersistableModel<T>`, and `AzureSecurityAttestationContext` was added, for use with `System.ClientModel.Primitives.ModelReaderWriter`.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed `GetPolicy` throwing instead of returning a null policy when the requested attestation type has no policy configured.
