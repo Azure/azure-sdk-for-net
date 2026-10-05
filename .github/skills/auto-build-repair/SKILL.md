@@ -65,7 +65,9 @@ For CLI invocations, record stdout as `engine-stdout.txt`, stderr as
 stderr after process diagnostics; redirecting stdout alone loses that response.
 The helper preserves both raw streams, consolidates `engine-errors.txt`, removes
 stale results, and rejects missing, malformed, ambiguous, or contradictory
-responses. Its exit code retains the engine failure; capture never authorizes
+responses. Only standalone response objects are candidates; objects nested in
+arrays or other objects are never promoted to the final response.
+Its exit code retains the engine failure; capture never authorizes
 publishing a failed repair. Do not merge diagnostics into JSON or manually
 reconstruct a response.
 

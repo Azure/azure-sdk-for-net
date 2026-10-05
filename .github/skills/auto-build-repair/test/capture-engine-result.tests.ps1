@@ -105,6 +105,40 @@ try {
     $escaped = '{"success":false,"attemptsUsed":0,"buildResult":"Braces { } and escaped quote \" and slash \\"}'
     Test-Capture 'escaped-string-braces' '' $escaped -engineExit 1 -expectedResult $escaped | Out-Null
     Test-Capture 'unrelated-json-log' '' "{`"message`":`"log { }`"}`n$failed" -engineExit 1 -expectedResult $failed | Out-Null
+    foreach ($newline in @("`n", "`r`n")) {
+        $newlineName = if ($newline -eq "`n") { 'lf' } else { 'crlf' }
+        $index = 0
+        foreach ($wrapper in @(
+            "[$newline  $failed$newline]",
+            "[[$newline  $failed$newline]]",
+            "[0,$newline  $failed$newline]",
+            "[true, false, null,$newline  $failed$newline]",
+            "[$newline  $failed,$newline  $failed$newline]",
+            "[`"Brackets [ ] and braces { }`",$newline  $failed$newline]",
+            "[`"Escaped quote \`" and slash \\`",$newline  $failed$newline]"
+        )) {
+            $name = "wrapped-array-$newlineName-$index"
+            Test-Capture "$name-stderr" '' "$npmErrors$wrapper$newline$upgradeWarning" -engineExit 1 | Out-Null
+            Test-Capture "$name-stdout" $wrapper '' -engineExit 1 | Out-Null
+            $index++
+        }
+    }
+    Test-Capture 'stderr-array-review-repro' '' "[`n {`"success`":false,`"attemptsUsed`":2}`n]" -engineExit 1 | Out-Null
+    Test-Capture 'stdout-success-array' "[`n $success`n]" '' | Out-Null
+    Test-Capture 'stderr-success-array' '' "[`n $success`n]" | Out-Null
+    Test-Capture 'stderr-unclosed-array' '' "[`n $failed" -engineExit 1 | Out-Null
+    Test-Capture 'stderr-mismatched-array' '' "[`n $failed`n}" -engineExit 1 | Out-Null
+    Test-Capture 'stderr-malformed-array' '' "[invalid,`n $failed`n]" -engineExit 1 | Out-Null
+    Test-Capture 'stderr-trailing-malformed-array' '' "$failed`n[`n {`"message`":`"log`"}," -engineExit 1 | Out-Null
+    $arrayLog = "[`n {`"message`":`"Brackets [ ] and braces { }`",`"values`":[[],[1,true,null]]}`n]"
+    Test-Capture 'stderr-array-diagnostics' '' "$npmErrors$arrayLog`n$failed`n$arrayLog`n$upgradeWarning" `
+        -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stderr-nested-response-array-log' '' "[`n $failed`n]`n$failed`n[`n $failed`n]" `
+        -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stdout-success-with-stderr-array-log' $success $arrayLog -expectedExit 0 -expectedResult $success | Out-Null
+    Test-Capture 'stderr-tagged-diagnostics' '' "[INFO] starting`n[12:34:56] diagnostic`n$npmErrors$failed`n[warn] $upgradeWarning" `
+        -engineExit 1 -expectedResult $failed | Out-Null
+    Test-Capture 'stderr-empty-array-log' '' "[]`n$failed`n[]" -engineExit 1 -expectedResult $failed | Out-Null
     foreach ($bound in @(1, 3, 10)) {
         $response = "{`"success`":true,`"attemptsUsed`":$bound}"
         Test-Capture "bound-$bound" $response '' -maxIterations $bound -expectedExit 0 -expectedResult $response | Out-Null
@@ -201,6 +235,20 @@ try {
     Assert ($report -notmatch 'MalformedEngineResult|Unknown of 3') 'report no longer misclassifies failed stderr JSON'
     Assert ($report -match '"status":"failed"' -and $report -match 'changes are not eligible for publication') `
         'captured failed response remains ineligible for publication'
+
+    $arrayDirectory = Join-Path $tmp 'stderr-array-review-repro'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $arrayDirectory `
+        -EngineErrorsFile (Join-Path $arrayDirectory 'engine-errors.txt') `
+        -RepoRoot $tmp -Repo 'Azure/azure-sdk-for-net' -Pr 63564 -HeadSha '32b4580' `
+        -PackagePath 'sdk/storage/Azure.ResourceManager.Storage' -OutFile $reportPath | Out-Null
+    Assert ($LASTEXITCODE -eq 0) 'rejected array response renders a failure report'
+    $report = Get-Content -Raw $reportPath
+    Assert ($report -match 'NoEngineResult' -and $report -match 'Engine response capture failed:') `
+        'array rejection and capture diagnostics remain visible in the report'
+    Assert ($report -match 'Unknown of 3' -and $report -notmatch '2 of 3') `
+        'report does not promote the nested attempt count'
+    Assert ($report -match '"status":"failed"' -and $report -match 'changes are not eligible for publication') `
+        'rejected array cannot authorize publication'
 }
 finally {
     Remove-Item -LiteralPath $tmp -Recurse -Force

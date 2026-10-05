@@ -30,7 +30,8 @@ if (Test-Path -LiteralPath $resultPath) {
 
 function Get-JsonObjects([string]$text, [string]$stream) {
     $nextStart = 0
-    foreach ($start in [regex]::Matches($text, '(?m)^[ \t]*\{')) {
+    # Consume whole containers, but leave bracket-prefixed process-log tags such as [npm-tsp-client] alone.
+    foreach ($start in [regex]::Matches($text, '(?m)^[ \t]*(?:\{|\[(?![A-Za-z0-9_.:-]+\]))')) {
         $offset = $start.Index + $start.Length - 1
         if ($offset -lt $nextStart) { continue }
         $depth = 0
@@ -45,18 +46,19 @@ function Get-JsonObjects([string]$text, [string]$stream) {
                 elseif ($character -eq '"') { $inString = $false }
             }
             elseif ($character -eq '"') { $inString = $true }
-            elseif ($character -eq '{') { $depth++ }
-            elseif ($character -eq '}') {
+            elseif ($character -in @('{', '[')) { $depth++ }
+            elseif ($character -in @('}', ']')) {
                 $depth--
                 if ($depth -eq 0) { $end = $i + 1; break }
             }
         }
-        if ($end -lt 0) { throw "Unterminated JSON object in engine $stream." }
+        if ($end -lt 0) { throw "Unterminated JSON container in engine $stream." }
         $nextStart = $end
         $json = $text.Substring($offset, $end - $offset)
         $document = [System.Text.Json.JsonDocument]::Parse($json)
         try {
             $root = $document.RootElement
+            if ($root.ValueKind -ne [System.Text.Json.JsonValueKind]::Object) { continue }
             $names = @($root.EnumerateObject() | ForEach-Object { $_.Name })
             if ('success' -cnotin $names -and 'attemptsUsed' -cnotin $names) { continue }
             $seen = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)

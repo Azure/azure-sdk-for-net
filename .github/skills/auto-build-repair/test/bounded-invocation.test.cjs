@@ -130,7 +130,8 @@ const workflow = fs.readFileSync(path.resolve(__dirname, "../../../workflows/sdk
 const invocation = /```bash\r?\n(mkdir -p "\$RUNNER_TEMP\/repair-results"[\s\S]*?)```/.exec(workflow)[1].replace(/\r\n/g, "\n");
 const bash = process.env.BASH || "bash";
 for (const [bound, mode, expected] of [[1, "success", 0], [3, "success", 0], [10, "success", 0],
-  [3, "failed", 1], [3, "failed-stderr", 1], [3, "failed-stderr-upgrade", 1], [3, "invalid-result", 1],
+  [3, "failed", 1], [3, "failed-stderr", 1], [3, "failed-stderr-upgrade", 1], [3, "failed-stderr-array", 1],
+  [3, "invalid-result", 1], [3, "invalid-array-result", 1],
   [3, "contradictory-result", 1], [3, "old-cli", 1], [3, "help-failed", 1]]) {
   test(`workflow invokes the engine once with bound ${bound}: ${mode}`, (t) => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), "bounded-invocation-"));
@@ -144,8 +145,14 @@ azsdk() {
   fi
   printf '%s\\n' "$*" >> "$RUNNER_TEMP/calls"
   if [[ "$MODE" == "invalid-result" ]]; then echo "not JSON"; return 0; fi
-  if [[ "$MODE" == "failed-stderr" || "$MODE" == "failed-stderr-upgrade" ]]; then
+  if [[ "$MODE" == "invalid-array-result" ]]; then
+    printf '[\\n {"success":true,"attemptsUsed":%s}\\n]\\n' "$BOUND"; return 0
+  fi
+  if [[ "$MODE" == "failed-stderr" || "$MODE" == "failed-stderr-upgrade" || "$MODE" == "failed-stderr-array" ]]; then
     echo "[npm-tsp-client] npm error E403" >&2
+    if [[ "$MODE" == "failed-stderr-array" ]]; then
+      printf '[\\n {"success":false,"attemptsUsed":%s}\\n]\\n' "$BOUND" >&2; return 1
+    fi
     printf '{"success":false,"attemptsUsed":%s,"errorCode":"PatchesFailed"}\\n' "$BOUND" >&2
     if [[ "$MODE" == "failed-stderr-upgrade" ]]; then echo "A new version of azsdk is available. Run azsdk upgrade to update." >&2; fi
     return 1
@@ -176,9 +183,16 @@ azsdk() {
       const resultPath = path.join(root, "repair-results", "result.json");
       assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-exit-code.txt"), "utf8").trim(),
         mode.startsWith("failed") || mode === "contradictory-result" ? "1" : "0");
-      if (mode === "invalid-result" || mode === "contradictory-result") {
+      if (mode === "invalid-result" || mode === "invalid-array-result" ||
+        mode === "contradictory-result" || mode === "failed-stderr-array") {
         assert.equal(fs.existsSync(resultPath), false);
         assert.match(fs.readFileSync(path.join(root, "repair-results", "engine-errors.txt"), "utf8"), /Engine response capture failed/);
+        if (mode === "failed-stderr-array") {
+          assert.equal(fs.readFileSync(path.join(root, "repair-results", "engine-stdout.txt"), "utf8"), "");
+          const raw = fs.readFileSync(path.join(root, "repair-results", "engine-stderr.txt"), "utf8");
+          assert.match(raw, /npm error E403/);
+          assert.match(raw, /\[\n \{"success":false,"attemptsUsed":3\}\n\]/);
+        }
         return;
       }
       const result = JSON.parse(fs.readFileSync(resultPath, "utf8"));
