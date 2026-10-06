@@ -9,10 +9,6 @@
   - Added the `CreateAkpKeyOptions` model and the new `CreateAkpKey` and `CreateAkpKeyAsync` methods in `KeyClient`.
   - Added the `Algorithm` and `Pub` properties to `JsonWebKey`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 - The default service version is now `2026-07-01-preview`.
 
