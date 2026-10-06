@@ -203,7 +203,7 @@ namespace Azure.Generator.Management.Utilities
                     });
                     setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
                 }
-                else if (isWrapperOptional && innerProperty.WireInfo?.IsRequired == true && !innerProperty.Type.IsValueType && !innerProperty.Type.IsCollection)
+                else if (isWrapperOptional && innerProperty.WireInfo?.IsRequired == true && !innerProperty.Type.IsNullable && !innerProperty.Type.IsValueType && !innerProperty.Type.IsCollection)
                 {
                     // Safe-flatten has only one public leaf, so an absent reference value
                     // represents an absent optional wrapper. Avoid constructing a required-leaf
