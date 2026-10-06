@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="family"> SKU Family of the managed HSM Pool. </param>
         /// <param name="name"> SKU of the managed HSM Pool. </param>
         /// <returns> A new <see cref="Models.ManagedHsmSku"/> instance for mocking. </returns>
-        public static ManagedHsmSku ManagedHsmSku(ManagedHsmSkuFamily family = default, Models.ManagedHsmSkuName name = default)
+        public static ManagedHsmSku ManagedHsmSku(ManagedHsmSkuFamily family = default, ManagedHsmSkuName name = default)
         {
             return new ManagedHsmSku(family, name, default);
         }

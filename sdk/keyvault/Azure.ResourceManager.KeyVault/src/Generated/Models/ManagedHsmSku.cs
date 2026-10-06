@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="ManagedHsmSku"/>. </summary>
         /// <param name="family"> SKU Family of the managed HSM Pool. </param>
         /// <param name="name"> SKU of the managed HSM Pool. </param>
-        public ManagedHsmSku(ManagedHsmSkuFamily family, Models.ManagedHsmSkuName name)
+        public ManagedHsmSku(ManagedHsmSkuFamily family, ManagedHsmSkuName name)
         {
             Family = family;
             Name = name;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="family"> SKU Family of the managed HSM Pool. </param>
         /// <param name="name"> SKU of the managed HSM Pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedHsmSku(ManagedHsmSkuFamily family, Models.ManagedHsmSkuName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedHsmSku(ManagedHsmSkuFamily family, ManagedHsmSkuName name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Family = family;
             Name = name;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> SKU of the managed HSM Pool. </summary>
         [WirePath("name")]
-        public Models.ManagedHsmSkuName Name { get; set; }
+        public ManagedHsmSkuName Name { get; set; }
     }
 }
