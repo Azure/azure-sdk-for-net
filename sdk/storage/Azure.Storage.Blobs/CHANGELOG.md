@@ -1,5 +1,10 @@
 # Release History
 
+## 12.30.1 (2026-10-05)
+
+### Bugs Fixed
+- Fixed `AuthenticatedRegionCryptoStream.Dispose()` to be idempotent and thread-safe, so the buffer it rents is no longer returned to the shared `ArrayPool<byte>` more than once when the stream is disposed repeatedly or concurrently. Returning the same array twice allowed unrelated callers to rent the same array instance and corrupt each other's data.
+
 ## 12.30.0 (2026-09-28)
 
 ### Features Added
