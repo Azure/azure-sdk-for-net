@@ -11,8 +11,6 @@ Set-StrictMode -Version 4
 
 BeforeAll {
     $script:repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../../..')).Path
-    # Pin the pre-pilot baseline so protections cannot drift with the current branch.
-    $script:baseline = 'd6261e739a077be104ff951c489e2b104c9d3c5f'
     $script:paths = @(
         'sdk/template/ci.yml',
         'eng/pipelines/templates/stages/archetype-sdk-client.yml',
@@ -133,39 +131,99 @@ Describe 'Template-only completion correlation' -Tag 'UnitTest' {
         $queued.ReleasePlanId | Should -BeExactly $Id
     }
 
-    It 'equals the parsed baseline after removing only the new feature in <Path>' -ForEach @(
-        @{ Index = 0; Path = 'sdk/template/ci.yml' },
-        @{ Index = 1; Path = 'eng/pipelines/templates/stages/archetype-sdk-client.yml' },
-        @{ Index = 2; Path = 'eng/pipelines/templates/stages/archetype-net-release.yml' }
-    ) {
-        $previousLazyFetch = $env:GIT_NO_LAZY_FETCH
-        try {
-            $env:GIT_NO_LAZY_FETCH = '1'
-            $baselineText = @(git -C $script:repoRoot show "$($script:baseline):$Path")
-            if ($LASTEXITCODE -ne 0) { throw "Pinned baseline unavailable: $Path" }
+    # Assert the safety contract from checked-in nodes, not historical Git objects:
+    # CI uses shallow checkouts and must not fetch a pre-pilot revision to run tests.
+    It 'keeps template feed and approval overrides opt-in with the same artifact and triggers' {
+        foreach ($name in @('ReleaseToDevOpsOnly', 'AutoApproveRelease')) {
+            $parameter = @($script:entry.parameters | Where-Object name -eq $name)
+            $parameter.Count | Should -Be 1
+            $parameter[0].type | Should -BeExactly 'boolean'
+            $parameter[0].default | Should -BeFalse
         }
-        finally { $env:GIT_NO_LAZY_FETCH = $previousLazyFetch }
-        $before = ($baselineText -join "`n") | ConvertFrom-Yaml
-        $after = Get-Content -LiteralPath (Join-Path $script:repoRoot $Path) -Raw | ConvertFrom-Yaml
-        if ($Index -lt 2) {
-            $after.parameters = @($after.parameters | Where-Object name -ne 'ReleasePlanId')
-            if ($Index -eq 0) { $after.extends.parameters.Remove('ReleasePlanId') }
-            else {
-                $call = @(Find-PipelineNode $after 'template' 'archetype-net-release.yml')[0]
-                $call.parameters.Remove('ReleasePlanId')
-            }
+        $script:entry.extends.template | Should -BeExactly '/eng/pipelines/templates/stages/archetype-sdk-client.yml'
+        $parameters = $script:entry.extends.parameters
+        $parameters.Contains('PublicFeed') | Should -BeFalse
+        $parameters.Contains('PublicPublishEnvironment') | Should -BeFalse
+        $parameters['${{ if eq(parameters.ReleaseToDevOpsOnly, ''true'') }}'].PublicFeed | Should -BeExactly 'public/storage-staging'
+        $parameters['${{ if eq(parameters.AutoApproveRelease, ''true'') }}'].PublicPublishEnvironment | Should -BeExactly 'none'
+        $parameters.ArtifactName | Should -BeExactly 'packages'
+        $parameters.Artifacts[0].safeName | Should -BeExactly 'AzureTemplate'
+        @($script:entry.trigger.branches.include) -join '|' | Should -BeExactly 'main|hotfix/*|release/*'
+        @($script:entry.trigger.paths.include) -join '|' | Should -BeExactly 'sdk/template/|eng/common/'
+    }
+
+    It 'keeps client release eligibility, build dependency and non-template publish defaults' {
+        $gate = '${{if and(not(and(eq(parameters.SkipPrValidation, true), eq(variables[''Build.Reason''], ''Manual''))), ne(variables[''Build.Reason''], ''PullRequest''), eq(variables[''System.TeamProject''], ''internal''))}}'
+        $guarded = @($script:client.extends.parameters.stages | Where-Object { $_.Contains($gate) })
+        $guarded.Count | Should -Be 1
+        @(Find-PipelineNode $guarded[0][$gate] 'template' 'archetype-net-release.yml').Count | Should -Be 1
+        $parameters = $script:releaseCalls[0].parameters
+        @($parameters.DependsOn) -join '|' | Should -BeExactly 'Build'
+        $parameters.ServiceDirectory | Should -BeExactly '${{ parameters.ServiceDirectory }}'
+        $parameters.PublicFeed | Should -BeExactly '${{ parameters.PublicFeed }}'
+        $parameters.PublicPublishEnvironment | Should -BeExactly '${{ parameters.PublicPublishEnvironment }}'
+        $parameters.Contains('TestPipeline') | Should -BeFalse
+        $parameters[$script:pilotCondition].TestPipeline | Should -BeTrue
+        $artifacts = ConvertTo-NormalizedNode $parameters.Artifacts | ConvertTo-Json -Depth 10 -Compress
+        $expected = @(@{ '${{ each artifact in parameters.Artifacts }}' = @(@{ '${{ if ne(artifact.createReleaseStage, ''false'') }}' = @('${{ artifact }}') }) })
+        $artifacts | Should -BeExactly (ConvertTo-NormalizedNode $expected | ConvertTo-Json -Depth 10 -Compress)
+        foreach ($contract in @(
+            @{ Name = 'PublicFeed'; Default = 'Nuget.org' },
+            @{ Name = 'PublicPublishEnvironment'; Default = 'package-publish' }
+        )) {
+            $parameter = @($script:client.parameters | Where-Object name -eq $contract.Name)
+            $parameter.Count | Should -Be 1
+            $parameter[0].default | Should -BeExactly $contract.Default
         }
-        else {
-            $after.parameters.Remove('ReleasePlanId')
-            $stage = @(Find-PipelineNode $after 'stage' 'Release_${{artifact.safeName}}')[0]
-            $stage.variables = @($stage.variables | Where-Object { -not $_.Contains($script:autoPilotCondition) })
-            $call = @(Find-PipelineNode $after 'template' '/eng/common/pipelines/templates/steps/mark-release-completion.yml')[0]
-            $call.parameters.Remove($script:pilotCondition)
-        }
-        # Whole-document equality protects signing, environments, eligibility, gates,
-        # job/stage dependencies, artifacts, and all non-template behavior.
-        $expected = ConvertTo-NormalizedNode $before | ConvertTo-Json -Depth 100 -Compress
-        $actual = ConvertTo-NormalizedNode $after | ConvertTo-Json -Depth 100 -Compress
-        $actual | Should -BeExactly $expected
+    }
+
+    It 'keeps signed publication, release gates and manual versus auto-release environments' {
+        $safeCondition = 'and(succeeded(), ne(variables[''SetDevVersion''], ''true''), ne(variables[''Skip.Release''], ''true''), ne(variables[''Build.Repository.Name''], ''Azure/azure-sdk-for-net-pr''))'
+        $internalAuto = '${{ if and(eq(variables[''Build.Reason''], ''IndividualCI''), eq(variables[''Build.SourceBranch''], ''refs/heads/main''), eq(variables[''System.TeamProject''], ''internal'')) }}'
+        $releaseGate = '${{ if and(eq(variables[''System.TeamProject''], ''internal''), or(in(variables[''Build.Reason''], ''Manual'', ''''), and(eq(variables[''Build.Reason''], ''IndividualCI''), eq(variables[''Build.SourceBranch''], ''refs/heads/main'')))) }}'
+        $guarded = @($script:release.stages | Where-Object { $_.Contains($releaseGate) })
+        $guarded.Count | Should -Be 1
+        $artifactLoop = $guarded[0][$releaseGate][0]['${{ each artifact in parameters.Artifacts }}']
+        @(Find-PipelineNode $artifactLoop[0]['${{if ne(artifact.skipReleaseStage, ''true'')}}'] 'stage' 'Release_${{artifact.safeName}}').Count | Should -Be 1
+        $prepare = @($script:release.stages | Where-Object { $_.Contains($internalAuto) })
+        $prepare.Count | Should -Be 1
+        $prepare[0][$internalAuto][0].template | Should -BeExactly '/eng/common/pipelines/templates/stages/archetype-auto-release-prepare.yml'
+        @($prepare[0][$internalAuto][0].parameters.DependsOn) -join '|' | Should -BeExactly 'Signing'
+        $prepare[0][$internalAuto][0].parameters.Condition | Should -BeExactly $safeCondition
+
+        $signing = @(Find-PipelineNode $script:release 'stage' 'Signing')
+        $signing.Count | Should -Be 1
+        $signing[0].dependsOn | Should -BeExactly '${{parameters.DependsOn}}'
+        $sign = @(Find-PipelineNode $signing[0] 'job' 'SignPackage')[0]
+        $sign.templateContext.outputs[0].artifactName | Should -BeExactly '${{parameters.ArtifactName}}-signed'
+        @(Find-PipelineNode $sign 'template' 'pipelines/steps/net-signing.yml@azure-sdk-build-tools').Count | Should -Be 1
+        $stage = $script:releaseStages[0]
+        $stage['${{ else }}'].condition | Should -BeExactly $safeCondition
+        ($stage[$script:existingAutoCondition].condition -replace '\s', '') | Should -BeExactly ('and(succeeded(),ne(variables[''SetDevVersion''],''true''),ne(variables[''Skip.Release''],''true''),ne(variables[''Build.Repository.Name''],''Azure/azure-sdk-for-net-pr''),eq(dependencies.AutoReleasePrepare.outputs[''ResolveAutoReleasePackages.resolve.ReleaseArtifact_${{artifact.safeName}}''],''true''))')
+        $publishGuard = @($stage.jobs | Where-Object { $_.Contains('${{if ne(artifact.skipPublishPackage, ''true'')}}') })
+        $publishGuard.Count | Should -Be 1
+        $publish = @(Find-PipelineNode $publishGuard[0]['${{if ne(artifact.skipPublishPackage, ''true'')}}'] 'deployment' 'PublishPackage')
+        $publish.Count | Should -Be 1
+        $publish[0].condition | Should -BeExactly 'and(succeeded(), ne(variables[''Skip.PublishPackage''], ''true''))'
+        $publish[0].dependsOn | Should -BeExactly 'TagRepository'
+        $publish[0].Contains('environment') | Should -BeFalse
+        $publish[0][$internalAuto].environment | Should -BeExactly 'none'
+        $publish[0]['${{ else }}'].environment | Should -BeExactly '${{ parameters.PublicPublishEnvironment }}'
+        $publish[0].templateContext.inputs[0].artifactName | Should -BeExactly '${{parameters.ArtifactName}}-signed'
+        $publish[0].templateContext.type | Should -BeExactly 'releaseJob'
+        $publish[0].templateContext.isProduction | Should -BeTrue
+        $pushes = @(Find-PipelineNode $publish[0] 'task' '1ES.PublishNuget@1')
+        $pushes.Count | Should -Be 2
+        $pushes[0].inputs.packagesToPush | Should -BeExactly '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+        $pushes[0].inputs['${{ if eq(parameters.PublicFeed, ''Nuget.org'') }}'].publishFeedCredentials | Should -BeExactly 'Nuget.org'
+        $pushes[0].inputs['${{ if ne(parameters.PublicFeed, ''Nuget.org'') }}'].publishVstsFeed | Should -BeExactly '${{ parameters.PublicFeed }}'
+        $pushes[1].inputs.packagesToPush | Should -BeExactly '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+        $pushes[1].inputs.publishVstsFeed | Should -BeExactly '${{ parameters.DevFeed }}'
+        $uploads = @(Find-PipelineNode $stage 'job' 'UploadSymbols')
+        $uploads[0].condition | Should -BeExactly 'and(succeeded(), ne(variables[''Skip.SymbolsUpload''], ''true''))'
+        $completion = $script:completionCalls[0].parameters
+        $completion.ConfigFileDir | Should -BeExactly '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
+        $completion.PackageArtifactName | Should -BeExactly '${{artifact.name}}'
+        $completion.SourceRootPath | Should -BeExactly '$(sdk-repo-path)'
     }
 }
