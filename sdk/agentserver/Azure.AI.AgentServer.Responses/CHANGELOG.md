@@ -13,6 +13,9 @@
   `ResponseContext.Shutdown`, so an explicit client cancel is composable as a token.
 
 ### Breaking Changes
+- Stored responses use Core durable tasks only when the resilient-task runtime is enabled.
+  `ResilientBackground=true` enables it automatically; otherwise `store=true` requests execute
+  in-process and are not recovered after an ungraceful crash.
 - Hosted registration now uses the `ClientSettings` pattern. The
   `AddResponsesServer(IServiceCollection, Action<ResponsesServerOptions>)` overload remains for
   local / non-hosted scenarios and now throws in a hosted Foundry environment (use the

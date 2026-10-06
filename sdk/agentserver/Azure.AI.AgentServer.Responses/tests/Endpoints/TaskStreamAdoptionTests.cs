@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +18,7 @@ public sealed class TaskStreamAdoptionTests
     {
         using var registry = new CountingEventStreamRegistry();
         using var factory = new TestWebApplicationFactory(
+            configureOptions: options => options.ResilientBackground = true,
             configureTestServices: services =>
                 services.AddSingleton<AgentEventStreamRegistry>(registry));
         using var client = factory.CreateClient();

@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -205,6 +206,7 @@ public sealed class TestRow2Row3Row4PathTests : CrashRecoveryE2ETestBase
             handler,
             configureTestServices: services =>
             {
+                services.SetResilientTasksEnabled();
                 services.AddSingleton<ResponsesProvider>(new FileResponsesProvider(ResponsesDir));
                 TestEventStreams.UseFileBacked(services, ResponsesDir);
                 services.AddSingleton(CoreTaskRecoveryTestHelpers.CreateTaskStore(TasksDir));

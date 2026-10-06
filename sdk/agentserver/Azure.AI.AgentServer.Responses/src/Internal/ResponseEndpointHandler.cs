@@ -38,6 +38,7 @@ internal sealed class ResponseEndpointHandler
     private readonly ResponsesCancellationSignalProvider _cancellationProvider;
     private readonly AgentEventStreamRegistry _eventStreamRegistry;
     private readonly IOptions<ResponsesServerOptions> _options;
+    private readonly IOptions<ResilientTaskOptions> _resilientTaskOptions;
     private readonly ILogger<ResponseEndpointHandler> _logger;
 
     /// <summary>
@@ -51,6 +52,7 @@ internal sealed class ResponseEndpointHandler
         ResponsesCancellationSignalProvider cancellationProvider,
         AgentEventStreamRegistry eventStreamRegistry,
         IOptions<ResponsesServerOptions> options,
+        IOptions<ResilientTaskOptions> resilientTaskOptions,
         ILogger<ResponseEndpointHandler> logger)
     {
         _activitySource = activitySource;
@@ -60,6 +62,7 @@ internal sealed class ResponseEndpointHandler
         _cancellationProvider = cancellationProvider;
         _eventStreamRegistry = eventStreamRegistry;
         _options = options;
+        _resilientTaskOptions = resilientTaskOptions;
         _logger = logger;
     }
 
@@ -238,7 +241,8 @@ internal sealed class ResponseEndpointHandler
         // (409 conversation_fork_not_supported), which are FR-051/FR-052 requirements that are not
         // background-gated.
         //
-        // EVERY store=true request is task-tracked — including background AND foreground streaming.
+        // When the Core task runtime is enabled, every store=true request is task-tracked —
+        // including background AND foreground streaming.
         // The streaming task path does NOT await response.created: the SSE result subscribes to the
         // task-bound stream and relays immediately (parity with Python `_live_stream`), so a
         // pre-creation (Phase 1) persistence failure is surfaced by the relay as a standalone spec-B8
@@ -249,10 +253,11 @@ internal sealed class ResponseEndpointHandler
         // background-streaming / Row-3 foreground crash-recovery gap: both are now task-tracked, so the
         // next-lifetime recovery scan observes and marks-failed a crashed turn (Path C).
         //
-        // Task-routing gate (parity with Python responses-resilience-spec §6): the handler runs INSIDE
-        // a Core resilient task for EVERY non-hosted store=true request — background OR foreground,
-        // streaming OR non-streaming, one-shot OR multi-turn. Only store=false (Row 4) runs inline
-        // (Python `run_sync`/`run_stream` skip the task when store=false: "no store ⇒ no resilient task").
+        // Task-routing gate (Python parity): when the Core resilient-task runtime is enabled, the
+        // handler runs INSIDE a task for every store=true request — background OR foreground,
+        // streaming OR non-streaming, one-shot OR multi-turn. When the runtime is disabled, stored
+        // work falls back to in-process execution: response persistence remains active, but crash
+        // recovery/task arbitration are not.
         // StartResilientTurnAsync selects the primitive from pickMultiTurn and the recovery disposition
         // from the row (Row 1 bg+resilient → re-invoke; Rows 2/3 → mark-failed). The trailing clause
         // keeps the pre-existing .NET behavior of routing a store=false conversation / steerable turn
@@ -267,8 +272,8 @@ internal sealed class ResponseEndpointHandler
         // x-platform-error-source (see ResilientStartFailureProtocolTests) — .NET returns a clean HTTP
         // error rather than a 200 + error event because, unlike Starlette, the SSE headers are not yet
         // committed when StartResilientTurnAsync runs.
-        bool useResilientTask = store
-            || (pickMultiTurn && (isBackground || !isStreaming));
+        bool useResilientTask = _resilientTaskOptions.Value.Enabled
+            && (store || (pickMultiTurn && (isBackground || !isStreaming)));
 
         var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
 
@@ -580,11 +585,9 @@ internal sealed class ResponseEndpointHandler
                 return JsonForClient(finalResponse);
             }
 
-            // Inline foreground fallback — reached ONLY for store=false one-shot foreground (Row 4:
-            // ephemeral, no durable state to recover, so no Core task). Every store=true foreground
-            // turn routes through the resilient task above (Row 3 Path C task-tracking), matching Python
-            // responses-resilience-spec §6 (the handler runs inside a resilient task for EVERY
-            // store=true request; only store=false runs inline).
+            // Inline foreground fallback — used for store=false one-shot work and for stored work
+            // when the application did not opt in to Core resilient tasks. Stored fallback responses
+            // are still persisted, but they are not task-tracked or recovered after a crash.
             // Order matters: register linked CTS first, then ClientDisconnected flag.
             // CancellationToken callbacks fire in LIFO order, so registering the flag
             // second ensures it is set before the linked CTS propagates cancellation

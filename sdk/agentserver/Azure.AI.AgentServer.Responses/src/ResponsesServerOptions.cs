@@ -59,9 +59,10 @@ public class ResponsesServerOptions
     /// <see langword="false"/> (the default), an interrupted background response
     /// transitions to a failed terminal state and is not re-invoked.
     /// <para>
-    /// Enabling this option requires resilient-capable response, task, and stream
-    /// persistence providers to be registered; the server fails loudly at startup when
-    /// they are missing rather than silently downgrading to weaker durability.
+    /// Enabling this option automatically opts the host into the Core resilient-task runtime and
+    /// requires resilient-capable response, task, and stream persistence providers; the server
+    /// fails loudly at startup when they are missing rather than silently downgrading to weaker
+    /// durability.
     /// </para>
     /// </summary>
     public bool ResilientBackground { get; set; }
@@ -75,6 +76,10 @@ public class ResponsesServerOptions
     /// forks are rejected with <c>409 conversation_fork_not_supported</c>, and overlapping
     /// turns are rejected with <c>409 conversation_locked</c>. When <see langword="false"/>
     /// (the default), steering is disabled.
+    /// Enabling steering requires the Core resilient-task runtime; set
+    /// <see cref="ResilientBackground"/> or call
+    /// <see cref="Azure.AI.AgentServer.Core.Tasks.ResilientTaskEnablementExtensions.SetResilientTasksEnabled(Microsoft.Extensions.DependencyInjection.IServiceCollection, bool)"/>
+    /// before host startup.
     /// </summary>
     public bool SteerableConversations { get; set; }
 

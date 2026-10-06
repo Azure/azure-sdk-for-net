@@ -82,6 +82,10 @@ public static class ResponsesServerServiceCollectionExtensions
 
         // Register InMemoryProviderOptions with defaults
         services.Configure<InMemoryProviderOptions>(_ => { });
+        services.TryAddEnumerable(
+            ServiceDescriptor.Singleton<
+                IPostConfigureOptions<ResilientTaskOptions>,
+                ResponsesResilientTaskEnablementSetup>());
 
         services.TryAddSingleton(TimeProvider.System);
 
@@ -170,8 +174,11 @@ public static class ResponsesServerServiceCollectionExtensions
             TimeSpan streamTtl = serviceProvider
                 .GetRequiredService<IOptions<InMemoryProviderOptions>>()
                 .Value.EventStreamTtl;
+            bool resilientTasksEnabled = serviceProvider
+                .GetRequiredService<IOptions<ResilientTaskOptions>>()
+                .Value.Enabled;
             var streamOptions = new AgentEventStreamOptions();
-            if (responseOptions.ResilientBackground && hostedStorage is null)
+            if (resilientTasksEnabled && hostedStorage is null)
             {
                 streamOptions.UseFileBackedReplay(
                     storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
