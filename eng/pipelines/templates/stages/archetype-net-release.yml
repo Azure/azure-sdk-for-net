@@ -5,6 +5,7 @@ parameters:
   DevFeed: 'public/azure-sdk-for-net'
   PublicFeed: Nuget.org
   PublicPublishEnvironment: package-publish
+  ReleasePlanId: '0'
 
 stages:
   - stage: Signing
@@ -61,6 +62,9 @@ stages:
           variables:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
+            - ${{ if and(eq(parameters.ServiceDirectory, 'template'), eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+              - name: AutoReleaseSdkPullRequestUrl
+                value: $[ stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.AutoReleaseSdkPullRequestUrl'] ]
           displayName: 'Release: ${{artifact.name}}'
           ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
             # Auto-release path: only release when the merged PR is labeled and changed this package.
@@ -232,6 +236,10 @@ stages:
                         ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
                         PackageArtifactName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
+                        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+                          ReleasePlanId: ${{ parameters.ReleasePlanId }}
+                          ${{ if and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+                            SdkPullRequest: $(AutoReleaseSdkPullRequestUrl)
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS

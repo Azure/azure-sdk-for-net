@@ -8,6 +8,10 @@ parameters:
     displayName: 'Automatically approve the release stage'
     type: boolean
     default: false
+  - name: ReleasePlanId
+    displayName: 'Optional release plan ID (0 uses SDK PR correlation)'
+    type: string
+    default: '0'
 
 trigger:
   branches:
@@ -33,6 +37,7 @@ extends:
     ${{ if eq(parameters.AutoApproveRelease, 'true') }}:
       PublicPublishEnvironment: none
     ServiceDirectory: template
+    ReleasePlanId: ${{ parameters.ReleasePlanId }}
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template
