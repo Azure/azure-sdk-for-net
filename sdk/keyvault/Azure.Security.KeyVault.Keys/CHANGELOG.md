@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.5 (Unreleased)
+## 4.11.0-beta.5 (2026-10-06)
 
 ### Features Added
 - Added support for Algorithm Key Pair (AKP) keys, such as ML-DSA post-quantum keys:
