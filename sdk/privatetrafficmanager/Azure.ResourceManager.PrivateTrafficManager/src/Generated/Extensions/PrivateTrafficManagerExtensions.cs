@@ -38,21 +38,21 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="PrivateTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePrivateTrafficManagerArmClient.GetEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePrivateTrafficManagerArmClient.GetPrivateTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateTrafficManagerEndpointResource"/> object. </returns>
+        public static PrivateTrafficManagerEndpointResource GetPrivateTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePrivateTrafficManagerArmClient(client).GetEndpointResource(id);
+            return GetMockablePrivateTrafficManagerArmClient(client).GetPrivateTrafficManagerEndpointResource(id);
         }
 
         /// <summary>
@@ -110,21 +110,21 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="TopologyMapSiteResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePrivateTrafficManagerArmClient.GetSiteResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePrivateTrafficManagerArmClient.GetTopologyMapSiteResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
-        public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopologyMapSiteResource"/> object. </returns>
+        public static TopologyMapSiteResource GetTopologyMapSiteResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePrivateTrafficManagerArmClient(client).GetSiteResource(id);
+            return GetMockablePrivateTrafficManagerArmClient(client).GetTopologyMapSiteResource(id);
         }
 
         /// <summary>

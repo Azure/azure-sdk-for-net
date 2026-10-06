@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="name"> The name of the Site. </param>
         /// <param name="properties"> The properties of the Site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyMapInlineSite(string name, SiteProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopologyMapInlineSite(string name, TopologyMapSiteProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public string Name { get; set; }
 
         /// <summary> The properties of the Site. </summary>
-        public SiteProperties Properties { get; set; }
+        public TopologyMapSiteProperties Properties { get; set; }
     }
 }

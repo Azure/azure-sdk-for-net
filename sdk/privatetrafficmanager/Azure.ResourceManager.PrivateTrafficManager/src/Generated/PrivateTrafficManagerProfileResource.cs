@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             }
         }
 
-        /// <summary> Gets a collection of Endpoints in the <see cref="PrivateTrafficManagerProfileResource"/>. </summary>
-        /// <returns> An object representing collection of Endpoints and their operations over a EndpointResource. </returns>
-        public virtual EndpointCollection GetEndpoints()
+        /// <summary> Gets a collection of PrivateTrafficManagerEndpoints in the <see cref="PrivateTrafficManagerProfileResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateTrafficManagerEndpoints and their operations over a PrivateTrafficManagerEndpointResource. </returns>
+        public virtual PrivateTrafficManagerEndpointCollection GetPrivateTrafficManagerEndpoints()
         {
-            return GetCachedClient(client => new EndpointCollection(client, Id));
+            return GetCachedClient(client => new PrivateTrafficManagerEndpointCollection(client, Id));
         }
 
         /// <summary> Gets a Private Traffic Manager endpoint. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EndpointResource>> GetEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateTrafficManagerEndpointResource>> GetPrivateTrafficManagerEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            return await GetEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateTrafficManagerEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a Private Traffic Manager endpoint. </summary>
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EndpointResource> GetEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateTrafficManagerEndpointResource> GetPrivateTrafficManagerEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
 
-            return GetEndpoints().Get(endpointName, cancellationToken);
+            return GetPrivateTrafficManagerEndpoints().Get(endpointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HealthPolicies in the <see cref="PrivateTrafficManagerProfileResource"/>. </summary>

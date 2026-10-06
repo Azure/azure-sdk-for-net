@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the Private Traffic Manager profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateTrafficManagerProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProfileProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal PrivateTrafficManagerProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrivateTrafficManagerProfileProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the Private Traffic Manager profile. </summary>
-        public ProfileProperties Properties { get; set; }
+        public PrivateTrafficManagerProfileProperties Properties { get; set; }
     }
 }

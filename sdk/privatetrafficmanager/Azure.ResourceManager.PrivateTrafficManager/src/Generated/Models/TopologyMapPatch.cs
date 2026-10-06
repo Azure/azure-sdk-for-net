@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <summary> Initializes a new instance of <see cref="TopologyMapPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The properties of the Topology Map that can be updated. </param>
+        /// <param name="catchAllSite"> The properties of the Topology Map that can be updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyMapPatch(IDictionary<string, string> tags, TopologyMapPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopologyMapPatch(IDictionary<string, string> tags, TopologyMapPatchProperties catchAllSite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
-            Properties = properties;
+            CatchAllSite = catchAllSite;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The properties of the Topology Map that can be updated. </summary>
-        internal TopologyMapPatchProperties Properties { get; set; }
+        internal TopologyMapPatchProperties CatchAllSite { get; set; }
 
         /// <summary> The Name of the CatchAll site. There is only one CatchAll site in a TopologyMap. </summary>
-        public string TopologyMapPatchCatchAllSiteName
+        public string CatchAllSiteName
         {
             get
             {
-                return Properties is null ? default : Properties.CatchAllSiteName;
+                return CatchAllSite is null ? default : CatchAllSite.CatchAllSiteName;
             }
             set
             {
-                if (Properties is null)
+                if (CatchAllSite is null)
                 {
-                    Properties = new TopologyMapPatchProperties();
+                    CatchAllSite = new TopologyMapPatchProperties();
                 }
-                Properties.CatchAllSiteName = value;
+                CatchAllSite.CatchAllSiteName = value;
             }
         }
     }

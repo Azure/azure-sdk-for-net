@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <summary> Initializes a new instance of <see cref="EndpointListResult"/>. </summary>
         /// <param name="value"> The Endpoint items on this page. </param>
-        internal EndpointListResult(IEnumerable<EndpointData> value)
+        internal EndpointListResult(IEnumerable<PrivateTrafficManagerEndpointData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="value"> The Endpoint items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointListResult(IList<EndpointData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointListResult(IList<PrivateTrafficManagerEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> The Endpoint items on this page. </summary>
-        public IList<EndpointData> Value { get; }
+        public IList<PrivateTrafficManagerEndpointData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

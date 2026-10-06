@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <summary> Initializes a new instance of <see cref="ProbeConfig"/>. </summary>
         public ProbeConfig()
         {
-            CustomHeaders = new ChangeTrackingList<CustomHeader>();
+            CustomHeaders = new ChangeTrackingList<ProbeCustomHeader>();
             ExpectedStatusCodeRanges = new ChangeTrackingList<ExpectedStatusCodeRange>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="customHeaders"> List of custom headers. </param>
         /// <param name="expectedStatusCodeRanges"> List of expected status code ranges. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProbeConfig(Protocol? protocol, long? port, string path, long? intervalInSeconds, long? timeoutInSeconds, long? toleratedNumberOfFailures, IList<CustomHeader> customHeaders, IList<ExpectedStatusCodeRange> expectedStatusCodeRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProbeConfig(ProbeProtocol? protocol, long? port, string path, long? intervalInSeconds, long? timeoutInSeconds, long? toleratedNumberOfFailures, IList<ProbeCustomHeader> customHeaders, IList<ExpectedStatusCodeRange> expectedStatusCodeRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Port = port;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> The protocol (HTTP, HTTPS or TCP) used to probe for endpoint health. </summary>
-        public Protocol? Protocol { get; set; }
+        public ProbeProtocol? Protocol { get; set; }
 
         /// <summary> The TCP port used to probe for endpoint health. </summary>
         public long? Port { get; set; }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public long? ToleratedNumberOfFailures { get; set; }
 
         /// <summary> List of custom headers. </summary>
-        public IList<CustomHeader> CustomHeaders { get; }
+        public IList<ProbeCustomHeader> CustomHeaders { get; }
 
         /// <summary> List of expected status code ranges. </summary>
         public IList<ExpectedStatusCodeRange> ExpectedStatusCodeRanges { get; }

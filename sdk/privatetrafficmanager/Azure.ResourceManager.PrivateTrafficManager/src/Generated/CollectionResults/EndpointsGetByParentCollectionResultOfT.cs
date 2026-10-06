@@ -14,7 +14,7 @@ using Azure.ResourceManager.PrivateTrafficManager.Models;
 
 namespace Azure.ResourceManager.PrivateTrafficManager
 {
-    internal partial class EndpointsGetByParentCollectionResultOfT : Pageable<EndpointData>
+    internal partial class EndpointsGetByParentCollectionResultOfT : Pageable<PrivateTrafficManagerEndpointData>
     {
         private readonly Endpoints _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EndpointsGetByParentCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EndpointData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<PrivateTrafficManagerEndpointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 }
                 EndpointListResult result = EndpointListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<EndpointData>.FromValues((IReadOnlyList<EndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<PrivateTrafficManagerEndpointData>.FromValues((IReadOnlyList<PrivateTrafficManagerEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

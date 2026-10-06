@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteListResult"/>. </summary>
         /// <param name="value"> The Site items on this page. </param>
-        internal SiteListResult(IEnumerable<SiteData> value)
+        internal SiteListResult(IEnumerable<TopologyMapSiteData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="value"> The Site items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteListResult(IList<SiteData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteListResult(IList<TopologyMapSiteData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         }
 
         /// <summary> The Site items on this page. </summary>
-        public IList<SiteData> Value { get; }
+        public IList<TopologyMapSiteData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

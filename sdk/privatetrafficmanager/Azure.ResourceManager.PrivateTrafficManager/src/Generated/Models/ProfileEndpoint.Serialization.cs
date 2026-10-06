@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             string name = default;
             string target = default;
             string monitoringTarget = default;
-            AdministrativeStatus? endpointStatus = default;
-            EndpointsKind? kind = default;
+            EndpointAdministrativeStatus? endpointStatus = default;
+            PrivateTrafficManagerEndpointKind? kind = default;
             long? weight = default;
             long? priority = default;
-            AlwaysServe? alwaysServe = default;
+            EndpointAlwaysServe? alwaysServe = default;
             ResourceIdentifier healthPolicyId = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    endpointStatus = new AdministrativeStatus(prop.Value.GetString());
+                    endpointStatus = new EndpointAdministrativeStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    kind = new EndpointsKind(prop.Value.GetString());
+                    kind = new PrivateTrafficManagerEndpointKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("weight"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    alwaysServe = new AlwaysServe(prop.Value.GetString());
+                    alwaysServe = new EndpointAlwaysServe(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("healthPolicyId"u8))

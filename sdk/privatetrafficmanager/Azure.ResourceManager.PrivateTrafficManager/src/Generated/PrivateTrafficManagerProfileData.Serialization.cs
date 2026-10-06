@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             SystemData systemData = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            ProfileProperties properties = default;
+            PrivateTrafficManagerProfileProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                     {
                         continue;
                     }
-                    properties = ProfileProperties.DeserializeProfileProperties(prop.Value, options);
+                    properties = PrivateTrafficManagerProfileProperties.DeserializePrivateTrafficManagerProfileProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

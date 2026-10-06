@@ -14,7 +14,7 @@ using Azure.ResourceManager.PrivateTrafficManager.Models;
 
 namespace Azure.ResourceManager.PrivateTrafficManager
 {
-    internal partial class SitesGetByParentCollectionResultOfT : Pageable<SiteData>
+    internal partial class SitesGetByParentCollectionResultOfT : Pageable<TopologyMapSiteData>
     {
         private readonly Sites _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SitesGetByParentCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SiteData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<TopologyMapSiteData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager
                 }
                 SiteListResult result = SiteListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SiteData>.FromValues((IReadOnlyList<SiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<TopologyMapSiteData>.FromValues((IReadOnlyList<TopologyMapSiteData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

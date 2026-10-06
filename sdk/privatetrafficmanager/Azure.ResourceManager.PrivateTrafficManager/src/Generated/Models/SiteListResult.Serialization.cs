@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SiteData item in Value)
+            foreach (TopologyMapSiteData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 return null;
             }
-            IList<SiteData> value = default;
+            IList<TopologyMapSiteData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SiteData> array = new List<SiteData>();
+                    List<TopologyMapSiteData> array = new List<TopologyMapSiteData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SiteData.DeserializeSiteData(item, options));
+                        array.Add(TopologyMapSiteData.DeserializeTopologyMapSiteData(item, options));
                     }
                     value = array;
                     continue;

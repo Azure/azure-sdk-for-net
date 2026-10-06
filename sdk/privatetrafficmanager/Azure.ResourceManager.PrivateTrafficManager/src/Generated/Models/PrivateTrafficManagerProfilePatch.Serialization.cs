@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            PrivateTrafficManagerProfileUpdateProperties properties = default;
+            PrivateTrafficManagerProfilePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    properties = PrivateTrafficManagerProfileUpdateProperties.DeserializePrivateTrafficManagerProfileUpdateProperties(prop.Value, options);
+                    properties = PrivateTrafficManagerProfilePatchProperties.DeserializePrivateTrafficManagerProfilePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

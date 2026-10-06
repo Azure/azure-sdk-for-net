@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         /// <param name="healthPolicyId"> The health policy associated with this endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileEndpoint(string name, string target, string monitoringTarget, AdministrativeStatus? endpointStatus, EndpointsKind? kind, long? weight, long? priority, AlwaysServe? alwaysServe, ResourceIdentifier healthPolicyId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProfileEndpoint(string name, string target, string monitoringTarget, EndpointAdministrativeStatus? endpointStatus, PrivateTrafficManagerEndpointKind? kind, long? weight, long? priority, EndpointAlwaysServe? alwaysServe, ResourceIdentifier healthPolicyId, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Target = target;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public string MonitoringTarget { get; set; }
 
         /// <summary> The status of the endpoint. If the endpoint is Enabled, it is probed for endpoint health and is included in the traffic routing method. </summary>
-        public AdministrativeStatus? EndpointStatus { get; set; }
+        public EndpointAdministrativeStatus? EndpointStatus { get; set; }
 
         /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
-        public EndpointsKind? Kind { get; set; }
+        public PrivateTrafficManagerEndpointKind? Kind { get; set; }
 
         /// <summary> The weight of this endpoint when using the 'Weighted' traffic routing method. Possible values are from 1 to 1000. </summary>
         public long? Weight { get; set; }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
         public long? Priority { get; set; }
 
         /// <summary> Indicates whether endpoint is Always Serve or not. Always Serve endpoints are always considered to be healthy. </summary>
-        public AlwaysServe? AlwaysServe { get; set; }
+        public EndpointAlwaysServe? AlwaysServe { get; set; }
 
         /// <summary> The health policy associated with this endpoint. </summary>
         public ResourceIdentifier HealthPolicyId { get; set; }

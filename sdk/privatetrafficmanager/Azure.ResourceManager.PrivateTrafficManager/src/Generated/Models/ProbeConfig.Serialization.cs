@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 writer.WritePropertyName("customHeaders"u8);
                 writer.WriteStartArray();
-                foreach (CustomHeader item in CustomHeaders)
+                foreach (ProbeCustomHeader item in CustomHeaders)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 return null;
             }
-            Protocol? protocol = default;
+            ProbeProtocol? protocol = default;
             long? port = default;
             string path = default;
             long? intervalInSeconds = default;
             long? timeoutInSeconds = default;
             long? toleratedNumberOfFailures = default;
-            IList<CustomHeader> customHeaders = default;
+            IList<ProbeCustomHeader> customHeaders = default;
             IList<ExpectedStatusCodeRange> expectedStatusCodeRanges = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    protocol = new Protocol(prop.Value.GetString());
+                    protocol = new ProbeProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    List<CustomHeader> array = new List<CustomHeader>();
+                    List<ProbeCustomHeader> array = new List<ProbeCustomHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CustomHeader.DeserializeCustomHeader(item, options));
+                        array.Add(ProbeCustomHeader.DeserializeProbeCustomHeader(item, options));
                     }
                     customHeaders = array;
                     continue;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 intervalInSeconds,
                 timeoutInSeconds,
                 toleratedNumberOfFailures,
-                customHeaders ?? new ChangeTrackingList<CustomHeader>(),
+                customHeaders ?? new ChangeTrackingList<ProbeCustomHeader>(),
                 expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRange>(),
                 additionalBinaryDataProperties);
         }

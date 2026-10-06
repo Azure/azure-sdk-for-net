@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(CatchAllSite))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue(CatchAllSite, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            TopologyMapPatchProperties properties = default;
+            TopologyMapPatchProperties catchAllSite = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     {
                         continue;
                     }
-                    properties = TopologyMapPatchProperties.DeserializeTopologyMapPatchProperties(prop.Value, options);
+                    catchAllSite = TopologyMapPatchProperties.DeserializeTopologyMapPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TopologyMapPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new TopologyMapPatch(tags ?? new ChangeTrackingDictionary<string, string>(), catchAllSite, additionalBinaryDataProperties);
         }
     }
 }

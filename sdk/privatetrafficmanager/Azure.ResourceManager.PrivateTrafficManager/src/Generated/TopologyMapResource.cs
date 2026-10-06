@@ -679,11 +679,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager
             }
         }
 
-        /// <summary> Gets a collection of Sites in the <see cref="TopologyMapResource"/>. </summary>
-        /// <returns> An object representing collection of Sites and their operations over a SiteResource. </returns>
-        public virtual SiteCollection GetSites()
+        /// <summary> Gets a collection of TopologyMapSites in the <see cref="TopologyMapResource"/>. </summary>
+        /// <returns> An object representing collection of TopologyMapSites and their operations over a TopologyMapSiteResource. </returns>
+        public virtual TopologyMapSiteCollection GetTopologyMapSites()
         {
-            return GetCachedClient(client => new SiteCollection(client, Id));
+            return GetCachedClient(client => new TopologyMapSiteCollection(client, Id));
         }
 
         /// <summary> Gets a Site. </summary>
@@ -692,11 +692,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteResource>> GetSiteAsync(string siteName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TopologyMapSiteResource>> GetTopologyMapSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return await GetSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
+            return await GetTopologyMapSites().GetAsync(siteName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a Site. </summary>
@@ -705,11 +705,11 @@ namespace Azure.ResourceManager.PrivateTrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteResource> GetSite(string siteName, CancellationToken cancellationToken = default)
+        public virtual Response<TopologyMapSiteResource> GetTopologyMapSite(string siteName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
-            return GetSites().Get(siteName, cancellationToken);
+            return GetTopologyMapSites().Get(siteName, cancellationToken);
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (EndpointData item in Value)
+            foreach (PrivateTrafficManagerEndpointData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Models
             {
                 return null;
             }
-            IList<EndpointData> value = default;
+            IList<PrivateTrafficManagerEndpointData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<EndpointData> array = new List<EndpointData>();
+                    List<PrivateTrafficManagerEndpointData> array = new List<PrivateTrafficManagerEndpointData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EndpointData.DeserializeEndpointData(item, options));
+                        array.Add(PrivateTrafficManagerEndpointData.DeserializePrivateTrafficManagerEndpointData(item, options));
                     }
                     value = array;
                     continue;

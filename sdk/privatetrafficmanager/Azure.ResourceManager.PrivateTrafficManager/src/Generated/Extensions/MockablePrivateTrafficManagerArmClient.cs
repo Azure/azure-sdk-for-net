@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="EndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource"/> object. </returns>
-        public virtual EndpointResource GetEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateTrafficManagerEndpointResource"/> object. </returns>
+        public virtual PrivateTrafficManagerEndpointResource GetPrivateTrafficManagerEndpointResource(ResourceIdentifier id)
         {
-            EndpointResource.ValidateResourceId(id);
-            return new EndpointResource(Client, id);
+            PrivateTrafficManagerEndpointResource.ValidateResourceId(id);
+            return new PrivateTrafficManagerEndpointResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HealthPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.PrivateTrafficManager.Mocking
             return new ProfileProbingGatewayResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="TopologyMapSiteResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
-        public virtual SiteResource GetSiteResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TopologyMapSiteResource"/> object. </returns>
+        public virtual TopologyMapSiteResource GetTopologyMapSiteResource(ResourceIdentifier id)
         {
-            SiteResource.ValidateResourceId(id);
-            return new SiteResource(Client, id);
+            TopologyMapSiteResource.ValidateResourceId(id);
+            return new TopologyMapSiteResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TopologyMapResource"/> along with the instance operations that can be performed on it but with no data. </summary>
