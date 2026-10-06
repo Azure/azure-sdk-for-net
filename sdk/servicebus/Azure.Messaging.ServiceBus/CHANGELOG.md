@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Suppressed `Receive` diagnostic activities for internal receives performed by `ServiceBusProcessor` and `ServiceBusSessionProcessor` when experimental ActivitySource support is enabled, including empty receives and shutdown cancellation. This also suppresses the corresponding events for `DiagnosticListener` subscribers in experimental mode. Default legacy tracing, processing, settlement, and application-initiated receive activities remain unchanged. ([#47985](https://github.com/Azure/azure-sdk-for-net/issues/47985))
+
 ### Other Changes
 
 ## 7.21.0 (2026-10-06)

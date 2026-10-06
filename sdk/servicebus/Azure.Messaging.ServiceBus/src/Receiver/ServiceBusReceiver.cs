@@ -325,7 +325,7 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.ReceiveMessageStart(Identifier, maxMessages);
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
+            using DiagnosticScope scope = isProcessor && ActivityExtensions.SupportsActivitySource ? default : ClientDiagnostics.CreateScope(
                 DiagnosticProperty.ReceiveActivityName,
                 ActivityKind.Client,
                 MessagingDiagnosticOperation.Receive);

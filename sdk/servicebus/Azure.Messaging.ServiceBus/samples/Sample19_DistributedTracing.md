@@ -1,6 +1,6 @@
 # Distributed tracing
 
-This sample demonstrates how to observe Service Bus operations using the built-in distributed tracing instrumentation. The `Azure.Messaging.ServiceBus` client library emits [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) events for every operation, so you can monitor latency, trace message flow across services, and diagnose failures in production.
+This sample demonstrates how to observe Service Bus operations using the built-in distributed tracing instrumentation. The `Azure.Messaging.ServiceBus` client library emits [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) events for application operations, so you can monitor latency, trace message flow across services, and diagnose failures in production.
 
 For background on how Service Bus propagates trace context, see [Distributed tracing and correlation through Service Bus messaging](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-end-to-end-tracing).
 
@@ -34,6 +34,8 @@ await sender.SendMessageAsync(new ServiceBusMessage("Hello with tracing!"));
 ```
 
 When the processor handles a message, the client library creates a `Process` activity that is automatically linked to the `Send` activity on the producer side via the `Diagnostic-Id` message property. This gives you end-to-end visibility from sender to receiver.
+
+When experimental ActivitySource support is enabled, `ServiceBusProcessor` and `ServiceBusSessionProcessor` emit processing and settlement activities, but not `Receive` activities for their internal receive loops, including empty receives and receives canceled during shutdown. The default legacy tracing mode continues to emit these `Receive` activities. Because ActivitySource and `DiagnosticListener` share the underlying activity, enabling experimental mode also suppresses these events for `DiagnosticListener` subscribers. Explicit calls to receive messages, including through `ProcessorReceiveActions` within a callback, still emit `Receive` activities in either mode. EventSource receive logs are unchanged.
 
 ```C# Snippet:ServiceBusOpenTelemetryProcessor
 AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
