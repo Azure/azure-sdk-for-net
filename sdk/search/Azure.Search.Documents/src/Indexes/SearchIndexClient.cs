@@ -617,7 +617,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SynonymMap>> GetSynonymMaps(
             CancellationToken cancellationToken = default)
         {
-            return GetSynonymMaps(select: null, cancellationToken: cancellationToken).ToBufferedList();
+            return GetSynonymMapsWithSelectedProperties(select: null, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SynonymMap>>> GetSynonymMapsAsync(
             CancellationToken cancellationToken = default)
         {
-            return await GetSynonymMapsAsync(select: null, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return await GetSynonymMapsWithSelectedPropertiesAsync(select: null, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -643,7 +643,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetSynonymMapNames(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SynonymMap>> response = GetSynonymMaps(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            Response<IReadOnlyList<SynonymMap>> response = GetSynonymMapsWithSelectedProperties(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
@@ -657,7 +657,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetSynonymMapNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<IReadOnlyList<SynonymMap>> response = await GetSynonymMapsAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            Response<IReadOnlyList<SynonymMap>> response = await GetSynonymMapsWithSelectedPropertiesAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
             return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 

@@ -70,7 +70,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexStatsSummaryRequest(nextLink, _search, _pageSize, _searchType, _context) : _client.CreateGetIndexStatsSummaryRequest(_search, _pageSize, _searchType, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _pageSize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexStatsSummaryRequest(nextLink, pageSize, _context) : _client.CreateGetIndexStatsSummaryRequest(_search, pageSize, _searchType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

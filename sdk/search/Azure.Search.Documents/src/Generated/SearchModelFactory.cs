@@ -2159,7 +2159,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxFileCount"> The maximum number of files allowed in the knowledge source. </param>
         /// <param name="remainingFileCount"> The number of additional files that can be uploaded at the time of the request. </param>
         /// <param name="maxFileSizeBytes"> The maximum size in bytes of an individual uploaded file. </param>
-        /// <returns> A new <see cref="Models.KnowledgeSourceFileCapacity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceFileCapacity"/> instance for mocking. </returns>
         public static KnowledgeSourceFileCapacity KnowledgeSourceFileCapacity(int maxFileCount = default, int remainingFileCount = default, long maxFileSizeBytes = default)
         {
             return new KnowledgeSourceFileCapacity(maxFileCount, remainingFileCount, maxFileSizeBytes, additionalBinaryDataProperties: null);

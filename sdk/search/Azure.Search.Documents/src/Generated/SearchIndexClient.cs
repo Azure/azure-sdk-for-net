@@ -327,16 +327,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetSynonymMapsWithSelectedProperties(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetSynonymMapsCollectionResult(
+            return new SearchIndexClientGetSynonymMapsWithSelectedPropertiesCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetSynonymMapsWithSelectedProperties");
         }
 
         /// <summary>
@@ -354,16 +354,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSynonymMapsWithSelectedPropertiesAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetSynonymMapsAsyncCollectionResult(
+            return new SearchIndexClientGetSynonymMapsWithSelectedPropertiesAsyncCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetSynonymMapsWithSelectedProperties");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -373,16 +373,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<SynonymMap> GetSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SynonymMap> GetSynonymMapsWithSelectedProperties(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetSynonymMapsCollectionResultOfT(
+            return new SearchIndexClientGetSynonymMapsWithSelectedPropertiesCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetSynonymMapsWithSelectedProperties");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -392,16 +392,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<SynonymMap> GetSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SynonymMap> GetSynonymMapsWithSelectedPropertiesAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetSynonymMapsAsyncCollectionResultOfT(
+            return new SearchIndexClientGetSynonymMapsWithSelectedPropertiesAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetSynonymMapsWithSelectedProperties");
         }
 
         /// <summary>

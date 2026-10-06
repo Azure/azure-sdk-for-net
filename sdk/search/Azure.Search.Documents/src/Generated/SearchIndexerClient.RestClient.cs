@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetDataSourceConnectionsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetDataSourceConnectionsWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -145,7 +145,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataSourceConnectionsRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetDataSourceConnectionsWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -159,6 +159,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -338,7 +342,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexersRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetIndexersWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -374,7 +378,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetIndexersRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetIndexersWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -388,6 +392,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -521,7 +529,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSkillsetsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetSkillsetsWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -557,7 +565,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetSkillsetsRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetSkillsetsWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -571,6 +579,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

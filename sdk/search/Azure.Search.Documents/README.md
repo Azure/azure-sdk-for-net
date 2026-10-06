@@ -235,7 +235,7 @@ Semantic ranking enhances the quality of search results for text-based queries. 
 - It applies secondary ranking to the initial result set, promoting the most semantically relevant results to the top.
 - It extracts and returns captions and answers in the response, which can be displayed on a search page to enhance the user's search experience.
 
-To learn more about semantic ranking, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+To learn more about semantic ranking, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/SemanticSearch.md).
 
 Additionally, for more comprehensive information about semantic ranking, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of semantic ranking in Azure AI Search.
 
@@ -245,7 +245,7 @@ Additionally, for more comprehensive information about semantic ranking, includi
 
 The SDK supports image-based vector search queries through `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`.
 
-To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
+To learn how to index vector fields and perform vector search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/VectorSearch.md). This sample provides detailed guidance on indexing vector fields and demonstrates how to perform vector search.
 
 Additionally, for more comprehensive information about vector search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of vector search in Azure AI Search.
 
@@ -522,9 +522,12 @@ await foreach (SearchResult<Hotel> result in searchResponse.GetResultsAsync())
 
 Use `KnowledgeBaseRetrievalClient` to retrieve grounded responses from a knowledge base, and use `SearchIndexClient` for knowledge source and knowledge base CRUD operations:
 
-- [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
-- [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample11_KnowledgeSourceOperations.md)
-- [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample12_KnowledgeBaseOperations.md)
+- [Set up and retrieve from a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseRetrieval.md)
+- [Knowledge source CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeSourceOperations.md)
+- [Knowledge base CRUD operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseOperations.md)
+- [Configure a knowledge base](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseConfiguration.md)
+- [Inspect retrieval responses](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeRetrievalResponse.md)
+- [Upload and manage files in a knowledge source](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/FileKnowledgeSource.md)
 
 ### Authenticate in a National Cloud
 
@@ -578,7 +581,7 @@ See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/
 * Go further with Azure.Search.Documents and our [samples][samples]
 * Read more about the [Azure AI Search service](https://learn.microsoft.com/azure/search/search-what-is-azure-search)
 * Explore [vector search](https://learn.microsoft.com/azure/search/vector-search-overview), including image-based queries with `VectorizableImageBinaryQuery` and `VectorizableImageUrlQuery`
-* Learn about [index aliases](https://learn.microsoft.com/rest/api/searchservice/aliases) and [knowledge base retrieval](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample10_KnowledgeBaseRetrieval.md)
+* Learn about [index aliases](https://learn.microsoft.com/rest/api/searchservice/aliases) and [knowledge base retrieval](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/KnowledgeBaseRetrieval.md)
 
 ## Contributing
 

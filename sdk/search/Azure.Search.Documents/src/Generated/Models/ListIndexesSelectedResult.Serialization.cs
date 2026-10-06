@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a List Indexes request. If successful, it includes the full definitions of all indexes. </summary>
     internal partial class ListIndexesSelectedResult : IJsonModel<ListIndexesSelectedResult>

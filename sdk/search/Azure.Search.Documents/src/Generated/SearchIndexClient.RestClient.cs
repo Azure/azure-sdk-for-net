@@ -106,7 +106,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymMapsRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateGetSynonymMapsWithSelectedPropertiesRequest(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetSynonymMapsRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetSynonymMapsWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -156,6 +156,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -303,7 +307,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetIndexesRequest(Uri nextPage, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetIndexesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -317,6 +321,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -365,7 +373,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetIndexesWithSelectedPropertiesRequest(Uri nextPage, IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetIndexesWithSelectedPropertiesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -379,6 +387,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -568,7 +580,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetAliasesRequest(Uri nextPage, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetAliasesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -582,6 +594,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -725,7 +741,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetKnowledgeBasesRequest(Uri nextPage, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetKnowledgeBasesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -739,6 +755,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -882,7 +902,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetKnowledgeSourcesRequest(Uri nextPage, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetKnowledgeSourcesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -896,6 +916,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1011,7 +1035,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetKnowledgeSourceFilesRequest(Uri nextPage, string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetKnowledgeSourceFilesRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1025,6 +1049,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1136,7 +1164,7 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateNextGetIndexStatsSummaryRequest(Uri nextPage, string search, int? pageSize, string searchType, RequestContext context)
+        internal HttpMessage CreateNextGetIndexStatsSummaryRequest(Uri nextPage, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -1150,6 +1178,10 @@ namespace Azure.Search.Documents.Indexes
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
+            }
+            if (pageSize != null)
+            {
+                uri.UpdateQuery("pageSize", TypeFormatters.ConvertToString(pageSize));
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

@@ -66,10 +66,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public LexicalNormalizerName? NormalizerName { get; set; }
 
-        // search-preview:2026-05-01-preview {
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         public PermissionFilter? PermissionFilter { get; set; }
-        // search-preview:2026-05-01-preview }
 
         /// <inheritdoc/>
         private protected override void Save(SearchField field)
@@ -81,10 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
             field.IsSortable = IsSortable;
             field.NormalizerName = NormalizerName;
 
-            // search-preview:2026-05-01-preview {
             field.PermissionFilter = PermissionFilter;
-
-            // search-preview:2026-05-01-preview }
 
             // Use a SearchableField instead, which will override this property.
             // The service will return Searchable == false for all non-searchable simple types.

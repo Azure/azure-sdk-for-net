@@ -324,16 +324,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetDataSourceConnections(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetDataSourceConnectionsWithSelectedProperties(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetDataSourceConnectionsCollectionResult(
+            return new SearchIndexerClientGetDataSourceConnectionsWithSelectedPropertiesCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexerClient.GetDataSourceConnections");
+                "SearchIndexerClient.GetDataSourceConnectionsWithSelectedProperties");
         }
 
         /// <summary>
@@ -351,16 +351,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetDataSourceConnectionsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetDataSourceConnectionsWithSelectedPropertiesAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetDataSourceConnectionsAsyncCollectionResult(
+            return new SearchIndexerClientGetDataSourceConnectionsWithSelectedPropertiesAsyncCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexerClient.GetDataSourceConnections");
+                "SearchIndexerClient.GetDataSourceConnectionsWithSelectedProperties");
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
@@ -370,16 +370,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<SearchIndexerDataSourceConnection> GetDataSourceConnections(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexerDataSourceConnection> GetDataSourceConnectionsWithSelectedProperties(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetDataSourceConnectionsCollectionResultOfT(
+            return new SearchIndexerClientGetDataSourceConnectionsWithSelectedPropertiesCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexerClient.GetDataSourceConnections");
+                "SearchIndexerClient.GetDataSourceConnectionsWithSelectedProperties");
         }
 
         /// <summary> Lists all datasources available for a search service. </summary>
@@ -389,16 +389,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<SearchIndexerDataSourceConnection> GetDataSourceConnectionsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexerDataSourceConnection> GetDataSourceConnectionsWithSelectedPropertiesAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetDataSourceConnectionsAsyncCollectionResultOfT(
+            return new SearchIndexerClientGetDataSourceConnectionsWithSelectedPropertiesAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexerClient.GetDataSourceConnections");
+                "SearchIndexerClient.GetDataSourceConnectionsWithSelectedProperties");
         }
 
         /// <summary>
@@ -1052,16 +1052,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetIndexers(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexersWithSelectedProperties(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetIndexersCollectionResult(
+            return new SearchIndexerClientGetIndexersWithSelectedPropertiesCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexerClient.GetIndexers");
+                "SearchIndexerClient.GetIndexersWithSelectedProperties");
         }
 
         /// <summary>
@@ -1079,16 +1079,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetIndexersAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetIndexersWithSelectedPropertiesAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetIndexersAsyncCollectionResult(
+            return new SearchIndexerClientGetIndexersWithSelectedPropertiesAsyncCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexerClient.GetIndexers");
+                "SearchIndexerClient.GetIndexersWithSelectedProperties");
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
@@ -1098,16 +1098,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<SearchIndexer> GetIndexers(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexer> GetIndexersWithSelectedProperties(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetIndexersCollectionResultOfT(
+            return new SearchIndexerClientGetIndexersWithSelectedPropertiesCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexerClient.GetIndexers");
+                "SearchIndexerClient.GetIndexersWithSelectedProperties");
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
@@ -1117,16 +1117,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<SearchIndexer> GetIndexersAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexer> GetIndexersWithSelectedPropertiesAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetIndexersAsyncCollectionResultOfT(
+            return new SearchIndexerClientGetIndexersWithSelectedPropertiesAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexerClient.GetIndexers");
+                "SearchIndexerClient.GetIndexersWithSelectedProperties");
         }
 
         /// <summary>
@@ -1594,16 +1594,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetSkillsets(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetSkillsetsWithSelectedProperties(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetSkillsetsCollectionResult(
+            return new SearchIndexerClientGetSkillsetsWithSelectedPropertiesCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexerClient.GetSkillsets");
+                "SearchIndexerClient.GetSkillsetsWithSelectedProperties");
         }
 
         /// <summary>
@@ -1621,16 +1621,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSkillsetsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetSkillsetsWithSelectedPropertiesAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexerClientGetSkillsetsAsyncCollectionResult(
+            return new SearchIndexerClientGetSkillsetsWithSelectedPropertiesAsyncCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexerClient.GetSkillsets");
+                "SearchIndexerClient.GetSkillsetsWithSelectedProperties");
         }
 
         /// <summary> List all skillsets in a search service. </summary>
@@ -1640,16 +1640,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<SearchIndexerSkillset> GetSkillsets(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexerSkillset> GetSkillsetsWithSelectedProperties(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetSkillsetsCollectionResultOfT(
+            return new SearchIndexerClientGetSkillsetsWithSelectedPropertiesCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexerClient.GetSkillsets");
+                "SearchIndexerClient.GetSkillsetsWithSelectedProperties");
         }
 
         /// <summary> List all skillsets in a search service. </summary>
@@ -1659,16 +1659,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<SearchIndexerSkillset> GetSkillsetsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexerSkillset> GetSkillsetsWithSelectedPropertiesAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexerClientGetSkillsetsAsyncCollectionResultOfT(
+            return new SearchIndexerClientGetSkillsetsWithSelectedPropertiesAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexerClient.GetSkillsets");
+                "SearchIndexerClient.GetSkillsetsWithSelectedProperties");
         }
 
         /// <summary>

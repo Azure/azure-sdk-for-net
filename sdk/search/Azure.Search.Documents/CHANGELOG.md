@@ -7,6 +7,11 @@
 - Added support for the `2026-10-01` service version, which is now the default.
 - Added `SearchOptions.MoreLikeThis` to search for documents similar to an existing document.
 - Added `KnowledgeSourceFileCapacity` and `KnowledgeSourceStatus.FileCapacity` for file upload capacity information.
+- Added `GetIndexersWithSelectedProperties`, `GetDataSourceConnectionsWithSelectedProperties`, `GetSkillsetsWithSelectedProperties`, and `GetSynonymMapsWithSelectedProperties`, with async counterparts, to expose pageable resource listings with property selection, prefix search, and page-size controls without changing the existing list-returning APIs.
+
+### Bugs Fixed
+
+- Resource listing methods now honor `AsPages(pageSizeHint)` on initial and continuation requests while preserving the service-provided cursor.
 
 ### Breaking Changes
 
@@ -325,8 +330,8 @@
 ## 11.5.0 (2023-11-10)
 
 ### Features Added
-- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
-- Added support for [Semantic Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/VectorSearch.md).
+- Added support for [Semantic Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/SemanticSearch.md).
 - Added support for [`PiiDetectionSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-pii-detection). It allows you extracts personal information from an input text and gives you the option of masking it using the Text Analytics API.
 - Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2, which now includes support for additional languages. Refer to the language lists [here](https://learn.microsoft.com/azure/cognitive-services/computer-vision/language-support).
 - Added new languages for ` SplitSkill`. Language lists can be found [here](https://learn.microsoft.com/azure/search/cognitive-search-skill-textsplit#skill-parameters).
@@ -359,7 +364,7 @@
 ## 11.5.0-beta.3 (2023-07-11)
 
 ### Features Added
-- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/VectorSearch.md).
 
 ### Bugs Fixed
 - Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service ([#37164](https://github.com/Azure/azure-sdk-for-net/issues/37164)).

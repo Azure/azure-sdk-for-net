@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents;
-using Azure.Search.Documents.Models;
+using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -81,7 +81,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexesWithSelectedPropertiesRequest(nextLink, _select, _search, _pageSize, _searchType, _context) : _client.CreateGetIndexesWithSelectedPropertiesRequest(_select, _search, _pageSize, _searchType, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _pageSize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetIndexesWithSelectedPropertiesRequest(nextLink, pageSize, _context) : _client.CreateGetIndexesWithSelectedPropertiesRequest(_select, _search, pageSize, _searchType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

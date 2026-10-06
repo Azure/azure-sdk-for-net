@@ -58,11 +58,9 @@ namespace Azure.Search.Documents.Indexes
         /// <value>String values from <see cref="LexicalNormalizerName.Values">LexicalAnalyzerName</see>.</value>
         public string NormalizerName { get; set; }
 
-        // search-preview:2026-05-01-preview {
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         /// <value>String values from <see cref="Models.PermissionFilter">PermissionFilter</see>.</value>
         public string PermissionFilter { get; set; }
-        // search-preview:2026-05-01-preview }
 
         /// <inheritdoc/>
         void ISearchFieldAttribute.SetField(SearchField field) => SetField(field);
@@ -88,12 +86,10 @@ namespace Azure.Search.Documents.Indexes
                 field.NormalizerName = NormalizerName;
             }
 
-            // search-preview:2026-05-01-preview {
             if (PermissionFilter != null)
             {
                 field.PermissionFilter = PermissionFilter;
             }
-            // search-preview:2026-05-01-preview }
         }
     }
 }

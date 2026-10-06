@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> File upload capacity for a File knowledge source. </summary>
     public partial class KnowledgeSourceFileCapacity : IJsonModel<KnowledgeSourceFileCapacity>
