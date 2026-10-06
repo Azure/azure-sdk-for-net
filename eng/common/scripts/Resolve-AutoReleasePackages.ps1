@@ -7,8 +7,7 @@ Language-agnostic. Intended to run in an internal post-merge CI run on 'main'. G
 commit, this script:
   1. Uses the shared Get-GitHubAutoReleasePullRequestForCommit policy to resolve the pull request for
      the commit: it requires exactly one PR merged into the base branch (default 'main') whose merge
-     commit is that commit, and requires the
-     'auto-release' label.
+      commit is that commit, and requires the 'auto-release' label.
   2. Builds a PR diff object (New-GitHubPullRequestDiffObject) from the PR's changed files and reuses
      the repo's existing package-detection logic (Get-PrPkgProperties) to identify the changed packages
       (honoring triggering paths and deleted files while ignoring only files directly under

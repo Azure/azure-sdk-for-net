@@ -50,15 +50,22 @@ function Get-GitHubAutoReleasePullRequestForCommit {
   # A commit can be contained in several PRs without being the merge commit of all of them.
   # The association payload can also lag, so only canonical PR records decide the match.
   $exactMatches = @()
+  $unverifiedNumbers = @()
   foreach ($number in @($associatedPullRequests | Select-Object -ExpandProperty number -Unique)) {
     $pullRequest = Get-GitHubPullRequest -RepoId $RepoId -PullRequestNumber $number -AuthToken $AuthToken
     if ($null -eq $pullRequest) {
-      $result.SkipReason = "Could not verify associated pull request #${number}; no pull request was selected."
-      return $result
+      $unverifiedNumbers += $number
+      continue
     }
     if ($pullRequest.merged_at -and $pullRequest.base.ref -eq $TargetBranch -and $pullRequest.merge_commit_sha -eq $CommitSha) {
       $exactMatches += $pullRequest
     }
+  }
+
+  # Search all candidates, but an unreadable candidate could still be a second exact match.
+  if ($unverifiedNumbers.Count -gt 0) {
+    $result.SkipReason = "Could not verify associated pull requests: $($unverifiedNumbers -join ', '). No pull request was selected."
+    return $result
   }
 
   if ($exactMatches.Count -eq 0) {
