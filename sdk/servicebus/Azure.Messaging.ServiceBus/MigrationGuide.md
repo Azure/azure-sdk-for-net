@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to version 7 of the Service Bus client library [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) from [`Microsoft.Azure.ServiceBus`](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/). It will focus on side-by-side comparisons for similar operations between the two packages.
 
-> **Important:** `Microsoft.Azure.ServiceBus` was retired on September 30, 2026 and no longer receives official support or updates from Microsoft. Applications using this AMQP-based library can continue to function. Migrate to `Azure.Messaging.ServiceBus` to receive security updates and bug fixes. See the [retirement announcement](https://techcommunity.microsoft.com/blog/messagingonazureblog/some-azure-service-bus-sdk-libraries-will-be-retired-on-30-september-2026%E2%80%94migrat/3917853).
+> **Important:** `Microsoft.Azure.ServiceBus` was retired on September 30, 2026 and no longer receives official support or updates from Microsoft. Applications using this library can continue to function. Migrate to `Azure.Messaging.ServiceBus` to receive security updates and bug fixes. See the [retirement announcement](https://techcommunity.microsoft.com/blog/messagingonazureblog/some-azure-service-bus-sdk-libraries-will-be-retired-on-30-september-2026%E2%80%94migrat/3917853).
 
 We assume that you are familiar with the `Microsoft.Azure.ServiceBus` library. If not, please refer to the [README for Azure.Messaging.ServiceBus](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples) rather than this guide.
 

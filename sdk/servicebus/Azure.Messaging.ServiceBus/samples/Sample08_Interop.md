@@ -1,6 +1,6 @@
 # Interop with `WindowsAzure.ServiceBus`
 
-> **Important:** `WindowsAzure.ServiceBus` was retired for Service Bus messaging on September 30, 2026. This sample helps applications using `Azure.Messaging.ServiceBus` exchange messages with existing applications using the retired library over AMQP. It does not restore support or updates for the retired library. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide_WindowsAzureServiceBus.md) to complete the migration.
+> **Important:** `WindowsAzure.ServiceBus` was retired for Service Bus messaging on September 30, 2026 and no longer receives official support or updates. This sample helps applications using `Azure.Messaging.ServiceBus` exchange messages with existing applications using the retired library over AMQP. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide_WindowsAzureServiceBus.md) to complete the migration.
 
 This sample demonstrates how to interoperate with messages that are sent or received using the `WindowsAzure.ServiceBus` library. The `WindowsAzure.ServiceBus` library uses the `DataContractSerializer` to serialize the `BrokeredMessage` body. Because of this, when attempting to interoperate with this library, there a few additional steps that are needed.
 
