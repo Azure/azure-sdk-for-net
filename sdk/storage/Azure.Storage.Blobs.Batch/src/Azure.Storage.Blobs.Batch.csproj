@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <PackageReference Include="Azure.Storage.Common" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
   </ItemGroup>
   <ItemGroup>
