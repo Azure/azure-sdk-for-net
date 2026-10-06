@@ -391,7 +391,8 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task DataLocality_Disabled_SkipsLayout()
+        public async Task DataLocality_Disabled_SkipsLayout(
+            [Values(LayoutAwareRouting.Disabled, LayoutAwareRouting.Auto)] LayoutAwareRouting layoutAwareRouting)
         {
             // Arrange - 100 byte blob with download hint present but feature disabled
             MemoryStream stream = new MemoryStream();
@@ -402,7 +403,7 @@ namespace Azure.Storage.Blobs.Test
             var capturedCalls = new List<(HttpRange Range, AutoRefreshingCache<BlobLayoutSegmentCacheValue> LayoutCache)>();
             SetupDownloadWithCapture(blockClient, dataSource, capturedCalls);
 
-            // layoutAwareRouting: LayoutAwareRouting.Disabled (default)
+            // Auto (default) currently resolves to Disabled
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
                 new StorageTransferOptions()
@@ -411,7 +412,7 @@ namespace Azure.Storage.Blobs.Test
                     InitialTransferLength = 20
                 },
                 transferValidation: s_validationOptions,
-                layoutAwareRouting: LayoutAwareRouting.Disabled);
+                layoutAwareRouting: layoutAwareRouting);
 
             // Act
             Response result = await InvokeDownloadToAsync(downloader, stream);

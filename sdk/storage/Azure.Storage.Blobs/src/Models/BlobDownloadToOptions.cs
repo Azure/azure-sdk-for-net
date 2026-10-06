@@ -39,7 +39,9 @@ namespace Azure.Storage.Blobs.Models
         /// on demand and cached (with automatic background refresh), and each range
         /// download is routed to the optimal endpoint for the chunk being read. This is
         /// a performance optimization only - the bytes returned are identical to a
-        /// non-locality-aware download.
+        /// non-locality-aware download. Defaults to <see cref="LayoutAwareRouting.Auto"/>,
+        /// which currently disables locality-aware routing; set to
+        /// <see cref="LayoutAwareRouting.Enabled"/> to opt in.
         /// </summary>
         public LayoutAwareRouting LayoutAwareRouting { get; set; } = LayoutAwareRouting.Auto;
     }

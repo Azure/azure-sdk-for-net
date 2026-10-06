@@ -12,7 +12,8 @@ namespace Azure.Storage.Blobs.Models
     {
         /// <summary>
         /// Default. The locality-aware routing behavior is determined by the client
-        /// library and may be updated in future releases.
+        /// library and may be updated in future releases. Currently, locality-aware
+        /// routing is disabled by default; use <see cref="Enabled"/> to opt in.
         /// </summary>
         Auto = 0,
 
