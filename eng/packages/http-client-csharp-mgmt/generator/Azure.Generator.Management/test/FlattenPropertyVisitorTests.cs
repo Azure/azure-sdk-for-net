@@ -1923,6 +1923,72 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/63548.
+        ///
+        /// When an optional wrapper with a single required reference-type property is
+        /// safe-flattened, assigning null to the flattened property should clear the
+        /// wrapper instead of invoking its required-argument constructor with null.
+        /// </summary>
+        [Test]
+        public void TestSafeFlattenNullAssignmentClearsOptionalWrapperForRequiredReferenceProperty()
+        {
+            var valueProperty = InputFactory.Property(
+                "value",
+                InputPrimitiveType.String,
+                isRequired: true,
+                serializedName: "value");
+
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProperty]);
+
+            var wrapperProperty = InputFactory.Property(
+                "wrapper",
+                wrapperModel,
+                isRequired: false,
+                serializedName: "wrapper");
+
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel);
+            Assert.That(parentProvider, Is.Not.Null);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [parentProvider!]);
+            }
+
+            var rendered = new TypeProviderWriter(parentProvider!).Write().Content;
+
+            Assert.That(
+                rendered,
+                Does.Match(@"value\s+is\s+null"),
+                "The safe-flattened setter should explicitly handle null assignment.");
+
+            Assert.That(
+                rendered,
+                Does.Match(@"Wrapper\s*=\s*\(value\s+is\s+null\)\s*\?\s*default\s*:"),
+                "Null assignment should clear the optional wrapper before constructing it.");
+
+            Assert.That(
+                rendered,
+                Does.Match(@"new\s+[\w\.:]*WrapperModel\s*\(\s*value\s*\)"),
+                "Non-null assignment should continue to construct the required wrapper.");
+        }
+
+        /// <summary>
         /// Verifies the fix for https://github.com/microsoft/typespec/issues/7380.
         ///
         /// When SafeFlatten chains across 3+ levels of single-property models the immediate

@@ -738,7 +738,7 @@ namespace Azure.Generator.Management.Visitors
             var flattenPropertyBody = new MethodPropertyBody(
                 PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty, propertyType),
                 // Emit collection setters only when compatibility or parent delegation requires them.
-                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, propertyType.IsNullable)
+                isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, propertyType.IsNullable, shouldLiftToNullable)
             );
 
             var flattenedProperty =
