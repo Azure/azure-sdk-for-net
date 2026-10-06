@@ -2,6 +2,8 @@
 
 This guide is intended to assist in the migration to version 7 of the Service Bus client library [`Azure.Messaging.ServiceBus`](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) from [`WindowsAzure.ServiceBus`](https://www.nuget.org/packages/WindowsAzure.ServiceBus/). It will focus on side-by-side comparisons for similar operations between the two packages.
 
+> **Important:** `WindowsAzure.ServiceBus` was retired for Service Bus messaging on September 30, 2026 and no longer receives official support or updates for that use. SBMP was also retired. Applications using AMQP can continue to function with the retired library. Migrate to `Azure.Messaging.ServiceBus` to receive security updates and bug fixes. Support for `WindowsAzure.ServiceBus` with Azure WCF Relay continues until further notice; `Azure.Messaging.ServiceBus` is not a replacement for WCF Relay. See the [retirement announcement](https://techcommunity.microsoft.com/blog/messagingonazureblog/some-azure-service-bus-sdk-libraries-will-be-retired-on-30-september-2026%E2%80%94migrat/3917853).
+
 We assume that you are familiar with the `WindowsAzure.ServiceBus` library. If not, please refer to the [README for Azure.Messaging.ServiceBus](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/README.md) and [Service Bus samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples) rather than this guide.
 
 ## Table of contents
@@ -40,11 +42,7 @@ There were several areas of consistent feedback expressed across the Azure clien
 
 To improve the development experience across Azure services, including Service Bus, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. The new `Azure.Messaging.ServiceBus` library follows these guidelines.
 
-While we believe that there is significant benefit to adopting the new Service Bus library `Azure.Messaging.ServiceBus`, it is important to be aware of the status of the older versions:
-
-- `WindowsAzure.ServiceBus` has not been officially deprecated and will continue to be supported with security and bug fixes as well as receiving some minor refinements. However, in the near future it will not be under active development and new features are unlikely to be added.
-
-- `Microsoft.Azure.ServiceBus` has been officially deprecated. While this package will continue to receive critical bug fixes, we strongly encourage you to upgrade.
+`Azure.Messaging.ServiceBus` is the supported replacement for both retired .NET Service Bus libraries. Migrate directly to it rather than to `Microsoft.Azure.ServiceBus`, which was also retired on September 30, 2026.
 
 ### Cross Service SDK improvements
 
@@ -88,7 +86,7 @@ By using a single top-level client, we can implicitly share a single AMQP connec
 
 ### Default transport type
 
-The default transport type in `Azure.Messaging.ServiceBus` is AMQP. The new library no longer supports SBMP, and as such you will need to migrate to AMQP. The behavioral differences have been described in [Use legacy WindowsAzure.ServiceBus .NET framework library with AMQP 1.0](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-amqp-dotnet). It is possible to use AMQP with WebSockets over port 443 by setting the [TransportType](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclientoptions.transporttype?view=azure-dotnet#azure-messaging-servicebus-servicebusclientoptions-transporttype) on the options used when creating your `ServiceBusClient`.
+The default transport type in `Azure.Messaging.ServiceBus` is AMQP. SBMP was retired on September 30, 2026, so migrate applications that used it to AMQP. For transport differences relevant to existing applications, see [AMQP compatibility for the retired WindowsAzure.ServiceBus library](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-amqp-dotnet). To use AMQP over WebSockets on port 443, set [TransportType](https://learn.microsoft.com/dotnet/api/azure.messaging.servicebus.servicebusclientoptions.transporttype) to `ServiceBusTransportType.AmqpWebSockets` on the options used to create your `ServiceBusClient`.
 
 ### BrokeredMessage changed to Message
 
