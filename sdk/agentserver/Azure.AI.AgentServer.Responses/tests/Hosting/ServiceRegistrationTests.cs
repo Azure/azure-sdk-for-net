@@ -11,10 +11,13 @@ using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
@@ -93,6 +96,34 @@ public class ServiceRegistrationTests
         // file-backed replay is an internal Core selection; from the Responses layer
         // we assert the registry is available for the orchestrator/replay to use.
         Assert.That(sp.GetService<Core.Streaming.AgentEventStreamRegistry>(), Is.Not.Null);
+    }
+
+    [Test]
+    public void Resilient_Task_Handlers_Are_Keyed_Scoped_Without_Root_Provider_Capture()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+        services.AddResponsesServer();
+
+        var handlers = services
+            .Where(descriptor =>
+                descriptor.ServiceType ==
+                    typeof(IResilientTaskHandler<ResponseTaskInput, ResponseTaskOutput>))
+            .ToArray();
+
+        Assert.That(handlers, Has.Length.EqualTo(2));
+        Assert.That(handlers, Has.All.Property(nameof(ServiceDescriptor.Lifetime))
+            .EqualTo(ServiceLifetime.Scoped));
+        Assert.That(handlers.Select(descriptor => descriptor.ServiceKey), Is.EquivalentTo(new object[]
+        {
+            ResponsesResilientTaskHandler.OneShotTaskName,
+            ResponsesResilientTaskHandler.MultiTurnTaskName,
+        }));
+        Assert.That(
+            services.Any(descriptor =>
+                descriptor.ServiceType == typeof(IHostedService)
+                && descriptor.ImplementationType?.Name == "ResponsesResilientTaskRootProvider"),
+            Is.False);
     }
 
     [TestCase(true)]
