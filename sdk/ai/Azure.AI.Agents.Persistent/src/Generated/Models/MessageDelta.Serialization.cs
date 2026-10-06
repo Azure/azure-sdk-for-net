@@ -154,7 +154,7 @@ namespace Azure.AI.Agents.Persistent
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MessageDelta(role, content, additionalBinaryDataProperties);
+            return new MessageDelta(role, content ?? new ChangeTrackingList<MessageDeltaContent>(), additionalBinaryDataProperties);
         }
     }
 }

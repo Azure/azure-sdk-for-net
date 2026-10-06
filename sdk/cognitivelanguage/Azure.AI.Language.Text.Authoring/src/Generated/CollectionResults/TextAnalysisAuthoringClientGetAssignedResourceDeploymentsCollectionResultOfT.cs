@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <returns> The pages of TextAnalysisAuthoringClientGetAssignedResourceDeploymentsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<TextAuthoringAssignedProjectDeploymentsMetadata>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

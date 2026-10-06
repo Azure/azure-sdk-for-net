@@ -9,57 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.ElasticSan;
+using Azure.ResourceManager.StorageDiscovery;
 
-namespace Azure.ResourceManager.ElasticSan.Models
+namespace Azure.ResourceManager.StorageDiscovery.Models
 {
-    /// <summary> Parent resource information. </summary>
-    internal partial class ManagedByInfo : IJsonModel<ManagedByInfo>
+    /// <summary> The capabilities that can be updated for a storage discovery workspace. </summary>
+    internal partial class StorageDiscoveryCapabilitiesUpdate : IJsonModel<StorageDiscoveryCapabilitiesUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedByInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StorageDiscoveryCapabilitiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryCapabilitiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedByInfo(document.RootElement, options);
+                        return DeserializeStorageDiscoveryCapabilitiesUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedByInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageDiscoveryCapabilitiesUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryCapabilitiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedByInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageDiscoveryCapabilitiesUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedByInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StorageDiscoveryCapabilitiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedByInfo IPersistableModel<ManagedByInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StorageDiscoveryCapabilitiesUpdate IPersistableModel<StorageDiscoveryCapabilitiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedByInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageDiscoveryCapabilitiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedByInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageDiscoveryCapabilitiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,15 +69,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryCapabilitiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedByInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageDiscoveryCapabilitiesUpdate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(AzureBlobStorageCapabilities))
             {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                writer.WritePropertyName("azureBlobStorage"u8);
+                writer.WriteObjectValue(AzureBlobStorageCapabilities, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -99,40 +98,40 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedByInfo IJsonModel<ManagedByInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StorageDiscoveryCapabilitiesUpdate IJsonModel<StorageDiscoveryCapabilitiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedByInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StorageDiscoveryCapabilitiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageDiscoveryCapabilitiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedByInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageDiscoveryCapabilitiesUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedByInfo(document.RootElement, options);
+            return DeserializeStorageDiscoveryCapabilitiesUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedByInfo DeserializeManagedByInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static StorageDiscoveryCapabilitiesUpdate DeserializeStorageDiscoveryCapabilitiesUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
+            AzureBlobStorageCapabilityPatch azureBlobStorageCapabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("resourceId"u8))
+                if (prop.NameEquals("azureBlobStorage"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(prop.Value.GetString());
+                    azureBlobStorageCapabilities = AzureBlobStorageCapabilityPatch.DeserializeAzureBlobStorageCapabilityPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ManagedByInfo(resourceId, additionalBinaryDataProperties);
+            return new StorageDiscoveryCapabilitiesUpdate(azureBlobStorageCapabilities, additionalBinaryDataProperties);
         }
     }
 }

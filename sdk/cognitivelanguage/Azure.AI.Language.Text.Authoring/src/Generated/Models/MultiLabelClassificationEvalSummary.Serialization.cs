@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
             }
             return new MultiLabelClassificationEvalSummary(
-                classes,
+                classes ?? new ChangeTrackingDictionary<string, MultiLabelClassEvalSummary>(),
                 microF1,
                 microPrecision,
                 microRecall,

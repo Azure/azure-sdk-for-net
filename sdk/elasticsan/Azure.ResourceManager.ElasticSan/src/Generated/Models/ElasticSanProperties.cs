@@ -19,17 +19,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanProperties"/>. </summary>
         /// <param name="sku"> resource sku. </param>
-        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
-        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ElasticSanProperties(ElasticSanSku sku, long baseSizeTiB, long extendedCapacitySizeTiB)
+        public ElasticSanProperties(ElasticSanSku sku)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             AvailabilityZones = new ChangeTrackingList<string>();
-            BaseSizeTiB = baseSizeTiB;
-            ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
             PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
@@ -41,14 +37,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <param name="totalVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
         /// <param name="volumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
-        /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
-        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
-        /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
+        /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </param>
+        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </param>
+        /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="autoScaleProperties"> Auto Scale Properties for Elastic San Appliance. </param>
+        /// <param name="version"> Elastic San appliance version. Defaults to V1 if not specified. </param>
+        /// <param name="usedCapacityGiB"> Used capacity in GiB. </param>
+        /// <param name="totalReservedIops"> Total IOPS reserved by all the volume groups under an ElasticSan. </param>
+        /// <param name="totalReservedMBps"> Total MBps reserved by all the volume groups under an ElasticSan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanProperties(ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticSanProperties(ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long? baseSizeTiB, long? extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, ElasticSanVersion? version, long? usedCapacityGiB, int? totalReservedIops, int? totalReservedMBps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             AutoScaleProperties = autoScaleProperties;
+            Version = version;
+            UsedCapacityGiB = usedCapacityGiB;
+            TotalReservedIops = totalReservedIops;
+            TotalReservedMBps = totalReservedMBps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -76,10 +80,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public ElasticSanProvisioningState? ProvisioningState { get; }
 
         /// <summary> Base size of the Elastic San appliance in TiB. </summary>
-        public long BaseSizeTiB { get; set; }
+        public long? BaseSizeTiB { get; set; }
 
         /// <summary> Extended size of the Elastic San appliance in TiB. </summary>
-        public long ExtendedCapacitySizeTiB { get; set; }
+        public long? ExtendedCapacitySizeTiB { get; set; }
 
         /// <summary> Total size of the provisioned Volumes in GiB. </summary>
         public long? TotalVolumeSizeGiB { get; }
@@ -87,14 +91,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Total number of volume groups in this Elastic San appliance. </summary>
         public long? VolumeGroupCount { get; }
 
-        /// <summary> Total Provisioned IOPS of the Elastic San appliance. </summary>
-        public long? TotalIops { get; }
+        /// <summary> Total Provisioned IOPS of the Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </summary>
+        public long? TotalIops { get; set; }
 
-        /// <summary> Total Provisioned MBps Elastic San appliance. </summary>
-        public long? TotalMbps { get; }
+        /// <summary> Total Provisioned MBps Elastic San appliance. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </summary>
+        public long? TotalMbps { get; set; }
 
-        /// <summary> Total size of the Elastic San appliance in TB. </summary>
-        public long? TotalSizeTiB { get; }
+        /// <summary> Total size of the Elastic San appliance in TB. Settable only for ElasticSanVersion V2, where it is required; read-only for V1. </summary>
+        public long? TotalSizeTiB { get; set; }
 
         /// <summary> The list of Private Endpoint Connections. </summary>
         public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
@@ -104,6 +108,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <summary> Auto Scale Properties for Elastic San Appliance. </summary>
         internal AutoScaleProperties AutoScaleProperties { get; set; }
+
+        /// <summary> Elastic San appliance version. Defaults to V1 if not specified. </summary>
+        public ElasticSanVersion? Version { get; set; }
+
+        /// <summary> Used capacity in GiB. </summary>
+        public long? UsedCapacityGiB { get; }
+
+        /// <summary> Total IOPS reserved by all the volume groups under an ElasticSan. </summary>
+        public int? TotalReservedIops { get; }
+
+        /// <summary> Total MBps reserved by all the volume groups under an ElasticSan. </summary>
+        public int? TotalReservedMBps { get; }
 
         /// <summary> Scale up settings on Elastic San Appliance. </summary>
         public ElasticSanScaleUpProperties ScaleUpProperties

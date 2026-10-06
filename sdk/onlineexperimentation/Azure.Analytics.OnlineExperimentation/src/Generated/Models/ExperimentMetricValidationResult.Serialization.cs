@@ -165,7 +165,7 @@ namespace Azure.Analytics.OnlineExperimentation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ExperimentMetricValidationResult(isValid, diagnostics, additionalBinaryDataProperties);
+            return new ExperimentMetricValidationResult(isValid, diagnostics ?? new ChangeTrackingList<DiagnosticDetail>(), additionalBinaryDataProperties);
         }
     }
 }
