@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Formats.Cbor;
 using System.IO;
 using System.Linq;
+using System.Net.Security;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Cose;
@@ -14,6 +15,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -1177,19 +1179,77 @@ namespace Azure.Security.CodeTransparency.Tests
 #if NET462
             Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
 #else
-            // Regression test for the frozen X509ChainPolicy.VerificationTime bug: a node certificate
-            // reissued (NotBefore in the recent past, simulating a ledger pod restart) must still be
-            // accepted. Because validation now builds a fresh chain per handshake with a current
-            // VerificationTime, a node certificate whose NotBefore is later than the client's construction
-            // time validates successfully instead of being rejected as NotTimeValid.
+            // Regression test for the frozen X509ChainPolicy.VerificationTime bug. The validation callback is
+            // created (as it is once per client) while the clock reads the construction time, BEFORE a reissued
+            // node certificate becomes valid. The callback is then invoked at two later points in time through the
+            // exact delegate wired up by CreateTlsCertAndTrustVerifier:
+            //   1. still before the node cert's NotBefore -> must fail (NotTimeValid), confirming the cert really is
+            //      not yet valid at construction time, so this is a genuine "reissued after construction" scenario;
+            //   2. after the node cert's NotBefore -> must succeed, which only holds because VerificationTime is read
+            //      per handshake. A callback that froze VerificationTime at construction time would reject it forever.
+            DateTime constructionTime = DateTime.Now;
+            DateTime clockNow = constructionTime;
+            Func<DateTime> clock = () => clockNow;
+
+            using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", constructionTime.AddDays(-1), constructionTime.AddYears(1));
+            // Node certificate reissued (e.g. ledger pod restart) with a NotBefore 10 minutes after construction.
+            DateTimeOffset nodeNotBefore = constructionTime.AddMinutes(10);
+            using X509Certificate2 nodeCert = CreateNodeCertificate("CN=ccf-node", identityCert, nodeNotBefore, nodeNotBefore.AddDays(90));
+
+            CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+
+            // Construct the validation callback while the clock is at construction time (node cert not yet valid).
+            HttpPipelineTransportOptions options = CodeTransparencyClient.CreateTlsCertAndTrustVerifier("serviceName", certClient, clock);
+            Func<ServerCertificateCustomValidationArgs, bool> callback = options.ServerCertificateCustomValidationCallback;
+
+            // (1) Still before NotBefore: the reissued certificate is genuinely not time-valid yet.
+            clockNow = constructionTime.AddMinutes(5);
+            bool resultBeforeValid = callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors));
+            Assert.IsFalse(resultBeforeValid, "Before the reissued node certificate's NotBefore it should be rejected as NotTimeValid.");
+
+            // (2) After NotBefore: accepted only because VerificationTime is evaluated per handshake, not frozen at construction.
+            clockNow = constructionTime.AddMinutes(20);
+            bool resultAfterValid = callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors));
+            Assert.IsTrue(resultAfterValid, "A node certificate reissued after client construction must be accepted; a callback frozen at construction time would reject it.");
+#endif
+        }
+
+        [Test]
+        public void ValidateServerCertificate_IsThreadSafeUnderConcurrentHandshakes()
+        {
+#if NET462
+            Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
+#else
+            // Regression test for the second defect: a single shared X509Chain was mutated and Build() called
+            // concurrently from parallel handshakes, which X509Chain does not support. Building a fresh chain per
+            // call must allow the shared callback to be invoked concurrently without corruption or exceptions.
             using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
             using X509Certificate2 nodeCert = CreateNodeCertificate("CN=ccf-node", identityCert, DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddDays(90));
 
             CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+            HttpPipelineTransportOptions options = CodeTransparencyClient.CreateTlsCertAndTrustVerifier("serviceName", certClient, static () => DateTime.Now);
+            Func<ServerCertificateCustomValidationArgs, bool> callback = options.ServerCertificateCustomValidationCallback;
 
-            bool result = CodeTransparencyClient.ValidateServerCertificate(certClient, "serviceName", nodeCert);
+            // Warm the identity cache so all parallel invocations exercise the chain build, not the mock transport.
+            Assert.IsTrue(callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors)));
 
-            Assert.IsTrue(result, "A node certificate chaining to the ledger identity certificate should be accepted.");
+            var results = new ConcurrentBag<bool>();
+            var exceptions = new ConcurrentQueue<Exception>();
+            Parallel.For(0, 256, new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount * 2 }, _ =>
+            {
+                try
+                {
+                    results.Add(callback(new ServerCertificateCustomValidationArgs(nodeCert, null, SslPolicyErrors.RemoteCertificateChainErrors)));
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Enqueue(ex);
+                }
+            });
+
+            Assert.IsEmpty(exceptions, "Concurrent handshakes must not throw; a shared non-thread-safe X509Chain would.");
+            Assert.AreEqual(256, results.Count);
+            Assert.IsTrue(results.All(r => r), "Every concurrent validation of a valid node certificate must succeed.");
 #endif
         }
 
@@ -1215,11 +1275,17 @@ namespace Azure.Security.CodeTransparency.Tests
         private static CodeTransparencyCertificateClient CreateCertificateClientReturning(X509Certificate2 identityCert)
         {
             string pem = ExportCertificatePem(identityCert);
-            var mockedResponse = new MockResponse(200);
-            mockedResponse.SetContent("{ \"ledgerTlsCertificate\": " + JsonSerializer.Serialize(pem) + " }");
+            string content = "{ \"ledgerTlsCertificate\": " + JsonSerializer.Serialize(pem) + " }";
             var options = new CodeTransparencyClientOptions
             {
-                Transport = new MockTransport(mockedResponse),
+                // Return a fresh response per request so the mock transport can serve any number of calls,
+                // including concurrent ones, without sharing a single response's content stream.
+                Transport = new MockTransport(_ =>
+                {
+                    var response = new MockResponse(200);
+                    response.SetContent(content);
+                    return response;
+                }),
                 IdentityClientEndpoint = new Uri("https://foo.bar.com")
             };
             return options.CreateCertificateClient();

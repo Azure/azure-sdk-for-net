@@ -182,9 +182,25 @@ namespace Azure.Security.CodeTransparency
         /// <param name="serviceName">which service to use to pull the cert from</param>
         /// <param name="certificateClient">identity service client to use for getting the CA cert</param>
         private static HttpPipelineTransportOptions CreateTlsCertAndTrustVerifier(string serviceName, CodeTransparencyCertificateClient certificateClient)
+            => CreateTlsCertAndTrustVerifier(serviceName, certificateClient, static () => DateTime.Now);
+
+        /// <summary>
+        /// Test seam for <see cref="CreateTlsCertAndTrustVerifier(string, CodeTransparencyCertificateClient)"/>
+        /// that allows the per-handshake verification time to be supplied by the caller. Production code uses
+        /// the parameterless overload, which reads <see cref="DateTime.Now"/> on every handshake.
+        /// </summary>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="certificateClient">identity service client to use for getting the CA cert.</param>
+        /// <param name="verificationTimeProvider">
+        /// Supplies the <see cref="X509ChainPolicy.VerificationTime"/> used for each validation. It is evaluated
+        /// inside the callback (per handshake), never captured once when the callback is created, so a certificate
+        /// reissued after the client was constructed is still validated against the current time.
+        /// </param>
+        internal static HttpPipelineTransportOptions CreateTlsCertAndTrustVerifier(string serviceName, CodeTransparencyCertificateClient certificateClient, Func<DateTime> verificationTimeProvider)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(certificateClient, nameof(certificateClient));
+            Argument.AssertNotNull(verificationTimeProvider, nameof(verificationTimeProvider));
 
             // The validation callback is shared for the lifetime of the client, but a fresh X509Chain is
             // built on every invocation (see ValidateServerCertificate). This keeps the chain's
@@ -192,7 +208,7 @@ namespace Azure.Security.CodeTransparency
             // across concurrent handshakes.
             return new HttpPipelineTransportOptions
             {
-                ServerCertificateCustomValidationCallback = args => ValidateServerCertificate(certificateClient, serviceName, args.Certificate)
+                ServerCertificateCustomValidationCallback = args => ValidateServerCertificate(certificateClient, serviceName, args.Certificate, verificationTimeProvider)
             };
         }
 
@@ -221,10 +237,26 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cert">the server certificate presented during the TLS handshake.</param>
         /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
         internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert)
+            => ValidateServerCertificate(certificateClient, serviceName, cert, static () => DateTime.Now);
+
+        /// <summary>
+        /// Overload of <see cref="ValidateServerCertificate(CodeTransparencyCertificateClient, string, X509Certificate2)"/>
+        /// that takes the verification time from <paramref name="verificationTimeProvider"/> instead of reading
+        /// <see cref="DateTime.Now"/> directly, so tests can advance a clock between callback creation and invocation.
+        /// </summary>
+        /// <param name="certificateClient">identity service client used to get (and cache) the CA cert.</param>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="cert">the server certificate presented during the TLS handshake.</param>
+        /// <param name="verificationTimeProvider">supplies the per-handshake <see cref="X509ChainPolicy.VerificationTime"/>.</param>
+        /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
+        internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert, Func<DateTime> verificationTimeProvider)
         {
             // Pull the TLS cert or get it from the cache
             ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
-            X509Certificate2 identityServiceCert = identity.GetCertificate();
+
+            // GetCertificate() parses and returns a fresh X509Certificate2 (native resource) on every handshake;
+            // dispose it once validation is done so handles do not accumulate on long-lived clients.
+            using X509Certificate2 identityServiceCert = identity.GetCertificate();
 
             // Build a fresh chain per validation so VerificationTime is current and the chain is not shared
             // across concurrent handshakes.
@@ -240,7 +272,7 @@ namespace Azure.Security.CodeTransparency
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
 
             // Evaluate validity against the current time, per handshake. Do NOT capture this once per client.
-            certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
+            certificateChain.ChainPolicy.VerificationTime = verificationTimeProvider();
 
             // Add the ledger identity TLS certificate to the ExtraStore.
             certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
