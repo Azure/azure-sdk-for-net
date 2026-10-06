@@ -15,8 +15,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Core.Tasks;
 
@@ -32,12 +34,15 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 public static class ResilientTaskServiceCollectionExtensions
 {
     /// <summary>
-    /// Sets up the resilient-tasks services, optionally supplying the hosted-storage credential.
+    /// Registers the lazy resilient-task services, optionally supplying the hosted-storage credential.
     /// Calling <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> directly also performs this
-    /// setup on first use, so this method only needs to be called explicitly to supply a hosted
-    /// credential. The credential may be supplied before or after task registrations while composing
-    /// the service collection. A <see cref="TokenCredential"/> registered directly in the service
-    /// collection is also supported; when both forms are used they must resolve to the same instance.
+    /// setup on first use, but neither registration path enables execution or recovery. Call
+    /// <see cref="ResilientTaskEnablementExtensions.SetResilientTasksEnabled(IServiceCollection, bool)"/>
+    /// before host startup to opt in. This method only needs to be called explicitly to supply a
+    /// hosted credential. The credential may be supplied before or after task registrations while
+    /// composing the service collection. A <see cref="TokenCredential"/> registered directly in the
+    /// service collection is also supported; when both forms are used they must resolve to the same
+    /// instance.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="credential">A credential for hosted-mode authentication. Required when running in a hosted environment.</param>
@@ -118,8 +123,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// <see cref="TaskDefinition{TInput, TOutput}"/> handle bound to it. The handle is also
     /// registered as a keyed singleton service — keyed by <paramref name="name"/> — so it can be
     /// resolved later with <see cref="ResilientTaskServiceProviderExtensions.GetResilientTask{TInput, TOutput}(IServiceProvider, string)"/>.
-    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method sets up
-    /// the resilient-tasks services if they are not already present.
+    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method registers
+    /// the lazy resilient-task services if they are not already present; it does not enable them.
     /// </summary>
     /// <typeparam name="TInput">The task input type.</typeparam>
     /// <typeparam name="TOutput">The task output type.</typeparam>
@@ -256,8 +261,8 @@ public static class ResilientTaskServiceCollectionExtensions
     /// returns a typed <see cref="TaskDefinition{TInput, TOutput}"/> handle bound to it. The handle
     /// is also registered as a keyed singleton service — keyed by <paramref name="name"/> — so it
     /// can be resolved later with <see cref="ResilientTaskServiceProviderExtensions.GetResilientTask{TInput, TOutput}(IServiceProvider, string)"/>.
-    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method sets up
-    /// the resilient-tasks services if they are not already present.
+    /// The first call to any <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c> method registers
+    /// the lazy resilient-task services if they are not already present; it does not enable them.
     /// </summary>
     /// <typeparam name="TInput">The task input type.</typeparam>
     /// <typeparam name="TOutput">The task output type.</typeparam>
@@ -493,7 +498,7 @@ public static class ResilientTaskServiceCollectionExtensions
         TokenCredential? credential,
         Uri? endpoint = null)
     {
-        // Resilient-tasks services are set up once per process. Everything below uses
+        // Resilient-tasks services are set up once per service collection. Everything below uses
         // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
         // would register a duplicate TaskDurabilityService, running the recovery scan twice. Guard
         // the whole method: on a repeat call, register nothing further and hand back a registrar over
@@ -525,10 +530,14 @@ public static class ResilientTaskServiceCollectionExtensions
             return new DefaultResilientTaskBuilder(existingRegistry, existingAccessor);
         }
 
+        ResilientTaskEnablementState enablement =
+            ResilientTaskEnablementExtensions.GetOrCreateState(services);
+        services.AddOptions<ResilientTaskOptions>();
+
         var registry = new TaskRegistry();
         services.TryAddSingleton(registry);
 
-        var engineAccessor = new TaskEngineAccessor();
+        var engineAccessor = new TaskEngineAccessor(enablement);
         services.TryAddSingleton(engineAccessor);
 
         var environment = new TaskHostEnvironment(credential, endpoint);
@@ -649,9 +658,24 @@ public static class ResilientTaskServiceCollectionExtensions
                 sp.GetRequiredService<TaskEngine>(),
                 scanInterval: null,
                 shutdownGrace: null,
-                logger);
+                logger,
+                sp.GetRequiredService<ResilientTaskEnablementState>());
         });
-        services.AddHostedService(sp => sp.GetRequiredService<TaskDurabilityService>());
+        services.TryAddSingleton<DisabledTaskDurabilityService>(sp =>
+        {
+            ILoggerFactory? loggerFactory = sp.GetService<ILoggerFactory>();
+            ILogger logger = loggerFactory?.CreateLogger(TaskTelemetry.Category)
+                ?? NullLogger.Instance;
+            return new DisabledTaskDurabilityService(logger);
+        });
+        services.AddSingleton<IHostedService>(sp =>
+        {
+            bool enabled = sp.GetRequiredService<IOptions<ResilientTaskOptions>>().Value.Enabled;
+            sp.GetRequiredService<ResilientTaskEnablementState>().SetConfigured(enabled);
+            return enabled
+                ? sp.GetRequiredService<TaskDurabilityService>()
+                : sp.GetRequiredService<DisabledTaskDurabilityService>();
+        });
 
         return new DefaultResilientTaskBuilder(canonical, canonicalAccessor);
     }

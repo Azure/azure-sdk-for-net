@@ -22,9 +22,10 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public sealed class ResilientTaskRegistrationTests
 {
     [Test]
-    public async Task AddResilientTasksRegistersDurabilityHostedService()
+    public async Task EnabledResilientTasksResolveDurabilityHostedService()
     {
         var services = new ServiceCollection();
+        services.SetResilientTasksEnabled();
         services.AddResilientTasks();
 
         // The durability service must be registered as an IHostedService so the host drives its
@@ -147,17 +148,20 @@ public sealed class ResilientTaskRegistrationTests
         Directory.CreateDirectory(root);
         try
         {
-            var services = new ServiceCollection();
-            services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
-            TaskDefinition<string, string> registered = services.AddResilientTask<string, string>(
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            builder.SetResilientTasksEnabled();
+            TaskDefinition<string, string> registered = builder.Services.AddResilientTask<string, string>(
                 "keyed-runnable", (ctx, ct) => Task.FromResult(ctx.Input));
 
-            await using var provider = services.BuildServiceProvider();
+            using IHost host = builder.Build();
+            await host.StartAsync();
             TaskDefinition<string, string> resolved =
-                provider.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-runnable");
+                host.Services.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-runnable");
 
             Assert.That(resolved, Is.SameAs(registered));
             Assert.That(await resolved.RunAsync("ready"), Is.EqualTo("ready"));
+            await host.StopAsync();
         }
         finally
         {
@@ -186,16 +190,19 @@ public sealed class ResilientTaskRegistrationTests
         Directory.CreateDirectory(root);
         try
         {
-            var services = new ServiceCollection();
-            services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
-            TaskDefinition<string, int> registered = services.AddResilientTask<string, int>(
+            HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+            builder.Services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            builder.SetResilientTasksEnabled();
+            TaskDefinition<string, int> registered = builder.Services.AddResilientTask<string, int>(
                 "len", (ctx, ct) => Task.FromResult(ctx.Input.Length));
 
-            await using var provider = services.BuildServiceProvider();
-            TaskDefinition<string, int> resolved = provider.GetResilientTask<string, int>("len");
+            using IHost host = builder.Build();
+            await host.StartAsync();
+            TaskDefinition<string, int> resolved = host.Services.GetResilientTask<string, int>("len");
 
             Assert.That(resolved, Is.SameAs(registered));
             Assert.That(await resolved.RunAsync("hello"), Is.EqualTo(5));
+            await host.StopAsync();
         }
         finally
         {

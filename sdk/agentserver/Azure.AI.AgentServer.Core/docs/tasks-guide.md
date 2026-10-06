@@ -131,6 +131,25 @@ conversation) and stays alive between turns until you end it.
 
 ## 3. Hello world
 
+### Enable resilient tasks
+
+The task runtime is **opt-in**. Registering a task declares its handler and typed
+definition, but does not initialize task storage or recovery:
+
+```csharp
+var builder = AgentHost.CreateBuilder();
+builder.SetResilientTasksEnabled();
+```
+
+Call the opt-in before host startup. When it is omitted, the host does not resolve the
+task engine, task store, or hosted credential; it does not run a startup recovery scan
+or periodic recovery loop. Starting a registered task throws a
+`ResilientTaskException` with `ResilientTaskErrorCode.NotEnabled`.
+
+Responses applications normally opt in through
+`ResponsesServerOptions.ResilientBackground = true`, which enables the same Core
+runtime automatically.
+
 ### One-shot
 
 ```C# Snippet:Core_TasksGuide_OneShotHelloWorld
@@ -583,6 +602,10 @@ stream closure crash-atomic.
 ### 5.1 Registration
 
 ```csharp
+IServiceCollection SetResilientTasksEnabled(
+    this IServiceCollection services,
+    bool enabled = true);
+
 IServiceCollection AddResilientTasks(this IServiceCollection services,
                                       TokenCredential? credential = null);
 
@@ -613,14 +636,14 @@ TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THand
     where THandler : class, IResilientTaskHandler<TInput, TOutput>;
 ```
 
-`AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks
-services on first use, so `AddResilientTasks()` is optional — call it explicitly only
-when you need to supply a `credential`, or register a `TokenCredential` directly in the
-service collection. Either form may be configured before or after task registrations.
-When both are used, they must resolve to the same credential instance. A credential is
-required when the host is running in Foundry hosted mode and the framework selects
-hosted task storage; local development uses the file-backed store and does not require
-one.
+`AddResilientTask`/`AddResilientMultiTurnTask` self-register the task definitions and
+lazy runtime services, but they do **not** enable task execution or recovery. Call
+`SetResilientTasksEnabled()` before host startup to opt in. `AddResilientTasks()` remains
+optional and is needed only when supplying a `credential`; alternatively register a
+`TokenCredential` directly in the service collection. Configuration and task
+registration may occur in either order. When both credential forms are used, they must
+resolve to the same instance. A credential is required in Foundry hosted mode; local
+development uses the file-backed store and does not require one.
 
 ### 5.2 `TaskDefinition<TInput, TOutput>`
 

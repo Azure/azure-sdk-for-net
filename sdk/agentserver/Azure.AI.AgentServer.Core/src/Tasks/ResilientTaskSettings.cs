@@ -12,6 +12,9 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 /// Configuration-bindable settings for hosted resilient-task storage.
 /// The inherited credential and <see cref="Endpoint"/> are resolved from one configuration
 /// section so task-storage identity and location cannot be configured independently.
+/// Binding storage settings does not enable the resilient-task runtime; call
+/// <see cref="ResilientTaskEnablementExtensions.SetResilientTasksEnabled(Microsoft.Extensions.Hosting.IHostApplicationBuilder, bool)"/>
+/// before host startup.
 /// </summary>
 [Experimental("SCME0002")]
 public class ResilientTaskSettings : ClientSettings

@@ -19,9 +19,9 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// so this service owns only the standing recovery sweep.
 /// </summary>
 /// <remarks>
-/// Registered as an <see cref="IHostedService"/> by <c>AddResilientTasks</c> so the host lifespan
-/// drives it: <see cref="StartAsync"/> runs the cold-start scan (blocking startup per SOT §49) and
-/// then spawns the periodic loop; <see cref="StopAsync"/> tears the loop down on graceful shutdown.
+/// Selected as the <see cref="IHostedService"/> only when the host opts in to resilient tasks.
+/// <see cref="StartAsync"/> runs the cold-start scan (blocking startup per SOT §49) and then spawns
+/// the periodic loop; <see cref="StopAsync"/> tears the loop down on graceful shutdown.
 /// </remarks>
 internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
 {
@@ -30,6 +30,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     private readonly TimeSpan _scanInterval;
     private readonly TimeSpan _shutdownGrace;
     private readonly ILogger _logger;
+    private readonly ResilientTaskEnablementState _enablement;
     private CancellationTokenSource _stopCts = new();
     private Task? _loop;
 
@@ -38,7 +39,8 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
         TaskEngine engine,
         TimeSpan? scanInterval = null,
         TimeSpan? shutdownGrace = null,
-        ILogger? logger = null)
+        ILogger? logger = null,
+        ResilientTaskEnablementState? enablement = null)
     {
         _scanner = scanner ?? throw new ArgumentNullException(nameof(scanner));
         _engine = engine ?? throw new ArgumentNullException(nameof(engine));
@@ -46,6 +48,8 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
             ?? TimeSpan.FromSeconds(TaskEngineConstants.RecoveryScanIntervalSeconds);
         _shutdownGrace = shutdownGrace ?? TaskEngineConstants.ShutdownGrace;
         _logger = logger ?? NullLogger.Instance;
+        _enablement = enablement
+            ?? new ResilientTaskEnablementState(enabled: true, ready: true);
     }
 
     /// <summary>
@@ -73,22 +77,27 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
         // hosted)" line and the signal the hosted crash-recovery verifier greps to prove a restart.
         _logger.TaskManagerStarting(_engine.Owner, _engine.InstanceId, Azure.AI.AgentServer.Core.FoundryEnvironment.IsHosted);
 
-        // Cold-start scan blocks startup (SOT §49). A transient failure is logged rather than
-        // faulting startup; the periodic loop then retries on its cadence.
+        // Cold-start scan blocks startup (SOT §49). Reaching this service means the application
+        // explicitly opted in to durability, so initialization failure must fail host startup
+        // rather than silently run with a durability guarantee that is not active.
         try
         {
             await ScanOnceAsync(cancellationToken).ConfigureAwait(false);
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
+            _enablement.MarkStopped();
             return;
         }
         catch (Exception ex)
         {
+            _enablement.MarkStopped();
             _logger.RecoveryScanFailed(ex.GetType().Name);
+            throw;
         }
 
         _loop = Task.Run(() => RunLoopAsync(_stopCts.Token), CancellationToken.None);
+        _enablement.MarkReady();
     }
 
     /// <summary>
@@ -99,6 +108,7 @@ internal sealed class TaskDurabilityService : IHostedService, IAsyncDisposable
     /// </summary>
     public async Task StopAsync(CancellationToken cancellationToken = default)
     {
+        _enablement.MarkStopped();
         if (_loop is not null)
         {
             _stopCts.Cancel();

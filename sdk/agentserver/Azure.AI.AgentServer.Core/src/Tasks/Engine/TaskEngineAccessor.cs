@@ -7,7 +7,7 @@ using System.Threading;
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
 /// <summary>
-/// A late-bound holder for the process <see cref="TaskEngine"/>. The resilient-task builder — and
+/// A late-bound holder for the host's <see cref="TaskEngine"/>. The resilient-task builder — and
 /// the <see cref="TaskDefinition{TInput, TOutput}"/> instances it returns — are created during
 /// <c>AddResilientTasks</c>, before the DI container (and therefore the engine) exists. This holder
 /// is populated when the <see cref="TaskEngine"/> singleton is first resolved, either during host
@@ -15,7 +15,14 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// </summary>
 internal sealed class TaskEngineAccessor
 {
+    private readonly ResilientTaskEnablementState _enablement;
     private TaskEngine? _engine;
+
+    public TaskEngineAccessor(ResilientTaskEnablementState? enablement = null)
+    {
+        // Direct internal test hosts construct an accessor without DI and already own an engine.
+        _enablement = enablement ?? new ResilientTaskEnablementState(enabled: true, ready: true);
+    }
 
     /// <summary>Binds the process task engine exactly once.</summary>
     public void Bind(TaskEngine engine)
@@ -32,8 +39,24 @@ internal sealed class TaskEngineAccessor
 
     /// <summary>Returns the engine, or throws if it has not been populated yet.</summary>
     public TaskEngine Require()
-        => Volatile.Read(ref _engine) ?? throw new InvalidOperationException(
+    {
+        if (!_enablement.IsConfigured)
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.NotEnabled,
+                "Resilient tasks are disabled for this host. Call SetResilientTasksEnabled() before host startup.");
+        }
+
+        if (!_enablement.IsReady)
+        {
+            throw new InvalidOperationException(
+                "The resilient-task runtime is not ready. Task definitions can run only after " +
+                "host startup recovery has completed and before host shutdown begins.");
+        }
+
+        return Volatile.Read(ref _engine) ?? throw new InvalidOperationException(
             "The task engine is not available yet. A task definition can only be run once the " +
             "application host has started, or after the definition has been resolved from its " +
             "service provider.");
+    }
 }
