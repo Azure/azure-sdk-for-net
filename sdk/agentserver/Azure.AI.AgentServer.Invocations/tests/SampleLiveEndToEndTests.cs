@@ -306,6 +306,7 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientResearchSnippets.ResilientResearchHandler>();
 
+        builder.Services.SetResilientTasksEnabled();
         builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
             ttl: TimeSpan.FromMinutes(5)));
 
@@ -333,6 +334,7 @@ public class SampleLiveEndToEndTests
         builder.Services.AddScoped<InvocationHandler,
             SampleResilientMultiturnSnippets.ResilientMultiturnHandler>();
 
+        builder.Services.SetResilientTasksEnabled();
         builder.Services.AddResilientMultiTurnTask<SampleResilientMultiturnSnippets.ConversationInput,
                               SampleResilientMultiturnSnippets.ConversationOutput>(
                 "conversation",
