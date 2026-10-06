@@ -12,7 +12,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
     /// <summary>
     /// Describes how the service is partitioned.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="UniformInt64RangePartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="NamedPartitionScheme"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="UniformInt64RangePartitionScheme"/>.
     /// </summary>
     public partial class ManagedServicePartitionScheme : ProvisionableConstruct
     {
