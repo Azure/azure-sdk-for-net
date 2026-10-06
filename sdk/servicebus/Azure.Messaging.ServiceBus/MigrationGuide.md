@@ -40,7 +40,7 @@ There were several areas of consistent feedback expressed across the Azure clien
 
 To improve the development experience across Azure services, including Service Bus, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. The new `Azure.Messaging.ServiceBus` library follows these guidelines.
 
-`Azure.Messaging.ServiceBus` is the supported replacement for both retired .NET Service Bus libraries. If you use `WindowsAzure.ServiceBus`, follow its [migration guide](MigrationGuide_WindowsAzureServiceBus.md), which covers the transport and API differences. The retirement of `WindowsAzure.ServiceBus` for Service Bus messaging does not affect its continued support with Azure WCF Relay.
+`Azure.Messaging.ServiceBus` is the supported replacement for both retired .NET Service Bus libraries. If you use `WindowsAzure.ServiceBus`, follow its [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide_WindowsAzureServiceBus.md), which covers the transport and API differences. The retirement of `WindowsAzure.ServiceBus` for Service Bus messaging does not affect its continued support with Azure WCF Relay.
 
 ### Cross-service SDK improvements
 
