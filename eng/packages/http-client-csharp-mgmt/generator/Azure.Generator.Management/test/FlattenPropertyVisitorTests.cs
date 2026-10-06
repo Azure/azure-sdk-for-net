@@ -1925,12 +1925,12 @@ namespace Azure.Generator.Mgmt.Tests
         /// <summary>
         /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/63548.
         ///
-        /// When an optional wrapper with a single required reference-type property is
+        /// When an optional wrapper with a single required non-nullable reference-type property is
         /// safe-flattened, assigning null to the flattened property should clear the
         /// wrapper instead of invoking its required-argument constructor with null.
         /// </summary>
         [Test]
-        public void TestSafeFlattenNullAssignmentClearsOptionalWrapperForRequiredReferenceProperty()
+        public void TestSafeFlattenNullAssignmentClearsOptionalWrapperForRequiredNonNullableReferenceProperty()
         {
             var valueProperty = InputFactory.Property(
                 "value",
@@ -1979,7 +1979,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             Assert.That(
                 rendered,
-                Does.Match(@"Wrapper\s*=\s*\(value\s+is\s+null\)\s*\?\s*default\s*:"),
+                Does.Match(@"Wrapper\s*=\s*(?:\(value\s+is\s+null\)|value\s+is\s+null)\s*\?\s*default\s*:"),
                 "Null assignment should clear the optional wrapper before constructing it.");
 
             Assert.That(
@@ -2039,7 +2039,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             Assert.That(
                 rendered,
-                Does.Not.Match(@"Wrapper\s*=\s*\(value\s+is\s+null\)\s*\?\s*default\s*:"),
+                Does.Not.Match(@"Wrapper\s*=\s*(?:\(value\s+is\s+null\)|value\s+is\s+null)\s*\?\s*default\s*:"),
                 "A required nullable leaf must not clear its optional wrapper.");
 
             Assert.That(

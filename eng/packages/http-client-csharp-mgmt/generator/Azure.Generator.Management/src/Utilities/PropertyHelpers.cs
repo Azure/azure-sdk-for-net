@@ -163,7 +163,7 @@ namespace Azure.Generator.Management.Utilities
             return BuildLazyCreateAndAssignSetter(innerModel, internalProperty, innerProperty, isPropertyLiftedToNullable);
         }
 
-        public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable, bool isWrapperOptional)
+        public static MethodBodyStatement? BuildSetterForSafeFlatten(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty, bool isPropertyLiftedToNullable)
         {
             // To not introduce breaking change, for collection types, we keep the setter for collection-type properties during safe flatten.
             if (includeSetterCheck)
@@ -203,10 +203,10 @@ namespace Azure.Generator.Management.Utilities
                     });
                     setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
                 }
-                else if (isWrapperOptional && innerProperty.WireInfo?.IsRequired == true && !innerProperty.Type.IsNullable && !innerProperty.Type.IsValueType && !innerProperty.Type.IsCollection)
+                else if (internalProperty.WireInfo?.IsRequired == false && innerProperty.WireInfo?.IsRequired == true && !innerProperty.Type.IsNullable && !innerProperty.Type.IsValueType && !innerProperty.Type.IsCollection)
                 {
                     // Safe-flatten has only one public leaf, so an absent reference value
-                    // represents an absent optional wrapper. Avoid constructing a required-leaf
+                    // represents an absent optional wrapper. Avoid constructing a required non-nullable leaf
                     // wrapper with null, which would fail its constructor validation.
                     setter.Add(internalPropertyExpression.Assign(
                         new TernaryConditionalExpression(
