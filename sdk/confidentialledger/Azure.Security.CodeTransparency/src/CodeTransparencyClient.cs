@@ -186,7 +186,50 @@ namespace Azure.Security.CodeTransparency
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(certificateClient, nameof(certificateClient));
 
-            X509Chain certificateChain = new();
+            // The validation callback is shared for the lifetime of the client, but a fresh X509Chain is
+            // built on every invocation (see ValidateServerCertificate). This keeps the chain's
+            // VerificationTime current on each handshake and avoids sharing a non-thread-safe X509Chain
+            // across concurrent handshakes.
+            return new HttpPipelineTransportOptions
+            {
+                ServerCertificateCustomValidationCallback = args => ValidateServerCertificate(certificateClient, serviceName, args.Certificate)
+            };
+        }
+
+        /// <summary>
+        /// Validates a server certificate presented during the TLS handshake against the ledger identity
+        /// TLS certificate pulled (and cached) from the identity service. The presented chain is accepted
+        /// only if it is rooted in the ledger identity TLS certificate.
+        /// </summary>
+        /// <remarks>
+        /// A fresh <see cref="X509Chain"/> is built on every call, for two reasons:
+        /// <list type="bullet">
+        /// <item><description>
+        /// <see cref="X509ChainPolicy.VerificationTime"/> must reflect the current time at each handshake.
+        /// Capturing it once at client construction freezes the timestamp, so a reissued node certificate
+        /// (whose <c>NotBefore</c> is later than the frozen time) would be rejected as <c>NotTimeValid</c>,
+        /// permanently failing every request until the process restarts.
+        /// </description></item>
+        /// <item><description>
+        /// <see cref="X509Chain"/> is not thread-safe; a single shared instance cannot be mutated and
+        /// have <see cref="X509Chain.Build(X509Certificate2)"/> called concurrently from parallel handshakes.
+        /// </description></item>
+        /// </list>
+        /// </remarks>
+        /// <param name="certificateClient">identity service client used to get (and cache) the CA cert.</param>
+        /// <param name="serviceName">which service to use to pull the cert from.</param>
+        /// <param name="cert">the server certificate presented during the TLS handshake.</param>
+        /// <returns><c>true</c> if the certificate chains to the ledger identity TLS certificate; otherwise <c>false</c>.</returns>
+        internal static bool ValidateServerCertificate(CodeTransparencyCertificateClient certificateClient, string serviceName, X509Certificate2 cert)
+        {
+            // Pull the TLS cert or get it from the cache
+            ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
+            X509Certificate2 identityServiceCert = identity.GetCertificate();
+
+            // Build a fresh chain per validation so VerificationTime is current and the chain is not shared
+            // across concurrent handshakes.
+            using X509Chain certificateChain = new();
+
             // Revocation is not required by CCF. Hence revocation checks must be skipped to avoid validation failing unnecessarily.
             certificateChain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
 
@@ -195,37 +238,22 @@ namespace Azure.Security.CodeTransparency
             // This makes it possible for validation of certificate chains terminating in the ledger identity TLS certificate to pass.
             // Note: .NET 5 introduced `CustomTrustStore` but we cannot use that here as we must support older versions of .NET.
             certificateChain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
+
+            // Evaluate validity against the current time, per handshake. Do NOT capture this once per client.
             certificateChain.ChainPolicy.VerificationTime = DateTime.Now;
 
-            // Define a validation function to ensure that certificates presented to the client only pass validation if
-            // they are trusted by the ledger identity TLS certificate.
-            // will yield AuthenticationException if cert is invalid
-            bool CertValidationCheck(X509Certificate2 cert)
-            {
-                // Pull the TLS cert or get it from the cache
-                ServiceIdentityResult identity = certificateClient.GetServiceIdentity(serviceName);
-                X509Certificate2 identityServiceCert = identity.GetCertificate();
+            // Add the ledger identity TLS certificate to the ExtraStore.
+            certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
 
-                // Add the ledger identity TLS certificate to the ExtraStore.
-                X509Certificate2Collection existingCerts = certificateChain.ChainPolicy.ExtraStore;
-                if (!existingCerts.Contains(identityServiceCert))
-                {
-                    certificateChain.ChainPolicy.ExtraStore.Clear();
-                    certificateChain.ChainPolicy.ExtraStore.Add(identityServiceCert);
-                }
-                // Validate the presented certificate chain, using the ChainPolicy defined above.
-                // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
-                bool isChainValid = certificateChain.Build(cert);
-                if (!isChainValid)
-                    return false;
+            // Validate the presented certificate chain, using the ChainPolicy defined above.
+            // Note: this check will allow certificates signed by standard CAs as well as those signed by the ledger identity TLS certificate.
+            bool isChainValid = certificateChain.Build(cert);
+            if (!isChainValid)
+                return false;
 
-                // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
-                X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
-                bool isChainRootedInTheTlsCert = rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint);
-                return isChainRootedInTheTlsCert;
-            }
-
-            return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
+            // Ensure that the presented certificate chain passes validation only if it is rooted in the ledger identity TLS certificate.
+            X509Certificate2 rootCert = certificateChain.ChainElements[certificateChain.ChainElements.Count - 1].Certificate;
+            return rootCert.Thumbprint.Equals(identityServiceCert.Thumbprint, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

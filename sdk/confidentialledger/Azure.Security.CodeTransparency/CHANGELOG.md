@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `CodeTransparencyClient` permanently rejecting the service TLS connection after a ledger CCF node certificate is reissued (for example, after a node pod restart). The server certificate validation callback previously captured a single `X509Chain` with a frozen `VerificationTime` at client construction, so reissued node certificates whose `NotBefore` was later than the construction time were rejected as `NotTimeValid` until the process restarted. Validation now builds a fresh chain per TLS handshake, which also removes the concurrent use of a non-thread-safe shared `X509Chain`.
+
 ### Other Changes
 
 ## 1.0.0 (2026-09-11)

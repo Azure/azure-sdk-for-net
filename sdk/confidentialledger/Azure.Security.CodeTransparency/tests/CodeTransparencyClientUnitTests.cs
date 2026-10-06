@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Cose;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1169,5 +1170,85 @@ namespace Azure.Security.CodeTransparency.Tests
                 $"First error: {exceptions.FirstOrDefault()?.Message}");
 #endif
         }
+
+        [Test]
+        public void ValidateServerCertificate_AcceptsNodeCertificateReissuedAfterConstruction()
+        {
+#if NET462
+            Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
+#else
+            // Regression test for the frozen X509ChainPolicy.VerificationTime bug: a node certificate
+            // reissued (NotBefore in the recent past, simulating a ledger pod restart) must still be
+            // accepted. Because validation now builds a fresh chain per handshake with a current
+            // VerificationTime, a node certificate whose NotBefore is later than the client's construction
+            // time validates successfully instead of being rejected as NotTimeValid.
+            using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
+            using X509Certificate2 nodeCert = CreateNodeCertificate("CN=ccf-node", identityCert, DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddDays(90));
+
+            CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+
+            bool result = CodeTransparencyClient.ValidateServerCertificate(certClient, "serviceName", nodeCert);
+
+            Assert.IsTrue(result, "A node certificate chaining to the ledger identity certificate should be accepted.");
+#endif
+        }
+
+        [Test]
+        public void ValidateServerCertificate_RejectsCertificateNotRootedInIdentityCertificate()
+        {
+#if NET462
+            Assert.Ignore("X509 CertificateRequest API used to synthesize test certificates was added in .NET Framework 4.7.2.");
+#else
+            using X509Certificate2 identityCert = CreateCaCertificate("CN=CCF Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
+            using X509Certificate2 otherCa = CreateCaCertificate("CN=Other Network", DateTimeOffset.UtcNow.AddDays(-1), DateTimeOffset.UtcNow.AddYears(1));
+            using X509Certificate2 foreignNodeCert = CreateNodeCertificate("CN=foreign-node", otherCa, DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddDays(90));
+
+            CodeTransparencyCertificateClient certClient = CreateCertificateClientReturning(identityCert);
+
+            bool result = CodeTransparencyClient.ValidateServerCertificate(certClient, "serviceName", foreignNodeCert);
+
+            Assert.IsFalse(result, "A certificate not rooted in the ledger identity certificate must be rejected.");
+#endif
+        }
+
+#if !NET462
+        private static CodeTransparencyCertificateClient CreateCertificateClientReturning(X509Certificate2 identityCert)
+        {
+            string pem = ExportCertificatePem(identityCert);
+            var mockedResponse = new MockResponse(200);
+            mockedResponse.SetContent("{ \"ledgerTlsCertificate\": " + JsonSerializer.Serialize(pem) + " }");
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = new MockTransport(mockedResponse),
+                IdentityClientEndpoint = new Uri("https://foo.bar.com")
+            };
+            return options.CreateCertificateClient();
+        }
+
+        private static X509Certificate2 CreateCaCertificate(string subjectName, DateTimeOffset notBefore, DateTimeOffset notAfter)
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP384);
+            var request = new CertificateRequest(subjectName, key, HashAlgorithmName.SHA384);
+            request.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 0, true));
+            request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
+            return request.CreateSelfSigned(notBefore, notAfter);
+        }
+
+        private static X509Certificate2 CreateNodeCertificate(string subjectName, X509Certificate2 issuer, DateTimeOffset notBefore, DateTimeOffset notAfter)
+        {
+            using ECDsa key = ECDsa.Create(ECCurve.NamedCurves.nistP384);
+            var request = new CertificateRequest(subjectName, key, HashAlgorithmName.SHA384);
+            request.CertificateExtensions.Add(new X509BasicConstraintsExtension(false, false, 0, false));
+            request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
+            byte[] serialNumber = RandomNumberGenerator.GetBytes(16);
+            return request.Create(issuer, notBefore, notAfter, serialNumber);
+        }
+
+        private static string ExportCertificatePem(X509Certificate2 cert)
+        {
+            string base64 = Convert.ToBase64String(cert.RawData, Base64FormattingOptions.InsertLineBreaks);
+            return "-----BEGIN CERTIFICATE-----\n" + base64 + "\n-----END CERTIFICATE-----\n";
+        }
+#endif
     }
 }
