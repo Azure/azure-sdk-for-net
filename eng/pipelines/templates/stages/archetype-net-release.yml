@@ -166,7 +166,10 @@ stages:
                               SignCertName: 'azure-sdk-esrp-release-certificate'
                               Intent: 'PackageDistribution'
                               ContentType: 'NuGet'
+                              OrganizationName: 'azure-sdk'
+                              ContentSource: 'Folder'
                               FolderLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}'
+                              WaitForReleaseCompletion: true
                               Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                               Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                               ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
