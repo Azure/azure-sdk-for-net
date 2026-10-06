@@ -1318,6 +1318,106 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void HoldGroupCreatedEventParsed_Test()
+        {
+            HoldGroupCreated @event = CallAutomationModelFactory.HoldGroupCreated(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.HoldGroupCreated");
+            if (parsedEvent is HoldGroupCreated holdGroupCreated)
+            {
+                Assert.That(holdGroupCreated.CorrelationId, Is.EqualTo("correlationId"));
+                Assert.That(holdGroupCreated.ServerCallId, Is.EqualTo("serverCallId"));
+                Assert.That(holdGroupCreated.OperationContext, Is.EqualTo("operationContext"));
+                Assert.That(holdGroupCreated.ResultInformation?.Code, Is.EqualTo(200));
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void HoldGroupFailedEventParsed_Test()
+        {
+            HoldGroupFailed @event = CallAutomationModelFactory.HoldGroupFailed(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 400, subCode: 8536, message: "Action failed, file could not be downloaded."));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.HoldGroupFailed");
+            if (parsedEvent is HoldGroupFailed holdGroupFailed)
+            {
+                Assert.That(holdGroupFailed.CorrelationId, Is.EqualTo("correlationId"));
+                Assert.That(holdGroupFailed.ServerCallId, Is.EqualTo("serverCallId"));
+                Assert.That(holdGroupFailed.OperationContext, Is.EqualTo("operationContext"));
+                Assert.That(holdGroupFailed.ResultInformation?.Code, Is.EqualTo(400));
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void HoldGroupAudioStartedEventParsed_Test()
+        {
+            HoldGroupAudioStarted @event = CallAutomationModelFactory.HoldGroupAudioStarted(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.HoldGroupAudioStarted");
+            if (parsedEvent is HoldGroupAudioStarted holdGroupAudioStarted)
+            {
+                Assert.That(holdGroupAudioStarted.CorrelationId, Is.EqualTo("correlationId"));
+                Assert.That(holdGroupAudioStarted.ServerCallId, Is.EqualTo("serverCallId"));
+                Assert.That(holdGroupAudioStarted.OperationContext, Is.EqualTo("operationContext"));
+                Assert.That(holdGroupAudioStarted.ResultInformation?.Code, Is.EqualTo(200));
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
+        public void HoldGroupAudioFailedEventParsed_Test()
+        {
+            HoldGroupAudioFailed @event = CallAutomationModelFactory.HoldGroupAudioFailed(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                operationContext: "operationContext",
+                resultInformation: new ResultInformation(code: 400, subCode: 8536, message: "Action failed, file could not be downloaded."));
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.HoldGroupAudioFailed");
+            if (parsedEvent is HoldGroupAudioFailed holdGroupAudioFailed)
+            {
+                Assert.That(holdGroupAudioFailed.CorrelationId, Is.EqualTo("correlationId"));
+                Assert.That(holdGroupAudioFailed.ServerCallId, Is.EqualTo("serverCallId"));
+                Assert.That(holdGroupAudioFailed.OperationContext, Is.EqualTo("operationContext"));
+                Assert.That(holdGroupAudioFailed.ResultInformation?.Code, Is.EqualTo(400));
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void MediaStreamingStartedEventParsed_Test()
         {
             MediaStreamingStarted @event = CallAutomationModelFactory.MediaStreamingStarted(

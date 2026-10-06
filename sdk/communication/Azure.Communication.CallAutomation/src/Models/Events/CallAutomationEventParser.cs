@@ -171,6 +171,14 @@ namespace Azure.Communication.CallAutomation
                     return HoldAudioResumed.Deserialize(eventData);
                 case nameof(HoldFailed):
                     return HoldFailed.Deserialize(eventData);
+                case nameof(HoldGroupCreated):
+                    return HoldGroupCreated.Deserialize(eventData);
+                case nameof(HoldGroupFailed):
+                    return HoldGroupFailed.Deserialize(eventData);
+                case nameof(HoldGroupAudioStarted):
+                    return HoldGroupAudioStarted.Deserialize(eventData);
+                case nameof(HoldGroupAudioFailed):
+                    return HoldGroupAudioFailed.Deserialize(eventData);
                 case nameof(MediaStreamingStarted):
                     return MediaStreamingStarted.Deserialize(eventData);
                 case nameof(MediaStreamingStopped):

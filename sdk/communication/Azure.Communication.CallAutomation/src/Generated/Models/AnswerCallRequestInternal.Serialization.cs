@@ -59,6 +59,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
+            if (Optional.IsDefined(HoldGroupOptions))
+            {
+                writer.WritePropertyName("holdGroupOptions"u8);
+                writer.WriteObjectValue(HoldGroupOptions);
+            }
             writer.WriteEndObject();
         }
 

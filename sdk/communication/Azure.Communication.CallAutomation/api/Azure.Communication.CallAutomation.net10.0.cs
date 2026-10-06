@@ -224,6 +224,10 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.HoldAudioResumed HoldAudioResumed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.HoldAudioStarted HoldAudioStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.HoldGroupAudioFailed HoldGroupAudioFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.HoldGroupAudioStarted HoldGroupAudioStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.HoldGroupCreated HoldGroupCreated(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
+        public static Azure.Communication.CallAutomation.HoldGroupFailed HoldGroupFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.IncomingCall IncomingCall(Azure.Communication.CommunicationIdentifier to = null, Azure.Communication.CommunicationIdentifier from = null, string callerDisplayName = null, string serverCallId = null, Azure.Communication.CallAutomation.CustomCallingContext customContext = null, string incomingCallContext = null, Azure.Communication.CommunicationIdentifier onBehalfOfCallee = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingFailed MediaStreamingFailed(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
         public static Azure.Communication.CallAutomation.MediaStreamingStarted MediaStreamingStarted(Azure.Communication.CallAutomation.MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null) { throw null; }
@@ -390,6 +394,10 @@ namespace Azure.Communication.CallAutomation
         public virtual string CallConnectionId { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult> CancelAllMediaOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.CallAutomation.HoldGroupCreatedEventResult> CreateHoldGroup(Azure.Communication.CallAutomation.HoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.HoldGroupCreatedEventResult>> CreateHoldGroupAsync(Azure.Communication.CallAutomation.HoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteHoldGroup(Azure.Communication.CallAutomation.DeleteHoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHoldGroupAsync(Azure.Communication.CallAutomation.DeleteHoldGroupOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.HoldResult> Hold(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.HoldResult>> HoldAsync(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.InterruptAudioAndAnnounceResult> InterruptAudioAndAnnounce(Azure.Communication.CallAutomation.InterruptAudioAndAnnounceOptions announcementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -721,6 +729,10 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
+    public partial class CreateHoldGroupRequest
+    {
+        public CreateHoldGroupRequest() { }
+    }
     public partial class CustomCallingContext
     {
         internal CustomCallingContext() { }
@@ -734,6 +746,20 @@ namespace Azure.Communication.CallAutomation
             XMSCustom = 0,
             X = 1,
         }
+    }
+    public partial class DeleteHoldGroupOptions
+    {
+        public DeleteHoldGroupOptions(string holdGroupId) { }
+        public string HoldGroupId { get { throw null; } }
+        public System.Uri OperationCallbackUri { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
+    }
+    public partial class DeleteHoldGroupRequest
+    {
+        public DeleteHoldGroupRequest() { }
+        public string HoldGroupId { get { throw null; } set { } }
+        public string OperationCallbackUri { get { throw null; } set { } }
+        public string OperationContext { get { throw null; } set { } }
     }
     public partial class DialogCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -933,6 +959,47 @@ namespace Azure.Communication.CallAutomation
         internal HoldFailed() { }
         public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
         public static Azure.Communication.CallAutomation.HoldFailed Deserialize(string content) { throw null; }
+    }
+    public partial class HoldGroupAudioFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal HoldGroupAudioFailed() { }
+        public static Azure.Communication.CallAutomation.HoldGroupAudioFailed Deserialize(string content) { throw null; }
+    }
+    public partial class HoldGroupAudioStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal HoldGroupAudioStarted() { }
+        public static Azure.Communication.CallAutomation.HoldGroupAudioStarted Deserialize(string content) { throw null; }
+    }
+    public partial class HoldGroupCreated : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal HoldGroupCreated() { }
+        public static Azure.Communication.CallAutomation.HoldGroupCreated Deserialize(string content) { throw null; }
+    }
+    public partial class HoldGroupCreatedEventResult
+    {
+        internal HoldGroupCreatedEventResult() { }
+        public Azure.Communication.CallAutomation.HoldGroupEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.HoldGroupEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class HoldGroupEventResult
+    {
+        internal HoldGroupEventResult() { }
+        public Azure.Communication.CallAutomation.HoldGroupAudioFailed AudioFailedResult { get { throw null; } }
+        public Azure.Communication.CallAutomation.HoldGroupAudioStarted AudioStartedResult { get { throw null; } }
+        public Azure.Communication.CallAutomation.HoldGroupCreated CreatedResult { get { throw null; } }
+        public Azure.Communication.CallAutomation.HoldGroupFailed FailedResult { get { throw null; } }
+        public bool IsSuccess { get { throw null; } }
+    }
+    public partial class HoldGroupFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal HoldGroupFailed() { }
+        public static Azure.Communication.CallAutomation.HoldGroupFailed Deserialize(string content) { throw null; }
+    }
+    public partial class HoldGroupOptions
+    {
+        public HoldGroupOptions(Azure.Communication.CallAutomation.PlaySource playSource) { }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.PlaySource PlaySource { get { throw null; } set { } }
     }
     public partial class HoldOptions
     {

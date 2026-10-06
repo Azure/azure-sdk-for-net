@@ -508,6 +508,136 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// Create a hold group for participants.
+        /// </summary>
+        /// <param name="options">The options for creating a hold group.</param>
+        /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns a <see cref="HoldGroupCreatedEventResult"/>, which can be used to wait for HoldGroup creation related events.</returns>
+        public virtual async Task<Response<HoldGroupCreatedEventResult>> CreateHoldGroupAsync(HoldGroupOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(CreateHoldGroup)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                CreateHoldGroupRequest request = CreateHoldGroupRequest(options);
+
+                var response = await CallMediaRestClient.CreateHoldGroupAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+
+                var result = new HoldGroupCreatedEventResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a hold group for participants.
+        /// </summary>
+        /// <param name="options">The options for creating a hold group.</param>
+        /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns a <see cref="HoldGroupCreatedEventResult"/>, which can be used to wait for HoldGroup creation related events.</returns>
+        public virtual Response<HoldGroupCreatedEventResult> CreateHoldGroup(HoldGroupOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(CreateHoldGroup)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                CreateHoldGroupRequest request = CreateHoldGroupRequest(options);
+
+                var response = CallMediaRestClient.CreateHoldGroup(CallConnectionId, request, cancellationToken);
+
+                var result = new HoldGroupCreatedEventResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a hold group.
+        /// </summary>
+        /// <param name="options">The options for deleting a hold group.</param>
+        /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an empty response.</returns>
+        public virtual async Task<Response> DeleteHoldGroupAsync(DeleteHoldGroupOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(DeleteHoldGroup)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                var request = new DeleteHoldGroupRequest(options.HoldGroupId);
+                request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
+                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
+
+                var response = await CallMediaRestClient.DeleteHoldGroupAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a hold group.
+        /// </summary>
+        /// <param name="options">The options for deleting a hold group.</param>
+        /// <param name="cancellationToken">Optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an empty response.</returns>
+        public virtual Response DeleteHoldGroup(DeleteHoldGroupOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(DeleteHoldGroup)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                {
+                    throw new ArgumentNullException(nameof(options));
+                }
+
+                var request = new DeleteHoldGroupRequest(options.HoldGroupId);
+                request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
+                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
+
+                var response = CallMediaRestClient.DeleteHoldGroup(CallConnectionId, request, cancellationToken);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private static RecognizeRequestInternal CreateRecognizeRequest(CallMediaRecognizeOptions recognizeOptions)
         {
             if (recognizeOptions == null)
@@ -680,6 +810,19 @@ namespace Azure.Communication.CallAutomation
             }
             else
             { return null; }
+        }
+
+        private static CreateHoldGroupRequest CreateHoldGroupRequest(HoldGroupOptions options)
+        {
+            if (options == null)
+            {
+                throw new ArgumentNullException(nameof(options));
+            }
+
+            var playSourceInternal = TranslatePlaySourceToInternal(options.PlaySource);
+            var operationContext = options.OperationContext ?? Guid.NewGuid().ToString();
+
+            return new CreateHoldGroupRequest(playSourceInternal, operationContext);
         }
 
         /// <summary>

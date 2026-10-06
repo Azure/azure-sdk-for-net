@@ -36,7 +36,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
         /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
+        /// <param name="holdGroupOptions">
+        /// Options for creating a hold group at call answer time.
+        /// When provided with AnswerCall, a hold group (Platform Endpoint + Audio Routing Group)
+        /// is created asynchronously to enable fast hold operations (~200ms vs ~5s legacy path).
+        /// HoldGroup creation does not block the AnswerCall response; HoldGroupCreated / HoldGroupFailed
+        /// callback events are emitted when the operation completes.
+        /// </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions, HoldGroupOptions holdGroupOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -48,6 +55,7 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingConfiguration = mediaStreamingConfiguration;
             EnableLoopbackAudio = enableLoopbackAudio;
             DtmfOptions = dtmfOptions;
+            HoldGroupOptions = holdGroupOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -70,5 +78,13 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableLoopbackAudio { get; set; }
         /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
         public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
+        /// <summary>
+        /// Options for creating a hold group at call answer time.
+        /// When provided with AnswerCall, a hold group (Platform Endpoint + Audio Routing Group)
+        /// is created asynchronously to enable fast hold operations (~200ms vs ~5s legacy path).
+        /// HoldGroup creation does not block the AnswerCall response; HoldGroupCreated / HoldGroupFailed
+        /// callback events are emitted when the operation completes.
+        /// </summary>
+        public HoldGroupOptions HoldGroupOptions { get; set; }
     }
 }
