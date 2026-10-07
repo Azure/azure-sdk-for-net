@@ -1,10 +1,10 @@
-# Only the three tools-repo production definitions opt in automatically. This
+# Only the three tools-repo production definitions publish from main. This
 # template is synced with eng/common, so foreign repos/definitions must stay off.
 parameters:
-  - name: enableAutomaticPublication
+  - name: publishDashboardResults
     type: boolean
     default: false
 
 variables:
-  - name: EvalDashboardAutomaticPublication
-    value: ${{ and(parameters.enableAutomaticPublication, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), in(variables['System.DefinitionId'], '8255', '8256', '8246'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}
+  - name: EvalDashboardPublicationEnabled
+    value: ${{ and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), in(variables['System.DefinitionId'], '8255', '8256', '8246'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}

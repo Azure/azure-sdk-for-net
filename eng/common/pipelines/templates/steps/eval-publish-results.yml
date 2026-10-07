@@ -24,13 +24,12 @@ steps:
     displayName: 'Prepare one complete build result bundle'
     condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
 
-  # Exclude the credential-bearing task from PR validation, not merely its upload.
-  # For a draft PR pilot, manually queue the trusted feature BRANCH, not refs/pull/*.
+  # Only trusted main runs receive the credential-bearing task; PRs and feature branches do not.
   # All consumers use this reviewed connection/container pair; queue-time inputs cannot redirect it.
-  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))) }}:
+  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest')) }}:
     - task: AzureCLI@2
       displayName: 'Publish saved build bundle directly to Blob'
-      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
+      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), ne(variables['Build.Reason'], 'PullRequest'))
       inputs:
         azureSubscription: eval-dashboard-sc
         scriptType: bash

@@ -32,26 +32,26 @@ target are fixed in [storage.ts](publisher/storage.ts), not queue-time/environme
 
 | Control | Current use |
 | --- | --- |
-| `autoPublishDashboardResults` | Entrypoints default to `true`; disable to opt out of trusted tools main publication |
-| `publishDashboardResults` | Publish to Blob and request the required pipeline-wide Azure Storage egress for an approved internal run |
+| `publishDashboardResults` | The only publishing switch; defaults to `true` in the three tools pipelines. Set `false` to disable both upload and Azure Storage egress |
 | `createDashboardBundle` | Shared-template artifact-only mode; enabled for all three tools entrypoints |
 
-Automatic publication requires organization `https://dev.azure.com/azure-sdk/`,
+Publication requires organization `https://dev.azure.com/azure-sdk/`,
 project `internal`, repository `Azure/azure-sdk-tools`, pipeline ID **8255** (workflow),
 **8256** (skill) or **8246** (live), exact `refs/heads/main`, and a CI, scheduled or
-manual reason. Other repositories/definitions and feature branches stay opt-in.
-PRs, pull refs and public-project runs cannot receive the publishing task.
+manual reason. The switch does not bypass those checks. Feature branches, other
+repositories/definitions, PRs, pull refs and public-project runs do not publish through
+these entrypoints, even when the switch is enabled.
 
-For an approved feature-branch run, set `publishDashboardResults=true`; there is no
-separate network-access flag. Publication requests the documented
+There is no separate automatic-publication, feature-branch override or network-access
+flag. Publication requests the documented
 [AzureStorage policy](https://aka.ms/1es/netiso/pipelinetemplates), which
 keeps `DefaultDeny, CFSClean, CFSClean2, CFSClean3` and allows Azure Storage egress
 for **all processes in that pipeline**, not just one container. It grants no RBAC
 access. Other synced consumers need matching `AllowAzureStorage` support in their
-repo-owned 1ES redirect; nothing is forwarded unless publication is enabled on a
-trusted run. Artifact-only runs request neither publishing credentials nor storage
-egress. Keep approvals,
-network restrictions and existing consumer defaults unchanged.
+repo-owned 1ES redirect and explicit main-branch onboarding; the shared archetype
+still defaults to no publication. Artifact-only runs request neither publishing
+credentials nor storage egress. Keep approvals, network restrictions and existing
+consumer defaults unchanged.
 
 These entrypoints run real evaluations and consume model quota; there is no synthetic
 pipeline mode. Completed failed evaluations publish before their existing test gate;
