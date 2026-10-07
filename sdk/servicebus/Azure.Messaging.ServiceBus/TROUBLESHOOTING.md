@@ -206,9 +206,9 @@ Most of the spans are self-explanatory and are started and stopped during the op
 
 ![image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/assets/Tracing.png)
 
-The screenshot shows an end-to-end transaction from an earlier version of the client, with messages sent and processed by [ServiceBusSessionProcessor][ServiceBusSessionProcessor]. Current versions link `Message` to `ServiceBusSender.Send`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`, but omit `ServiceBusReceiver.Receive` for processor-internal receives.
+The screenshot shows an end-to-end transaction from an earlier version of the client, with messages sent and processed by [ServiceBusSessionProcessor][ServiceBusSessionProcessor]. Processor message traces link `Message` to `ServiceBusSender.Send`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`.
 
-[ServiceBusProcessor][ServiceBusProcessor] and [ServiceBusSessionProcessor][ServiceBusSessionProcessor] do not emit `Receive` activities for internal polling or shutdown cancellation in either tracing mode. Application-initiated receives, including receives through `ProcessorReceiveActions` in a callback, remain traced. To diagnose whether an idle processor is polling, collect the receive start and completion events described in [Logging and diagnostics](#logging-and-diagnostics). These EventSource logs remain available independently of tracing.
+[ServiceBusProcessor][ServiceBusProcessor] and [ServiceBusSessionProcessor][ServiceBusSessionProcessor] emit processing and settlement activities in both tracing modes. Application-initiated receives, including receives through `ProcessorReceiveActions` in a callback, emit `Receive` activities. For internal receive-loop diagnostics, including idle polling and shutdown cancellation, collect the receive start and completion events described in [Logging and diagnostics](#logging-and-diagnostics). These EventSource logs are available independently of tracing.
 
 ## Troubleshoot sender issues
 

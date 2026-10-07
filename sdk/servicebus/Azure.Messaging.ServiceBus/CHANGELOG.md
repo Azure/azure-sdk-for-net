@@ -6,7 +6,7 @@
 
 ### Breaking Changes
 
-- `ServiceBusProcessor` and `ServiceBusSessionProcessor` no longer emit `Receive` diagnostic activities for their internal receive loops, including empty receives and receives canceled during shutdown. This applies to both Application Insights/DiagnosticListener tracing and experimental ActivitySource tracing. Processing, settlement, application-initiated receive activities, and EventSource receive logs remain unchanged. Applications that use these activities to monitor idle polling should collect EventSource receive logs instead. ([#47985](https://github.com/Azure/azure-sdk-for-net/issues/47985))
+- `ServiceBusProcessor` and `ServiceBusSessionProcessor` tracing now focuses on processing and settlement in both Application Insights/DiagnosticListener and experimental ActivitySource modes. Application-initiated receives continue to emit `Receive` activities. Migrate monitoring of internal receive loops, including idle polling and shutdown cancellation, from processor `Receive` activities to EventSource receive logs. ([#47985](https://github.com/Azure/azure-sdk-for-net/issues/47985))
 
 ### Bugs Fixed
 
