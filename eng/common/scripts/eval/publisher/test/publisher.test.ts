@@ -183,7 +183,7 @@ test("real publisher CLI retains storage success if the final notification-statu
             return Response.json({ status: "succeeded", failureCount: 0 });
         };`);
     const child = run(resolve(import.meta.dirname, "../publish-bundle.ts"), ["--bundle", f.path, "--result", output], {
-        TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual", BUILD_SOURCEBRANCH: "refs/heads/feature",
+        TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual", BUILD_SOURCEBRANCH: "refs/heads/main",
         EVAL_STORAGE_CONTAINER_URL: "https://attacker.example/results", PATH: "",
     }, ["--import", pathToFileURL(mock).href]);
     assert.match(child.stdout, /Result archive stored:/);
@@ -420,15 +420,15 @@ test("publisher dependency lock is portable with public URLs and SHA512 integrit
     }
 });
 
-test("real CLI blocks public projects, PR validation and pull refs before requesting a credential", () => {
+test("real CLI blocks public projects, PRs and every non-main branch before requesting a credential", () => {
     const script = resolve(import.meta.dirname, "../publish-bundle.ts");
     for (const rejected of [{ SYSTEM_TEAMPROJECT: "public" }, { BUILD_REASON: "PullRequest" },
-        { BUILD_SOURCEBRANCH: "refs/pull/1/merge" }]) {
+        ...["refs/pull/1/merge", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", ""].map(BUILD_SOURCEBRANCH => ({ BUILD_SOURCEBRANCH }))]) {
         const env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual",
-            BUILD_SOURCEBRANCH: "refs/heads/main", ...rejected };
+            BUILD_SOURCEBRANCH: "refs/heads/main", ...rejected, PATH: "" };
         delete env.NODE_TEST_CONTEXT;
         const child = spawnSync(process.execPath, ["--experimental-strip-types", script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
-        assert.ifError(child.error); assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal, non-PR/);
+        assert.ifError(child.error); assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal main-branch/);
         assert.doesNotMatch(child.stdout, /storage identity acquired/);
     }
 });
@@ -450,7 +450,7 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
     const summary = await readFile(join(root, "pipelines/templates/jobs/eval-summarize.yml"), "utf8");
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
-    assert.match(workflow, /name: publishDashboardResults[\s\S]*?default: false/);
+    assert.match(workflow, /name: publishDashboardResults[\s\S]*?default: true/);
     assert.match(workflow, /- group: AzSDK_Eval_Variable_group/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/build-mcp.yml/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard.yml/);
@@ -459,7 +459,7 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
         assert.doesNotMatch(content, /notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|dashboardUrl|dashboardAudience/);
     }
     assert.match(summary, /pool:\s+name: \$\(LINUXPOOL\)\s+image: \$\(LINUXVMIMAGE\)\s+os: linux/);
-    assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*PullRequest.*refs\/pull\//);
+    assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*Build.SourceBranch.*refs\/heads\/main.*PullRequest/);
     assert.match(steps, /azureSubscription: eval-dashboard-sc/);
     assert.doesNotMatch(steps, /EVAL_STORAGE_CONTAINER_URL/);
     assert.match(summary, /dependsOn:|EvalExpectedMatrix:.*stageDependencies.Prepare.generate_eval_matrix/);
@@ -475,22 +475,21 @@ test("one publication flag gates both upload and Azure Storage egress on the sam
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
     const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
     assert.doesNotMatch(workflow + archetype, /allowAzureStorageNetworkAccess/);
-    assert.match(workflow, /Publish build results to Blob \(includes pipeline-wide Azure Storage egress\)/);
+    assert.match(workflow, /Publish trusted main results to Blob \(includes pipeline-wide Azure Storage egress\)/);
     const gate = source => source.match(/\$\{\{ if (and\(parameters\.publishDashboardResults, .+\)) \}\}:/)?.[1];
     const networkGate = gate(archetype), uploadGate = gate(steps);
     assert.ok(networkGate); assert.equal(networkGate, uploadGate, "One opt-in uses identical trust guards for upload and egress");
     assert.equal((archetype.match(/AllowAzureStorage:/g) ?? []).length, 1, "No unconditional parameter forwarded to synced consumers");
     const evaluate = (expression, variables, publishDashboardResults) => runInNewContext(expression, {
         variables, parameters: { publishDashboardResults },
-        and: (...values) => values.every(Boolean), not: value => !value,
+        and: (...values) => values.every(Boolean),
         eq: (left, right) => String(left ?? "").toLowerCase() === String(right ?? "").toLowerCase(),
         ne: (left, right) => String(left ?? "").toLowerCase() !== String(right ?? "").toLowerCase(),
-        startsWith: (value, prefix) => String(value ?? "").toLowerCase().startsWith(prefix.toLowerCase()),
     });
     for (const enabled of [false, true]) for (const project of ["internal", "public"]) {
-        for (const reason of ["IndividualCI", "Manual", "PullRequest"]) for (const branch of ["refs/heads/main", "refs/heads/feature", "refs/pull/17084/merge"]) {
+        for (const reason of ["IndividualCI", "Manual", "PullRequest"]) for (const branch of ["refs/heads/main", "refs/heads/feature", "refs/heads/feature/main", "refs/tags/main", "refs/pull/17084/merge", ""]) {
             const variables = { "System.TeamProject": project, "Build.Reason": reason, "Build.SourceBranch": branch };
-            const expected = enabled && project === "internal" && reason !== "PullRequest" && !branch.startsWith("refs/pull/");
+            const expected = enabled && project === "internal" && reason !== "PullRequest" && branch === "refs/heads/main";
             assert.equal(evaluate(networkGate, variables, enabled), expected);
             assert.equal(evaluate(uploadGate, variables, enabled), expected);
         }
@@ -513,11 +512,12 @@ for (const tier of ["workflow", "skill", "live"]) {
         const root = resolve(import.meta.dirname, "../../../..");
         const content = await readFile(join(root, `pipelines/${tier}-eval.yml`), "utf8");
         assert.match(content, /createDashboardBundle: true/);
-        assert.match(content, /- name: publishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: false/);
-        assert.doesNotMatch(content, /allowAzureStorageNetworkAccess|notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|pipelineDefinitionId|dashboardUrl|dashboardAudience/);
-        assert.match(content, /name: autoPublishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
+        assert.match(content, /- name: publishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
+        assert.doesNotMatch(content, /autoPublishDashboardResults|enableAutomaticPublication|EvalDashboardAutomaticPublication|allowAzureStorageNetworkAccess|notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|pipelineDefinitionId|dashboardUrl|dashboardAudience/);
+        const inputs = content.slice(content.indexOf("\nparameters:\n"), content.indexOf("\nvariables:\n"));
+        assert.deepEqual([...inputs.matchAll(/- name: (\w+)/g)].map(match => match[1]), ["publishDashboardResults"]);
         assert.match(content, /template: \/eng\/common\/pipelines\/templates\/variables\/eval-dashboard.yml/);
-        assert.ok(content.includes("publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
+        assert.ok(content.includes("publishDashboardResults: ${{ eq(variables['EvalDashboardPublicationEnabled'], 'true') }}"));
         assert.match(content, /group: AzSDK_Eval_Variable_group/);
         assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
         if (tier === "live") {
@@ -528,15 +528,15 @@ for (const tier of ["workflow", "skill", "live"]) {
             assert.match(content, /vallyRoot: \.github\/skills/);
             assert.match(content, /'\*\/evals\/\*\.eval\.yaml'/);
         }
-        assert.ok(content.includes("enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}"));
+        assert.ok(content.includes("publishDashboardResults: ${{ parameters.publishDashboardResults }}"));
     });
 }
 
-test("automatic publication is restricted to the exact trusted tools main definitions and can be disabled", async () => {
+test("the sole publishing switch is restricted to trusted tools main definitions and false always disables it", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
     const source = await readFile(join(root, "pipelines/templates/variables/eval-dashboard.yml"), "utf8");
-    assert.match(source, /name: enableAutomaticPublication\s+type: boolean\s+default: false/);
-    assert.doesNotMatch(source, /pipelineDefinitionId/);
+    assert.match(source, /name: publishDashboardResults\s+type: boolean\s+default: false/);
+    assert.doesNotMatch(source, /pipelineDefinitionId|enableAutomaticPublication|EvalDashboardAutomaticPublication/);
     const expression = source.match(/value: \$\{\{ (.+) \}\}/)?.[1];
     assert.ok(expression);
     // Exercise the actual YAML predicate with the same and/eq/in semantics.
@@ -551,11 +551,12 @@ test("automatic publication is restricted to the exact trusted tools main defini
         const variables = { "System.CollectionUri": "https://dev.azure.com/azure-sdk/", "System.TeamProject": "internal",
             "Build.Repository.Name": "Azure/azure-sdk-tools", "System.DefinitionId": id,
             "Build.SourceBranch": "refs/heads/main", "Build.Reason": "Schedule" };
-        const parameters = { enableAutomaticPublication: true };
+        const parameters = { publishDashboardResults: true };
         for (const reason of ["Schedule", "Manual", "IndividualCI", "BatchedCI"]) {
             assert.equal(evaluate({ ...variables, "Build.Reason": reason }, parameters), true);
+            assert.equal(evaluate({ ...variables, "Build.Reason": reason }, { publishDashboardResults: false }), false);
         }
-        assert.equal(evaluate(variables, { ...parameters, enableAutomaticPublication: false }), false);
+        assert.equal(evaluate(variables, { publishDashboardResults: false }), false);
         for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
             ["Build.Repository.Name", "Azure/azure-rest-api-specs"], ["System.DefinitionId", "9999"],
             ["System.DefinitionId", ""], ["System.DefinitionId", undefined],

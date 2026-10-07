@@ -12,8 +12,8 @@ try {
     const { values } = parseArgs({ options: { bundle: { type: "string" }, result: { type: "string" } } });
     if (!values.bundle || !values.result) throw new PublicationError("invalid_arguments", "Provide --bundle and --result.");
     if (process.env.TF_BUILD && (process.env.SYSTEM_TEAMPROJECT !== "internal" ||
-        process.env.BUILD_REASON === "PullRequest" || process.env.BUILD_SOURCEBRANCH?.startsWith("refs/pull/"))) {
-        throw new PublicationError("untrusted_run", "Publishing requires a trusted internal, non-PR run.");
+        process.env.BUILD_REASON === "PullRequest" || process.env.BUILD_SOURCEBRANCH !== "refs/heads/main")) {
+        throw new PublicationError("untrusted_run", "Publishing requires a trusted internal main-branch run.");
     }
     const output = resolve(values.result);
     if (output === resolve(values.bundle)) throw new PublicationError("invalid_arguments", "The archive and publication result must use different paths.");

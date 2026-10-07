@@ -21,21 +21,17 @@ trigger:
 pr: none
 
 parameters:
-  - name: autoPublishDashboardResults
-    displayName: 'Automatically publish trusted tools main builds (disable to opt out)'
+  - name: publishDashboardResults
+    displayName: 'Publish trusted main results to Blob (includes pipeline-wide Azure Storage egress)'
     type: boolean
     default: true
-  - name: publishDashboardResults
-    displayName: 'Publish build results to Blob (includes pipeline-wide Azure Storage egress)'
-    type: boolean
-    default: false
 
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
   - template: /eng/common/pipelines/templates/variables/eval-dashboard.yml
     parameters:
-      enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}
+      publishDashboardResults: ${{ parameters.publishDashboardResults }}
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
   - group: AzSDK_Eval_Variable_group
 
@@ -43,7 +39,7 @@ extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
     createDashboardBundle: true
-    publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
+    publishDashboardResults: ${{ eq(variables['EvalDashboardPublicationEnabled'], 'true') }}
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
