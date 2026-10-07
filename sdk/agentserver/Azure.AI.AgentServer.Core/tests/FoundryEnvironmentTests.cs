@@ -17,6 +17,7 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", null);
         Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID", null);
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", null);
         Environment.SetEnvironmentVariable("PORT", null);
         Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", null);
         Environment.SetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING", null);
@@ -81,6 +82,55 @@ public class FoundryEnvironmentTests
         Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID", "session-123");
         FoundryEnvironment.Reload();
         Assert.That(FoundryEnvironment.SessionId, Is.EqualTo("session-123"));
+    }
+
+    [Test]
+    public void SessionGuid_ReturnsHostedEnvVar_WhenValid()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", new string('a', 32));
+
+        FoundryEnvironment.Reload();
+
+        Assert.That(FoundryEnvironment.SessionGuid, Is.EqualTo(new string('a', 32)));
+    }
+
+    [Test]
+    public void SessionGuid_ReturnsNull_WhenNotSet()
+    {
+        FoundryEnvironment.Reload();
+
+        Assert.That(FoundryEnvironment.SessionGuid, Is.Null);
+    }
+
+    [TestCase("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")]
+    [TestCase("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+    [TestCase("gggggggggggggggggggggggggggggggg")]
+    [TestCase("not-a-guid")]
+    public void SessionGuid_Throws_WhenHostedValueIsInvalid(string value)
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "production");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", value);
+
+        InvalidOperationException exception =
+            Assert.Throws<InvalidOperationException>(() => FoundryEnvironment.Reload())!;
+
+        Assert.That(exception.Message, Does.Contain("FOUNDRY_AGENT_SESSION_GUID"));
+    }
+
+    [Test]
+    public void SessionGuid_PreservesLocalValue_WhenNotHosted()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID", "local-value");
+
+        FoundryEnvironment.Reload();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(FoundryEnvironment.IsHosted, Is.False);
+            Assert.That(FoundryEnvironment.SessionGuid, Is.EqualTo("local-value"));
+        });
     }
 
     [Test]

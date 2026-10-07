@@ -3,6 +3,10 @@
 ## 1.0.0-beta.9 (Unreleased)
 
 ### Features Added
+- Hosted durable multi-turn task IDs are now scoped by `FOUNDRY_AGENT_SESSION_GUID`, preventing
+  recreated same-name sessions from colliding with tombstoned tasks from an earlier incarnation.
+  Public `ResponseContext.ConversationChainId` values and one-shot task IDs are unchanged, and
+  pending, in-progress, or suspended pre-rollout chains continue under their legacy task IDs.
 - Added `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` and
   `AddResponsesServer(IHostApplicationBuilder host, string sectionName, Action<ResponsesServerSettings>)`,
   which bind a new `ResponsesServerSettings : ClientSettings` (the Foundry credential, `Endpoint`,

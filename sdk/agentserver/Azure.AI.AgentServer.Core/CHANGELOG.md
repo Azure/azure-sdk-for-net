@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added `FoundryEnvironment.SessionGuid`, sourced from `FOUNDRY_AGENT_SESSION_GUID`, and
+  validation of the hosted platform's 32-character lowercase hexadecimal session-incarnation ID.
+- Added `TaskDefinition<TInput, TOutput>.GetStatusAsync()` for task-ID migration and compatibility
+  probes without activating or reclaiming the task.
 - Added host-scoped resilient-task opt-in through `SetResilientTasksEnabled()` and
   `ResilientTaskOptions.Enabled`. Task registration alone no longer initializes task storage or
   recovery; enabled hosts run startup recovery and the periodic recovery loop.

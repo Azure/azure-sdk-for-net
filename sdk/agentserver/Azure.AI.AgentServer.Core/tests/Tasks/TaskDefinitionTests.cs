@@ -26,6 +26,7 @@ public sealed class TaskDefinitionTests
         Assert.That(await (await definition.StartAsync("started")).Completion, Is.EqualTo("started"));
         Assert.That(await definition.GetActiveRunAsync("task"), Is.Null);
         Assert.That(await definition.GetActiveRunAsync("task", "input"), Is.Null);
+        Assert.That(await definition.GetStatusAsync("task"), Is.EqualTo(TaskRunStatus.Suspended));
 
         await definition.DeleteAsync("deleted-task");
         Assert.That(definition.DeletedTaskId, Is.EqualTo("deleted-task"));
@@ -81,6 +82,24 @@ public sealed class TaskDefinitionTests
         TaskRun<string>? active = await def.GetActiveRunAsync("t-1");
 
         Assert.That(active, Is.Null);
+    }
+
+    [Test]
+    public async Task GetStatusAsyncReturnsPersistedMultiTurnStatus()
+    {
+        using var host = TaskTestHost.Create();
+        TaskDefinition<string, string> def = host.Builder.AddMultiTurnTask<string, string>(
+            "chat", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        TaskRun<string> turn = await def.StartAsync(
+            "hi",
+            new RunOptions { TaskId = "status-chain" });
+        await turn.Completion;
+
+        Assert.That(
+            await def.GetStatusAsync("status-chain"),
+            Is.EqualTo(TaskRunStatus.Suspended));
+        Assert.That(await def.GetStatusAsync("missing-chain"), Is.Null);
     }
 
     [Test]
@@ -166,6 +185,11 @@ public sealed class TaskDefinitionTests
             string inputId,
             CancellationToken cancellationToken = default)
             => Task.FromResult<TaskRun<string>?>(null);
+
+        public override Task<TaskRunStatus?> GetStatusAsync(
+            string taskId,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult<TaskRunStatus?>(TaskRunStatus.Suspended);
 
         public override Task DeleteAsync(
             string taskId,

@@ -233,6 +233,9 @@ internal sealed class ResponseEndpointHandler
         string? chainId = pickMultiTurn
             ? DeriveConversationChainId(request, conversationId, responseId, steerable)
             : null;
+        string? taskId = pickMultiTurn
+            ? DeriveTaskId(request, conversationId, responseId, steerable)
+            : null;
 
         // Multi-turn (conversation / steerable) is NOT background-gated (parity with Python
         // `_pick_primitive`, which routes any conversation_id or steerable turn through the multi-turn
@@ -337,7 +340,7 @@ internal sealed class ResponseEndpointHandler
                     execution.RelayViaTaskStream = true;
 
                     var run = await StartResilientTurnAsync(
-                        httpContext, request, responseId, chainId, pickMultiTurn,
+                        httpContext, request, responseId, chainId, taskId, pickMultiTurn,
                         platformContext, clientHeaders, queryParameters);
 
                     // A steered turn queued behind an active turn does NOT short-circuit to a JSON
@@ -438,7 +441,7 @@ internal sealed class ResponseEndpointHandler
             if (useResilientTask)
             {
                 var run = await StartResilientTurnAsync(
-                    httpContext, request, responseId, chainId, pickMultiTurn,
+                    httpContext, request, responseId, chainId, taskId, pickMultiTurn,
                     platformContext, clientHeaders, queryParameters);
 
                 // A steered turn queued behind an active turn returns the queued envelope
@@ -487,7 +490,7 @@ internal sealed class ResponseEndpointHandler
                 // the primitive from pickMultiTurn. Either way the foreground caller waits synchronously
                 // for the terminal result and receives the FINAL response inline.
                 var run = await StartResilientTurnAsync(
-                    httpContext, request, responseId, chainId, pickMultiTurn,
+                    httpContext, request, responseId, chainId, taskId, pickMultiTurn,
                     platformContext, clientHeaders, queryParameters);
 
                 // A steered turn queued behind an active turn returns the queued envelope immediately;
@@ -756,9 +759,9 @@ internal sealed class ResponseEndpointHandler
     }
 
     /// <summary>
-    /// Derives the stable conversation chain id for arbitration using the same inputs as
-    /// <see cref="ResponseContextImpl.ConversationChainId"/>, so a turn keys to the same chain in
-    /// the arbitrator as it reports to the handler.
+    /// Derives the stable public conversation chain id reported through
+    /// <see cref="ResponseContextImpl.ConversationChainId"/>. Hosted task arbitration may use a
+    /// private session-incarnation scope while preserving this handler-facing identity.
     /// </summary>
     private static string DeriveConversationChainId(
         CreateResponse request, string? conversationId, string responseId, bool steerable)
@@ -773,6 +776,28 @@ internal sealed class ResponseEndpointHandler
             conversationId, request.PreviousResponseId, responseId, agentName, sessionId, steerable);
     }
 
+    /// <summary>Derives the private physical task ID for the current hosted session incarnation.</summary>
+    private static string DeriveTaskId(
+        CreateResponse request, string? conversationId, string responseId, bool steerable)
+    {
+        AgentReference? agentReference = request.AgentReference ?? request.Agent;
+        string agentName = agentReference?.Name is { Length: > 0 } name ? name : "server-default-agent";
+        string sessionId = request.AgentSessionId is { Length: > 0 } sid
+            ? sid
+            : SessionIdDerivation.Derive(conversationId, request.PreviousResponseId, responseId, agentReference);
+        string? sessionGuid = FoundryEnvironment.IsHosted ? FoundryEnvironment.SessionGuid : null;
+        string taskSessionId = TaskIdDerivation.DeriveSessionScope(sessionId, sessionGuid);
+
+        return TaskIdDerivation.Derive(
+            conversationId,
+            request.PreviousResponseId,
+            responseId,
+            agentName,
+            sessionId,
+            taskSessionId,
+            steerable);
+    }
+
     /// <summary>
     /// Starts a background response turn inside the selected Core resilient task and maps Core
     /// steering/precondition exceptions to the Responses 409 envelopes. Picks the multi-turn
@@ -784,6 +809,7 @@ internal sealed class ResponseEndpointHandler
         CreateResponse request,
         string responseId,
         string? chainId,
+        string? taskId,
         bool pickMultiTurn,
         PlatformContext platformContext,
         IReadOnlyDictionary<string, string> clientHeaders,
@@ -799,22 +825,32 @@ internal sealed class ResponseEndpointHandler
         var definition = httpContext.RequestServices
             .GetRequiredKeyedService<TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(taskName);
 
-        // Multi-turn: the chain id is the task id and the response id is the per-turn input id; a
-        // previous_response_id becomes the ifLastInputId fork precondition (Core rejects a turn that
-        // does not extend the most recent turn). One-shot: task id == input id == response id.
-        var runOptions = pickMultiTurn
-            ? new RunOptions
-            {
-                TaskId = chainId!,
-                InputId = responseId,
-                IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
-                    ? null
-                    : request.PreviousResponseId,
-            }
-            : new RunOptions { TaskId = responseId, InputId = responseId };
-
         try
         {
+            string selectedTaskId = responseId;
+            if (pickMultiTurn)
+            {
+                selectedTaskId = await SelectCompatibleTaskIdAsync(
+                    definition,
+                    taskId!,
+                    chainId!,
+                    CancellationToken.None).ConfigureAwait(false);
+            }
+
+            // Multi-turn: the physical task id may be scoped by the hosted session GUID while the
+            // public chain id remains stable. A previous_response_id becomes the ifLastInputId fork
+            // precondition. One-shot task id == input id == response id.
+            var runOptions = pickMultiTurn
+                ? new RunOptions
+                {
+                    TaskId = selectedTaskId,
+                    InputId = responseId,
+                    IfLastInputId = string.IsNullOrEmpty(request.PreviousResponseId)
+                        ? null
+                        : request.PreviousResponseId,
+                }
+                : new RunOptions { TaskId = responseId, InputId = responseId };
+
             return await definition.StartAsync(
                 new ResponseTaskInput(payload),
                 runOptions,
@@ -871,6 +907,31 @@ internal sealed class ResponseEndpointHandler
             ex.Data[StorageErrorMapper.PlatformErrorDataKey] = true;
             throw;
         }
+    }
+
+    private static async Task<string> SelectCompatibleTaskIdAsync(
+        TaskDefinition<ResponseTaskInput, ResponseTaskOutput> definition,
+        string taskId,
+        string legacyTaskId,
+        CancellationToken cancellationToken)
+    {
+        if (string.Equals(taskId, legacyTaskId, StringComparison.Ordinal))
+        {
+            return taskId;
+        }
+
+        if (await definition.GetStatusAsync(taskId, cancellationToken).ConfigureAwait(false) is not null)
+        {
+            return taskId;
+        }
+
+        TaskRunStatus? legacyStatus =
+            await definition.GetStatusAsync(legacyTaskId, cancellationToken).ConfigureAwait(false);
+        return legacyStatus is TaskRunStatus.Pending
+            or TaskRunStatus.InProgress
+            or TaskRunStatus.Suspended
+                ? legacyTaskId
+                : taskId;
     }
 
     private static string ToWireStatus(Core.Tasks.TaskRunStatus status) => status switch

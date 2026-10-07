@@ -69,6 +69,7 @@ namespace Azure.AI.AgentServer.Core
         public static int Port { get { throw null; } }
         public static string? ProjectArmId { get { throw null; } }
         public static string? ProjectEndpoint { get { throw null; } }
+        public static string? SessionGuid { get { throw null; } }
         public static string? SessionId { get { throw null; } }
         public static System.TimeSpan SseKeepAliveInterval { get { throw null; } }
         public static System.TimeSpan WebSocketKeepAliveInterval { get { throw null; } }
@@ -492,6 +493,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual System.Threading.Tasks.Task DeleteAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>?> GetActiveRunAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRunStatus?> GetStatusAsync(string taskId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<TOutput> RunAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Tasks.TaskRun<TOutput>> StartAsync(TInput input, Azure.AI.AgentServer.Core.Tasks.RunOptions? options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

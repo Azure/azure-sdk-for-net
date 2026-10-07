@@ -89,6 +89,19 @@ public class TaskDefinition<TInput, TOutput>
         => Engine.GetActiveRunAsync<TOutput>(Name, taskId, inputId, cancellationToken);
 
     /// <summary>
+    /// Returns the persisted status of the task keyed by <paramref name="taskId"/>, or
+    /// <see langword="null"/> when no task owned by this definition exists.
+    /// </summary>
+    /// <param name="taskId">The task id.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>The persisted task status, or <see langword="null"/>.</returns>
+    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    public virtual Task<TaskRunStatus?> GetStatusAsync(
+        string taskId,
+        CancellationToken cancellationToken = default)
+        => Engine.GetStatusAsync(Name, taskId, cancellationToken);
+
+    /// <summary>
     /// Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled,
     /// and removes the record. Idempotent — a no-op when the chain is absent.
     /// </summary>

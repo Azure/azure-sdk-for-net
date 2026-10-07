@@ -46,6 +46,16 @@ public static class FoundryEnvironment
     public static string? SessionId { get; private set; }
 
     /// <summary>
+    /// The system-generated session incarnation GUID. Sourced from the
+    /// <c>FOUNDRY_AGENT_SESSION_GUID</c> environment variable.
+    /// </summary>
+    /// <remarks>
+    /// In hosted environments, a non-empty value must be exactly 32 lowercase hexadecimal
+    /// characters. The value changes when a deleted public session is recreated.
+    /// </remarks>
+    public static string? SessionGuid { get; private set; }
+
+    /// <summary>
     /// The HTTP listen port. Sourced from the <c>PORT</c> environment variable. Default: 8088.
     /// </summary>
     public static int Port { get; private set; }
@@ -142,6 +152,17 @@ public static class FoundryEnvironment
     /// </summary>
     internal static void Reload()
     {
+        bool isHosted =
+            !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
+        string? sessionGuid = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_GUID");
+        if (isHosted && !string.IsNullOrEmpty(sessionGuid) && !IsLowercaseHexGuid(sessionGuid))
+        {
+            throw new InvalidOperationException(
+                "FOUNDRY_AGENT_SESSION_GUID must be a 32-character lowercase hexadecimal GUID.");
+        }
+
+        IsHosted = isHosted;
+        SessionGuid = sessionGuid;
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
         AgentId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");
@@ -190,10 +211,6 @@ public static class FoundryEnvironment
                 ? TimeSpan.FromSeconds(wsSeconds)
                 : Timeout.InfiniteTimeSpan;
 
-        // IsHosted: true when the FOUNDRY_HOSTING_ENVIRONMENT environment variable exists
-        // and is non-empty. This variable is injected by the Azure AI Foundry hosting infrastructure.
-        IsHosted = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT"));
-
         // Agent identity env vars for A365 tracing.
         AgentInstanceClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_INSTANCE_CLIENT_ID");
         AgentBlueprintClientId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID");
@@ -202,5 +219,23 @@ public static class FoundryEnvironment
         // A365 tracing enabled when both hosted and explicitly opted in.
         IsAgent365TracingEnabled = IsHosted
             && string.Equals(Environment.GetEnvironmentVariable("FOUNDRY_AGENT365_TRACING_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsLowercaseHexGuid(string value)
+    {
+        if (value.Length != 32)
+        {
+            return false;
+        }
+
+        foreach (char character in value)
+        {
+            if (!((character >= '0' && character <= '9') || (character >= 'a' && character <= 'f')))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

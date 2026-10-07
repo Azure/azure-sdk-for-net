@@ -2392,6 +2392,31 @@ internal sealed partial class TaskEngine : IDisposable
         return null;
     }
 
+    /// <summary>Returns the persisted status for a task owned by the named definition.</summary>
+    public async Task<TaskRunStatus?> GetStatusAsync(
+        string name,
+        string taskId,
+        CancellationToken cancellationToken = default)
+    {
+        _registry.Get(name);
+        TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
+        if (record is null
+            || record.Source?.Type != TaskWireKeys.SourceTypeValue
+            || !TaskNameMatches(record, name))
+        {
+            return null;
+        }
+
+        return record.Status switch
+        {
+            TaskWireKeys.StatusPending => TaskRunStatus.Pending,
+            TaskWireKeys.StatusInProgress => TaskRunStatus.InProgress,
+            TaskWireKeys.StatusSuspended => TaskRunStatus.Suspended,
+            TaskWireKeys.StatusCompleted => TaskRunStatus.Completed,
+            _ => null,
+        };
+    }
+
     /// <summary>
     /// Consults the store for a persisted <c>in_progress</c> record and, when its lease is dead
     /// and reclaimable by this owner, inline-reclaims and re-invokes it as recovered. Returns the
