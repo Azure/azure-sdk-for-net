@@ -40,8 +40,13 @@ public sealed class ResilientTaskEnablementTests
             Assert.That(storeResolutions, Is.Zero);
         });
 
+        TaskDefinition<string, string> resolved =
+            host.Services.GetResilientTask<string, string>("disabled");
+        Assert.That(resolved, Is.SameAs(task));
+        Assert.That(storeResolutions, Is.Zero);
+
         ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
-            () => task.RunAsync("payload"))!;
+            () => resolved.RunAsync("payload"))!;
         Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.NotEnabled));
         Assert.That(storeResolutions, Is.Zero);
 

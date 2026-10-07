@@ -4,7 +4,8 @@
 
 ### Features Added
 - Hosted durable multi-turn task IDs are now scoped by `FOUNDRY_AGENT_SESSION_GUID`, preventing
-  recreated same-name sessions from colliding with tombstoned tasks from an earlier incarnation.
+  recreated sessions from reusing name-derived IDs that refer to tombstoned tasks from an earlier
+  incarnation and can cause a service precondition failure (HTTP 412).
   Public `ResponseContext.ConversationChainId` values and one-shot task IDs are unchanged, and
   pending, in-progress, or suspended pre-rollout chains continue under their legacy task IDs.
 - Added `AddResponsesServer(IHostApplicationBuilder host, string sectionName)` and

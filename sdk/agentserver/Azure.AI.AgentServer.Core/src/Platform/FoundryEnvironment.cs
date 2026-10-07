@@ -50,8 +50,11 @@ public static class FoundryEnvironment
     /// <c>FOUNDRY_AGENT_SESSION_GUID</c> environment variable.
     /// </summary>
     /// <remarks>
-    /// In hosted environments, a non-empty value must be exactly 32 lowercase hexadecimal
-    /// characters. The value changes when a deleted public session is recreated.
+    /// Unlike <see cref="SessionId"/>, which is the logical public session identity, this value
+    /// is an internal identifier unique to one hosted session incarnation, independent of the
+    /// session name. It changes when a session is recreated. Responses uses it to avoid reusing a
+    /// durable task ID whose prior session was deleted and tombstoned by the service. In hosted
+    /// environments, a non-empty value must be exactly 32 lowercase hexadecimal characters.
     /// </remarks>
     public static string? SessionGuid { get; private set; }
 

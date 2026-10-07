@@ -469,8 +469,9 @@ verbatim. The digest is cross-language stable with Python.
 In hosted environments, the physical durable multi-turn task ID uses the
 system-generated `FOUNDRY_AGENT_SESSION_GUID` together with the resolved public
 session ID as its private session scope. This prevents a recreated same-name
-session from colliding with a tombstoned task from an earlier incarnation while
-leaving `ResponseContext.ConversationChainId` unchanged. If the GUID is absent,
+session from reusing a name-derived ID whose earlier task was deleted and
+tombstoned by the service, which can cause an HTTP 412 precondition failure on
+task creation. `ResponseContext.ConversationChainId` remains unchanged. If the GUID is absent,
 the physical task ID retains the legacy chain ID. During rollout, an existing
 pending, in-progress, or suspended legacy task is reused; completed or missing
 legacy tasks do not block creation under the GUID-scoped ID. One-shot physical

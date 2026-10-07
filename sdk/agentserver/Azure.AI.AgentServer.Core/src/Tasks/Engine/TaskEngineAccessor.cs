@@ -10,8 +10,8 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// A late-bound holder for the host's <see cref="TaskEngine"/>. The resilient-task builder — and
 /// the <see cref="TaskDefinition{TInput, TOutput}"/> instances it returns — are created during
 /// <c>AddResilientTasks</c>, before the DI container (and therefore the engine) exists. This holder
-/// is populated when the <see cref="TaskEngine"/> singleton is first resolved, either during host
-/// startup or when a keyed task definition is resolved from the service provider.
+/// is populated when the enabled host resolves the <see cref="TaskEngine"/> during startup.
+/// Resolving a keyed task definition is deliberately lazy and never initializes storage.
 /// </summary>
 internal sealed class TaskEngineAccessor
 {
@@ -55,8 +55,7 @@ internal sealed class TaskEngineAccessor
         }
 
         return Volatile.Read(ref _engine) ?? throw new InvalidOperationException(
-            "The task engine is not available yet. A task definition can only be run once the " +
-            "application host has started, or after the definition has been resolved from its " +
-            "service provider.");
+            "The task engine is not available yet. A task definition can only be run after the " +
+            "enabled application host has started.");
     }
 }

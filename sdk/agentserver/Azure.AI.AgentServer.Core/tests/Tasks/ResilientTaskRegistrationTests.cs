@@ -142,7 +142,7 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
-    public async Task KeyedDefinitionResolutionInitializesTheTaskEngine()
+    public async Task KeyedDefinitionResolutionUsesTheStartedTaskEngine()
     {
         string root = Path.Combine(Path.GetTempPath(), "agentserver-keyed-definition-" + System.Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(root);

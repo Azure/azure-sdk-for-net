@@ -437,11 +437,7 @@ public static class ResilientTaskServiceCollectionExtensions
     {
         services.AddKeyedSingleton<TaskDefinition<TInput, TOutput>>(
             name,
-            (serviceProvider, _) =>
-            {
-                _ = serviceProvider.GetRequiredService<TaskEngine>();
-                return definition;
-            });
+            (_, _) => definition);
     }
 
     /// <summary>

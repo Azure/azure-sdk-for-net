@@ -154,6 +154,7 @@ runtime automatically.
 
 ```C# Snippet:Core_TasksGuide_OneShotHelloWorld
 var builder = AgentHost.CreateBuilder();
+builder.SetResilientTasksEnabled();
 
 TaskDefinition<string, string> echo = builder.Services.AddResilientTask<string, string>(
     "echo", async (ctx, ct) =>
@@ -171,9 +172,12 @@ string result = await echo.RunAsync("hello");
 await app.App.StopAsync();
 ```
 
-The registration-time handle is bound to the task engine when the application host starts.
-When resolving a handle later through `GetResilientTask`, resolution initializes the engine
-even when the caller is using a built service provider outside an `IHost`.
+The registration-time handle is bound to the task engine when the enabled application host
+starts. Resolving a handle later through `GetResilientTask` is intentionally lazy: it returns
+the same definition without initializing the task store, credentials, or engine. The host must
+already be running before the definition is invoked. Building an `IServiceProvider` by itself
+does not start the resilient-task runtime; use a normal `IHost`, or explicitly run its registered
+hosted services in specialized test infrastructure.
 
 There are two ways to get a task's `TaskDefinition<TInput, TOutput>` handle:
 
@@ -190,8 +194,8 @@ TaskDefinition<string, string> echo = serviceProvider.GetResilientTask<string, s
 string result = await echo.RunAsync("hello again");
 ```
 
-Both return the *same* handle instance; use whichever is convenient at the call site. See §5.2 for
-the full `GetResilientTask` signature and the keyed-registration rationale.
+Both return the *same* handle instance; use whichever is convenient inside a running host. See
+§5.2 for the full `GetResilientTask` signature and the keyed-registration rationale.
 
 ### Constructor-injected handler
 
