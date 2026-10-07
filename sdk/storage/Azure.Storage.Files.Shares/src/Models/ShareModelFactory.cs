@@ -24,6 +24,74 @@ namespace Azure.Storage.Files.Shares.Models
                 marker: marker,
                 numberOfHandlesClosed: numberOfHandlesClosed);
 
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        public static ShareProperties ShareProperties(
+            string accessTier = default,
+            DateTimeOffset? lastModified = default,
+            int? provisionedIops = default,
+            int? provisionedIngressMBps = default,
+            int? provisionedEgressMBps = default,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
+            DateTimeOffset? deletedOn = default,
+            int? remainingRetentionDays = default,
+            ETag? eTag = default,
+            DateTimeOffset? accessTierChangeTime = default,
+            string accessTierTransitionState = default,
+            ShareLeaseStatus? leaseStatus = default,
+            ShareLeaseState? leaseState = default,
+            ShareLeaseDuration? leaseDuration = default,
+            int? quotaInGB = default,
+            IDictionary<string, string> metadata = default,
+            ShareProtocols? protocols = default,
+            ShareRootSquash? rootSquash = default,
+            bool? enableSnapshotVirtualDirectoryAccess = default,
+            bool? enablePaidBursting = default,
+            long? paidBurstingMaxIops = default,
+            long? paidBustingMaxBandwidthMibps = default,
+            long? includedBurstIops = default,
+            long? maxBurstCreditsForIops = default,
+            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default,
+            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default,
+            bool? enableChangeFeed = default,
+            int? changeFeedRetentionInDays = default,
+            string changeFeedBlobContainerName = default,
+            DateTimeOffset? createdOn = default)
+            => new ShareProperties()
+            {
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                ETag = eTag,
+                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierTransitionState = accessTierTransitionState,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+                Protocols = protocols,
+                RootSquash = rootSquash,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                EnablePaidBursting = enablePaidBursting,
+                PaidBurstingMaxIops = paidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = paidBustingMaxBandwidthMibps,
+                IncludedBurstIops = includedBurstIops,
+                MaxBurstCreditsForIops = maxBurstCreditsForIops,
+                NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime,
+                NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime,
+                EnableChangeFeed = enableChangeFeed,
+                ChangeFeedRetentionInDays = changeFeedRetentionInDays,
+                ChangeFeedBlobContainerName = changeFeedBlobContainerName,
+                CreatedOn = createdOn
+            };
+
         ///// <summary>
         ///// Creates a new ShareProperties instance for mocking.
         ///// </summary>
@@ -86,72 +154,6 @@ namespace Azure.Storage.Files.Shares.Models
         //        NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime,
         //        EnableDirectoryLease = enableDirectoryLease
         //    };
-
-        /// <summary>
-        /// Creates a new ShareProperties instance for mocking.
-        /// </summary>
-        public static ShareProperties ShareProperties(
-            string accessTier = default,
-            DateTimeOffset? lastModified = default,
-            int? provisionedIops = default,
-            int? provisionedIngressMBps = default,
-            int? provisionedEgressMBps = default,
-            DateTimeOffset? nextAllowedQuotaDowngradeTime = default,
-            DateTimeOffset? deletedOn = default,
-            int? remainingRetentionDays = default,
-            ETag? eTag = default,
-            DateTimeOffset? accessTierChangeTime = default,
-            string accessTierTransitionState = default,
-            ShareLeaseStatus? leaseStatus = default,
-            ShareLeaseState? leaseState = default,
-            ShareLeaseDuration? leaseDuration = default,
-            int? quotaInGB = default,
-            IDictionary<string, string> metadata = default,
-            ShareProtocols? protocols = default,
-            ShareRootSquash? rootSquash = default,
-            bool? enableSnapshotVirtualDirectoryAccess = default,
-            bool? enablePaidBursting = default,
-            long? paidBurstingMaxIops = default,
-            long? paidBustingMaxBandwidthMibps = default,
-            long? includedBurstIops = default,
-            long? maxBurstCreditsForIops = default,
-            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default,
-            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default,
-            bool? enableChangeFeed = default,
-            int? changeFeedRetentionInDays = default,
-            string changeFeedBlobContainerName = default)
-            => new ShareProperties()
-            {
-                AccessTier = accessTier,
-                LastModified = lastModified,
-                ProvisionedIops = provisionedIops,
-                ProvisionedIngressMBps = provisionedIngressMBps,
-                ProvisionedEgressMBps = provisionedEgressMBps,
-                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
-                DeletedOn = deletedOn,
-                RemainingRetentionDays = remainingRetentionDays,
-                ETag = eTag,
-                AccessTierChangeTime = accessTierChangeTime,
-                AccessTierTransitionState = accessTierTransitionState,
-                LeaseStatus = leaseStatus,
-                LeaseState = leaseState,
-                LeaseDuration = leaseDuration,
-                QuotaInGB = quotaInGB,
-                Metadata = metadata,
-                Protocols = protocols,
-                RootSquash = rootSquash,
-                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
-                EnablePaidBursting = enablePaidBursting,
-                PaidBurstingMaxIops = paidBurstingMaxIops,
-                PaidBurstingMaxBandwidthMibps = paidBustingMaxBandwidthMibps,
-                IncludedBurstIops = includedBurstIops,
-                MaxBurstCreditsForIops = maxBurstCreditsForIops,
-                NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime,
-                NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime,
-                EnableChangeFeed = enableChangeFeed,
-                ChangeFeedRetentionInDays = changeFeedRetentionInDays,
-                ChangeFeedBlobContainerName = changeFeedBlobContainerName,
-            };
 
         /// <summary>
         /// Creates a new ShareProperties instance for mocking.

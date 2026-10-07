@@ -783,6 +783,7 @@ namespace Azure.Storage.Files.Shares
                 ChangeFeedRetentionInDays = response.Headers.TryGetValue("x-ms-file-change-feed-retention-in-days", out int? changeFeedRetentionInDays) ? changeFeedRetentionInDays : null,
                 ChangeFeedBlobContainerName = response.Headers.TryGetValue("x-ms-file-blob-container-for-xfiles-change-feed", out string changeFeedBlobContainerName) ? changeFeedBlobContainerName : null,
                 //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
+                CreatedOn = response.Headers.TryGetValue("x-ms-share-creation-time", out DateTimeOffset? creationTime) ? creationTime : null,
             };
         }
 
@@ -865,6 +866,7 @@ namespace Azure.Storage.Files.Shares
                 NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeOn,
                 NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeOn,
                 //EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
+                CreatedOn = sharePropertiesInternal.CreatedOn
             };
         }
 

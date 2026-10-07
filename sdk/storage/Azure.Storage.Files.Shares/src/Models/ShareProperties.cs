@@ -188,6 +188,11 @@ namespace Azure.Storage.Files.Shares.Models
         //public bool? EnableDirectoryLease { get; internal set; }
 
         /// <summary>
+        /// CreatedTime.
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; internal set; }
+
+        /// <summary>
         /// Internal constructor.
         /// </summary>
         internal ShareProperties() { }
