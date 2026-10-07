@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// HoldGroup creation does not block the AnswerCall response; HoldGroupCreated / HoldGroupFailed
         /// callback events are emitted when the operation completes.
         /// </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions, HoldGroupOptions holdGroupOptions)
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions, HoldGroupOptionsInternal holdGroupOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -85,6 +85,6 @@ namespace Azure.Communication.CallAutomation
         /// HoldGroup creation does not block the AnswerCall response; HoldGroupCreated / HoldGroupFailed
         /// callback events are emitted when the operation completes.
         /// </summary>
-        public HoldGroupOptions HoldGroupOptions { get; set; }
+        public HoldGroupOptionsInternal HoldGroupOptions { get; set; }
     }
 }

@@ -8,25 +8,25 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The request payload for creating a hold group. </summary>
-    public partial class CreateHoldGroupRequest
+    internal partial class CreateHoldGroupRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="CreateHoldGroupRequest"/>. </summary>
-        public CreateHoldGroupRequest()
+        /// <summary> Initializes a new instance of <see cref="CreateHoldGroupRequestInternal"/>. </summary>
+        public CreateHoldGroupRequestInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateHoldGroupRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateHoldGroupRequestInternal"/>. </summary>
         /// <param name="playSourceInfo"></param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal CreateHoldGroupRequest(PlaySourceInternal playSourceInfo, string operationContext)
+        internal CreateHoldGroupRequestInternal(PlaySourceInternal playSourceInfo, string operationContext)
         {
             PlaySourceInfo = playSourceInfo;
             OperationContext = operationContext;
         }
 
         /// <summary> Gets or sets the play source info. </summary>
-        internal PlaySourceInternal PlaySourceInfo { get; set; }
+        public PlaySourceInternal PlaySourceInfo { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
-        internal string OperationContext { get; set; }
+        public string OperationContext { get; set; }
     }
 }

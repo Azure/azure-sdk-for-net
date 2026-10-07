@@ -3,6 +3,12 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for Hold Group operations to manage audio playback for groups of participants.
+  - `CreateHoldGroup()` / `CreateHoldGroupAsync()` - Create a new hold group with specified audio source.
+  - `DeleteHoldGroup()` / `DeleteHoldGroupAsync()` - Delete an existing hold group.
+  - New public models: `HoldGroupOptions` and `DeleteHoldGroupOptions` for configuring hold group operations.
+  - Events for hold group lifecycle: `HoldGroupCreated`, `HoldGroupAudioStarted`, `HoldGroupAudioFailed`, and `HoldGroupFailed`.
+  - Result type `HoldGroupCreatedEventResult` for waiting on hold group creation events.
 - The StartRecording function now accepts the PauseOnStart parameter.
 - Added support for CreateCallFailed and AnswerCallFailed events.
 - Enabled audio streaming support for various APIs such as CreateCall, AnswerCall, CreateGroupCall, and ConnectCall.

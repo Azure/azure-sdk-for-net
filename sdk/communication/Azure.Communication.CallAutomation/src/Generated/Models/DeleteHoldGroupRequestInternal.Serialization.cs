@@ -10,16 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class DeleteHoldGroupRequest : IUtf8JsonSerializable
+    internal partial class DeleteHoldGroupRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HoldGroupId))
-            {
-                writer.WritePropertyName("holdGroupId"u8);
-                writer.WriteStringValue(HoldGroupId);
-            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

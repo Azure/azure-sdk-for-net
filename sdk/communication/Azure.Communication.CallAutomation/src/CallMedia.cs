@@ -525,7 +525,7 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
                 }
 
-                CreateHoldGroupRequest request = CreateHoldGroupRequest(options);
+                CreateHoldGroupRequestInternal  request = CreateHoldGroupRequest(options);
 
                 var response = await CallMediaRestClient.CreateHoldGroupAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -558,7 +558,7 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
                 }
 
-                CreateHoldGroupRequest request = CreateHoldGroupRequest(options);
+                CreateHoldGroupRequestInternal request = CreateHoldGroupRequest(options);
 
                 var response = CallMediaRestClient.CreateHoldGroup(CallConnectionId, request, cancellationToken);
 
@@ -591,7 +591,7 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
                 }
 
-                var request = new DeleteHoldGroupRequest(options.HoldGroupId);
+                var request = new DeleteHoldGroupRequestInternal();
                 request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
 
@@ -623,7 +623,7 @@ namespace Azure.Communication.CallAutomation
                     throw new ArgumentNullException(nameof(options));
                 }
 
-                var request = new DeleteHoldGroupRequest(options.HoldGroupId);
+                var request = new DeleteHoldGroupRequestInternal();
                 request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
 
@@ -812,7 +812,7 @@ namespace Azure.Communication.CallAutomation
             { return null; }
         }
 
-        private static CreateHoldGroupRequest CreateHoldGroupRequest(HoldGroupOptions options)
+        private static CreateHoldGroupRequestInternal CreateHoldGroupRequest(HoldGroupOptions options)
         {
             if (options == null)
             {
@@ -822,7 +822,7 @@ namespace Azure.Communication.CallAutomation
             var playSourceInternal = TranslatePlaySourceToInternal(options.PlaySource);
             var operationContext = options.OperationContext ?? Guid.NewGuid().ToString();
 
-            return new CreateHoldGroupRequest(playSourceInternal, operationContext);
+            return new CreateHoldGroupRequestInternal(playSourceInternal, operationContext);
         }
 
         /// <summary>

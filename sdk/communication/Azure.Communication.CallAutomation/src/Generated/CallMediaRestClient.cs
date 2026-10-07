@@ -765,7 +765,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateCreateHoldGroupRequest(string callConnectionId, CreateHoldGroupRequest createHoldGroupRequest)
+        internal HttpMessage CreateCreateHoldGroupRequest(string callConnectionId, CreateHoldGroupRequestInternal createHoldGroupRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -780,28 +780,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(createHoldGroupRequest);
+            content.JsonWriter.WriteObjectValue(createHoldGroupRequestInternal);
             request.Content = content;
             return message;
         }
 
         /// <summary> Creates a hold group with a pre-created PE and looping play prompt. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="createHoldGroupRequest"> The create hold group request. </param>
+        /// <param name="createHoldGroupRequestInternal"> The create hold group request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="createHoldGroupRequest"/> is null. </exception>
-        public async Task<Response<object>> CreateHoldGroupAsync(string callConnectionId, CreateHoldGroupRequest createHoldGroupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="createHoldGroupRequestInternal"/> is null. </exception>
+        public async Task<Response<object>> CreateHoldGroupAsync(string callConnectionId, CreateHoldGroupRequestInternal createHoldGroupRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (createHoldGroupRequest == null)
+            if (createHoldGroupRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(createHoldGroupRequest));
+                throw new ArgumentNullException(nameof(createHoldGroupRequestInternal));
             }
 
-            using var message = CreateCreateHoldGroupRequest(callConnectionId, createHoldGroupRequest);
+            using var message = CreateCreateHoldGroupRequest(callConnectionId, createHoldGroupRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -820,21 +820,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Creates a hold group with a pre-created PE and looping play prompt. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="createHoldGroupRequest"> The create hold group request. </param>
+        /// <param name="createHoldGroupRequestInternal"> The create hold group request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="createHoldGroupRequest"/> is null. </exception>
-        public Response<object> CreateHoldGroup(string callConnectionId, CreateHoldGroupRequest createHoldGroupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="createHoldGroupRequestInternal"/> is null. </exception>
+        public Response<object> CreateHoldGroup(string callConnectionId, CreateHoldGroupRequestInternal createHoldGroupRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (createHoldGroupRequest == null)
+            if (createHoldGroupRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(createHoldGroupRequest));
+                throw new ArgumentNullException(nameof(createHoldGroupRequestInternal));
             }
 
-            using var message = CreateCreateHoldGroupRequest(callConnectionId, createHoldGroupRequest);
+            using var message = CreateCreateHoldGroupRequest(callConnectionId, createHoldGroupRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -851,7 +851,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateDeleteHoldGroupRequest(string callConnectionId, DeleteHoldGroupRequest deleteHoldGroupRequest)
+        internal HttpMessage CreateDeleteHoldGroupRequest(string callConnectionId, DeleteHoldGroupRequestInternal deleteHoldGroupRequestInternal)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -866,28 +866,28 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deleteHoldGroupRequest);
+            content.JsonWriter.WriteObjectValue(deleteHoldGroupRequestInternal);
             request.Content = content;
             return message;
         }
 
         /// <summary> Deletes a hold group, terminating its PE and releasing all held participants. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="deleteHoldGroupRequest"> The delete hold group request. </param>
+        /// <param name="deleteHoldGroupRequestInternal"> The delete hold group request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="deleteHoldGroupRequest"/> is null. </exception>
-        public async Task<Response> DeleteHoldGroupAsync(string callConnectionId, DeleteHoldGroupRequest deleteHoldGroupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="deleteHoldGroupRequestInternal"/> is null. </exception>
+        public async Task<Response> DeleteHoldGroupAsync(string callConnectionId, DeleteHoldGroupRequestInternal deleteHoldGroupRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (deleteHoldGroupRequest == null)
+            if (deleteHoldGroupRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(deleteHoldGroupRequest));
+                throw new ArgumentNullException(nameof(deleteHoldGroupRequestInternal));
             }
 
-            using var message = CreateDeleteHoldGroupRequest(callConnectionId, deleteHoldGroupRequest);
+            using var message = CreateDeleteHoldGroupRequest(callConnectionId, deleteHoldGroupRequestInternal);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -900,21 +900,21 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Deletes a hold group, terminating its PE and releasing all held participants. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="deleteHoldGroupRequest"> The delete hold group request. </param>
+        /// <param name="deleteHoldGroupRequestInternal"> The delete hold group request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="deleteHoldGroupRequest"/> is null. </exception>
-        public Response DeleteHoldGroup(string callConnectionId, DeleteHoldGroupRequest deleteHoldGroupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="deleteHoldGroupRequestInternal"/> is null. </exception>
+        public Response DeleteHoldGroup(string callConnectionId, DeleteHoldGroupRequestInternal deleteHoldGroupRequestInternal, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (deleteHoldGroupRequest == null)
+            if (deleteHoldGroupRequestInternal == null)
             {
-                throw new ArgumentNullException(nameof(deleteHoldGroupRequest));
+                throw new ArgumentNullException(nameof(deleteHoldGroupRequestInternal));
             }
 
-            using var message = CreateDeleteHoldGroupRequest(callConnectionId, deleteHoldGroupRequest);
+            using var message = CreateDeleteHoldGroupRequest(callConnectionId, deleteHoldGroupRequestInternal);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
