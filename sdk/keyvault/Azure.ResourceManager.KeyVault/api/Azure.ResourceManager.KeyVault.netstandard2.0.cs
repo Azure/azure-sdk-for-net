@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmProperties ManagedHsmProperties(System.Guid? tenantId = default(System.Guid?), System.Collections.Generic.IEnumerable<string> initialAdminObjectIds = null, System.Uri hsmUri = null, bool? enableSoftDelete = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), Azure.ResourceManager.KeyVault.Models.ManagedHsmCreateMode? createMode = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmCreateMode?), string statusMessage = null, Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState? provisioningState = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmProvisioningState?), Azure.ResourceManager.KeyVault.Models.ManagedHsmNetworkRuleSet networkRuleSet = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.ManagedHsmGeoReplicatedRegion> regions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.KeyVault.Models.ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections = null, Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmPublicNetworkAccess?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties securityDomainProperties = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainProperties ManagedHSMSecurityDomainProperties(Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainActivationStatus? activationStatus = default(Azure.ResourceManager.KeyVault.Models.ManagedHSMSecurityDomainActivationStatus?), string activationStatusMessage = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmServiceTagRule ManagedHsmServiceTagRule(string tag = null) { throw null; }
-        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSku ManagedHsmSku(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily family = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily), Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName name = Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName.StandardB1) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSku ManagedHsmSku(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily family = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily), Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName name = default(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule ManagedHsmVirtualNetworkRule(Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.SecretAttributes SecretAttributes(bool? enabled = default(bool?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expires = default(System.DateTimeOffset?), System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updated = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.SecretBaseAttributes SecretBaseAttributes(bool? enabled = default(bool?), System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? expires = default(System.DateTimeOffset?), System.DateTimeOffset? created = default(System.DateTimeOffset?), System.DateTimeOffset? updated = default(System.DateTimeOffset?)) { throw null; }
@@ -1596,13 +1596,30 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily left, Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum ManagedHsmSkuName
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedHsmSkuName : System.IEquatable<Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName>
     {
-        StandardB1 = 0,
-        CustomB32 = 1,
-        CustomB6 = 2,
-        CustomC42 = 3,
-        CustomC10 = 4,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedHsmSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName CustomB32 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName CustomB6 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName CustomC10 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName CustomC42 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName StandardB1 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName StandardB10v2 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName StandardB15v2 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName StandardB1v2 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName StandardB20v2 { get { throw null; } }
+        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName StandardB5v2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName left, Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName left, Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuName right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ManagedHsmVirtualNetworkRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>
     {
