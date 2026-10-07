@@ -206,7 +206,9 @@ Most of the spans are self-explanatory and are started and stopped during the op
 
 ![image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/assets/Tracing.png)
 
-In the above screenshot, we see the end-to-end transaction that can be viewed in Application Insights in the portal. In this scenario, the application is sending messages and using the [ServiceBusSessionProcessor][ServiceBusSessionProcessor] to process them. The `Message` activity is linked to `ServiceBusSender.Send`, `ServiceBusReceiver.Receive`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`. 
+The screenshot shows an end-to-end transaction from an earlier version of the client, with messages sent and processed by [ServiceBusSessionProcessor][ServiceBusSessionProcessor]. Current versions link `Message` to `ServiceBusSender.Send`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`, but omit `ServiceBusReceiver.Receive` for processor-internal receives.
+
+[ServiceBusProcessor][ServiceBusProcessor] and [ServiceBusSessionProcessor][ServiceBusSessionProcessor] do not emit `Receive` activities for internal polling or shutdown cancellation in either tracing mode. Application-initiated receives, including receives through `ProcessorReceiveActions` in a callback, remain traced. To diagnose whether an idle processor is polling, collect the receive start and completion events described in [Logging and diagnostics](#logging-and-diagnostics). These EventSource logs remain available independently of tracing.
 
 ## Troubleshoot sender issues
 

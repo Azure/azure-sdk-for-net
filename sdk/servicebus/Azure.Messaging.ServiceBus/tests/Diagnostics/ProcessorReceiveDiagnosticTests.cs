@@ -74,7 +74,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             Assert.AreSame(messages, received);
             Assert.AreSame(parent, Activity.Current);
-            bool suppressed = isProcessor && _useActivitySource;
+            bool suppressed = isProcessor;
             AssertReceiveActivities(activityListener, diagnosticListener, suppressed ? 0 : 1);
             if (!suppressed)
             {
@@ -136,7 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             Assert.AreSame(exception, thrown);
             Assert.AreSame(parent, Activity.Current);
-            bool suppressed = isProcessor && _useActivitySource;
+            bool suppressed = isProcessor;
             AssertReceiveActivities(activityListener, diagnosticListener, suppressed ? 0 : 1);
             if (!suppressed)
             {
