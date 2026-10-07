@@ -144,24 +144,6 @@ if ($null -eq $newVersionParsed)
   exit 1
 }
 
-# Check API status
-try
-{
-  az account show *> $null
-  if (!$?) {
-    Write-Host 'Running az login...'
-    az login *> $null
-  }
-  $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-  $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-  $fullPackageNameInApiView = Get-FullPackageName -PackageInfo $packageProperties -UseColonSeparator
-  Check-ApiReviewStatus -PackageName $fullPackageNameInApiView -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
-}
-catch
-{
-  Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
-}
-
 if (Test-Path "Function:SetPackageVersion")
 {
   $replaceLatestEntryTitle = $true
