@@ -729,10 +729,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
-    public partial class CreateHoldGroupRequest
-    {
-        public CreateHoldGroupRequest() { }
-    }
     public partial class CustomCallingContext
     {
         internal CustomCallingContext() { }
@@ -752,13 +748,6 @@ namespace Azure.Communication.CallAutomation
         public DeleteHoldGroupOptions(string holdGroupId) { }
         public string HoldGroupId { get { throw null; } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
-        public string OperationContext { get { throw null; } set { } }
-    }
-    public partial class DeleteHoldGroupRequest
-    {
-        public DeleteHoldGroupRequest() { }
-        public string HoldGroupId { get { throw null; } set { } }
-        public string OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
     }
     public partial class DialogCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
