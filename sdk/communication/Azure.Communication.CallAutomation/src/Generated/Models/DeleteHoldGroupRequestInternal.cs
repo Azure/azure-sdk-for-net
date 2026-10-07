@@ -29,8 +29,5 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Optional operation context for correlation. </summary>
         public string OperationContext { get; set; }
-
-        /// <summary> Optional callback URI for operation completion notifications. </summary>
-        public string OperationCallbackUri { get; set; }
     }
 }

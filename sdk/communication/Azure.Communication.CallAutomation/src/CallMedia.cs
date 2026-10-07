@@ -593,7 +593,6 @@ namespace Azure.Communication.CallAutomation
 
                 var request = new DeleteHoldGroupRequestInternal();
                 request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
-                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
 
                 var response = await CallMediaRestClient.DeleteHoldGroupAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
@@ -625,7 +624,6 @@ namespace Azure.Communication.CallAutomation
 
                 var request = new DeleteHoldGroupRequestInternal();
                 request.OperationContext = options.OperationContext ?? Guid.NewGuid().ToString();
-                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
 
                 var response = CallMediaRestClient.DeleteHoldGroup(CallConnectionId, request, cancellationToken);
 
