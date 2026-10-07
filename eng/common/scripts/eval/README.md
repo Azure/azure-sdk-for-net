@@ -33,8 +33,7 @@ target are fixed in [storage.ts](publisher/storage.ts), not queue-time/environme
 | Control | Current use |
 | --- | --- |
 | `autoPublishDashboardResults` | Entrypoints default to `true`; disable to opt out of trusted tools main publication |
-| `publishDashboardResults` | Explicit publication for an approved internal feature-branch run |
-| `allowAzureStorageNetworkAccess` | Explicit pipeline-wide Azure Storage egress for that publishing run |
+| `publishDashboardResults` | Publish to Blob and request the required pipeline-wide Azure Storage egress for an approved internal run |
 | `createDashboardBundle` | Shared-template artifact-only mode; enabled for all three tools entrypoints |
 
 Automatic publication requires organization `https://dev.azure.com/azure-sdk/`,
@@ -43,12 +42,15 @@ project `internal`, repository `Azure/azure-sdk-tools`, pipeline ID **8255** (wo
 manual reason. Other repositories/definitions and feature branches stay opt-in.
 PRs, pull refs and public-project runs cannot receive the publishing task.
 
-For an approved feature-branch run, enable both explicit publication and network
-access. The documented [AzureStorage policy](https://aka.ms/1es/netiso/pipelinetemplates)
+For an approved feature-branch run, set `publishDashboardResults=true`; there is no
+separate network-access flag. Publication requests the documented
+[AzureStorage policy](https://aka.ms/1es/netiso/pipelinetemplates), which
 keeps `DefaultDeny, CFSClean, CFSClean2, CFSClean3` and allows Azure Storage egress
 for **all processes in that pipeline**, not just one container. It grants no RBAC
 access. Other synced consumers need matching `AllowAzureStorage` support in their
-repo-owned 1ES redirect; nothing is forwarded unless they opt in. Keep approvals,
+repo-owned 1ES redirect; nothing is forwarded unless publication is enabled on a
+trusted run. Artifact-only runs request neither publishing credentials nor storage
+egress. Keep approvals,
 network restrictions and existing consumer defaults unchanged.
 
 These entrypoints run real evaluations and consume model quota; there is no synthetic

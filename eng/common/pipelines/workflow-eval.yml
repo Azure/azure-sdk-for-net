@@ -29,11 +29,7 @@ parameters:
     type: boolean
     default: true
   - name: publishDashboardResults
-    displayName: 'Publish the complete build bundle directly to Blob'
-    type: boolean
-    default: false
-  - name: allowAzureStorageNetworkAccess
-    displayName: 'Allow Azure Storage network access for this publishing pipeline (all processes)'
+    displayName: 'Publish build results to Blob (includes pipeline-wide Azure Storage egress)'
     type: boolean
     default: false
 
@@ -51,7 +47,6 @@ extends:
   parameters:
     createDashboardBundle: true
     publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
-    allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock

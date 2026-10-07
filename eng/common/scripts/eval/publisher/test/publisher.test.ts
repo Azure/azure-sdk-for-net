@@ -469,16 +469,32 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     assert.doesNotMatch(workflow + steps + archetype, /githubenterprise|msft\.ghe\.com|dashboardRepositoryServiceConnection/);
 });
 
-test("Azure Storage egress requires explicit opt-in and publication on a trusted internal run", async () => {
+test("one publication flag gates both upload and Azure Storage egress on the same trusted runs", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
     const workflow = await readFile(join(root, "pipelines/workflow-eval.yml"), "utf8");
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
-    for (const content of [workflow, archetype]) {
-        assert.match(content, /- name: allowAzureStorageNetworkAccess\n(?:    [^\n]*\n)*?    type: boolean\n    default: false/);
-    }
-    assert.ok(workflow.includes("allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
-    assert.match(archetype, /\$\{\{ if and\(parameters.allowAzureStorageNetworkAccess, parameters.publishDashboardResults, eq\(variables\['System.TeamProject'\], 'internal'\), ne\(variables\['Build.Reason'\], 'PullRequest'\), not\(startsWith\(variables\['Build.SourceBranch'\], 'refs\/pull\/'\)\)\) \}\}:\s+AllowAzureStorage: true/);
+    const steps = await readFile(join(root, "pipelines/templates/steps/eval-publish-results.yml"), "utf8");
+    assert.doesNotMatch(workflow + archetype, /allowAzureStorageNetworkAccess/);
+    assert.match(workflow, /Publish build results to Blob \(includes pipeline-wide Azure Storage egress\)/);
+    const gate = source => source.match(/\$\{\{ if (and\(parameters\.publishDashboardResults, .+\)) \}\}:/)?.[1];
+    const networkGate = gate(archetype), uploadGate = gate(steps);
+    assert.ok(networkGate); assert.equal(networkGate, uploadGate, "One opt-in uses identical trust guards for upload and egress");
     assert.equal((archetype.match(/AllowAzureStorage:/g) ?? []).length, 1, "No unconditional parameter forwarded to synced consumers");
+    const evaluate = (expression, variables, publishDashboardResults) => runInNewContext(expression, {
+        variables, parameters: { publishDashboardResults },
+        and: (...values) => values.every(Boolean), not: value => !value,
+        eq: (left, right) => String(left ?? "").toLowerCase() === String(right ?? "").toLowerCase(),
+        ne: (left, right) => String(left ?? "").toLowerCase() !== String(right ?? "").toLowerCase(),
+        startsWith: (value, prefix) => String(value ?? "").toLowerCase().startsWith(prefix.toLowerCase()),
+    });
+    for (const enabled of [false, true]) for (const project of ["internal", "public"]) {
+        for (const reason of ["IndividualCI", "Manual", "PullRequest"]) for (const branch of ["refs/heads/main", "refs/heads/feature", "refs/pull/17084/merge"]) {
+            const variables = { "System.TeamProject": project, "Build.Reason": reason, "Build.SourceBranch": branch };
+            const expected = enabled && project === "internal" && reason !== "PullRequest" && !branch.startsWith("refs/pull/");
+            assert.equal(evaluate(networkGate, variables, enabled), expected);
+            assert.equal(evaluate(uploadGate, variables, enabled), expected);
+        }
+    }
 });
 
 test("opted-in redirect retains enforced Default Deny/CFS and preserves other pipeline defaults", async () => {
@@ -497,15 +513,11 @@ for (const tier of ["workflow", "skill", "live"]) {
         const root = resolve(import.meta.dirname, "../../../..");
         const content = await readFile(join(root, `pipelines/${tier}-eval.yml`), "utf8");
         assert.match(content, /createDashboardBundle: true/);
-        for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
-            assert.match(content, new RegExp(`- name: ${name}\\n(?:    [^\\n]*\\n)*?    type: boolean\\n    default: false`));
-        }
-        assert.doesNotMatch(content, /notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|pipelineDefinitionId|dashboardUrl|dashboardAudience/);
+        assert.match(content, /- name: publishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: false/);
+        assert.doesNotMatch(content, /allowAzureStorageNetworkAccess|notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|pipelineDefinitionId|dashboardUrl|dashboardAudience/);
         assert.match(content, /name: autoPublishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
         assert.match(content, /template: \/eng\/common\/pipelines\/templates\/variables\/eval-dashboard.yml/);
-        for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
-            assert.ok(content.includes(name + ": ${{ or(parameters." + name + ", eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
-        }
+        assert.ok(content.includes("publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
         assert.match(content, /group: AzSDK_Eval_Variable_group/);
         assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
         if (tier === "live") {
