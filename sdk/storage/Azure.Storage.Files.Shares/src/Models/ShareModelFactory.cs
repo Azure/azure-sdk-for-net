@@ -54,6 +54,9 @@ namespace Azure.Storage.Files.Shares.Models
             long? maxBurstCreditsForIops = default,
             DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default,
             DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default,
+            bool? enableChangeFeed = default,
+            int? changeFeedRetentionInDays = default,
+            string changeFeedBlobContainerName = default,
             DateTimeOffset? createdOn = default)
             => new ShareProperties()
             {
@@ -83,6 +86,9 @@ namespace Azure.Storage.Files.Shares.Models
                 MaxBurstCreditsForIops = maxBurstCreditsForIops,
                 NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime,
+                EnableChangeFeed = enableChangeFeed,
+                ChangeFeedRetentionInDays = changeFeedRetentionInDays,
+                ChangeFeedBlobContainerName = changeFeedBlobContainerName,
                 CreatedOn = createdOn
             };
 
