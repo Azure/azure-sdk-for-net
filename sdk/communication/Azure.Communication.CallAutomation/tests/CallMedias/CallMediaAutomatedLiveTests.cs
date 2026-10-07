@@ -709,5 +709,218 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.That(disconnectedEvent is CallDisconnected, Is.True);
             Assert.That(((CallDisconnected)disconnectedEvent!).CallConnectionId, Is.EqualTo(callConnectionId));
         }
+
+        [Ignore(reason: "Skipping this until pma changes are deployed")]
+        [RecordedTest]
+        public async Task CreateAndDeleteHoldGroupTest()
+        {
+            /* Test case: Create and delete a hold group in an ACS to ACS call
+             * 1. Create a CallAutomation client
+             * 2. Create a call between two ACS users
+             * 3. Answer the call on the receiver side
+             * 4. Create a hold group with audio source
+             * 5. Verify response is successful
+             * 6. Delete the hold group
+             * 7. Verify response is successful
+             * 8. Clean up the call
+             */
+
+            // Create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // Setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // Wait for call connected event
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(connectedEvent, Is.Not.Null);
+                    Assert.That(connectedEvent is CallConnected, Is.True);
+
+                    // Create a hold group with file source audio
+                    var fileSource = new FileSource(new Uri("https://raw.githubusercontent.com/Azure-Samples/communication-services-python-quickstarts/main/call-automation/pre-recorded-music.wav"));
+                    var holdGroupOptions = new HoldGroupOptions(fileSource)
+                    {
+                        OperationContext = "test-hold-group-1"
+                    };
+
+                    var createHoldGroupResult = await callConnection.GetCallMedia().CreateHoldGroupAsync(holdGroupOptions);
+                    Assert.That(createHoldGroupResult, Is.Not.Null);
+                    Assert.That(createHoldGroupResult.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created).Or.EqualTo(StatusCodes.Status200OK));
+
+                    // Delete the hold group
+                    var deleteHoldGroupOptions = new DeleteHoldGroupOptions("test-hold-group-1")
+                    {
+                        OperationContext = "test-delete-hold-group-1"
+                    };
+
+                    var deleteHoldGroupResult = await callConnection.GetCallMedia().DeleteHoldGroupAsync(deleteHoldGroupOptions);
+                    Assert.That(deleteHoldGroupResult, Is.Not.Null);
+                    Assert.That(deleteHoldGroupResult.Status, Is.EqualTo(StatusCodes.Status200OK).Or.EqualTo(StatusCodes.Status202Accepted));
+
+                    // Hangup the call
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                    Assert.That(disconnectedEvent is CallDisconnected, Is.True);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [Ignore(reason: "Skipping this until pma changes are deployed")]
+        [RecordedTest]
+        public async Task CreateAndDeleteHoldGroupTestAsync()
+        {
+            /* Test case: Create and delete a hold group in an ACS to ACS call (Async variant)
+             * Tests the async methods for hold group operations
+             */
+
+            // Create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // Setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // Wait for call connected event
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(connectedEvent, Is.Not.Null);
+
+                    // Create a hold group with text-to-speech source
+                    var textSource = new TextSource("Welcome to hold group testing");
+                    var holdGroupOptions = new HoldGroupOptions(textSource);
+
+                    var createHoldGroupResult = await callConnection.GetCallMedia().CreateHoldGroupAsync(holdGroupOptions);
+                    Assert.That(createHoldGroupResult, Is.Not.Null);
+                    Assert.That(createHoldGroupResult.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created).Or.EqualTo(StatusCodes.Status200OK));
+
+                    // Delete the hold group
+                    var deleteHoldGroupOptions = new DeleteHoldGroupOptions("test-hold-group-async");
+                    var deleteHoldGroupResult = await callConnection.GetCallMedia().DeleteHoldGroupAsync(deleteHoldGroupOptions);
+                    Assert.That(deleteHoldGroupResult, Is.Not.Null);
+
+                    // Hangup the call
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [Ignore(reason: "Skipping this until pma changes are deployed")]
+        [RecordedTest]
+        public async Task AnswerCallWithHoldGroupOptionsScenarioTest()
+        {
+            /* Test case: Answer a call scenario with hold group in AnswerCallOptions
+             * 1. Create a call from user to target
+             * 2. Wait for incoming call
+             * 3. Answer the call on target side with operation context
+             * 4. Create hold group after answer
+             * 5. Verify hold group creation is successful
+             * 6. Delete hold group
+             * 7. Clean up
+             */
+
+            // Create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // Setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId);
+                    callConnectionId = result.CallerCallConnectionId;
+                    var callConnection = client.GetCallConnection(callConnectionId);
+
+                    // Wait for call connected
+                    var connectedEvent = await WaitForEvent<CallConnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(connectedEvent, Is.Not.Null);
+
+                    // Create hold group with audio
+                    var fileSource = new FileSource(new Uri("https://raw.githubusercontent.com/Azure-Samples/communication-services-python-quickstarts/main/call-automation/pre-recorded-music.wav"));
+                    var holdGroupOptions = new HoldGroupOptions(fileSource)
+                    {
+                        OperationContext = "answer-scenario-hold-group"
+                    };
+
+                    var createResult = await callConnection.GetCallMedia().CreateHoldGroupAsync(holdGroupOptions);
+                    Assert.That(createResult.GetRawResponse().Status, Is.EqualTo(StatusCodes.Status201Created).Or.EqualTo(StatusCodes.Status200OK));
+
+                    // Clean up - delete hold group
+                    var deleteOptions = new DeleteHoldGroupOptions("answer-hold-group")
+                    {
+                        OperationContext = "cleanup-hold-group"
+                    };
+                    await callConnection.GetCallMedia().DeleteHoldGroupAsync(deleteOptions);
+
+                    // Hangup
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.That(disconnectedEvent, Is.Not.Null);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
     }
 }

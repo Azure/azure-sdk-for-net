@@ -1145,5 +1145,196 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 }
             };
         }
+
+        [Test]
+        public void HoldGroupOptionsConstructorTest()
+        {
+            // Arrange & Act
+            var holdGroupOptions = new HoldGroupOptions(_fileSource);
+
+            // Assert
+            Assert.That(holdGroupOptions.PlaySource, Is.EqualTo(_fileSource));
+            Assert.That(holdGroupOptions.OperationContext, Is.Null);
+        }
+
+        [Test]
+        public void HoldGroupOptionsWithOperationContextTest()
+        {
+            // Arrange
+            var operationContext = "test-context-123";
+
+            // Act
+            var holdGroupOptions = new HoldGroupOptions(_textSource)
+            {
+                OperationContext = operationContext
+            };
+
+            // Assert
+            Assert.That(holdGroupOptions.PlaySource, Is.EqualTo(_textSource));
+            Assert.That(holdGroupOptions.OperationContext, Is.EqualTo(operationContext));
+        }
+
+        [Test]
+        public void HoldGroupOptionsPlaySourceModificationTest()
+        {
+            // Arrange
+            var holdGroupOptions = new HoldGroupOptions(_fileSource);
+            var newTextSource = new TextSource("Updated audio", "en-US-JennyNeural");
+
+            // Act
+            holdGroupOptions.PlaySource = newTextSource;
+
+            // Assert
+            Assert.That(holdGroupOptions.PlaySource, Is.EqualTo(newTextSource));
+        }
+
+        [Test]
+        public void DeleteHoldGroupOptionsConstructorTest()
+        {
+            // Arrange & Act
+            var holdGroupId = "hold-group-id-123";
+            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId);
+
+            // Assert
+            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
+            Assert.That(deleteOptions.OperationContext, Is.Null);
+            Assert.That(deleteOptions.OperationCallbackUri, Is.Null);
+        }
+
+        [Test]
+        public void DeleteHoldGroupOptionsWithOperationContextTest()
+        {
+            // Arrange
+            var holdGroupId = "hold-group-id-456";
+            var operationContext = "delete-context-456";
+
+            // Act
+            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
+            {
+                OperationContext = operationContext
+            };
+
+            // Assert
+            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
+            Assert.That(deleteOptions.OperationContext, Is.EqualTo(operationContext));
+            Assert.That(deleteOptions.OperationCallbackUri, Is.Null);
+        }
+
+        [Test]
+        public void DeleteHoldGroupOptionsWithCallbackUriTest()
+        {
+            // Arrange
+            var holdGroupId = "hold-group-id-789";
+            var callbackUri = new Uri("https://example.com/callback");
+
+            // Act
+            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
+            {
+                OperationCallbackUri = callbackUri
+            };
+
+            // Assert
+            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
+            Assert.That(deleteOptions.OperationCallbackUri, Is.EqualTo(callbackUri));
+        }
+
+        [Test]
+        public void DeleteHoldGroupOptionsWithAllPropertiesTest()
+        {
+            // Arrange
+            var holdGroupId = "hold-group-comprehensive";
+            var operationContext = "comprehensive-context";
+            var callbackUri = new Uri("https://example.com/comprehensive-callback");
+
+            // Act
+            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
+            {
+                OperationContext = operationContext,
+                OperationCallbackUri = callbackUri
+            };
+
+            // Assert
+            Assert.That(deleteOptions.HoldGroupId, Is.EqualTo(holdGroupId));
+            Assert.That(deleteOptions.OperationContext, Is.EqualTo(operationContext));
+            Assert.That(deleteOptions.OperationCallbackUri, Is.EqualTo(callbackUri));
+        }
+
+        [Test]
+        public void HoldGroupOptionsWithDifferentAudioSourcesTest()
+        {
+            // Test with FileSource
+            var fileOptions = new HoldGroupOptions(_fileSource);
+            Assert.That(fileOptions.PlaySource, Is.TypeOf<FileSource>());
+
+            // Test with TextSource
+            var textOptions = new HoldGroupOptions(_textSource);
+            Assert.That(textOptions.PlaySource, Is.TypeOf<TextSource>());
+        }
+
+        [Test]
+        public void DeleteHoldGroupOptionsNullUriTest()
+        {
+            // Arrange
+            var holdGroupId = "test-id";
+
+            // Act
+            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
+            {
+                OperationCallbackUri = null
+            };
+
+            // Assert
+            Assert.That(deleteOptions.OperationCallbackUri, Is.Null);
+        }
+
+        [Test]
+        public void HoldGroupOptionsOperationContextModificationTest()
+        {
+            // Arrange
+            var holdGroupOptions = new HoldGroupOptions(_fileSource)
+            {
+                OperationContext = "initial-context"
+            };
+
+            // Act
+            holdGroupOptions.OperationContext = "modified-context";
+
+            // Assert
+            Assert.That(holdGroupOptions.OperationContext, Is.EqualTo("modified-context"));
+        }
+
+        [Test]
+        public void HoldGroupOptionsNullContextTest()
+        {
+            // Arrange & Act
+            var holdGroupOptions = new HoldGroupOptions(_fileSource)
+            {
+                OperationContext = null
+            };
+
+            // Assert
+            Assert.That(holdGroupOptions.OperationContext, Is.Null);
+        }
+
+        [Test]
+        public void DeleteHoldGroupOptionsCallbackUriModificationTest()
+        {
+            // Arrange
+            var holdGroupId = "test-id";
+            var originalUri = new Uri("https://example.com/callback1");
+            var newUri = new Uri("https://example.com/callback2");
+
+            var deleteOptions = new DeleteHoldGroupOptions(holdGroupId)
+            {
+                OperationCallbackUri = originalUri
+            };
+
+            // Act
+            deleteOptions.OperationCallbackUri = newUri;
+
+            // Assert
+            Assert.That(deleteOptions.OperationCallbackUri, Is.EqualTo(newUri));
+            Assert.That(deleteOptions.OperationCallbackUri, Is.Not.EqualTo(originalUri));
+        }
     }
 }
