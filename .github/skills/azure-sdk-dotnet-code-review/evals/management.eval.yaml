@@ -319,3 +319,221 @@ stimuli:
       - type: output-matches
         config:
           pattern: '(?m)^No findings\.$'
+
+  - name: arm-common-type-redefinition-is-flagged
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute's PR diff adds a brand-new public
+      model named SystemData with its own properties, used nowhere else before this PR. The
+      package already has ResourceData.SystemData available from Azure.ResourceManager. The
+      new type's implementation, serialization, tests and documentation are otherwise correct
+      and no analyzer flags it.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)SystemData'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: pre-existing-arm-common-type-redefinition-out-of-scope
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      findings only. Azure.ResourceManager.Compute has shipped its own public SystemData model
+      for several GA releases, predating this PR. The PR's actual diff only adds an unrelated
+      new property to a different model, VirtualMachineData.DiagnosticsProfile, and does not
+      touch the SystemData type or any file that declares it. That new property, its
+      serialization, tests and documentation are correct. If there is no finding, return
+      exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: checknameavailability-naming-pattern-enforced
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute adds a new client method named
+      CheckAvailability that checks whether a virtual machine name is available, a new response
+      model named AvailabilityResult, and a new enum named UnavailableReason. All three are
+      brand new in this PR. Implementation, serialization, tests and documentation are
+      otherwise correct and no analyzer flags the names.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)NameAvailability'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: definition-and-operation-suffix-are-reserved
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute adds two brand-new public types in
+      this PR: VirtualMachineScaleSetDefinition, a plain data model with no naming collision
+      concern, and MaintenanceOperation, a plain data/info class that does not inherit
+      Operation<T>. Both are new in this PR, with no DisableEnhancedAnalysis property set on
+      the project, and no analyzer currently flags either name.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)Definition'
+      - type: output-matches
+        config:
+          pattern: '(?i)Operation'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: data-and-collection-suffix-reserved-for-resource-trio
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute adds a brand-new public type named
+      DiagnosticsSettingsData in this PR. It is a plain configuration payload model that does
+      not inherit ResourceData or TrackedResourceData and is not a resource. Its
+      implementation, serialization, tests and documentation are otherwise correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)DiagnosticsSettingsData'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: domain-collection-exception-is-not-flagged
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. A data-plane library adds a brand-new public type named
+      MongoDBCollection representing an actual MongoDB collection domain concept, not an
+      ArmCollection. This is an established exception name already used elsewhere in the SDK
+      for the same domain concept. Its implementation, serialization, tests and documentation
+      are otherwise correct. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: new-listoperations-method-is-flagged
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute's generator just regenerated the
+      VirtualMachineResource type as part of this PR's diff, and the regenerated output
+      includes a new public method, ListOperations, alongside every other operation already
+      exposed as its own public method. This method is newly present in the PR's diff. All
+      other generated members, tests and documentation are correct.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)ListOperations'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: pre-existing-listoperations-method-out-of-scope
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      findings only. Azure.ResourceManager.Compute's VirtualMachineResource type has shipped a
+      public ListOperations method for several GA releases. This PR's actual diff only changes
+      an unrelated method, GetAsync's retry policy, in a different file, and does not
+      regenerate or otherwise touch ListOperations or its declaring file. That change is
+      otherwise correct. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: new-put-patch-body-must-be-required
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute introduces a brand-new PATCH
+      operation in this PR, exposed as UpdateAsync(VirtualMachinePatch patch = null,
+      CancellationToken cancellationToken = default). This is the operation's first appearance;
+      there is no prior shipped overload. The service contract requires the patch body on every
+      call. Serialization, tests and documentation otherwise match the service contract.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)required'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: existing-shipped-optional-body-not-retrofitted
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      findings only. Azure.ResourceManager.Compute shipped UpdateAsync(VirtualMachinePatch
+      patch = null, CancellationToken cancellationToken = default) several GA releases ago,
+      with the body parameter already optional. This PR's actual diff only adds an unrelated
+      new read-only property to VirtualMachineData and does not change UpdateAsync or its
+      declaring file. The new property is otherwise correct. If there is no finding, return
+      exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: new-discriminated-hierarchy-base-must-be-abstract
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic new API and
+      return findings only. Azure.ResourceManager.Compute introduces a brand-new polymorphic
+      model family in this PR: a public, non-abstract base class NetworkConfiguration with its
+      own discriminator value, plus two new derived types for other discriminator values. All
+      three types, their serialization, tests and documentation are otherwise correct and no
+      analyzer flags the base class.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?i)abstract'
+      - type: output-not-matches
+        config:
+          pattern: '(?m)^No findings\.$'
+
+  - name: existing-concrete-discriminator-base-not-retroactively-flagged
+    prompt: >-
+      First invoke the azure-sdk-dotnet-code-review skill. Review this synthetic PR and return
+      findings only. Azure.ResourceManager.Compute has shipped a public, non-abstract
+      polymorphic base class NetworkConfiguration for several GA releases, with existing
+      derived subtypes. This PR's actual diff only adds one brand-new derived subtype for a
+      new discriminator value, in a new file; it does not change NetworkConfiguration itself
+      or its declaring file. The new subtype, its serialization, tests and documentation are
+      otherwise correct. If there is no finding, return exactly `No findings.`
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azure-sdk-dotnet-code-review"]
+      - type: output-matches
+        config:
+          pattern: '(?m)^No findings\.$'

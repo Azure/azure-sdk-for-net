@@ -255,6 +255,38 @@ What they cover:
   libraries. In such a project type names are unchecked too, and a PR *adding* the property is a
   project-wide suppression of six diagnostics at once → 🔴 on the ladder.
 
+- **`Definition` and `Operation` are narrow, reserved suffixes, not general-purpose ones.**
+  `*Definition` should be removed unless the plain noun would actually collide with another
+  resource's type in the same namespace. `*Operation` is reserved for types that inherit
+  `Operation<T>`; a plain data/info model should not borrow it (rename to `*Data` or similar).
+  Both are only partially covered by `AZC0030`–`AZC0033`, which is type-scoped and frequently
+  suppressed via `DisableEnhancedAnalysis` (see above) — treat this as the hand-review backstop
+  for exactly the projects where the analyzer can't help.
+- **`CheckNameAvailability` has a fixed naming triad.** Checking method:
+  `Check<Resource/RP noun>NameAvailability`. Its request/response model follows the Content/
+  Result convention below but keeps the resource/RP noun:
+  `<Resource/RP noun>NameAvailability<Content|Result>`. The "why unavailable" enum:
+  `<Resource/RP noun>NameUnavailableReason`. A bare `NameAvailability*`/`CheckNameAvailability*`
+  without the resource/RP noun is under-specified and collides with the same pattern in sibling
+  RPs.
+- **Remove a `ListOperations`/`ListOperationsAsync` method this PR is newly generating or
+  exposing.** Older ARM generation emitted this as a side effect; every operation already has
+  its own public method, so a newly-generated one is pure surface noise, not a legitimate API.
+  This is not a license to hunt for pre-existing occurrences in files the PR does not touch —
+  flag it only when the PR's own diff introduces or regenerates it.
+- **A PUT/PATCH body parameter this PR is newly adding should be required, not optional.** The
+  body is the entire resource or patch payload — there is no meaningful "no body" call for a
+  brand-new operation. Applies only to an operation the PR introduces. Do **not** suggest
+  flipping an already-shipped method's body parameter from optional to required — that is
+  itself the optional-to-required break this file already flags under Breaking Changes, and
+  reverting it needs the same GA-compatibility bar, not a naming/design pass.
+- **When the PR introduces a new discriminated (polymorphic) hierarchy, its base type should be
+  `abstract`.** A concrete, directly-instantiable base alongside its own discriminator value
+  next to real subtypes is almost always an incomplete hierarchy. If the PR instead adds a new
+  subtype onto an existing, already-shipped concrete base, that base's concreteness is
+  pre-existing design debt, not a new-code finding — note it only as an ℹ️ observation if at
+  all, never a blocking finding.
+
 - **`Url` → `Uri`, and the type is `Uri`** — no public member or parameter contains `Url`; it's
   always `Uri`. A member that holds an absolute address is typed `System.Uri`, not `string`.
   Watch for `string`-typed members whose *name* betrays a URI (`*Link`, `*Endpoint`,
@@ -309,6 +341,21 @@ What they cover:
   for a dedicated PATCH partial-update model and `Content` for a dedicated PUT/POST wrapper.
   Resource-data models retain `Data`. Do not infer the verb from a method name or rename a
   reusable domain model merely because it is used as a request body.
+- **Do not redefine an ARM common type this PR is newly introducing on the public surface of an
+  `Azure.ResourceManager.*` package.** Each of these names is reserved for the shared framework
+  type; a new declaration using one of them is a duplication bug, not a coincidence. An existing
+  redefinition already shipped pre-PR is not a new-code finding to raise — removing it is itself
+  a breaking change requiring the full GA-compatibility bar, not a quick fix in passing.
+
+  | Type name | Use instead |
+  |---|---|
+  | `ManagedServiceIdentity`, `ManagedServiceIdentityType`, `ManagedServiceIdentityPatch` | `Azure.ResourceManager.Models` equivalents |
+  | `UserAssignedIdentity` | `Azure.ResourceManager.Models.UserAssignedIdentity` |
+  | `SystemData` | Already exposed via `ResourceData.SystemData` — do not redefine |
+  | `ErrorResponse`, `ErrorDetail` | `Azure.ResponseError` / `Azure.ResourceManager.Models.ErrorDetail` |
+  | `OperationStatusResult` | The `ArmOperation`/`Operation<T>` pattern, not a redefined status model |
+  | `TrackedResource` | Inherit `TrackedResourceData` instead of defining a new base |
+  | `TagsUpdate`, `TagsPatch` | The Tags-update pattern `Azure.ResourceManager` already provides, or a service-prefixed `*Patch` model that carries only `Tags` |
 - **`Resource` suffix is reserved for `ArmResource`-derived types.** A data model, options bag,
   or client named `*Resource` in a non-`Azure.ResourceManager.*` package is wrong. Third-party
   `*Resource` types being *consumed* (e.g. `OpenAI.Conversations.ConversationResource`) are not
@@ -317,6 +364,13 @@ What they cover:
   normally become `WidgetData` and `WidgetCollection`. Keep `Resource` when it is part of the
   domain name, such as `PrivateLinkResource`; this simplification does not apply to
   framework-owned types.
+- **`Data` and `Collection` suffixes are reserved for the ARM resource trio.** `*Data` implies
+  `ResourceData`/`TrackedResourceData` inheritance; `*Collection` implies `ArmCollection`
+  inheritance. A handful of named domain terms are established exceptions —
+  `MongoDBCollection`, `CosmosDBSqlCollection`, `CassandraCollection` — because they name a real
+  collection/grouping concept from the service domain, not a resource collection. A plain
+  settings/config/payload model named `*Data` or `*Collection` without the matching base
+  misrepresents itself as resource-trio state.
 - **Expand single-word and abbreviated names.** `AZC0012` only covers types — apply the same
   standard to public properties and parameters. Also expand abbreviations the analyzer never
   sees, on types *and* members: `auth` → `authentication`, `agentRef` → `agent`, `params` →
