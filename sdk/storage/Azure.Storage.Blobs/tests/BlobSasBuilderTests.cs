@@ -8,6 +8,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -78,6 +79,27 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+        }
+
+        [Test]
+        public void ToSasQueryParameters_NormalizesNonUtcTimesToUtc()
+        {
+            DateTimeOffset startsOn = new DateTimeOffset(2026, 01, 01, 10, 00, 00, TimeSpan.FromHours(-7));
+            DateTimeOffset expiresOn = new DateTimeOffset(2026, 01, 01, 11, 00, 00, TimeSpan.FromHours(-7));
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[32]));
+
+            BlobSasBuilder sasBuilder = new BlobSasBuilder(BlobContainerSasPermissions.Read, expiresOn)
+            {
+                StartsOn = startsOn,
+                BlobContainerName = "container"
+            };
+
+            string query = sasBuilder.ToSasQueryParameters(credential).ToString();
+            string expectedStart = WebUtility.UrlEncode(startsOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+            string expectedExpiry = WebUtility.UrlEncode(expiresOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+
+            StringAssert.Contains($"st={expectedStart}", query);
+            StringAssert.Contains($"se={expectedExpiry}", query);
         }
 
         [RecordedTest]

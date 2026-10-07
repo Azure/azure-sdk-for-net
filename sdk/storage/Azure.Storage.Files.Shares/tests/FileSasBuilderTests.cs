@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Globalization;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +92,28 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(resource, sasQueryParameters.Resource);
             Assert.AreEqual(SasProtocol.Https, sasQueryParameters.Protocol);
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
+        }
+
+        [Test]
+        public void FileSasBuilder_ToSasQueryParameters_NormalizesNonUtcTimesToUtc()
+        {
+            DateTimeOffset startsOn = new DateTimeOffset(2026, 01, 01, 10, 00, 00, TimeSpan.FromHours(-5));
+            DateTimeOffset expiresOn = new DateTimeOffset(2026, 01, 01, 11, 45, 00, TimeSpan.FromHours(-5));
+            StorageSharedKeyCredential credential = new StorageSharedKeyCredential("account", Convert.ToBase64String(new byte[32]));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(ShareFileSasPermissions.Read, expiresOn)
+            {
+                StartsOn = startsOn,
+                ShareName = "share",
+                FilePath = "path"
+            };
+
+            string query = sasBuilder.ToSasQueryParameters(credential).ToString();
+            string expectedStart = WebUtility.UrlEncode(startsOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+            string expectedExpiry = WebUtility.UrlEncode(expiresOn.ToUniversalTime().ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture));
+
+            StringAssert.Contains($"st={expectedStart}", query);
+            StringAssert.Contains($"se={expectedExpiry}", query);
         }
 
         [RecordedTest]
